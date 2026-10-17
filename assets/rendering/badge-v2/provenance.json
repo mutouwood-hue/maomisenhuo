@@ -1,0 +1,1597 @@
+{
+  "source": "吧唧渲染参考V2照抄版.html",
+  "sourceSha256": "352dff431d90289e278af1d09c089d8cf864ed963966c34f6badf0f60f7cdc64",
+  "originalScriptIndex": 0,
+  "rendererSha256": "8fa2efd134f942b9a52094162dc95ba03f78913a41a8f101180e727647dd4186",
+  "pcat": {
+    "file": "source/pixel-cat.pcat",
+    "bytes": 205624,
+    "sha256": "82520ca7f00eb28f005795cc970746150d73075083d4032119d795d19c2d0b4e",
+    "version": 1,
+    "cubes": 56,
+    "bones": [
+      "root",
+      "body",
+      "head",
+      "ear_left",
+      "ear_right",
+      "eye_left",
+      "eye_right",
+      "tail_base",
+      "tail_middle",
+      "tail_tip",
+      "front_left",
+      "front_right",
+      "back_left",
+      "back_right"
+    ],
+    "animations": {
+      "idle": {
+        "seconds": 3.2,
+        "loop": 1,
+        "tracks": 7
+      },
+      "walk": {
+        "seconds": 1,
+        "loop": 1,
+        "tracks": 12
+      },
+      "paw": {
+        "seconds": 2.4,
+        "loop": 1,
+        "tracks": 5
+      }
+    },
+    "breeds": [
+      "orange",
+      "silver",
+      "tuxedo",
+      "siamese",
+      "ragdoll",
+      "blue"
+    ],
+    "outfits": [
+      "bandana",
+      "bow",
+      "cap",
+      "raincoat",
+      "backpack",
+      "scarf"
+    ]
+  },
+  "authorization": "User-provided local reference HTML/PCAT reused for this project; no new geometry, texture, AI image, remote service or invented asset license.",
+  "camera": {
+    "yaw": -28,
+    "pitch": 14,
+    "distance": 90,
+    "ox": 0,
+    "oy": 24
+  },
+  "material": {
+    "breed": "orange",
+    "outfit": "none",
+    "perspective": true,
+    "ground": false,
+    "halfResolution": false
+  },
+  "frame": {
+    "width": 192,
+    "height": 208,
+    "anchor": [
+      96,
+      196
+    ],
+    "transparent": true
+  },
+  "timingNote": "BadgeRenderer.pose expects seconds. Original controller supplies millisecond t; this exporter samples the original ANIM seconds and complete cycles, correcting that controller unit mismatch.",
+  "attentionNote": "Original controller stare cue look=[-32,10], added by original pose() to head; original idle skeletal animation continues. No synthetic eye/head pose authored.",
+  "alphaNote": "Coverage written at the original opaque fragment write, independent of RGB565 value; transparent texels never write coverage. Ground disabled for cutout. No chroma-key deletion of black eyes.",
+  "coveragePatches": [
+    [
+      "this.fb=new Uint16Array(SCR*SCR);",
+      "this.fb=new Uint16Array(SCR*SCR);this.alpha=new Uint8Array(SCR*SCR);this.stripA=new Uint8Array(SCR*STRIP_H);"
+    ],
+    [
+      "C[row+x]=0;Zb[row+x]=0;",
+      "C[row+x]=0;Zb[row+x]=0;this.stripA[row+x]=0;"
+    ],
+    [
+      "C[zi]=c;Zb[zi]=z;st.written++;",
+      "C[zi]=c;Zb[zi]=z;this.stripA[zi]=255;st.written++;"
+    ],
+    [
+      "fb[fr+x]=C[row+x];",
+      "{fb[fr+x]=C[row+x];this.alpha[fr+x]=this.stripA[row+x];}"
+    ]
+  ],
+  "instrumentedRendererSha256": "2d9ad5eba9a6b7ba249a111fbc44a7c8a0db858e7aa1a844b07b5ea7a63f4016",
+  "sceneNote": "Badge reference only supplies a black AMOLED background and optional flat ground disc, not the mobile room. room pointer remains NULL for root scene composition.",
+  "sharedTransform": {
+    "sourceUnionBox": [
+      168,
+      144,
+      342,
+      365
+    ],
+    "scale": 0.8288288288288288,
+    "offsetX": -115.76576576576576,
+    "offsetY": -107.35135135135135,
+    "resampling": "nearest-neighbor only",
+    "anchorMeaning": "Fixed common full-cycle floor/support bound mapped to (96,196); natural leg/body motion remains. No per-frame crop, re-centering or scaling."
+  },
+  "colorStatistics": {
+    "maxCoveredRGB565Colors": 17,
+    "countsByClip": {
+      "idle": [
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11
+      ],
+      "pet": [
+        11,
+        15,
+        15,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        15,
+        16,
+        11
+      ],
+      "walk": [
+        11,
+        11,
+        17,
+        17,
+        11,
+        11,
+        11,
+        17,
+        17,
+        11
+      ],
+      "attention": [
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        11,
+        14,
+        11,
+        11,
+        11,
+        11
+      ]
+    }
+  },
+  "lvglFormat": "I8",
+  "samples": [
+    {
+      "name": "sample-idle.png",
+      "clip": "idle",
+      "timeSeconds": 0,
+      "opaquePixels": 15545,
+      "colors": 11,
+      "opaqueBlackPixels": 0,
+      "bounds": [
+        30,
+        19,
+        168,
+        194
+      ],
+      "pngSha256": "7c96aac69c3718ee433b84f0804c000c62305e1b1b5e2f7817e450776dc3da21",
+      "encodedBytes": 40960
+    },
+    {
+      "name": "sample-pet.png",
+      "clip": "pet",
+      "timeSeconds": 0.8,
+      "opaquePixels": 15460,
+      "colors": 11,
+      "opaqueBlackPixels": 0,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "pngSha256": "00cae56bc9be1c8522b6d08e18f23ea436520955e92081f4da5c3d7886773be3",
+      "encodedBytes": 40960
+    },
+    {
+      "name": "sample-attention.png",
+      "clip": "attention",
+      "timeSeconds": 0.8,
+      "opaquePixels": 15657,
+      "colors": 11,
+      "opaqueBlackPixels": 0,
+      "bounds": [
+        29,
+        13,
+        167,
+        193
+      ],
+      "pngSha256": "1734f3088d12767b62c1b171f8c3f8c96bcd873b81f0d0af5b86f1ebb3d6d67d",
+      "encodedBytes": 40960
+    }
+  ],
+  "plannedClips": [
+    {
+      "id": "idle",
+      "animation": "idle",
+      "count": 20,
+      "cycleMs": 3200,
+      "loop": true,
+      "look": [
+        0,
+        0
+      ],
+      "uniqueFrames": 20
+    },
+    {
+      "id": "pet",
+      "animation": "paw",
+      "count": 24,
+      "cycleMs": 2400,
+      "loop": false,
+      "look": [
+        0,
+        0
+      ],
+      "uniqueFrames": 24
+    },
+    {
+      "id": "walk",
+      "animation": "walk",
+      "count": 10,
+      "cycleMs": 1000,
+      "loop": true,
+      "look": [
+        0,
+        0
+      ],
+      "uniqueFrames": 10
+    },
+    {
+      "id": "attention",
+      "animation": "idle",
+      "count": 12,
+      "cycleMs": 3200,
+      "loop": true,
+      "look": [
+        -32,
+        10
+      ],
+      "uniqueFrames": 12
+    }
+  ],
+  "budget": {
+    "frameCount": 66,
+    "encodedFrameBytes": 40960,
+    "totalPayloadBytes": 2703360,
+    "original40FrameRGB565A8Budget": 4792320
+  },
+  "verification": {
+    "referenceFrameCount": 66,
+    "referenceRGB565Exact": true,
+    "alphaFromFragmentCoverage": true,
+    "allI8RoundTripsExact": true,
+    "allFramesBorderClear": true,
+    "noPerFrameAutoCrop": true
+  },
+  "runtimeCaveat": "LVGL 9.5 software indexed decoder may expand one 192x208 I8 frame to ARGB8888 (159744 bytes) and cache it. Flash savings do not prove target decode speed, heap safety, animation FPS, or panel acceptance.",
+  "stage": "full",
+  "room": {
+    "source": null,
+    "available": false,
+    "reason": "No reviewed room PNG supplied; asset bank room is NULL. Reference black ground-disc sample is not registered as a room."
+  },
+  "frames": [
+    {
+      "id": "game_idle_00",
+      "clip": "idle",
+      "index": 0,
+      "timeSeconds": 0,
+      "bounds": [
+        30,
+        19,
+        168,
+        194
+      ],
+      "coverage": 15545,
+      "colors": 11,
+      "raw565AlphaSha256": "8924a7df0c23d396b65a5079357ba6aa48dc9c4460239262f57c775323a274c5",
+      "pngSha256": "7c96aac69c3718ee433b84f0804c000c62305e1b1b5e2f7817e450776dc3da21",
+      "encodedSha256": "d7a13ecac4dd54dad6fdd87c1af693716eb635109f3e01136b47226bf4c04212",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": null
+    },
+    {
+      "id": "game_idle_01",
+      "clip": "idle",
+      "index": 1,
+      "timeSeconds": 0.16,
+      "bounds": [
+        30,
+        19,
+        167,
+        194
+      ],
+      "coverage": 15646,
+      "colors": 11,
+      "raw565AlphaSha256": "eaef78b26c6b27c4d4272d84efe96dfa3ed31b77d50de9e0bdb82773f49ae5a5",
+      "pngSha256": "c3f5cb72a398f6eda15b86350d0e0f5f048583c3fc4e5ba1f768254c2d396341",
+      "encodedSha256": "4a1fc494903e736a7c42b175003869d8a6146f83854bf6b6f9fa7f7f5f727fd5",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1116
+    },
+    {
+      "id": "game_idle_02",
+      "clip": "idle",
+      "index": 2,
+      "timeSeconds": 0.32,
+      "bounds": [
+        30,
+        19,
+        167,
+        194
+      ],
+      "coverage": 15670,
+      "colors": 11,
+      "raw565AlphaSha256": "f1fea3f76a137cb1ba875cbb08be347aedae8432b86a54e1f0ca6fb0074fd771",
+      "pngSha256": "be600622cfdd101db2c4cebb175648e32fc411fab169ef1d0b96a7f84050c578",
+      "encodedSha256": "bbf440f73341198cdedda666e7afe558b281c65eeaea52ec5bd85e956ccc5c8b",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1326
+    },
+    {
+      "id": "game_idle_03",
+      "clip": "idle",
+      "index": 3,
+      "timeSeconds": 0.48,
+      "bounds": [
+        29,
+        19,
+        167,
+        193
+      ],
+      "coverage": 15735,
+      "colors": 11,
+      "raw565AlphaSha256": "dfc374b1957221d11974d2384899f32ddc346ff73678c18b22addc12b7f73855",
+      "pngSha256": "8f5c097fba6d9c64bc7384ca23e5eebb325008ac213796c34e261082f00f4171",
+      "encodedSha256": "39a34e77eb4d6ce0f98c41aa85424eaff0e17089808aea79220cfeb82046baae",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1623
+    },
+    {
+      "id": "game_idle_04",
+      "clip": "idle",
+      "index": 4,
+      "timeSeconds": 0.64,
+      "bounds": [
+        29,
+        18,
+        167,
+        193
+      ],
+      "coverage": 15769,
+      "colors": 11,
+      "raw565AlphaSha256": "920c40a7e8cd4d8fc725d35ee35f60866cb459fac43c5b5a5755c35278873a0a",
+      "pngSha256": "91f78a1909e4734f5c79a7ff6305fbcb445ba72e25a5d5e304c53a39f9a19a23",
+      "encodedSha256": "d0abf32bd5f6e02c6a42b24a5798e84b125b05a7a49b30e0a7440860cf936d54",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1619
+    },
+    {
+      "id": "game_idle_05",
+      "clip": "idle",
+      "index": 5,
+      "timeSeconds": 0.8,
+      "bounds": [
+        29,
+        18,
+        167,
+        193
+      ],
+      "coverage": 15770,
+      "colors": 11,
+      "raw565AlphaSha256": "b6761e89f2b3be6b60735e0ae4b35bc3b76f49556935e6a0ce3b14e2a3753a62",
+      "pngSha256": "68ac724cc7ec4224675483dbabb21f1841e6cc131432162c93e071c5f837b0ef",
+      "encodedSha256": "4028f5d8d14ff278ab0e5b0e52b8dca873fa629f3085afab4ffbd3d94c440501",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1392
+    },
+    {
+      "id": "game_idle_06",
+      "clip": "idle",
+      "index": 6,
+      "timeSeconds": 0.96,
+      "bounds": [
+        29,
+        17,
+        167,
+        193
+      ],
+      "coverage": 15781,
+      "colors": 11,
+      "raw565AlphaSha256": "3767ad5d053cd38ca77d742d2ea79e4395f60a870669e727885a2cd025edfe84",
+      "pngSha256": "5a20579279ff15f5ef016a29f86c55295a797fd5180f828237b6f6b030c40292",
+      "encodedSha256": "f0246025d6f34ba50f47882bebb46f4f4e8d478cfe1a00385375bf647c09d147",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1357
+    },
+    {
+      "id": "game_idle_07",
+      "clip": "idle",
+      "index": 7,
+      "timeSeconds": 1.12,
+      "bounds": [
+        29,
+        17,
+        167,
+        193
+      ],
+      "coverage": 15763,
+      "colors": 11,
+      "raw565AlphaSha256": "536917f8145abac31f854547fe06a6e4e8f98a50b94ca9a5c8452ff6428965b2",
+      "pngSha256": "01e088f1a81d32776aa891a3247653d79dc0032dbcb0b41a169eb431c406126d",
+      "encodedSha256": "d6369a167c9b2b107f3635c6afc95b9af4b4b8b91c9dc444b3c02ad75994c62b",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1310
+    },
+    {
+      "id": "game_idle_08",
+      "clip": "idle",
+      "index": 8,
+      "timeSeconds": 1.28,
+      "bounds": [
+        29,
+        17,
+        167,
+        192
+      ],
+      "coverage": 15730,
+      "colors": 11,
+      "raw565AlphaSha256": "72913ec54b2d9576a705f4cd1231359c50f1782c5388e3c37c4c772fe8b83a2d",
+      "pngSha256": "8423075195ec92b7af849dba2246de530ce3562336f49e00268b17f6c4f00cb0",
+      "encodedSha256": "0f1b8b4f8ae81eeec43b4736f8becc6239fca0065ca83e78171d942a94dbcf29",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1065
+    },
+    {
+      "id": "game_idle_09",
+      "clip": "idle",
+      "index": 9,
+      "timeSeconds": 1.44,
+      "bounds": [
+        29,
+        17,
+        167,
+        192
+      ],
+      "coverage": 15716,
+      "colors": 11,
+      "raw565AlphaSha256": "4db046688e6d36040d62ebd0f2b424bf2e8d76431261fdfac2dc6bbe5696590d",
+      "pngSha256": "858f678a90d85b741c507db4f4cb9524b78373fa1b5a97f6da88f1b2a7f26945",
+      "encodedSha256": "237a8ebf211f60d3ef5a9a7e0b8649715ebbe15ad1c09d5b3cb90f1ae0fa5e02",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1008
+    },
+    {
+      "id": "game_idle_10",
+      "clip": "idle",
+      "index": 10,
+      "timeSeconds": 1.6,
+      "bounds": [
+        29,
+        17,
+        168,
+        192
+      ],
+      "coverage": 15663,
+      "colors": 11,
+      "raw565AlphaSha256": "170203d7a601ccad1ca3f58054f692ddc95cee0833af42c97c2f89ef7e5c3da5",
+      "pngSha256": "f461610eaf6a407a15b0570581055e0cb3ae4d8beb0640407c6936be1313e5cf",
+      "encodedSha256": "8aedcc4d60764505a82775eef7758138c6b73b8ff6920276b0e02fcc6f3f6152",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1011
+    },
+    {
+      "id": "game_idle_11",
+      "clip": "idle",
+      "index": 11,
+      "timeSeconds": 1.7600000000000002,
+      "bounds": [
+        29,
+        17,
+        168,
+        192
+      ],
+      "coverage": 15616,
+      "colors": 11,
+      "raw565AlphaSha256": "90d6cf34c53d474eefe371db9d7a6170de48d8bc1e45464eb8bb69b1d4c84b8c",
+      "pngSha256": "43db1bd38490a411e575f88406ab8c7b2fda637cffc7c29c51013260a6fd3bfd",
+      "encodedSha256": "591c65f5109096d0410d2ee1cdc32a32f422eae6834b6d9183f478f713d0890a",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1467
+    },
+    {
+      "id": "game_idle_12",
+      "clip": "idle",
+      "index": 12,
+      "timeSeconds": 1.92,
+      "bounds": [
+        29,
+        18,
+        168,
+        192
+      ],
+      "coverage": 15557,
+      "colors": 11,
+      "raw565AlphaSha256": "251ced9b2ceb59a294d016f35aa289493b4d750f7abf3cc83d7da6a7a13dee67",
+      "pngSha256": "e8d0cbeafd9730d57608d973fa07e091a82dddf411c40e90876934b86e50c3fa",
+      "encodedSha256": "eb79dbed696d0faa28b8a13e9136b24783e621fb18f4431c85c7de453c1446a8",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1249
+    },
+    {
+      "id": "game_idle_13",
+      "clip": "idle",
+      "index": 13,
+      "timeSeconds": 2.08,
+      "bounds": [
+        29,
+        18,
+        168,
+        193
+      ],
+      "coverage": 15503,
+      "colors": 11,
+      "raw565AlphaSha256": "78beed4a14d6eea50b1de3a438ed0f505c01dd9601ca1b0d7c5396ed055657a3",
+      "pngSha256": "ac62527090744c8169269819716cdbbe24c552e610482aa226b7a4e9294b9710",
+      "encodedSha256": "f06acf5362db45be7eafe0a2a5726563c45535852e2391e3de9566a64a547a11",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1471
+    },
+    {
+      "id": "game_idle_14",
+      "clip": "idle",
+      "index": 14,
+      "timeSeconds": 2.24,
+      "bounds": [
+        29,
+        19,
+        168,
+        193
+      ],
+      "coverage": 15469,
+      "colors": 11,
+      "raw565AlphaSha256": "b225013a43ad7af4ea3d621bac31ced5f089c3e3e28a28e1dfbc5e842607c500",
+      "pngSha256": "9023646a31e5357db2d83c819b47bac6c64125a5dabedeb45367d75c6b843b0e",
+      "encodedSha256": "baddcf39646b6caa81232f7299465f36ab6d2a1300c2ee81873e8710cbbee4d3",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1778
+    },
+    {
+      "id": "game_idle_15",
+      "clip": "idle",
+      "index": 15,
+      "timeSeconds": 2.4,
+      "bounds": [
+        29,
+        19,
+        168,
+        193
+      ],
+      "coverage": 15449,
+      "colors": 11,
+      "raw565AlphaSha256": "e1610ed94404fc8f330f3b6ed0a820d68e1a47cff154457031421a1a7c060dce",
+      "pngSha256": "bdde49b18b16e67373a454d83323418d344abba73050c312c8feb744ceac6f65",
+      "encodedSha256": "36c2a370b2f105c9625a909a0a0bfe07904324dfc11b2f2dea84e74aeb489b01",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1690
+    },
+    {
+      "id": "game_idle_16",
+      "clip": "idle",
+      "index": 16,
+      "timeSeconds": 2.56,
+      "bounds": [
+        29,
+        19,
+        168,
+        193
+      ],
+      "coverage": 15440,
+      "colors": 11,
+      "raw565AlphaSha256": "d9b8261c165bf787d8a057149716144edacfd8804891420a0ade8c562d8e7765",
+      "pngSha256": "597e5321a576674dffe4e3865fd366eec7809f5bca2457c4c3ab28abb400f342",
+      "encodedSha256": "9b602b897efd2cc5d368b028b15fdbb7eddee14a8241f849a7fa2e21fc4d676b",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1151
+    },
+    {
+      "id": "game_idle_17",
+      "clip": "idle",
+      "index": 17,
+      "timeSeconds": 2.72,
+      "bounds": [
+        29,
+        19,
+        168,
+        193
+      ],
+      "coverage": 15450,
+      "colors": 11,
+      "raw565AlphaSha256": "49f253069f39eeefa26e20bca61cef99eab1fd4690e7b9a9c89aa088d6008b78",
+      "pngSha256": "4e5f53b214853e65efb13ab366dad739c4e18e009ef152e3d7f6fa22357a75e7",
+      "encodedSha256": "ef9d63a8424fc21d34df34336e5c60ea0eec8dadc445128458403892b2a2cffa",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1192
+    },
+    {
+      "id": "game_idle_18",
+      "clip": "idle",
+      "index": 18,
+      "timeSeconds": 2.88,
+      "bounds": [
+        30,
+        19,
+        168,
+        194
+      ],
+      "coverage": 15459,
+      "colors": 11,
+      "raw565AlphaSha256": "37052ae222a8ed6994b7cd769977fe639c5fa5ebc67757f18a5ba78c2dde55e3",
+      "pngSha256": "4658b35496b828da8f14c0cffd89003f2d7a86be56adf929f47ea72b70471152",
+      "encodedSha256": "f6a0be7de3ec011d96446868123aa8d12e6bfcc3190eb5c73e7d0d5e4b108159",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1064
+    },
+    {
+      "id": "game_idle_19",
+      "clip": "idle",
+      "index": 19,
+      "timeSeconds": 3.04,
+      "bounds": [
+        30,
+        19,
+        168,
+        194
+      ],
+      "coverage": 15509,
+      "colors": 11,
+      "raw565AlphaSha256": "aee6bdde807bfc2514d30d13eff53c069d223c6e26f98f4c7c1975eac5074e15",
+      "pngSha256": "8bdf6b0c949be711748f597058af051ad81219322b0b15f49beadb7321733419",
+      "encodedSha256": "0f098e8c65af1b3803efa2c8199f66827ab5fe80d20f3a45780c6c3252cae3eb",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 953
+    },
+    {
+      "id": "game_pet_00",
+      "clip": "pet",
+      "index": 0,
+      "timeSeconds": 0,
+      "bounds": [
+        30,
+        19,
+        168,
+        194
+      ],
+      "coverage": 15596,
+      "colors": 11,
+      "raw565AlphaSha256": "963ee275c9d3602f9344f86b8e65a5fa45795eedbd4b94cb41c7a20157a216c7",
+      "pngSha256": "b837339c173fb76532d84e47303fb8c3d7eef4134833619da310035fba358f09",
+      "encodedSha256": "0c43bc772840ff4dae85b457f4e1045b396dce605c6fe9b07f8018b754a0f3a2",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": null
+    },
+    {
+      "id": "game_pet_01",
+      "clip": "pet",
+      "index": 1,
+      "timeSeconds": 0.1,
+      "bounds": [
+        28,
+        20,
+        167,
+        194
+      ],
+      "coverage": 15807,
+      "colors": 15,
+      "raw565AlphaSha256": "a9ecd6bf6bb21f820b4f9005f03b88e15153d271f5c1ed5e2636a5df8470ed3e",
+      "pngSha256": "de5bb8f5a74494317da61b9e83a17b293752f9dc7c27db55d051c9ddf91f9b2b",
+      "encodedSha256": "defa07c8319b5b9aaafa41dc0e4dbe7d5f2a19e81753a324e1d76662c9cd4d0e",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2679
+    },
+    {
+      "id": "game_pet_02",
+      "clip": "pet",
+      "index": 2,
+      "timeSeconds": 0.2,
+      "bounds": [
+        28,
+        20,
+        166,
+        194
+      ],
+      "coverage": 15878,
+      "colors": 15,
+      "raw565AlphaSha256": "e9d17b9243050e2a72d9a4dd89d25a2bcc59e73d58da759387d08d61dd32ccf1",
+      "pngSha256": "23728f22970377327ced9e26a6f5137bca2cb4d373b9920ea528bb2bc8d8747d",
+      "encodedSha256": "a0e659ebebff04a55e236dc2d91273b191cae94782c833fcfc6a7df0f7f2b2a6",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2823
+    },
+    {
+      "id": "game_pet_03",
+      "clip": "pet",
+      "index": 3,
+      "timeSeconds": 0.3,
+      "bounds": [
+        27,
+        21,
+        166,
+        195
+      ],
+      "coverage": 15844,
+      "colors": 11,
+      "raw565AlphaSha256": "7351bb6b948da72a9104642a5c9833dd829d8645183a75d5eba1b4e14fa7b94f",
+      "pngSha256": "31e1498341036ac6de96819e7f4588b2cb11a018efb76af01d6c13b2d80ebe46",
+      "encodedSha256": "55341f7b8b131c2a9eaea02e279a475c925167cd35f850e7decef99a77773a90",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 3299
+    },
+    {
+      "id": "game_pet_04",
+      "clip": "pet",
+      "index": 4,
+      "timeSeconds": 0.4,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15643,
+      "colors": 11,
+      "raw565AlphaSha256": "b9d989aaf8c5958145ff5638d3a4645d298871e916ae9c723df79845aed59f47",
+      "pngSha256": "4f5e41d817ae133bfe3cfbf385f36d9f6f5899978aba47fcbacc3ec78173dc18",
+      "encodedSha256": "f38a877b6d69b7dd6fccc518d26bdd37a471f62b94bdaaf6b8b4f4ab87b4b001",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 3155
+    },
+    {
+      "id": "game_pet_05",
+      "clip": "pet",
+      "index": 5,
+      "timeSeconds": 0.5,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15568,
+      "colors": 11,
+      "raw565AlphaSha256": "78a9f3df1c342999044ebbd0042026885ba5b6c14e2dec8f1574b8976e27984b",
+      "pngSha256": "ce45ad14e766e78029afda7617b542a3bb36469ce68e2b392a87d1f87c7e7a3b",
+      "encodedSha256": "4f15ff0e8d0b20c71fe4a701f1034baae176efa7d84e5e86018a1c689a3fbb17",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 467
+    },
+    {
+      "id": "game_pet_06",
+      "clip": "pet",
+      "index": 6,
+      "timeSeconds": 0.6,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15461,
+      "colors": 11,
+      "raw565AlphaSha256": "d841eee77f0c131905ab13cd8e6393d2e61f41ac71fa4d407968a056a3d5ec72",
+      "pngSha256": "8a1e34c049928efdd062e44e20a1a4acd96ffe89534b01ae6c3a8dbedb5f8759",
+      "encodedSha256": "9369218175a46df2292cdfd746ff48a0baeb585d9f6cdb67d7c60faa2bdfcb42",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 396
+    },
+    {
+      "id": "game_pet_07",
+      "clip": "pet",
+      "index": 7,
+      "timeSeconds": 0.7,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15364,
+      "colors": 11,
+      "raw565AlphaSha256": "8f757290992e24a967c7739efafe9b494a5520c363fac0cf0e9e17c3106c22a4",
+      "pngSha256": "ef18a96526430df936e13a481544a5016cbbbb3db4c4e9d44602eaee731f84be",
+      "encodedSha256": "0825318b597715e103b1e6238f913955b5da20dab17886e1ad9551142fea5c94",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 343
+    },
+    {
+      "id": "game_pet_08",
+      "clip": "pet",
+      "index": 8,
+      "timeSeconds": 0.8,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15460,
+      "colors": 11,
+      "raw565AlphaSha256": "4544c7b6e77df37cdcf5099b19fc057d3c8c05e1db24a464f46c3037449c9042",
+      "pngSha256": "00cae56bc9be1c8522b6d08e18f23ea436520955e92081f4da5c3d7886773be3",
+      "encodedSha256": "42f495bbeac3d7befaba7e615c04d5fa78f6f11fad0503cf6679b72d622c6ddd",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 384
+    },
+    {
+      "id": "game_pet_09",
+      "clip": "pet",
+      "index": 9,
+      "timeSeconds": 0.9,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15543,
+      "colors": 11,
+      "raw565AlphaSha256": "55c1437d273d10f67daf656a04cfe87c018ba749a7be58beee477d06e7dd96b1",
+      "pngSha256": "a21434d79776b447896c36327ebc49395ba600e7ebd57a76b370dedf1625019f",
+      "encodedSha256": "8e8662f7113d15679d51d0e3a56c5d8979cdba2258a115129c5cb74bc0baebb0",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 444
+    },
+    {
+      "id": "game_pet_10",
+      "clip": "pet",
+      "index": 10,
+      "timeSeconds": 1,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15578,
+      "colors": 11,
+      "raw565AlphaSha256": "9ce28852c4f39cb873dd9d8597410fbbf599ff5eb82b53dd233c3bea677a5acf",
+      "pngSha256": "b1828c8fb64dd909ee601ca25a8489d6b7ad4bd06974babd0a475433ac38ae77",
+      "encodedSha256": "81b56de4c313f192460f8a8bf10a96d548cd037c8a932f741ee3867a10094af7",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 532
+    },
+    {
+      "id": "game_pet_11",
+      "clip": "pet",
+      "index": 11,
+      "timeSeconds": 1.1,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15492,
+      "colors": 11,
+      "raw565AlphaSha256": "a1f97a6c040037fd681a7ca0c185691b361ed51638ffdbf32597382f794544c8",
+      "pngSha256": "1dbc6429c637633a72f57fef3d2d1f2b43fbc88b86aea72d215f92f904006e8f",
+      "encodedSha256": "3aaf7d28d0cfc6ea6b7b65847fb1d4ae25eea8c5c69c72437f1d2862bab96580",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 566
+    },
+    {
+      "id": "game_pet_12",
+      "clip": "pet",
+      "index": 12,
+      "timeSeconds": 1.2,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15360,
+      "colors": 11,
+      "raw565AlphaSha256": "3c496819fd11a0730a236581429b30d1693f2e1d96d760f623e49939b81f2f8d",
+      "pngSha256": "72020b6489decd255a20fa0bec236a176d3e1df13d574a3bb271f39684425983",
+      "encodedSha256": "53ff6ff4a855df07d6c905ab5c92c0ba9916baf9be72ed831e66e3b40e386d27",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 496
+    },
+    {
+      "id": "game_pet_13",
+      "clip": "pet",
+      "index": 13,
+      "timeSeconds": 1.3,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15236,
+      "colors": 11,
+      "raw565AlphaSha256": "e81f7b26da29c942516778b0266e8f7161b317c775fb994c138348db3b1ef371",
+      "pngSha256": "59b7d46a8dcf01808ce0bf206d2fc62f7c7aa99b2f9f7e8c127b9b3b3d942a42",
+      "encodedSha256": "6128073cc6502b32234522386fd212a0bbb29bd056493b7b0c70523c00a06ed2",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 408
+    },
+    {
+      "id": "game_pet_14",
+      "clip": "pet",
+      "index": 14,
+      "timeSeconds": 1.4,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15318,
+      "colors": 11,
+      "raw565AlphaSha256": "6e363cfe6ffcd3cdfff9a749e137bfa86270e79db39fbdad4d0eba1a091f27b3",
+      "pngSha256": "8cd8d971566e90d6f93858a9c655dceeb6ac5b3224328be2f588c1eabfcdcca3",
+      "encodedSha256": "ba8f7aad9ce92dad9735ef257de607183ed558e2a34b447324d432b24a047f3b",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 419
+    },
+    {
+      "id": "game_pet_15",
+      "clip": "pet",
+      "index": 15,
+      "timeSeconds": 1.5,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15385,
+      "colors": 11,
+      "raw565AlphaSha256": "4b0df3be91601ee6e8ff86c3ae96a2bfa9f039dee08bd38c26f1d6e860deeeb1",
+      "pngSha256": "3f87c2385d251ef86bfae17fdbb0250240ff99b37bc38d2749e2a16a62559ed8",
+      "encodedSha256": "55ca597dc6a9fe1936091b2306f1629d1276ea3a2ac213514a333b7fb16a4b80",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 463
+    },
+    {
+      "id": "game_pet_16",
+      "clip": "pet",
+      "index": 16,
+      "timeSeconds": 1.6,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15420,
+      "colors": 11,
+      "raw565AlphaSha256": "8200d8a5cd53c7bff754a4c68e2c594074f1a0b719b9e2f92b538f16ab95d1ab",
+      "pngSha256": "fcdd236c7e3cff3ec5d4780b87bb2602c8c39d18f6cd0ad78bfb533c05bf7443",
+      "encodedSha256": "7d712a4b97ea0e285d824558307bfc33ab41ebadc15f18b8b522169759d225ef",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 489
+    },
+    {
+      "id": "game_pet_17",
+      "clip": "pet",
+      "index": 17,
+      "timeSeconds": 1.7,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15418,
+      "colors": 11,
+      "raw565AlphaSha256": "b61f948878fea242760f020323ad8deeffee8106fe69b2a76dacc7b9dcb9f946",
+      "pngSha256": "047fdb206bd34edfec30f4a0ec3d7a3373ac8d08ab2b41d9079d15bf4d91ed86",
+      "encodedSha256": "118c32928fc77c6c2f2cb918f62f3617f95aae36fc052cd2be5637df3aed1274",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 112
+    },
+    {
+      "id": "game_pet_18",
+      "clip": "pet",
+      "index": 18,
+      "timeSeconds": 1.8,
+      "bounds": [
+        26,
+        22,
+        165,
+        195
+      ],
+      "coverage": 15426,
+      "colors": 11,
+      "raw565AlphaSha256": "8f95bb0bf10130390e54f25b103618ed1399fc7feec0538f31916f34fcce2b6e",
+      "pngSha256": "96bbd74775745d9a08d605d1aab0511cea4ed8d60e8d84b9cefe8775c3c6e0c2",
+      "encodedSha256": "355aee219ed133cfd53b82d3204d59db09faf3a3b60bc3d4b768f55b158bfec5",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 98
+    },
+    {
+      "id": "game_pet_19",
+      "clip": "pet",
+      "index": 19,
+      "timeSeconds": 1.9,
+      "bounds": [
+        27,
+        22,
+        166,
+        195
+      ],
+      "coverage": 15473,
+      "colors": 11,
+      "raw565AlphaSha256": "327199d060210411a46087d89bdd48bf0d1840b32aa6fcfcd39f0c70a233788d",
+      "pngSha256": "32862b8e97125c69b382e82db52e8e9417dea949507df127c6911351cce6475c",
+      "encodedSha256": "fab4f44012f87a378c0a793bc13948f59285eb0b13af9d3367a087abddb8b4d8",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1471
+    },
+    {
+      "id": "game_pet_20",
+      "clip": "pet",
+      "index": 20,
+      "timeSeconds": 2,
+      "bounds": [
+        27,
+        21,
+        166,
+        195
+      ],
+      "coverage": 15639,
+      "colors": 11,
+      "raw565AlphaSha256": "3b43571c575a6edf03ef0b31f723e53c7c7e1154d2418b24f0f8d980d4e35b07",
+      "pngSha256": "3e9f368e570f8c9b44de1ff4fa7050fb7eda61ea4fa4f9447c2925a55b8fac5a",
+      "encodedSha256": "c16f0b380e9c3b4c7da53c0c4ded41e5905a653999f07db565c8622b20807115",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2490
+    },
+    {
+      "id": "game_pet_21",
+      "clip": "pet",
+      "index": 21,
+      "timeSeconds": 2.1,
+      "bounds": [
+        28,
+        21,
+        167,
+        194
+      ],
+      "coverage": 15735,
+      "colors": 15,
+      "raw565AlphaSha256": "6fb78d789ee239b3b392511e7fdd76390fb6d336ec469fb79ea3a158d472b3f7",
+      "pngSha256": "b8d63cbdc950c388c74ef6faeb4a19c894d2679cf15e12423d282391ba895551",
+      "encodedSha256": "64d9002491328a78b6a5046bac1314a3bcf1020a16917f7e47190a9fae58710b",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2441
+    },
+    {
+      "id": "game_pet_22",
+      "clip": "pet",
+      "index": 22,
+      "timeSeconds": 2.2,
+      "bounds": [
+        28,
+        20,
+        167,
+        194
+      ],
+      "coverage": 15773,
+      "colors": 16,
+      "raw565AlphaSha256": "0084fe6540fff474933c6caed884a08160719cc043ad84beeed688724b5e738a",
+      "pngSha256": "feca18184b6dc7f967a49cef397ceb228ba31b2537dc375b3022c871bf2e504e",
+      "encodedSha256": "066170bfdf7b929223addbe60004dfbb73263db3c4685886a2851da781e71759",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2228
+    },
+    {
+      "id": "game_pet_23",
+      "clip": "pet",
+      "index": 23,
+      "timeSeconds": 2.3,
+      "bounds": [
+        29,
+        19,
+        167,
+        194
+      ],
+      "coverage": 15668,
+      "colors": 11,
+      "raw565AlphaSha256": "0e5637906008d502849c4fb0ca6d947af2229c01c9876e5414d53e7df76db5fa",
+      "pngSha256": "fa34f9ca0904ae680973a172305d2d119653a74474f2d9a5f2eb48e33382ba41",
+      "encodedSha256": "61c7ed80de3b6657fb52a9f9f98de64e8ad915702ccb9c4faa915583740a371f",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1924
+    },
+    {
+      "id": "game_walk_00",
+      "clip": "walk",
+      "index": 0,
+      "timeSeconds": 0,
+      "bounds": [
+        30,
+        19,
+        168,
+        194
+      ],
+      "coverage": 15527,
+      "colors": 11,
+      "raw565AlphaSha256": "3fc65ba594af851091a9699a3e9159af047f2f49c055f756518a84bc01b7752a",
+      "pngSha256": "9f02da31a3827744fe858715661dae7029b431b80c78bcb89c0d93b36ffdc8f4",
+      "encodedSha256": "5d7898f8796755d6a151199dc00760cae0f4b39549a0456f5ba4cf117e6df9f8",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": null
+    },
+    {
+      "id": "game_walk_01",
+      "clip": "walk",
+      "index": 1,
+      "timeSeconds": 0.1,
+      "bounds": [
+        27,
+        17,
+        168,
+        188
+      ],
+      "coverage": 15381,
+      "colors": 11,
+      "raw565AlphaSha256": "119353e283e52cbdb6ac97c885b2e85612c2b990c507855ac87d3dc6ae0a0f27",
+      "pngSha256": "3531af8ad1a2095349d230e0d1f5be953354874bee8220b96d67fa162ec7aea1",
+      "encodedSha256": "e1cb2a4eecb667d2bfd3402a8dbffee421548bb951d07e23ade9a4d862d0b53b",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 6757
+    },
+    {
+      "id": "game_walk_02",
+      "clip": "walk",
+      "index": 2,
+      "timeSeconds": 0.2,
+      "bounds": [
+        23,
+        15,
+        168,
+        185
+      ],
+      "coverage": 15251,
+      "colors": 17,
+      "raw565AlphaSha256": "c73df3e359a8bcda893fd8da76422368f9b8fbf795e09248e4941dfd985d0718",
+      "pngSha256": "28ca5dcf203984f2e59e876d3421bfbeac521fe593c42943bf295891b02ca7c4",
+      "encodedSha256": "67ba0e0cc6dd20704e8fe913410bd13616de0ed64bed9758583187008d66831e",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 5470
+    },
+    {
+      "id": "game_walk_03",
+      "clip": "walk",
+      "index": 3,
+      "timeSeconds": 0.3,
+      "bounds": [
+        23,
+        16,
+        168,
+        185
+      ],
+      "coverage": 15229,
+      "colors": 17,
+      "raw565AlphaSha256": "63cf7c286cdc7dfd4313455217add9359df09fcf9965ef7b7626865b047f7347",
+      "pngSha256": "2b882ff1f431fc31fda8af115460ebe88ae51e02035c596ab8dc26898062d9eb",
+      "encodedSha256": "0b1f7661e9603251539851a9cad28878a1c73701c6cb0c338b694ffdce06305c",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2203
+    },
+    {
+      "id": "game_walk_04",
+      "clip": "walk",
+      "index": 4,
+      "timeSeconds": 0.4,
+      "bounds": [
+        27,
+        18,
+        168,
+        188
+      ],
+      "coverage": 15395,
+      "colors": 11,
+      "raw565AlphaSha256": "60051fe7317c0cbb01ec8d70909e337a8663c6a9232abc68f9d5484084f731c8",
+      "pngSha256": "06bc2e2c3d73f68319b393b9a5e89eef5d748fb67d5310ab1c50fa53a93a0042",
+      "encodedSha256": "7f92c8d770c9669bdc71a583cf87974bf8af969f56874a1e6a388853c696a2b9",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 6205
+    },
+    {
+      "id": "game_walk_05",
+      "clip": "walk",
+      "index": 5,
+      "timeSeconds": 0.5,
+      "bounds": [
+        30,
+        19,
+        168,
+        194
+      ],
+      "coverage": 15571,
+      "colors": 11,
+      "raw565AlphaSha256": "5ece382aafe83f92f6b8d00e8c22ec66bd434dca083ed9d5cc18140dd4a12091",
+      "pngSha256": "41ee97b783aab04a8a7365fb53faddf93b42eab2aecc295fa3317698bf4216fb",
+      "encodedSha256": "3854842440d97856ddc8494a863e260189fb39c5867b066c44fcab839afda7fe",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 4724
+    },
+    {
+      "id": "game_walk_06",
+      "clip": "walk",
+      "index": 6,
+      "timeSeconds": 0.6,
+      "bounds": [
+        29,
+        19,
+        168,
+        190
+      ],
+      "coverage": 14988,
+      "colors": 11,
+      "raw565AlphaSha256": "937c9e9b1471c36cf5b9523e75997a574a19840439368dbe1159d84ef187967c",
+      "pngSha256": "29e7ffee5f533dd5eced0955bee208de6e9b64975104b8bc10e0a1afb8a3e4cb",
+      "encodedSha256": "ac5bdeaf77a0919d051f192276f336a35def987d0f2fecc90ffb960892dbc137",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 6401
+    },
+    {
+      "id": "game_walk_07",
+      "clip": "walk",
+      "index": 7,
+      "timeSeconds": 0.7,
+      "bounds": [
+        29,
+        17,
+        168,
+        188
+      ],
+      "coverage": 14744,
+      "colors": 17,
+      "raw565AlphaSha256": "4d1a00b98896456a6410397cb142f81f254ba25416f2e2253a55a2dcc85eda1e",
+      "pngSha256": "c9ae533698f907c282ac388ee37efad9ed4df25285a049e5e6e2ca3daa3ddfd7",
+      "encodedSha256": "a1ff2f169eb7c2b0ff87cb26ae59b66d0a95d489b4338376b72e3cbbb0f20206",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 5383
+    },
+    {
+      "id": "game_walk_08",
+      "clip": "walk",
+      "index": 8,
+      "timeSeconds": 0.8,
+      "bounds": [
+        29,
+        18,
+        168,
+        188
+      ],
+      "coverage": 14781,
+      "colors": 17,
+      "raw565AlphaSha256": "9ee16e8f90bbd3ab6d908c6a73c1ac4860cce02b11c6e2f0b09ababcda9acb5a",
+      "pngSha256": "26a65e991ff4aa560e2b71a3d690e58a9030c40706005e26b9a9abc0332cadd1",
+      "encodedSha256": "46ca29d84d7eac0bf8779218ee10dd5e89ed54e1552db7dd852e8319b4db56c8",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2141
+    },
+    {
+      "id": "game_walk_09",
+      "clip": "walk",
+      "index": 9,
+      "timeSeconds": 0.9,
+      "bounds": [
+        29,
+        19,
+        168,
+        190
+      ],
+      "coverage": 15022,
+      "colors": 11,
+      "raw565AlphaSha256": "b96adab4c41e55338823817adcf95fa195703a3d785afab2a1b1120beadee5b9",
+      "pngSha256": "8e85f250e60a3548ca94901d3b3aac95ee560d788e49589292712130764f9de8",
+      "encodedSha256": "8db7f3e16c376c4dd12c57719f4cd44fc5bf16491b1de9ddb705ff92e55b43b6",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 5797
+    },
+    {
+      "id": "game_attention_00",
+      "clip": "attention",
+      "index": 0,
+      "timeSeconds": 0,
+      "bounds": [
+        30,
+        14,
+        166,
+        194
+      ],
+      "coverage": 15499,
+      "colors": 11,
+      "raw565AlphaSha256": "7546efaf97b5fe67ea6323a72c15fcc1313af2348c5f1a80c7733724373df551",
+      "pngSha256": "3d11cc22f7ce2d5717d003f09947a217580827b184e40a33fed6a8ed5e4a27f1",
+      "encodedSha256": "13d7d71153f4dcc5a14a8264ebc0a2a50a5201f33b26167ae68eba3b9e7c4cdb",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": null
+    },
+    {
+      "id": "game_attention_01",
+      "clip": "attention",
+      "index": 1,
+      "timeSeconds": 0.2666666666666666,
+      "bounds": [
+        30,
+        14,
+        166,
+        194
+      ],
+      "coverage": 15601,
+      "colors": 11,
+      "raw565AlphaSha256": "0f5c8cfb174ce00f4390fc5308860e4f52022a290dc6b0e1acb42acaf84a7413",
+      "pngSha256": "822b31f16f94ecc629ca99222ea4817c189177bfc37ca1a2d617dcf795ef0b5c",
+      "encodedSha256": "0994cdc8729d0d2c4526da5e08ebdedce7047f11f3bd0f7faa86891b6b32fca7",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1915
+    },
+    {
+      "id": "game_attention_02",
+      "clip": "attention",
+      "index": 2,
+      "timeSeconds": 0.5333333333333332,
+      "bounds": [
+        29,
+        14,
+        167,
+        193
+      ],
+      "coverage": 15647,
+      "colors": 11,
+      "raw565AlphaSha256": "a8abe42f781c37d7866d700a8d691a17d9e2d8b49c78c3c75d9f21ea4f319447",
+      "pngSha256": "1566ec42695433d5f5daa27221656d6f555c0a6f29ad83cabb112947f9ddfb6a",
+      "encodedSha256": "169bce6172c29d6fbdfaad2fb1c40469f5923d75ccf7bdc563e0ae6980726292",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2497
+    },
+    {
+      "id": "game_attention_03",
+      "clip": "attention",
+      "index": 3,
+      "timeSeconds": 0.8,
+      "bounds": [
+        29,
+        13,
+        167,
+        193
+      ],
+      "coverage": 15657,
+      "colors": 11,
+      "raw565AlphaSha256": "14a3a0a079da16181ad1766fc57739f6f4ce2b73e761989614aede87f41ddc8c",
+      "pngSha256": "1734f3088d12767b62c1b171f8c3f8c96bcd873b81f0d0af5b86f1ebb3d6d67d",
+      "encodedSha256": "49f0b6291cace8faa201213ff41bfd484ef1512b8b43b805946744a5f41877ed",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2200
+    },
+    {
+      "id": "game_attention_04",
+      "clip": "attention",
+      "index": 4,
+      "timeSeconds": 1.0666666666666664,
+      "bounds": [
+        29,
+        12,
+        167,
+        193
+      ],
+      "coverage": 15647,
+      "colors": 11,
+      "raw565AlphaSha256": "085df77b7446db1c4c548ec846e3db0f82c3f9fa62e70d211d456da28812b71e",
+      "pngSha256": "1a0e6ce2838199908746d0bb04ba78cde5f502bce2ac768e23c6af9d57af6825",
+      "encodedSha256": "5abe0c34ac552148c91fe4f64632f8bbd3e30e60f7c8282176b3a7270606a269",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2039
+    },
+    {
+      "id": "game_attention_05",
+      "clip": "attention",
+      "index": 5,
+      "timeSeconds": 1.3333333333333335,
+      "bounds": [
+        29,
+        12,
+        166,
+        192
+      ],
+      "coverage": 15608,
+      "colors": 11,
+      "raw565AlphaSha256": "d7f522fbfb8fdc9b5bc699ba7f15eef3dfc864b1d1a29af761a6ee3a903a6edc",
+      "pngSha256": "cdf56f0590a54be55908bc478cadff566af06a381644d3eb0129781229ce9b9c",
+      "encodedSha256": "dc291292ba6ef4fe530beafe8d342f881d5f0132c3544785a0faccdb655b92b4",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1847
+    },
+    {
+      "id": "game_attention_06",
+      "clip": "attention",
+      "index": 6,
+      "timeSeconds": 1.6,
+      "bounds": [
+        29,
+        12,
+        166,
+        192
+      ],
+      "coverage": 15556,
+      "colors": 11,
+      "raw565AlphaSha256": "4c6bded30f1b7cc538c90c94e0672e886b97aa741654b263ee14c4be0042f14d",
+      "pngSha256": "96ed68fca1a37f33258710b00984cb67db1c882efb159f52502a6e419348599d",
+      "encodedSha256": "cff96d17dd0bb6c20d6a8a5ca1bdbcbac21a20ca283a11f32266d465bd3f44e3",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1754
+    },
+    {
+      "id": "game_attention_07",
+      "clip": "attention",
+      "index": 7,
+      "timeSeconds": 1.8666666666666667,
+      "bounds": [
+        29,
+        13,
+        165,
+        192
+      ],
+      "coverage": 15438,
+      "colors": 14,
+      "raw565AlphaSha256": "189eb11f1f106bdd13dad0cb856aea8df1d0199f08693d3c1aa159de8d3ee57f",
+      "pngSha256": "3afb4f942fc864df3bf29c07a84e87d99941662952db454bcecfdf4737f9cc55",
+      "encodedSha256": "ae2b1e27fe2a5cb211f7fc716ad79fff830193ac7162851fbb847bd01df90820",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2081
+    },
+    {
+      "id": "game_attention_08",
+      "clip": "attention",
+      "index": 8,
+      "timeSeconds": 2.133333333333333,
+      "bounds": [
+        29,
+        14,
+        165,
+        193
+      ],
+      "coverage": 15308,
+      "colors": 11,
+      "raw565AlphaSha256": "61782012d98f62b79351e9dbe13056ea84e0711a0cf0fa8de049e7bfbd4a9130",
+      "pngSha256": "50869207ae1005d1425ea0b46a84fcf5d90828acce903fb63db15405ce672a9d",
+      "encodedSha256": "b47b530a08840eab6a5f96505abeb902a18754f3f693a28acdf78f86086d36b7",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2186
+    },
+    {
+      "id": "game_attention_09",
+      "clip": "attention",
+      "index": 9,
+      "timeSeconds": 2.4,
+      "bounds": [
+        29,
+        14,
+        164,
+        193
+      ],
+      "coverage": 15245,
+      "colors": 11,
+      "raw565AlphaSha256": "15fbe8ccbbd86ce78e778c74a85e8c0a5eb6e2713026f2c0e3627822bf83dd4d",
+      "pngSha256": "5930383cc9eb257b1d83122577ec9c3618eb7149742353939e7d87090d8cb300",
+      "encodedSha256": "9404cc899307e48d8950d4fbb4aaae4af1ccce2ec663fbcf283072c5374725ab",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 2114
+    },
+    {
+      "id": "game_attention_10",
+      "clip": "attention",
+      "index": 10,
+      "timeSeconds": 2.666666666666667,
+      "bounds": [
+        29,
+        14,
+        165,
+        193
+      ],
+      "coverage": 15268,
+      "colors": 11,
+      "raw565AlphaSha256": "f4f58a8aca934e753e776f120acf9346d16f8e8ba4050142285d5a1db28b6da6",
+      "pngSha256": "ed86c070934b27c14a2dfcd43f9c5007b83b01e4706ebacf41b02310d1c4a1e9",
+      "encodedSha256": "4ba321834cb2d5258d211ef526ef1e4867452365f4d6303cd317f06139190444",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1723
+    },
+    {
+      "id": "game_attention_11",
+      "clip": "attention",
+      "index": 11,
+      "timeSeconds": 2.933333333333333,
+      "bounds": [
+        30,
+        14,
+        165,
+        194
+      ],
+      "coverage": 15366,
+      "colors": 11,
+      "raw565AlphaSha256": "5483a7174d174086c87bb7e777ba64f8478d0f2cbb36a8a2518a0a8c5f46a472",
+      "pngSha256": "8a074e983becdcaf4553d47abed1b446b8c2abdcc8dc5d3e9b086035164859c5",
+      "encodedSha256": "080c9754c698304b547aeafad97ed5401075223139fc0cea962f0510df77a3f7",
+      "encodedBytes": 40960,
+      "changedPixelsFromPrevious": 1712
+    }
+  ],
+  "generatedC": {
+    "game_assets.c": "784da17bd3d13d87c65db621b69aba35d762e34b58f9af9cd047e0bc1b99e74c",
+    "game_assets.h": "395599c7e352fc15e574c8ea305a6e11833970bbbca7737cb14b0b7c365133e0",
+    "game_attention.c": "2332fe8f2617e18cde68d01fce073a4aa19c4c651abed903977b0793915aab1b",
+    "game_idle.c": "52dd1aed9a4e8499854374ce746d506fe384bf54265c50edc872fb38e664201e",
+    "game_pet.c": "2ed8c47e4066a4d01a8e4128828cd0e8a75c62cf7b80dc89c5818a954319af14",
+    "game_walk.c": "447b623dff702721f791c9d20b29bc1ec666463175115bdd169d18002239667d"
+  },
+  "lvglLayoutEvidence": [
+    {
+      "path": "firmware/managed_components/lvgl__lvgl/src/libs/bin_decoder/lv_bin_decoder.c",
+      "sha256": "39416e4f018263a5f231cd7065fef4a849c15e5b9b56b33eadfe03d6028f4ef3"
+    },
+    {
+      "path": "firmware/managed_components/lvgl__lvgl/src/misc/lv_color.h",
+      "sha256": "94fd3ebccdd9a7069e6f2fced6c289d7fcffe2420d25ab947b81e0e1865d3edc"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "status": "bounded_actual_technical_validation_pass_with_display_and_performance_limits",
+  "confirmedOpenP1P2": [],
+  "actualReviewComplete": true,
+  "appSha256": "b0d1704032c1067455b4355617924dadc63efa20a4ec245189e75d75b99f8bcc",
+  "rootFinalIndexSha256": "c65512f51a7e76f0eed0f458e4989a9b7ae0d537342e7f02f3ce2adbf7b7943e",
+  "rootIndexFiles": 70,
+  "actualEvidencePins": 87,
+  "softwarePrior451Unchanged": true,
+  "accepted": [
+    "activeOTA1 app+sector readback exact",
+    "normalboot version042",
+    "physical protected ranges verified during flash maintenance",
+    "three complete actual compute+metric/CRC matches",
+    "sample0/1 actualLVGL technical3D composition",
+    "STATE1/12/15 unchanged",
+    "Root session closed per recorded finalizer metadata"
+  ],
+  "notAccepted": [
+    "sample2 third3D display proof",
+    "sustained or natural3D animation",
+    "finalAart",
+    "physical touch/care/swipe/scanout/tearfree",
+    "all-time durability/heap/stack stress",
+    "post-normal-run fullNVS byte readback",
+    "phoneNative/reward chain retest",
+    "043implementation or deployment"
+  ],
+  "reportPath": "tests/firmware042-review/ACTUAL-DEVICE-REVIEW.md",
+  "reportSha256": "32f0689bb5b10bf9d3b7159e46f28191d284c3a90963e9b3f8ad96c0ffb651cc",
+  "evidencePath": "tests/firmware042-review/actual-evidence.json",
+  "evidenceSha256": "eb0f20304dba7d2378fb511b3689856c329fa4f3908efaec45590c89b0065975",
+  "reviewerDeviceActions": false,
+  "createdAtUtc": "2026-10-16T11:39:50.572348+00:00"
+}

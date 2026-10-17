@@ -1,0 +1,32 @@
+{
+  "actualReviewComplete": true,
+  "status": "bounded_actual_cache_technical_validation_pass_performance_incomplete",
+  "confirmedOpenP1P2": [],
+  "appSha256": "905552f2f35dc56942b226e9d8558ae98bf31e0e07765ae0c1ba81ab32e88cc2",
+  "rootFinalIndexSha256": "6f5c491d2862426297daf117220c35a0e4822e34957a06a70c736597a7ded9b6",
+  "rootIndexFiles": 59,
+  "actualEvidencePins": 70,
+  "prior319Unchanged": true,
+  "accepted": [
+    "activeOTA1 app/sector/tail readback exact",
+    "pre/post wholephysical digest during maintenance",
+    "four complete cached computations/CRC/metrics",
+    "two actualLVGL compositions exact original042 image bytes",
+    "STATE1/13/16 unchanged",
+    "bounded55.311s/17command session closed per recorded finalizer metadata"
+  ],
+  "notAccepted": [
+    "sustainedFPS/natural animation",
+    "A art",
+    "physical touch/care/swipe/scanout/tearfree",
+    "post-normal-run fullNVS physical reread",
+    "phoneNative/reward retest",
+    "044 new233 baseline implementation/deployment"
+  ],
+  "reportPath": "tests/firmware043-review/ACTUAL-DEVICE-REVIEW.md",
+  "reportSha256": "02cab5399ee63f17c0e1e7f20872866478fa2af135a1b985ab3fa73f672434d1",
+  "evidencePath": "tests/firmware043-review/actual-evidence.json",
+  "evidenceSha256": "ccc48d2039b83bb800be8eda3a659c560d6db471971d15ea8de7d1689466e2e2",
+  "reviewerDeviceActions": false,
+  "createdAtUtc": "2026-10-16T12:11:59.439080+00:00"
+}

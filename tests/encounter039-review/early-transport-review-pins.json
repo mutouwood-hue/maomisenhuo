@@ -1,0 +1,11 @@
+{
+  "status": "early review; correction required; no implementation/deployment release",
+  "pins": {
+    "artifacts/local-ble-adapter/versions/encounter-v1/encounter-transport.js": "8554b08362eefea739f3e56dbdcbac3cca861902691e9c0f7d4ab79ac7ea90ff",
+    "protocol/local-encounter-v1/TRANSPORT-CONTRACT.json": "12cc4897f69d8c1b8c445ac06f955141f00cb5b9d2119e9bf8b37a834c349a35",
+    "artifacts/local-ble-adapter/versions/encounter-v1/test-encounter-transport.cjs": "98fce7d330fd734cfd2d62a8745a724f42a355a519f395ec2f0a4c5ffb0e3452",
+    "tests/encounter039-review/early-transport-owner-rerun.log": "957991757374e095b92aa7e00100828a2d985f444aa1c218edf67bdda5984d2c",
+    "tests/encounter039-review/early-transport-boundaries.cjs": "bff8531c4834c038c7359b02b4b3bfde02278aca5d5fd0cbe0bdb7b539f6f111",
+    "tests/encounter039-review/early-transport-boundaries.json": "7766d85fbd391e7c419eda0acd81c36fa057b3993d354fe10268e1324ce2e1c0"
+  }
+}

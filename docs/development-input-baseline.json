@@ -1,0 +1,30 @@
+{
+  "capturedAtUTC": "2026-10-15T07:42:18.615437+00:00",
+  "files": [
+    {
+      "path": "吧唧交互规范开发包.zip",
+      "bytes": 2685315,
+      "sha256": "e69d4bb8b116c34101fdf2af332c58cbefde4ae7428b5613c4dbc4997124aa24"
+    },
+    {
+      "path": "吧唧渲染参考.html",
+      "bytes": 1560500,
+      "sha256": "352dff431d90289e278af1d09c089d8cf864ed963966c34f6badf0f60f7cdc64"
+    },
+    {
+      "path": "吧唧渲染参考V2照抄版.html",
+      "bytes": 1560500,
+      "sha256": "352dff431d90289e278af1d09c089d8cf864ed963966c34f6badf0f60f7cdc64"
+    },
+    {
+      "path": "小橘电子宠物.html",
+      "bytes": 1566723,
+      "sha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53"
+    },
+    {
+      "path": "预览小猫.html",
+      "bytes": 947328,
+      "sha256": "e4c34f47cca80a1d9a8c23f69cd3f8f53bc76f8ce33b180d457ae1529ac518f2"
+    }
+  ]
+}

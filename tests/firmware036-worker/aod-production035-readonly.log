@@ -1,0 +1,5 @@
+clock=[153,382,312,413] fontLine=32 text=20:34 hidden=0
+hint=[108,381,357,399] fontLine=19 text=轻点唤醒 hidden=0
+phase=[103,117,362,135] fontLine=19 text=上次：在家陪伴 hidden=0
+hint_text_size=64,19; suggested_center438_text_bounds=[201,429,264,447]
+badge_ui: Original animation bank: available

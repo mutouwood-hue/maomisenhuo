@@ -1,0 +1,1 @@
+PASS exact production framing: fragmented roundtrip, identical retry, corruption/padding/order/sequence/size/schema rejection, pending backpressure

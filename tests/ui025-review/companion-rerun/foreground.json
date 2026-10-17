@@ -1,0 +1,23 @@
+{
+  "softwareNotDevice": true,
+  "sent": [
+    {
+      "scene": "away",
+      "action": "idle",
+      "weather": "clear"
+    },
+    {
+      "scene": "home",
+      "action": "idle",
+      "weather": "clear"
+    },
+    {
+      "scene": "home",
+      "action": "idle",
+      "weather": "clear"
+    }
+  ],
+  "hiddenProjection": null,
+  "resumeWithoutAuthorizationSends": 0,
+  "originalRecallPreserved": true
+}

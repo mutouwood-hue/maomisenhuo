@@ -1,0 +1,47 @@
+{
+  "kind": "virtual_fixture",
+  "actualOriginalVu": true,
+  "actualMountedSource": true,
+  "realNative": false,
+  "realGATT": false,
+  "records": [
+    {
+      "name": "025negative_vs026zero_transaction",
+      "negative025DrinkCount": 3,
+      "fixed026DrinkCount": 1,
+      "uuid": 0,
+      "digest": 0,
+      "seal": 0,
+      "acks": 0,
+      "waitingMs": 4000
+    },
+    {
+      "name": "prebound_and_actual_backup_mount",
+      "blockedAliases": 38,
+      "backupReadOnly": true,
+      "importRejectedWhileOwned": true,
+      "noNewWrites": true
+    },
+    {
+      "name": "cancel_during_digest",
+      "seals": 0,
+      "acks": 0,
+      "queueRetained": true,
+      "noResume": true
+    },
+    {
+      "name": "native_unknown_cold_recovery",
+      "realClientMemoryRPC": true,
+      "liveBeforeRecoveryCount": 0,
+      "recreatedCount": 1,
+      "duplicateAck": true,
+      "ramRuntimeNotPersisted": true
+    },
+    {
+      "name": "independent_original2s_and_quarantine",
+      "boundaryMs": 2000,
+      "petCount": 2,
+      "quarantineDoesNotTouchPriorRuntime": true
+    }
+  ]
+}

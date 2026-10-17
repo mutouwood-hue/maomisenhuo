@@ -1,0 +1,17 @@
+{
+  "image": "/Users/zoumutou/coding/猫咪森活/artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T0355Z-perf035/actual035-calibrated-face2.png",
+  "imageSha256": "e62b5d3c466be48ec2c61e5be05b7152c8a831ea4ec1f800c708c0bbfb59336d",
+  "source": "actual running device LVGL software composition, not optical scanout",
+  "observed": "12:07 and light wake hint overlap near y390; phase visible inAOD",
+  "hardwareControlPerformed": false,
+  "rawCrc32": "5ce64a8e",
+  "rawSha256": "b49bb1ee5e549c6416565502da77de6297805d580fede36aef670432a827e01d",
+  "static void set_mode(ui_mode_t next)": {
+    "exact034035": true,
+    "sha256": "ebcead42b4a82c753534d71c17466ffe60adc2b187e2635c8d0dde30e07a24c5"
+  },
+  "static void update_clock(void)\n{": {
+    "exact034035": true,
+    "sha256": "c7bc5f73197d91b0f70ebcddfaee3ac6a125739aa56abb1bb1dcde0a8afed150"
+  }
+}

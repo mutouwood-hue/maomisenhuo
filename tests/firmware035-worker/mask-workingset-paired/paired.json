@@ -1,0 +1,282 @@
+{
+  "hardware": false,
+  "orderedPairedTrials": 5,
+  "runs": [
+    {
+      "order": [
+        4,
+        12,
+        16
+      ],
+      "measurements": {
+        "4": {
+          "radiusCalls": 686247,
+          "radiusHits": 482831,
+          "radiusMisses": 203416,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1594169,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "12": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1266550,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "16": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1282030,
+          "flushes": 27208,
+          "pixels": 125447016
+        }
+      },
+      "ratio12vs4": 0.7944891664560031,
+      "ratio16vs4": 0.8041995547523506
+    },
+    {
+      "order": [
+        16,
+        12,
+        4
+      ],
+      "measurements": {
+        "16": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1122149,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "12": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1127116,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "4": {
+          "radiusCalls": 686247,
+          "radiusHits": 482831,
+          "radiusMisses": 203416,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1402502,
+          "flushes": 27208,
+          "pixels": 125447016
+        }
+      },
+      "ratio12vs4": 0.8036466258158633,
+      "ratio16vs4": 0.8001050978893435
+    },
+    {
+      "order": [
+        12,
+        4,
+        16
+      ],
+      "measurements": {
+        "12": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1214322,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "4": {
+          "radiusCalls": 686247,
+          "radiusHits": 482831,
+          "radiusMisses": 203416,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1479991,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "16": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1111715,
+          "flushes": 27208,
+          "pixels": 125447016
+        }
+      },
+      "ratio12vs4": 0.8204928273212472,
+      "ratio16vs4": 0.7511633516690304
+    },
+    {
+      "order": [
+        16,
+        4,
+        12
+      ],
+      "measurements": {
+        "16": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1043266,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "4": {
+          "radiusCalls": 686247,
+          "radiusHits": 482831,
+          "radiusMisses": 203416,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1212998,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "12": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 956573,
+          "flushes": 27208,
+          "pixels": 125447016
+        }
+      },
+      "ratio12vs4": 0.7886022895338657,
+      "ratio16vs4": 0.8600723166897225
+    },
+    {
+      "order": [
+        4,
+        16,
+        12
+      ],
+      "measurements": {
+        "4": {
+          "radiusCalls": 686247,
+          "radiusHits": 482831,
+          "radiusMisses": 203416,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 1230796,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "16": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 988231,
+          "flushes": 27208,
+          "pixels": 125447016
+        },
+        "12": {
+          "radiusCalls": 686247,
+          "radiusHits": 681194,
+          "radiusMisses": 5053,
+          "decoderOpen": 15121,
+          "decoderArea": 148122,
+          "indexedLines": 134420,
+          "indexedPixels": 16701672,
+          "iterations": 40,
+          "wallUs": 966996,
+          "flushes": 27208,
+          "pixels": 125447016
+        }
+      },
+      "ratio12vs4": 0.7856671617392321,
+      "ratio16vs4": 0.8029202239851283
+    }
+  ],
+  "summary": {
+    "4": {
+      "medianUs": 1402502,
+      "minUs": 1212998,
+      "maxUs": 1594169
+    },
+    "12": {
+      "medianUs": 1127116,
+      "minUs": 956573,
+      "maxUs": 1266550
+    },
+    "16": {
+      "medianUs": 1111715,
+      "minUs": 988231,
+      "maxUs": 1282030
+    }
+  },
+  "medianPairRatio12vs4": 0.7944891664560031,
+  "medianPairRatio16vs4": 0.8029202239851283,
+  "allContinuous40EndFrameHashesExact": true,
+  "limits": [
+    "Mac scheduling/background variability present; not a formal statistical test",
+    "No QSPI/PSRAM/physical input or scanout",
+    "Mask-only host copy, not a production patch",
+    "Do not infer per-ESP FPS or68ms reduction from this ratio"
+  ]
+}

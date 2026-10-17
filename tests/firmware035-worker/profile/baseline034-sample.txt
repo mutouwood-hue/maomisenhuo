@@ -1,0 +1,41 @@
+Analysis of sampling baseline034 (pid 49509) every 1 millisecond
+Process:         baseline034 [49509]
+Path:            /Users/USER/*/baseline034
+Load Address:    0x102898000
+Identifier:      baseline034
+Version:         ???
+Code Type:       ARM64
+Parent Process:  Python [49500]
+Target Type:     live task
+
+Date/Time:       2026-10-16 11:42:51.080 +0800
+Launch Time:     2026-10-16 11:42:50.971 +0800
+OS Version:      macOS 27.2 (26B5101f)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         240K
+Physical footprint (peak):  256K
+Idle exit:                  untracked
+----
+
+Call graph:
+    334 Thread_4499946: Main Thread   DispatchQueue_<multiple>
+      332 _dyld_start  (in dyld) + 0  [0x1032f8bf0]
+      1 start  (in dyld) + 6012  [0x103325afc]
+      + 1 dyld4::ExternallyViewableState::createMinimalInfo(lsl::Allocator&, unsigned long long, char const*, unsigned long long, char const*, DyldSharedCache const*)  (in dyld) + 1528  [0x103342c54]
+      +   1 dyld4::ExternallyViewableState::triggerNotifications(dyld_image_mode, unsigned int, dyld_image_info const*)  (in dyld) + 304  [0x1033434e0]
+      +     1 dyld4::RemoteNotificationResponder::blockOnSynchronousEvent(unsigned int)  (in dyld) + 48  [0x103367fd0]
+      +       1 dyld4::RemoteNotificationResponder::sendMessage(int, unsigned int, mach_msg_header_t*)  (in dyld) + 244  [0x103367c18]
+      +         1 mach_msg_overwrite  (in dyld) + 244  [0x103374578]
+      +           1 mach_msg2_internal  (in dyld) + 76  [0x1033743d0]
+      +             1 mach_msg2_trap  (in dyld) + 8  [0x1032f572c]
+      1 start  (in dyld) + 1124  [0x1033247e4]
+
+Total number in stack (recursive counted multiple, when >=5):
+
+Sort by top of stack, same collapsed (when >= 5):
+        _dyld_start  (in dyld)        332
+
+Binary images description not available
+

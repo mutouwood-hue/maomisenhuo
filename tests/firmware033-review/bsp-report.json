@@ -1,0 +1,7 @@
+{
+  "pass": true,
+  "scenarios": 10,
+  "sourceSha256": "c5274e918464b5c524768198210e45920251f32cca56de008c8cfce5a6526c97",
+  "productionDecisionAndRetryFragments": true,
+  "limit": "heap/alignment/register substitutes; adapter cleanup verified by static source, not real allocations or device"
+}

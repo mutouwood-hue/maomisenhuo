@@ -1,0 +1,11 @@
+{
+  "virtual_fixture": true,
+  "realAdapterAndEventCodec": true,
+  "originalPeerPet": "peer-pet-1",
+  "secondRead": "MALFORMED_FRAME",
+  "thirdRead": {
+    "rejected": "EVENT_CONFLICT"
+  },
+  "wireAckCount": 0,
+  "verifier": "owner Native fixture verified=true; NOT actual Native history or reward writer"
+}

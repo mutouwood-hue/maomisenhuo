@@ -1,0 +1,258 @@
+{
+  "softwareOnly": true,
+  "separateFromMetrics": true,
+  "cases": [
+    {
+      "variant": "r3",
+      "case": "horizontal-commit",
+      "records": [
+        {
+          "name": "horizontal-held",
+          "tick": 2200,
+          "diffPixels": 0,
+          "hash": "3627401df165fd37"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2240,
+          "diffPixels": 0,
+          "hash": "50fcf7ab9ba77a17"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2280,
+          "diffPixels": 0,
+          "hash": "31eabe5d5ce685f0"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2320,
+          "diffPixels": 0,
+          "hash": "cb0ee2ccc2caa9b0"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2360,
+          "diffPixels": 0,
+          "hash": "da3d85c27e028b70"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2400,
+          "diffPixels": 0,
+          "hash": "7dc62d0f3bb8039c"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2440,
+          "diffPixels": 0,
+          "hash": "550cc7afb76aedba"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2480,
+          "diffPixels": 0,
+          "hash": "bfbbe03927fdb983"
+        },
+        {
+          "name": "horizontal-final",
+          "tick": 2740,
+          "diffPixels": 0,
+          "hash": "d9035a66db4b4505"
+        }
+      ]
+    },
+    {
+      "variant": "r3",
+      "case": "horizontal-rebound",
+      "records": [
+        {
+          "name": "horizontal-held",
+          "tick": 2200,
+          "diffPixels": 0,
+          "hash": "3627401df165fd37"
+        },
+        {
+          "name": "horizontal-final",
+          "tick": 2460,
+          "diffPixels": 0,
+          "hash": "ff34156fe7392a7f"
+        }
+      ]
+    },
+    {
+      "variant": "r3",
+      "case": "vertical-up",
+      "records": [
+        {
+          "name": "vertical-final",
+          "tick": 2620,
+          "diffPixels": 218,
+          "hash": "c2d746a9394ff4b1"
+        }
+      ]
+    },
+    {
+      "variant": "r3",
+      "case": "vertical-down",
+      "records": [
+        {
+          "name": "vertical-final",
+          "tick": 2620,
+          "diffPixels": 50,
+          "hash": "921dfb9e7364b581"
+        }
+      ]
+    },
+    {
+      "variant": "r3",
+      "case": "sleep",
+      "records": [
+        {
+          "name": "sleep-success-short",
+          "tick": 4020,
+          "diffPixels": 0,
+          "hash": "6e96acc45d7367df"
+        },
+        {
+          "name": "sleep-expired-aod",
+          "tick": 7920,
+          "diffPixels": 0,
+          "hash": "e7ce1e544a0fe6c0"
+        },
+        {
+          "name": "wake-no-sleep-replay",
+          "tick": 8630,
+          "diffPixels": 0,
+          "hash": "9b57ea881dd3b679"
+        }
+      ]
+    },
+    {
+      "variant": "legacy",
+      "case": "horizontal-commit",
+      "records": [
+        {
+          "name": "horizontal-held",
+          "tick": 2200,
+          "diffPixels": 0,
+          "hash": "c52da77548012cab"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2240,
+          "diffPixels": 0,
+          "hash": "1e31c1fb35a9a781"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2280,
+          "diffPixels": 0,
+          "hash": "294f0f9022a94c50"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2320,
+          "diffPixels": 0,
+          "hash": "c673b5539534d4cd"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2360,
+          "diffPixels": 0,
+          "hash": "41267671af0c00e5"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2400,
+          "diffPixels": 0,
+          "hash": "cebf2fd32c0f6b56"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2440,
+          "diffPixels": 0,
+          "hash": "9a9fcca84782e6fc"
+        },
+        {
+          "name": "horizontal-held",
+          "tick": 2480,
+          "diffPixels": 0,
+          "hash": "4bf71fc6df22c544"
+        },
+        {
+          "name": "horizontal-final",
+          "tick": 2740,
+          "diffPixels": 0,
+          "hash": "d9035a66db4b4505"
+        }
+      ]
+    },
+    {
+      "variant": "legacy",
+      "case": "horizontal-rebound",
+      "records": [
+        {
+          "name": "horizontal-held",
+          "tick": 2200,
+          "diffPixels": 0,
+          "hash": "c52da77548012cab"
+        },
+        {
+          "name": "horizontal-final",
+          "tick": 2460,
+          "diffPixels": 0,
+          "hash": "ff34156fe7392a7f"
+        }
+      ]
+    },
+    {
+      "variant": "legacy",
+      "case": "vertical-up",
+      "records": [
+        {
+          "name": "vertical-final",
+          "tick": 2620,
+          "diffPixels": 218,
+          "hash": "c2d746a9394ff4b1"
+        }
+      ]
+    },
+    {
+      "variant": "legacy",
+      "case": "vertical-down",
+      "records": [
+        {
+          "name": "vertical-final",
+          "tick": 2620,
+          "diffPixels": 50,
+          "hash": "921dfb9e7364b581"
+        }
+      ]
+    },
+    {
+      "variant": "legacy",
+      "case": "sleep",
+      "records": [
+        {
+          "name": "sleep-success-short",
+          "tick": 4020,
+          "diffPixels": 0,
+          "hash": "6e96acc45d7367df"
+        },
+        {
+          "name": "sleep-expired-aod",
+          "tick": 7920,
+          "diffPixels": 0,
+          "hash": "e7ce1e544a0fe6c0"
+        },
+        {
+          "name": "wake-no-sleep-replay",
+          "tick": 8630,
+          "diffPixels": 0,
+          "hash": "9b57ea881dd3b679"
+        }
+      ]
+    }
+  ]
+}

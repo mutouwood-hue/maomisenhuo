@@ -1,0 +1,14 @@
+/* BLE panel reuses the actual game.html :root palette and dialog/control styles.
+   The existing design source has no spacing scale; use font-relative structural spacing,
+   pending shared design-system spacing documentation (no replacement token system). */
+#ble-local-entry { margin-block: 1em; }
+#ble-local-dialog { background: var(--paper); color: var(--ink); }
+#ble-local-dialog .reset-actions { flex-wrap: wrap; }
+#ble-local-dialog .field-label { margin-block-start: 1em; color: var(--ink); }
+#ble-local-dialog .dialog-copy { color: var(--ink); }
+#ble-local-dialog .secondary-button { color: var(--ink); }
+#ble-local-dialog .close-button { color: var(--ink); }
+#ble-local-dialog .dialog-error { color: var(--orange-dark); }
+#ble-local-dialog select { font: inherit; }
+#ble-local-dialog pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: inherit; }
+#ble-local-dialog :focus-visible, #ble-local-entry :focus-visible { outline-color: var(--orange-dark); }

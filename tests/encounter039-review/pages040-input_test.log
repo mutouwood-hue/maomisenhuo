@@ -1,0 +1,30 @@
+badge_ui: Original animation bank: available
+UI input assertions passed: 46455 (production handlers, memory-only domain/peer/BSP)
+V3 pointer/guide/geometry assertions passed: 170; total 46625 (actual LVGL pointer+tick; offline stores)
+Toast extent: 五点命中方向待验 width=128/164 height=19/24
+Toast extent: 亮度未改请重试 width=112/164 height=19/24
+Toast extent: 保存失败未完成 width=112/164 height=19/24
+Toast extent: 动作已存待确认 width=112/164 height=19/24
+Toast extent: 存档忙正在等待 width=112/164 height=19/24
+Toast extent: 存档未就绪未保存 width=128/164 height=19/24
+Toast extent: 展示未存请重试 width=112/164 height=19/24
+Toast extent: 已取消未保存 width=96/164 height=19/24
+Toast extent: 已请求附近发现 width=112/164 height=19/24
+Toast extent: 已超时未保存 width=96/164 height=19/24
+Toast extent: 引导未存请重试 width=112/164 height=19/24
+Toast extent: 待同步已满连手机 width=128/164 height=19/24
+Toast extent: 慢慢来小猫在回应 width=128/164 height=19/24
+Toast extent: 手机已确认互动 width=112/164 height=19/24
+Toast extent: 手机状态已同步 width=112/164 height=19/24
+Toast extent: 按住月亮1.5秒 width=103/164 height=19/24
+Toast extent: 本地同步无云 width=96/164 height=19/24
+Toast extent: 没有待同步互动 width=112/164 height=19/24
+Toast extent: 省电设置失败 width=96/164 height=19/24
+Toast extent: 礼物已存待展示 width=112/164 height=19/24
+Toast extent: 礼物已存待确认 width=112/164 height=19/24
+Toast extent: 语音关闭未录音 width=112/164 height=19/24
+Toast extent: 请先用手机同步 width=112/164 height=19/24
+Toast extent: 请重开附近发现 width=112/164 height=19/24
+Toast extent: 重连手机后补传 width=112/164 height=19/24
+Observed settle: rebound 180 ms (nominal 180), commit 200 ms (nominal 200); host LVGL ticks 10 ms
+V3 modal/routes assertions passed: 218; total 46843 (actual LVGL pointer; memory-only fixtures)

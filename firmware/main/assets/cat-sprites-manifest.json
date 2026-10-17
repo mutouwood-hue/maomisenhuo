@@ -1,0 +1,44 @@
+{
+  "format": "LV_COLOR_FORMAT_RGB565A8",
+  "layoutSource": "https://github.com/lvgl/lvgl/blob/v9.5.0/scripts/LVGLImage.py",
+  "size": [
+    200,
+    180
+  ],
+  "rgbStride": 400,
+  "alphaStride": 200,
+  "commonSourceCrop": [
+    65,
+    25,
+    161,
+    158
+  ],
+  "fittedSize": [
+    130,
+    180
+  ],
+  "offset": [
+    35,
+    0
+  ],
+  "resample": "Pillow LANCZOS",
+  "pillowVersion": "12.3.0",
+  "assets": [
+    {
+      "source": "assets/rendering/cat-idle.png",
+      "sourceSha256": "71d0ac886e20b068cbd6690a362aaa3eb47c405f73d8ada40d9870833ef90235",
+      "symbol": "cat_idle",
+      "dataBytes": 108000,
+      "dataSha256": "c77569c67cb3f2dd6dd23e9f5a2bc487ba47f515462f15f6b610eccc3fe87184",
+      "cSha256": "8889cf5d443b6c6a58af8577bdd17fc2c51107394fe35b721a09a725f509e649"
+    },
+    {
+      "source": "assets/rendering/cat-paw.png",
+      "sourceSha256": "cb31f9304f6fed45f086532b6bc00b1f2bbc4e2304730303d3c5c5da6b7dcf01",
+      "symbol": "cat_paw",
+      "dataBytes": 108000,
+      "dataSha256": "4e7e415c4ef20b574eeafcf9cfe92d87516d9f1f173a4d854831cacf3fe7475a",
+      "cSha256": "8d2918a5198fa991820c24f01b0f5d5b4ef2da2e8de427a437178cdca034e179"
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+# Name,     Type, SubType,  Offset,   Size,  Flags
+# Mirrors the vendor layout, with a larger NVS partition because the pet save,
+# the friendship dex and the offline encounter log all live there.
+nvs,        data, nvs,      0x9000,   0x8000,
+phy_init,   data, phy,      0x11000,  0x1000,
+factory,    app,  factory,  ,         8M,
+# Reserved for phase two: LLM voice models/prompts and packaged UI sound packs.
+storage,    data, spiffs,   ,         8M,

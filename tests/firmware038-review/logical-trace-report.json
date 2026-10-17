@@ -1,0 +1,401 @@
+{
+  "softwareOnly": true,
+  "production": "source-r3",
+  "negative": "source-r3-legacy; only bounded_face=false",
+  "cases": [
+    {
+      "variant": "r3",
+      "case": "horizontal-commit",
+      "exit": 0,
+      "frames": 14,
+      "ticks": [
+        2160,
+        2200,
+        2280,
+        2320,
+        2360,
+        2400,
+        2440,
+        2480,
+        2530,
+        2570,
+        2610,
+        2650,
+        2690,
+        2730
+      ],
+      "metrics": [
+        "METRIC horizontal-commit ticks2740 frames14 flush252 pixels1093584 page3 face1 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "18d7b9cf1f652d90cb093c605edd22ea48e3ba328d542c68f980e8493bb5da13"
+    },
+    {
+      "variant": "r3",
+      "case": "horizontal-rebound",
+      "exit": 0,
+      "frames": 7,
+      "ticks": [
+        2160,
+        2250,
+        2290,
+        2330,
+        2370,
+        2410,
+        2450
+      ],
+      "metrics": [
+        "METRIC horizontal-rebound ticks2460 frames7 flush143 pixels640232 page3 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "53e84a24d36426e821176c10d280bef257b171e811a12f57990f997f8b6f6fd5"
+    },
+    {
+      "variant": "r3",
+      "case": "vertical-up",
+      "exit": 0,
+      "frames": 11,
+      "ticks": [
+        2160,
+        2200,
+        2240,
+        2280,
+        2320,
+        2360,
+        2440,
+        2480,
+        2520,
+        2560,
+        2600
+      ],
+      "metrics": [
+        "METRIC vertical-up ticks2620 frames11 flush472 pixels2170236 page4 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "7029b10cb8bdfdefd8bbc47575f4a9181bff581a088d534dccfd57df3326c719"
+    },
+    {
+      "variant": "r3",
+      "case": "vertical-down",
+      "exit": 0,
+      "frames": 11,
+      "ticks": [
+        2160,
+        2200,
+        2240,
+        2280,
+        2320,
+        2360,
+        2440,
+        2480,
+        2520,
+        2560,
+        2600
+      ],
+      "metrics": [
+        "METRIC vertical-down ticks2620 frames11 flush472 pixels2170236 page6 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "b0e77e7f22485252782acddbbd68472fcc512d5e6478b473946553b31f0df58a"
+    },
+    {
+      "variant": "r3",
+      "case": "samecontext",
+      "exit": 0,
+      "frames": 64,
+      "ticks": [
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560
+      ],
+      "metrics": [
+        "METRIC samecontext-64 ticks1560 frames64 flush192 pixels388352 page3 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "1e9080b90df8d37a18f16dae99dfd20e6121bcaaacd0af750aa2531df51cc524"
+    },
+    {
+      "variant": "r3",
+      "case": "trust",
+      "exit": 0,
+      "frames": 0,
+      "ticks": [],
+      "metrics": [],
+      "outputSha256": "00dcd59f39b2a61c7e594c7851610f592ad5892dc7f3d5d6b6ebbf7a037cdfc8"
+    },
+    {
+      "variant": "r3",
+      "case": "sleep",
+      "exit": 0,
+      "frames": 0,
+      "ticks": [],
+      "metrics": [],
+      "outputSha256": "c51a06aa97384f9976358aebe841071c07d6e7e99aebce086d16955211e307ff"
+    },
+    {
+      "variant": "r3",
+      "case": "sleep-fail",
+      "exit": 0,
+      "frames": 0,
+      "ticks": [],
+      "metrics": [],
+      "outputSha256": "1aeb4b4ede5d0e66d2fce8c36257cdb96570c5d4e3f62ac101d3608cae2c39a8"
+    },
+    {
+      "variant": "legacy",
+      "case": "horizontal-commit",
+      "exit": 0,
+      "frames": 14,
+      "ticks": [
+        2160,
+        2200,
+        2280,
+        2320,
+        2360,
+        2400,
+        2440,
+        2480,
+        2530,
+        2570,
+        2610,
+        2650,
+        2690,
+        2730
+      ],
+      "metrics": [
+        "METRIC horizontal-commit ticks2740 frames14 flush657 pixels3032792 page3 face1 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "5b8f8c4f89ae560fa0309b337bf1893be3516aa85afdc36c97a3e45270b9ad94"
+    },
+    {
+      "variant": "legacy",
+      "case": "horizontal-rebound",
+      "exit": 0,
+      "frames": 7,
+      "ticks": [
+        2160,
+        2250,
+        2290,
+        2330,
+        2370,
+        2410,
+        2450
+      ],
+      "metrics": [
+        "METRIC horizontal-rebound ticks2460 frames7 flush291 pixels1343288 page3 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "0e95154b9f4d1220d5960d0020387d062fdeac13d9676ff31557566f3ae537fb"
+    },
+    {
+      "variant": "legacy",
+      "case": "vertical-up",
+      "exit": 0,
+      "frames": 11,
+      "ticks": [
+        2160,
+        2200,
+        2240,
+        2280,
+        2320,
+        2360,
+        2440,
+        2480,
+        2520,
+        2560,
+        2600
+      ],
+      "metrics": [
+        "METRIC vertical-up ticks2620 frames11 flush472 pixels2170236 page4 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "7029b10cb8bdfdefd8bbc47575f4a9181bff581a088d534dccfd57df3326c719"
+    },
+    {
+      "variant": "legacy",
+      "case": "vertical-down",
+      "exit": 0,
+      "frames": 11,
+      "ticks": [
+        2160,
+        2200,
+        2240,
+        2280,
+        2320,
+        2360,
+        2440,
+        2480,
+        2520,
+        2560,
+        2600
+      ],
+      "metrics": [
+        "METRIC vertical-down ticks2620 frames11 flush472 pixels2170236 page6 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "b0e77e7f22485252782acddbbd68472fcc512d5e6478b473946553b31f0df58a"
+    },
+    {
+      "variant": "legacy",
+      "case": "samecontext",
+      "exit": 0,
+      "frames": 64,
+      "ticks": [
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560,
+        1560
+      ],
+      "metrics": [
+        "METRIC samecontext-64 ticks1560 frames64 flush192 pixels388352 page3 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "1e9080b90df8d37a18f16dae99dfd20e6121bcaaacd0af750aa2531df51cc524"
+    },
+    {
+      "variant": "legacy",
+      "case": "trust",
+      "exit": 0,
+      "frames": 0,
+      "ticks": [],
+      "metrics": [],
+      "outputSha256": "00dcd59f39b2a61c7e594c7851610f592ad5892dc7f3d5d6b6ebbf7a037cdfc8"
+    },
+    {
+      "variant": "legacy",
+      "case": "sleep",
+      "exit": 0,
+      "frames": 0,
+      "ticks": [],
+      "metrics": [],
+      "outputSha256": "c51a06aa97384f9976358aebe841071c07d6e7e99aebce086d16955211e307ff"
+    },
+    {
+      "variant": "legacy",
+      "case": "sleep-fail",
+      "exit": 0,
+      "frames": 0,
+      "ticks": [],
+      "metrics": [],
+      "outputSha256": "1aeb4b4ede5d0e66d2fce8c36257cdb96570c5d4e3f62ac101d3608cae2c39a8"
+    }
+  ],
+  "matchedLogicalFrameTicks": true,
+  "notes": [
+    "Each case runs a fresh process; explicit lv_tick_inc(10), identical production pointer path and call count. Snapshot calls flush at bounded held points in both variants. Not physical FPS.",
+    "Legacy is same r3 production except independent test-copy bounded_face=false, not frozen037 whole design; isolates slide mechanism.",
+    "Samecontext metric is polling fixture including forced lv_refr_now, not actual static idle duration."
+  ]
+}

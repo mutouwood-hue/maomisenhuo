@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/zoumutou/coding/猫咪森活/tests/firmware043-review/build-verifier-negative-material/tools/verify_room_cache.py", line 6, in <module>
+    assert hashlib.sha256(s.encode()).hexdigest()==d['originalSha256'],'Output-driving source drift'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Output-driving source drift

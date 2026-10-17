@@ -1,0 +1,17 @@
+{
+  "kind": "read-only planning basis, not a new measurement",
+  "source": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T0205Z-safe10/RESULT.json",
+  "sourceSha256": "6457c3ddabff89107e286518dc57c713359bd767f0bf72e301180e8323e1f563",
+  "historicalMixedWindowSeconds": 560.582213,
+  "renderCycles": 2364,
+  "renderMeanUs": 69821.29230118444,
+  "renderMaxUs": 147577,
+  "logicalRgb565PayloadBytes": 978967920,
+  "pressedPolls": 0,
+  "dmaFreeEnd": 72347,
+  "dmaMinimumSinceBoot": 32944,
+  "warning": "Historical mixed awake/standby + diagnostic selection/capture window; not physical swipe/FPS/tearing evidence; not comparable causal buffer benchmark",
+  "newDeviceOperation": false,
+  "frozenSourceHashCount": 103,
+  "sourceReverifiedExact": true
+}

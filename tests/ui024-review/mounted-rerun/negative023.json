@@ -1,0 +1,345 @@
+{
+  "baseline023": true,
+  "eventsEnabled": false,
+  "scenario": "normal",
+  "refreshAttempts": 1,
+  "presentationProbe": false,
+  "browserAnchorInsideDevice": null,
+  "refreshDisabled": false,
+  "diagnosticText": "连接详情与本地诊断只在点击刷新时读取设备。结果仅代表读取完成时，后续动作需再刷新；不自动重连或确认事件。事件水位不单独证明奖励已发放，具体结果看上方真实事件提示。真实新本地握手已核对。以下是本次连接的读回快照，并非实时。已读回本次连接的设备状态。 已请求本机保存位置；请在系统窗口确认保存。刷新连接详情导出本地诊断 JSON实际读取记录手机读取完成时间（UTC）2026-10-16T02:09:38.645Z本次读取 generation2结果有效性属于本次连接（非实时）来源：读取时的 HELLO 握手协议CFLOCAL2握手设备 ID0123456789abcdef0123456789abcdef声明能力（不等于全部实测通过）scene、snapshot、events来源：设备 state 响应设备 ID0123456789abcdef0123456789abcdef本地客户端 ID未绑定（null）设备已处理指令序号1设备已确认事件水位0设备待确认事件数0设备存储错误否设备已有场景快照是设备快照摘要快照猫 IDcat-3415dd8b-8274-43bd-9487-671bfdeedf87快照版本1快照场景在家（home）快照动作休息（idle）快照天气晴天（clear）校时可观测性设备时钟当前 BLE 未提供 clockValid / now，尚不能核实校时。",
+  "normal500msPollSuppressed": true,
+  "memorySceneChangedWithoutDOMMutation": true,
+  "priorCommands": 3,
+  "commandsAfterExplicitDiagnostic": [
+    {
+      "op": "state"
+    },
+    {
+      "op": "snapshot",
+      "seq": 2
+    }
+  ],
+  "journalChanged": true,
+  "authorityChanged": true,
+  "beforeJournalSha256": "5cc7156ba8c62d5ae5d29758219530fc113ac51f76fc5fce46b0e5f45b9e08c6",
+  "afterJournalSha256": "1b0cf16dbf5672dc340308704896df7d20f542733ca4281f3221ead7fad0b6d4",
+  "statusUnchanged": false,
+  "status": "sending",
+  "exportRequests": 1,
+  "observerRecords": [
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "attributes",
+        "target": "offline-legacy-panel",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-scan",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-retry",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-v2-retry",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "attributes",
+        "target": "offline-legacy-panel",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-v2-status",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-scan",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-retry",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-v2-retry",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ]
+  ],
+  "sourceSha256": "632bf1dab23aa8fc72c39534e2c1722ee176921749753a395d64f1e1ca6f9856"
+}

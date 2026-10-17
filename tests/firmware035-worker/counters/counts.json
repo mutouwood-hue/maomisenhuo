@@ -1,0 +1,74 @@
+{
+  "hardware": false,
+  "productionSourceReadOnly": true,
+  "LVGLHostOnlyCounterCopies": true,
+  "runtimeConfigCircleCache4": true,
+  "runtimeConfigImageCache0": true,
+  "runtimeConfigBinRamLoadFalse": true,
+  "sourceSha256": {
+    "firmware/managed_components/lvgl__lvgl/src/draw/sw/lv_draw_sw_mask.c": "e1f852a16219644ae2d8a08c8bb49865a6f5af1bb3e2115ec3e423de46675c22",
+    "firmware/managed_components/lvgl__lvgl/src/libs/bin_decoder/lv_bin_decoder.c": "39416e4f018263a5f231cd7065fef4a849c15e5b9b56b33eadfe03d6028f4ef3"
+  },
+  "records": {
+    "baseline034": {
+      "counters": {
+        "radiusCalls": 687507,
+        "radiusHits": 484091,
+        "radiusMisses": 203416,
+        "decoderOpen": 15144,
+        "decoderArea": 148352,
+        "indexedLines": 134628,
+        "indexedPixels": 16741608,
+        "iterations": 40,
+        "wallUs": 910235,
+        "flushes": 27252,
+        "pixels": 125658136
+      },
+      "radiusMissHistogram": {
+        "2": 16212,
+        "3": 26742,
+        "4": 15372,
+        "9": 29817,
+        "197": 21477,
+        "203": 20891,
+        "209": 29225,
+        "210": 11940,
+        "218": 3782,
+        "223": 15763,
+        "227": 12195
+      }
+    },
+    "candidate035": {
+      "counters": {
+        "radiusCalls": 686247,
+        "radiusHits": 482831,
+        "radiusMisses": 203416,
+        "decoderOpen": 15121,
+        "decoderArea": 148122,
+        "indexedLines": 134420,
+        "indexedPixels": 16701672,
+        "iterations": 40,
+        "wallUs": 888717,
+        "flushes": 27208,
+        "pixels": 125447016
+      },
+      "radiusMissHistogram": {
+        "2": 16212,
+        "3": 26742,
+        "4": 15372,
+        "9": 29817,
+        "197": 21477,
+        "203": 20891,
+        "209": 29225,
+        "210": 11940,
+        "218": 3782,
+        "223": 15763,
+        "227": 12195
+      }
+    }
+  },
+  "limits": [
+    "Counters include actual synthetic production drag/settle plus inter-gesture poll/feedback",
+    "Not ESP cycle attribution or physical DMA/scanout"
+  ]
+}

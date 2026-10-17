@@ -1,0 +1,8 @@
+SNAP sleep-success-short 4020 6e96acc45d7367df
+ORACLE sleep-success-short 4020 0 6e96acc45d7367df
+SNAP sleep-expired-aod 7920 e7ce1e544a0fe6c0
+ORACLE sleep-expired-aod 7920 0 e7ce1e544a0fe6c0
+SNAP wake-no-sleep-replay 8630 9b57ea881dd3b679
+ORACLE wake-no-sleep-replay 8630 0 9b57ea881dd3b679
+REVIEW software_fixture_only case=sleep
+badge_ui: Original animation bank: available

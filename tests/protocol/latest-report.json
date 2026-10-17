@@ -1,0 +1,33 @@
+{
+  "generatedAtUtc": "2026-10-15T11:32:18.343790+00:00",
+  "runtime": {
+    "python": "3.13.3",
+    "platform": "Darwin",
+    "machine": "arm64"
+  },
+  "scope": "Host execution and protocol oracle only; no Android device, real BLE, target NVS, touch, flash, pairing or power acceptance.",
+  "testsRun": 42,
+  "durationSeconds": 17.002,
+  "status": "passed",
+  "completeProductionHostCoverage": true,
+  "success": true,
+  "skipped": [],
+  "failures": [],
+  "errors": [],
+  "inputSha256": {
+    "firmware/main/badge.h": "3bef73b259f8854da0599c3a5cbcf2ba881153735df4469e3bf3cdfc6d841998",
+    "firmware/main/badge_ble.c": "5ec70dda848e45d27139178df315012abb7345d3a47433da903820e553a38d27",
+    "firmware/main/badge_state.c": "2213d540323cec507d6532de7e078248b1d104de0998174cfa50a5377ca53481",
+    "firmware/main/badge_wire.c": "99a767fe1f8e2d14f672271983a61fee5e17928e73e00cb3efee3cb30024dd97",
+    "firmware/main/badge_wire.h": "a927d49bdf0ca89ae414568bdaa11dede8cda5e745dc7f0329f4dc96ffffb563",
+    "app/android/app/src/main/java/com/catforest/app/PetStore.kt": "c892ec60fe7114e055bc989445ad7829c7cdcee10d36f6522f5590ce034ae797",
+    "app/android/app/src/main/java/com/catforest/app/BadgeBle.kt": "1d59efe4fa97c8338bdc544b4a1634d99584f4b79bdfdbf2fc77668936bf7f36",
+    "protocol/v1/fixtures/applied-ack.json": "faa9a9cee058bf9d06019c8459639ca0005b44344478a75ecb19303380e47ca4",
+    "protocol/v1/fixtures/pet-event.json": "50e0cd56bb9c887ccd649b6b2516d31685c1af773ec8b4f057d45abcd809c012",
+    "protocol/v1/fixtures/snapshot.json": "7857d3ae11fba47db73ddea3f9e08a6b8c7b784a1522df548a4df975076fd971",
+    "protocol/v1/fixtures/synced-status.json": "531215b1a42f036065f0b2e2d1787f1c0cb170c1c361041b81a934c19b67216f",
+    "protocol/v1/README.md": "f2f6233f9e63fb81945f2bf4f2fa16844642f5ea70e293f6514ea9adf78cb355",
+    ".tools/idf-tools/cjson-pinned/cJSON.c": "607e756460fa0de37d20a7a9181f2de29c97bfb7ce5a0e6c2f548243836cd852",
+    ".tools/idf-tools/cjson-pinned/cJSON.h": "25b0145150d500498e4d209cec69c18c42cf818bffcc54690be3b895a2a16dee"
+  }
+}

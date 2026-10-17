@@ -1,0 +1,2 @@
+{"scope":"independent delta actual production UI timer/layout, host doubles not hardware","passed":true,"assertions":724,"samples":240,"sampleStepMs":20,"twoCyclesMs":4800,"largestStepPx":5,"maxPhaseErrorPx":3}
+badge_ui: Original animation bank: available

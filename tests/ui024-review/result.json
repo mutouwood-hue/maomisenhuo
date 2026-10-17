@@ -1,0 +1,149 @@
+{
+  "kind": "host_only virtual_fixture, not Android/radio/disk/device",
+  "status": "pass_for_sole_integrator_data_preserving_install_then_actual_acceptance",
+  "prior023P1": "reproduced baseline; closed on exact024 source and software mounted scope",
+  "originalProbe023": {
+    "candidate": "ui023",
+    "normal500msPollSuppressed": true,
+    "memorySceneChangedWithoutDOMMutation": true,
+    "priorCommands": 3,
+    "commandsAfterExplicitDiagnostic": [
+      {
+        "op": "state"
+      },
+      {
+        "op": "snapshot",
+        "seq": 2
+      }
+    ],
+    "journalChanged": true,
+    "authorityChanged": true,
+    "status": "sending",
+    "externalObserverRecords": [
+      {
+        "id": "offline-legacy-panel",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-scan",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-retry",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-legacy-panel",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-scan",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-retry",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-legacy-panel",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-scan",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-retry",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-legacy-panel",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-scan",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-retry",
+        "type": "attributes",
+        "attribute": "hidden"
+      }
+    ]
+  },
+  "originalProbe024": {
+    "candidate": "ui024",
+    "normal500msPollSuppressed": true,
+    "memorySceneChangedWithoutDOMMutation": true,
+    "priorCommands": 3,
+    "commandsAfterExplicitDiagnostic": [
+      {
+        "op": "state"
+      }
+    ],
+    "journalChanged": false,
+    "authorityChanged": false,
+    "status": "synced",
+    "externalObserverRecords": [
+      {
+        "id": "offline-legacy-panel",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-scan",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-retry",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-legacy-panel",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-scan",
+        "type": "attributes",
+        "attribute": "hidden"
+      },
+      {
+        "id": "offline-v2-retry",
+        "type": "attributes",
+        "attribute": "hidden"
+      }
+    ]
+  },
+  "targetedNode": {
+    "tests": 29,
+    "pass": 29,
+    "fail": 0,
+    "skipped": 0
+  },
+  "sourceHashes": {
+    "offline-scene-sync.js": "4868902efa98566fcf0d18cebedc64735824999b079f90c4520916fa788cdb80",
+    "offline-device-diagnostics.js": "8fa35d180d0cceb391956fb2af9cdbc391137dcbc945168d63bb11e477ffa704"
+  },
+  "ownerDiagnosticsCSS": {
+    "profiles": 9,
+    "checks": 237,
+    "metadataHashesAssociated": true,
+    "notRerenderedByReviewer": true
+  },
+  "all024SourceStableAfterTests": true,
+  "all023SourceAppZipStillFrozen": true
+}

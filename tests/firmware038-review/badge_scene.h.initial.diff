@@ -1,0 +1,11 @@
+--- 037/main/badge_scene.h
++++ 038/main/badge_scene.h
+@@ -36,3 +36,8 @@
+ /* Presentation only: saved context is static until a fresh snapshot this boot.
+  * action is a short actual observed/locally persisted action, never inferred stats. */
+ void badge_scene_set_context(badge_scene_t *,bool known,l2_scene_t,l2_weather_t,l2_action_t,bool live);
++
++/* Local presentation only; no domain events, storage or timer changes. */
++void badge_scene_enable_world(badge_scene_t *);
++void badge_scene_set_overlay(badge_scene_t *,bool);
++void badge_scene_set_slide_offset(badge_scene_t *,int);

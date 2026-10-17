@@ -1,0 +1,7 @@
+#pragma once
+#include "baji_link.h"
+#include "esp_err.h"
+/* App-lifetime peripheral. Start once outside LVGL; never authenticates an owner. */
+esp_err_t bj_ble_start(void);
+/* UI-serialized caller, max two requests/tick. No I2C, wait, LVGL or allocation. */
+void bj_ble_pump(bj_link_t *link, bj_controller_t *controller, const bj_power_view_t *power);

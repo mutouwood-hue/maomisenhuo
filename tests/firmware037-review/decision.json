@@ -1,0 +1,85 @@
+{
+  "atUtc": "2026-10-16T04:33:19.758825+00:00",
+  "decision": "release_for_sole_root_controlled_application_validation_after_current_fresh_backup_partition_protected_range_gates",
+  "noConfirmedP1P2In037Delta": true,
+  "app": {
+    "path": "deliverables/cat-forest-badge-0.3.7-local3.bin",
+    "bytes": 6398128,
+    "sha256": "22392ed66544e517277550cb2facc4a2c8ea865641e8624e47eb73ab5b5cc9e9",
+    "description": {
+      "version": "0.3.7-local3",
+      "projectName": "cat_forest_badge",
+      "idfVersion": "v5.5.5",
+      "secureVersion": 0,
+      "elfSha256": "c9d07eeb37d60d5afddc347973452388e13505fdbd890e6477dfbfa2f557c753"
+    }
+  },
+  "elf": {
+    "path": "build/cat_forest_badge.elf",
+    "sha256": "c9d07eeb37d60d5afddc347973452388e13505fdbd890e6477dfbfa2f557c753"
+  },
+  "sourceZip": {
+    "path": "deliverables/cat-forest-badge-0.3.7-local3-source.zip",
+    "bytes": 2692003,
+    "sha256": "088e4cfae7583be7667344cc4cba46759df29b51ef669613885fe1e054aed2f7",
+    "sourceFiles": 107,
+    "allSourceEntriesReadBackExact": true,
+    "noBuildTreesOrBinaries": true
+  },
+  "pagesSha256": "a6fb478b194fa1247c629775bca2de6c66191a57a20b28afdfb0039c3c496d81",
+  "source107Stable": true,
+  "other50MainAndPrivateMaskExact036": true,
+  "runtimeDeltaExactlyTwoExpressions": true,
+  "matrixIndependentRerun": {
+    "cases": 96,
+    "checks": 10704,
+    "negative036Reproduced": true,
+    "PLAYCOMPImageExact036": true,
+    "clockValidFlipsAndRepeatedRefresh": true,
+    "syntheticProductionWakeDomainZero": true
+  },
+  "newIndependentCases": {
+    "count": 6,
+    "assertions": 7710,
+    "actualHintPixels": 614,
+    "face12InkBounds": [
+      201,
+      430,
+      264,
+      444
+    ],
+    "face0InkBounds": [
+      201,
+      382,
+      264,
+      396
+    ],
+    "allInkWithinPhysicalR233AndDisjointClock": true,
+    "hintCenterWakeAndOutsideWakeRejected": true,
+    "firstWakeReleaseDoesNotEmitPETOrChangeDomain": true,
+    "statusCareSettingsNoHintLeak": true
+  },
+  "buildBoundaries": {
+    "singlePrivateTUAndNoHostMacros": true,
+    "privateTargetTUWerrorExit0": true,
+    "publicSymbolsExact036": 11,
+    "BssDataDeltaFrom036": 0,
+    "partitionExact036": true
+  },
+  "softwareOnly": true,
+  "deviceActions": false,
+  "reviewerVisuals": [
+    "036-clock1-face2-mode2-low0",
+    "037-clock1-face2-mode2-low0",
+    "037-clock0-face1-mode2-low0",
+    "037-clock1-face0-mode2-low0"
+  ],
+  "remaining": [
+    "Root actual freshly calibrated AOD/brightness/composition verification",
+    "036 optionalPSRAM enabled/fallback log, actualcap/heap/min/largest and samestatePERF unverified",
+    "035vs0348pixel partial residual unchanged",
+    "physicalwake/swipe and opticalscanouttearfree unverified",
+    "legacy4extremeOOMstillasserts"
+  ],
+  "noWholePRDOrPhysicalCareClaim": true
+}

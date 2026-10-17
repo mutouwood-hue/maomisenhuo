@@ -1,0 +1,48 @@
+Analysis of sampling candidate035 (pid 49672) every 1 millisecond
+Process:         candidate035 [49672]
+Path:            /Users/USER/*/candidate035
+Load Address:    0x102f60000
+Identifier:      candidate035
+Version:         ???
+Code Type:       ARM64
+Parent Process:  Python [49500]
+Target Type:     live task
+
+Date/Time:       2026-10-16 11:43:18.424 +0800
+Launch Time:     2026-10-16 11:43:18.371 +0800
+OS Version:      macOS 27.2 (26B5101f)
+Report Version:  7
+Analysis Tool:   /usr/bin/sample
+
+Physical footprint:         320K
+Physical footprint (peak):  336K
+Idle exit:                  untracked
+----
+
+Call graph:
+    249 Thread_4500742: Main Thread   DispatchQueue_<multiple>
+      247 _dyld_start  (in dyld) + 0  [0x103608bf0]
+      1 start  (in dyld) + 3240  [0x103635028]
+      + 1 dyld4::ExternallyViewableState::createMinimalInfo(lsl::Allocator&, unsigned long long, char const*, unsigned long long, char const*, DyldSharedCache const*)  (in dyld) + 1528  [0x103652c54]
+      +   1 dyld4::ExternallyViewableState::triggerNotifications(dyld_image_mode, unsigned int, dyld_image_info const*)  (in dyld) + 304  [0x1036534e0]
+      +     1 dyld4::RemoteNotificationResponder::blockOnSynchronousEvent(unsigned int)  (in dyld) + 48  [0x103677fd0]
+      +       1 dyld4::RemoteNotificationResponder::sendMessage(int, unsigned int, mach_msg_header_t*)  (in dyld) + 244  [0x103677c18]
+      +         1 mach_msg_overwrite  (in dyld) + 244  [0x103684578]
+      +           1 mach_msg2_internal  (in dyld) + 76  [0x1036843d0]
+      +             1 mach_msg2_trap  (in dyld) + 8  [0x10360572c]
+      1 start  (in dyld) + 6012  [0x103635afc]
+        1 dyld4::ExternallyViewableState::createMinimalInfo(lsl::Allocator&, unsigned long long, char const*, unsigned long long, char const*, DyldSharedCache const*)  (in dyld) + 1528  [0x103652c54]
+          1 dyld4::ExternallyViewableState::triggerNotifications(dyld_image_mode, unsigned int, dyld_image_info const*)  (in dyld) + 304  [0x1036534e0]
+            1 dyld4::RemoteNotificationResponder::blockOnSynchronousEvent(unsigned int)  (in dyld) + 48  [0x103677fd0]
+              1 dyld4::RemoteNotificationResponder::sendMessage(int, unsigned int, mach_msg_header_t*)  (in dyld) + 244  [0x103677c18]
+                1 mach_msg_overwrite  (in dyld) + 244  [0x103684578]
+                  1 mach_msg2_internal  (in dyld) + 76  [0x1036843d0]
+                    1 mach_msg2_trap  (in dyld) + 8  [0x10360572c]
+
+Total number in stack (recursive counted multiple, when >=5):
+
+Sort by top of stack, same collapsed (when >= 5):
+        _dyld_start  (in dyld)        247
+
+Binary images description not available
+

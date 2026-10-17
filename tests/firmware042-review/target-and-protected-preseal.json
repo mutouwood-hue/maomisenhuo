@@ -1,0 +1,120 @@
+{
+  "protected": [
+    {
+      "path": "main/local2_core.c",
+      "exists": true,
+      "sha256": "1a2e22df6f16e93676727611bc3072d6803ed9e679dc41b9a0dce7cc9b4fe603",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "main/local2_core.h",
+      "exists": true,
+      "sha256": "de714f53212f772e0ca6ae668a8680c71e53b24e913fd979a10b8906c772bb75",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "main/local2_store.c",
+      "exists": true,
+      "sha256": "d0b3ffa1097888d26e27e4f8a2304735c4e84be14244c28af8d73e8911061610",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "main/local2_wire.c",
+      "exists": true,
+      "sha256": "48778300017ee9d458224dfd2e6b5a6324fd1f7b4a1069d8bfa7569c46c1edc3",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "main/local2_ble.c",
+      "exists": true,
+      "sha256": "7d4f9e44abfc36105e1d83ddecca2a624a467d8f6b5af3d537f9e162c9753ac6",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "main/local2_peer.c",
+      "exists": true,
+      "sha256": "b44a779663229e51c7b6f37d65b3945f56ff52e42b1cda95867349f6199a7e16",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "main/badge_gesture.c",
+      "exists": true,
+      "sha256": "7c1287c077dfd17fb29bacf0aa5ef1eecf37561c5d454caed0ac0a1755b0ae16",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "main/badge_display_capture.h",
+      "exists": true,
+      "sha256": "a8e6df877539bc37422a61952e1bef8981bc331f3c65104f39e4b8031399ad90",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "sdkconfig",
+      "exists": true,
+      "sha256": "dda410a0461e5b9e2160eacfa26f7c7bc1c217b4e4f1be5efd217dcaf8c6f894",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "partitions.csv",
+      "exists": true,
+      "sha256": "09fc932049fe06c1eb696b49af5ea7c1f50866ba6212433ca2e7d16be779a648",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/esp32_s3_touch_amoled_1_75c.c",
+      "exists": true,
+      "sha256": "f3a86ce64f3117fc52b35c646ec652826a62a214a589a133dae3155e1016cc24",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "managed_components/lvgl__lvgl/src/core/lv_refr.c",
+      "exists": true,
+      "sha256": "6520b6348cfb5849153a924d8505557f00aea2007258ec7705665ffaf8f5db81",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "managed_components/lvgl__lvgl/src/draw/sw/lv_draw_sw.c",
+      "exists": true,
+      "sha256": "ae0de2eaed665616501d30116285a5dbd6e328a95a71f0934d161d12522f8393",
+      "baseExists": true,
+      "same038": true
+    },
+    {
+      "path": "managed_components/espressif__esp_lvgl_adapter/src/adapter/esp_lv_adapter.c",
+      "exists": true,
+      "sha256": "3aaf0e1b79c8f89afb1224f5f08957aee3e76e1ae2d9d3ae626d717a6b42b2f5",
+      "baseExists": true,
+      "same038": true
+    }
+  ],
+  "compile": [
+    {
+      "file": "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-visual-integration042/source/main/badge_renderer_exact.c",
+      "ESP_PLATFORM": true,
+      "ffpContractOff": true,
+      "stackUsage": true,
+      "hostExpectedOverride": false,
+      "compileCommandSha256": "d6cee3767ca363662491f8803bdc94f0f10933166db9227f0877ee6c5c5b2c8c"
+    },
+    {
+      "file": "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-visual-integration042/source/main/badge_renderer_panel.c",
+      "ESP_PLATFORM": true,
+      "ffpContractOff": false,
+      "stackUsage": true,
+      "hostExpectedOverride": false,
+      "compileCommandSha256": "f3706166da7e42892e0df5f100edc19c5d2639aa075918516bd4a34586a6272b"
+    }
+  ]
+}

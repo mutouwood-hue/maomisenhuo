@@ -1,0 +1,208 @@
+{
+  "decision": "limited_emulator_sample_flow_pass_not_physical_device_or_complete_world",
+  "confirmedP1P2": [],
+  "environment": {
+    "atUtc": "2026-10-16T10:06:07.214486+00:00",
+    "serial": "emulator-5556",
+    "scope": "existing Android emulator only; restarted without wipe; no physical device actions",
+    "values": {
+      "wm": {
+        "exitCode": 0,
+        "stdout": "Physical size: 720x1280\n",
+        "stderr": ""
+      },
+      "density": {
+        "exitCode": 0,
+        "stdout": "Physical density: 320\n",
+        "stderr": ""
+      },
+      "api": {
+        "exitCode": 0,
+        "stdout": "35\n",
+        "stderr": ""
+      },
+      "webview": {
+        "exitCode": 0,
+        "stdout": "Current WebView Update Service state\n  Current WebView package (name, version): (com.android.webview, 124.0.6367.219)\n  Minimum targetSdkVersion: 33\n  Minimum WebView version code: 636771901\n  Number of relros started: 1\n  Number of relros finished: 1\n  WebView package dirty: false\n  Any WebView package installed: true\n  Preferred WebView package (name, version): (com.android.webview, 124.0.6367.219)\n  WebView packages:\n    Valid package com.android.webview (versionName: 124.0.6367.219, versionCode: 636771901, targetSdkVersion: 34) is  installed/enabled for all users\n",
+        "stderr": ""
+      }
+    }
+  },
+  "profiles": [
+    {
+      "frames": "01-17",
+      "outerPixels": [
+        720,
+        1280
+      ],
+      "density": 320,
+      "webViewBounds": [
+        0,
+        48,
+        720,
+        1184
+      ],
+      "actualCssViewport": [
+        360,
+        568
+      ]
+    },
+    {
+      "frames": "18-20",
+      "outerPixels": [
+        780,
+        1832
+      ],
+      "density": 320,
+      "webViewBounds": [
+        0,
+        48,
+        780,
+        1736
+      ],
+      "actualCssViewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "frames": "21-23",
+      "outerPixels": [
+        720,
+        1424
+      ],
+      "density": 320,
+      "webViewBounds": [
+        0,
+        48,
+        720,
+        1328
+      ],
+      "actualCssViewport": [
+        360,
+        640
+      ]
+    }
+  ],
+  "rootFinalIndexFilesVerified": 77,
+  "interim50PinsUnchanged": true,
+  "evidencePinCount": 84,
+  "evidenceHashes": {
+    "artifacts/device-integration/2026-10-16-ui027-emulator/01-app-logcat.txt": "3ba8f4acfd1c7ce35565db72b21f4f24d7cc3e2348699750ecac27ef1c7cc5ea",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/01-cold-home.png": "289b30c55c95ed4ac6f7a7e35d70687c2b2d3b7f7cc1fdeee8f106e698de6387",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/01-cold-home.xml": "518011d081f22f86ddd2a36879c7a1b06790243b526c15a391263fe847826713",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/02-app-logcat.txt": "7054da9396cf13c22590ecb95fe54cf4b6fe90ef69c67b233d636fc69a5c995a",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/02-home-after-wait.png": "f1ffa255b0e6275e942f0c988a371e977a20a9398273d3f9fa1666348d7e1844",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/02-home-after-wait.xml": "5d897965a8f7f8eac5a6804e96c046e660776f6fbe5f90a21a6772b5f5ceca6e",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/03-simulated-unlock-guide.png": "b41232fc657a523d290ca7187900e6733a726c95fec32de48daa286c15ffe05f",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/03-simulated-unlock-guide.xml": "6f9c1b40e979ff86b3a19c01a1749bd17e43f215c3ed1ddd30ad027f4d4518f3",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/04-expanded-home.png": "e1cc7ccf91fdb298229ea802e9ebb5895135cbf4a68c4580d5576b5bad456e3e",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/04-expanded-home.xml": "d06cc47fb48173f020d8fed854b877ccbaa993176fa856a31cdb42cc6076a350",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/05-street-entry.png": "68bf648786257b8edf9915bf70536af57a9a8f8ab019a2f6a811d0efaf8e7aee",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/05-street-entry.xml": "a7de9306071a857a3159d6e3525982dfc0bc6cc3075db55ea58e3789ba5766a3",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/06-screenrecord.txt": "9a271f2a916b0b6ee6cecb2426f0b3206ef074578be55d9bc94f6f3fe3ab86aa",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/06-street-ground-after.png": "373fa0acf48d985e3ccf8a1db348e3715477e9c47e755976aa7d3b99cfd12ed2",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/06-street-ground.mp4": "bac3615fa068c5a78382fa50350eddc4c277fa8a3d832632c6be11e484ca27ba",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/07-original-garden.png": "5fe00fc6104120018ef26241040b2bd83a35535318d845a2f4e063748f2f7371",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/07-original-garden.xml": "ecb2fd253675b16069af31aa38a7a71d0ff0922abb352969cde8d47b0e7a9668",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/08-garden-return-home.png": "1b7a692242e6e412bb75dde4fc219b9c0a211832af10e66f9f218b64bacc8ac8",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/08-garden-return-home.xml": "2f1bbff1d7812b64276bc395cfb14bd22277204431ec98e7be5ace2235ae8569",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/09-guide-reopen.png": "0d12431a5284ec959e3d02550cc6ec1f66a59b55afbd51b8483676d443d4f82f",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/09-guide-reopen.xml": "6f9c1b40e979ff86b3a19c01a1749bd17e43f215c3ed1ddd30ad027f4d4518f3",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/10-back-closes-guide.png": "2fcb6f266ced3f1df5258d06878a81ecfe281ecc25caf0b7c4fd80ccf9cb77b9",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/10-back-closes-guide.xml": "b63148370684b0439ab83c5ec61a4a4da1b77018462e9de845782902e7dadbff",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/11-street-before-background.png": "5b579affd6e1791bc4d66869aca696f3123acf07c62f5a3f7dc33e4e630bc3b5",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/11-street-before-background.xml": "ed7e3ae8eb590fda6b9a539b61f37ddfa7d23980e43711ea9ddbdaf68257ca3e",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/12-android-home-background.png": "2933cd3549efe2bd9333ed21fa7858d5dd8541a6e1d9960e7e92c4131e4cc8c5",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/12-android-home-background.xml": "c2345a0a94458604f0bf5b15ceaa8731bdfe1e63ede426b8943ef071d6d0e8fa",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/13-resume-from-home.png": "cece29515f3fdb5ee30a212ab55a2aa89fb525a57637f247d464a1b2e77cbe22",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/13-resume-from-home.xml": "d976ec4f584ce09fa6a74752fcd6505225723e887cb5ac26cff627d1eca784f0",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/14-street-for-back.png": "681130ed20c55df18665640d97577602108aa3373212539d277aed3c749f4341",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/14-street-for-back.xml": "ed7e3ae8eb590fda6b9a539b61f37ddfa7d23980e43711ea9ddbdaf68257ca3e",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/15-back-street-to-home.png": "bf948defeed4f898455e43d998fd875753b05b1b683b797596c9c8aa8a0d468b",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/15-back-street-to-home.xml": "7c6f126ce87141b17e61ee41b62621ebbb9090c1c348fb525b1f5e2078cad739",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/16-back-home-exit.png": "2933cd3549efe2bd9333ed21fa7858d5dd8541a6e1d9960e7e92c4131e4cc8c5",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/16-back-home-exit.xml": "c2345a0a94458604f0bf5b15ceaa8731bdfe1e63ede426b8943ef071d6d0e8fa",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/17-reopen-fresh-fixture.png": "9f128d3739f6f293b7fba22c9d5ed39ec067d0bdebccb1c16712a6a2874b67fe",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/17-reopen-fresh-fixture.xml": "99eb996f8cd7373dc71c04a9fe8047fb2c77e74c4318911d3921d538b7ed0e86",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/18-long-screen-initial.png": "242f4ae603aaaa576f3447e0889e0ff6f7e5a4dc6975fb1dbbd03a5bc0831bb2",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/18-long-screen-initial.xml": "a0ff0d47af4dbb7637506da72f8c4903432f29d9ec75ecac17a90eac2d4d26f9",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/19-long-screen-guide.png": "67a200c9267324fa19af1a4186ba8ed94aafdcc2b08a1e69b8f06fd4eba7545d",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/19-long-screen-guide.xml": "b1d23fd668bb85412ee34ffdee92a887950d428e3583b776696fe35a39cd1c15",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/20-long-expanded-home.png": "092928759c4fdf94d6c3f6d1e9eb3ec11dd05f223a705253623e1e4f8dd423f1",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/20-long-expanded-home.xml": "1c6392add79c1ddbffdb67d9b9228e922fc67dd1b1bd4ef7795f16704a6fc5dc",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/21-short-360x640-home.png": "cf384ea67c6bf39d47745e3eb86547536ba31ec814bdefd6d4547fc6eff8bbfd",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/21-short-360x640-home.xml": "73cb9ba935c9d2d5d187d30ab00bc522c225a6eb2da1ee6f28187f6254ff7274",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/22-short-360x640-guide.png": "b5285f43d2882443e34592abec17107505529f1826993caf740e7919adda1d15",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/22-short-360x640-guide.xml": "30e0eb19762aa22aef757b995df222299ccbcfee17a824fed527ab6917567e38",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/23-short-guide-back-home.png": "3c5323d553f4309d6ebd8b0123fad2e55c760a4c1fcd16d3387a930c8725570e",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/23-short-guide-back-home.xml": "93832f5115ba00dc8f93d74ede886365c066d7bffe617b82af4b81fb6f9b534a",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/24-restored-physical-size.png": "c098e7d4b45f739acc00879b82f92f969914d36fa5b90b352f6b8cc4896c244e",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/24-restored-physical-size.xml": "867988ba3e4d6d80dabd81391526129bb0cca7cfdf01f1ac150efd90cdb57f72",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/25-back-exit-final.png": "45886287a8b57afb8b1dd02afbbba50abc70fd67ad941ae0dbb87186e97f96f7",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/25-back-exit-final.xml": "c2345a0a94458604f0bf5b15ceaa8731bdfe1e63ede426b8943ef071d6d0e8fa",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/PREFLIGHT.json": "2ae73f288fd6104bb0404047dfc53acb098a277e65e3df8c3042739a8a036711",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/SESSION.json": "42479ca7dacb73ff7c7513f8cf023ca59449a7bd5e92a7b32d587b782bf3e904",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/actions.jsonl": "f74fd5c018810878476309b167d7b8c0f29b96c887fe8e7bce3cef951ff4bab5",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/boot-after-restart.json": "ce670fb40b546b0d760762ebddb2949088f5b885b63d84cb3d0fa6b6474bd1a8",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/bounded-preflight.json": "7043889b9caddc8dbca005ae31ed1f054acd6930622bf44503e78c4068d36316",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/emulator-restart.json": "93dee8c3ef72f04aa539969475cdb8e5a2b541fc96ba67df5918e4a66eb9704a",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/emulator-restart.log": "19c12a19b15408c93654ff15bf406c5458fe187a1c2c14106a8d752113e3e577",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/emulator-stop.json": "9d3a2f0c1d48237290c6d1613b0a14465e7a4a40f54a012e7d766957fa014715",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/final-apkPath.txt": "ba56e8828218d55cd5c6375b49c05a6e3237ade64f88eb1d60eca0fef5480cd1",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/final-app-logcat.txt": "b690fd0634be37c1ccf1fac30b12d20fb4866cc5128c316db7a218aa31512c81",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/final-density.txt": "d4282d3761f8524b0cb8905313ff65090c77b3b72f366c9676fdaf8fb2b4ad4c",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/final-foreground.txt": "db7cfc1accadc57b4a3920fd6c0acf9028296bf1af1c53e432e3bc4d4e2bcba2",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/final-package.txt": "28319fa27b64a473d492d1d391ab2ee4d731e9a2188709050bd23bdb140c8cf7",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/final-pid.txt": "330e534f023272fe4e1f66e90399215dd581f7b275b072010631587fa0a12d2a",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/final-projectUids.txt": "e7dba22a346cf3437321b6d6a357def9bf9fd48b95eb2118a59e6d08760808d5",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/final-wm.txt": "7f3368455c954e86d4ca3c1b037d4641739037f61333d4750cf197d0ebe98b45",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/install.txt": "a39f7738efca208b73e603f91c292bc1fdbeb768eb59801cbbb71fd513cf7a1f",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/launch.txt": "205c88c0239b42284f5db21ad62af9c10f8e0a0cf4da5962aed557f9b985793f",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/pre-api.txt": "22f0b04af06177a933886085621c7b19c9aea0c1131f37d1bf12acbb5aceaee8",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/pre-density.txt": "9cc9098b765a82b77bcfb3d44075ad861cc542f2e1379ebd44427db95dd6f919",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/pre-webview.txt": "37332a1663165d96be79e63b40c39a7804867bead350cc7cef8aee027c41f79a",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/pre-wm.txt": "26667c6eed3784751c954b020941ea97d483061be2d7b38f61e35307f7ce7274",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/private-media.json": "ad077428f1dd25cfced242197f3a4cf0a6c9dc2e4528980c2d8ca96fe834be1a",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/qa_action.py": "59119c6f13bb88cdfea3011ed49819bd6334b08cd86203fa21e622319c325b03",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/FINAL-INDEX.json": "760c64a41e16dc9e4cfc1153aad5f7969821e8e14d26dbb643fc4c7e2173658f",
+    "artifacts/html-offline-candidate/ui027/manifest.json": "50b4a5f1766e3fbd87c16ac834ef6fad3968edf67cbbbdd43c5e451201e16e92",
+    "artifacts/html-offline-candidate/ui027/FROZEN.json": "50b4a5f1766e3fbd87c16ac834ef6fad3968edf67cbbbdd43c5e451201e16e92",
+    "artifacts/html-offline-candidate/ui027/source-hashes.json": "9359f6feee62c36341d4df9757d3b5047c0aca69b656a1286c2fbf30315f57cb",
+    "artifacts/html-offline-candidate/ui027/deliverables/catforest-world-demo-0.2.7-debug.apk": "8952dd53140106b309abce79688cf0cebfa89b7623c62002e5c7c69e27075e0a",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/post-index-installed-apk/installed-base.apk": "8952dd53140106b309abce79688cf0cebfa89b7623c62002e5c7c69e27075e0a",
+    "artifacts/device-integration/2026-10-16-ui027-emulator/post-index-installed-apk/READBACK.json": "6d84aa7f41e319d7c867ef6f08558b75d1993775176abdac50a4a6b6a8fb327a"
+  },
+  "sessionInstalledApkSha256RootReported": "8952dd53140106b309abce79688cf0cebfa89b7623c62002e5c7c69e27075e0a",
+  "installedApkBytesPresentInReviewed77": false,
+  "postIndexInstalledApkBytesIndependentlyRecomputed": {
+    "path": "artifacts/device-integration/2026-10-16-ui027-emulator/post-index-installed-apk/installed-base.apk",
+    "bytes": 1065138,
+    "sha256": "8952dd53140106b309abce79688cf0cebfa89b7623c62002e5c7c69e27075e0a",
+    "scope": "later read-only emulator APK readback, candidate byte-identical; original77 unchanged"
+  },
+  "uids": {
+    "com.catforest.app": "10148",
+    "com.catforest.worlddemo": "10149"
+  },
+  "logScope": {
+    "file": "final-app-logcat.txt",
+    "lines": 602,
+    "fatalExceptionOrUncaughtMatched": 0,
+    "ELevelCount": 5,
+    "ELevelLines": [
+      "10-16 18:06:24.119  1803  1874 E EGL_emulation: eglCreateContext: EGL_BAD_CONFIG: no ES 3.2 support",
+      "10-16 18:06:24.119  1803  1874 E EGL_emulation: tid 1874: eglCreateContext(1830): error 0x3005 (EGL_BAD_CONFIG)",
+      "10-16 18:08:24.005  1803  1874 E platform: Failed to open rendernode: No such file or directory",
+      "10-16 18:12:48.905  1803  1803 E chromium: [ERROR:aw_browser_terminator.cc(154)] Renderer process (1828) crash detected (code -1).",
+      "10-16 18:16:18.159  1803  1803 E chromium: [ERROR:aw_browser_terminator.cc(154)] Renderer process (2524) crash detected (code -1)."
+    ],
+    "rendererExitDiagnostics": "2 code -1 messages shortly after Back exit; timing only, cause not established"
+  },
+  "mediaMetadataRecordsVerified": 4,
+  "video": {
+    "bytes": 580705,
+    "review": "hash/size and endpoint screenshots only; no full video frame-by-frame audit"
+  },
+  "noReviewDeviceActions": true
+}

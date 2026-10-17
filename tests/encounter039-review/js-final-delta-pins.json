@@ -1,0 +1,23 @@
+{
+  "decision": "software_candidate_delta_pass_no_device_or_native_consumer_acceptance",
+  "ownerSuitesIndependentlyRerun": {
+    "eventAndJournal": 79,
+    "transportFixtureSuites": 48
+  },
+  "independentBoundaryCases": {
+    "adapter": 6,
+    "transport": 6
+  },
+  "evidenceHashes": {
+    "artifacts/local-ble-adapter/versions/encounter-v1/encounter-adapter.js": "ba33e3e926a9a17b17fc681fb00e935487d2c51ef402a8b68ecd1d018cbd57e6",
+    "artifacts/local-ble-adapter/versions/encounter-v1/encounter-event.js": "898218eafa5329ed355555c4b4c45ee8a740ca0ddd9dd1de37c68290a6486917",
+    "artifacts/local-ble-adapter/versions/encounter-v1/encounter-transport.js": "265a6d3ba7ec53736a3bf94193a0ec126e78aa44dccd85c67cd117fb98b1a3e4",
+    "tests/encounter039-review/ADAPTER-R6-TRANSPORT-R4-DELTA.md": "43a5aa99dee75b697551e7c6f4dd5fcfae501e1dc3c4c83135092500a1cd31f1",
+    "tests/encounter039-review/adapter-r6-boundaries.cjs": "faf711704cf6f309d1b9092b7b422f2a9b059933c9a7f290a2aeb1caaa6f7b79",
+    "tests/encounter039-review/adapter-r6-boundaries-r2.json": "177cb98aca82e835031949204e7189d47d25f8618d64205eb08c118af1adb266",
+    "tests/encounter039-review/event-adapter-r6-owner-rerun.tap": "2e2cc6e872f8a8d73db24ced70f8079b45239f38d0739a9d46133a050f70ecf7",
+    "tests/encounter039-review/transport-r4-owner-rerun.tap": "7a01feb380989e64650ac7edea2030cf4d699556b65a2023fe6abc5ce976cf30",
+    "tests/encounter039-review/transport-final-six-boundaries.cjs": "c763771a21cddbb794c8e6510960f937daa1d3d3d8d162530b7dbe73d07a2cbd",
+    "tests/encounter039-review/transport-final-six-boundaries.json": "d6fc1e5532612fd34752d138c72672bdbd33de8213bfe82fb6dc4225256032c1"
+  }
+}

@@ -1,0 +1,2 @@
+NEGATIVE {"case":"remote-override-disconnect","live":false,"observedLocal":false,"action":0,"expectedLocalPet":true,"phase":"上次状态","syntheticNativeEmits":1}
+badge_ui: Original animation bank: available

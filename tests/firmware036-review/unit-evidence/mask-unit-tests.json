@@ -1,0 +1,101 @@
+{
+  "hardware": false,
+  "asanUbsanPrivateSource": true,
+  "hostExplicitPoolCapabilitySubstitute": true,
+  "cases": {
+    "baseline-raster-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 472 ALLOC 0 FREE 0"
+    },
+    "private-raster-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 472 ALLOC 1 FREE 1"
+    },
+    "private-raster-alloc-fail": {
+      "returncode": 0,
+      "output": "CHECKS 472 ALLOC 1 FREE 0"
+    },
+    "private-guards-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 18 ALLOC 3 FREE 3"
+    },
+    "private-mixed-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 28 ALLOC 2 FREE 2"
+    },
+    "private-capacity-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 16 ALLOC 1 FREE 1"
+    },
+    "private-no-legacy-alloc-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 3 ALLOC 1 FREE 1"
+    },
+    "private-zero-clamp-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 4 ALLOC 1 FREE 1"
+    },
+    "private-budget-exact-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 4 ALLOC 1 FREE 1"
+    },
+    "private-budget-minus-one-enabled": {
+      "returncode": 0,
+      "output": "CHECKS 3 ALLOC 0 FREE 0"
+    },
+    "private-fallback-unsupported": {
+      "returncode": 0,
+      "output": "CHECKS 8 ALLOC 1 FREE 1"
+    },
+    "private-fallback-low-free": {
+      "returncode": 0,
+      "output": "CHECKS 8 ALLOC 1 FREE 1"
+    },
+    "private-fallback-small-block": {
+      "returncode": 0,
+      "output": "CHECKS 8 ALLOC 1 FREE 1"
+    },
+    "private-fallback-alloc-fail": {
+      "returncode": 0,
+      "output": "CHECKS 8 ALLOC 2 FREE 1"
+    },
+    "private-fallback-misaligned": {
+      "returncode": 0,
+      "output": "CHECKS 8 ALLOC 2 FREE 2"
+    },
+    "private-fallback-bad-cap": {
+      "returncode": 0,
+      "output": "CHECKS 8 ALLOC 2 FREE 2"
+    },
+    "private-fallback-short-size": {
+      "returncode": 0,
+      "output": "CHECKS 8 ALLOC 2 FREE 2"
+    },
+    "private-fallback-post-budget": {
+      "returncode": 0,
+      "output": "CHECKS 8 ALLOC 2 FREE 2"
+    },
+    "threaded-2000-rasters": {
+      "returncode": 0,
+      "output": "CHECKS 2004 ALLOC 1 FREE 1"
+    },
+    "private-legacy-oom-1": {
+      "expectedFailureOfOriginalFallback": true,
+      "returncode": -6
+    },
+    "private-legacy-oom-2": {
+      "expectedFailureOfOriginalFallback": true,
+      "returncode": -6
+    },
+    "private-legacy-oom-temp": {
+      "expectedFailureOfOriginalFallback": true,
+      "returncode": -6
+    }
+  },
+  "all470RadiusInverseHashesExactBaseline": true,
+  "originalFallbackExtremeOomNotFixed": true,
+  "limits": [
+    "Host malloc/cap substitutes, not target PSRAM latency/capability proof",
+    "Precompiled LVGL dependency not ASAN-instrumented; actual modified mask and harness are"
+  ]
+}

@@ -1,0 +1,227 @@
+﻿[
+    {
+        "from":  "rule-prd-baseline",
+        "to":  "proposal-foundation",
+        "label":  "共享新PRD并确认Go/预研范围"
+    },
+    {
+        "from":  "proposal-foundation",
+        "to":  "proposal-social",
+        "label":  "可信归属与两板链路"
+    },
+    {
+        "from":  "rule-private-social",
+        "to":  "proposal-social",
+        "label":  "隐私与双向证明前置"
+    },
+    {
+        "from":  "rule-confirmation",
+        "to":  "proposal-social",
+        "label":  "Q13/Q14及阈值确认"
+    },
+    {
+        "from":  "proposal-social",
+        "to":  "proposal-ledger",
+        "label":  "遇见会话成为经济前提"
+    },
+    {
+        "from":  "rule-economy",
+        "to":  "proposal-ledger",
+        "label":  "经济规则先定"
+    },
+    {
+        "from":  "proposal-ledger",
+        "to":  "proposal-breeding",
+        "label":  "原子账本与幂等结算"
+    },
+    {
+        "from":  "proposal-social",
+        "to":  "proposal-collection",
+        "label":  "先展示基础收藏"
+    },
+    {
+        "from":  "proposal-breeding",
+        "to":  "proposal-collection",
+        "label":  "补交换/后代来源谱系"
+    },
+    {
+        "from":  "proposal-foundation",
+        "to":  "proposal-hardware",
+        "label":  "并行硬件打样与功耗"
+    },
+    {
+        "from":  "rule-mic-privacy",
+        "to":  "proposal-mic",
+        "label":  "主动语音隐私门禁"
+    },
+    {
+        "from":  "proposal-mic",
+        "to":  "proposal-environment",
+        "label":  "复用采集不复用授权"
+    },
+    {
+        "from":  "rule-mic-privacy",
+        "to":  "proposal-environment",
+        "label":  "Q9已通过；实现授权、指示、停采"
+    },
+    {
+        "from":  "proposal-breeding",
+        "to":  "proposal-pilot",
+        "label":  "真实社交完整闭环"
+    },
+    {
+        "from":  "proposal-hardware",
+        "to":  "proposal-pilot",
+        "label":  "安全provision样机"
+    },
+    {
+        "from":  "rule-fate",
+        "to":  "proposal-pilot",
+        "label":  "可选Fate先测再开"
+    },
+    {
+        "from":  "proposal-pilot",
+        "to":  "proposal-m3",
+        "label":  "M2留存达到预先定义门槛"
+    },
+    {
+        "from":  "proposal-environment",
+        "to":  "proposal-pilot",
+        "label":  "环境分类与授权/功耗真机验收"
+    },
+    {
+        "from":  "rule-prd-baseline",
+        "to":  "proposal-team-execution",
+        "label":  "用户已准按v1.9继续实施"
+    },
+    {
+        "from":  "rule-verification-evidence",
+        "to":  "proposal-team-execution",
+        "label":  "写范围隔离与证据分级"
+    },
+    {
+        "from":  "proposal-team-execution",
+        "to":  "proposal-social",
+        "label":  "先冻结HTTP/BLE契约再接三端"
+    },
+    {
+        "from":  "proposal-foundation",
+        "to":  "proposal-ota",
+        "label":  "分区与密钥安全前置"
+    },
+    {
+        "from":  "proposal-ota",
+        "to":  "proposal-pilot",
+        "label":  "升级回滚与断电门禁"
+    },
+    {
+        "from":  "proposal-social",
+        "to":  "proposal-personality",
+        "label":  "真实事件触发人格与主动表达"
+    },
+    {
+        "from":  "proposal-personality",
+        "to":  "proposal-pilot",
+        "label":  "可解释漂移与触发限频"
+    },
+    {
+        "from":  "rule-trial-parameters",
+        "to":  "proposal-breeding",
+        "label":  "双孩权益及试验候选参数"
+    },
+    {
+        "from":  "rule-trial-parameters",
+        "to":  "proposal-ledger",
+        "label":  "试验策略可配置与生产审定"
+    },
+    {
+        "from":  "rule-trial-parameters",
+        "to":  "proposal-mic",
+        "label":  "ASR暂不定，不启自由识别云音频"
+    },
+    {
+        "from":  "proposal-team-execution",
+        "to":  "proposal-environment-model",
+        "label":  "新增独占模型研发范围"
+    },
+    {
+        "from":  "proposal-environment-model",
+        "to":  "proposal-environment",
+        "label":  "合法数据/模型及provider集成"
+    },
+    {
+        "from":  "rule-wire-m2",
+        "to":  "proposal-social",
+        "label":  "共同摘要与签名编号先冻结"
+    },
+    {
+        "from":  "rule-wire-m2",
+        "to":  "proposal-environment",
+        "label":  "授权/事件/ACK独立与墓碑防复活"
+    },
+    {
+        "from":  "rule-venue-credential",
+        "to":  "proposal-venue-lease",
+        "label":  "凭据来源与位置隐私先确认"
+    },
+    {
+        "from":  "proposal-venue-lease",
+        "to":  "proposal-social",
+        "label":  "有效场地门禁前置"
+    },
+    {
+        "from":  "proposal-social",
+        "to":  "proposal-breeding",
+        "label":  "confirmed options与参与者列表供正常双端选择"
+    },
+    {
+        "from":  "rule-wire-m2",
+        "to":  "proposal-ota",
+        "label":  "冻结20–23字节后实现签发与三端uploader"
+    },
+    {
+        "from":  "proposal-venue-lease",
+        "to":  "proposal-ledger",
+        "label":  "结算当下复验可信租约与会话场地快照"
+    },
+    {
+        "from":  "rule-peer-wire",
+        "to":  "proposal-peer-auth",
+        "label":  "冻结owner16–18不替代peer认证审查"
+    },
+    {
+        "from":  "proposal-peer-auth",
+        "to":  "proposal-social",
+        "label":  "可信双板与本机匹配后输出证明"
+    },
+    {
+        "from":  "rule-guardian-privacy",
+        "to":  "proposal-privacy-eligibility",
+        "label":  "可信年龄监护scope与独立同意"
+    },
+    {
+        "from":  "proposal-privacy-eligibility",
+        "to":  "proposal-environment",
+        "label":  "授权签发和事件当下复核"
+    },
+    {
+        "from":  "proposal-privacy-eligibility",
+        "to":  "proposal-venue-lease",
+        "label":  "位置与发现敏感资格前置"
+    },
+    {
+        "from":  "rule-pet-sync-evidence",
+        "to":  "proposal-pet-sync-diagnosis",
+        "label":  "先确认现象与复现再确定根因"
+    },
+    {
+        "from":  "proposal-foundation",
+        "to":  "proposal-pet-sync-diagnosis",
+        "label":  "核查既有归属和签名状态同步链路"
+    },
+    {
+        "from":  "proposal-pet-sync-diagnosis",
+        "to":  "proposal-pilot",
+        "label":  "外出返回切猫与重连的双端一致性验收"
+    }
+]

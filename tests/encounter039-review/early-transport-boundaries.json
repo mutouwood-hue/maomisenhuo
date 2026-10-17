@@ -1,0 +1,54 @@
+{
+  "virtual_fixture": true,
+  "reusesOwnerNativeFixture": true,
+  "independentBoundaryCases": [
+    {
+      "case": "nonuuid hello owner",
+      "result": {
+        "stage": "ready_local",
+        "helloClient": "owner-not-a-uuid",
+        "stateClient": null,
+        "deviceId": "0123456789abcdef0123456789abcdef",
+        "commands": [
+          "hello",
+          "state"
+        ]
+      }
+    },
+    {
+      "case": "nonuuid state owner",
+      "result": {
+        "stage": "ready_local",
+        "helloClient": null,
+        "stateClient": "owner-not-a-uuid",
+        "deviceId": "0123456789abcdef0123456789abcdef",
+        "commands": [
+          "hello",
+          "state"
+        ]
+      }
+    },
+    {
+      "case": "uppercase device identity",
+      "result": {
+        "stage": "ready_local",
+        "helloClient": null,
+        "stateClient": null,
+        "deviceId": "0123456789ABCDEF0123456789ABCDEF",
+        "commands": [
+          "hello",
+          "state"
+        ]
+      }
+    },
+    {
+      "case": "explicit legacy route result",
+      "result": {
+        "nativeMode": "legacy",
+        "requestedApplicationMode": "legacy",
+        "wireFamily": "CFLOCAL3",
+        "stage": "disconnected"
+      }
+    }
+  ]
+}

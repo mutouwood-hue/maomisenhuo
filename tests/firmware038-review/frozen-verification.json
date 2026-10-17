@@ -1,0 +1,53 @@
+{
+  "softwareOnly": true,
+  "status": "passed",
+  "sourceCount": 107,
+  "sourceZipEntries": 144,
+  "sourceReadbackExact": 107,
+  "sourceChangesOnly": [
+    "CMakeLists.txt",
+    "main/badge_pages.c",
+    "main/badge_scene.c",
+    "main/badge_scene.h",
+    "tools/host_preview/preview.c"
+  ],
+  "unchangedSourceCount": 102,
+  "app": {
+    "path": "deliverables/cat-forest-badge-0.3.8-local3.bin",
+    "bytes": 6402112,
+    "sha256": "fcdd98ee3fdee872abd64737f83f4d3f1077ff0f991a3f55322ed5d5e173625b",
+    "description": {
+      "version": "0.3.8-local3",
+      "projectName": "cat_forest_badge",
+      "idfVersion": "v5.5.5",
+      "secureVersion": 0,
+      "elfSha256": "ad048342a5013792e5fff34b861acb79a8d66c8e9c0db2548e63b1b0dbd4c202"
+    }
+  },
+  "elf": {
+    "path": "build/cat_forest_badge.elf",
+    "sha256": "ad048342a5013792e5fff34b861acb79a8d66c8e9c0db2548e63b1b0dbd4c202"
+  },
+  "zip": {
+    "path": "deliverables/cat-forest-badge-0.3.8-local3-source.zip",
+    "bytes": 2706890,
+    "sha256": "b2106f4f4cf032b3162d23527ba245ff2e0c67dbf7a8f83b6fd642724f47e7d3",
+    "sourceFiles": 107,
+    "allSourceEntriesReadBackExact": true,
+    "noBuildTreesOrBinaries": true
+  },
+  "frozenManifestPins": true,
+  "allManifestEvidencePins": 15,
+  "oneActualSdkPrivateMaskTU": true,
+  "sdkHostMacroAbsent": true,
+  "evidenceHashes": {
+    "artifacts/firmware-local-v3-visual038/FROZEN.json": "c13d6464d620b8a71facef5deeba047e8efa473655d8480b6aa7f4d560c40cfc",
+    "artifacts/firmware-local-v3-visual038/manifest.json": "596a6f03133535410dcc16b299e11b0108313b5e85c75847daab907fe8435a3c",
+    "artifacts/firmware-local-v3-visual038/source-hashes.json": "b6a75cc96dbc1686599b2d41feaa94f1361a7129223b6b4a1e18717810eefef0",
+    "artifacts/firmware-local-v3-visual038/SOURCE-DELTA.json": "ebfb49bec8c3282e7c9006acab9b19ee290f68a52a44b9eb80fa3f3f2add7802",
+    "artifacts/firmware-local-v3-visual038/deliverables/cat-forest-badge-0.3.8-local3.bin": "fcdd98ee3fdee872abd64737f83f4d3f1077ff0f991a3f55322ed5d5e173625b",
+    "artifacts/firmware-local-v3-visual038/build/cat_forest_badge.elf": "ad048342a5013792e5fff34b861acb79a8d66c8e9c0db2548e63b1b0dbd4c202",
+    "artifacts/firmware-local-v3-visual038/deliverables/cat-forest-badge-0.3.8-local3-source.zip": "b2106f4f4cf032b3162d23527ba245ff2e0c67dbf7a8f83b6fd642724f47e7d3",
+    "artifacts/firmware-local-v3-visual038/build/compile_commands.json": "6ed1962f97731ff08f8d7f5db21737e44c82a5e26dfa376f0a030b11ef4d3ce3"
+  }
+}

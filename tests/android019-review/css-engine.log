@@ -1,0 +1,144 @@
+{
+  "metadata" : {
+    "engine" : "macOS offscreen WKWebView, nonpersistent, no window\/device\/browser tab",
+    "inlineIndexSha256" : "b138561d35a631badac68f554a128b217c971aae80d047046188ce24159fa867",
+    "inputSha256" : "2d6ec91e8dd154620719d1b518f493aa72c4d4589330b6d5366c1715f9a09798",
+    "limitation" : ":active mirrored to equal-specificity attribute state; synthetic PointerEvents and deterministic clock; actual Android touch\/cancel\/native selection still pending",
+    "productionStyles" : [
+      {
+        "file" : "life-panels.css",
+        "sha256" : "57710578ddb321794fb0c77faa3fe10c3d94e5d9d39cd38a0b433ddf54e532a3"
+      },
+      {
+        "file" : "offline-host.css",
+        "sha256" : "61b8b7815a196da4a4e252deaf2b65846b6aa1e301bada474a4811b60addda45"
+      },
+      {
+        "file" : "offline-ui-polish.css",
+        "sha256" : "d2c8dc4e68b051e80652725430187554504231139895dc28023ea927c0efaff1"
+      }
+    ],
+    "viewport" : {
+      "height" : 640,
+      "width" : 360
+    }
+  },
+  "pass" : true,
+  "tests" : [
+    {
+      "detail" : [
+        {
+          "alias" : "button:not(:disabled)[data-engine-active]",
+          "original" : "button:not(:disabled):active"
+        },
+        {
+          "alias" : ".room-view canvas[data-engine-active]",
+          "original" : ".room-view canvas:active"
+        },
+        {
+          "alias" : "#m-rail button[data-engine-active]",
+          "original" : "#m-rail button:active"
+        },
+        {
+          "alias" : "#m-dock button[data-engine-active]",
+          "original" : "#m-dock button:active"
+        },
+        {
+          "alias" : "#sc-meet #sc-key, #sc-meet #sc-key[data-engine-active], #sc-meet #sc-key.down",
+          "original" : "#sc-meet #sc-key, #sc-meet #sc-key:active, #sc-meet #sc-key.down"
+        }
+      ],
+      "name" : "production global active rule included",
+      "pass" : true
+    },
+    {
+      "detail" : {
+        "active" : {
+          "height" : 56,
+          "left" : 275,
+          "top" : 264.125,
+          "width" : 48
+        },
+        "armed" : {
+          "height" : 56,
+          "left" : 275,
+          "top" : 264.125,
+          "width" : 48
+        },
+        "down" : {
+          "height" : 56,
+          "left" : 275,
+          "top" : 264.125,
+          "width" : 48
+        },
+        "initial" : {
+          "height" : 56,
+          "left" : 275,
+          "top" : 264.125,
+          "width" : 48
+        },
+        "transform" : "matrix(1, 0, 0, 1, 0, -28)",
+        "transition" : "background, box-shadow"
+      },
+      "name" : "production active\/down\/armed keep same actual WebKit rectangle",
+      "pass" : true
+    },
+    {
+      "name" : "no geometry transition on hold target",
+      "pass" : true
+    },
+    {
+      "name" : "stable hold stays idle before1000",
+      "pass" : true
+    },
+    {
+      "detail" : {
+        "height" : 56,
+        "left" : 275,
+        "top" : 264.125,
+        "width" : 48
+      },
+      "name" : "actual CSS + input + original arm succeed for stationary center hold",
+      "pass" : true
+    },
+    {
+      "name" : "short release under active cascade remains idle",
+      "pass" : true
+    },
+    {
+      "name" : "pointercancel does not arm under active CSS",
+      "pass" : true
+    },
+    {
+      "name" : "lostpointercapture does not arm under active CSS",
+      "pass" : true
+    },
+    {
+      "name" : "pointerleave does not arm under active CSS",
+      "pass" : true
+    },
+    {
+      "name" : "genuine slide outside still cancels",
+      "pass" : true
+    },
+    {
+      "detail" : {
+        "before" : {
+          "height" : 56,
+          "left" : 275,
+          "top" : 264.125,
+          "width" : 48
+        },
+        "moved" : {
+          "height" : 56,
+          "left" : 275,
+          "top" : 293.125,
+          "width" : 48
+        },
+        "phase" : "idle"
+      },
+      "name" : "018 production negative control moves key and cancels same stationary finger",
+      "pass" : true
+    }
+  ]
+}

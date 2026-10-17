@@ -1,0 +1,13 @@
+#companion-open{position:fixed;right:var(--companion-gap);top:calc(var(--safe-area-inset-top,0px) + var(--companion-gap));z-index:60;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:var(--companion-radius);padding:var(--companion-small-gap);box-shadow:var(--shadow)}
+:root{--companion-gap:16px;--companion-small-gap:8px;--companion-radius:12px;--companion-text:13px;--companion-button:44px}
+#companion-dialog{background:var(--paper);color:var(--ink);font-size:var(--companion-text)}
+#companion-dialog label{display:block;margin-block:var(--companion-small-gap)}
+#companion-dialog textarea,#companion-dialog select,#companion-dialog input:not([type=checkbox]){width:100%;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:var(--companion-radius);min-height:var(--companion-button);padding:var(--companion-small-gap)}
+#companion-dialog .companion-actions{display:flex;gap:var(--companion-small-gap);flex-wrap:wrap;margin-block:var(--companion-gap)}
+#companion-dialog .companion-actions button{flex:1;min-height:var(--companion-button);border:1px solid var(--line);border-radius:var(--companion-radius);background:var(--paper);color:var(--ink);padding:var(--companion-small-gap)}
+#companion-dialog pre{white-space:pre-wrap;overflow-wrap:anywhere;background:var(--sky);padding:var(--companion-small-gap);border-radius:var(--companion-radius)}
+#companion-error{color:var(--orange-dark)}
+/* 样式真源为原作色彩与上方共享刻度；入口在更多抽屉自然流，不覆盖姓名/存档。 */
+#companion-mobile-entries{display:flex;gap:var(--companion-small-gap);margin-block:var(--companion-gap);flex-wrap:wrap}
+#companion-mobile-entries>#companion-open,#companion-mobile-entries>#m2-open{position:static;inset:auto;z-index:auto;flex:1;min-height:var(--companion-button);font-size:var(--companion-text);white-space:nowrap}
+

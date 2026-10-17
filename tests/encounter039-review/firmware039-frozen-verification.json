@@ -1,0 +1,53 @@
+{
+  "decision": "NOT RELEASED; confirmed C01/P2 and C02/P1 require independent040 fixes",
+  "application": {
+    "path": "deliverables/cat-forest-badge-0.3.9-local4.bin",
+    "bytes": 6409968,
+    "sha256": "275cd9610f0174662dfe9223289a024cead02da3eb2c1dd06f249606e19c5d96"
+  },
+  "elf": {
+    "path": "deliverables/cat-forest-badge-0.3.9-local4.elf",
+    "bytes": 20172604,
+    "sha256": "e6b15249911bafc25e7e28dbfcf94fb72e6edc8e3416ebff77f4116233566739"
+  },
+  "sourceZip": {
+    "path": "deliverables/cat-forest-badge-0.3.9-local4-source.zip",
+    "bytes": 2528824,
+    "files": 138,
+    "sourceFiles": 108,
+    "sha256": "8f3b55632f9b7b319198ea702206d1084db20477c874c4a4dbdc3a4569a6221f"
+  },
+  "sourceCount": 108,
+  "unchanged038": 99,
+  "delta": [
+    "CMakeLists.txt",
+    "main/local2_peer.h",
+    "main/local2_core.h",
+    "main/local2_ble.c",
+    "main/local2_core.c",
+    "main/local2_peer.c",
+    "main/local2_wire.c",
+    "main/local3_encounter.inc",
+    "main/badge_pages.c"
+  ],
+  "zipAll108ReadbackExact": true,
+  "r2NineSourcePinsExact": true,
+  "evidenceHashes": {
+    "artifacts/firmware-local-v4-encounter039/FROZEN.json": "6e59a138e66e318a43eee6db37021eae26c315c7fd36b0971b6457b341e2d0e4",
+    "artifacts/firmware-local-v4-encounter039/manifest.json": "6245a223016edf7982cbf7d8dc3f70b287dc38e257a785dd855d92685408b7ba",
+    "artifacts/firmware-local-v4-encounter039/source-hashes.json": "db2fbb5809a626e57b6eaf78251c03ee556110fe24517c073ca91e942c300e30",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/manifest.json": "5138ae60aceec5a00cf54e03c8cdb4e8ba6dd3a69bfdfdbf0558e36b14ac1bb8",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local2_core.c": "2eb066015b52fd23815e7e584591a0f4969518d99ea4d8c6d781b23d94bc9133",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local2_core.h": "dc0013feaa4efbe64efcd7cc8cc0f756047a48142df04bf8c8d3ec0617e7df57",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local3_encounter.inc": "556d9b602850a9dda614a6c8831f52f827c36df9e29e6d973e31eb24764d6bd1",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local2_wire.c": "425557f49e5bb8ca4e59358b208e833f57d90074e64187ee3975d2398ba6a356",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local2_wire.h": "09c756b30ad7f84a8d1e28cf704792410807898855773747a022b23c7a2cf5a6",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local2_store.h": "74be87b32c9db82ff5ecd0309cba84706883463224444bfcf90856f2363b837e",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local2_peer.c": "9f2543fd5129140c1434f88f73a6a24b3a67ad8f10c53368683ab8a2feed6b32",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local2_peer.h": "09c12937bfe5a04a5029522dad9d1d357c0ce0fbc7bb9154269bed2758e363d8",
+    "artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/badge_pages.c": "ea38c958e2c246fdebb4467aed06e688abeeecd88f1674d25af32faa12a1625f",
+    "tests/encounter039-review/raw-digest-r2-negative.json": "a50aad27aed70f29ab9dac5f025a5db38f56e83cfa5a781243390a64d963653c",
+    "tests/encounter039-review/stale-consent-r2-negative.json": "0f9b964f6e78f5a4cc870b13e82ef4036ebf282a1a8ca574f172cc4decd7397e",
+    "tests/encounter039-review/core-atomic-r2-report.json": "f61ae54d2f81d793861468de6f5be9af999dcce8afbe55d57f62c1d8c731cd78"
+  }
+}

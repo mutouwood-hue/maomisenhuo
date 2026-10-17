@@ -1,0 +1,49 @@
+{
+  "decision": "controlled_application_only_device_validation_release",
+  "version": "0.3.8-local3",
+  "newConfirmedBlockingP1P2": [],
+  "initialConfirmedP2": "three visual-source trust cases in ee81; fixed r2 and retained negatives",
+  "app": {
+    "path": "deliverables/cat-forest-badge-0.3.8-local3.bin",
+    "bytes": 6402112,
+    "sha256": "fcdd98ee3fdee872abd64737f83f4d3f1077ff0f991a3f55322ed5d5e173625b",
+    "description": {
+      "version": "0.3.8-local3",
+      "projectName": "cat_forest_badge",
+      "idfVersion": "v5.5.5",
+      "secureVersion": 0,
+      "elfSha256": "ad048342a5013792e5fff34b861acb79a8d66c8e9c0db2548e63b1b0dbd4c202"
+    }
+  },
+  "elf": {
+    "path": "build/cat_forest_badge.elf",
+    "sha256": "ad048342a5013792e5fff34b861acb79a8d66c8e9c0db2548e63b1b0dbd4c202"
+  },
+  "sourceZip": {
+    "path": "deliverables/cat-forest-badge-0.3.8-local3-source.zip",
+    "bytes": 2706890,
+    "sha256": "b2106f4f4cf032b3162d23527ba245ff2e0c67dbf7a8f83b6fd642724f47e7d3",
+    "sourceFiles": 107,
+    "allSourceEntriesReadBackExact": true,
+    "noBuildTreesOrBinaries": true
+  },
+  "pagesSha256": "dd7e6efefa63e79b3639bb0d886eeb5976e892d031b53e82a0bd1fd4e726bc45",
+  "sceneSha256": "2c5723e423803fba96ae8982ad955125a34bd03717db776272747e152036fbc8",
+  "softwareOnly": true,
+  "independentLogicalTraceRuns": 16,
+  "independentDirtyOracleRuns": 10,
+  "baselineVerticalOracleRuns": 2,
+  "independentRerunOwnerMemoryFixtureRuns": 2,
+  "physicalSwipePassed": false,
+  "tearFreePassed": false,
+  "physicalCarePassed": false,
+  "deviceHeapPassed": false,
+  "preservedKnownLimits": [
+    "037/038 vertical partial residue 218/50 pixels",
+    "035 inherited two 8-pixel edge differences",
+    "sleep horizontal/vertical legacy full-page fallback",
+    "original legacy4 extreme OOM assert",
+    "actual internal/DMA reserve and optical/touch proof pending"
+  ],
+  "review": "REVIEW.md"
+}

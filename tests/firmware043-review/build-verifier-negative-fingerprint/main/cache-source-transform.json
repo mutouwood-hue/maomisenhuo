@@ -1,0 +1,42 @@
+{
+  "originalSha256": "118e62218f56385e83e6fae898867efeec4ae2f42d1ea77b30141c07597e2b3a",
+  "transforms": [
+    [
+      "#include <time.h>",
+      "#include <time.h>\n#include \"room_cache_fingerprint.h\""
+    ],
+    [
+      "static bool raster(vr_t *r,double imin,double imax,vr_stats_t *st){memset(r->color,0,sizeof(r->color));\nmemset(r->depth,0,sizeof(r->depth));\nmemset(r->owner,0,sizeof(r->owner));",
+      "static bool raster(vr_t *r,double imin,double imax,vr_stats_t *st,const vr_room_cache_t *cache){\nif(cache){\nfor(unsigned y=0;y<256;y++){\n#ifdef ESP_PLATFORM\nif((y&7)==0&&!badge_renderer_checkpoint())return false;\n#endif\nsize_t from=(size_t)(r->roi_y+(int)y)*466+r->roi_x;\nmemcpy(r->color+y*256,cache->color+from*2,512);\nmemcpy(r->depth+y*256,cache->depth+from*2,512);\nmemcpy(r->owner+y*256,cache->owner+from,256);\n}\n}else{\nmemset(r->color,0,sizeof(r->color));\nmemset(r->depth,0,sizeof(r->depth));\nmemset(r->owner,0,sizeof(r->owner));\n}"
+    ],
+    [
+      "raster(r,imin,imax,st)",
+      "raster(r,imin,imax,st,NULL)"
+    ],
+    [
+      "bool props,int tx,int ty,bool tile,vr_stats_t *st){",
+      "bool props,int tx,int ty,bool tile,vr_stats_t *st,const vr_room_cache_t *cache){"
+    ],
+    [
+      "if(!room(r,props))return false;",
+      "if(!cache&&!room(r,props))return false;"
+    ],
+    [
+      "raster(r,1.0/180,1.0/35,st)",
+      "raster(r,1.0/180,1.0/35,st,cache)"
+    ],
+    [
+      "props,0,0,false,st);",
+      "props,0,0,false,st,NULL);"
+    ],
+    [
+      "props,tx,ty,true,st);",
+      "props,tx,ty,true,st,NULL);"
+    ],
+    [
+      "#include \"esp_timer.h\"",
+      "#include \"esp_timer.h\"\n#include \"esp_rom_crc.h\""
+    ]
+  ],
+  "appended": "\n/* Static room cache is caller-owned immutable Flash. All three planes must\n * pass one joint header+fingerprint+CRC validation before any frame uses it. */\nstatic uint32_t cache_u32(const uint8_t *p){return (uint32_t)p[0]|((uint32_t)p[1]<<8)|((uint32_t)p[2]<<16)|((uint32_t)p[3]<<24);}\nbool vr_room_cache_open(vr_room_cache_t *out,const uint8_t *blob,size_t bytes){\nif(!out)return false;\nmemset(out,0,sizeof(*out));\nstatic const uint8_t fp[32]=ROOM_CACHE_FINGERPRINT;\nif(!blob||bytes!=1085860u||memcmp(blob,\"CFRMC01\\0\",8)||cache_u32(blob+8)!=1||cache_u32(blob+12)!=80||cache_u32(blob+16)!=466||cache_u32(blob+20)!=466||cache_u32(blob+24)!=35||cache_u32(blob+28)!=180||cache_u32(blob+32)!=434312||cache_u32(blob+36)!=434312||cache_u32(blob+40)!=217156||memcmp(blob+48,fp,32))return false;\nuint32_t crc;\n#ifdef ESP_PLATFORM\ncrc=0;\nfor(size_t i=80;i<bytes;i+=4096){\nif(!badge_renderer_checkpoint())return false;\nsize_t count=bytes-i<4096?bytes-i:4096;\ncrc=esp_rom_crc32_le(crc,blob+i,(uint32_t)count);\n}\n#else\ncrc=0xffffffffu;\nfor(size_t i=80;i<bytes;i++){\n#ifdef ESP_PLATFORM\nif((i&4095u)==0&&!badge_renderer_checkpoint())return false;\n#endif\ncrc^=blob[i];for(unsigned k=0;k<8;k++)crc=(crc>>1)^(0xedb88320u&(0u-(crc&1u)));\n}\ncrc^=0xffffffffu;\n#endif\nif(crc!=cache_u32(blob+44))return false;\nout->color=blob+80;out->depth=blob+80+434312;out->owner=blob+80+868624;out->valid=0x43414348u;\nreturn true;\n}\nbool vr_world_cached_frame(vr_t *r,const vr_room_cache_t *cache,const char *name,double seconds,double heading,double ly,double lp,double wx,double wz,double wy,vr_stats_t *st){\nif(!cache||cache->valid!=0x43414348u||!cache->color||!cache->depth||!cache->owner)return false;\nreturn world_render(r,name,seconds,heading,ly,lp,wx,wz,wy,true,0,0,false,st,cache);\n}\nbool vr_world_cached_tile(vr_t *r,const vr_room_cache_t *cache,const char *name,double seconds,double heading,double wx,double wz,double wy,int tx,int ty,vr_stats_t *st){\nif(!cache||cache->valid!=0x43414348u||!cache->color||!cache->depth||!cache->owner)return false;\nreturn world_render(r,name,seconds,heading,0,0,wx,wz,wy,true,tx,ty,true,st,cache);\n}\n"
+}

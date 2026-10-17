@@ -1,0 +1,69 @@
+{
+  "released": true,
+  "status": "controlled_application_only_cold_warm_cache_device_validation_released",
+  "version": "0.4.3-exactcache",
+  "appSha256": "905552f2f35dc56942b226e9d8558ae98bf31e0e07765ae0c1ba81ab32e88cc2",
+  "appBytes": 7723088,
+  "elfSha256": "d7ebe539cba1b18ff6c6cf453b40a00c16304240b23eb391942876cce1f660b3",
+  "sourceZipSha256": "eba9862c0b5ce11010992d1067cc2503476b41b840605b4fcfa956f968152df5",
+  "confirmedOpenP1P2": [],
+  "allowed": "Root-only verified current activeOTA1 app sectors update, explicit cold0/warm0/1/2 benchmark, two software composition captures, CLEAR/STATE/PERF/QUIT; no selector/NVS/boot/other-slot writes",
+  "notAccepted": [
+    "AfinishedArt",
+    "continuousFPS/naturalAnimation",
+    "physicalTouch/care/swipe/scanout/tearfree",
+    "all-time NVS/runtime durability",
+    "power-loss atomic active-slot update/automatic rollback"
+  ],
+  "executionArtifacts": [
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/run_stage.py",
+      "sha256": "cb4f0303e0b87a127101770b7655ba4713388bef008e7cd0082bf8acaeb3afb9"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/esptool_no_write_retry.py",
+      "sha256": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/diagnostic_session.py",
+      "sha256": "f2463790452389c97ec7568b8a5ebc1103dbcc45174a96873f6504c93dda8426"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/CANDIDATE.json",
+      "sha256": "d601b48ffd86347b052cfccb3054a34ae652ac9067c3a7af4f112f0701fd1d95"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/expected-render-samples.json",
+      "sha256": "86328990926cf266f8b5fcdcc9102f342f3d2fed3f83423fd8ef9381fe7854ca"
+    }
+  ],
+  "requiredExecutionArtifacts": [
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/run_stage.py",
+      "sha256": "cb4f0303e0b87a127101770b7655ba4713388bef008e7cd0082bf8acaeb3afb9"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/esptool_no_write_retry.py",
+      "sha256": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/diagnostic_session.py",
+      "sha256": "f2463790452389c97ec7568b8a5ebc1103dbcc45174a96873f6504c93dda8426"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/CANDIDATE.json",
+      "sha256": "d601b48ffd86347b052cfccb3054a34ae652ac9067c3a7af4f112f0701fd1d95"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/expected-render-samples.json",
+      "sha256": "86328990926cf266f8b5fcdcc9102f342f3d2fed3f83423fd8ef9381fe7854ca"
+    }
+  ],
+  "reportPath": "tests/firmware043-review/REVIEW.md",
+  "reportSha256": "b07b8137648180ab365a3102dab6245c3c89a129fe52abee21eb6dfe560140cd",
+  "evidencePath": "tests/firmware043-review/review-evidence.json",
+  "evidenceSha256": "d2c88cb3d0f286b2f55b93b0bd438bd9398de35c7669e79ea0f4f6ca8d0af781",
+  "evidencePinCount": 319,
+  "reviewerDeviceActions": false,
+  "createdAtUtc": "2026-10-16T11:55:34.706482+00:00"
+}

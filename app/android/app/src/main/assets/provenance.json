@@ -1,0 +1,19 @@
+{
+  "source": "小橘电子宠物.html",
+  "sourceSha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+  "purpose": "Original Three.js room, minigame, outdoor and clinic views; native app owns durable state and transactions",
+  "outputs": {
+    "cat-source.js": "1a974e574b0a209b69f1daaffb7903eb96bd3fde36b4c1352a0167cafee6310c",
+    "clinic-core.js": "052ce15ad1ff176089c9352441b791b6344dce59acf9fcd04e4f3a098862d8bf",
+    "clinic.html": "860626a4cb97f5658fe407127c60eb6afdc81b9c46d1a5212038a93bd8151930",
+    "immersive-room.js": "a45cdd3cf9ed244dabe9b0c36752583d8684b3331714c4935d98610b2a7e1f56",
+    "minigame-core.js": "0a81de83fd2804aff3e5a47cfb3338d1fe73b13b8de9eeed890d0ed1bca851f3",
+    "minigame.html": "b38a33ace2733c45b860cf90a4b18536c226145a21d5c314eec3a1c789c73516",
+    "phone-feedback.css": "bd877fc2aef4ca6e38e5fa2c5360cc5a1c81221ca407cd67c6da8bcd38fd4713",
+    "phone-feedback.js": "e7408c67e38a0adb1317fe881635ad2163dfe8651a4a59614a0fc24971db8328",
+    "renderer-core.js": "ff06a9212d75cc7996c965aaab2ee3f962621899630383d5f8490511503f4bef",
+    "renderer.html": "1739d7ae5e70cb8b1cbab6209e6af9a0a4bd5178ba67295f973fb3262235d770",
+    "world-core.js": "bf1501d8a1222ee8a9b9482fe76e2c9e95ac90e1ba37973bd704a2e05cd37624",
+    "world.html": "d62764e8c6acb066496f8e065b550269b1c3163a5d4d009c76f7dfaa70763d33"
+  }
+}

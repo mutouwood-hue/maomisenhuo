@@ -1,0 +1,150 @@
+{
+  "status": "pass",
+  "kind": "independent read-only delta and host-only checks; no device",
+  "app": {
+    "path": "deliverables/cat-forest-badge-0.3.4-local3.bin",
+    "bytes": 6397696,
+    "sha256": "7f438d6f92f597ae8dd183acadaad177aebe456f43a0791f0fb64e2fc1b13f4e",
+    "description": {
+      "version": "0.3.4-local3",
+      "projectName": "cat_forest_badge",
+      "time": "09:56:43",
+      "date": "Oct 16 2026",
+      "idfVersion": "v5.5.5",
+      "elfSha256": "0fd225ba194ff6f5944c8b1cb0158964defacffd7899f9c43bfd05096ed5e92c",
+      "secureVersion": 0
+    }
+  },
+  "sourceZip": {
+    "path": "deliverables/cat-forest-badge-0.3.4-local3-source.zip",
+    "bytes": 2655141,
+    "sha256": "135f63a13fbeec0816363114de0c4acbaf02e373b14ccd5b9302cb48aa670d37",
+    "sourceFiles": 103,
+    "allSourceEntriesReadBackExact": true,
+    "noBuildTreesOrBinaries": true,
+    "externalDependencies": "managed_components symlink excluded; fixed project-local frozen component graph and ESP-IDF5.5.5 required"
+  },
+  "sourceCount": 103,
+  "zipEntries": 114,
+  "zipSupportEntries": 11,
+  "allMainByteEqual033": 51,
+  "changedPaths": [
+    "CMakeLists.txt",
+    "cmake/private-bsp-integrity.cmake",
+    "components/waveshare__esp32_s3_touch_amoled_1_75c/esp32_s3_touch_amoled_1_75c.c",
+    "tools/host_preview/preview.c"
+  ],
+  "bspExact032Sha256": "f3a86ce64f3117fc52b35c646ec652826a62a214a589a133dae3155e1016cc24",
+  "sourceStable": true,
+  "prior033SourceAppZipManifestReverified": true,
+  "partitionSourceSha256": "09fc932049fe06c1eb696b49af5ea7c1f50866ba6212433ca2e7d16be779a648",
+  "compiledPartitionSha256": "a83d5badd3817619dc7dbd12fda088c39004b91e14413b24d20f2dd0b9097be4",
+  "compiledPartitionUnchanged033": true,
+  "appDescriptionVersion": "0.3.4-local3",
+  "secureVersion": 0,
+  "fits8MiBAppSlot": true,
+  "diagnosticProductionCTests": {
+    "offline": true,
+    "actualDiagnosticC": true,
+    "platformUsbHeapDomainSubstitutes": true,
+    "hardware": false,
+    "checksPassed": 34
+  },
+  "diagnosticCompileCommand": [
+    "clang",
+    "-std=gnu11",
+    "-O1",
+    "-UNDEBUG",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-DLV_KCONFIG_IGNORE",
+    "-DLV_LVGL_H_INCLUDE_SIMPLE",
+    "-DLV_CONF_PATH=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/tools/host_preview/lv_conf.h\"",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/tools/host_preview/diag_stubs",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/tools/host_preview/stubs",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/tools/host_preview",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/tools/host_preview/diag_test.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a",
+    "-lm",
+    "-o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware034-review/diag-production-test"
+  ],
+  "diagnosticBinarySha256": "e26160dfa332c10b4eb755c246775dcebbb58a0382e1615481447192c02195b3",
+  "linkedExistingHostLvglSha256": "eb4b486f1646dc6c1ec3043410f9d744c7804c23971e00c6f19b064d4b061613",
+  "fixed10": {
+    "offline": true,
+    "deviceTouched": false,
+    "checks": [
+      {
+        "name": "BSP_exact_deployed_032_safe10_source",
+        "passed": true
+      },
+      {
+        "name": "one_literal_10_row_profile",
+        "passed": true
+      },
+      {
+        "name": "internal_draw_buffers",
+        "passed": true
+      },
+      {
+        "name": "requires_double_buffer",
+        "passed": true
+      },
+      {
+        "name": "no20row_probe_or_registration_retry",
+        "passed": true
+      },
+      {
+        "name": "no_clock_increase",
+        "passed": true
+      },
+      {
+        "name": "capture_64KiB_DMA_guard_unchanged",
+        "passed": true
+      },
+      {
+        "name": "all033_main_source_exact",
+        "passed": true
+      },
+      {
+        "name": "sdkconfig_exact033",
+        "passed": true
+      },
+      {
+        "name": "sdkconfig_defaults_exact033",
+        "passed": true
+      },
+      {
+        "name": "partition_table_source_exact033",
+        "passed": true
+      }
+    ],
+    "checkCount": 11,
+    "candidateBspSha256": "f3a86ce64f3117fc52b35c646ec652826a62a214a589a133dae3155e1016cc24",
+    "safe032BspSha256": "f3a86ce64f3117fc52b35c646ec652826a62a214a589a133dae3155e1016cc24",
+    "mainFileCount": 51,
+    "expectedPixelBytesPerBuffer": 9320,
+    "expectedTotalPixelBytes": 18640,
+    "previous20RowTotalPixelBytes": 37280,
+    "nominalReturnedInternalPixelBufferBytes": 18640,
+    "expectedFullScreenMinimumChunks": 47,
+    "actualHeapRecoveryNotMeasured": true,
+    "captureMayStillRefuseIfRuntimeBudgetInsufficient": true
+  },
+  "limits": [
+    "USB/heap/domain/input host substitutes; not actual hardware",
+    "No target build, device, serial, ADB or install",
+    "nominal pixel buffer reduction does not prove real heap recovery, faster rendering or capture budget success"
+  ]
+}

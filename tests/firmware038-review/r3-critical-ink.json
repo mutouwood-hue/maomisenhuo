@@ -1,0 +1,108 @@
+{
+  "softwareOnly": true,
+  "note": "Bright pixel count is label-region ink evidence; visual reading separately required, not OCR proof",
+  "records": [
+    {
+      "file": "artifacts/firmware-local-v3-visual038/evidence/world-matrix-r3/world1-face0-clock1-low0-power2.png",
+      "sha256": "943758c8883c97bb53cebf70daec491a06fee8fa0d2fdb7406cf05c8c0e86950",
+      "timeLabelRegion": [
+        153,
+        51,
+        313,
+        74
+      ],
+      "brightInkPixels": 480,
+      "brightInkBounds": [
+        178,
+        53,
+        287,
+        67
+      ]
+    },
+    {
+      "file": "artifacts/firmware-local-v3-visual038/evidence/world-matrix-r3/world1-face1-clock1-low0-power2.png",
+      "sha256": "c56234776dfa5f3d667696bd7c3a58d0e883ef61bdeab5f2e0aea487e26aa935",
+      "timeLabelRegion": [
+        153,
+        382,
+        313,
+        414
+      ],
+      "brightInkPixels": 1001,
+      "brightInkBounds": [
+        183,
+        383,
+        282,
+        412
+      ]
+    },
+    {
+      "file": "artifacts/firmware-local-v3-visual038/evidence/world-matrix-r3/world1-face2-clock1-low0-power2.png",
+      "sha256": "c56234776dfa5f3d667696bd7c3a58d0e883ef61bdeab5f2e0aea487e26aa935",
+      "timeLabelRegion": [
+        153,
+        382,
+        313,
+        414
+      ],
+      "brightInkPixels": 1001,
+      "brightInkBounds": [
+        183,
+        383,
+        282,
+        412
+      ]
+    },
+    {
+      "file": "artifacts/firmware-local-v3-visual038/evidence/world-matrix-r3/world3-face0-clock1-low0-power0.png",
+      "sha256": "d06c3fcb6ec91e2659ac5ed30726e3b7f6a558cb19d2d69373460499756bacaf",
+      "timeLabelRegion": [
+        153,
+        51,
+        313,
+        74
+      ],
+      "brightInkPixels": 480,
+      "brightInkBounds": [
+        178,
+        53,
+        287,
+        67
+      ]
+    },
+    {
+      "file": "artifacts/firmware-local-v3-visual038/evidence/world-matrix-r3/world3-face1-clock1-low0-power0.png",
+      "sha256": "cd8bc91bbbcb393098adde2e79b92f6f055a3ad5fcc9a25e346d9da1a83730cd",
+      "timeLabelRegion": [
+        153,
+        382,
+        313,
+        414
+      ],
+      "brightInkPixels": 1036,
+      "brightInkBounds": [
+        183,
+        383,
+        282,
+        412
+      ]
+    },
+    {
+      "file": "artifacts/firmware-local-v3-visual038/evidence/world-matrix-r3/world3-face2-clock1-low0-power0.png",
+      "sha256": "cd8bc91bbbcb393098adde2e79b92f6f055a3ad5fcc9a25e346d9da1a83730cd",
+      "timeLabelRegion": [
+        153,
+        382,
+        313,
+        414
+      ],
+      "brightInkPixels": 1036,
+      "brightInkBounds": [
+        183,
+        383,
+        282,
+        412
+      ]
+    }
+  ]
+}

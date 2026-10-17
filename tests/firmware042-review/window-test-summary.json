@@ -1,0 +1,8 @@
+{
+  "scope": "offline review evidence only; pending final product freeze",
+  "uiNewCheckCallSites": 29,
+  "uiTotalIncludingSharedBaseline": 46450,
+  "workerCases": 10,
+  "helperHandleCases": 18,
+  "actualHardwareActions": 0
+}

@@ -1,0 +1,13 @@
+{
+  "timestamp": "2026-10-15T11:32:39.011799+00:00",
+  "status": "passed",
+  "checks": 21,
+  "sourceSha256": {
+    "badge_gesture.c": "a1a6eb0897a774f35886e96e0da7adc6585f6f088ed5243ef3eb34cd5cd725bd",
+    "badge_gesture.h": "0f167ad1b809af0ca7d48bd10ab7cafa60a0dd5ad8008dcf9fa066a4d513db78",
+    "badge_ui_contract.h": "a8338e96c5cdf62ba183630bdcf3eff04f4394c6c0c87098e47c738242653f8c"
+  },
+  "scope": "Host production classifier only; no LVGL/hardware acceptance",
+  "stdout": "PASS tap at300ms and11px\nPASS 301ms is not a tap\nPASS 12px is not a tap\nPASS 599ms is not a hold\nPASS 600ms is a hold not tap\nPASS hold allows11px\nPASS hold rejects12px\nPASS 49px is not swipe\nPASS 50px at500ms swipe\nPASS 501ms is not swipe\nPASS up\nPASS left\nPASS down\nPASS diagonal distance and dominant direction\nPASS out and back never taps\nPASS out and back is not a final swipe\nPASS tap across timer wrap\nPASS hold across timer wrap\nPASS clamp edge coordinates\nPASS inactive release\nPASS target re-press does not reset duration\nCHECKS 21 FAILURES 0\n",
+  "stderr": ""
+}

@@ -1,0 +1,21 @@
+{
+  "status": "design_gates_only_no_implementation_release",
+  "reviewedAtUtc": "2026-10-16T12:02:27.199257+00:00",
+  "designInputs": [
+    {
+      "path": "artifacts/firmware-visual-integration044/design/PRODUCTION-LIFECYCLE.md",
+      "sha256AtRead": "462f1c92f910a97ff01841783bf4dc3cb563ea764c840a32fc16eaffb80251cd",
+      "wip": true
+    },
+    {
+      "path": "artifacts/firmware-visual-plan/2026-10-16/selected-A/044-FRONT-BUDGET-DECISION.json",
+      "sha256AtRead": "0e90f2c179ab0cdf200836153f8a00fd28c7463711d29092750d85b797e04ad7",
+      "wip": true
+    }
+  ],
+  "gateDocumentSha256": "c83df80b5f65dbfd26b806958fd79560e6c43305b14ed8ffdec495d26c89c3f1",
+  "runtimeSourceRead": false,
+  "deviceActions": false,
+  "buildsOrTestsRun": false,
+  "implementationReleased": false
+}

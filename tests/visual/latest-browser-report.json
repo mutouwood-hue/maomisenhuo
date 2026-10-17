@@ -1,0 +1,47 @@
+{
+  "generatedAtUtc": "2026-10-15T08:20:31.649550+00:00",
+  "scope": "Desktop Tabbit file-page checks of extracted original Three.js assets only; not Android WebView or hardware acceptance",
+  "checks": [
+    {
+      "name": "room-ready",
+      "passed": true,
+      "readyCalls": [
+        {
+          "method": "ready",
+          "args": []
+        }
+      ],
+      "canvasCount": 1
+    },
+    {
+      "name": "cancelled-care",
+      "passed": true,
+      "careFinishedCalls": 0,
+      "progress": [
+        "小猫正在走过来…",
+        "这次先休息一下"
+      ]
+    },
+    {
+      "name": "original-minigame-finish-score",
+      "passed": true,
+      "elapsed": 20,
+      "running": false,
+      "score": 1,
+      "callback": 1,
+      "note": "Found and fixed wrapper treating numeric original onFinish(score) as an object; rerun used numeric callback."
+    }
+  ],
+  "inputSha256": {
+    "app/android/app/src/main/assets/cat-source.js": "1a974e574b0a209b69f1daaffb7903eb96bd3fde36b4c1352a0167cafee6310c",
+    "app/android/app/src/main/assets/minigame-core.js": "0a81de83fd2804aff3e5a47cfb3338d1fe73b13b8de9eeed890d0ed1bca851f3",
+    "app/android/app/src/main/assets/minigame.html": "b38a33ace2733c45b860cf90a4b18536c226145a21d5c314eec3a1c789c73516",
+    "app/android/app/src/main/assets/provenance.json": "8e1d4284adcd8cd15067776c12395cd7a1f804c18d15e1ca1c590b9784b4cd4f",
+    "app/android/app/src/main/assets/renderer-core.js": "0fde64728569dccbb029d9a5e3bf420c6d4b26c610de2789bf4ca2d8fd19d649",
+    "app/android/app/src/main/assets/renderer.html": "79b03b6aa582a198aef201140a72fdb886b82deda15a9235301fa0d7c910290c"
+  },
+  "screenshots": {
+    "original-minigame-browser.png": "aad8e906274c97a7cad7df4fe791bdd0518d6d80669a7ead952add68cf23bc27",
+    "original-room-browser.png": "5485589ff6e9e674ab75ac070a23d1bf6f4ba77fc1311e82571180969e2b903d"
+  }
+}

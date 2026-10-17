@@ -1,0 +1,299 @@
+{
+  "contract": "CFLOCAL3/encounter_complete_v1",
+  "revision": 3,
+  "status": "DESIGN FROZEN FOR INDEPENDENT IMPLEMENTATION; not code/device/migration acceptance",
+  "frozenAtUtc": "2026-10-16T09:00:13.785723+00:00",
+  "proposalPath": "artifacts/firmware-local-v4-encounter039/PROTOCOL-PROPOSAL.json",
+  "proposalSha256": "7aab095dac7f35fdece3753c8e95045ec59725c870b552054b5024bdd63d5d1f",
+  "rootDecisions": {
+    "approve8FullBindingSlotsAnd32LifetimePeerWatermarks": true,
+    "approveExistingSha256First16BindingFingerprint": true,
+    "approveImmutableFullOfferBeforeExplicitButtonConsent": true,
+    "approvePreparedCommittedPeerCommitThenAtomicEvent": true,
+    "approveFlatNewPeerEvent": true,
+    "approveNewPeerUuidSuffix22FramingSchema3Max224": true,
+    "approvePhoneWire3CFLOCAL3SameRawPhoneGatt": true,
+    "approveProductionAutomaticSchema2Migration": false,
+    "approveFlashingUserBadgeOrSchemaUpgrade": false,
+    "approveUseOldGiftOrRamCompleteForNewEvent": false,
+    "approveDistributedAtomicAllOrNoneClaim": false,
+    "approveCurrent038RollbackAfterSchemaChangeWithoutSeparateReview": false,
+    "drawingCriticalPath": false
+  },
+  "event": {
+    "exactKeys": [
+      "v",
+      "protocol",
+      "source",
+      "kind",
+      "eventId",
+      "counter",
+      "deviceId",
+      "petId",
+      "occurredAtMs",
+      "encounterId",
+      "peerId",
+      "peerPetId",
+      "localEncounterCounter",
+      "peerEncounterCounter",
+      "proofVersion",
+      "method",
+      "proof",
+      "bindingFingerprint",
+      "peerComplete",
+      "gift"
+    ],
+    "constants": {
+      "v": 3,
+      "protocol": "CFLOCAL3",
+      "source": "native_device",
+      "kind": "peer_complete",
+      "proofVersion": 1,
+      "method": "button",
+      "proof": "mutual_durable_commit",
+      "peerComplete": true,
+      "gift": false
+    },
+    "identity": {
+      "deviceId": "16 raw bytes /32 lower hex; nonzero; not self",
+      "petId": "1..64 bytes printable ASCII; validate full offered and consent-bound values, no truncation",
+      "counter": "Each device has independent nextEncounterCounter (1..JS_SAFE_MAX-1), persisted reservation; never gift lifetime counter.",
+      "canonicalOrder": "sort deviceId raw bytes lexicographically; carry each corresponding encounter counter",
+      "encounterId": "ec1: + lower hex(deviceA[16]||counterA_u64LE||deviceB[16]||counterB_u64LE), exactly100 ASCII bytes. No nonce/hash needed for id.",
+      "bindingFingerprint": "First16 bytes SHA256(domain ASCII CF-ENCOUNTER-BINDING-v1 plus method byte1 plus canonical A device16/counter8LE/petLength1/petBytes then B likewise). Existing SDK mbedtls SHA256 reused, no new crypto library/service. Not authentication.",
+      "immutableAfterBinding": [
+        "deviceA/B",
+        "counterA/B",
+        "petIdA/B",
+        "proofVersion1",
+        "methodbutton",
+        "bindingFingerprint"
+      ],
+      "reconnect": "New link nonces only bind replay envelopes; reconnect cannot change durable tuple. Changed device/pet/counter/fingerprint is IDENTITY_CONFLICT, no overwrite or new completion."
+    },
+    "petIdentity": "full local+peer ASCII bytes0x21..0x7e length1..64, consent-bound; no current snapshot substitution",
+    "occurredAtMs": "actual calibrated timestamp safe>=0 or null; not required for award identity",
+    "canonicalFingerprintMustRecompute": true,
+    "newEventOnlyHasInnerV3": "care/gift retain oldshape exceptCFLOCAL3 protocol; outer v3 always",
+    "unknownMissingExtraOrConflictingFields": "reject/preserve head; zeroaward/ACK"
+  },
+  "semanticAndStorageProposal": {
+    "proposal": "CFLOCAL3 / encounter_complete_v1 independent firmware039",
+    "revision": 1,
+    "status": "AWAITING_ROOT_CONTRACT_APPROVAL; source copied038 but runtime not changed",
+    "atUtc": "2026-10-16T08:59:00.339426+00:00",
+    "ownership": {
+      "firmwareOnly": "artifacts/firmware-local-v4-encounter039/**",
+      "rootOnly": [
+        "protocol/local-encounter-v1/**",
+        "artifacts/local-ble-adapter/versions/encounter-v1/**"
+      ],
+      "reviewerOnly": "tests/encounter039-review/**",
+      "forbidden": [
+        "device/USB/serial/ADB/flash",
+        "038/026 frozen changes",
+        "Git writes/deletion",
+        "real schema2 migration/activation",
+        "NPC/draw-gesture/NFC/QR/new services"
+      ]
+    },
+    "contractAlreadyLocked": "protocol/local-encounter-v1/TRANSPORT-CONTRACT.json revision1 (unchanged)",
+    "semantics": {
+      "scope": "First valid completed encounter for a device pair; no repeat worldgrowth/reward, no inference from gifts or old RAM DONE. Anonymous device-local evidence only.",
+      "eventClaim": "Both devices have separately persisted COMMITTED for the same immutable binding. This side then atomically persisted its first-complete watermark and FIFO evidence.",
+      "notClaimed": [
+        "simultaneous distributed commit",
+        "both sides have received the final message",
+        "both phones have consumed/rewarded",
+        "cryptographic account identity or malicious-peer attestation",
+        "gift exchanged or friend account resolved"
+      ],
+      "gift": "New protocol does not grant/send a gift. Existing gift events retain peerComplete:false. New peer_complete has gift:false."
+    },
+    "identity": {
+      "deviceId": "16 raw bytes /32 lower hex; nonzero; not self",
+      "petId": "1..64 bytes printable ASCII; validate full offered and consent-bound values, no truncation",
+      "counter": "Each device has independent nextEncounterCounter (1..JS_SAFE_MAX-1), persisted reservation; never gift lifetime counter.",
+      "canonicalOrder": "sort deviceId raw bytes lexicographically; carry each corresponding encounter counter",
+      "encounterId": "ec1: + lower hex(deviceA[16]||counterA_u64LE||deviceB[16]||counterB_u64LE), exactly100 ASCII bytes. No nonce/hash needed for id.",
+      "bindingFingerprint": "First16 bytes SHA256(domain ASCII CF-ENCOUNTER-BINDING-v1 plus method byte1 plus canonical A device16/counter8LE/petLength1/petBytes then B likewise). Existing SDK mbedtls SHA256 reused, no new crypto library/service. Not authentication.",
+      "immutableAfterBinding": [
+        "deviceA/B",
+        "counterA/B",
+        "petIdA/B",
+        "proofVersion1",
+        "methodbutton",
+        "bindingFingerprint"
+      ],
+      "reconnect": "New link nonces only bind replay envelopes; reconnect cannot change durable tuple. Changed device/pet/counter/fingerprint is IDENTITY_CONFLICT, no overwrite or new completion."
+    },
+    "handshake": {
+      "HELLO": "schema3 and encounter-v1 capability; own device/pet identity +fresh link nonce and echoed advertisement challenge; oldschema2 rejected before mutation.",
+      "OFFER": "Reserve a durable own encounter counter for this peer when its valid HELLO is accepted; exchange immutable offer counters/pet identities. At most8 full pending records; capacity rejection does not reserve or overwrite. Local confirmation unavailable until complete pair offer tuple/encounterId is known.",
+      "LOCAL_BUTTON_CONSENT": "At actual local button action, recheck current local snapshot petId and selected remote identity against offer; persist full local/remote pet strings and local-consent bit for exact binding before sending CONSENT. No auto-confirm on reconnect.",
+      "CONSENT_RECEIVED": "Validate full pair binding; persist remote-consent observation. Duplicate exact bytes idempotent; conflicting tuple blocks.",
+      "LOCAL_PREPARED": "Only after both consent bits durable; persist PREPARED before emitting PREPARED certificate.",
+      "LOCAL_COMMITTED": "Only after local PREPARED and matching remote PREPARED certificate are durable; persist COMMITTED before emitting COMMIT certificate.",
+      "PEER_COMMIT_OBSERVED": "Persist matching peer COMMIT certificate for same binding; distinguish from local completion. Never derive from gift ACK/DONE.",
+      "LOCAL_COMPLETE": "Only local COMMITTED plus durable peer COMMIT observed, current/bound local identity matches, freeFIFO and event counter available: ONE blob commit changes first-complete bit and appends peer_complete event. Failure/uncertain commit sends no false success; reload authoritative blob before retry.",
+      "QUEUE_FULL": "Durable committed/proof state retained, completion/event not claimed; retry after legitimate phone ACK releases FIFO space. Peer may already complete; no global all-or-none claim.",
+      "RETRANSMIT": "Persisted phase certificates resend same tuple on reconnect. Last COMMIT loss can yield temporary asymmetric local events; eventual reliable reconnect converges without new counters/event duplication.",
+      "AFTER_PHONE_ACK": "Release full binding slot only after ACK of that peer_complete event in same state commit; keep counters+bindingFingerprint+first-complete bit forever. Completed compact COMMIT can be resent using immutable ledger after full slot released; peer validates against its own full binding. Current HELLO identities must recompute same fingerprint or reject."
+    },
+    "pendingAndLedger": {
+      "legacyPeerLimitUnchanged": 32,
+      "totalEventFIFOUnchanged": 200,
+      "fullEncounterBindingSlots": 8,
+      "slotHeldFor": [
+        "offer/consent/prepared/commit recovery",
+        "completed peer_complete waiting phone ACK"
+      ],
+      "backpressure": "8 full slots occupied => ENCOUNTER_BUSY/defer; no new consent/reservation/event. ACK frees full slot, never completion watermark. 32 peer keys remain lifetime cap with no implicit eviction.",
+      "newPerPeerLedgerFields": {
+        "localEncounterCounter": "u64",
+        "remoteEncounterCounter": "u64",
+        "bindingFingerprint": "16 bytes",
+        "firstComplete": "u8 boolean (reservedbits0)"
+      },
+      "newFullBindingSlotFields": {
+        "peerSlot": "u8",
+        "localPetId": "65 bytes zero padded inclNUL",
+        "remotePetId": "65 bytes zero padded inclNUL",
+        "phaseFlags": "u8: localConsent,remoteConsent,localPrepared,remotePreparedSeen,localCommitted,remoteCommitSeen; remainingbits0"
+      },
+      "bindingVerification": "Every message and completion validates full slot against immutable ledger and fingerprint. Queued peer_complete must retain its full slot; missing binding makes decode fail closed. After ACK only fingerprint/counters needed for completion dedup/resend, never fabricate a new event from current snapshot."
+    },
+    "eventWire": {
+      "common": {
+        "v": 3,
+        "protocol": "CFLOCAL3",
+        "source": "native_device",
+        "kind": "peer_complete",
+        "eventId": "existing deviceId:eventCounter",
+        "counter": "safe integer",
+        "deviceId": "ownId",
+        "petId": "full confirmation-bound localPetId from full slot (NEVER current snapshot substitution)",
+        "occurredAtMs": "actual calibrated timestamp or null"
+      },
+      "additional": {
+        "encounterId": "ec1:100 chars",
+        "peerId": "remote device hex32",
+        "peerPetId": "full confirmation-bound remotePetId",
+        "localEncounterCounter": "safe nonzero integer",
+        "peerEncounterCounter": "safe nonzero integer",
+        "proofVersion": 1,
+        "method": "button",
+        "proof": "mutual_durable_commit",
+        "bindingFingerprint": "32 lower hex",
+        "peerComplete": true,
+        "gift": false
+      },
+      "careAndGift": "Stay existing shapes except protocol CFLOCAL3/v3 envelope. Gift peerComplete:false always. New kind cannot be consumed by old026 because strict v2/CFLOCAL2 gate.",
+      "sourceSeparation": "Host fixtures/027 NPC cannot be used as production Native evidence. Fixture success never labeled real radio/NVS proof."
+    },
+    "peerTransport": {
+      "framingSchema": 3,
+      "mfgSchemaByte": 3,
+      "phoneGatt": "reuse root locked raw UUID only with strict HELLO; no v2fallback",
+      "peerGatt": "recommend new peer UUID suffix21->22 plusmfg3, oldschema2 never enters state machine",
+      "frameBytes": 20,
+      "frameHeaderBytes": 6,
+      "payloadPerFrame": 14,
+      "messageCapBytes": 224,
+      "maxPages": 16,
+      "maxFullBindingCertificateBytes": 217,
+      "capCalculation": "3 version/method/phase +2*(device16+counter8+petlen1+petmax64)+nonces32+CRC4=217<=224. CRC is corruption check, not identity authentication. Compact completed certificates smaller.",
+      "reassembly": "strict length/page/sequence/type; no unbounded allocation, reject extra/truncated/conflicting duplicate frames; new Rx/Tx/lastRx arrays224 each (additional480B vs3*64), timeout discards partial link messages not durable records.",
+      "timing": "Retain bounded retry interval; no blocking send or lock held while awaiting radio."
+    },
+    "storage": {
+      "magic": "CFL3",
+      "schema": 3,
+      "blobCapBytesUnchanged": 8192,
+      "singleAuthoritativeKey": "cf_local2/state",
+      "no副keyFork": "Do not preserve active schema2 under a second writable key and claim rollback-safe.",
+      "oldSchema2ProductionLoad": "MIGRATION_REQUIRED/read-only failure; no writes, no init-new fallback, no erase; no activation opcode this round.",
+      "hostOnlyMigration": "Pure converter: preserve every old device/owner/lastseq/requestid/hash/lastresult/snapshot/200FIFO/gift32/outgoingwatermark; initialize all new encounter fields zero and nextEncounterCounter1. Never infer new completion. Not automatically called by platform loader.",
+      "ownerContinuity": "Migrated owner preserved. New v3 journal new clientId must receive OWNER_CONFLICT; only explicit same-owner nextseq host continuity fixture. Old V2 pending not relabeled/replayed as V3. Production migration requires resolved oldpending plus separate review.",
+      "encodedUpperBound": {
+        "oldFixedBytes": 451,
+        "eventBytes": "17*care +25*gift +17*peer_complete; total<=200, gift<=32",
+        "oldPeerBytes": "42*legacyPeerCount<=42*32",
+        "oldOutgoingBytes": "9*pendingOldOutgoing<=9*32",
+        "newGlobalBytes": "nextEncounterCounter8 +fullSlotCount1 =9",
+        "newLedgerBytes": "33*peerCount<=1056",
+        "newFullSlotsBytes": "132*fullSlotCount<=1056",
+        "conservativeMaximumBytes": 7860,
+        "arithmetic": "5739 old validated maximum +9+33*32+132*8 =7860 <8192; 332B guard. Some maxima may not be co-reachable; bound is conservative. Need actual production encoder/decoder/max-slot tests before claiming accepted.",
+        "noCompression": "No 7-bit pet packing and no enlarged NVS needed."
+      },
+      "NVS32KiB": "8pages existing partition unchanged. Atomic old/new full blobs and GC reserve plus untouched other namespaces must be budgeted in actual NVS, not just8192 scratch. Conservative blob ~7860 needs about2 data pages+index entries; old+new generations plus at least1 GC page consume at least5 of8 pages. Fragmentation/legacykeys may still reject: propagate storage_error/unknown and stop proofs, never erase. No real migration capacity guarantee from host encoder test.",
+      "downgrade": "038 rejects schema3 at same authoritative key. Successful fallback requires a separately approved consistent pre039 state restoration, not just app swap. After any039 phone settlement, restoring old blob alone can replay future effects; no lossless live rollback promise."
+    },
+    "implementationFilesExpected": [
+      "source/main/local2_core.c/.h schema3+atomic encounter/FIFO",
+      "source/main/local2_peer.c/.h schema3 peer durable machine/framing",
+      "source/main/local2_wire.c CFLOCAL3 strict gate/new event",
+      "source/main/local2_ble.c HELLO family/capability naming",
+      "source/main/local2_store.c schema2 migration-required guard; no production migration",
+      "source/main/badge_pages.c minimal honest durable peer phase labels only if required",
+      "source/CMakeLists.txt version0.3.9-local4"
+    ],
+    "faultTestsPlanned": [
+      "two actual production instances and byte-defined saved blobs",
+      "power cut before/after each persist callback and before/after each send; reload exact durable blob",
+      "persist callback may return false after bytes landed; latchunknown thenreload, no premature cert",
+      "drop/duplicate/reorder CONSENT/PREPARED/COMMIT; lastCOMMIT lost/asymmetric progression",
+      "FIFO200 full retains pending proofs; ACK then completion exactly once",
+      "8 full slots held by nonACKed events; 9th blocked; ACK frees binding but32-lifetime watermark retained",
+      "32peer/max64ASCII identity/max200mix encode<=7860 and loadchecks",
+      "sameencounterId conflict pet/counter/version/fingerprint and self rejected",
+      "identity change before confirm/completion and reconnect no rebind",
+      "duplicate completion after phoneACK/reboot no new event; resendcompactCOMMIT after fullslot release",
+      "old026 exact v2 transport and oldpeer schema2 rejected without mutation",
+      "schema2 pure migration preserves owner/lastseq/hash and allold counters; loadernevercalls converter",
+      "sameowner v3 nextseq accepted only explicit fixture; newowner fails; oldpending notreplayed",
+      "gift false and NPC/source isolation"
+    ],
+    "decisionsRequestedFromRoot": [
+      "Approve8 full pending/unACKed binding slots +32 lifetime completion watermarks (instead of storing full bothpet in all32).",
+      "Approve reused mbedtls SHA256 truncated16-byte binding fingerprint; encounterId itself remains hash-free canonical device/counters.",
+      "Approve immutable full tuple bound OFFER before localbutton; confirmation must wait until both counters/ids/pets known; no RAM DONE upgrade.",
+      "Approve CONSENT->PREPARED->COMMITTED->peerCOMMIT observed->atomic local FIFO+first-complete sequence.",
+      "Approve proposed flat peer_complete fields, new peer UUID suffix22, bounded224/16-page framing.",
+      "Confirm production oldschema2 always migration-required and no userboard deployment in this task."
+    ]
+  },
+  "transportContract": "TRANSPORT-CONTRACT.json",
+  "productionReadNextGate": "native subscribed evidence,current connection generation,CFLOCAL3HELLO requiredproof/cap/storeSchema; after async fingerprint recheck generation+device before caching",
+  "phoneAckGate": "must have exact successfullyread nativeevent and durable originalresult+worlddedup receipt;64lowerhexsaveDigest; Native pre/postjournal certificate; no simulation promotion",
+  "sameEncounterDedupBeyondEventId": "B must dedup immutable encounterId before worldgrowth even if delivered under another eventcounter; device promises oneevent perpairfirstcompletion",
+  "oldOwner": "keep old identity/seq/hash; freshV3client cannot automatically take migratedowner; runtime migration remains disabled",
+  "capacityBoundIsDesignNotEvidence": "7860<=8192 requires actual production maximum encoders and independentreview; no realNVS/GCcapacity claim",
+  "implementationRelease": "code may be implemented only in owned independent dirs; formal freeze/review still required; never deploy to realboard under this scope",
+  "checkpointsBeijing": [
+    "22:00 evaluate",
+    "23:00 freeze"
+  ],
+  "amendedAtUtc": "2026-10-16T09:12:14.826170+00:00",
+  "amendment": "Add mandatory Native original-result receipt verifier for initial ACK and exact unknown ACK retry; no wire/peer proof schema change.",
+  "transportClarifications": {
+    "owner": "HELLO/STATE clientId null requires lastSeq0, UUID requires lastSeq>=1",
+    "deviceId": "nonzero lowercasehex32",
+    "publicSelectTransport": "cflocal3 only; rawNative cflocal2 route metadata is requiredWireFamily declaration, not proof of HELLO",
+    "bindingVectors": "binding-vectors.json"
+  },
+  "adapterAbi": {
+    "createPortsRequired": [
+      "bridge",
+      "storage",
+      "durableCheckpoint",
+      "verifyDurableReceipt"
+    ],
+    "noAutoAttach": true,
+    "verifyDurableReceipt": "async(receipt,{operation,deviceId,event,pending})=>{verified:true,eventId,saveDigest}; independently confirm Native original outcome/dedup/current save identity; never certify merely from pending journal",
+    "checkAgainAfterNativeCheckpoint": true,
+    "missingOrMismatchedNativeHistory": "preserve pending; zero ACK wire even on explicit retry",
+    "B027": "remains unavailable production port; this callback is not provisioned by simulation fixture"
+  }
+}

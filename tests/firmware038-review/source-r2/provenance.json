@@ -1,0 +1,6 @@
+{
+  "main/badge_pages.c": "dd7e6efefa63e79b3639bb0d886eeb5976e892d031b53e82a0bd1fd4e726bc45",
+  "main/badge_scene.c": "4f38f94c630839c9aca50449fa26d5941056791bd94e894b3e602034739a785b",
+  "main/badge_scene.h": "adf163808a668ba52f70ba39a94714dd6d0f4b2f983b55aee23813c2336f5e02",
+  "tools/host_preview/preview.c": "2d0465db85a26f1d74eca1879b312f0df2d3f07a8e551e03fe33133bf30ee2cd"
+}

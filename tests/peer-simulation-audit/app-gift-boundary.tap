@@ -1,0 +1,22 @@
+TAP version 13
+# Subtest: real flower grants exactly one inventory item and original social receipt; no invented friend/profile/card
+ok 1 - real flower grants exactly one inventory item and original social receipt; no invented friend/profile/card
+  ---
+  duration_ms: 16.632709
+  type: 'test'
+  ...
+# Subtest: unsupported, forged, or cross-device events remain in FIFO and never produce a receipt or ACK
+ok 2 - unsupported, forged, or cross-device events remain in FIFO and never produce a receipt or ACK
+  ---
+  duration_ms: 16.867458
+  type: 'test'
+  ...
+1..2
+# tests 2
+# suites 0
+# pass 2
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 120.458125

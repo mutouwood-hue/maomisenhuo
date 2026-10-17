@@ -1,0 +1,416 @@
+{
+  "kind": "read_only_independent_review_of_root_device_captures",
+  "apkSha256": "5e18946f19a8c44d76db60757dcfe099766cd1ede04c7986603fb34903286697",
+  "installRecordSha256": "c4351d0f44950a87725a4efd52618584996d59cb8779b2f8afa2e1bb12d232d5",
+  "installStorageByteEqualityRecheckedFromArchiveStreams": [
+    {
+      "file": "before-021-app-data.tar",
+      "recordedStorageFilesVerified": 14,
+      "sha256": "dd48bd6fc0f52f67048c325f59bbbd4aa85a0f0b3e16af511c4e757e88fd9c8c"
+    },
+    {
+      "file": "after-install-before-launch.tar",
+      "recordedStorageFilesVerified": 14,
+      "sha256": "dd48bd6fc0f52f67048c325f59bbbd4aa85a0f0b3e16af511c4e757e88fd9c8c"
+    }
+  ],
+  "separation": {
+    "normal": {
+      "tip": [
+        39,
+        919,
+        929,
+        1001
+      ],
+      "notice": [
+        39,
+        2122,
+        955,
+        2242
+      ],
+      "intersectionPixelsSquared": 0,
+      "verticalGapPixels": 1121
+    },
+    "short": {
+      "tip": [
+        36,
+        849,
+        828,
+        924
+      ],
+      "notice": [
+        36,
+        1416,
+        852,
+        1524
+      ],
+      "intersectionPixelsSquared": 0,
+      "verticalGapPixels": 492
+    }
+  },
+  "viewed": {
+    "normal-bath-first": {
+      "pngSha256": "7ba64b283045a2d404d8c20877261a4ce41e2a6736fea7fb53d1428265a7ffb3",
+      "xmlSha256": "8fcab52d50e780c134b6d0c1b8a260c0a0e3078efdb5bb9ccbf59e357e6c8639",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-bath-first": {
+      "pngSha256": "1974f2a8b5cc103fcbecdf5cf6caa2656b9206534db55ba0ad5c1306678ba54a",
+      "xmlSha256": "88100ebeccc4aac3b24da2dfa4bbb6191c55fec05f04ad9f53a326cb046d6609",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-bath-after-tip-window": {
+      "pngSha256": "77ed42a6bc3d035e545189f04bc673a2ab73cadba9a4e9809496001ce1bdb36e",
+      "xmlSha256": "26f06ebf3819c68f7d1ff9a613fe4b38b69e1623480f65b6f1bf2e48607913e6",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-bath-tip-expired": {
+      "pngSha256": "4c8522a3cb0e8cf625d20088270b8e096e1b494d6c53688a4e98612fc5fb9239",
+      "xmlSha256": "17fbefa6591566258f88f7ba03c11dc3de13b25c5dbe8de3805f0861b7164bbf",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-bath-view-switched": {
+      "pngSha256": "c3a3750aff399b29d337e7f6d759bfe38a967c3885e1f190ddea49ba491fb463",
+      "xmlSha256": "b60a9e7b4cf680df2435a19632f756543d19bfd9f4a40ab7183c2b3fd934e904",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-bath-view-switched": {
+      "pngSha256": "a076a2c18e8e9d4f2e617a6c67c6dffcaffd4ec9aa535ec43b839d36f30fe7ed",
+      "xmlSha256": "17e9170d63772e0065c91eef88101bd250e43c3a57cb290ceb124ac43fcb439d",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-bath-cancelled": {
+      "pngSha256": "a78a6c68462edb5121ab717df2e5bf79dd1f49f923a0f3a7223421f1d9929d0a",
+      "xmlSha256": "a281f89ab9317bf40911949de8bcd7c9f75606e41d68e52aa47bd1984c328a90",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-bath-cancelled": {
+      "pngSha256": "60b54c480d2cb6e6f682b37fc82867c3e03c13ecc529a39d8a462c431aeeec8e",
+      "xmlSha256": "01ba4464dc2ffe5a138da0b965f0eb48abb9738280e6cf7681f879e2dc7882a3",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-recall-start": {
+      "pngSha256": "3f770d64bcac6861aa3231c38eae16d7965007bc85f10b34cb41f9aa9e2deb08",
+      "xmlSha256": "ebca99164461b4542b34c2bf56a932c0f0388c4a346d10e7f46804606c09b9ae",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-recall-active": {
+      "pngSha256": "76a659088ed9ef4e66346508bd1ef3aa4daf589123ed8d6bd15f547089e01426",
+      "xmlSha256": "afaf642249c6564b5037cccf1920b44dcc7ef86a4e57ff92faf8e8d16d82c9c9",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-recall-active": {
+      "pngSha256": "e86c64dd86407a56e47495f9450e7954aa22091a884142164d6601dbd2b1afab",
+      "xmlSha256": "9d5763a7fd802ad2be758439d98d4f30636eb3ad621685957362aed74e123fc1",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-recall-actually-active": {
+      "pngSha256": "38e69a3449f07c6ffaca21e09bae8d6745a3cf96fc68301ae77f04160eea761e",
+      "xmlSha256": "73cba2106dffd3ef2106bddc595fdb3ac19f2c714359b730ef9e2adfe64d190a",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-recall-stable-recorded": {
+      "pngSha256": "066f9a6026b9e7f7a8e7e0d6c726ece3454a2dc71090f59a681f9d0051f1f823",
+      "xmlSha256": "e5ee8e19a6369513d4509e6938a1572d4c6798ac21543e5e5c7bb083b3270f5f",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-recall-result": {
+      "pngSha256": "de103ee20469d71e48f8a0448fa34c03f0ae30c6e0c2add7e9628c22ddca4a81",
+      "xmlSha256": "a1340beecb1545b5a66c1b17d26234813b8aa1881eceb39b8e4d4138fd168550",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-recall-actually-stable": {
+      "pngSha256": "ed2ffd29ef6f73b3497c125a8fa7991750d2a35ea0cd5bb690e566ed50e8a736",
+      "xmlSha256": "3484a4f25beb335965b33f3a5c4e3908cd4fa141e6ae1cec97b300335e05b575",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-recall-result": {
+      "pngSha256": "987bd6ca6e89008e82b40a5f225e50eea6df711453d8a92c024a3ee5675007ad",
+      "xmlSha256": "b00f99bb5bc4f1dd902c7956a4aebf36c1fe1fca88098a33ec89b082765d33ce",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-badge-disconnected-icons": {
+      "pngSha256": "bb2a0e785fc70688981b583ac9db68e3ae9f560d32ea75a07b968fd73b043887",
+      "xmlSha256": "717217edff971a729e74615ba4f9bc1dcf40af2dd19a218fbeab587fb87372df",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "cold-start-preserved": {
+      "pngSha256": "422f103739e8734c2743b4b7897a163078829a67008e3cf4d68c7709c60e56f8",
+      "xmlSha256": "b7be8ad766f167eea27bd939c835f11d06ae8b3a0cdfdb5652f41f91f72d2851",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-event-neutral-choice": {
+      "pngSha256": "b933159acfe5c4d970a497a5ad4a199f6d37a9f40cde0b3d40973d42cb284f45",
+      "xmlSha256": "001d1ad7f07e65b02fdc748b7ea85e73f58f5e42600e8ed7d98dd74550237b49",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-rain-neutral-choice": {
+      "pngSha256": "59c369f98c151f2b69edab6321f5e9dad0cea8827ae0124d9ef5dac368148b25",
+      "xmlSha256": "a4948687d8a686ea8b2673977012b373dc04532a077533e7f8a376981a699391",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "normal-meet-icons": {
+      "pngSha256": "a9b01aa323ee67808ed78696e0ce3ddb7135abb08ad8ee4c52b2f0cbba2901ca",
+      "xmlSha256": "6c9f91173a832dea7fcdd5368b5756125f477370a425a4e56423eaf7f90185f0",
+      "physicalPixels": [
+        1200,
+        2670
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-meet-buttons-icons": {
+      "pngSha256": "ac6dcb23acc4464a1781610dc8e176324885dc8ff39414454c737634b2d7408d",
+      "xmlSha256": "3b59002be971033cd705776214860a429d7d0c89124247274cde35167da8aa53",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    },
+    "short-badge-icons": {
+      "pngSha256": "2f2dbd632ec9be62c7dcf2de0761681fb232cdf67200041f0bcd057626490247",
+      "xmlSha256": "49adff09174806b37065d750cf2357ed0de7cceb19aee607b2c05db4d7cb1a37",
+      "physicalPixels": [
+        1080,
+        1920
+      ],
+      "reviewerViewedPixels": true
+    }
+  },
+  "timeline": [
+    {
+      "atUtc": "2026-10-16T01:05:11Z",
+      "snapshot": "cold-start-preserved"
+    },
+    {
+      "atUtc": "2026-10-16T01:05:50Z",
+      "snapshot": "normal-bath-first"
+    },
+    {
+      "atUtc": "2026-10-16T01:05:56Z",
+      "snapshot": "normal-bath-after-tip-window"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:18Z",
+      "tap": "换个视角"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:21Z",
+      "snapshot": "normal-bath-view-switched"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:21Z",
+      "tap": "先休息"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:25Z",
+      "snapshot": "normal-bath-cancelled"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:32Z",
+      "snapshot": "short-bath-first"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:52Z",
+      "snapshot": "short-bath-tip-expired"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:52Z",
+      "tap": "换个视角"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:55Z",
+      "snapshot": "short-bath-view-switched"
+    },
+    {
+      "atUtc": "2026-10-16T01:06:55Z",
+      "tap": "先休息"
+    },
+    {
+      "atUtc": "2026-10-16T01:07:01Z",
+      "snapshot": "short-bath-cancelled"
+    },
+    {
+      "atUtc": "2026-10-16T01:07:28Z",
+      "tap": "自由活动"
+    },
+    {
+      "atUtc": "2026-10-16T01:07:32Z",
+      "snapshot": "short-recall-start"
+    },
+    {
+      "atUtc": "2026-10-16T01:07:50Z",
+      "tap": "安静绕过去"
+    },
+    {
+      "atUtc": "2026-10-16T01:07:55Z",
+      "snapshot": "short-event-neutral-choice"
+    },
+    {
+      "atUtc": "2026-10-16T01:07:55Z",
+      "tap": "自由活动"
+    },
+    {
+      "atUtc": "2026-10-16T01:07:59Z",
+      "snapshot": "short-recall-active"
+    },
+    {
+      "atUtc": "2026-10-16T01:09:04Z",
+      "snapshot": "short-recall-stable-recorded"
+    },
+    {
+      "atUtc": "2026-10-16T01:09:04Z",
+      "tap": "召回小猫"
+    },
+    {
+      "atUtc": "2026-10-16T01:09:07Z",
+      "snapshot": "short-recall-result"
+    },
+    {
+      "atUtc": "2026-10-16T01:09:07Z",
+      "tap": "回家"
+    },
+    {
+      "atUtc": "2026-10-16T01:10:04Z",
+      "tap": "自由活动"
+    },
+    {
+      "atUtc": "2026-10-16T01:10:08Z",
+      "snapshot": "normal-recall-active"
+    },
+    {
+      "atUtc": "2026-10-16T01:10:43Z",
+      "tap": "在树荫旁避雨"
+    },
+    {
+      "atUtc": "2026-10-16T01:10:46Z",
+      "snapshot": "normal-rain-neutral-choice"
+    },
+    {
+      "atUtc": "2026-10-16T01:10:46Z",
+      "tap": "自由活动"
+    },
+    {
+      "atUtc": "2026-10-16T01:10:49Z",
+      "snapshot": "normal-recall-actually-active"
+    },
+    {
+      "atUtc": "2026-10-16T01:10:57Z",
+      "snapshot": "normal-recall-actually-stable"
+    },
+    {
+      "atUtc": "2026-10-16T01:10:57Z",
+      "tap": "召回小猫"
+    },
+    {
+      "atUtc": "2026-10-16T01:11:01Z",
+      "snapshot": "normal-recall-result"
+    },
+    {
+      "atUtc": "2026-10-16T01:11:01Z",
+      "tap": "回家"
+    },
+    {
+      "atUtc": "2026-10-16T01:11:08Z",
+      "snapshot": "normal-badge-disconnected-icons"
+    },
+    {
+      "atUtc": "2026-10-16T01:12:09Z",
+      "snapshot": "normal-meet-icons"
+    },
+    {
+      "atUtc": "2026-10-16T01:12:55Z",
+      "snapshot": "short-meet-buttons-icons"
+    },
+    {
+      "atUtc": "2026-10-16T01:13:05Z",
+      "snapshot": "short-badge-icons"
+    }
+  ],
+  "limits": [
+    "static PNG/XML does not prove absence of transient250ms flicker",
+    "MP4 files not reviewed/decoded here; AVAsset exact-frame review belongs to root",
+    "install readback is root record crosschecked against candidate; reviewer did not query device",
+    "archive hash agreement applies before launch; no post-game storage or receipt/clock/FIFO inference"
+  ]
+}

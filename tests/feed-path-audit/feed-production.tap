@@ -1,0 +1,46 @@
+TAP version 13
+# Subtest: physical-source feed plans original cost/stats/xp/count then durable receipt and ACK
+ok 1 - physical-source feed plans original cost/stats/xp/count then durable receipt and ACK
+  ---
+  duration_ms: 9.073875
+  type: 'test'
+  ...
+# Subtest: same feed event is duplicate ACK with no second cost or growth
+ok 2 - same feed event is duplicate ACK with no second cost or growth
+  ---
+  duration_ms: 5.699792
+  type: 'test'
+  ...
+# Subtest: phone busy, wrong provenance, and missing acknowledged history cannot award or ACK feed
+ok 3 - phone busy, wrong provenance, and missing acknowledged history cannot award or ACK feed
+  ---
+  duration_ms: 4.179625
+  type: 'test'
+  ...
+# Subtest: same event ID with changed action is rejected after a settled feed
+ok 4 - same event ID with changed action is rejected after a settled feed
+  ---
+  duration_ms: 6.37875
+  type: 'test'
+  ...
+# Subtest: original full-food or insufficient-coins eligibility makes a durable non-award receipt
+ok 5 - original full-food or insufficient-coins eligibility makes a durable non-award receipt
+  ---
+  duration_ms: 7.572292
+  type: 'test'
+  ...
+# Subtest: risk characterization: distinct feed counters at identical fixture time do not share original closure cooldown
+ok 6 - risk characterization: distinct feed counters at identical fixture time do not share original closure cooldown
+  ---
+  duration_ms: 7.779417
+  type: 'test'
+  ...
+1..6
+# tests 6
+# suites 0
+# pass 6
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 103.244125

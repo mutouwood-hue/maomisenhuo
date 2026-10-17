@@ -1,0 +1,197 @@
+{
+  "createdAtUtc": "2026-10-15T14:36:31.022168+00:00",
+  "userDecision": "No cloud; corrected HTML plus latest user instructions are the product baseline; real phone-badge connection remains required.",
+  "status": "analysis_only_no_product_or_device_mutations",
+  "baselineHtml": {
+    "path": "小橘电子宠物.html",
+    "sha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+    "legacyOriginalIsSame": false,
+    "legacyOriginalLacksCorrectedSocialV7": true
+  },
+  "inspection": "Targeted static reads of listed sources and corrected HTML social/life/blocks sections, no browser execution or tests in this pass",
+  "dependencies": [
+    {
+      "id": "C01",
+      "file": "scripts/build.mjs",
+      "dependency": "build injection: companion-prelude + companion.js + social CSS",
+      "proposedDisposition": "exclude_cloud_bootstrap",
+      "note": "Keep original script order, mobile safe-area/gesture fixes, native export and local BLE; replace only cloud entry wiring in a later isolated implementation."
+    },
+    {
+      "id": "C02",
+      "file": "src/companion/main.js",
+      "dependency": "account/session/UI/15s timer + wraps game store and replaces __pgLife",
+      "proposedDisposition": "replace_local_orchestrator",
+      "note": "No account/endpoint/restore login; local lifecycle with no cloud mutation wrappers or provider override."
+    },
+    {
+      "id": "C03",
+      "file": "src/companion/cloud-save.js",
+      "dependency": "remote revision CAS/pull/push/cloud migration/importSave",
+      "proposedDisposition": "replace_local_save_bundle",
+      "note": "Keep original complete family export/import and backups; local revision and event ledger, no automatic overwrite."
+    },
+    {
+      "id": "C04",
+      "file": "src/companion/api-client.js",
+      "dependency": "HTTP bearer auth/idempotency + OTA binary download",
+      "proposedDisposition": "exclude_external_network",
+      "note": "No backend client or fake successful responses; retain blob/local asset fetch separately."
+    },
+    {
+      "id": "C05",
+      "file": "src/companion/outbox.js",
+      "dependency": "telemetry upload with remote terminal results",
+      "proposedDisposition": "exclude_uploader_preserve_data",
+      "note": "Do not transmit or delete existing outbox; local diagnostic counters only if needed."
+    },
+    {
+      "id": "C06",
+      "file": "src/companion/life-sync.js",
+      "dependency": "server life days/consent revisions/eligibility",
+      "proposedDisposition": "replace_local_optional_model",
+      "note": "Historical summary storage can be adapted locally; sensitive inputs remain disabled simulation only."
+    },
+    {
+      "id": "C07",
+      "file": "src/companion/badge-sync.js",
+      "dependency": "server challenges/auth grants/signed objects/event batches + cloud import",
+      "proposedDisposition": "split_transport_from_cloud_authority",
+      "note": "Reuse binary framing/chunk CRC/generation correlation; local capability/version and durable ACK require old firmware source and coordinated endpoint change."
+    },
+    {
+      "id": "C08",
+      "file": "src/companion/badge-sync-scheduler.js",
+      "dependency": "signed time/cat/day objects fetched from server",
+      "proposedDisposition": "replace_local_scheduler",
+      "note": "Use committed local profile/cat revision + local session epoch, not login or cloud revision."
+    },
+    {
+      "id": "C09",
+      "file": "src/companion/active-events.js",
+      "dependency": "signed active event upload and server-issued ACK",
+      "proposedDisposition": "replace_local_durable_receipt",
+      "note": "Only device-backed facts; no phone heartbeats invented as activity, no unsigned impersonation of existing server envelopes."
+    },
+    {
+      "id": "C10",
+      "file": "src/social/panel.js",
+      "dependency": "backend-style account/cloud assets/encounter operations UI",
+      "proposedDisposition": "exclude_from_product_entry",
+      "note": "Use corrected HTML social-v7 encounter/collection UI; UI worker owns changes, root analysis only."
+    },
+    {
+      "id": "C11",
+      "file": "src/social/client.js",
+      "dependency": "friend/assets/encounter/gift/breeding/environment/diary HTTP and signed peer challenge",
+      "proposedDisposition": "replace_local_domain_and_peer_adapters",
+      "note": "Original game rules/local collection first; real physical peer transport and durable per-side receipts separate from NPC/demo."
+    },
+    {
+      "id": "C12",
+      "file": "src/social/controller.js",
+      "dependency": "getOwner account gate + partial read-only localCollection",
+      "proposedDisposition": "retain_patterns_not_schema",
+      "note": "Keep cancellation/generation safeguards conceptually; do not replace richer corrected HTML dex with this partial collection."
+    },
+    {
+      "id": "C13",
+      "file": "src/companion/ai-adapter.js",
+      "dependency": "login/consent/remote message/remote scene generation",
+      "proposedDisposition": "exclude_remote_ai_keep_builtin_scenes",
+      "note": "No paid API/credentials; built-in original block scene recipes remain. Do not call remote API or present canned text as generated."
+    },
+    {
+      "id": "C14",
+      "file": "src/companion/privacy-eligibility.js",
+      "dependency": "server trusted age/guardian eligibility",
+      "proposedDisposition": "disable_sensitive_paths",
+      "note": "No synthetic eligibility grants; no age/child collection; local plan only with sensitive capabilities off."
+    },
+    {
+      "id": "C15",
+      "file": "src/social/environment-resume.js",
+      "dependency": "cloud environment consent restore",
+      "proposedDisposition": "exclude_cloud_resume",
+      "note": "Do not auto-enable old consent; local simulation off, no microphone capture."
+    },
+    {
+      "id": "C16",
+      "file": "src/social/environment-revoke.js",
+      "dependency": "server consent revoke queue",
+      "proposedDisposition": "preserve_old_markers_inactive",
+      "note": "Exclude runtime dependency; preserve historical markers, no deletion and no signed pseudo-grant."
+    },
+    {
+      "id": "C17",
+      "file": "src/social/update-uploader.js",
+      "dependency": "backend-issued signed OTA flow",
+      "proposedDisposition": "exclude_ota_from_first_local_loop",
+      "note": "Keep current manual no-flash policy and raw rollback backups; do not silently change firmware through new App."
+    },
+    {
+      "id": "C18",
+      "file": "src/companion/prelude.js",
+      "dependency": "writes pg-life-cfg and deletes old key/endpoint",
+      "proposedDisposition": "replace_nondestructive_gates",
+      "note": "Retain startup off gates as design, not destructive key clearing; do not execute archived prelude against existing user storage."
+    },
+    {
+      "id": "C19",
+      "file": "src/native/bridge.js",
+      "dependency": "native export/share/back lifecycle + native geolocation shim",
+      "proposedDisposition": "retain_split_sensitive_branch",
+      "note": "Keep local blob export/back fixes; geolocation paths gated off. Removing network client must not break fetch(blob)."
+    },
+    {
+      "id": "C20",
+      "file": "src/ble/client.js",
+      "dependency": "local handshake/write+correlated ACK/reconnect generation",
+      "proposedDisposition": "reuse_after_firmware_compare",
+      "note": "No server dependency. Exact HELLO caps15 means do not silently add incompatible caps or assume extensions."
+    },
+    {
+      "id": "C21",
+      "file": "src/ble/protocol.js",
+      "dependency": "BJ20 binary framing e7f1 service/opcode/state parsing",
+      "proposedDisposition": "retain_legacy_base_compatibility",
+      "note": "Current new NDJSON 7b2e incompatible; preserve family and negotiate any additional local protocol, freeze after firmware source review."
+    },
+    {
+      "id": "C22",
+      "file": "android/app/src/main/AndroidManifest.xml",
+      "dependency": "BLE + Internet/location/background/camera/mic/motion permission surface",
+      "proposedDisposition": "review_only_no_permission_changes",
+      "note": "No permission grant now. Android<=30 BLE scan location gate differs from collecting GPS; do not bulk-delete all location permissions on name match."
+    }
+  ],
+  "sourceHashes": {
+    "scripts/build.mjs": "30e7d81d0bf0783d1284db4055e5bf89843046c0385da6b3125275e645d5e160",
+    "src/companion/main.js": "3dbe280bb6d64e9c2e13524464d180918615e3e1a697ff823b9f3eaa267d138f",
+    "src/companion/cloud-save.js": "77fc1716a7a7b7b55045d9cdaa0e224c9730116591d301057bfccfc5618148d4",
+    "src/companion/api-client.js": "b9fcd27daf1d8f260c95e97623c5646a79ce191595931c2ec4047b06aeda4e8c",
+    "src/companion/outbox.js": "4b0c3781e1d6061a2ebd917c0d2b78dda7e29d5943b03b4a3acc4008fe7f1508",
+    "src/companion/life-sync.js": "fd03dc2a0bac3f36cb30d5e73f21814b9c0801407e1e0d2caeccd276ec4a943e",
+    "src/companion/badge-sync.js": "be4e463e3703d0df8baf70053fe3a3c80b9870fa1f3594e09020ccf1894cf8d2",
+    "src/companion/badge-sync-scheduler.js": "0fbd49fc48e88ffd5b5e4b58271ebf063fd3481c35b688bdf5a5e3815df856e1",
+    "src/companion/active-events.js": "f0280fe1990dc89b2b43eacd505a9b4d16cdf871e7eed73f1c05c0ffc4edf5e3",
+    "src/social/panel.js": "d64729b44b1ef51a6c4a3101cd689ed8ec9dc960ec025a3f390682ae8f0855ac",
+    "src/social/client.js": "ddbead4a75d7d3a758b3fd9c71824e9edf781fa2ab00108a4c276d6aefb70238",
+    "src/social/controller.js": "f7eb6534c62c51332c10f77bdfeb22238bba2f5aa8401091a2eebfe1b83dbaad",
+    "src/companion/ai-adapter.js": "c7f99c99c1fe80670b97c8e66da81f1ced111dc4c19e43d51799cffffec8ab24",
+    "src/companion/privacy-eligibility.js": "df874a6a142dbf4caf78ed9dee34a9a7d61b16e465f32e3312a411da8494c1bf",
+    "src/social/environment-resume.js": "331770d4a7d97e15e8cbef4491f3d98a05ba500552ce92c3b6a053a64c731e49",
+    "src/social/environment-revoke.js": "568818026580876fe38811c1b1bf052363be9605e91fbba4a5776366b33c5d00",
+    "src/social/update-uploader.js": "fce31b3a02e416b6d7f4b913d19ab9535571d21b3a84ae2a9a843c21e42821c8",
+    "src/companion/prelude.js": "375ff9f5afd8001f567f3923b2662329e2574e60288d70d3f2a6bd11304377e8",
+    "src/native/bridge.js": "595b9a744254de93209a6930bcea1c29411b144437d1a0d9e0816161be6ae9e3",
+    "src/ble/client.js": "00e36d89f7cc028a521cfc40815e769f26f5a4025af78a615173ef2aeefe8a8a",
+    "src/ble/protocol.js": "ded0e878da81d1bd91d1bbcc95f664b6c18abaec2a7982e91351389f4b99bd1f",
+    "android/app/src/main/AndroidManifest.xml": "dcb8fadc572fb0932848db2e4ce0f808cde357dce499a908f5e108b710a62602"
+  },
+  "changesExecuted": [],
+  "devicesTouched": false,
+  "networkCallsExecuted": false,
+  "credentialsReadOrAdded": false,
+  "remainingFirmwareSourceRequired": true
+}

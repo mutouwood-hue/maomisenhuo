@@ -1,0 +1,48 @@
+{
+  "status": "pass",
+  "kind": "independent_source_package_and_evidence_readback_plus_actual_Node_fixture_execution_not_device",
+  "newRuntime": [
+    "web/offline-family-ui.css",
+    "web/offline-family-ui.js"
+  ],
+  "all21PriorWebFilesUnchanged": true,
+  "compiledDexComparison021": [
+    {
+      "entry": "classes.dex",
+      "sha256": "118ff93a1ac9f7a92b803840cf057b46c345cb912bd0ff0a0c4b38f87ac3f7a5",
+      "byteEqual021": true,
+      "changedBytes": 0,
+      "differenceScope": "none"
+    },
+    {
+      "entry": "classes2.dex",
+      "sha256": "4800ceff3a2d265e1586040dbded911674b7ee620de8f7dc80edac3102354e8c",
+      "byteEqual021": false,
+      "changedBytes": 34,
+      "differenceScope": "generated BuildConfig version12->13 and0.2.1->0.2.2 plus checksum fields only"
+    }
+  ],
+  "ownerFamilyCss": {
+    "profiles": 6,
+    "checks": 183,
+    "evidenceSha256": "131f54430be522c4895649e02daeeeccbf30a9802c85327763a70fcfa7aa4649",
+    "sourceAssociatedAndChecksReadback": true,
+    "notIndependentlyRerunWebKit": true
+  },
+  "executedNodeTests": 24,
+  "ownIndependentTests": 5,
+  "existingTargetedTests": 19,
+  "priorFrozen": {
+    "ui020": {
+      "sourceCount": 131,
+      "allSourcesAndDeliverablesStillFrozen": true
+    },
+    "ui021": {
+      "sourceCount": 135,
+      "allSourcesAndDeliverablesStillFrozen": true
+    }
+  },
+  "sourceStableAfterTests": true,
+  "manifestSha256": "9880c3fc7adadc3fce91ac569804bcf895af453e28581e894d10a5a9c0ab309e",
+  "FROZENSha256": "8245187c45ef9c8872b54b783d6d5b5f8b4bb89b57e924ff1b5f700f6a273b84"
+}

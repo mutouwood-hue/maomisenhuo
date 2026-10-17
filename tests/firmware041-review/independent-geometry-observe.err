@@ -1,0 +1,12 @@
+ROI_REJECT x-16 z-16 h0 support2
+ROI_REJECT x-16 z-16 h90 support2
+ROI_REJECT x-16 z-16 h180 support2
+ROI_REJECT x-16 z-16 h270 support2
+ROI_REJECT x-16 z0 h180 support2
+ROI_REJECT x-16 z0 h270 support2
+ROI_REJECT x0 z-16 h90 support2
+ROI_REJECT x0 z-16 h180 support2
+ROI_REJECT x0 z-16 h270 support2
+BOUNDS_ESCAPE x16 z-16 h180 ROI[210,124] bounds[392,126,466,382]
+ROI_REJECT x16 z-16 h270 support2
+FAIL line29: vr_world_frame(r,"walk",sec,heading,0,0,x,z,0,true,&st)

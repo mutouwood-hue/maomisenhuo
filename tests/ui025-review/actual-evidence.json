@@ -1,0 +1,288 @@
+{
+  "scope": "final limited actual original companion loop, core readonly demo and finite foreground observation",
+  "status": "pass_limited_actual_scope",
+  "apkSha256": "ea08d990f5210f5e8cf831b77cea60f39b2826270604148f84a38432be786c88",
+  "installFilesByteIdentical": 13,
+  "awayRead": {
+    "本次读取 generation": "2",
+    "设备已处理指令序号": "29",
+    "设备已确认事件水位": "9",
+    "设备待确认事件数": "0",
+    "快照版本": "20",
+    "快照场景": "在外出游（away）",
+    "快照动作": "休息（idle）",
+    "快照天气": "晴天（clear）"
+  },
+  "homeRead": {
+    "本次读取 generation": "2",
+    "设备已处理指令序号": "31",
+    "设备已确认事件水位": "9",
+    "设备待确认事件数": "0",
+    "快照版本": "22",
+    "快照场景": "在家（home）",
+    "快照动作": "休息（idle）",
+    "快照天气": "晴天（clear）"
+  },
+  "originalRecallAction": {
+    "atUtc": "2026-10-16T03:02:16Z",
+    "tap": "叫它回家",
+    "bounds": [
+      331,
+      1589,
+      607,
+      1719
+    ]
+  },
+  "overlayRemovedButOriginalSchedulePillPersists": true,
+  "baselineAuthorityRevision": 65,
+  "afterLoopAuthorityRevision": 72,
+  "authorityChangedEntries": [
+    "cat-cflocal2-journal-v1"
+  ],
+  "ledgerRecords": 9,
+  "ledgerStatuses": {
+    "applied": 8,
+    "quarantined": 1
+  },
+  "socialReceipts": 9,
+  "coins": 24,
+  "xp": 67,
+  "counts": {
+    "feed": 2,
+    "bath": 0,
+    "pet": 11,
+    "play": 0,
+    "sleep": 3,
+    "climb": 0,
+    "tease": 0,
+    "drink": 0
+  },
+  "videos": {
+    "pages-raw.mp4": {
+      "bytes": 14731831,
+      "mvhdDurationSeconds": 99.986,
+      "sha256": "3000bbf494c8ecfda49135188e48c5c7c3a69371f0e0967d05a8ff14c1e0ec59",
+      "decodedOrFullVisualReviewed": false
+    },
+    "core-raw.mp4": {
+      "bytes": 26242898,
+      "mvhdDurationSeconds": 179.9837,
+      "sha256": "3501ad89f87fe3f719e48bbe7fea19f109896d389a5d9b7b301bbe58d64b7a5b",
+      "decodedOrFullVisualReviewed": false
+    }
+  },
+  "evidenceHashes": {
+    "drive-evidence-progress.json": "705d7174afdb08b8a7e5eef09449dfd90ca59282286eb971e531833b99996ca9",
+    "stability-summary.json": "927e974dbe092a7a588d802e40c0ea322f8b53ac8a89ace1924b85df7c409b34",
+    "scan-results.xml": "9683237a88c32d5fc86036ba9bb4219ebea46f7f400f6ecccdcaf920fd3fb209",
+    "scan-results.png": "ebbf923d6502ca601f7fc81db94c0a703745ed0075b08f1aa61a50ff71284ece",
+    "room-observation.json": "27c1eb87d58f2ec1fcfda73348acbdb029a10c474a4d182e479b410168bba5b8",
+    "room-60-meta.json": "7ea848ff195f6e64f5e903d110f9c29c9c0124971d64a348f4f47d2629b1170c",
+    "before-explicit-disconnect.xml": "2a14041dd6e3b5e16ed00986809a4ba9b67b6445917956e47047d51c653b905c",
+    "before-explicit-disconnect.png": "5039800ae7f4dd0d4ce25e37bb6a464352ee82ab70fc6922c6d1787cb7e0705f",
+    "room-240-meta.json": "fe2346372d6e414c355deaf7f1598156201c7e8017438df844bc45a75cb6d224",
+    "connected-away-before-read.xml": "ee8193c69e4b2173a1ced26e6421ca5b8f5a52b4509905469641bf8002bd0478",
+    "connected-away-before-read.png": "aa8c036e67aa003311f0e5072d8b80c0f27b6675cd5805d2f96531651da1660d",
+    "pages-raw-sample-30.png": "d26246a5f405dad98698fec7a88fbb80e7c495c242bded5f92bb96efe8bb67db",
+    "final-state-fields.png": "02ac55f414093008d6b0ec51836cd445c092244d7efad9d3e4d905b924a54574",
+    "core-family.xml": "9a71b0dea275be68027382f96e673c779cf5fff8d49d76d7e62b8ad1e20d42c6",
+    "final-state-fields.xml": "bcfea0d3f95368a2e5a7b7f3f89fcec608f115b4eccb84ababd70bedb44f2af7",
+    "core-family.png": "a324541f16baff467647eb84aaa4662f3f957b0184e71a940940cf3da9715a1a",
+    "final-read-complete.xml": "16345ca90c71754ba9590ecd1611f155a606ea1a2dbc905dd3d21f9c277ca133",
+    "final-read-complete.png": "7b8f43870569f2c38dad8e00604bfc9e38b9d41e2a703815ab057eaf2843f56b",
+    "PLAN.json": "9549f816fde7b7e84cdff9d1bbe31bfada8ae51535f946f219bf2c76cdfbf39f",
+    "result.json": "27d0cfcd368139a29985722cf5a58d2d298f87719fcc15b079ef832cd87eff60",
+    "room-300-meta.json": "ab60ff1b374053d1f4e5dc45cd89cd16bc86cbb23794c7359755ef1d8a62877d",
+    "core-room.png": "a11e864985057dcf0d5f12c031b9d06af889b331076916859328e66521d9efc9",
+    "core-room.xml": "a31913cce1061285324214c20a3ef4b44ca9755d3b22b85500e7ba41fa2fffad",
+    "explicitly-disconnected.png": "23721222b10c3cbd2e1b4280f4da1744cc27908fc8b07cb45ccc803f5519f325",
+    "explicitly-disconnected.xml": "ce272ff3dc6eeb47b1fdeaf7d77f12092130c1ef833342272b18c8c6aa447937",
+    "home-state-fields.png": "4cb1438826f7742ce2ba2daf52ea0f4f0cb239a28ad50cdfd643281c5bac07d9",
+    "pages-raw-qa-contact.png": "d856eda2b42ee906f12af4feee3f578684286d45b9b785fa285e8873b0281cdc",
+    "home-state-fields.xml": "0ddb1d1f8a5391d90d8acef0dea4cd6a4805151d7d2bbeaf89c2a99085d8dbe0",
+    "core-raw-sample-155.png": "2861483af481e3e716c71f61e20692d55ed744a617813376218dbe65eb18b7af",
+    "review-release.json": "ab871cde43d0d96e676f6dc5ccc33dc7fcb0c1f791ff1bf742d87a7b575a0c73",
+    "room-240-authority.json": "81547b5f45fef0e79a23c8075196802979ba3f112af0c53b8b4b7fc9e9aaf0b3",
+    "core-raw-sample-1.png": "468354a73b3f31aa83bc8ffda53825d5c6c337fbaa0aa51cbe1e37e44122e41e",
+    "home-read-complete.xml": "a82e7706b3155d72ef9286fcd0c5ca5af3570f1cde48fb17f5129fe44a4b3605",
+    "home-read-complete.png": "ef5ab046fd1ce904985f1d107009a1d5608bfca4d1f903d67e4570b3c4d5393e",
+    "home-dialog-reopened.png": "7e6c1ec6504a4653acb3849ccfc30f941908ee691e4dd1510748d181e9f53b97",
+    "home-dialog-reopened.xml": "07bab1fcef6e19444b8a4af9167fac358531d1bacc27c72b2c59f921caedf801",
+    "core-wardrobe.png": "835b26f30c8538f53e5500b6a000b777bf5d82514c558e6c8d701ce63ad192e7",
+    "stability-room-start.png": "ab447230091596d6341e703e4fcb88e57bfb26cc00fab25a101900dd9d890fe2",
+    "core-wardrobe.xml": "45c42c5d41a95dd683f3d95278f27f96f7317f806c4e12a830129411d46c5b8c",
+    "room-180-authority.json": "e0c6d3bd9eeb30016793dea1594b12b91f2f135436ef7bebb0b914d9f0a86948",
+    "stability-room-start.xml": "3ee19aa67f5f489d6c71d253f1d08f0388e533af4a3c26bf723a25f44832b49a",
+    "away-read-complete.xml": "81a5cbe84c84b924143c3ef14800f323be23cafacbab8de6251b33f7fe6aec8e",
+    "away-read-complete.png": "2bdb706245a419f4852b578220827513008e722b474563f4a6703a7f6020de18",
+    "core-raw-sample-75.png": "d6758cf4fc0fab0561215b00bee5468e258c3c1806815ae3bd47c6a12da31f22",
+    "core-after-wardrobe.xml": "20f0df96911f38a49c8685aac8038c58bfb81e458f7ace62ba199604be993948",
+    "pages-raw-sample-90.png": "488ca63752ae7dc2f544164603f21f36180a7c94b898d21bef661b17fea1f105",
+    "core-after-wardrobe.png": "a54bf0dd977c920775dbc8c1a7a43ca6d37bc9212a2852c6de33f0b67beeb41c",
+    "after-loop-meta.json": "faf7e79c9dfc6f45fb290e66b115cf5459be2e409489a01cb900653204a79085",
+    "room-60-authority.json": "6f35ae4a43d77f31b39dbf4bab5c8683ecfcf82fc9b9d827c7aa46ae3db6bc38",
+    "before-original-recall.xml": "9558ce6c1dfdb88d46b8c275e846ddd81b2d690d552e451bc58f9842f3d3111e",
+    "before-original-recall.png": "cffef8f7c79378507eb987667b2d41b8e671acb1a94209627f18790c47cf530a",
+    "pages-raw-sample-1.png": "3b983c0b59e6762295613fed2a8ae5ecadc4c07ef26b2b3ad21fc52fb7d1d7fe",
+    "authority-final.json": "46686fa3cb7bb4bd6d27d8cc8cff6a18138002a6e5b5f40d8afb575b988214b3",
+    "preservation-summary.json": "a3b69e48e325d0ce4621f52997c5a9ba28520369d289de2fce4b75a20b7065a6",
+    "core-raw-sample-135.png": "fb1585f20462f98af28036f1d1459026427c89d0a13b10ef5fc6c451478a54c0",
+    "core-raw-qa-contact.png": "fdb823f8b5b530994a14a85c1e68bcff5068db2f7a1b27730024beb93d8642e0",
+    "released-home.png": "d1d026b8eb3b11a0bc0cb28632a96ad49739b34ff3032109cf4d7466695841ca",
+    "released-home.xml": "ab7d8ff44ac8a611412934465c6738aa8a4210550d9b03534ddd3171a19f1a09",
+    "pages-raw-sample-45.png": "59f32da013f18c6b4421843dc1421ecb95f34258d7d3c47f3fce51967d1ef4d2",
+    "drive-evidence.json": "6429819469445304de7dd223157320e71286003fc8af36be471de0eef1f7b73a",
+    "pages-raw-sample-60.png": "e8a8083212f10a48aba0a6e1193ffc6991384dbb0fbe55ae291fa7458093e66d",
+    "baseline-meta.json": "826dba741a422800a6fba4644328ddbb21444378fad5135e5bdeb16e3f6fd6e0",
+    "core-family-preview.png": "b9fd0662f9f8e86d0f5ce7740b612f72fbcede3a4f606501085ec3408724e0d4",
+    "core-family-preview.xml": "b5b023ae38dbdfad4fd1a9e97b9ebd2dcbeb823069c059aad1c797ce1b1997e8",
+    "post-readback.json": "c82a0e7b71180689b9d6927bf8743a4839a2bc45523939b5148da4766bf118fa",
+    "mode-options.xml": "734c0c0ee8443288e620df2a0bd6707aed53e0e01df56f2f8f40ce5fe3758835",
+    "latest.xml": "ab7d8ff44ac8a611412934465c6738aa8a4210550d9b03534ddd3171a19f1a09",
+    "mode-options.png": "a2b725f13b0d4560b2a89cba88e62db80a7d6049b732e60ad3e60cc5be52e3e4",
+    "details-summary.png": "6af1655c11feaf95b6b394930806bd7a2a867931a76e88e686394b1a449631d4",
+    "away-actions.png": "193b2bafe5bf704ea89659f0bd010e46e3eef36e16ac5362c791661d331a8ce5",
+    "away-state-fields.xml": "ee37d0262005fae32ada23e81e39a4e196db4951814455e88a89d7f7ddf41d8c",
+    "details-summary.xml": "16342803d6ea16eebcbbe45c2f1708616a106d46cc5230c01e330c45566ae682",
+    "away-actions.xml": "c497485cf310795fefb2f933daf0b5dcbbefa07d7d9701d6696eed45fa1110cd",
+    "away-state-fields.png": "cd786eae722648547b13e7cf07be57b02904b92ded2808716450b0f9f4b1058e",
+    "core-raw-sample-105.png": "4d152c7178969db52eae9f3afc4895007c7426b5048bc9d753de4f966c943652",
+    "new-mode.png": "4e826b319fcfdbbe4eb02f8699c7f1e6e9b172438dec5d9a38bfb5e8a08b9dcf",
+    "new-mode.xml": "386b159269886f92484ee9b28c0f75005d04edf46ab0aa4f65d0599566ab9fe0",
+    "video-samples.json": "58527d1afba85555a371943e116ea31feb0975f15a7062b63cbeb709457fb0f7",
+    "home-refresh-actions.xml": "15c45df758e0c9dadc3576cc74dacdb91341c640204272dc7e8c02eeb7f2e740",
+    "home-refresh-actions.png": "b891ba07b2368e02241fa6c33e14ad982f3bc8695576663e5e185bec03c9c92f",
+    "room-120-authority.json": "e0c6d3bd9eeb30016793dea1594b12b91f2f135436ef7bebb0b914d9f0a86948",
+    "after-original-recall.xml": "a1754ed73c6912e7ba7638d4071545425d80cf015994ad6e956306aee19755c8",
+    "after-loop-authority.json": "a9ea56fb86a026e10f74510353a7b67006b4b0f9a07eabe2f3fd0d1532e75581",
+    "after-original-recall.png": "87acf8cd0151d8d4bc5611eb53f7e6ca78d72bb7deb1d70d0bcb85e0793e5571",
+    "room-120-meta.json": "1cd1494bcb306a3999978b19e8a665b44d71059a5ef35db0e86ac575a5b91a24",
+    "room-start-authority.json": "19c3761d53c21b1cb49b8ab04cdcdbae11ef4c9c8c80ec3cdcea38811b1a0c2a",
+    "final-refresh-actions.png": "435ccc4bd4265dd121ddf3ba14e6b64cd5259bb0400d683c994c1bd08e859f1b",
+    "final-refresh-actions.xml": "03bab2748b2d718463607c0516f378086e398549a231842c5161a54e832179a9",
+    "room-180-meta.json": "884504eb07192c7d7287dc68c7a8c9026df6c1da3c983089860124b7245a8c25",
+    "final-read-open.xml": "66020dfaa5f912b8ad50270a530c6a8386af57a041fc3305687e2bdd43e94416",
+    "scene-loop-summary.json": "2af450503805fcd19fb87f41f59c909a845d78255f2d162b51b1818960d302a5",
+    "room-observation-first-attempt.json": "2e7a64a114ab1ef4c8db7bbd4c902b64ffe9671f5bfc497ec16746f6d39b1d4a",
+    "final-read-open.png": "36243435d22876b22334a73abdf4fb73688ef97134400408822839d58098f146",
+    "pages-raw-sample-15.png": "de9addf237b5af727fb3da14e602e88049476966f749c19445d2e9cb6d7319db",
+    "baseline-authority.json": "fc1a545ddc3175a1e675e2ff292162eaf86104db6068d299fceaad5e4537d499",
+    "actions.json": "03edc11ae89770aba797970e49bbe8521e0bcda6b73b602ca2b2ac3b3351ba67",
+    "room-300-authority.json": "81547b5f45fef0e79a23c8075196802979ba3f112af0c53b8b4b7fc9e9aaf0b3",
+    "stability-room-end.xml": "3ee19aa67f5f489d6c71d253f1d08f0388e533af4a3c26bf723a25f44832b49a",
+    "stability-room-end.png": "ff81b9ac481dff0503090962748645a0b6deb456dc6f1ae844cbd4a9bf0b6315",
+    "restored-app.png": "de8b84e7bdeb8021783a116752dbacc4882dd07633de86f5a382f4572b20893e",
+    "restored-app.xml": "248fcc56dc346b3cc51875021e69dcaa5fbd95f2d87d4c69fe4f464e84434e94",
+    "install.json": "a552deea111ee904bac611819a76f77bc08a74e0129af8ba928ac96b0616b770",
+    "core-raw-sample-175.png": "d881bc5fad9d9756801c79738722b8a715428e73b1afc417ef19adc833f4d56e",
+    "cold-start.png": "5482de1cd615c090f448943364c831735b01deec7d3d3a703f872fa8e4080fb1",
+    "badge-initial.xml": "717217edff971a729e74615ba4f9bc1dcf40af2dd19a218fbeab587fb87372df",
+    "badge-initial.png": "00d615ee2b8e2df28f30c4803f2b201de15272021ae8987e9be2ecb32556fe59",
+    "cold-start.xml": "072877fcf7d1840b90784f28218a76f4de8bf5dcb25695349b3844c1a7d85160",
+    "core-wardrobe-scroll.xml": "90805fe5a90be9baefea8d531da7f39bbe5f4d9562e8efc41f118032801c68f8",
+    "room-start-meta.json": "a459c49dca19e5ce54a48e7b494c618d2ca205547f7c4cfbdd7f4cc4ad7963da",
+    "core-wardrobe-scroll.png": "51b0f4ccc22d3da872dfbb94ee6663f06d87f4630723bed82eb21500448d0f33",
+    "core-raw-sample-35.png": "d8769d3f1919748dba62995952410beab24a61e0efe0907fc08bb227841c3a57"
+  },
+  "limits": [
+    "Independent read-only review of Root device actions; no reviewer device/network operations",
+    "State persistence/reader linkage only, not optical badge animation or precise clock validity",
+    "Two nonfatal Adreno shader compilation + two pipeline failure messages retained; not all graphics logs clean",
+    "Memory sample start precedes corrected timed window; no leak/continuousFPS guarantee",
+    "Existing schedule pill stays outward after private recall; inherited presentation mismatch",
+    "No new care/gift/reward/bilateral or power-loss test; original9status retained",
+    "Separate videos not asserted complete continuous whole loop; container duration only independently parsed"
+  ],
+  "nativeFinalRevision": 81,
+  "finalRead": {
+    "本次读取 generation": "2",
+    "设备已处理指令序号": "36",
+    "设备已确认事件水位": "9",
+    "设备待确认事件数": "0",
+    "快照版本": "27",
+    "快照场景": "在家（home）",
+    "快照动作": "休息（idle）",
+    "快照天气": "晴天（clear）"
+  },
+  "protectedEntryBytesUnchanged": [
+    "pixel-cat-pet-v1",
+    "pg-social-v1",
+    "cat-cflocal2-source-identities-v1",
+    "cat-cflocal2-event-ledger-v1"
+  ],
+  "journalPending": null,
+  "stability": {
+    "seconds": 303.684,
+    "pid": "10921",
+    "fiveSamePidForegroundSamples": true,
+    "memory": [
+      {
+        "checkpoint": "room-start",
+        "atUtc": "2026-10-16T03:05:31.069530+00:00",
+        "pssKB": 236311,
+        "nativePrivateDirtyKB": 46396,
+        "graphicsPrivateDirtyKB": 97270
+      },
+      {
+        "checkpoint": "room-60",
+        "atUtc": "2026-10-16T03:07:26.765187+00:00",
+        "pssKB": 255022,
+        "nativePrivateDirtyKB": 45536,
+        "graphicsPrivateDirtyKB": 94828
+      },
+      {
+        "checkpoint": "room-120",
+        "atUtc": "2026-10-16T03:08:26.808640+00:00",
+        "pssKB": 247062,
+        "nativePrivateDirtyKB": 46480,
+        "graphicsPrivateDirtyKB": 94860
+      },
+      {
+        "checkpoint": "room-180",
+        "atUtc": "2026-10-16T03:09:26.498742+00:00",
+        "pssKB": 243132,
+        "nativePrivateDirtyKB": 46496,
+        "graphicsPrivateDirtyKB": 94948
+      },
+      {
+        "checkpoint": "room-240",
+        "atUtc": "2026-10-16T03:10:26.508734+00:00",
+        "pssKB": 248384,
+        "nativePrivateDirtyKB": 46788,
+        "graphicsPrivateDirtyKB": 94824
+      },
+      {
+        "checkpoint": "room-300",
+        "atUtc": "2026-10-16T03:11:26.510344+00:00",
+        "pssKB": 242652,
+        "nativePrivateDirtyKB": 45568,
+        "graphicsPrivateDirtyKB": 94824
+      }
+    ],
+    "memoryStartPredatesTimedObservation": true,
+    "mainProcessLogLines": 40,
+    "selectedFatalUncaughtMatches": [],
+    "nonfatalGpuMessages": {
+      "shaderCompilationFailed": 2,
+      "pipelineCreateFailed": 2
+    },
+    "notWholeOSRendererOrLongTermGuarantee": true,
+    "gfxinfoTotalFrames": {
+      "room-start": [
+        0,
+        0
+      ],
+      "room-300": [
+        0,
+        0
+      ]
+    },
+    "gfxinfoUsableForPerformance": false
+  },
+  "release": {
+    "wmRestored": true,
+    "Home": true,
+    "bleDisconnected": true,
+    "screenrecordPidEmpty": true
+  }
+}

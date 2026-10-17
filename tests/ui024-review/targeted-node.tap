@@ -1,0 +1,184 @@
+TAP version 13
+# Subtest: only correlated real state response is exported; zero/false/null retained, unknown/store/journal/clock fields excluded
+ok 1 - only correlated real state response is exported; zero/false/null retained, unknown/store/journal/clock fields excluded
+  ---
+  duration_ms: 1.565458
+  type: 'test'
+  ...
+# Subtest: missing optional fields remain absent and invalid response identity/frame/generation never creates observation
+ok 2 - missing optional fields remain absent and invalid response identity/frame/generation never creates observation
+  ---
+  duration_ms: 1.994542
+  type: 'test'
+  ...
+# Subtest: cached observation becomes expired on disconnect/background/mode or generation change and never resurrects
+ok 3 - cached observation becomes expired on disconnect/background/mode or generation change and never resurrects
+  ---
+  duration_ms: 2.082916
+  type: 'test'
+  ...
+# Subtest: background and resumed same-generation or new device cannot accept an old late response
+ok 4 - background and resumed same-generation or new device cannot accept an old late response
+  ---
+  duration_ms: 0.477
+  type: 'test'
+  ...
+# Subtest: BUSY/failure does not erase cached read or silently retry; stale cache is explicitly marked
+ok 5 - BUSY/failure does not erase cached read or silently retry; stale cache is explicitly marked
+  ---
+  duration_ms: 1.13425
+  type: 'test'
+  ...
+# Subtest: production coordinator+transport: diagnostic read holds shared lease across ticks/retry with no journal/checkpoint/event mutation
+ok 6 - production coordinator+transport: diagnostic read holds shared lease across ticks/retry with no journal/checkpoint/event mutation
+  ---
+  duration_ms: 14.519708
+  type: 'test'
+  ...
+# Subtest: production mutation in flight blocks diagnostic with BUSY and zero additional radio or journal operations
+ok 7 - production mutation in flight blocks diagnostic with BUSY and zero additional radio or journal operations
+  ---
+  duration_ms: 7.848166
+  type: 'test'
+  ...
+# Subtest: production read failure releases lease without business halt; only later normal tick resumes original scene flow
+ok 8 - production read failure releases lease without business halt; only later normal tick resumes original scene flow
+  ---
+  duration_ms: 5.872625
+  type: 'test'
+  ...
+# Subtest: production foreground loss rejects late state without syncing/consuming or accepting stale observation
+ok 9 - production foreground loss rejects late state without syncing/consuming or accepting stale observation
+  ---
+  duration_ms: 3.055334
+  type: 'test'
+  ...
+# Subtest: production disconnect invalidates pending read; later stale packet cannot create a result
+ok 10 - production disconnect invalidates pending read; later stale packet cannot create a result
+  ---
+  duration_ms: 2.482375
+  type: 'test'
+  ...
+# Subtest: production event settlement lease blocks read before any extra radio/journal; release preserves original flow
+ok 11 - production event settlement lease blocks read before any extra radio/journal; release preserves original flow
+  ---
+  duration_ms: 2.79525
+  type: 'test'
+  ...
+# Subtest: view stays collapsed, opening/export without read issues no command; real0/false/null and missing fields remain distinct
+ok 12 - view stays collapsed, opening/export without read issues no command; real0/false/null and missing fields remain distinct
+  ---
+  duration_ms: 251.381583
+  type: 'test'
+  ...
+# Subtest: Native export requests only bounded local JSON; stale cached record is labeled and no saved-success claim is made
+ok 13 - Native export requests only bounded local JSON; stale cached record is labeled and no saved-success claim is made
+  ---
+  duration_ms: 114.135042
+  type: 'test'
+  ...
+# Subtest: browser fallback uses one local Blob/download and does not fetch or mutate storage
+ok 14 - browser fallback uses one local Blob/download and does not fetch or mutate storage
+  ---
+  duration_ms: 82.8425
+  type: 'test'
+  ...
+# Subtest: response strings render only as text; generation changes expire and export errors stay local
+ok 15 - response strings render only as text; generation changes expire and export errors stay local
+  ---
+  duration_ms: 77.936584
+  type: 'test'
+  ...
+# Subtest: production Host + adapter + transport require explicit connect and both durable ACK and final GATT completion
+ok 16 - production Host + adapter + transport require explicit connect and both durable ACK and final GATT completion
+  ---
+  duration_ms: 1627.123167
+  type: 'test'
+  ...
+# Subtest: native owner wiring keeps V2 off JavascriptInterface, denies frames, and stops transports before WebView pause
+ok 17 - native owner wiring keeps V2 off JavascriptInterface, denies frames, and stops transports before WebView pause
+  ---
+  duration_ms: 0.609833
+  type: 'test'
+  ...
+# Subtest: production event Host + original rules + durable ledger + real adapter/transport commits both stores before Native ACK
+ok 18 - production event Host + original rules + durable ledger + real adapter/transport commits both stores before Native ACK
+  ---
+  duration_ms: 961.574584
+  type: 'test'
+  ...
+# Subtest: foreground failure is localized once, and the route helper does not repeat stale operation text
+ok 19 - foreground failure is localized once, and the route helper does not repeat stale operation text
+  ---
+  duration_ms: 124.300875
+  type: 'test'
+  ...
+# Subtest: a blocked source export produces an explicitly labeled raw recovery backup including original social and dedup bytes
+ok 20 - a blocked source export produces an explicitly labeled raw recovery backup including original social and dedup bytes
+  ---
+  duration_ms: 74.650375
+  type: 'test'
+  ...
+# Subtest: production adapter unknown ACK is journaled unchanged across reconnect and explicit recovery without a second game award
+ok 21 - production adapter unknown ACK is journaled unchanged across reconnect and explicit recovery without a second game award
+  ---
+  duration_ms: 447.080417
+  type: 'test'
+  ...
+# Subtest: Native event fsync wait excludes original gameplay, observers, scene sampling and ACK until complete result projection
+ok 22 - Native event fsync wait excludes original gameplay, observers, scene sampling and ACK until complete result projection
+  ---
+  duration_ms: 836.108417
+  type: 'test'
+  ...
+# Subtest: actual mounted diagnostics stays closed/listener-only, shares mutation lease, exports only real read and expires on Host pause
+ok 23 - actual mounted diagnostics stays closed/listener-only, shares mutation lease, exports only real read and expires on Host pause
+  ---
+  duration_ms: 214.770291
+  type: 'test'
+  ...
+# Subtest: 023 negative control: mounted state callback causes presentation mutations and unintended snapshot without500ms poll
+ok 24 - 023 negative control: mounted state callback causes presentation mutations and unintended snapshot without500ms poll
+  ---
+  duration_ms: 1433.311166
+  type: 'test'
+  ...
+# Subtest: 024 mounted refresh/export is state-only with memory-only food change; journal/Native/status unchanged, normal game DOM still samples
+ok 25 - 024 mounted refresh/export is state-only with memory-only food change; journal/Native/status unchanged, normal game DOM still samples
+  ---
+  duration_ms: 1304.745667
+  type: 'test'
+  ...
+# Subtest: 024 mounted event-enabled refresh after consumer interval emits no event/ACK/snapshot; real game DOM retains original event pump
+ok 26 - 024 mounted event-enabled refresh after consumer interval emits no event/ACK/snapshot; real game DOM retains original event pump
+  ---
+  duration_ms: 2580.754291
+  type: 'test'
+  ...
+# Subtest: 024 mounted BUSY refresh/export during a real pending scene does not cause any additional wire/journal/Native/status change
+ok 27 - 024 mounted BUSY refresh/export during a real pending scene does not cause any additional wire/journal/Native/status change
+  ---
+  duration_ms: 1483.854917
+  type: 'test'
+  ...
+# Subtest: 024 mounted background/resume and disconnect renders keep cached diagnostics expired and emit no command or persistence change
+ok 28 - 024 mounted background/resume and disconnect renders keep cached diagnostics expired and emit no command or persistence change
+  ---
+  duration_ms: 2729.470042
+  type: 'test'
+  ...
+# Subtest: 024 mounted failed state responses and repeated panel renders remain state-only without journal/Native/main-status side effects
+ok 29 - 024 mounted failed state responses and repeated panel renders remain state-only without journal/Native/main-status side effects
+  ---
+  duration_ms: 1385.840583
+  type: 'test'
+  ...
+1..29
+# tests 29
+# suites 0
+# pass 29
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 16764.2565

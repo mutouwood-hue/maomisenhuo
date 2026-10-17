@@ -1,0 +1,35 @@
+{
+  "checkedAtUtc": "2026-10-15T14:30:45.020484+00:00",
+  "scope": "original ota_0 backup only; no live connection/reset/write",
+  "uuidSearch": [
+    {
+      "name": "legacy_service",
+      "uuid": "e7f1a000-1c9b-4a7e-9d2f-3b8c5e6f7a00",
+      "asciiOffset": -1,
+      "networkByteOffset": -1,
+      "nimbleLittleEndianOffset": 102229
+    },
+    {
+      "name": "legacy_rx",
+      "uuid": "e7f1a000-1c9b-4a7e-9d2f-3b8c5e6f7a01",
+      "asciiOffset": -1,
+      "networkByteOffset": -1,
+      "nimbleLittleEndianOffset": 102209
+    },
+    {
+      "name": "legacy_tx",
+      "uuid": "e7f1a000-1c9b-4a7e-9d2f-3b8c5e6f7a02",
+      "asciiOffset": -1,
+      "networkByteOffset": -1,
+      "nimbleLittleEndianOffset": 102189
+    },
+    {
+      "name": "new_service",
+      "uuid": "7b2e1000-6a6d-4d8f-9c45-4f4d43415431",
+      "asciiOffset": -1,
+      "networkByteOffset": -1,
+      "nimbleLittleEndianOffset": -1
+    }
+  ],
+  "limits": "All three old UUIDs found together are strong identity evidence only. They do not prove START_LOCAL behavior, extension support, security semantics or complete source-build equivalence."
+}

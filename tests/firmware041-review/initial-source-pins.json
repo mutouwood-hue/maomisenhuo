@@ -1,0 +1,7 @@
+{
+  "artifacts/firmware-visual-prototype041/source/renderer.c": "c18e03f46c6c57ed92e496840aeb57f21c0ae3850035ee6405c38ff015b39603",
+  "artifacts/firmware-visual-prototype041/source/renderer.h": "fafee45dfc7923b099367ef3c7a96604852652b9dfa47717e6f7072f0d91e15c",
+  "artifacts/firmware-visual-prototype041/reference/pixel-cat.pcat": "82520ca7f00eb28f005795cc970746150d73075083d4032119d795d19c2d0b4e",
+  "artifacts/firmware-visual-prototype041/reference/badge-renderer.original.cjs": "8fa2efd134f942b9a52094162dc95ba03f78913a41a8f101180e727647dd4186",
+  "artifacts/firmware-visual-prototype041/reference/badge-renderer.coverage.cjs": "2d9ad5eba9a6b7ba249a111fbc44a7c8a0db858e7aa1a844b07b5ea7a63f4016"
+}

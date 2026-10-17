@@ -1,0 +1,44 @@
+[
+  {
+    "path": "AndroidManifest.xml",
+    "oldBytes": 4688,
+    "newBytes": 4688,
+    "oldCompressed": 1457,
+    "newCompressed": 1458
+  },
+  {
+    "path": "assets/build-manifest.json",
+    "oldBytes": 4075,
+    "newBytes": 4246,
+    "oldCompressed": 1573,
+    "newCompressed": 1632
+  },
+  {
+    "path": "assets/game-03.js",
+    "oldBytes": 757440,
+    "newBytes": 760178,
+    "oldCompressed": 252729,
+    "newCompressed": 254010
+  },
+  {
+    "path": "assets/offline-device-backup.js",
+    "oldBytes": 8547,
+    "newBytes": 8572,
+    "oldCompressed": 3595,
+    "newCompressed": 3604
+  },
+  {
+    "path": "assets/offline-device-events.js",
+    "oldBytes": 14151,
+    "newBytes": 16211,
+    "oldCompressed": 5962,
+    "newCompressed": 6739
+  },
+  {
+    "path": "classes2.dex",
+    "oldBytes": 114244,
+    "newBytes": 114244,
+    "oldCompressed": 52299,
+    "newCompressed": 52296
+  }
+]

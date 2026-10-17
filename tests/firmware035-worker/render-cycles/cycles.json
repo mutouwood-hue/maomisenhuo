@@ -1,0 +1,27 @@
+{
+  "hardware": false,
+  "records": {
+    "baseline034": {
+      "render": 600,
+      "full47": 501,
+      "fullPixels": 501,
+      "partial": 99,
+      "iterations": 40,
+      "wallUs": 922306,
+      "flushes": 27252,
+      "pixels": 125658136
+    },
+    "candidate035": {
+      "render": 600,
+      "full47": 500,
+      "fullPixels": 500,
+      "partial": 100,
+      "iterations": 40,
+      "wallUs": 1056316,
+      "flushes": 27208,
+      "pixels": 125447016
+    }
+  },
+  "source": "actual LV_EVENT_RENDER_START/READY and software flush callback, production synthetic horizontal drag/easeout+feedback",
+  "notPhysicalScanout": true
+}

@@ -1,0 +1,2 @@
+首次复核断言将Root PNG与独立bit-replication展开PNG要求8bit全等而失败；已定位Root冻结decoder用四舍五入255/31、255/63转换，独立decoder用位复制。RGB565原始字节全部精确一致，两种PNG逐通道最大差1/255。后续分别对原始RGB565和Root已声明的nearest转换进行核验，不将测试假设失败记为设备/产品故障。
+另一初始断言用Path.read_text读取console TXT会自动规范化CRLF，不能直接与raw decode字符串比较；已改按TXT原字节UTF8解码核对。均保留为夹具假设修正，不是raw被改动。

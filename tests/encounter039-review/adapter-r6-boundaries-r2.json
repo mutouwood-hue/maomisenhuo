@@ -1,0 +1,13 @@
+{
+  "virtual_fixture": true,
+  "actualAdapterSource": true,
+  "NativeAndWireStubbed": true,
+  "independentBoundaryCases": [
+    "HELLO terminal: zero row/checkpoint/request",
+    "new invalid UUID no storage write",
+    "stored invalid UUID preserved",
+    "pending terminal seq preserved rejected",
+    "terminal nextSeq events read allowed but snapshot/ACK no writes",
+    "MAX-1 valid final mutation commits safe terminal row, then stops"
+  ]
+}

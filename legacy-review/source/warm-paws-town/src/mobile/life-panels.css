@@ -1,0 +1,95 @@
+/* 原生 JS/CSS + Capacitor，规范 §2 不适用。实际样式真源是原 game.html
+ * 内联 life-v5/blocks-v6/毕业样式及 :root；此层不覆盖调色板。
+ * 现有间距/字号无登记 token：集中在本共享适配层，待设计系统补档。
+ */
+
+/* 固定头部不能参与压缩，否则短屏时标签会被内容挤出可视区域。 */
+#life-ov .lf-head,
+#life-ov .lf-tabs { flex: none; }
+#life-ov .lf-head > div { min-width: 0; flex-wrap: wrap; }
+#life-ov .lf-head b,
+#life-ov #lf-date { line-height: 1.5; }
+#life-ov .lf-head b { white-space: nowrap; }
+#life-ov .lf-mode,
+#life-ov .lf-x { flex: none; }
+#life-ov .lf-body { flex: 1 1 auto; min-height: 0; overscroll-behavior: contain; }
+#life-ov .lf-hero > *,
+#life-ov .lf-now > *,
+#life-ov .lf-tg > div,
+#bk-ov .bk-main > *,
+#bk-ov .bk-form > *,
+#bk-ov .bk-head > div { min-width: 0; }
+#life-ov .lf-card { align-self: stretch; }
+#life-ov .lf-card b { overflow-wrap: anywhere; }
+#life-ov .lf-card span { margin-block-start: auto; overflow-wrap: anywhere; }
+#life-ov .lf-note,
+#life-ov .lf-sum,
+#life-ov .lf-pmeta,
+#life-ov .lf-tg,
+#bk-ov .bk-note,
+#bk-ov .bk-lines,
+#bk-ov .bk-meta,
+#bk-ov .bk-lib,
+#grad-ov .g-letter,
+#grad-ov .g-mem { overflow-wrap: anywhere; }
+#bk-ov .bk-x { flex: none; }
+#bk-ov .bk-places button,
+#bk-ov .bk-tabs button { flex: none; }
+#bk-ov .bk-form input:not([type=checkbox]),
+#bk-ov .bk-form select { min-width: 0; max-width: 100%; box-sizing: border-box; }
+#bk-ov .bk-box { overscroll-behavior: contain; }
+#grad-ov .g-box { overscroll-behavior: contain; }
+
+/* 系统安全区由弹层容器统一预留；内容滚动区不再重复添加 bottom。
+ * 构建会把 env 接到原生 --safe-area-inset-*，浏览器仍使用 env 回退。
+ * 短屏/横屏也适用，防止正在滚动的按钮进入系统手势条。
+ */
+#life-ov,
+#bk-ov,
+#grad-ov {
+  box-sizing: border-box;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+#life-ov .lf-box {
+  max-height: min(900px,calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px));
+}
+#life-ov .lf-body { padding-bottom: 18px; }
+#bk-ov .bk-box {
+  box-sizing: border-box;
+  max-height: min(920px,calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px));
+  padding-bottom: 16px;
+}
+#grad-ov .g-box {
+  box-sizing: border-box;
+  max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px);
+  padding-bottom: 20px;
+}
+
+@media (max-width:600px) {
+  #life-ov .lf-box { max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px); }
+  #life-ov .lf-head { display: grid; grid-template-columns: minmax(0,1fr) auto auto; align-items: center; }
+  #life-ov .lf-head > div { gap: 0 8px; align-items: baseline; }
+  #life-ov #lf-date { white-space: nowrap; }
+  /* 原来的无提示横向滚动令最后一个隐私标签只露一角；换行展示全部入口。 */
+  #life-ov .lf-tabs { flex-wrap: wrap; overflow: visible; }
+  #life-ov .lf-tabs button { flex: none; min-height: 36px; }
+  #life-ov .lf-now { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  #life-ov .lf-card b { min-height: 2.8em; line-height: 1.4; }
+  #life-ov .lf-card small { min-height: 1.5em; overflow-wrap: anywhere; }
+  #life-ov .lf-places { grid-template-columns: minmax(0,1fr); }
+  #life-ov .lf-bz { width: min(262px,100%); height: auto; aspect-ratio: 1; box-sizing: border-box; }
+  #life-ov #lf-bcv { width: 100%; height: auto; }
+  #life-ov .lf-row .g-btn { max-width: 100%; white-space: normal; }
+  #life-ov .lf-heard { min-width: 0; flex-basis: 100%; overflow-wrap: anywhere; }
+  #bk-ov .bk-box { max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 12px); }
+  #bk-ov .bk-places,
+  #bk-ov .bk-tabs { max-width: 100%; overscroll-behavior-x: contain; }
+  #bk-ov .bk-main,
+  #bk-ov .bk-form { grid-template-columns: minmax(0,1fr); }
+  #grad-invite { flex-wrap: wrap; box-sizing: border-box; }
+  #grad-invite span { white-space: normal; min-width: 0; overflow-wrap: anywhere; }
+  #grad-ov .g-box { box-sizing: border-box; max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 20px); padding-top: 44px; }
+  #grad-ov .g-photo { max-width: 100%; box-sizing: border-box; }
+  #grad-ov .g-photo img,
+  #grad-ov .g-photo svg { max-width: 100%; height: auto; aspect-ratio: 4/3; }
+}

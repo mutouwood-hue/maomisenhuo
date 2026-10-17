@@ -1,0 +1,24 @@
+{
+  "readOnlyProductionReview": true,
+  "baselines": {
+    "firmware-local-v3-perf034": {
+      "sourceFiles": 103,
+      "app": "7f438d6f92f597ae8dd183acadaad177aebe456f43a0791f0fb64e2fc1b13f4e",
+      "sourceZip": "135f63a13fbeec0816363114de0c4acbaf02e373b14ccd5b9302cb48aa670d37",
+      "manifestSha256": "bb780bf2a75d25ae48912f76a3c4af2b776e80c4239b3d15864ba4e76845ef57"
+    },
+    "firmware-local-v3-perf035": {
+      "sourceFiles": 103,
+      "app": "b5f06e3140b13162fa0baa4bed68bc5cf1ae4312b8fcced644ce44d8c2b9918f",
+      "sourceZip": "3b4968665cce22ad8813385b297045052e6008ddbf9f917dc098aa727320bddf",
+      "manifestSha256": "b46641dcc04bee0b159fdc15fd5ebc773c27d41ce048a59bd8cb129043259b48"
+    },
+    "firmware-local-v3-perf036": {
+      "sourceFiles": 107,
+      "app": "a34cfaafc09d8af59ddda076906b17eac1543d0f6b454bff70048d90a0c51ff7",
+      "sourceZip": "3e8ce0b488a068f8c32603ff263ac8f6d06a0bd001bc1cb9f2b9c2877e19ac34",
+      "manifestSha256": "16ffff6577b305ffaad9f2e2345f94267b2eed45b437ec926f7655c402266fcc"
+    }
+  },
+  "noDeviceNoGitNoDeletion": true
+}

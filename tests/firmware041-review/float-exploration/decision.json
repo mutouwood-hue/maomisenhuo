@@ -1,0 +1,9 @@
+{
+  "decision": "exploration_data_handoff_only_not_pixel_exact_not_integration",
+  "newConfirmedP1P2": [],
+  "reviewedSealedEvidencePins": 92,
+  "independentRenderedSamples": 7,
+  "referenceR2Preserved": true,
+  "report": "tests/firmware041-review/float-exploration/REVIEW.md",
+  "reportSha256": "6049639d0ea066f3ffd068e966f2c7d2017b257f2dc69a3f4993f7837bab2d16"
+}

@@ -1,0 +1,15 @@
+{
+  "status": "prepared_not_executed",
+  "baseline": "frozen037",
+  "baselineManifestSha256": "c06fca9965e66933d982ab21bddbc0072bc1256858b35d686cb5b1b5fbb26f85",
+  "productionSourceHashes": {
+    "main/badge_pages.c": "a6fb478b194fa1247c629775bca2de6c66191a57a20b28afdfb0039c3c496d81",
+    "main/badge_scene.c": "e80c1a75d8cebbafe9194402d5939695bf3e8cac687de05d05fb9dd10505959f",
+    "main/badge_gesture.c": "7c1287c077dfd17fb29bacf0aa5ef1eecf37561c5d454caed0ac0a1755b0ae16",
+    "main/badge_gesture.h": "a5eaf6b238e043eb4d4b6dc286108437108744801e111d9ec731e7a9ef9dc2ba",
+    "main/badge_ui_targets.h": "bd195d42df68382be63becbc41e2614d94bb5c2a8e202c2da3e1ec8ddf2bcaef",
+    "sdkconfig": "dda410a0461e5b9e2160eacfa26f7c7bc1c217b4e4f1be5efd217dcaf8c6f894"
+  },
+  "inheritedActualEvidence": "tests/firmware037-review/actual-evidence.json",
+  "noCandidateReadBuildOrDevice": true
+}

@@ -1,0 +1,105 @@
+TAP version 13
+# Subtest: real packaged original arm runs once after1000ms hold, release preserves armed and original15s expiry
+ok 1 - real packaged original arm runs once after1000ms hold, release preserves armed and original15s expiry
+  ---
+  duration_ms: 199.215375
+  ...
+# Subtest: short release never arms and a timer-delayed valid release uses elapsed1000ms fallback once
+ok 2 - short release never arms and a timer-delayed valid release uses elapsed1000ms fallback once
+  ---
+  duration_ms: 96.560334
+  ...
+# Subtest: pointercancel before threshold cancels without release-fallback activation
+ok 3 - pointercancel before threshold cancels without release-fallback activation
+  ---
+  duration_ms: 63.188042
+  ...
+# Subtest: pointerleave before threshold cancels without release-fallback activation
+ok 4 - pointerleave before threshold cancels without release-fallback activation
+  ---
+  duration_ms: 59.51475
+  ...
+# Subtest: lostpointercapture before threshold cancels without release-fallback activation
+ok 5 - lostpointercapture before threshold cancels without release-fallback activation
+  ---
+  duration_ms: 39.579
+  ...
+# Subtest: pointer captured slide outside cancels; secondary fingers and foreign pointerup cannot complete
+ok 6 - pointer captured slide outside cancels; secondary fingers and foreign pointerup cannot complete
+  ---
+  duration_ms: 37.766916
+  ...
+# Subtest: closing or resetting original modal cancels pending hold synchronously; reopen has no stale state
+ok 7 - closing or resetting original modal cancels pending hold synchronously; reopen has no stale state
+  ---
+  duration_ms: 40.045833
+  ...
+# Subtest: background, blur and pagehide cancel pending hold and cannot arm later
+ok 8 - background, blur and pagehide cancel pending hold and cannot arm later
+  ---
+  duration_ms: 106.229583
+  ...
+# Subtest: selection/context menu suppression is key-scoped and CSS retains48px target
+ok 9 - selection/context menu suppression is key-scoped and CSS retains48px target
+  ---
+  duration_ms: 31.1655
+  ...
+# Subtest: cancellation past1000ms with a delayed timer never uses successful-release fallback
+ok 10 - cancellation past1000ms with a delayed timer never uses successful-release fallback
+  ---
+  duration_ms: 87.135458
+  ...
+# Subtest: persisted pagehide cancels old hold but restored page accepts a fresh original hold
+ok 11 - persisted pagehide cancels old hold but restored page accepts a fresh original hold
+  ---
+  duration_ms: 26.464917
+  ...
+# Subtest: reversing only018 key hooks recreates frozen017 social script byte-for-byte, including all rules and awards
+ok 12 - reversing only018 key hooks recreates frozen017 social script byte-for-byte, including all rules and awards
+  ---
+  duration_ms: 4.755292
+  ...
+# Subtest: deferred original/Host/adapter scripts wait for Native authoritative result+owner+pending recovery, even when local social was corrupt
+ok 13 - deferred original/Host/adapter scripts wait for Native authoritative result+owner+pending recovery, even when local social was corrupt
+  ---
+  duration_ms: 192.165542
+  ...
+# Subtest: Native recovery failure leaves original scripts inert and never publishes adapter checkpoint callback
+ok 14 - Native recovery failure leaves original scripts inert and never publishes adapter checkpoint callback
+  ---
+  duration_ms: 67.243916
+  ...
+# Subtest: ordinary browser retains gameplay but cannot supply Native checkpoint or device ACK fallback
+ok 15 - ordinary browser retains gameplay but cannot supply Native checkpoint or device ACK fallback
+  ---
+  duration_ms: 56.25675
+  ...
+# Subtest: Native A-slot recovery does not alter original B-slot save or expose raw cross-slot keys
+ok 16 - Native A-slot recovery does not alter original B-slot save or expose raw cross-slot keys
+  ---
+  duration_ms: 79.314667
+  ...
+# Subtest: head module is definition-only while Native recovery is delayed
+ok 17 - head module is definition-only while Native recovery is delayed
+  ---
+  duration_ms: 1.658458
+  ...
+# Subtest: actual Host suspend closes original modal and cancels a delayed key hold without later arming
+ok 18 - actual Host suspend closes original modal and cancels a delayed key hold without later arming
+  ---
+  duration_ms: 218.612792
+  ...
+# Subtest: timer-delayed outside release and cancelled pointer never invoke original arm; fresh release can
+ok 19 - timer-delayed outside release and cancelled pointer never invoke original arm; fresh release can
+  ---
+  duration_ms: 195.437625
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1385.706

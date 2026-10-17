@@ -1,0 +1,62 @@
+/* CFLOCAL3 candidate event codec. Pure definitions; no radio, Native, storage or reward writers.
+ * Proof validation checks byte consistency, not account authentication or simultaneous phone settlement. */
+(function(root,factory){
+  const api=factory();
+  if(typeof module==='object'&&module.exports)module.exports=api;else root.CatEncounterV1Event=api;
+})(typeof globalThis!=='undefined'?globalThis:this,function(){
+  'use strict';
+  const BASE=['source','protocol','deviceId','eventId','counter','petId','occurredAtMs','kind'];
+  const PEER=['v',...BASE,'encounterId','peerId','peerPetId','localEncounterCounter','peerEncounterCounter','proofVersion','method','proof','bindingFingerprint','peerComplete','gift'];
+  const CARE=['pet','feed','water','bath','play','sleep'];
+  const safe=n=>Number.isSafeInteger(n)&&n>=0;
+  const positive=n=>safe(n)&&n>0;
+  const counter=n=>positive(n)&&n<Number.MAX_SAFE_INTEGER;
+  const id=s=>typeof s==='string'&&/^[0-9a-f]{32}$/.test(s)&&s!=='0'.repeat(32);
+  const pet=s=>typeof s==='string'&&s.length>0&&s.length<=64&&/^[\x21-\x7e]+$/.test(s);
+  const plain=o=>o!==null&&typeof o==='object'&&!Array.isArray(o)&&(Object.getPrototypeOf(o)===Object.prototype||Object.getPrototypeOf(o)===null);
+  const fail=message=>Object.assign(new Error(message),{code:'MALFORMED_ENCOUNTER_EVENT',outcome:'no_change'});
+  const clone=x=>JSON.parse(JSON.stringify(x));
+  function exact(e,keys){if(!plain(e)||Object.keys(e).length!==keys.length||Object.keys(e).some(k=>!keys.includes(k)))throw fail('Event fields differ from the negotiated proof schema');}
+  function hex(bytes){return Array.from(bytes,n=>n.toString(16).padStart(2,'0')).join('');}
+  function unhex(s){return Uint8Array.from(s.match(/../g),x=>Number.parseInt(x,16));}
+  function little(n){let b=BigInt(n);const out=new Uint8Array(8);for(let i=0;i<8;i++){out[i]=Number(b&255n);b>>=8n;}return out;}
+  function pair(e){
+    if(!id(e.deviceId)||!id(e.peerId)||e.deviceId===e.peerId||!counter(e.localEncounterCounter)||!counter(e.peerEncounterCounter)||!pet(e.petId)||!pet(e.peerPetId))throw fail('Invalid immutable encounter identity');
+    const a={id:e.deviceId,counter:e.localEncounterCounter,petId:e.petId},b={id:e.peerId,counter:e.peerEncounterCounter,petId:e.peerPetId};
+    return a.id<b.id?[a,b]:[b,a];
+  }
+  function encounterId(e){return 'ec1:'+pair(e).map(x=>hex(unhex(x.id))+hex(little(x.counter))).join('');}
+  function bindingBytes(e){
+    const out=[...new TextEncoder().encode('CF-ENCOUNTER-BINDING-v1'),1];
+    for(const x of pair(e))out.push(...unhex(x.id),...little(x.counter),x.petId.length,...new TextEncoder().encode(x.petId));
+    return Uint8Array.from(out);
+  }
+  async function bindingFingerprint(e,cryptoApi=globalThis.crypto){
+    if(typeof cryptoApi?.subtle?.digest!=='function')throw Object.assign(new Error('SHA-256 unavailable; event retained'),{code:'PROOF_CRYPTO_UNAVAILABLE',outcome:'no_change'});
+    const digest=new Uint8Array(await cryptoApi.subtle.digest('SHA-256',bindingBytes(e)));
+    return hex(digest.slice(0,16));
+  }
+  async function validateEvent(input,deviceId,cryptoApi=globalThis.crypto){
+    // Clone before the async digest: external fixture/UI mutation cannot change the checked tuple.
+    if(!plain(input))throw fail('Event must be an object from the negotiated device protocol');
+    if(input.kind==='peer_complete')exact(input,PEER);
+    else if(input.kind==='care')exact(input,[...BASE,'action']);
+    else if(input.kind==='gift')exact(input,[...BASE,'peerId','peerCounter','giftId','quantity','peerComplete']);
+    else throw fail('Unsupported event kind; source FIFO must remain unACKed');
+    let e;try{e=clone(input);}catch{throw fail('Event is not a JSON protocol object');}
+    if(!plain(e)||e.source!=='native_device'||e.protocol!=='CFLOCAL3'||!id(deviceId)||e.deviceId!==deviceId||!positive(e.counter)||e.eventId!==deviceId+':'+e.counter||!pet(e.petId)||(e.occurredAtMs!==null&&!safe(e.occurredAtMs)))throw fail('Invalid source, device, event counter or consent-bound pet identity');
+    if(e.kind==='care'){
+      exact(e,[...BASE,'action']);if(!CARE.includes(e.action))throw fail('Invalid care producer action');
+    }else if(e.kind==='gift'){
+      exact(e,[...BASE,'peerId','peerCounter','giftId','quantity','peerComplete']);
+      if(!id(e.peerId)||e.peerId===deviceId||!positive(e.peerCounter)||e.giftId!=='flower'||e.quantity!==1||e.peerComplete!==false)throw fail('Gift is not bilateral completion evidence');
+    }else if(e.kind==='peer_complete'){
+      exact(e,PEER);
+      if(e.v!==3||e.proofVersion!==1||e.method!=='button'||e.proof!=='mutual_durable_commit'||e.peerComplete!==true||e.gift!==false||typeof e.bindingFingerprint!=='string'||!/^[0-9a-f]{32}$/.test(e.bindingFingerprint)||e.encounterId!==encounterId(e))throw fail('Invalid or unsupported durable encounter proof');
+      const fingerprint=await bindingFingerprint(e,cryptoApi);
+      if(e.bindingFingerprint!==fingerprint)throw fail('Immutable encounter binding fingerprint mismatch');
+    }else throw fail('Unsupported event kind; source FIFO must remain unACKed');
+    return clone(e);
+  }
+  return {validateEvent,encounterId,bindingBytes,bindingFingerprint,PEER_KEYS:Object.freeze(PEER.slice())};
+});

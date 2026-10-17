@@ -1,0 +1,3695 @@
+{
+  "status": "host_delta_reproduced_known_raster_residual",
+  "kind": "independent offline recompile actual production034/035 with readonly LVGL/assets; no physical devices/Git/delete",
+  "app": {
+    "path": "deliverables/cat-forest-badge-0.3.5-local3.bin",
+    "bytes": 6396432,
+    "sha256": "b5f06e3140b13162fa0baa4bed68bc5cf1ae4312b8fcced644ce44d8c2b9918f",
+    "description": {
+      "version": "0.3.5-local3",
+      "projectName": "cat_forest_badge",
+      "idfVersion": "v5.5.5",
+      "secureVersion": 0,
+      "elfSha256": "bdec36570128e679ef5c204e4b32964e5c28a3e17b58c93b95a66665b14620b4"
+    }
+  },
+  "sourceZip": {
+    "path": "deliverables/cat-forest-badge-0.3.5-local3-source.zip",
+    "bytes": 2660465,
+    "sha256": "3b4968665cce22ad8813385b297045052e6008ddbf9f917dc098aa727320bddf",
+    "sourceFiles": 103,
+    "entriesReadBackExact": true,
+    "externalDependencies": "Fixed workspace ESP-IDF5.5.5 and readonly firmware/managed_components; host replay also needs 034 compiled LVGL/assets; no build trees/binaries in ZIP"
+  },
+  "zipEntries": 118,
+  "sourceFiles": 103,
+  "changedPaths": [
+    "CMakeLists.txt",
+    "main/badge_pages.c",
+    "main/badge_scene.c",
+    "tools/host_preview/preview.c"
+  ],
+  "unchangedMainFiles": 49,
+  "protectedBase034SourceAppElfZip": true,
+  "sourceStable": true,
+  "hostReadOnlyObjectHashes": {
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f16.c.o": "40137696f63bd11c92c3c2a6ce8762ea498a22e06e2110e39de7b24c2f06ccb4",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_paw.c.o": "96d2982cbae58cf2485af5b3f092bfb02e20b757d31b91e4428954200077b02b",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_n40.c.o": "80ed2d0dade7c83b4e41b6ed20aa00ee69f6fd2cae3eed4324f3f3b6ac018eaa",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_pet.c.o": "82173149d577f5360d6dc05591d54a2ac11d00d54ed09d96afbd23bbca529e42",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_idle.c.o": "952f386b2cf785b2b31e1c7ed8c02ba78843e0921ecd33e4ee154d455031c620",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_walk.c.o": "b40ad7b0be9808436e29a3b9636205b6eaa2866a6e0c66a9835f36c05026d719",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_idle.c.o": "343cb52dd7e809503cbeb8c54b383f879a3c1410fa553b417f9af449faca4ac3",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_assets.c.o": "603eef174112db7ca02c95a7e6dfe45756e76f2a135d4d374909bb57cd36c536",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/local2_fonts.c.o": "e0f11b392199ed41e3c9de7c1286cd5ada6d42cec921083611fc9b2dfd077d67",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f20.c.o": "2d8ade9c079e84605bda4effb14ea4cb0c033d0154630e2cf7125f51b477e9c0",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_attention.c.o": "203a7f8cf0c38ef67d35b271c74f1d1456d6131ed6abdf3e1d483d3981275632",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f24.c.o": "2aac558afdea162c41ce3e8307d6cfa47281073ee73662a7d32a948b68ca40aa",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_gesture.c.o": "4f20205385069fe7f83fd8e1ed4bcd80832ccdecfa98cd0dcee763787ebbf0dc",
+    "artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/diag_stubs.c.o": "3d63ad77d4479665877e21e600ad78aaa196f46cc6a93bdea0f4227c3d3576bf",
+    "artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a": "eb4b486f1646dc6c1ec3043410f9d744c7804c23971e00c6f19b064d4b061613"
+  },
+  "compileCommands": [
+    [
+      "clang",
+      "-O3",
+      "-std=gnu11",
+      "-UNDEBUG",
+      "-Wall",
+      "-Wextra",
+      "-DLV_KCONFIG_IGNORE",
+      "-DLV_LVGL_H_INCLUDE_SIMPLE",
+      "-DLV_CONF_PATH=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/lv_conf.h\"",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/stubs",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main",
+      "-DBADGE_PAGES_SOURCE=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_pages.c\"",
+      "-DBENCH_CONTINUOUS=1",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/bench-isolated.c",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_scene.c",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_gesture.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/diag_stubs.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f16.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_paw.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_n40.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_pet.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_idle.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_walk.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_idle.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_assets.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/local2_fonts.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f20.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_attention.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f24.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a",
+      "-lm",
+      "-o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/baseline034-continuous"
+    ],
+    [
+      "clang",
+      "-O3",
+      "-std=gnu11",
+      "-UNDEBUG",
+      "-Wall",
+      "-Wextra",
+      "-DLV_KCONFIG_IGNORE",
+      "-DLV_LVGL_H_INCLUDE_SIMPLE",
+      "-DLV_CONF_PATH=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/lv_conf.h\"",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/stubs",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/main",
+      "-DBADGE_PAGES_SOURCE=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/main/badge_pages.c\"",
+      "-DBENCH_CONTINUOUS=1",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/bench-isolated.c",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/main/badge_scene.c",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_gesture.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/diag_stubs.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f16.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_paw.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_n40.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_pet.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_idle.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_walk.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_idle.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_assets.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/local2_fonts.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f20.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_attention.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f24.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a",
+      "-lm",
+      "-o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/candidate035-continuous"
+    ],
+    [
+      "clang",
+      "-O3",
+      "-std=gnu11",
+      "-UNDEBUG",
+      "-Wall",
+      "-Wextra",
+      "-DLV_KCONFIG_IGNORE",
+      "-DLV_LVGL_H_INCLUDE_SIMPLE",
+      "-DLV_CONF_PATH=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/lv_conf.h\"",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/stubs",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main",
+      "-DBADGE_PAGES_SOURCE=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_pages.c\"",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/bench-isolated.c",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_scene.c",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_gesture.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/diag_stubs.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f16.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_paw.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_n40.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_pet.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_idle.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_walk.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_idle.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_assets.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/local2_fonts.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f20.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_attention.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f24.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a",
+      "-lm",
+      "-o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/baseline034-full-oracle"
+    ],
+    [
+      "clang",
+      "-O3",
+      "-std=gnu11",
+      "-UNDEBUG",
+      "-Wall",
+      "-Wextra",
+      "-DLV_KCONFIG_IGNORE",
+      "-DLV_LVGL_H_INCLUDE_SIMPLE",
+      "-DLV_CONF_PATH=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/lv_conf.h\"",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/stubs",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl",
+      "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/main",
+      "-DBADGE_PAGES_SOURCE=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/main/badge_pages.c\"",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/bench-isolated.c",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/main/badge_scene.c",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_gesture.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/diag_stubs.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f16.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_paw.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_n40.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_pet.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_idle.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_walk.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_idle.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_assets.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/local2_fonts.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f20.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_attention.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f24.c.o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a",
+      "-lm",
+      "-o",
+      "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/candidate035-full-oracle"
+    ]
+  ],
+  "results": {
+    "baseline034-continuous": {
+      "metrics": [
+        {
+          "case": "unchanged-home-face0",
+          "repeats": 64,
+          "hostWallUs": 119002,
+          "flushes": 3008,
+          "pixels": 13897984
+        },
+        {
+          "case": "unchanged-home-face0",
+          "repeats": 64,
+          "hostWallUs": 173537,
+          "flushes": 3008,
+          "pixels": 13897984
+        },
+        {
+          "case": "unchanged-home-face1",
+          "repeats": 64,
+          "hostWallUs": 328547,
+          "flushes": 3008,
+          "pixels": 13897984
+        },
+        {
+          "case": "unchanged-home-face2",
+          "repeats": 64,
+          "hostWallUs": 228806,
+          "flushes": 3008,
+          "pixels": 13897984
+        },
+        {
+          "case": "horizontal-drag-commit-easeout",
+          "repeats": 1,
+          "hostWallUs": 86919,
+          "flushes": 705,
+          "pixels": 3196508
+        },
+        {
+          "case": "horizontal-drag-rebound",
+          "repeats": 1,
+          "hostWallUs": 140981,
+          "flushes": 373,
+          "pixels": 1715072
+        }
+      ],
+      "samples": {
+        "initial": "da119bcf373cee03",
+        "unchanged-home-face0": "7feeb119387d5f7b",
+        "unchanged-home-face1": "440a584c5d4db899",
+        "unchanged-home-face2": "6be8908c3af09f11",
+        "scene-0-time0": "67622cb410d58ad7",
+        "scene-0-time1": "292c5b9f81913817",
+        "scene-0-time2": "292c5b9f81913817",
+        "scene-0-time3": "6a2f90852c52f21a",
+        "scene-0-time4": "b9218790090a2b53",
+        "scene-0-time5": "b9218790090a2b53",
+        "scene-1-time0": "fff0f2ed5a0c89c3",
+        "scene-1-time1": "4b447320036e0c75",
+        "scene-1-time2": "f951007d397907b7",
+        "scene-1-time3": "35e53543bff0102b",
+        "scene-1-time4": "c6aada4e9eccf3fe",
+        "scene-1-time5": "ff588ceef9eef7c0",
+        "scene-2-time0": "b5e862a832ba28bc",
+        "scene-2-time1": "bd054f31b368e9d5",
+        "scene-2-time2": "6c99f502d204fc2d",
+        "scene-2-time3": "6026c4e55f551f34",
+        "scene-2-time4": "dcbe62b8be08cb60",
+        "scene-2-time5": "1adcb1096f6bfdb5",
+        "scene-3-time0": "e75d38238d261932",
+        "scene-3-time1": "740a66601d120f18",
+        "scene-3-time2": "f52f8df3744295d7",
+        "scene-3-time3": "a7f2ceaf018ff4e9",
+        "scene-3-time4": "dd2e837a88b22d87",
+        "scene-3-time5": "690326e69318b67f",
+        "scene-4-time0": "67622cb410d58ad7",
+        "scene-4-time1": "292c5b9f81913817",
+        "scene-4-time2": "292c5b9f81913817",
+        "scene-4-time3": "6a2f90852c52f21a",
+        "scene-4-time4": "b9218790090a2b53",
+        "scene-4-time5": "b9218790090a2b53",
+        "clock-font-0": "d10ddd63a5ba7a91",
+        "clock-font-1": "edd4e92997279d95",
+        "clock-font-2": "049b0964b92d8ffe",
+        "clock-font-3": "02fd332e26357810",
+        "pet-frame-0": "5b1e8c10e541183d",
+        "pet-frame-1": "5b1e8c10e541183d",
+        "pet-frame-2": "145de6a85a62e3d7",
+        "pet-frame-3": "145de6a85a62e3d7",
+        "pet-frame-4": "be169571a23b487f",
+        "pet-frame-5": "be169571a23b487f",
+        "pet-frame-6": "2e47e1ecb5f5c5d4",
+        "pet-frame-7": "2e47e1ecb5f5c5d4",
+        "pet-frame-8": "baa30e63fd9096a0",
+        "pet-frame-9": "1067fbb5b3495864",
+        "pet-frame-10": "88762e15265db2fb",
+        "pet-frame-11": "88762e15265db2fb",
+        "pet-frame-12": "2237ad1b224b4f55",
+        "pet-frame-13": "2237ad1b224b4f55",
+        "pet-frame-14": "c7badd1ad0cd826f",
+        "clip-0-0": "b87dd2c175fe2994",
+        "clip-0-1": "264e15bb1d24f4e1",
+        "clip-0-2": "264e15bb1d24f4e1",
+        "clip-0-3": "9e55e2ca0996de2c",
+        "clip-0-4": "eca35e97cd9fc39d",
+        "clip-0-5": "eca35e97cd9fc39d",
+        "clip-0-6": "866be23550eb35f5",
+        "clip-0-7": "090a51a739a4c36c",
+        "clip-0-8": "090a51a739a4c36c",
+        "clip-0-9": "72f6942b23f9e950",
+        "clip-0-10": "72f6942b23f9e950",
+        "clip-0-11": "5faf4155dc1ba1fe",
+        "clip-1-0": "05e762c502176f52",
+        "clip-1-1": "c0da76f7f681b0c9",
+        "clip-1-2": "c0da76f7f681b0c9",
+        "clip-1-3": "86766d5aa98b8c0c",
+        "clip-1-4": "86766d5aa98b8c0c",
+        "clip-1-5": "cbf16134b09dd610",
+        "clip-1-6": "cbf16134b09dd610",
+        "clip-1-7": "88e337d8f232a09e",
+        "clip-1-8": "88e337d8f232a09e",
+        "clip-1-9": "675556a1ef65afed",
+        "clip-1-10": "675556a1ef65afed",
+        "clip-1-11": "6c1c6999d0b9cc76",
+        "clip-2-0": "6c1c6999d0b9cc76",
+        "clip-2-1": "44294b2145f97de6",
+        "clip-2-2": "44294b2145f97de6",
+        "clip-2-3": "b0159da77e1de86f",
+        "clip-2-4": "b0159da77e1de86f",
+        "clip-2-5": "7fb2fa4810d508e7",
+        "clip-2-6": "7fb2fa4810d508e7",
+        "clip-2-7": "82882e7f2f2121d1",
+        "clip-2-8": "82882e7f2f2121d1",
+        "clip-2-9": "3424c4222483196b",
+        "clip-2-10": "3424c4222483196b",
+        "clip-2-11": "b87dd2c175fe2994",
+        "clip-3-0": "d645eb6dd3f5bc3c",
+        "clip-3-1": "d645eb6dd3f5bc3c",
+        "clip-3-2": "3c9e4d02889b9e4c",
+        "clip-3-3": "3c9e4d02889b9e4c",
+        "clip-3-4": "3c9e4d02889b9e4c",
+        "clip-3-5": "4d0debe204404763",
+        "clip-3-6": "4d0debe204404763",
+        "clip-3-7": "4d0debe204404763",
+        "clip-3-8": "d96f8d9e6f130859",
+        "clip-3-9": "d96f8d9e6f130859",
+        "clip-3-10": "fb2e77de927e48f1",
+        "clip-3-11": "fb2e77de927e48f1",
+        "frozen-aod": "264e15bb1d24f4e1",
+        "thawed-play": "9e55e2ca0996de2c",
+        "weather-only-snow": "7e8d4e69d3ddc07e",
+        "weather-only-rain": "125f7702cb80ceda",
+        "status": "aa74d3b8d38206f9",
+        "status-changed": "6326fdecabfa9981",
+        "return-home": "9bbff30740645aef",
+        "drag-up-mid": "21842993b055880e",
+        "drag-released": "e183606673029d36",
+        "drag-rebound": "d69b7f1e940f0bc9",
+        "toast-font": "ec45b04f53bc3309",
+        "toast-gone": "4089bfa878bb9c79",
+        "horizontal-drag-final": "58dff54da0cc6d9e",
+        "horizontal-rebound-final": "c7b086bf13b5a936"
+      },
+      "full": {},
+      "deviations": {},
+      "checks": 12
+    },
+    "candidate035-continuous": {
+      "metrics": [
+        {
+          "case": "unchanged-home-face0",
+          "repeats": 64,
+          "hostWallUs": 6616,
+          "flushes": 192,
+          "pixels": 386304
+        },
+        {
+          "case": "unchanged-home-face0",
+          "repeats": 64,
+          "hostWallUs": 6623,
+          "flushes": 192,
+          "pixels": 386304
+        },
+        {
+          "case": "unchanged-home-face1",
+          "repeats": 64,
+          "hostWallUs": 8300,
+          "flushes": 192,
+          "pixels": 386304
+        },
+        {
+          "case": "unchanged-home-face2",
+          "repeats": 64,
+          "hostWallUs": 8403,
+          "flushes": 192,
+          "pixels": 386304
+        },
+        {
+          "case": "horizontal-drag-commit-easeout",
+          "repeats": 1,
+          "hostWallUs": 32808,
+          "flushes": 683,
+          "pixels": 3087072
+        },
+        {
+          "case": "horizontal-drag-rebound",
+          "repeats": 1,
+          "hostWallUs": 16624,
+          "flushes": 373,
+          "pixels": 1715072
+        }
+      ],
+      "samples": {
+        "initial": "da119bcf373cee03",
+        "unchanged-home-face0": "7feeb119387d5f7b",
+        "unchanged-home-face1": "440a584c5d4db899",
+        "unchanged-home-face2": "6be8908c3af09f11",
+        "scene-0-time0": "67622cb410d58ad7",
+        "scene-0-time1": "292c5b9f81913817",
+        "scene-0-time2": "292c5b9f81913817",
+        "scene-0-time3": "6a2f90852c52f21a",
+        "scene-0-time4": "b9218790090a2b53",
+        "scene-0-time5": "b9218790090a2b53",
+        "scene-1-time0": "fff0f2ed5a0c89c3",
+        "scene-1-time1": "4b447320036e0c75",
+        "scene-1-time2": "f951007d397907b7",
+        "scene-1-time3": "35e53543bff0102b",
+        "scene-1-time4": "c6aada4e9eccf3fe",
+        "scene-1-time5": "ff588ceef9eef7c0",
+        "scene-2-time0": "b5e862a832ba28bc",
+        "scene-2-time1": "bd054f31b368e9d5",
+        "scene-2-time2": "6c99f502d204fc2d",
+        "scene-2-time3": "6026c4e55f551f34",
+        "scene-2-time4": "dcbe62b8be08cb60",
+        "scene-2-time5": "1adcb1096f6bfdb5",
+        "scene-3-time0": "e75d38238d261932",
+        "scene-3-time1": "740a66601d120f18",
+        "scene-3-time2": "f52f8df3744295d7",
+        "scene-3-time3": "a7f2ceaf018ff4e9",
+        "scene-3-time4": "dd2e837a88b22d87",
+        "scene-3-time5": "690326e69318b67f",
+        "scene-4-time0": "67622cb410d58ad7",
+        "scene-4-time1": "292c5b9f81913817",
+        "scene-4-time2": "292c5b9f81913817",
+        "scene-4-time3": "6a2f90852c52f21a",
+        "scene-4-time4": "b9218790090a2b53",
+        "scene-4-time5": "b9218790090a2b53",
+        "clock-font-0": "d10ddd63a5ba7a91",
+        "clock-font-1": "edd4e92997279d95",
+        "clock-font-2": "049b0964b92d8ffe",
+        "clock-font-3": "02fd332e26357810",
+        "pet-frame-0": "5b1e8c10e541183d",
+        "pet-frame-1": "5b1e8c10e541183d",
+        "pet-frame-2": "145de6a85a62e3d7",
+        "pet-frame-3": "145de6a85a62e3d7",
+        "pet-frame-4": "be169571a23b487f",
+        "pet-frame-5": "be169571a23b487f",
+        "pet-frame-6": "2e47e1ecb5f5c5d4",
+        "pet-frame-7": "2e47e1ecb5f5c5d4",
+        "pet-frame-8": "baa30e63fd9096a0",
+        "pet-frame-9": "1067fbb5b3495864",
+        "pet-frame-10": "88762e15265db2fb",
+        "pet-frame-11": "88762e15265db2fb",
+        "pet-frame-12": "2237ad1b224b4f55",
+        "pet-frame-13": "2237ad1b224b4f55",
+        "pet-frame-14": "c7badd1ad0cd826f",
+        "clip-0-0": "b87dd2c175fe2994",
+        "clip-0-1": "264e15bb1d24f4e1",
+        "clip-0-2": "264e15bb1d24f4e1",
+        "clip-0-3": "9e55e2ca0996de2c",
+        "clip-0-4": "eca35e97cd9fc39d",
+        "clip-0-5": "eca35e97cd9fc39d",
+        "clip-0-6": "866be23550eb35f5",
+        "clip-0-7": "090a51a739a4c36c",
+        "clip-0-8": "090a51a739a4c36c",
+        "clip-0-9": "72f6942b23f9e950",
+        "clip-0-10": "72f6942b23f9e950",
+        "clip-0-11": "5faf4155dc1ba1fe",
+        "clip-1-0": "05e762c502176f52",
+        "clip-1-1": "c0da76f7f681b0c9",
+        "clip-1-2": "c0da76f7f681b0c9",
+        "clip-1-3": "86766d5aa98b8c0c",
+        "clip-1-4": "86766d5aa98b8c0c",
+        "clip-1-5": "cbf16134b09dd610",
+        "clip-1-6": "cbf16134b09dd610",
+        "clip-1-7": "88e337d8f232a09e",
+        "clip-1-8": "88e337d8f232a09e",
+        "clip-1-9": "675556a1ef65afed",
+        "clip-1-10": "675556a1ef65afed",
+        "clip-1-11": "6c1c6999d0b9cc76",
+        "clip-2-0": "6c1c6999d0b9cc76",
+        "clip-2-1": "44294b2145f97de6",
+        "clip-2-2": "44294b2145f97de6",
+        "clip-2-3": "b0159da77e1de86f",
+        "clip-2-4": "b0159da77e1de86f",
+        "clip-2-5": "7fb2fa4810d508e7",
+        "clip-2-6": "7fb2fa4810d508e7",
+        "clip-2-7": "82882e7f2f2121d1",
+        "clip-2-8": "82882e7f2f2121d1",
+        "clip-2-9": "3424c4222483196b",
+        "clip-2-10": "3424c4222483196b",
+        "clip-2-11": "b87dd2c175fe2994",
+        "clip-3-0": "d645eb6dd3f5bc3c",
+        "clip-3-1": "d645eb6dd3f5bc3c",
+        "clip-3-2": "3c9e4d02889b9e4c",
+        "clip-3-3": "3c9e4d02889b9e4c",
+        "clip-3-4": "3c9e4d02889b9e4c",
+        "clip-3-5": "4d0debe204404763",
+        "clip-3-6": "4d0debe204404763",
+        "clip-3-7": "4d0debe204404763",
+        "clip-3-8": "d96f8d9e6f130859",
+        "clip-3-9": "d96f8d9e6f130859",
+        "clip-3-10": "fb2e77de927e48f1",
+        "clip-3-11": "fb2e77de927e48f1",
+        "frozen-aod": "264e15bb1d24f4e1",
+        "thawed-play": "9e55e2ca0996de2c",
+        "weather-only-snow": "7e8d4e69d3ddc07e",
+        "weather-only-rain": "125f7702cb80ceda",
+        "status": "aa74d3b8d38206f9",
+        "status-changed": "6326fdecabfa9981",
+        "return-home": "9bbff30740645aef",
+        "drag-up-mid": "21842993b055880e",
+        "drag-released": "e183606673029d36",
+        "drag-rebound": "d69b7f1e940f0bc9",
+        "toast-font": "8a631efa0688fa29",
+        "toast-gone": "4321888346110499",
+        "horizontal-drag-final": "58dff54da0cc6d9e",
+        "horizontal-rebound-final": "c7b086bf13b5a936"
+      },
+      "full": {},
+      "deviations": {},
+      "checks": 12
+    },
+    "baseline034-full-oracle": {
+      "metrics": [
+        {
+          "case": "unchanged-home-face0",
+          "repeats": 64,
+          "hostWallUs": 115620,
+          "flushes": 3008,
+          "pixels": 13897984
+        },
+        {
+          "case": "unchanged-home-face0",
+          "repeats": 64,
+          "hostWallUs": 100731,
+          "flushes": 3008,
+          "pixels": 13897984
+        },
+        {
+          "case": "unchanged-home-face1",
+          "repeats": 64,
+          "hostWallUs": 76858,
+          "flushes": 3008,
+          "pixels": 13897984
+        },
+        {
+          "case": "unchanged-home-face2",
+          "repeats": 64,
+          "hostWallUs": 70792,
+          "flushes": 3008,
+          "pixels": 13897984
+        },
+        {
+          "case": "horizontal-drag-commit-easeout",
+          "repeats": 1,
+          "hostWallUs": 34337,
+          "flushes": 705,
+          "pixels": 3196508
+        },
+        {
+          "case": "horizontal-drag-rebound",
+          "repeats": 1,
+          "hostWallUs": 16418,
+          "flushes": 373,
+          "pixels": 1715072
+        }
+      ],
+      "samples": {
+        "initial": "da119bcf373cee03",
+        "unchanged-home-face0": "7feeb119387d5f7b",
+        "unchanged-home-face1": "440a584c5d4db899",
+        "unchanged-home-face2": "6be8908c3af09f11",
+        "scene-0-time0": "67622cb410d58ad7",
+        "scene-0-time1": "292c5b9f81913817",
+        "scene-0-time2": "292c5b9f81913817",
+        "scene-0-time3": "6a2f90852c52f21a",
+        "scene-0-time4": "b9218790090a2b53",
+        "scene-0-time5": "b9218790090a2b53",
+        "scene-1-time0": "fff0f2ed5a0c89c3",
+        "scene-1-time1": "4b447320036e0c75",
+        "scene-1-time2": "f951007d397907b7",
+        "scene-1-time3": "35e53543bff0102b",
+        "scene-1-time4": "c6aada4e9eccf3fe",
+        "scene-1-time5": "ff588ceef9eef7c0",
+        "scene-2-time0": "b5e862a832ba28bc",
+        "scene-2-time1": "bd054f31b368e9d5",
+        "scene-2-time2": "6c99f502d204fc2d",
+        "scene-2-time3": "6026c4e55f551f34",
+        "scene-2-time4": "dcbe62b8be08cb60",
+        "scene-2-time5": "1adcb1096f6bfdb5",
+        "scene-3-time0": "e75d38238d261932",
+        "scene-3-time1": "740a66601d120f18",
+        "scene-3-time2": "f52f8df3744295d7",
+        "scene-3-time3": "a7f2ceaf018ff4e9",
+        "scene-3-time4": "dd2e837a88b22d87",
+        "scene-3-time5": "690326e69318b67f",
+        "scene-4-time0": "67622cb410d58ad7",
+        "scene-4-time1": "292c5b9f81913817",
+        "scene-4-time2": "292c5b9f81913817",
+        "scene-4-time3": "6a2f90852c52f21a",
+        "scene-4-time4": "b9218790090a2b53",
+        "scene-4-time5": "b9218790090a2b53",
+        "clock-font-0": "d10ddd63a5ba7a91",
+        "clock-font-1": "edd4e92997279d95",
+        "clock-font-2": "049b0964b92d8ffe",
+        "clock-font-3": "02fd332e26357810",
+        "pet-frame-0": "5b1e8c10e541183d",
+        "pet-frame-1": "5b1e8c10e541183d",
+        "pet-frame-2": "145de6a85a62e3d7",
+        "pet-frame-3": "145de6a85a62e3d7",
+        "pet-frame-4": "be169571a23b487f",
+        "pet-frame-5": "be169571a23b487f",
+        "pet-frame-6": "2e47e1ecb5f5c5d4",
+        "pet-frame-7": "2e47e1ecb5f5c5d4",
+        "pet-frame-8": "baa30e63fd9096a0",
+        "pet-frame-9": "1067fbb5b3495864",
+        "pet-frame-10": "88762e15265db2fb",
+        "pet-frame-11": "88762e15265db2fb",
+        "pet-frame-12": "2237ad1b224b4f55",
+        "pet-frame-13": "2237ad1b224b4f55",
+        "pet-frame-14": "c7badd1ad0cd826f",
+        "clip-0-0": "b87dd2c175fe2994",
+        "clip-0-1": "264e15bb1d24f4e1",
+        "clip-0-2": "264e15bb1d24f4e1",
+        "clip-0-3": "9e55e2ca0996de2c",
+        "clip-0-4": "eca35e97cd9fc39d",
+        "clip-0-5": "eca35e97cd9fc39d",
+        "clip-0-6": "866be23550eb35f5",
+        "clip-0-7": "090a51a739a4c36c",
+        "clip-0-8": "090a51a739a4c36c",
+        "clip-0-9": "72f6942b23f9e950",
+        "clip-0-10": "72f6942b23f9e950",
+        "clip-0-11": "5faf4155dc1ba1fe",
+        "clip-1-0": "05e762c502176f52",
+        "clip-1-1": "c0da76f7f681b0c9",
+        "clip-1-2": "c0da76f7f681b0c9",
+        "clip-1-3": "86766d5aa98b8c0c",
+        "clip-1-4": "86766d5aa98b8c0c",
+        "clip-1-5": "cbf16134b09dd610",
+        "clip-1-6": "cbf16134b09dd610",
+        "clip-1-7": "88e337d8f232a09e",
+        "clip-1-8": "88e337d8f232a09e",
+        "clip-1-9": "675556a1ef65afed",
+        "clip-1-10": "675556a1ef65afed",
+        "clip-1-11": "6c1c6999d0b9cc76",
+        "clip-2-0": "6c1c6999d0b9cc76",
+        "clip-2-1": "44294b2145f97de6",
+        "clip-2-2": "44294b2145f97de6",
+        "clip-2-3": "b0159da77e1de86f",
+        "clip-2-4": "b0159da77e1de86f",
+        "clip-2-5": "7fb2fa4810d508e7",
+        "clip-2-6": "7fb2fa4810d508e7",
+        "clip-2-7": "82882e7f2f2121d1",
+        "clip-2-8": "82882e7f2f2121d1",
+        "clip-2-9": "3424c4222483196b",
+        "clip-2-10": "3424c4222483196b",
+        "clip-2-11": "b87dd2c175fe2994",
+        "clip-3-0": "d645eb6dd3f5bc3c",
+        "clip-3-1": "d645eb6dd3f5bc3c",
+        "clip-3-2": "3c9e4d02889b9e4c",
+        "clip-3-3": "3c9e4d02889b9e4c",
+        "clip-3-4": "3c9e4d02889b9e4c",
+        "clip-3-5": "4d0debe204404763",
+        "clip-3-6": "4d0debe204404763",
+        "clip-3-7": "4d0debe204404763",
+        "clip-3-8": "d96f8d9e6f130859",
+        "clip-3-9": "d96f8d9e6f130859",
+        "clip-3-10": "fb2e77de927e48f1",
+        "clip-3-11": "fb2e77de927e48f1",
+        "frozen-aod": "264e15bb1d24f4e1",
+        "thawed-play": "9e55e2ca0996de2c",
+        "weather-only-snow": "7e8d4e69d3ddc07e",
+        "weather-only-rain": "125f7702cb80ceda",
+        "status": "aa74d3b8d38206f9",
+        "status-changed": "6326fdecabfa9981",
+        "return-home": "9bbff30740645aef",
+        "drag-up-mid": "21842993b055880e",
+        "drag-released": "e183606673029d36",
+        "drag-rebound": "d69b7f1e940f0bc9",
+        "toast-font": "ec45b04f53bc3309",
+        "toast-gone": "4089bfa878bb9c79",
+        "horizontal-drag-final": "58dff54da0cc6d9e",
+        "horizontal-rebound-final": "c7b086bf13b5a936"
+      },
+      "full": {
+        "initial": "da119bcf373cee03",
+        "unchanged-home-face0": "7feeb119387d5f7b",
+        "unchanged-home-face1": "440a584c5d4db899",
+        "unchanged-home-face2": "6be8908c3af09f11",
+        "scene-0-time0": "67622cb410d58ad7",
+        "scene-0-time1": "292c5b9f81913817",
+        "scene-0-time2": "292c5b9f81913817",
+        "scene-0-time3": "6a2f90852c52f21a",
+        "scene-0-time4": "b9218790090a2b53",
+        "scene-0-time5": "b9218790090a2b53",
+        "scene-1-time0": "fff0f2ed5a0c89c3",
+        "scene-1-time1": "4b447320036e0c75",
+        "scene-1-time2": "f951007d397907b7",
+        "scene-1-time3": "35e53543bff0102b",
+        "scene-1-time4": "c6aada4e9eccf3fe",
+        "scene-1-time5": "ff588ceef9eef7c0",
+        "scene-2-time0": "b5e862a832ba28bc",
+        "scene-2-time1": "bd054f31b368e9d5",
+        "scene-2-time2": "6c99f502d204fc2d",
+        "scene-2-time3": "6026c4e55f551f34",
+        "scene-2-time4": "dcbe62b8be08cb60",
+        "scene-2-time5": "1adcb1096f6bfdb5",
+        "scene-3-time0": "e75d38238d261932",
+        "scene-3-time1": "740a66601d120f18",
+        "scene-3-time2": "f52f8df3744295d7",
+        "scene-3-time3": "a7f2ceaf018ff4e9",
+        "scene-3-time4": "dd2e837a88b22d87",
+        "scene-3-time5": "690326e69318b67f",
+        "scene-4-time0": "67622cb410d58ad7",
+        "scene-4-time1": "292c5b9f81913817",
+        "scene-4-time2": "292c5b9f81913817",
+        "scene-4-time3": "6a2f90852c52f21a",
+        "scene-4-time4": "b9218790090a2b53",
+        "scene-4-time5": "b9218790090a2b53",
+        "clock-font-0": "d10ddd63a5ba7a91",
+        "clock-font-1": "edd4e92997279d95",
+        "clock-font-2": "049b0964b92d8ffe",
+        "clock-font-3": "02fd332e26357810",
+        "pet-frame-0": "5b1e8c10e541183d",
+        "pet-frame-1": "5b1e8c10e541183d",
+        "pet-frame-2": "145de6a85a62e3d7",
+        "pet-frame-3": "145de6a85a62e3d7",
+        "pet-frame-4": "be169571a23b487f",
+        "pet-frame-5": "be169571a23b487f",
+        "pet-frame-6": "2e47e1ecb5f5c5d4",
+        "pet-frame-7": "2e47e1ecb5f5c5d4",
+        "pet-frame-8": "baa30e63fd9096a0",
+        "pet-frame-9": "1067fbb5b3495864",
+        "pet-frame-10": "88762e15265db2fb",
+        "pet-frame-11": "88762e15265db2fb",
+        "pet-frame-12": "2237ad1b224b4f55",
+        "pet-frame-13": "2237ad1b224b4f55",
+        "pet-frame-14": "c7badd1ad0cd826f",
+        "clip-0-0": "b87dd2c175fe2994",
+        "clip-0-1": "264e15bb1d24f4e1",
+        "clip-0-2": "264e15bb1d24f4e1",
+        "clip-0-3": "9e55e2ca0996de2c",
+        "clip-0-4": "eca35e97cd9fc39d",
+        "clip-0-5": "eca35e97cd9fc39d",
+        "clip-0-6": "866be23550eb35f5",
+        "clip-0-7": "090a51a739a4c36c",
+        "clip-0-8": "090a51a739a4c36c",
+        "clip-0-9": "72f6942b23f9e950",
+        "clip-0-10": "72f6942b23f9e950",
+        "clip-0-11": "5faf4155dc1ba1fe",
+        "clip-1-0": "05e762c502176f52",
+        "clip-1-1": "c0da76f7f681b0c9",
+        "clip-1-2": "c0da76f7f681b0c9",
+        "clip-1-3": "86766d5aa98b8c0c",
+        "clip-1-4": "86766d5aa98b8c0c",
+        "clip-1-5": "cbf16134b09dd610",
+        "clip-1-6": "cbf16134b09dd610",
+        "clip-1-7": "88e337d8f232a09e",
+        "clip-1-8": "88e337d8f232a09e",
+        "clip-1-9": "675556a1ef65afed",
+        "clip-1-10": "675556a1ef65afed",
+        "clip-1-11": "6c1c6999d0b9cc76",
+        "clip-2-0": "6c1c6999d0b9cc76",
+        "clip-2-1": "44294b2145f97de6",
+        "clip-2-2": "44294b2145f97de6",
+        "clip-2-3": "b0159da77e1de86f",
+        "clip-2-4": "b0159da77e1de86f",
+        "clip-2-5": "7fb2fa4810d508e7",
+        "clip-2-6": "7fb2fa4810d508e7",
+        "clip-2-7": "82882e7f2f2121d1",
+        "clip-2-8": "82882e7f2f2121d1",
+        "clip-2-9": "3424c4222483196b",
+        "clip-2-10": "3424c4222483196b",
+        "clip-2-11": "b87dd2c175fe2994",
+        "clip-3-0": "d645eb6dd3f5bc3c",
+        "clip-3-1": "d645eb6dd3f5bc3c",
+        "clip-3-2": "3c9e4d02889b9e4c",
+        "clip-3-3": "3c9e4d02889b9e4c",
+        "clip-3-4": "3c9e4d02889b9e4c",
+        "clip-3-5": "4d0debe204404763",
+        "clip-3-6": "4d0debe204404763",
+        "clip-3-7": "4d0debe204404763",
+        "clip-3-8": "d96f8d9e6f130859",
+        "clip-3-9": "d96f8d9e6f130859",
+        "clip-3-10": "fb2e77de927e48f1",
+        "clip-3-11": "fb2e77de927e48f1",
+        "frozen-aod": "264e15bb1d24f4e1",
+        "thawed-play": "9e55e2ca0996de2c",
+        "weather-only-snow": "7e8d4e69d3ddc07e",
+        "weather-only-rain": "125f7702cb80ceda",
+        "status": "aa74d3b8d38206f9",
+        "status-changed": "6326fdecabfa9981",
+        "return-home": "47248c79a7684fcf",
+        "drag-up-mid": "21842993b055880e",
+        "drag-released": "e6fbad781db88083",
+        "drag-rebound": "ae0b9ce6f01b90e9",
+        "toast-font": "ec45b04f53bc3309",
+        "toast-gone": "4089bfa878bb9c79",
+        "horizontal-drag-final": "58dff54da0cc6d9e",
+        "horizontal-rebound-final": "c7b086bf13b5a936"
+      },
+      "deviations": {
+        "return-home": [
+          [
+            67331,
+            64333,
+            49834
+          ],
+          [
+            67332,
+            64333,
+            49834
+          ],
+          [
+            67333,
+            64333,
+            49834
+          ],
+          [
+            67334,
+            64333,
+            49834
+          ],
+          [
+            67339,
+            64333,
+            49834
+          ],
+          [
+            67340,
+            64333,
+            49834
+          ],
+          [
+            67341,
+            64333,
+            49834
+          ],
+          [
+            67342,
+            64333,
+            49834
+          ]
+        ],
+        "drag-released": [
+          [
+            139686,
+            10562,
+            12610
+          ],
+          [
+            139687,
+            10562,
+            12610
+          ],
+          [
+            139688,
+            10562,
+            12610
+          ],
+          [
+            139689,
+            10562,
+            12610
+          ],
+          [
+            139690,
+            10562,
+            12610
+          ],
+          [
+            139691,
+            10562,
+            12610
+          ],
+          [
+            139692,
+            10562,
+            12610
+          ],
+          [
+            139693,
+            10562,
+            12610
+          ],
+          [
+            139694,
+            10562,
+            12610
+          ],
+          [
+            139695,
+            10562,
+            12610
+          ],
+          [
+            139696,
+            10562,
+            12610
+          ],
+          [
+            139697,
+            10562,
+            12610
+          ],
+          [
+            146415,
+            14659,
+            12611
+          ],
+          [
+            146418,
+            33510,
+            35559
+          ],
+          [
+            146419,
+            33510,
+            35559
+          ],
+          [
+            146424,
+            31398,
+            29349
+          ],
+          [
+            146425,
+            35559,
+            33510
+          ],
+          [
+            146426,
+            29317,
+            31366
+          ],
+          [
+            146427,
+            33510,
+            35559
+          ],
+          [
+            146428,
+            33510,
+            35559
+          ],
+          [
+            146432,
+            35559,
+            33510
+          ],
+          [
+            146433,
+            31398,
+            29349
+          ],
+          [
+            146435,
+            27237,
+            29285
+          ],
+          [
+            146436,
+            31430,
+            33478
+          ],
+          [
+            146437,
+            33510,
+            35559
+          ],
+          [
+            146442,
+            14659,
+            12611
+          ],
+          [
+            149206,
+            62928,
+            62960
+          ],
+          [
+            149207,
+            62928,
+            62960
+          ],
+          [
+            149208,
+            62928,
+            62960
+          ],
+          [
+            149209,
+            62928,
+            62960
+          ],
+          [
+            149210,
+            62928,
+            62960
+          ],
+          [
+            149211,
+            62928,
+            62960
+          ],
+          [
+            149212,
+            62928,
+            62960
+          ],
+          [
+            149213,
+            62928,
+            62960
+          ],
+          [
+            149214,
+            62928,
+            62960
+          ],
+          [
+            149215,
+            62928,
+            62960
+          ],
+          [
+            149216,
+            62928,
+            62960
+          ],
+          [
+            149217,
+            62928,
+            62960
+          ],
+          [
+            149218,
+            62928,
+            62960
+          ],
+          [
+            149219,
+            62928,
+            62960
+          ],
+          [
+            149220,
+            62928,
+            62960
+          ],
+          [
+            149221,
+            62928,
+            62960
+          ],
+          [
+            149222,
+            62928,
+            62960
+          ],
+          [
+            149223,
+            62928,
+            62960
+          ],
+          [
+            149224,
+            62928,
+            62960
+          ],
+          [
+            149225,
+            62928,
+            62960
+          ],
+          [
+            149226,
+            62928,
+            62960
+          ],
+          [
+            149227,
+            62928,
+            62960
+          ],
+          [
+            149228,
+            62928,
+            62960
+          ],
+          [
+            149229,
+            62928,
+            62960
+          ],
+          [
+            149230,
+            62928,
+            62960
+          ],
+          [
+            149231,
+            62928,
+            62960
+          ],
+          [
+            149232,
+            62928,
+            62960
+          ],
+          [
+            149233,
+            62928,
+            62960
+          ],
+          [
+            149234,
+            62928,
+            62960
+          ],
+          [
+            149235,
+            62928,
+            62960
+          ],
+          [
+            149236,
+            62928,
+            62960
+          ],
+          [
+            149237,
+            62928,
+            62960
+          ],
+          [
+            149238,
+            62928,
+            62960
+          ],
+          [
+            149239,
+            62928,
+            62960
+          ],
+          [
+            149240,
+            62928,
+            62960
+          ],
+          [
+            149241,
+            62928,
+            62960
+          ],
+          [
+            149242,
+            62928,
+            62960
+          ],
+          [
+            149243,
+            62928,
+            62960
+          ],
+          [
+            149473,
+            10562,
+            12610
+          ],
+          [
+            149474,
+            10562,
+            12610
+          ],
+          [
+            149491,
+            19048,
+            19015
+          ],
+          [
+            149956,
+            12644,
+            10596
+          ],
+          [
+            149957,
+            12644,
+            10596
+          ],
+          [
+            149958,
+            12644,
+            10596
+          ],
+          [
+            149959,
+            12644,
+            10596
+          ],
+          [
+            150901,
+            10530,
+            10562
+          ],
+          [
+            150902,
+            10530,
+            10562
+          ],
+          [
+            152272,
+            10530,
+            10562
+          ],
+          [
+            152273,
+            10530,
+            10562
+          ],
+          [
+            152293,
+            10530,
+            10562
+          ],
+          [
+            152294,
+            10530,
+            10562
+          ],
+          [
+            152295,
+            10530,
+            10562
+          ],
+          [
+            152296,
+            10530,
+            10562
+          ],
+          [
+            152721,
+            12610,
+            10562
+          ],
+          [
+            152722,
+            12610,
+            10562
+          ],
+          [
+            152723,
+            25252,
+            23172
+          ],
+          [
+            152737,
+            27365,
+            29445
+          ],
+          [
+            152738,
+            23172,
+            25220
+          ],
+          [
+            152759,
+            14722,
+            14754
+          ],
+          [
+            152760,
+            27365,
+            29445
+          ],
+          [
+            152761,
+            27365,
+            29445
+          ],
+          [
+            152762,
+            27365,
+            29445
+          ],
+          [
+            152763,
+            25252,
+            25284
+          ],
+          [
+            152765,
+            27364,
+            27332
+          ],
+          [
+            152766,
+            12610,
+            10562
+          ],
+          [
+            153596,
+            10499,
+            12579
+          ],
+          [
+            153597,
+            10499,
+            12579
+          ],
+          [
+            153598,
+            20902,
+            20934
+          ],
+          [
+            153606,
+            20935,
+            22983
+          ],
+          [
+            153607,
+            10499,
+            12579
+          ],
+          [
+            153608,
+            10499,
+            12579
+          ],
+          [
+            153969,
+            8483,
+            8484
+          ],
+          [
+            154138,
+            27365,
+            29445
+          ],
+          [
+            154139,
+            27365,
+            29445
+          ],
+          [
+            154140,
+            27365,
+            29445
+          ],
+          [
+            154141,
+            27365,
+            29445
+          ],
+          [
+            154142,
+            27365,
+            29445
+          ],
+          [
+            154143,
+            27365,
+            29445
+          ],
+          [
+            154144,
+            27365,
+            29445
+          ],
+          [
+            154145,
+            27365,
+            29445
+          ],
+          [
+            154146,
+            27365,
+            29445
+          ],
+          [
+            154147,
+            27365,
+            29445
+          ],
+          [
+            154148,
+            27365,
+            29445
+          ],
+          [
+            154149,
+            27365,
+            29445
+          ],
+          [
+            154150,
+            27365,
+            29445
+          ],
+          [
+            154151,
+            27365,
+            29445
+          ],
+          [
+            154152,
+            27365,
+            29445
+          ],
+          [
+            154153,
+            27365,
+            29445
+          ],
+          [
+            154154,
+            27365,
+            29445
+          ],
+          [
+            154155,
+            27365,
+            29445
+          ],
+          [
+            154156,
+            27365,
+            29445
+          ],
+          [
+            154160,
+            25252,
+            23172
+          ],
+          [
+            154161,
+            12610,
+            10562
+          ],
+          [
+            154162,
+            12610,
+            10562
+          ],
+          [
+            156921,
+            10562,
+            12610
+          ],
+          [
+            156922,
+            10562,
+            12610
+          ],
+          [
+            156923,
+            10562,
+            12610
+          ],
+          [
+            156924,
+            10562,
+            12610
+          ],
+          [
+            156925,
+            10562,
+            12610
+          ],
+          [
+            156927,
+            37894,
+            42022
+          ],
+          [
+            156946,
+            37894,
+            42022
+          ],
+          [
+            156948,
+            10562,
+            12610
+          ],
+          [
+            156949,
+            10562,
+            12610
+          ],
+          [
+            156950,
+            10562,
+            12610
+          ],
+          [
+            156951,
+            10562,
+            12610
+          ],
+          [
+            156952,
+            10562,
+            12610
+          ],
+          [
+            158326,
+            10562,
+            12610
+          ],
+          [
+            158327,
+            10562,
+            12610
+          ],
+          [
+            158328,
+            10562,
+            12610
+          ],
+          [
+            158329,
+            10562,
+            12610
+          ],
+          [
+            158330,
+            10562,
+            12610
+          ],
+          [
+            158331,
+            10562,
+            12610
+          ],
+          [
+            158332,
+            10562,
+            12610
+          ],
+          [
+            158333,
+            10562,
+            12610
+          ],
+          [
+            158334,
+            10562,
+            12610
+          ],
+          [
+            158335,
+            10562,
+            12610
+          ],
+          [
+            158336,
+            10562,
+            12610
+          ],
+          [
+            158337,
+            10562,
+            12610
+          ],
+          [
+            158338,
+            10562,
+            12610
+          ],
+          [
+            158339,
+            10562,
+            12610
+          ],
+          [
+            158340,
+            10562,
+            12610
+          ],
+          [
+            158341,
+            10562,
+            12610
+          ],
+          [
+            158342,
+            10562,
+            12610
+          ],
+          [
+            158343,
+            10562,
+            12610
+          ],
+          [
+            160485,
+            10661,
+            10662
+          ],
+          [
+            160499,
+            8549,
+            8581
+          ],
+          [
+            160571,
+            12579,
+            10499
+          ],
+          [
+            160572,
+            14693,
+            14660
+          ],
+          [
+            160573,
+            35563,
+            35531
+          ],
+          [
+            160593,
+            27209,
+            29257
+          ],
+          [
+            160594,
+            18854,
+            20902
+          ],
+          [
+            160951,
+            8484,
+            8516
+          ],
+          [
+            160965,
+            8484,
+            8516
+          ],
+          [
+            163363,
+            10499,
+            12579
+          ],
+          [
+            163364,
+            10499,
+            12579
+          ],
+          [
+            163365,
+            16741,
+            16773
+          ],
+          [
+            163366,
+            37644,
+            41773
+          ],
+          [
+            163379,
+            29257,
+            27209
+          ],
+          [
+            163380,
+            29257,
+            27209
+          ],
+          [
+            163381,
+            29257,
+            27209
+          ],
+          [
+            163382,
+            29257,
+            27209
+          ],
+          [
+            163383,
+            29257,
+            27209
+          ],
+          [
+            163384,
+            16741,
+            14660
+          ],
+          [
+            163846,
+            12580,
+            12579
+          ],
+          [
+            166534,
+            23405,
+            23404
+          ],
+          [
+            166535,
+            29908,
+            29875
+          ],
+          [
+            166539,
+            40540,
+            40572
+          ],
+          [
+            166541,
+            48860,
+            48892
+          ],
+          [
+            166542,
+            40540,
+            40572
+          ],
+          [
+            166568,
+            29908,
+            29875
+          ],
+          [
+            166569,
+            23405,
+            23404
+          ],
+          [
+            166620,
+            14691,
+            16739
+          ],
+          [
+            166622,
+            25125,
+            23077
+          ],
+          [
+            166629,
+            12579,
+            10499
+          ],
+          [
+            166630,
+            12579,
+            10499
+          ],
+          [
+            166631,
+            12579,
+            10499
+          ],
+          [
+            166632,
+            12579,
+            10499
+          ],
+          [
+            166633,
+            12579,
+            10499
+          ],
+          [
+            166634,
+            12579,
+            10499
+          ],
+          [
+            166635,
+            12579,
+            10499
+          ],
+          [
+            166636,
+            12579,
+            10499
+          ],
+          [
+            166637,
+            12579,
+            10499
+          ],
+          [
+            167937,
+            44732,
+            44700
+          ],
+          [
+            167938,
+            44732,
+            44700
+          ],
+          [
+            167939,
+            44732,
+            44700
+          ],
+          [
+            167940,
+            44732,
+            44700
+          ],
+          [
+            168016,
+            8418,
+            10466
+          ],
+          [
+            168017,
+            23044,
+            20964
+          ],
+          [
+            170734,
+            19179,
+            19212
+          ],
+          [
+            170735,
+            29711,
+            29712
+          ],
+          [
+            170736,
+            29711,
+            29712
+          ],
+          [
+            170737,
+            29711,
+            29712
+          ],
+          [
+            170738,
+            29711,
+            29712
+          ],
+          [
+            170739,
+            29711,
+            29712
+          ],
+          [
+            170740,
+            29711,
+            29712
+          ],
+          [
+            170741,
+            29711,
+            29712
+          ],
+          [
+            170742,
+            29711,
+            29712
+          ],
+          [
+            170743,
+            29711,
+            29712
+          ],
+          [
+            170744,
+            29711,
+            29712
+          ],
+          [
+            170745,
+            29711,
+            29712
+          ],
+          [
+            170746,
+            29711,
+            29712
+          ],
+          [
+            170747,
+            29711,
+            29712
+          ],
+          [
+            170748,
+            29711,
+            29712
+          ],
+          [
+            170749,
+            29711,
+            29712
+          ],
+          [
+            170750,
+            29711,
+            29712
+          ],
+          [
+            170751,
+            29711,
+            29712
+          ],
+          [
+            170752,
+            29711,
+            29712
+          ],
+          [
+            170753,
+            29711,
+            29712
+          ],
+          [
+            170754,
+            29711,
+            29712
+          ],
+          [
+            170755,
+            29711,
+            29712
+          ],
+          [
+            170756,
+            29711,
+            29712
+          ],
+          [
+            170757,
+            19179,
+            19212
+          ]
+        ],
+        "drag-rebound": [
+          [
+            67331,
+            64333,
+            49834
+          ],
+          [
+            67332,
+            64333,
+            49834
+          ],
+          [
+            67333,
+            64333,
+            49834
+          ],
+          [
+            67334,
+            64333,
+            49834
+          ],
+          [
+            67339,
+            64333,
+            49834
+          ],
+          [
+            67340,
+            64333,
+            49834
+          ],
+          [
+            67341,
+            64333,
+            49834
+          ],
+          [
+            67342,
+            64333,
+            49834
+          ]
+        ]
+      },
+      "checks": 128
+    },
+    "candidate035-full-oracle": {
+      "metrics": [
+        {
+          "case": "unchanged-home-face0",
+          "repeats": 64,
+          "hostWallUs": 6596,
+          "flushes": 192,
+          "pixels": 386304
+        },
+        {
+          "case": "unchanged-home-face0",
+          "repeats": 64,
+          "hostWallUs": 7126,
+          "flushes": 192,
+          "pixels": 386304
+        },
+        {
+          "case": "unchanged-home-face1",
+          "repeats": 64,
+          "hostWallUs": 7391,
+          "flushes": 192,
+          "pixels": 386304
+        },
+        {
+          "case": "unchanged-home-face2",
+          "repeats": 64,
+          "hostWallUs": 7214,
+          "flushes": 192,
+          "pixels": 386304
+        },
+        {
+          "case": "horizontal-drag-commit-easeout",
+          "repeats": 1,
+          "hostWallUs": 49750,
+          "flushes": 683,
+          "pixels": 3087072
+        },
+        {
+          "case": "horizontal-drag-rebound",
+          "repeats": 1,
+          "hostWallUs": 19197,
+          "flushes": 373,
+          "pixels": 1715072
+        }
+      ],
+      "samples": {
+        "initial": "da119bcf373cee03",
+        "unchanged-home-face0": "7feeb119387d5f7b",
+        "unchanged-home-face1": "440a584c5d4db899",
+        "unchanged-home-face2": "6be8908c3af09f11",
+        "scene-0-time0": "67622cb410d58ad7",
+        "scene-0-time1": "292c5b9f81913817",
+        "scene-0-time2": "292c5b9f81913817",
+        "scene-0-time3": "6a2f90852c52f21a",
+        "scene-0-time4": "b9218790090a2b53",
+        "scene-0-time5": "b9218790090a2b53",
+        "scene-1-time0": "fff0f2ed5a0c89c3",
+        "scene-1-time1": "4b447320036e0c75",
+        "scene-1-time2": "f951007d397907b7",
+        "scene-1-time3": "35e53543bff0102b",
+        "scene-1-time4": "c6aada4e9eccf3fe",
+        "scene-1-time5": "ff588ceef9eef7c0",
+        "scene-2-time0": "b5e862a832ba28bc",
+        "scene-2-time1": "bd054f31b368e9d5",
+        "scene-2-time2": "6c99f502d204fc2d",
+        "scene-2-time3": "6026c4e55f551f34",
+        "scene-2-time4": "dcbe62b8be08cb60",
+        "scene-2-time5": "1adcb1096f6bfdb5",
+        "scene-3-time0": "e75d38238d261932",
+        "scene-3-time1": "740a66601d120f18",
+        "scene-3-time2": "f52f8df3744295d7",
+        "scene-3-time3": "a7f2ceaf018ff4e9",
+        "scene-3-time4": "dd2e837a88b22d87",
+        "scene-3-time5": "690326e69318b67f",
+        "scene-4-time0": "67622cb410d58ad7",
+        "scene-4-time1": "292c5b9f81913817",
+        "scene-4-time2": "292c5b9f81913817",
+        "scene-4-time3": "6a2f90852c52f21a",
+        "scene-4-time4": "b9218790090a2b53",
+        "scene-4-time5": "b9218790090a2b53",
+        "clock-font-0": "d10ddd63a5ba7a91",
+        "clock-font-1": "edd4e92997279d95",
+        "clock-font-2": "049b0964b92d8ffe",
+        "clock-font-3": "02fd332e26357810",
+        "pet-frame-0": "5b1e8c10e541183d",
+        "pet-frame-1": "5b1e8c10e541183d",
+        "pet-frame-2": "145de6a85a62e3d7",
+        "pet-frame-3": "145de6a85a62e3d7",
+        "pet-frame-4": "be169571a23b487f",
+        "pet-frame-5": "be169571a23b487f",
+        "pet-frame-6": "2e47e1ecb5f5c5d4",
+        "pet-frame-7": "2e47e1ecb5f5c5d4",
+        "pet-frame-8": "baa30e63fd9096a0",
+        "pet-frame-9": "1067fbb5b3495864",
+        "pet-frame-10": "88762e15265db2fb",
+        "pet-frame-11": "88762e15265db2fb",
+        "pet-frame-12": "2237ad1b224b4f55",
+        "pet-frame-13": "2237ad1b224b4f55",
+        "pet-frame-14": "c7badd1ad0cd826f",
+        "clip-0-0": "b87dd2c175fe2994",
+        "clip-0-1": "264e15bb1d24f4e1",
+        "clip-0-2": "264e15bb1d24f4e1",
+        "clip-0-3": "9e55e2ca0996de2c",
+        "clip-0-4": "eca35e97cd9fc39d",
+        "clip-0-5": "eca35e97cd9fc39d",
+        "clip-0-6": "866be23550eb35f5",
+        "clip-0-7": "090a51a739a4c36c",
+        "clip-0-8": "090a51a739a4c36c",
+        "clip-0-9": "72f6942b23f9e950",
+        "clip-0-10": "72f6942b23f9e950",
+        "clip-0-11": "5faf4155dc1ba1fe",
+        "clip-1-0": "05e762c502176f52",
+        "clip-1-1": "c0da76f7f681b0c9",
+        "clip-1-2": "c0da76f7f681b0c9",
+        "clip-1-3": "86766d5aa98b8c0c",
+        "clip-1-4": "86766d5aa98b8c0c",
+        "clip-1-5": "cbf16134b09dd610",
+        "clip-1-6": "cbf16134b09dd610",
+        "clip-1-7": "88e337d8f232a09e",
+        "clip-1-8": "88e337d8f232a09e",
+        "clip-1-9": "675556a1ef65afed",
+        "clip-1-10": "675556a1ef65afed",
+        "clip-1-11": "6c1c6999d0b9cc76",
+        "clip-2-0": "6c1c6999d0b9cc76",
+        "clip-2-1": "44294b2145f97de6",
+        "clip-2-2": "44294b2145f97de6",
+        "clip-2-3": "b0159da77e1de86f",
+        "clip-2-4": "b0159da77e1de86f",
+        "clip-2-5": "7fb2fa4810d508e7",
+        "clip-2-6": "7fb2fa4810d508e7",
+        "clip-2-7": "82882e7f2f2121d1",
+        "clip-2-8": "82882e7f2f2121d1",
+        "clip-2-9": "3424c4222483196b",
+        "clip-2-10": "3424c4222483196b",
+        "clip-2-11": "b87dd2c175fe2994",
+        "clip-3-0": "d645eb6dd3f5bc3c",
+        "clip-3-1": "d645eb6dd3f5bc3c",
+        "clip-3-2": "3c9e4d02889b9e4c",
+        "clip-3-3": "3c9e4d02889b9e4c",
+        "clip-3-4": "3c9e4d02889b9e4c",
+        "clip-3-5": "4d0debe204404763",
+        "clip-3-6": "4d0debe204404763",
+        "clip-3-7": "4d0debe204404763",
+        "clip-3-8": "d96f8d9e6f130859",
+        "clip-3-9": "d96f8d9e6f130859",
+        "clip-3-10": "fb2e77de927e48f1",
+        "clip-3-11": "fb2e77de927e48f1",
+        "frozen-aod": "264e15bb1d24f4e1",
+        "thawed-play": "9e55e2ca0996de2c",
+        "weather-only-snow": "7e8d4e69d3ddc07e",
+        "weather-only-rain": "125f7702cb80ceda",
+        "status": "aa74d3b8d38206f9",
+        "status-changed": "6326fdecabfa9981",
+        "return-home": "9bbff30740645aef",
+        "drag-up-mid": "21842993b055880e",
+        "drag-released": "e183606673029d36",
+        "drag-rebound": "d69b7f1e940f0bc9",
+        "toast-font": "8a631efa0688fa29",
+        "toast-gone": "4321888346110499",
+        "horizontal-drag-final": "58dff54da0cc6d9e",
+        "horizontal-rebound-final": "c7b086bf13b5a936"
+      },
+      "full": {
+        "initial": "da119bcf373cee03",
+        "unchanged-home-face0": "7feeb119387d5f7b",
+        "unchanged-home-face1": "440a584c5d4db899",
+        "unchanged-home-face2": "6be8908c3af09f11",
+        "scene-0-time0": "67622cb410d58ad7",
+        "scene-0-time1": "292c5b9f81913817",
+        "scene-0-time2": "292c5b9f81913817",
+        "scene-0-time3": "6a2f90852c52f21a",
+        "scene-0-time4": "b9218790090a2b53",
+        "scene-0-time5": "b9218790090a2b53",
+        "scene-1-time0": "fff0f2ed5a0c89c3",
+        "scene-1-time1": "4b447320036e0c75",
+        "scene-1-time2": "f951007d397907b7",
+        "scene-1-time3": "35e53543bff0102b",
+        "scene-1-time4": "c6aada4e9eccf3fe",
+        "scene-1-time5": "ff588ceef9eef7c0",
+        "scene-2-time0": "b5e862a832ba28bc",
+        "scene-2-time1": "bd054f31b368e9d5",
+        "scene-2-time2": "6c99f502d204fc2d",
+        "scene-2-time3": "6026c4e55f551f34",
+        "scene-2-time4": "dcbe62b8be08cb60",
+        "scene-2-time5": "1adcb1096f6bfdb5",
+        "scene-3-time0": "e75d38238d261932",
+        "scene-3-time1": "740a66601d120f18",
+        "scene-3-time2": "f52f8df3744295d7",
+        "scene-3-time3": "a7f2ceaf018ff4e9",
+        "scene-3-time4": "dd2e837a88b22d87",
+        "scene-3-time5": "690326e69318b67f",
+        "scene-4-time0": "67622cb410d58ad7",
+        "scene-4-time1": "292c5b9f81913817",
+        "scene-4-time2": "292c5b9f81913817",
+        "scene-4-time3": "6a2f90852c52f21a",
+        "scene-4-time4": "b9218790090a2b53",
+        "scene-4-time5": "b9218790090a2b53",
+        "clock-font-0": "d10ddd63a5ba7a91",
+        "clock-font-1": "edd4e92997279d95",
+        "clock-font-2": "049b0964b92d8ffe",
+        "clock-font-3": "02fd332e26357810",
+        "pet-frame-0": "5b1e8c10e541183d",
+        "pet-frame-1": "5b1e8c10e541183d",
+        "pet-frame-2": "145de6a85a62e3d7",
+        "pet-frame-3": "145de6a85a62e3d7",
+        "pet-frame-4": "be169571a23b487f",
+        "pet-frame-5": "be169571a23b487f",
+        "pet-frame-6": "2e47e1ecb5f5c5d4",
+        "pet-frame-7": "2e47e1ecb5f5c5d4",
+        "pet-frame-8": "baa30e63fd9096a0",
+        "pet-frame-9": "1067fbb5b3495864",
+        "pet-frame-10": "88762e15265db2fb",
+        "pet-frame-11": "88762e15265db2fb",
+        "pet-frame-12": "2237ad1b224b4f55",
+        "pet-frame-13": "2237ad1b224b4f55",
+        "pet-frame-14": "c7badd1ad0cd826f",
+        "clip-0-0": "b87dd2c175fe2994",
+        "clip-0-1": "264e15bb1d24f4e1",
+        "clip-0-2": "264e15bb1d24f4e1",
+        "clip-0-3": "9e55e2ca0996de2c",
+        "clip-0-4": "eca35e97cd9fc39d",
+        "clip-0-5": "eca35e97cd9fc39d",
+        "clip-0-6": "866be23550eb35f5",
+        "clip-0-7": "090a51a739a4c36c",
+        "clip-0-8": "090a51a739a4c36c",
+        "clip-0-9": "72f6942b23f9e950",
+        "clip-0-10": "72f6942b23f9e950",
+        "clip-0-11": "5faf4155dc1ba1fe",
+        "clip-1-0": "05e762c502176f52",
+        "clip-1-1": "c0da76f7f681b0c9",
+        "clip-1-2": "c0da76f7f681b0c9",
+        "clip-1-3": "86766d5aa98b8c0c",
+        "clip-1-4": "86766d5aa98b8c0c",
+        "clip-1-5": "cbf16134b09dd610",
+        "clip-1-6": "cbf16134b09dd610",
+        "clip-1-7": "88e337d8f232a09e",
+        "clip-1-8": "88e337d8f232a09e",
+        "clip-1-9": "675556a1ef65afed",
+        "clip-1-10": "675556a1ef65afed",
+        "clip-1-11": "6c1c6999d0b9cc76",
+        "clip-2-0": "6c1c6999d0b9cc76",
+        "clip-2-1": "44294b2145f97de6",
+        "clip-2-2": "44294b2145f97de6",
+        "clip-2-3": "b0159da77e1de86f",
+        "clip-2-4": "b0159da77e1de86f",
+        "clip-2-5": "7fb2fa4810d508e7",
+        "clip-2-6": "7fb2fa4810d508e7",
+        "clip-2-7": "82882e7f2f2121d1",
+        "clip-2-8": "82882e7f2f2121d1",
+        "clip-2-9": "3424c4222483196b",
+        "clip-2-10": "3424c4222483196b",
+        "clip-2-11": "b87dd2c175fe2994",
+        "clip-3-0": "d645eb6dd3f5bc3c",
+        "clip-3-1": "d645eb6dd3f5bc3c",
+        "clip-3-2": "3c9e4d02889b9e4c",
+        "clip-3-3": "3c9e4d02889b9e4c",
+        "clip-3-4": "3c9e4d02889b9e4c",
+        "clip-3-5": "4d0debe204404763",
+        "clip-3-6": "4d0debe204404763",
+        "clip-3-7": "4d0debe204404763",
+        "clip-3-8": "d96f8d9e6f130859",
+        "clip-3-9": "d96f8d9e6f130859",
+        "clip-3-10": "fb2e77de927e48f1",
+        "clip-3-11": "fb2e77de927e48f1",
+        "frozen-aod": "264e15bb1d24f4e1",
+        "thawed-play": "9e55e2ca0996de2c",
+        "weather-only-snow": "7e8d4e69d3ddc07e",
+        "weather-only-rain": "125f7702cb80ceda",
+        "status": "aa74d3b8d38206f9",
+        "status-changed": "6326fdecabfa9981",
+        "return-home": "47248c79a7684fcf",
+        "drag-up-mid": "21842993b055880e",
+        "drag-released": "e6fbad781db88083",
+        "drag-rebound": "ae0b9ce6f01b90e9",
+        "toast-font": "ec45b04f53bc3309",
+        "toast-gone": "4089bfa878bb9c79",
+        "horizontal-drag-final": "58dff54da0cc6d9e",
+        "horizontal-rebound-final": "c7b086bf13b5a936"
+      },
+      "deviations": {
+        "return-home": [
+          [
+            67331,
+            64333,
+            49834
+          ],
+          [
+            67332,
+            64333,
+            49834
+          ],
+          [
+            67333,
+            64333,
+            49834
+          ],
+          [
+            67334,
+            64333,
+            49834
+          ],
+          [
+            67339,
+            64333,
+            49834
+          ],
+          [
+            67340,
+            64333,
+            49834
+          ],
+          [
+            67341,
+            64333,
+            49834
+          ],
+          [
+            67342,
+            64333,
+            49834
+          ]
+        ],
+        "drag-released": [
+          [
+            139686,
+            10562,
+            12610
+          ],
+          [
+            139687,
+            10562,
+            12610
+          ],
+          [
+            139688,
+            10562,
+            12610
+          ],
+          [
+            139689,
+            10562,
+            12610
+          ],
+          [
+            139690,
+            10562,
+            12610
+          ],
+          [
+            139691,
+            10562,
+            12610
+          ],
+          [
+            139692,
+            10562,
+            12610
+          ],
+          [
+            139693,
+            10562,
+            12610
+          ],
+          [
+            139694,
+            10562,
+            12610
+          ],
+          [
+            139695,
+            10562,
+            12610
+          ],
+          [
+            139696,
+            10562,
+            12610
+          ],
+          [
+            139697,
+            10562,
+            12610
+          ],
+          [
+            146415,
+            14659,
+            12611
+          ],
+          [
+            146418,
+            33510,
+            35559
+          ],
+          [
+            146419,
+            33510,
+            35559
+          ],
+          [
+            146424,
+            31398,
+            29349
+          ],
+          [
+            146425,
+            35559,
+            33510
+          ],
+          [
+            146426,
+            29317,
+            31366
+          ],
+          [
+            146427,
+            33510,
+            35559
+          ],
+          [
+            146428,
+            33510,
+            35559
+          ],
+          [
+            146432,
+            35559,
+            33510
+          ],
+          [
+            146433,
+            31398,
+            29349
+          ],
+          [
+            146435,
+            27237,
+            29285
+          ],
+          [
+            146436,
+            31430,
+            33478
+          ],
+          [
+            146437,
+            33510,
+            35559
+          ],
+          [
+            146442,
+            14659,
+            12611
+          ],
+          [
+            149206,
+            62928,
+            62960
+          ],
+          [
+            149207,
+            62928,
+            62960
+          ],
+          [
+            149208,
+            62928,
+            62960
+          ],
+          [
+            149209,
+            62928,
+            62960
+          ],
+          [
+            149210,
+            62928,
+            62960
+          ],
+          [
+            149211,
+            62928,
+            62960
+          ],
+          [
+            149212,
+            62928,
+            62960
+          ],
+          [
+            149213,
+            62928,
+            62960
+          ],
+          [
+            149214,
+            62928,
+            62960
+          ],
+          [
+            149215,
+            62928,
+            62960
+          ],
+          [
+            149216,
+            62928,
+            62960
+          ],
+          [
+            149217,
+            62928,
+            62960
+          ],
+          [
+            149218,
+            62928,
+            62960
+          ],
+          [
+            149219,
+            62928,
+            62960
+          ],
+          [
+            149220,
+            62928,
+            62960
+          ],
+          [
+            149221,
+            62928,
+            62960
+          ],
+          [
+            149222,
+            62928,
+            62960
+          ],
+          [
+            149223,
+            62928,
+            62960
+          ],
+          [
+            149224,
+            62928,
+            62960
+          ],
+          [
+            149225,
+            62928,
+            62960
+          ],
+          [
+            149226,
+            62928,
+            62960
+          ],
+          [
+            149227,
+            62928,
+            62960
+          ],
+          [
+            149228,
+            62928,
+            62960
+          ],
+          [
+            149229,
+            62928,
+            62960
+          ],
+          [
+            149230,
+            62928,
+            62960
+          ],
+          [
+            149231,
+            62928,
+            62960
+          ],
+          [
+            149232,
+            62928,
+            62960
+          ],
+          [
+            149233,
+            62928,
+            62960
+          ],
+          [
+            149234,
+            62928,
+            62960
+          ],
+          [
+            149235,
+            62928,
+            62960
+          ],
+          [
+            149236,
+            62928,
+            62960
+          ],
+          [
+            149237,
+            62928,
+            62960
+          ],
+          [
+            149238,
+            62928,
+            62960
+          ],
+          [
+            149239,
+            62928,
+            62960
+          ],
+          [
+            149240,
+            62928,
+            62960
+          ],
+          [
+            149241,
+            62928,
+            62960
+          ],
+          [
+            149242,
+            62928,
+            62960
+          ],
+          [
+            149243,
+            62928,
+            62960
+          ],
+          [
+            149473,
+            10562,
+            12610
+          ],
+          [
+            149474,
+            10562,
+            12610
+          ],
+          [
+            149491,
+            19048,
+            19015
+          ],
+          [
+            149956,
+            12644,
+            10596
+          ],
+          [
+            149957,
+            12644,
+            10596
+          ],
+          [
+            149958,
+            12644,
+            10596
+          ],
+          [
+            149959,
+            12644,
+            10596
+          ],
+          [
+            150901,
+            10530,
+            10562
+          ],
+          [
+            150902,
+            10530,
+            10562
+          ],
+          [
+            152272,
+            10530,
+            10562
+          ],
+          [
+            152273,
+            10530,
+            10562
+          ],
+          [
+            152293,
+            10530,
+            10562
+          ],
+          [
+            152294,
+            10530,
+            10562
+          ],
+          [
+            152295,
+            10530,
+            10562
+          ],
+          [
+            152296,
+            10530,
+            10562
+          ],
+          [
+            152721,
+            12610,
+            10562
+          ],
+          [
+            152722,
+            12610,
+            10562
+          ],
+          [
+            152723,
+            25252,
+            23172
+          ],
+          [
+            152737,
+            27365,
+            29445
+          ],
+          [
+            152738,
+            23172,
+            25220
+          ],
+          [
+            152759,
+            14722,
+            14754
+          ],
+          [
+            152760,
+            27365,
+            29445
+          ],
+          [
+            152761,
+            27365,
+            29445
+          ],
+          [
+            152762,
+            27365,
+            29445
+          ],
+          [
+            152763,
+            25252,
+            25284
+          ],
+          [
+            152765,
+            27364,
+            27332
+          ],
+          [
+            152766,
+            12610,
+            10562
+          ],
+          [
+            153596,
+            10499,
+            12579
+          ],
+          [
+            153597,
+            10499,
+            12579
+          ],
+          [
+            153598,
+            20902,
+            20934
+          ],
+          [
+            153606,
+            20935,
+            22983
+          ],
+          [
+            153607,
+            10499,
+            12579
+          ],
+          [
+            153608,
+            10499,
+            12579
+          ],
+          [
+            153969,
+            8483,
+            8484
+          ],
+          [
+            154138,
+            27365,
+            29445
+          ],
+          [
+            154139,
+            27365,
+            29445
+          ],
+          [
+            154140,
+            27365,
+            29445
+          ],
+          [
+            154141,
+            27365,
+            29445
+          ],
+          [
+            154142,
+            27365,
+            29445
+          ],
+          [
+            154143,
+            27365,
+            29445
+          ],
+          [
+            154144,
+            27365,
+            29445
+          ],
+          [
+            154145,
+            27365,
+            29445
+          ],
+          [
+            154146,
+            27365,
+            29445
+          ],
+          [
+            154147,
+            27365,
+            29445
+          ],
+          [
+            154148,
+            27365,
+            29445
+          ],
+          [
+            154149,
+            27365,
+            29445
+          ],
+          [
+            154150,
+            27365,
+            29445
+          ],
+          [
+            154151,
+            27365,
+            29445
+          ],
+          [
+            154152,
+            27365,
+            29445
+          ],
+          [
+            154153,
+            27365,
+            29445
+          ],
+          [
+            154154,
+            27365,
+            29445
+          ],
+          [
+            154155,
+            27365,
+            29445
+          ],
+          [
+            154156,
+            27365,
+            29445
+          ],
+          [
+            154160,
+            25252,
+            23172
+          ],
+          [
+            154161,
+            12610,
+            10562
+          ],
+          [
+            154162,
+            12610,
+            10562
+          ],
+          [
+            156921,
+            10562,
+            12610
+          ],
+          [
+            156922,
+            10562,
+            12610
+          ],
+          [
+            156923,
+            10562,
+            12610
+          ],
+          [
+            156924,
+            10562,
+            12610
+          ],
+          [
+            156925,
+            10562,
+            12610
+          ],
+          [
+            156927,
+            37894,
+            42022
+          ],
+          [
+            156946,
+            37894,
+            42022
+          ],
+          [
+            156948,
+            10562,
+            12610
+          ],
+          [
+            156949,
+            10562,
+            12610
+          ],
+          [
+            156950,
+            10562,
+            12610
+          ],
+          [
+            156951,
+            10562,
+            12610
+          ],
+          [
+            156952,
+            10562,
+            12610
+          ],
+          [
+            158326,
+            10562,
+            12610
+          ],
+          [
+            158327,
+            10562,
+            12610
+          ],
+          [
+            158328,
+            10562,
+            12610
+          ],
+          [
+            158329,
+            10562,
+            12610
+          ],
+          [
+            158330,
+            10562,
+            12610
+          ],
+          [
+            158331,
+            10562,
+            12610
+          ],
+          [
+            158332,
+            10562,
+            12610
+          ],
+          [
+            158333,
+            10562,
+            12610
+          ],
+          [
+            158334,
+            10562,
+            12610
+          ],
+          [
+            158335,
+            10562,
+            12610
+          ],
+          [
+            158336,
+            10562,
+            12610
+          ],
+          [
+            158337,
+            10562,
+            12610
+          ],
+          [
+            158338,
+            10562,
+            12610
+          ],
+          [
+            158339,
+            10562,
+            12610
+          ],
+          [
+            158340,
+            10562,
+            12610
+          ],
+          [
+            158341,
+            10562,
+            12610
+          ],
+          [
+            158342,
+            10562,
+            12610
+          ],
+          [
+            158343,
+            10562,
+            12610
+          ],
+          [
+            160485,
+            10661,
+            10662
+          ],
+          [
+            160499,
+            8549,
+            8581
+          ],
+          [
+            160571,
+            12579,
+            10499
+          ],
+          [
+            160572,
+            14693,
+            14660
+          ],
+          [
+            160573,
+            35563,
+            35531
+          ],
+          [
+            160593,
+            27209,
+            29257
+          ],
+          [
+            160594,
+            18854,
+            20902
+          ],
+          [
+            160951,
+            8484,
+            8516
+          ],
+          [
+            160965,
+            8484,
+            8516
+          ],
+          [
+            163363,
+            10499,
+            12579
+          ],
+          [
+            163364,
+            10499,
+            12579
+          ],
+          [
+            163365,
+            16741,
+            16773
+          ],
+          [
+            163366,
+            37644,
+            41773
+          ],
+          [
+            163379,
+            29257,
+            27209
+          ],
+          [
+            163380,
+            29257,
+            27209
+          ],
+          [
+            163381,
+            29257,
+            27209
+          ],
+          [
+            163382,
+            29257,
+            27209
+          ],
+          [
+            163383,
+            29257,
+            27209
+          ],
+          [
+            163384,
+            16741,
+            14660
+          ],
+          [
+            163846,
+            12580,
+            12579
+          ],
+          [
+            166534,
+            23405,
+            23404
+          ],
+          [
+            166535,
+            29908,
+            29875
+          ],
+          [
+            166539,
+            40540,
+            40572
+          ],
+          [
+            166541,
+            48860,
+            48892
+          ],
+          [
+            166542,
+            40540,
+            40572
+          ],
+          [
+            166568,
+            29908,
+            29875
+          ],
+          [
+            166569,
+            23405,
+            23404
+          ],
+          [
+            166620,
+            14691,
+            16739
+          ],
+          [
+            166622,
+            25125,
+            23077
+          ],
+          [
+            166629,
+            12579,
+            10499
+          ],
+          [
+            166630,
+            12579,
+            10499
+          ],
+          [
+            166631,
+            12579,
+            10499
+          ],
+          [
+            166632,
+            12579,
+            10499
+          ],
+          [
+            166633,
+            12579,
+            10499
+          ],
+          [
+            166634,
+            12579,
+            10499
+          ],
+          [
+            166635,
+            12579,
+            10499
+          ],
+          [
+            166636,
+            12579,
+            10499
+          ],
+          [
+            166637,
+            12579,
+            10499
+          ],
+          [
+            167937,
+            44732,
+            44700
+          ],
+          [
+            167938,
+            44732,
+            44700
+          ],
+          [
+            167939,
+            44732,
+            44700
+          ],
+          [
+            167940,
+            44732,
+            44700
+          ],
+          [
+            168016,
+            8418,
+            10466
+          ],
+          [
+            168017,
+            23044,
+            20964
+          ],
+          [
+            170734,
+            19179,
+            19212
+          ],
+          [
+            170735,
+            29711,
+            29712
+          ],
+          [
+            170736,
+            29711,
+            29712
+          ],
+          [
+            170737,
+            29711,
+            29712
+          ],
+          [
+            170738,
+            29711,
+            29712
+          ],
+          [
+            170739,
+            29711,
+            29712
+          ],
+          [
+            170740,
+            29711,
+            29712
+          ],
+          [
+            170741,
+            29711,
+            29712
+          ],
+          [
+            170742,
+            29711,
+            29712
+          ],
+          [
+            170743,
+            29711,
+            29712
+          ],
+          [
+            170744,
+            29711,
+            29712
+          ],
+          [
+            170745,
+            29711,
+            29712
+          ],
+          [
+            170746,
+            29711,
+            29712
+          ],
+          [
+            170747,
+            29711,
+            29712
+          ],
+          [
+            170748,
+            29711,
+            29712
+          ],
+          [
+            170749,
+            29711,
+            29712
+          ],
+          [
+            170750,
+            29711,
+            29712
+          ],
+          [
+            170751,
+            29711,
+            29712
+          ],
+          [
+            170752,
+            29711,
+            29712
+          ],
+          [
+            170753,
+            29711,
+            29712
+          ],
+          [
+            170754,
+            29711,
+            29712
+          ],
+          [
+            170755,
+            29711,
+            29712
+          ],
+          [
+            170756,
+            29711,
+            29712
+          ],
+          [
+            170757,
+            19179,
+            19212
+          ]
+        ],
+        "drag-rebound": [
+          [
+            67331,
+            64333,
+            49834
+          ],
+          [
+            67332,
+            64333,
+            49834
+          ],
+          [
+            67333,
+            64333,
+            49834
+          ],
+          [
+            67334,
+            64333,
+            49834
+          ],
+          [
+            67339,
+            64333,
+            49834
+          ],
+          [
+            67340,
+            64333,
+            49834
+          ],
+          [
+            67341,
+            64333,
+            49834
+          ],
+          [
+            67342,
+            64333,
+            49834
+          ]
+        ],
+        "toast-font": [
+          [
+            67331,
+            64333,
+            49834
+          ],
+          [
+            67332,
+            64333,
+            49834
+          ],
+          [
+            67333,
+            64333,
+            49834
+          ],
+          [
+            67334,
+            64333,
+            49834
+          ],
+          [
+            67339,
+            64333,
+            49834
+          ],
+          [
+            67340,
+            64333,
+            49834
+          ],
+          [
+            67341,
+            64333,
+            49834
+          ],
+          [
+            67342,
+            64333,
+            49834
+          ]
+        ],
+        "toast-gone": [
+          [
+            67331,
+            64333,
+            49834
+          ],
+          [
+            67332,
+            64333,
+            49834
+          ],
+          [
+            67333,
+            64333,
+            49834
+          ],
+          [
+            67334,
+            64333,
+            49834
+          ],
+          [
+            67339,
+            64333,
+            49834
+          ],
+          [
+            67340,
+            64333,
+            49834
+          ],
+          [
+            67341,
+            64333,
+            49834
+          ],
+          [
+            67342,
+            64333,
+            49834
+          ]
+        ]
+      },
+      "checks": 128
+    }
+  },
+  "fullRasterExactUniqueSamples": 115,
+  "continuousExactUniqueSamples": 113,
+  "continuousDifferences": {
+    "toast-font": {
+      "pixels": 8,
+      "bounds": [
+        227,
+        144,
+        238,
+        144
+      ],
+      "maxRGB565Delta": [
+        7,
+        5,
+        3
+      ],
+      "differentPixels": [
+        [
+          67331,
+          49834,
+          64333
+        ],
+        [
+          67332,
+          49834,
+          64333
+        ],
+        [
+          67333,
+          49834,
+          64333
+        ],
+        [
+          67334,
+          49834,
+          64333
+        ],
+        [
+          67339,
+          49834,
+          64333
+        ],
+        [
+          67340,
+          49834,
+          64333
+        ],
+        [
+          67341,
+          49834,
+          64333
+        ],
+        [
+          67342,
+          49834,
+          64333
+        ]
+      ]
+    },
+    "toast-gone": {
+      "pixels": 8,
+      "bounds": [
+        227,
+        144,
+        238,
+        144
+      ],
+      "maxRGB565Delta": [
+        7,
+        5,
+        3
+      ],
+      "differentPixels": [
+        [
+          67331,
+          49834,
+          64333
+        ],
+        [
+          67332,
+          49834,
+          64333
+        ],
+        [
+          67333,
+          49834,
+          64333
+        ],
+        [
+          67334,
+          49834,
+          64333
+        ],
+        [
+          67339,
+          49834,
+          64333
+        ],
+        [
+          67340,
+          49834,
+          64333
+        ],
+        [
+          67341,
+          49834,
+          64333
+        ],
+        [
+          67342,
+          49834,
+          64333
+        ]
+      ]
+    }
+  },
+  "diagnosticChecks": {
+    "offline": true,
+    "actualDiagnosticC": true,
+    "platformUsbHeapDomainSubstitutes": true,
+    "hardware": false,
+    "checksPassed": 34
+  },
+  "diagnosticCommand": [
+    "clang",
+    "-std=gnu11",
+    "-O1",
+    "-UNDEBUG",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-DLV_KCONFIG_IGNORE",
+    "-DLV_LVGL_H_INCLUDE_SIMPLE",
+    "-DLV_CONF_PATH=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/lv_conf.h\"",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/diag_stubs",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/stubs",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/main",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf035/source/tools/host_preview/diag_test.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a",
+    "-lm",
+    "-o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware035-review/diagnostic-production"
+  ],
+  "notOpticalOrSwipeFix": true,
+  "rawOutputReducedTo4SamplesPerContinuousVariant": true,
+  "diskSpaceBeforeScriptBytes": 23176421376
+}

@@ -1,0 +1,5 @@
+字体：思源黑体 / Noto Sans SC Medium（Adobe & Google），SIL Open Font License 1.1，可免费商用与嵌入固件。
+badge_f16 / f24：画面文字 + ASCII；badge_f20：画面文字 + ASCII + GB2312 一级常用 3755 字（小猫名字、气泡）；badge_n40：数字与冒号。
+全部 4bpp、未压缩（--no-compress），生成命令：
+lv_font_conv --font NotoSansSC-Medium.otf --size 20 --bpp 4 --format lvgl --no-compress -r 0x20-0x7E --symbols "<chars_ui.txt 内容 + 常用字>" -o badge_f20.c --lv-font-name badge_f20
+改了画面文字后：在 HTML「导出」里重新导出 chars_ui.txt，再按上面命令重新生成。

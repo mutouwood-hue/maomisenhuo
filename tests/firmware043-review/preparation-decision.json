@@ -1,0 +1,30 @@
+{
+  "readonlyPreparationReleased": true,
+  "allowedStages": [
+    "security",
+    "backup",
+    "verify-current"
+  ],
+  "released": false,
+  "appWriteReleased": false,
+  "executionArtifacts": [
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/run_stage.py",
+      "sha256": "cb4f0303e0b87a127101770b7655ba4713388bef008e7cd0082bf8acaeb3afb9"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/diagnostic_session.py",
+      "sha256": "7a32f845ea04d97bff56390702bac8a5bb73cdc7518666e865485f9849c9a5a2"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/esptool_no_write_retry.py",
+      "sha256": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4"
+    }
+  ],
+  "reportPath": "tests/firmware043-review/PREPARATION-REVIEW.md",
+  "reportSha256": "11e94687f6c1458c5af13f1dd5a7393e984804e16522fb8c631ef74964c1ef4f",
+  "checksPath": "tests/firmware043-review/preparation-checks.json",
+  "checksSha256": "f535b9dca172072ec4bf6a2ee7c2edd5ed7541809acdd4dbbc46ac47ab9b6ab8",
+  "reviewerDeviceActions": false,
+  "requiresFinal043CandidateReview": true
+}

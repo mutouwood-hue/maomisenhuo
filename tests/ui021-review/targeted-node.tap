@@ -1,0 +1,94 @@
+TAP version 13
+# Subtest: five-page icon decoration keeps original button objects, human labels, prices and listeners
+ok 1 - five-page icon decoration keeps original button objects, human labels, prices and listeners
+  ---
+  duration_ms: 551.525791
+  type: 'test'
+  ...
+# Subtest: all six real hub tabs and their original near/gift/world/settings actions receive icons
+ok 2 - all six real hub tabs and their original near/gift/world/settings actions receive icons
+  ---
+  duration_ms: 511.050542
+  type: 'test'
+  ...
+# Subtest: dynamic text and disabled states keep full labels after rerender; readiness icon does not alter status
+ok 3 - dynamic text and disabled states keep full labels after rerender; readiness icon does not alter status
+  ---
+  duration_ms: 340.0735
+  type: 'test'
+  ...
+# Subtest: clinic/journal/badge rail slots replace old glyphs without adding duplicate rows
+ok 4 - clinic/journal/badge rail slots replace old glyphs without adding duplicate rows
+  ---
+  duration_ms: 138.284708
+  type: 'test'
+  ...
+# Subtest: decorator does not mutate original social/store data or invoke permissions
+ok 5 - decorator does not mutate original social/store data or invoke permissions
+  ---
+  duration_ms: 274.355167
+  type: 'test'
+  ...
+# Subtest: decoration observer settles and ignores per-frame progress text that is not an action
+ok 6 - decoration observer settles and ignores per-frame progress text that is not an action
+  ---
+  duration_ms: 342.375417
+  type: 'test'
+  ...
+# Subtest: local page SVGs use unique gradient IDs, decorative accessibility and no network content
+ok 7 - local page SVGs use unique gradient IDs, decorative accessibility and no network content
+  ---
+  duration_ms: 208.58075
+  type: 'test'
+  ...
+# Subtest: page icons settle alongside unchanged Host/layout observers after dynamic action text updates
+ok 8 - page icons settle alongside unchanged Host/layout observers after dynamic action text updates
+  ---
+  duration_ms: 369.579125
+  type: 'test'
+  ...
+# Subtest: populated original friends/gifts/world retain native selects and their action suite
+ok 9 - populated original friends/gifts/world retain native selects and their action suite
+  ---
+  duration_ms: 315.875334
+  type: 'test'
+  ...
+# Subtest: dynamic choices and unsupported world-edit verbs stay text-only with original labels/listeners
+ok 10 - dynamic choices and unsupported world-edit verbs stay text-only with original labels/listeners
+  ---
+  duration_ms: 187.184917
+  type: 'test'
+  ...
+# Subtest: 100 original N refreshes preserve all persistent decoration without observer repair
+ok 11 - 100 original N refreshes preserve all persistent decoration without observer repair
+  ---
+  duration_ms: 374.891458
+  type: 'test'
+  ...
+# Subtest: unknown mapped action values never fall back to a generic icon
+ok 12 - unknown mapped action values never fall back to a generic icon
+  ---
+  duration_ms: 765.53125
+  type: 'test'
+  ...
+# Subtest: nine inserted event choices and clinic instruments remain original text/node/listener
+ok 13 - nine inserted event choices and clinic instruments remain original text/node/listener
+  ---
+  duration_ms: 251.18025
+  type: 'test'
+  ...
+# Subtest: tip flow has no new lifetime/key writes and no fixed-bottom/zindex workaround
+ok 14 - tip flow has no new lifetime/key writes and no fixed-bottom/zindex workaround
+  ---
+  duration_ms: 0.642625
+  type: 'test'
+  ...
+1..14
+# tests 14
+# suites 0
+# pass 14
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 5535.660375

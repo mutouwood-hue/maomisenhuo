@@ -1,0 +1,202 @@
+{
+  "kind": "independent offline readback of Root actual device evidence; reviewer never opened device",
+  "status": "pass_limited_scope",
+  "appSha256": "7f438d6f92f597ae8dd183acadaad177aebe456f43a0791f0fb64e2fc1b13f4e",
+  "imageReadbackBytes": 6397952,
+  "appSectorAlignedTailFF": true,
+  "freshPrefixExactBeforeAndAfterSelectorActivation": true,
+  "prefixNvsRangeBytePreserved": true,
+  "current32MiBComposedRollbackImage": {
+    "bytes": 33554432,
+    "sha256": "646faff870c822ac08a671eff08b405cb887e4a8405839af83c0130211e00bd9",
+    "isNewFullRead": false,
+    "allPhysicalRangesToolVerifiedBeforeWrite": true
+  },
+  "originalReadFailuresRetained": {
+    "921600_corrupt_frame": true,
+    "460800_no_reset_no_sync": true,
+    "460800_clean_rom_success": true
+  },
+  "captures": [
+    {
+      "face": 0,
+      "captureId": 1,
+      "crc32": "a5038e40",
+      "bytes": 434312,
+      "rawSha256": "2de4a4b1058743f365e868ab00f356604241075dbaf0e5ae8db3117c0d441b55",
+      "logSha256": "0987f6f65659c017dea3ae32f8aca823d378e40b282df6e91164d396f7fc5ba6",
+      "pngMatchesDecodedRaw": true,
+      "uiPauseUs": 69620,
+      "physicalScanout": false
+    },
+    {
+      "face": 1,
+      "captureId": 2,
+      "crc32": "c1199251",
+      "bytes": 434312,
+      "rawSha256": "c14083a6ba81ea6481fd5c76bbaa9a121159be9e8c7fec6c58889059c4319b2a",
+      "logSha256": "964b174f4053860bd636463423f0bcbd861378a5247a79d64cc32601aeb70147",
+      "pngMatchesDecodedRaw": true,
+      "uiPauseUs": 45249,
+      "physicalScanout": false
+    },
+    {
+      "face": 2,
+      "captureId": 3,
+      "crc32": "8831908a",
+      "bytes": 434312,
+      "rawSha256": "9f980692796b17427afe4ac0b828922c4204e25ad8797c050a876af15bba72dd",
+      "logSha256": "b674a11cba16044a657f44b95e7d17051c5112315e2677bb11107bb4640b3a55",
+      "pngMatchesDecodedRaw": true,
+      "uiPauseUs": 46881,
+      "physicalScanout": false
+    }
+  ],
+  "initialState": {
+    "revision": 18,
+    "lastSeq": 27,
+    "lastAck": 9,
+    "nextEvent": 10,
+    "pending": 0,
+    "clockValid": false,
+    "nowMs": 0,
+    "utcOffsetMinutes": 0,
+    "ready": true,
+    "storageError": false
+  },
+  "finalState": {
+    "revision": 19,
+    "lastSeq": 28,
+    "lastAck": 9,
+    "nextEvent": 10,
+    "pending": 0,
+    "clockValid": true,
+    "nowMs": 1792117858971,
+    "utcOffsetMinutes": 480,
+    "ready": true,
+    "storageError": false
+  },
+  "initialPerf": {
+    "schema": 1,
+    "sinceUs": 1566261,
+    "nowUs": 5805010,
+    "renderFrameId": 17,
+    "refreshRequests": 23,
+    "rendered": 17,
+    "flushCount": 533,
+    "pixelsSubmitted": 2454024,
+    "inputPolls": 65,
+    "pressedPolls": 0,
+    "render": [
+      17,
+      2067033,
+      198301
+    ],
+    "flushSubmit": [
+      533,
+      182798,
+      535
+    ],
+    "flushWait": [
+      533,
+      6655,
+      75
+    ],
+    "inputInterval": [
+      64,
+      3682744,
+      200466
+    ],
+    "inputRead": [
+      65,
+      2885,
+      2336
+    ],
+    "appUiTick": [
+      59,
+      331655,
+      37530
+    ],
+    "dmaFree": 72595,
+    "dmaLargest": 31744,
+    "dmaMinimum": 33440,
+    "psramFree": 8278980,
+    "drawBufferBytes": 9320,
+    "drawDouble": true,
+    "buffer1Bytes": 9320,
+    "buffer2Bytes": 9320,
+    "buffer1DmaCapable": true,
+    "buffer2DmaCapable": true,
+    "physicalScanoutMeasured": false
+  },
+  "finalPerf": {
+    "schema": 1,
+    "sinceUs": 12041577,
+    "nowUs": 572623790,
+    "renderFrameId": 2425,
+    "refreshRequests": 2364,
+    "rendered": 2364,
+    "flushCount": 106065,
+    "pixelsSubmitted": 489483960,
+    "inputPolls": 13190,
+    "pressedPolls": 0,
+    "render": [
+      2364,
+      165057535,
+      147577
+    ],
+    "flushSubmit": [
+      106065,
+      34566442,
+      1071
+    ],
+    "flushWait": [
+      106065,
+      1236184,
+      135
+    ],
+    "inputInterval": [
+      13189,
+      560544207,
+      190690
+    ],
+    "inputRead": [
+      13190,
+      98754,
+      271
+    ],
+    "appUiTick": [
+      2373,
+      46614747,
+      43220
+    ],
+    "dmaFree": 72347,
+    "dmaLargest": 31744,
+    "dmaMinimum": 32944,
+    "psramFree": 8255424,
+    "drawBufferBytes": 9320,
+    "drawDouble": true,
+    "buffer1Bytes": 9320,
+    "buffer2Bytes": 9320,
+    "buffer1DmaCapable": true,
+    "buffer2DmaCapable": true,
+    "physicalScanoutMeasured": false
+  },
+  "sessionElapsedSeconds": 574.372,
+  "errorLines": 0,
+  "startupDiagnosticParserErrors": [
+    "CFDIAG ERROR COMMAND_INVALID_OR_TOO_LONG"
+  ],
+  "bootResetLines": [
+    "rst:0x15 (USB_UART_CHIP_RESET),boot:0xb (SPI_FAST_FLASH_BOOT)"
+  ],
+  "panicMatches": 0,
+  "fullLogSha256": "c4bdf2937578166eb595a7dc68ae4fc36a7d0e6150440adcbac1db2821bf2474",
+  "limits": [
+    "No optical/physical scanout/tearing/touch validation; pressedPolls0",
+    "Fresh prefix plus earlier real read ranges reverified in full, not new full32MiB read",
+    "Read framing failures do not establish flash corruption or physical cause",
+    "Clock valid plus offset does not establish precise time synchronization",
+    "Current evidence does not test new care/gift or power loss recovery"
+  ]
+}

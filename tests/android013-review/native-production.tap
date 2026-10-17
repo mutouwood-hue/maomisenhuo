@@ -1,0 +1,85 @@
+TAP version 13
+# Subtest: production Java CAS+SHA/UTF8, exact idempotent commits, strict types and bounds (JVM Android stand-ins)
+ok 1 - production Java CAS+SHA/UTF8, exact idempotent commits, strict types and bounds (JVM Android stand-ins)
+  ---
+  duration_ms: 209.909375
+  ...
+# Subtest: production Java beforeRename failure has no certificate; same JS client re-syncs exact decision
+ok 2 - production Java beforeRename failure has no certificate; same JS client re-syncs exact decision
+  ---
+  duration_ms: 111.951916
+  ...
+# Subtest: production Java afterRename failure has no certificate; same JS client re-syncs exact decision
+ok 3 - production Java afterRename failure has no certificate; same JS client re-syncs exact decision
+  ---
+  duration_ms: 96.736042
+  ...
+# Subtest: production Java directory failure has no certificate; same JS client re-syncs exact decision
+ok 4 - production Java directory failure has no certificate; same JS client re-syncs exact decision
+  ---
+  duration_ms: 96.329458
+  ...
+# Subtest: actual production commit reply lost at pre checkpoint recovers same-instance CAS and accepts next command
+ok 5 - actual production commit reply lost at pre checkpoint recovers same-instance CAS and accepts next command
+  ---
+  duration_ms: 104.109458
+  ...
+# Subtest: actual production commit reply lost at post checkpoint recovers same-instance CAS and accepts next command
+ok 6 - actual production commit reply lost at post checkpoint recovers same-instance CAS and accepts next command
+  ---
+  duration_ms: 109.502083
+  ...
+# Subtest: unrelated authority update cannot pass stale CAS; restart restores authoritative journal before any caller
+ok 7 - unrelated authority update cannot pass stale CAS; restart restores authoritative journal before any caller
+  ---
+  duration_ms: 192.731416
+  ...
+# Subtest: persistent directory fsync failure cannot downgrade to successful readback
+ok 8 - persistent directory fsync failure cannot downgrade to successful readback
+  ---
+  duration_ms: 98.472208
+  ...
+# Subtest: authority corruption/background commits fail closed; A/main have separate files
+ok 9 - authority corruption/background commits fail closed; A/main have separate files
+  ---
+  duration_ms: 189.332583
+  ...
+# Subtest: private port policy restricts main document, origin and slot
+ok 10 - private port policy restricts main document, origin and slot
+  ---
+  duration_ms: 79.39925
+  ...
+# Subtest: lost/partial WebStorage uses complete Native redo; matching markers retain newer phone progress
+ok 11 - lost/partial WebStorage uses complete Native redo; matching markers retain newer phone progress
+  ---
+  duration_ms: 1.292417
+  ...
+# Subtest: production Java authority + original game rules + event consumer recover an awarded result after all WebStorage bytes are lost
+ok 12 - production Java authority + original game rules + event consumer recover an awarded result after all WebStorage bytes are lost
+  ---
+  duration_ms: 131.78375
+  ...
+# Subtest: original game normal saves and actual import preserve the Native commit marker through instrumented F()
+ok 13 - original game normal saves and actual import preserve the Native commit marker through instrumented F()
+  ---
+  duration_ms: 92.421208
+  ...
+# Subtest: independent actual production readback catches silent finish rename failure and retry re-syncs
+ok 14 - independent actual production readback catches silent finish rename failure and retry re-syncs
+  ---
+  duration_ms: 98.389666
+  ...
+# Subtest: independent first-ever silent finish failure cannot certify a missing base
+ok 15 - independent first-ever silent finish failure cannot certify a missing base
+  ---
+  duration_ms: 93.410292
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2574.524333

@@ -1,0 +1,21 @@
+{
+  "sourceZip": "吧唧交互规范开发包.zip",
+  "sourceZipSha256": "e69d4bb8b116c34101fdf2af332c58cbefde4ae7428b5613c4dbc4997124aa24",
+  "assets": [
+    {
+      "zipEntry": "吧唧交互规范/fonts/badge_f24.c",
+      "output": "firmware/main/assets/badge_f24.c",
+      "bytes": 523674,
+      "sha256": "d9662fe0ac06c35691a92a61f1d48234279f581e4824eacba68ae0cf8da55d74",
+      "changedBytes": false
+    },
+    {
+      "zipEntry": "吧唧交互规范/fonts/badge_n40.c",
+      "output": "firmware/main/assets/badge_n40.c",
+      "bytes": 23623,
+      "sha256": "b3598309b57945e0cd73ba8884e3cd987d8add50d3b810df6bc8e5bd1e16afe6",
+      "changedBytes": false
+    }
+  ],
+  "license": "Original ZIP attribution retained in FONT-PROVENANCE.txt; OFL-1.1.txt in same folder"
+}

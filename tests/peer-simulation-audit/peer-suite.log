@@ -1,0 +1,11 @@
+PASS explicit consent, durable exchange, duplicate completion
+PASS first HELLO/CONFIRM/GIFT/ACK/DONE drop retries
+PASS nonce, identity and pre-confirm rejection
+PASS interrupted confirmation never completes
+PASS durable reserve failure cannot send success
+PASS restart reuses pending durable outbox counter
+PASS unrelated durable pending peer does not block current peer receipt
+PASS incoming persist failure never ACKs receipt
+PASS 32 peer watermark limit refuses unknown peer
+PASS full durable event FIFO rejects without advancing watermark
+PASS lost DONE, both reboot, new nonce + new physical consent: no second first-gift event

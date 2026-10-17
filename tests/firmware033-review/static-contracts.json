@@ -1,0 +1,24 @@
+{
+  "status": "pass",
+  "configAssignedChanges": {
+    "CONFIG_LV_USE_SNAPSHOT": [
+      null,
+      "y"
+    ]
+  },
+  "appDescriptionMagic": "0xabcd5432",
+  "appVersion": "0.3.3-local3",
+  "secureVersion": 0,
+  "imageFits8MiBAppSlot": true,
+  "USB_RX_SourceFiles": [
+    "badge_diagnostics.c"
+  ],
+  "USB_RX_taskCount": 1,
+  "syntheticProductionDiagnosticCaptureDecoded": {
+    "bytes": 434312,
+    "crc32": "c9c7d172",
+    "rawSha256": "2d4d0280e06d4dfdd29d46f56400a4beddd18a9730aa36984cc198c8ff2dabd0",
+    "hardware": false
+  },
+  "limits": "only host/static proof; no port opened, no write to device"
+}

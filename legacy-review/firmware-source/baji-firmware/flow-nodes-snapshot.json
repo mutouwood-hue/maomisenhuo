@@ -1,0 +1,300 @@
+﻿[
+    {
+        "id":  "rule-prd-baseline",
+        "type":  "rule",
+        "title":  "PRD基线与进入条件",
+        "label":  "PRD基线与进入条件",
+        "position":  {
+                         "x":  40,
+                         "y":  40
+                     }
+    },
+    {
+        "id":  "rule-private-social",
+        "type":  "rule",
+        "title":  "宠物先行与双向确认",
+        "label":  "宠物先行与双向确认",
+        "position":  {
+                         "x":  40,
+                         "y":  260
+                     }
+    },
+    {
+        "id":  "rule-confirmation",
+        "type":  "rule",
+        "title":  "暗号与扫码规则 · Q13/Q14待确认",
+        "label":  "暗号与扫码规则 · Q13/Q14待确认",
+        "position":  {
+                         "x":  40,
+                         "y":  480
+                     }
+    },
+    {
+        "id":  "rule-economy",
+        "type":  "rule",
+        "title":  "社交奖励与防刷",
+        "label":  "社交奖励与防刷",
+        "position":  {
+                         "x":  40,
+                         "y":  700
+                     }
+    },
+    {
+        "id":  "rule-mic-privacy",
+        "type":  "rule",
+        "title":  "Q9合规已确认 · 环境感知工程约束",
+        "label":  "Q9合规已确认 · 环境感知工程约束",
+        "position":  {
+                         "x":  40,
+                         "y":  920
+                     }
+    },
+    {
+        "id":  "rule-fate",
+        "type":  "rule",
+        "title":  "Fate可选且默认关闭",
+        "label":  "Fate可选且默认关闭",
+        "position":  {
+                         "x":  40,
+                         "y":  1140
+                     }
+    },
+    {
+        "id":  "proposal-foundation",
+        "type":  "proposal",
+        "title":  "M2-A 底座收尾与真机验收",
+        "label":  "M2-A 底座收尾与真机验收",
+        "position":  {
+                         "x":  440,
+                         "y":  40
+                     }
+    },
+    {
+        "id":  "proposal-social",
+        "type":  "proposal",
+        "title":  "M2-B 遇见与好友契约",
+        "label":  "M2-B 遇见与好友契约",
+        "position":  {
+                         "x":  840,
+                         "y":  260
+                     }
+    },
+    {
+        "id":  "proposal-ledger",
+        "type":  "proposal",
+        "title":  "云端权威资产账本",
+        "label":  "云端权威资产账本",
+        "position":  {
+                         "x":  840,
+                         "y":  700
+                     }
+    },
+    {
+        "id":  "proposal-collection",
+        "type":  "proposal",
+        "title":  "图鉴基础与毕业谱系",
+        "label":  "图鉴基础与毕业谱系",
+        "position":  {
+                         "x":  1240,
+                         "y":  260
+                     }
+    },
+    {
+        "id":  "proposal-breeding",
+        "type":  "proposal",
+        "title":  "M2-C 礼物交换与玩家生蛋",
+        "label":  "M2-C 礼物交换与玩家生蛋",
+        "position":  {
+                         "x":  1240,
+                         "y":  700
+                     }
+    },
+    {
+        "id":  "proposal-mic",
+        "type":  "proposal",
+        "title":  "麦克风采集与离线语音",
+        "label":  "麦克风采集与离线语音",
+        "position":  {
+                         "x":  440,
+                         "y":  920
+                     }
+    },
+    {
+        "id":  "proposal-environment",
+        "type":  "proposal",
+        "title":  "M2环境声分类与三端集成",
+        "label":  "M2环境声分类与三端集成",
+        "position":  {
+                         "x":  840,
+                         "y":  920
+                     }
+    },
+    {
+        "id":  "proposal-hardware",
+        "type":  "proposal",
+        "title":  "自研AMOLED吧唧V1硬件线",
+        "label":  "自研AMOLED吧唧V1硬件线",
+        "position":  {
+                         "x":  440,
+                         "y":  480
+                     }
+    },
+    {
+        "id":  "proposal-pilot",
+        "type":  "proposal",
+        "title":  "M2-D 线下试养与可选Fate",
+        "label":  "M2-D 线下试养与可选Fate",
+        "position":  {
+                         "x":  1640,
+                         "y":  700
+                     }
+    },
+    {
+        "id":  "proposal-m3",
+        "type":  "proposal",
+        "title":  "M3 收费收藏与发布门禁",
+        "label":  "M3 收费收藏与发布门禁",
+        "position":  {
+                         "x":  2040,
+                         "y":  700
+                     }
+    },
+    {
+        "id":  "rule-verification-evidence",
+        "type":  "rule",
+        "title":  "逐条验收与外部限制",
+        "position":  {
+                         "x":  40,
+                         "y":  1360
+                     }
+    },
+    {
+        "id":  "proposal-team-execution",
+        "type":  "proposal",
+        "title":  "团队分工与契约冻结",
+        "position":  {
+                         "x":  440,
+                         "y":  1360
+                     }
+    },
+    {
+        "id":  "proposal-ota",
+        "type":  "proposal",
+        "title":  "M2固件与资产OTA",
+        "position":  {
+                         "x":  1240,
+                         "y":  1140
+                     }
+    },
+    {
+        "id":  "proposal-personality",
+        "type":  "proposal",
+        "title":  "M2人格漂移与主动表达",
+        "position":  {
+                         "x":  1640,
+                         "y":  1140
+                     }
+    },
+    {
+        "id":  "rule-trial-parameters",
+        "type":  "rule",
+        "title":  "试验参数与双子代已确认",
+        "label":  "试验参数与双子代已确认",
+        "position":  {
+                         "x":  40,
+                         "y":  1580
+                     }
+    },
+    {
+        "id":  "proposal-environment-model",
+        "type":  "proposal",
+        "title":  "端侧环境小模型与训练证据",
+        "label":  "端侧环境小模型与训练证据",
+        "position":  {
+                         "x":  840,
+                         "y":  1580
+                     }
+    },
+    {
+        "id":  "rule-wire-m2",
+        "type":  "rule",
+        "title":  "M2字节协议与编号冻结",
+        "label":  "M2字节协议与编号冻结",
+        "position":  {
+                         "x":  40,
+                         "y":  1800
+                     }
+    },
+    {
+        "id":  "rule-venue-credential",
+        "type":  "rule",
+        "title":  "场地凭据不等于客户端场地名",
+        "position":  {
+                         "x":  40,
+                         "y":  2020
+                     }
+    },
+    {
+        "id":  "proposal-venue-lease",
+        "type":  "proposal",
+        "title":  "受控场地租约与位置门禁",
+        "position":  {
+                         "x":  840,
+                         "y":  2020
+                     }
+    },
+    {
+        "id":  "rule-peer-wire",
+        "type":  "rule",
+        "title":  "Peer owner 16–18接口冻结与角色来源",
+        "position":  {
+                         "x":  40,
+                         "y":  2240
+                     }
+    },
+    {
+        "id":  "proposal-peer-auth",
+        "type":  "proposal",
+        "title":  "徽章可信身份与真实本机暗号输入",
+        "position":  {
+                         "x":  1240,
+                         "y":  2240
+                     }
+    },
+    {
+        "id":  "rule-guardian-privacy",
+        "type":  "rule",
+        "title":  "不满14岁监护同意与敏感权限默认关闭",
+        "position":  {
+                         "x":  40,
+                         "y":  2460
+                     }
+    },
+    {
+        "id":  "proposal-privacy-eligibility",
+        "type":  "proposal",
+        "title":  "年龄监护资格DI与手机状态联调",
+        "position":  {
+                         "x":  840,
+                         "y":  2460
+                     }
+    },
+    {
+        "id":  "rule-pet-sync-evidence",
+        "type":  "rule",
+        "title":  "手机与吧唧宠物状态同步 · 问题待定位",
+        "position":  {
+                         "x":  40,
+                         "y":  2680
+                     }
+    },
+    {
+        "id":  "proposal-pet-sync-diagnosis",
+        "type":  "proposal",
+        "title":  "宠物状态同步链路诊断与回归",
+        "position":  {
+                         "x":  840,
+                         "y":  2680
+                     }
+    }
+]

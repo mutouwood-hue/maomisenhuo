@@ -1,0 +1,25 @@
+{
+  "scope": "pure-C production peer + core, host only; no radio or device execution",
+  "passed": [
+    "PASS explicit consent, durable exchange, duplicate completion",
+    "PASS first HELLO/CONFIRM/GIFT/ACK/DONE drop retries",
+    "PASS nonce, identity and pre-confirm rejection",
+    "PASS interrupted confirmation never completes",
+    "PASS durable reserve failure cannot send success",
+    "PASS restart reuses pending durable outbox counter",
+    "PASS unrelated durable pending peer does not block current peer receipt",
+    "PASS incoming persist failure never ACKs receipt",
+    "PASS 32 peer watermark limit refuses unknown peer",
+    "PASS full durable event FIFO rejects without advancing watermark",
+    "PASS lost DONE, both reboot, new nonce + new physical consent: no second first-gift event",
+    "PASS exact production framing: fragmented roundtrip, identical retry, corruption/padding/order/sequence/size/schema rejection, pending backpressure"
+  ],
+  "sha256": {
+    "tests/local2-peer/test_peer.c": "e32c2e70ccc483d086e2e1a0207f7dcf0cc4faef7ed26877b6d82d7abb6d688c",
+    "artifacts/firmware-local-v2/source/main/local2_peer.c": "b44a779663229e51c7b6f37d65b3945f56ff52e42b1cda95867349f6199a7e16",
+    "artifacts/firmware-local-v2/source/main/local2_core.c": "1a2e22df6f16e93676727611bc3072d6803ed9e679dc41b9a0dce7cc9b4fe603",
+    "artifacts/firmware-local-v2/source/main/local2_peer.h": "3eb6e24ecdcb765839ce0785b87a2b31d958122734ec6ba6525a506f9fecc807",
+    "artifacts/firmware-local-v2/source/main/local2_core.h": "de714f53212f772e0ca6ae668a8680c71e53b24e913fd979a10b8906c772bb75",
+    "tests/local2-peer/test_transport.py": "06a1597055c1beb1d96e36b2c29f09f4792f15dbc6bb693a26c8ce651e7db8b8"
+  }
+}

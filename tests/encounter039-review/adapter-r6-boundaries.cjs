@@ -1,0 +1,16 @@
+'use strict';
+const fs=require('node:fs'),path=require('node:path'),{createRequire}=require('node:module');
+const file=path.resolve('artifacts/local-ble-adapter/versions/encounter-v1/test-encounter-journal.cjs');const text=fs.readFileSync(file,'utf8');const prefix=text.slice(0,text.indexOf("test('journal persists"));
+const checks=String.raw`
+(async()=>{
+ const rows=[],MAX=Number.MAX_SAFE_INTEGER;
+ {const h=harness(),p=h.create(),before=h.raw();h.state.hello.lastSeq=MAX;await assert.rejects(p.scenes.pushScene(scene()),{code:'SEQUENCE_EXHAUSTED'});assert.equal(h.raw(),before);assert.equal(h.requests.length,0);assert.equal(h.checkpoints.length,0);rows.push('HELLO terminal: zero row/checkpoint/request');}
+ {const h=harness();assert.throws(()=>h.create({uuid:()=> 'not-a-uuid'}),{code:'LOCAL_STORAGE_FAILED'});assert.equal(h.raw(),null);rows.push('new invalid UUID no storage write');}
+ {const bad=JSON.stringify({schema:1,protocol:'CFLOCAL3',proofVersion:1,clientId:'bad',devices:{}}),h=harness({initial:bad});assert.throws(h.create,{code:'LOCAL_STORAGE_FAILED'});assert.equal(h.raw(),bad);rows.push('stored invalid UUID preserved');}
+ const client='00000000-0000-4000-8000-000000000001';const raw=(seq,pending=null)=>JSON.stringify({schema:1,protocol:'CFLOCAL3',proofVersion:1,clientId:client,devices:{[ID]:{nextSeq:seq,syncRevision:0,lastSemantic:null,pending}}});
+ {const before=raw(MAX,{id:'pending',op:'snapshot',seq:MAX,data:{}}),h=harness({initial:before});assert.throws(h.create,{code:'LOCAL_STORAGE_FAILED'});assert.equal(h.raw(),before);assert.equal(h.requests.length,0);rows.push('pending terminal seq preserved rejected');}
+ {const before=raw(MAX),h=harness({initial:before}),p=h.create();h.control.event={source:'native_device',protocol:'CFLOCAL3',deviceId:ID,eventId:ID+':1',counter:1,petId:'pet-1',occurredAtMs:null,kind:'care',action:'pet'};await p.events.readNext();const count=h.requests.length;await assert.rejects(p.scenes.pushScene(scene()),{code:'SEQUENCE_EXHAUSTED'});await assert.rejects(p.events.acknowledge({eventId:ID+':1',status:'applied',persisted:true,saveDigest:'a'.repeat(64)}),{code:'SEQUENCE_EXHAUSTED'});assert.equal(h.requests.length,count);assert.equal(h.raw(),before);assert.equal(h.checkpoints.length,0);rows.push('terminal nextSeq events read allowed but snapshot/ACK no writes');}
+ {const h=harness(),p=h.create();h.state.hello.lastSeq=MAX-2;h.control.request=async(op,data,extras)=>{h.requests.push({op,data,extras});return{data:{persisted:true,seq:extras.seq,revision:data.revision??0,duplicate:false},generation:1,gattWriteCompleted:true};};await p.scenes.pushScene(scene());assert.equal(h.requests[0].extras.seq,MAX-1);assert.equal(JSON.parse(h.raw()).devices[ID].nextSeq,MAX);const before=h.raw(),n=h.checkpoints.length;await assert.rejects(p.scenes.pushScene(scene({requestId:'changed',scene:'away'})),{code:'SEQUENCE_EXHAUSTED'});assert.equal(h.requests.length,1);assert.equal(h.raw(),before);assert.equal(h.checkpoints.length,n);rows.push('MAX-1 valid final mutation commits safe terminal row, then stops');}
+ console.log(JSON.stringify({virtual_fixture:true,actualAdapterSource:true,NativeAndWireStubbed:true,independentBoundaryCases:rows},null,2));
+})().catch(e=>{console.error(e);process.exitCode=1;});`;
+new Function('require','__dirname',prefix+checks)(createRequire(file),path.dirname(file));

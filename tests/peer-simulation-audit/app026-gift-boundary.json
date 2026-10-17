@@ -1,0 +1,75 @@
+{
+  "atUtc": "2026-10-16T04:42:36.632897+00:00",
+  "versionName": "0.2.6-html-local",
+  "versionCode": 17,
+  "apkSha256": "a780c0e48b9c2ac2c149e761171a6eb6e9098aee84507be5f6409a9527144ab8",
+  "sourceZipSha256FromFrozen": "c422abdcf2fbad3c48c2ce966bf2da9e7b18c2cee6e7ab2bf0c5b70715549abd",
+  "frozenJsonSha256": "da18f4abc4b8be0b219c631e95503610425af41b5ececb97c320dcac99bd111b",
+  "hostOnly": true,
+  "hardwareVerified": false,
+  "command": "node --test --test-name-pattern='real flower|unsupported, forged' artifacts/html-offline-candidate/ui026/source/tests/event-transaction.test.cjs",
+  "exitCode": 0,
+  "passed": 2,
+  "failed": 0,
+  "tap": "app026-gift-boundary.tap",
+  "tapSha256": "2508f1dfcdc1178b9674229839f73d801c3b9b857287d499e9e93b0051a18f16",
+  "sources": {
+    "tests/event-transaction.test.cjs": {
+      "sha256": "ae72fe05c5ccdfddfa99cbe94d7c49e193b7695c671d6c3689c25e34f7169e0e",
+      "frozenSha256": "ae72fe05c5ccdfddfa99cbe94d7c49e193b7695c671d6c3689c25e34f7169e0e",
+      "matchesFrozen": true
+    },
+    "tests/event-fixture.cjs": {
+      "sha256": "415105a4ebd0109ffee7e25795b78a2ea3bf542acbb56e32d024b819e5c742a6",
+      "frozenSha256": "415105a4ebd0109ffee7e25795b78a2ea3bf542acbb56e32d024b819e5c742a6",
+      "matchesFrozen": true
+    },
+    "web/offline-device-events.js": {
+      "sha256": "8ce6818c646f10af67d9ec48202000e23a0c998e05eb9d543244b7022c2d107c",
+      "frozenSha256": "8ce6818c646f10af67d9ec48202000e23a0c998e05eb9d543244b7022c2d107c",
+      "matchesFrozen": true
+    },
+    "web/offline-event-store.js": {
+      "sha256": "de67845a40a54b0a4a4de35230f984b8f82ba91b986583b5ab05dca1e07cc47c",
+      "frozenSha256": "de67845a40a54b0a4a4de35230f984b8f82ba91b986583b5ab05dca1e07cc47c",
+      "matchesFrozen": true
+    },
+    "web/offline-durable-store.js": {
+      "sha256": "6493ac2b307070a3c153fc6e62cb73945166a021f854a2e676336cfa684a23f9",
+      "frozenSha256": "6493ac2b307070a3c153fc6e62cb73945166a021f854a2e676336cfa684a23f9",
+      "matchesFrozen": true
+    },
+    "web/offline-scene-map.js": {
+      "sha256": "7b68b861b32cc81774d78af0990a97a0bfe55917fd8f500b948fe3db9434021e",
+      "frozenSha256": "7b68b861b32cc81774d78af0990a97a0bfe55917fd8f500b948fe3db9434021e",
+      "matchesFrozen": true
+    },
+    "android/app/src/main/assets/game-03.js": {
+      "sha256": "44ebeee5e7dd4684bad9d87568ff659fe17aa030516a00fc8c4841ecde400cd2",
+      "frozenSha256": "44ebeee5e7dd4684bad9d87568ff659fe17aa030516a00fc8c4841ecde400cd2",
+      "matchesFrozen": true
+    },
+    "original/game.html": {
+      "sha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+      "frozenSha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+      "matchesFrozen": true
+    },
+    "android/app/build.gradle.kts": {
+      "sha256": "39b3f398a0d1b53e7b7e96f539ca8c474d9347d834916471163207ef65221ef1",
+      "frozenSha256": "39b3f398a0d1b53e7b7e96f539ca8c474d9347d834916471163207ef65221ef1",
+      "matchesFrozen": true
+    }
+  },
+  "substitutes": [
+    "Native authority/storage is in-memory JS fixture, not Java/AtomicFile/FD.sync",
+    "ports.events.readNext/acknowledge are queued in-memory callbacks, not GATT/Android/BLE",
+    "actual packaged original vu store and 026 production consumer/ledger/durable recovery module are loaded"
+  ],
+  "scope": [
+    "one flower and original inbox receipt only; friends/cards remain empty",
+    "same event duplicates do not regrant",
+    "forged peerComplete:true rejects and no friend is created",
+    "unsupported or cross-device event guards in selected second test"
+  ],
+  "sourceProtected": true
+}

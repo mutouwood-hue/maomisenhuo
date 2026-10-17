@@ -1,0 +1,28 @@
+--- 043-stage
++++ 044-stage
+@@ -10,7 +10,7 @@
+ 
+ B = Path(__file__).resolve().parent
+ R = B.parents[3]
+-P = R / 'artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042'
++P = R / 'artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043'
+ STAGES = ('security', 'backup', 'verify-current', 'app-write', 'app-readback', 'verify-protected')
+ stage = sys.argv[1]
+ assert stage in STAGES
+@@ -108,12 +108,12 @@
+     assert fresh[:0x9000] == historic[:0x9000]
+     assert fresh[0x11000:] == historic[0x11000:]
+     assert sha(fresh[0x8000:0x8c00]) == 'a83d5badd3817619dc7dbd12fda088c39004b91e14413b24d20f2dd0b9097be4'
+-    # Latest selector must remain identical to verified042 metadata: copy1 seq2 selects OTA1.
++    # Latest selector must remain identical to verified043 metadata: copy1 seq2 selects OTA1.
+     assert sha(fresh[0x13000:0x14000]) == 'f5ab818d800af4e3e1efd4c91587ff9019dfc243adb0bc2ef0c7eb4a0c9df16d'
+     old[:0x20000] = fresh
+-    current042 = (R / 'artifacts/firmware-visual-integration042/deliverables/cat-forest-badge-0.4.2-exact3d.bin').read_bytes()
+-    assert sha(current042) == 'b0d1704032c1067455b4355617924dadc63efa20a4ec245189e75d75b99f8bcc'
+-    assert old[0x820000:0x820000 + len(current042)] == current042
++    current043 = (R / 'artifacts/firmware-visual-integration043/deliverables/cat-forest-badge-0.4.3-exactcache.bin').read_bytes()
++    assert sha(current043) == '905552f2f35dc56942b226e9d8558ae98bf31e0e07765ae0c1ba81ab32e88cc2'
++    assert old[0x820000:0x820000 + len(current043)] == current043
+     for filename, begin, end in [('before-prefix.bin', 0, 0x20000), ('before-ota0.bin', 0x20000, 0x820000),
+                                   ('before-ota1.bin', 0x820000, 0x1020000), ('before-assets-tail.bin', 0x1020000, 0x2000000)]:
+         (B / filename).write_bytes(old[begin:end])

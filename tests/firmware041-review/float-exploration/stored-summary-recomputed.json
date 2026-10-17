@@ -1,0 +1,34 @@
+{
+  "model": {
+    "cases": 220,
+    "framesWithWrittenCounterDifference": 6,
+    "maxAbsoluteWrittenCounterDifference": 1,
+    "exactRgbFrames": 196,
+    "totalDifferentPixels": 24,
+    "maxDifferentPixelsPerFrame": 1,
+    "coverageDifferentPixels": 0,
+    "ownerDifferentPixels": 0,
+    "maxChannelStepsRGB565": [
+      6,
+      19,
+      12
+    ],
+    "maxSharedCoveredDepthDifference": 1
+  },
+  "world": {
+    "cases": 30,
+    "framesWithWrittenCounterDifference": 0,
+    "maxAbsoluteWrittenCounterDifference": 0,
+    "exactRgbFrames": 26,
+    "totalDifferentPixels": 4,
+    "maxDifferentPixelsPerFrame": 1,
+    "coverageDifferentPixels": 0,
+    "ownerDifferentPixels": 0,
+    "maxChannelStepsRGB565": [
+      5,
+      10,
+      2
+    ],
+    "maxSharedCoveredDepthDifference": 1
+  }
+}

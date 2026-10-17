@@ -1,0 +1,69 @@
+{
+  "contract": "CFLOCAL3 encounter candidate transport",
+  "revision": 1,
+  "status": "transport family decisions locked for independent candidate; event proof schema still awaiting firmware proposal",
+  "atUtc": "2026-10-16T08:55:26.064232+00:00",
+  "phoneEnvelope": {
+    "v": 3,
+    "protocol": "CFLOCAL3",
+    "readOps": [
+      "hello",
+      "state",
+      "events"
+    ],
+    "mutationOps": [
+      "snapshot",
+      "ack"
+    ],
+    "maxUtf8LineIncludingLf": 2048,
+    "strictJson": "duplicate/escapedduplicate keys,unknown outerfields,NUL,unpairedsurrogate,unsafeinteger,nonfinite,depth>16 rejected",
+    "singleFlight": true,
+    "exactPendingBytesReplayedOnlyByExplicitUserAction": true
+  },
+  "hello": {
+    "requiredCapabilities": [
+      "scene",
+      "snapshot",
+      "events",
+      "encounter_complete_v1"
+    ],
+    "requiredFields": {
+      "protocol": "CFLOCAL3",
+      "maxLine": 2048,
+      "encounterProofVersion": 1,
+      "storeSchema": 3
+    },
+    "deviceId": "32 lowercase hex",
+    "clientId": "null or existing UUID owner; may not be silently reset",
+    "lastSeq": "safe nonnegative integer"
+  },
+  "nativeRoute": {
+    "physicalServiceUuid": "6f3d2000-8f4d-4b73-9ce5-43464c4f4332",
+    "rx": "6f3d2001-8f4d-4b73-9ce5-43464c4f4332",
+    "tx": "6f3d2002-8f4d-4b73-9ce5-43464c4f4332",
+    "reuseIsRawBytesOnly": true,
+    "noNativeOrRadioOperationDuringModuleLoad": true,
+    "publicAppFamily": "cflocal3",
+    "nativeRawModeName": "cflocal2",
+    "rawModeNameMustNotBeShownAsHelloProof": true,
+    "autoFallbackToV2": false,
+    "old026Probe": "oldv2 HELLO rejected before any owner/seq/NVS mutation; original026 full transport negative test required"
+  },
+  "journal": {
+    "newKey": "cat-cflocal3-journal-v1",
+    "protocol": "CFLOCAL3",
+    "checkpoint": "mandatory UTF8 journal SHA256 Native durable pre/post mutation certificate; no localStorage-only production success",
+    "migration": "no autoimport of oldV2 journal/clientId/pending; mismatchedowner rejects; offline continuity design separately reviewed",
+    "realUserNativeAllowlistChangeAuthorizedThisRound": false
+  },
+  "deployment": {
+    "hardwareFlash": false,
+    "realSchema2AutoMigration": false,
+    "schema2Loader": "MIGRATION_REQUIRED or currentcorrupt-safe failure without writes; no erase/init/reset fallback",
+    "hostOnlyMigration": "explicit pure/fixture conversion, preserve old identity/owner/seq/hash/FIFO/watermarks; no infer complete",
+    "old038AfterSchema3": "unsupported; not lossless runningrollback",
+    "B027": "noNative noBLE in-memory simulation; unavailable production port only"
+  },
+  "eventProofSchema": "pending; no consumer may activate on this partial contract",
+  "sourceProof": "not cryptographic account authentication; no distributed atomic completion claim"
+}

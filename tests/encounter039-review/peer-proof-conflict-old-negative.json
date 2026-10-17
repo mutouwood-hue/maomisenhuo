@@ -1,0 +1,30 @@
+{
+  "virtual_fixture": true,
+  "realAdapterAndEventCodec": true,
+  "originalPeerPet": "peer-pet-1",
+  "secondRead": "MALFORMED_FRAME",
+  "thirdRead": {
+    "v": 3,
+    "source": "native_device",
+    "protocol": "CFLOCAL3",
+    "deviceId": "0123456789abcdef0123456789abcdef",
+    "eventId": "0123456789abcdef0123456789abcdef:1",
+    "counter": 1,
+    "petId": "pet-1",
+    "occurredAtMs": null,
+    "kind": "peer_complete",
+    "peerId": "fedcba9876543210fedcba9876543210",
+    "peerPetId": "changed-peer-pet",
+    "localEncounterCounter": 1,
+    "peerEncounterCounter": 2,
+    "proofVersion": 1,
+    "method": "button",
+    "proof": "mutual_durable_commit",
+    "peerComplete": true,
+    "gift": false,
+    "encounterId": "ec1:0123456789abcdef0123456789abcdef0100000000000000fedcba9876543210fedcba98765432100200000000000000",
+    "bindingFingerprint": "a34e12b0858f37c9ac79cc18c4e22a49"
+  },
+  "wireAckCount": 1,
+  "verifier": "owner Native fixture verified=true; NOT actual Native history or reward writer"
+}

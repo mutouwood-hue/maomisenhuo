@@ -1,0 +1,1 @@
+{"checks":1718470,"slopedAnalyticPixelsPerOrder":3600,"analyticBlue":2160,"analyticRed":1440,"actualWorldBoundaryCases":26,"boundedInputsGuardRejected":10,"independentDirtyPathFrames":8,"onlyNewBoxNegativePixels":68824,"residentHostBytes":431880,"sourcePcatBytesSeparate":205624,"scope":"actual C with host ASAN/UBSAN; no S3 runtime"}

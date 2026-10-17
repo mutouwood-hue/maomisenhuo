@@ -1,0 +1,127 @@
+{
+  "kind": "readonly_pure_SVG_function_readback_no_DOM_or_test_suite",
+  "exact": 24,
+  "allEqual": true,
+  "rows": [
+    {
+      "name": "meet",
+      "size": 18,
+      "sha256": "d03be14815ffb0df3886f384257b413ebb64e12a33bc024ca9345d16455d568a"
+    },
+    {
+      "name": "meet",
+      "size": 24,
+      "sha256": "77dc0bb870f9c48def2c5c08a0e0a569c59db6980e3a646165aa4d2c1c0ab65a"
+    },
+    {
+      "name": "meet",
+      "size": 26,
+      "sha256": "25f1dcff982b5348d333ffebee19dc9e88a000e8ca1243818786e03f2c277758"
+    },
+    {
+      "name": "meet",
+      "size": 32,
+      "sha256": "a98faa9c44e6e0ef52719c3189f9aab651acb40f312e2ac33c62faf3b19aba5f"
+    },
+    {
+      "name": "dex",
+      "size": 18,
+      "sha256": "6b99846de05ddf3909721a17138d53ea0a0cb033777dcd8f0e9a8706b9a8dc68"
+    },
+    {
+      "name": "dex",
+      "size": 24,
+      "sha256": "9fa2ebd0db008f4157552d9ae7b8826659658e92c4a9c3cbeac6df655e9b8515"
+    },
+    {
+      "name": "dex",
+      "size": 26,
+      "sha256": "537da7d7355fd92aaa70905b176ca137b433103cb96502156723068f16774154"
+    },
+    {
+      "name": "dex",
+      "size": 32,
+      "sha256": "737c558aae46a495a08aa67140e5c37a2547134dee55328b80fc42b1da0b6806"
+    },
+    {
+      "name": "life",
+      "size": 18,
+      "sha256": "d01d05051d93236f46efee8d3a19ea362a0345cf7a40ba3e370e3316b4f2b346"
+    },
+    {
+      "name": "life",
+      "size": 24,
+      "sha256": "48331ebc885f5e9b25df1404b2d25bdb112afea0e4af390459aa62d3fc266ddb"
+    },
+    {
+      "name": "life",
+      "size": 26,
+      "sha256": "5f1245736fc1620ccd53d08aa70647961e8da9d239c80ec627e6cadf1e3722df"
+    },
+    {
+      "name": "life",
+      "size": 32,
+      "sha256": "842f651ecb087c8db73b5f624a12c79a8daf31b2afb12b8b867696c32bf49dbb"
+    },
+    {
+      "name": "world",
+      "size": 18,
+      "sha256": "618383e7d0982d2f84b6835b4cb1e3ced69fe0652cb3d03f9c9616f3a10518d0"
+    },
+    {
+      "name": "world",
+      "size": 24,
+      "sha256": "1989c0ababda1255e80194f9f4b8b2f772ffe1b9e9904075a11b485a1b793d4f"
+    },
+    {
+      "name": "world",
+      "size": 26,
+      "sha256": "78347ce4f55323b0e1e9ed99faeb9b1a47c2e8c7e0a94fb61c34583683ad9bb0"
+    },
+    {
+      "name": "world",
+      "size": 32,
+      "sha256": "d0713595728085de935a42997114b057d250d87f306c42df94b4cd0f7276f665"
+    },
+    {
+      "name": "wardrobe",
+      "size": 18,
+      "sha256": "c7abfeefffdd3c117df1951f40be695376397222e93926dddaa47d088599a42c"
+    },
+    {
+      "name": "wardrobe",
+      "size": 24,
+      "sha256": "b08543c116257b198d0237c427f25b6a2e0c48660e18e9474eaf79328eb0d80a"
+    },
+    {
+      "name": "wardrobe",
+      "size": 26,
+      "sha256": "ba00990e6619737bdaadb515974148172ea431ac12d44d76184908263ba4b0b8"
+    },
+    {
+      "name": "wardrobe",
+      "size": 32,
+      "sha256": "389cfed764ef62b809d94ebc981d9170763341fd868ffa6af1e37bc08504e363"
+    },
+    {
+      "name": "family",
+      "size": 18,
+      "sha256": "b27b1950cf96fd840bf5a1705c556bf2cee295fc53a97816660da7b34812e295"
+    },
+    {
+      "name": "family",
+      "size": 24,
+      "sha256": "54e09dcb93d9532ded9cf2c9e8baa5fa2bf0d10734327a169d5b9ca79a149e54"
+    },
+    {
+      "name": "family",
+      "size": 26,
+      "sha256": "6a9d357142ff1e279cbd45e3f08d84af2350de0f37ee59ae83445c9dea5f6956"
+    },
+    {
+      "name": "family",
+      "size": 32,
+      "sha256": "5588f92df3d9120ed4c761dc10dfc60e96524053b9946c3ae79d26cacfe7ff2d"
+    }
+  ]
+}

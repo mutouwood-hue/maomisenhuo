@@ -1,0 +1,251 @@
+{
+  "scope": "AST-extracted actual handle function only; no serial imports or hardware execution. Outer transport branch reviewed statically. Stage gate reviewed statically.",
+  "executionArtifacts": [
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/run_stage.py",
+      "sha256": "163f45ba26e7edae535036c45675136ab43c9af54444081fcbb3d84fb9957910"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/esptool_no_write_retry.py",
+      "sha256": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/diagnostic_session.py",
+      "sha256": "7a32f845ea04d97bff56390702bac8a5bb73cdc7518666e865485f9849c9a5a2"
+    }
+  ],
+  "cases": [
+    {
+      "name": "valid",
+      "locked": false,
+      "pending": false,
+      "remaining": 1,
+      "validated": true
+    },
+    {
+      "name": "invalid",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "unpublished",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "partial",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "wrong-sample",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "bool-sample",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "float-sample",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "string-sample",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "numeric-valid",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "missing-valid",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "missing-published",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "missing-completeFrame",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "missing-sample",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "bad-json",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "begin-progress",
+      "locked": false,
+      "pending": true,
+      "remaining": 1,
+      "validated": null
+    },
+    {
+      "name": "explicit-error",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": null
+    },
+    {
+      "name": "second-boot-idle",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": null
+    },
+    {
+      "name": "second-ready-idle",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": null
+    },
+    {
+      "name": "perf-exact-threshold",
+      "locked": false,
+      "pending": false,
+      "remaining": 1,
+      "validated": true
+    },
+    {
+      "name": "low-dma",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "bool-dma",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "float-dma",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "single-buffer",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "wrong-buffer-size",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "buffer2-not-dma",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "perf-missing-dmaFree",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "perf-missing-drawBufferBytes",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "perf-missing-drawDouble",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "perf-missing-buffer1Bytes",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "perf-missing-buffer2Bytes",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "perf-missing-buffer1DmaCapable",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "perf-missing-buffer2DmaCapable",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    },
+    {
+      "name": "perf-bad-json",
+      "locked": true,
+      "pending": false,
+      "remaining": 0,
+      "validated": false
+    }
+  ],
+  "allPass": true
+}

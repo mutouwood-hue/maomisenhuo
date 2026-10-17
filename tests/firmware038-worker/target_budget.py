@@ -1,0 +1,8 @@
+from pathlib import Path
+import subprocess,shlex,json
+R=Path.cwd();O=R/'artifacts/firmware-local-v3-visual038';B=R/'artifacts/firmware-local-v3-perf037';T=R/'tests/firmware038-worker';records={};nm=next(R.glob('.tools/idf-tools/tools/xtensa-esp-elf/*/xtensa-esp-elf/bin/xtensa-esp-elf-nm'))
+entries=json.loads((O/'build/compile_commands.json').read_text());entry=next(e for e in entries if e['file'].endswith('/main/badge_scene.c'))
+for tag,base in [('037',B),('038',O)]:
+ cmd=shlex.split(entry['command']);cmd[cmd.index('-o')+1]=str(T/('size-'+tag+'.o'));cmd[cmd.index(entry['file'])]=str(T/'size_probe.c');cmd += [f'-DSCENE_IMPL="{base}/source/main/badge_scene.c"'];p=subprocess.run(cmd,cwd=entry['directory'],capture_output=True,text=True);assert p.returncode==0,p.stderr
+ p=subprocess.run([str(nm),'-S',str(T/('size-'+tag+'.o'))],capture_output=True,text=True,check=True);records[tag]={x[3]:int(x[1],16) for l in p.stdout.splitlines() if len(x:=l.split())==4 and x[3].startswith('cf_')}
+heap=json.loads((O/'evidence/host-allocation-comparison.json').read_text());d=records['038']['cf_scene_size']-records['037']['cf_scene_size'];r=dict(target32ActualCompiler=True,sizes=records,sceneCount=6,directSceneStructBytesDelta=d*6,backgroundObjectCountDelta=0,backgroundDrawCallbacksAdded=2,backgroundBitmapsAdded=0,newDMABytes=0,newResidentPSRAMPixelsBytes=0,host64LvglRequestedLiveDeltas=heap['deltas'],budgetGate='STATIC+host requested allocation proxy only; actual device heap/capture guard is Root gate',drawRectDescriptorIsStackOrExistingLvglDrawTask=True);(O/'evidence/target-budget.json').write_text(json.dumps(r,indent=2)+'\n');print(r)

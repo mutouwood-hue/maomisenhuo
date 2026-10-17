@@ -1,0 +1,9 @@
+SNAP cold-old-neutral 1560 0fcd78648800250c
+SNAP current-feed 2460 621eb0406b49337b
+TRUST disconnectCleared1
+SNAP disconnect 2460 6434d1aef382b1ed
+TRUST sameRevisionReconnectNeutral1
+SNAP same-revision-reconnect 2460 586af735b486f2af
+SNAP short-reaction-expired 5760 9c48e3962a9392cc
+REVIEW software_fixture_only case=trust
+badge_ui: Original animation bank: available

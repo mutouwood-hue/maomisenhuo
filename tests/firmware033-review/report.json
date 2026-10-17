@@ -1,0 +1,370 @@
+{
+  "status": "pass",
+  "scope": "host_only_no_device_or_target_build",
+  "app": {
+    "path": "deliverables/cat-forest-badge-0.3.3-local3.bin",
+    "bytes": 6398304,
+    "sha256": "70f07fb0dd638e53ae44554dd15dcec7feb4dba06a9e7caf07bc8c7275760f95",
+    "description": {
+      "version": "0.3.3-local3",
+      "projectName": "cat_forest_badge",
+      "time": "09:06:41",
+      "date": "Oct 16 2026",
+      "idfVersion": "v5.5.5",
+      "elfSha256": "ee89f8e7540a87f1f29fe91d00038d4fe3c74ff2f6a75bf4f04f2793ce8d6336",
+      "secureVersion": 0
+    }
+  },
+  "sourceZip": {
+    "path": "deliverables/cat-forest-badge-0.3.3-local3-source.zip",
+    "bytes": 2661503,
+    "sha256": "0226760dce646f071636a5bccd9330701dda658774873cf9b1d34477912989a6",
+    "sourceFileCount": 103,
+    "allSourceEntriesReadBackExact": true,
+    "externalReadOnlyDependencies": "source/managed_components symlink deliberately excluded; fixed component graph/markers in source/CMakeLists.txt; SDK5.5.5/toolchain remain project-local shared dependencies"
+  },
+  "sourceCount": 103,
+  "totalZipEntries": 114,
+  "extraSupportFiles": 11,
+  "protectedBaseMainFilesByteEqual": 43,
+  "partitionCsvSha256": "09fc932049fe06c1eb696b49af5ea7c1f50866ba6212433ca2e7d16be779a648",
+  "compiledPartitionSha256": "a83d5badd3817619dc7dbd12fda088c39004b91e14413b24d20f2dd0b9097be4",
+  "sourceStableAfterTests": true,
+  "diagnosticProductionCCompileCommand": [
+    "clang",
+    "-std=gnu11",
+    "-O1",
+    "-UNDEBUG",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-DLV_KCONFIG_IGNORE",
+    "-DLV_LVGL_H_INCLUDE_SIMPLE",
+    "-DLV_CONF_PATH=\"/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf/source/tools/host_preview/lv_conf.h\"",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf/source/tools/host_preview/diag_stubs",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf/source/tools/host_preview/stubs",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf/source/main",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/firmware/managed_components/lvgl__lvgl",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf/source/tools/host_preview",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf/host-build/lvgl",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf/source/tools/host_preview/diag_test.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf/host-build/lvgl/lib/liblvgl.a",
+    "-lm",
+    "-o",
+    "/Users/zoumutou/coding/猫咪森活/tests/firmware033-review/diag-production-test"
+  ],
+  "diagnosticProductionCTests": {
+    "offline": true,
+    "actualDiagnosticC": true,
+    "platformUsbHeapDomainSubstitutes": true,
+    "hardware": false,
+    "checksPassed": 34
+  },
+  "diagnosticBinarySha256": "e26160dfa332c10b4eb755c246775dcebbb58a0382e1615481447192c02195b3",
+  "linkedExistingHostLvglLibrarySha256": "81a3c5378bd8122a9aeed2fa3add9685a83468820c01b9bdae475263d8fc4479",
+  "layoutExecution": "unmodified frozen owner host executable rerun with reviewer-owned outputs; not independently recompiled entire UI",
+  "layoutExecutableSha256": "37bb9a128ae527964358cece361b5f898d615a361a43fa7f379c2dac0ed9ae0e",
+  "layoutRerunCases": [
+    {
+      "case": "boot",
+      "assertions": 46421,
+      "rawSha256": "9e2fb9ce30ac691493f227f3b59303d46f0ef590937b86e0fa70b5cf06551702",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "pair",
+      "assertions": 46421,
+      "rawSha256": "a57f4a5f87d780f583f44797749e637725cd0c2f5a2194ce07e30e1fab131f13",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "pair_secure",
+      "assertions": 46421,
+      "rawSha256": "a57f4a5f87d780f583f44797749e637725cd0c2f5a2194ce07e30e1fab131f13",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "pair_passkey",
+      "assertions": 46421,
+      "rawSha256": "a57f4a5f87d780f583f44797749e637725cd0c2f5a2194ce07e30e1fab131f13",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "guide_1",
+      "assertions": 46421,
+      "rawSha256": "1a20ab7d4a49ebddaab4701ad5cae86294cbb6361c48694eeca1bbb8047fd1e3",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "guide_2",
+      "assertions": 46421,
+      "rawSha256": "7387befa17ba29fd3243326f4d6c0e09d0cbae63a84b4ea73f9fefb950bc27a0",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "guide_3",
+      "assertions": 46421,
+      "rawSha256": "dbe410a69c7b63486854369dc8e06eaea2e29e80525f1ea22946de7258f4377e",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "guide_4",
+      "assertions": 46421,
+      "rawSha256": "13beff882fe114b8702ab0a5fefd6d95de282de4c97e135709427a10e6454cb8",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "guide_5",
+      "assertions": 46421,
+      "rawSha256": "72943ccf1a4ea6c48e337cd08bbdb5384081285566643dbef0d0597680ddf20c",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "main_a",
+      "assertions": 46421,
+      "rawSha256": "4b99990c7495fb5f3bf828ad5f408541dba95fa3c769e7c89cfc1c0134b2328a",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "main_b",
+      "assertions": 46421,
+      "rawSha256": "2c323ecb4c5ea07f4d50c3b241884498609c8a797b6d9bb244a464a41d10b2fc",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "main_c",
+      "assertions": 46421,
+      "rawSha256": "b6ec37a1cc08321d135a15664cafb89d8a865a77cd13a3f04821864675e428df",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "main_b_clock",
+      "assertions": 46421,
+      "rawSha256": "a58136628124bdaa280624713cce92a0f329345d1509dd001d9a4fb658f5c02e",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "main_c_clock",
+      "assertions": 46421,
+      "rawSha256": "046dfcfec43a82b28ab70f62f3f326cb45cd873b5f293d1d533ddba2b15200fd",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "care_menu",
+      "assertions": 46421,
+      "rawSha256": "8799b2cd4f74e6871659a786013de8375e768c5556b44c8bef3e53a826380073",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "status",
+      "assertions": 46421,
+      "rawSha256": "06b878084a70c4182984bd9a05c01e3c9a0daa3b8a2b4435bd0eb991156db0dc",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "settings",
+      "assertions": 46421,
+      "rawSha256": "bf3186ed2c2fd078e27cc464b0807663eb504cd34bdce4ddc96f75a8719b9d45",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "device",
+      "assertions": 46421,
+      "rawSha256": "dd1db4d072b182386f2e6f1e9e4eb02fccad6bd4d37f16a4996b648b5a6f97ce",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "pair_reset",
+      "assertions": 46421,
+      "rawSha256": "dfc6a4a4b806b355d0356b4f73453aeed32053243327d0adb68e2a8885745072",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "touch_test",
+      "assertions": 46421,
+      "rawSha256": "1cc2f2a3740b8f0ffb1cd96df7b793ee4adb50796559e57124cdb7d6368e2686",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "touch_complete",
+      "assertions": 46421,
+      "rawSha256": "21da421072e03f1519052d714f82ded42a51eb5aeec7dc9039d9bcc798710872",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "voice",
+      "assertions": 46421,
+      "rawSha256": "38e5085b31039777d39a420b7054a03b005d7b1b8e2d53b68c4222d435d0bc70",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "main_low_stats",
+      "assertions": 46421,
+      "rawSha256": "cf8a20b401cd0a4932be02b56c56534a12a2d6e35005da78b3073fd3aae5f02b",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "storage_error",
+      "assertions": 46421,
+      "rawSha256": "08967ea1649d4dabab7ace6e609a092ca026bda2810a737e3c3f81383b7f618b",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "aod",
+      "assertions": 46421,
+      "rawSha256": "f5d7d87261b5943a2a715ee3581abbffce7d33b563f407cc6bdf331ff4ee4715",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "care_feed",
+      "assertions": 46421,
+      "rawSha256": "5a8c58833164b47b81955f8c8ec6d0b4a450fec630b2568b753bca3c316a1199",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "care_water",
+      "assertions": 46421,
+      "rawSha256": "32cd109ac4e2971c70d522d7a77a2d1780a4bfa0519e9334c74f276ee057281e",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "care_play",
+      "assertions": 46421,
+      "rawSha256": "0b2456fca0e277a7f194acd6fc55f1fb97f1afc77b3c54551823ef2cfc34aed4",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "care_sleep",
+      "assertions": 46421,
+      "rawSha256": "a8d41be2318fae40382a0ff44b1789039c038ea8e809bb5d816fa09a9aa1fbc8",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "departing",
+      "assertions": 46421,
+      "rawSha256": "3f4547ebd4a97b4b8bcdeac8e5b6be9877658a3c2500c0b23b5a7e69dd2afb5c",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "away_rain",
+      "assertions": 46421,
+      "rawSha256": "142ca613a8059c10da21dd3911b9c0ffdf40ebd79a4a16f3c5ecac41b5d61326",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "returning_snow",
+      "assertions": 46421,
+      "rawSha256": "92833ed985a02a560160ba40028e612332dbd0bb464b10bc3534ecbe1f68e60a",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "action_pet",
+      "assertions": 46421,
+      "rawSha256": "8274374b683118e8924293e69916a20c3321883651b1c9577956c76ce384d704",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "action_feed",
+      "assertions": 46421,
+      "rawSha256": "93f5d76fcd27771d9a639633d0e1a4921ef3f1a47496559dd41322feddec4ca5",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "action_water",
+      "assertions": 46421,
+      "rawSha256": "f279ed9c7f4084a30dee514e92b835ab25cc24db93fce36f3c0ded6fefb3a4da",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "action_bath",
+      "assertions": 46421,
+      "rawSha256": "dc99716e89a3649dad1e832ed523ec66dd53885b3af0e9c247a7d2654d887788",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "action_play",
+      "assertions": 46421,
+      "rawSha256": "f8c0457200784e949dd3fca997e1f027fa0f44de1bcf70809364b60a07abd3d6",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "action_sleep",
+      "assertions": 46421,
+      "rawSha256": "4d77975807ed8bf099f4100ed2ec268242a8aa099ef5527512d3cd4d6116e7c4",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "meet_confirm",
+      "assertions": 46421,
+      "rawSha256": "e79faf3c5fab9aa6bcfb6dc6a34c53effec76e2e0b5192be907d96b358879f63",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "gift_pending",
+      "assertions": 46421,
+      "rawSha256": "44b07770f09f9979b27ebd035111134e091b828430fca798b4d8023a0e6cfcc3",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "gift_complete",
+      "assertions": 46421,
+      "rawSha256": "0902abcb58ba20baae0955c1973c7f988c59fff29bf53082321994d7cd452350",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "drag_up_mid",
+      "assertions": 46421,
+      "rawSha256": "23ca3b1388f0912d60ed7d4fce4fa8628ee5b8f3fb52bc66df9e16634099d508",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "drag_commit",
+      "assertions": 46421,
+      "rawSha256": "57f9d87a8d85f253c89cc0121f414289aef779d551368dce3a75ae5e0a1b4af1",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "drag_rebound",
+      "assertions": 46421,
+      "rawSha256": "92b09cee57fdb65a32e0f9523581b06f46189cd76c22a15fa10e72702b90a3a9",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "drag_no_target",
+      "assertions": 46421,
+      "rawSha256": "cfc0b19d2e29079f8222c0b088f53af8ba9cca61c260e075c3f953b135d0fa22",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "input_test",
+      "assertions": 46845,
+      "rawSha256": "595b9f080bbf53b1a21929e1275faef6e362330007ff3268d97ce0743147211c",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "guide_demo_test",
+      "assertions": 46664,
+      "rawSha256": "e0c8fffec3260090e4872c77d0a62e41ca2aa3c1090ba64fabab98eb78456209",
+      "sameAsFrozenOwnerEvidence": true
+    },
+    {
+      "case": "diagnostic_view_test",
+      "assertions": 46450,
+      "rawSha256": "c66cb6ae9b421ba753300db8fe3f6691e6473e6688d30c6d3118d175614d587d",
+      "sameAsFrozenOwnerEvidence": true
+    }
+  ],
+  "uniqueFontAssertionsPerHarness": 46416,
+  "decoderChecks": 14,
+  "limitations": [
+    "USB/heap/domain/input/NVS are host substitutes",
+    "no physical buffers/optical scanout/performance/clock/FIFO proved",
+    "capture pause and USB transfer cannot be used as performance window"
+  ]
+}

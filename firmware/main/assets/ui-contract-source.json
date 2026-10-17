@@ -1,0 +1,171 @@
+{
+  "source": "吧唧交互规范开发包.zip",
+  "sourceSha256": "e69d4bb8b116c34101fdf2af332c58cbefde4ae7428b5613c4dbc4997124aa24",
+  "specSha256": "9fc554f8f167cdbf24de9d4fb774cee72619741788c15fb7a4a5a9ccde05482f",
+  "version": "0.3.0",
+  "screens": {
+    "main_a": {
+      "name": "主表盘 A · 只有小猫",
+      "gestures": {
+        "tap_cat": "摸摸",
+        "tap_alert": "处理提醒",
+        "up": "照料",
+        "down": "状态",
+        "left": "下一个表盘",
+        "right": "上一个表盘",
+        "long": "按住说话"
+      }
+    },
+    "main_b": {
+      "name": "主表盘 B · 24 小时时间环",
+      "gestures": {
+        "tap_cat": "摸摸",
+        "tap_alert": "处理提醒",
+        "up": "照料",
+        "down": "状态",
+        "left": "下一个表盘",
+        "right": "上一个表盘",
+        "long": "按住说话"
+      }
+    },
+    "main_c": {
+      "name": "主表盘 C · 时间环 + 心动",
+      "gestures": {
+        "tap_cat": "摸摸",
+        "tap_alert": "处理提醒",
+        "up": "照料",
+        "down": "状态",
+        "left": "下一个表盘",
+        "right": "上一个表盘",
+        "long": "按住说话"
+      }
+    },
+    "aod": {
+      "name": "待机常显",
+      "gestures": {
+        "tap": "唤醒"
+      }
+    },
+    "care_menu": {
+      "name": "照料轮盘",
+      "gestures": {
+        "tap_btn": "开始照料",
+        "down": "返回"
+      }
+    },
+    "care_feed": {
+      "name": "喂食中",
+      "gestures": {
+        "tap_btn": "喂一口",
+        "down": "先休息"
+      }
+    },
+    "care_water": {
+      "name": "喝水中",
+      "gestures": {
+        "tap_btn": "喝一口",
+        "down": "先休息"
+      }
+    },
+    "care_play": {
+      "name": "逗猫中",
+      "gestures": {
+        "drag": "移动羽毛",
+        "down": "先休息（从顶部 60 像素内起手下滑）"
+      }
+    },
+    "care_sleep": {
+      "name": "哄睡",
+      "gestures": {
+        "hold_btn": "关灯",
+        "down": "先休息"
+      }
+    },
+    "sleeping": {
+      "name": "睡着了",
+      "gestures": {}
+    },
+    "status": {
+      "name": "状态",
+      "gestures": {
+        "tap_row": "去对应照料",
+        "tap_gear": "设置",
+        "up": "返回"
+      }
+    },
+    "settings": {
+      "name": "设置",
+      "gestures": {
+        "tap_row": "切换",
+        "right": "返回",
+        "long_ver": "触摸自检（开发用）"
+      }
+    },
+    "touch_test": {
+      "name": "触摸自检（开发用）",
+      "gestures": {
+        "tap": "点靶点",
+        "right": "返回"
+      }
+    },
+    "voice": {
+      "name": "按住说话 / 唤醒后在听",
+      "gestures": {
+        "release": "结束说话"
+      }
+    },
+    "meet": {
+      "name": "遇见：附近有小猫",
+      "gestures": {
+        "tap_hi": "打招呼",
+        "tap_skip": "忽略"
+      }
+    },
+    "meet_tap": {
+      "name": "遇见：碰一碰确认",
+      "gestures": {
+        "nfc": "确认",
+        "tap_cancel": "取消"
+      }
+    },
+    "meet_scan": {
+      "name": "遇见：扫码确认（没有 NFC 时）",
+      "gestures": {
+        "scan": "对方扫码成功",
+        "tap_cancel": "取消"
+      }
+    },
+    "meet_done": {
+      "name": "遇见：成为朋友",
+      "gestures": {
+        "tap": "返回"
+      }
+    },
+    "away": {
+      "name": "生活同步：小猫在外面",
+      "gestures": {
+        "tap_btn": "叫它回家",
+        "down": "状态"
+      }
+    },
+    "lowbat": {
+      "name": "电量不足",
+      "gestures": {}
+    },
+    "boot": {
+      "name": "开机",
+      "gestures": {}
+    },
+    "pair": {
+      "name": "配对",
+      "gestures": {}
+    },
+    "guide": {
+      "name": "首次引导",
+      "gestures": {
+        "tap": "下一页"
+      }
+    }
+  },
+  "note": "Only palette and basic touch thresholds are compiled; no hardware history, sample values or legacy events imported."
+}

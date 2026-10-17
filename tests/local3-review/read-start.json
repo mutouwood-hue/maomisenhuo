@@ -1,0 +1,38 @@
+{
+  "artifacts/firmware-local-v3/source/main/badge_scene.c": {
+    "sha256": "358f5de5766556ec8ad39fc606a563c38f75875088900c1325a7882473c7d68b",
+    "bytes": 9052
+  },
+  "artifacts/firmware-local-v3/source/main/badge_gesture.h": {
+    "sha256": "a5eaf6b238e043eb4d4b6dc286108437108744801e111d9ec731e7a9ef9dc2ba",
+    "bytes": 962
+  },
+  "artifacts/firmware-local-v3/source/main/badge_scene.h": {
+    "sha256": "1ce796c24793c88619a37460ba255d8c63584fc49dc6b50e2b9f00694e885527",
+    "bytes": 1808
+  },
+  "artifacts/firmware-local-v3/source/main/badge_ui_targets.h": {
+    "sha256": "b7283d5d8ca6f4954a17f61ac732f10a63f749b04340b270821b661b2febe5a2",
+    "bytes": 806
+  },
+  "artifacts/firmware-local-v3/source/main/badge_gesture.c": {
+    "sha256": "7c1287c077dfd17fb29bacf0aa5ef1eecf37561c5d454caed0ac0a1755b0ae16",
+    "bytes": 1978
+  },
+  "artifacts/firmware-local-v3/source/main/badge_pages.c": {
+    "sha256": "5b05e49dc21be6bce8f185d1fa048d16e2bda5cf876c614861e781f1af670a54",
+    "bytes": 74894
+  },
+  "artifacts/firmware-local-v3/source/tools/host_preview/run_preview.py": {
+    "sha256": "b13f7deab2861dc1302cc283356668ed526f4a6ef10360ef1b88a8d888c4ddcf",
+    "bytes": 9888
+  },
+  "artifacts/firmware-local-v3/source/tools/host_preview/preview.c": {
+    "sha256": "0adedbf458d82fbde93547b0f745d87a91bba78c0d76fd9f70ff2f9a89a8eae4",
+    "bytes": 27992
+  },
+  "artifacts/firmware-local-v3/source/tools/host_preview/replay_virtual_peer.py": {
+    "sha256": "7f89d1e65ed0df17189f6d7386ea951dfa49ab6a92dc6f644215870133fc9d51",
+    "bytes": 7474
+  }
+}

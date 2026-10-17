@@ -1,0 +1,44 @@
+{
+  "exitCode": 1,
+  "summary": {
+    "tests": "69",
+    "suites": "0",
+    "pass": "65",
+    "fail": "4",
+    "cancelled": "0",
+    "skipped": "0",
+    "todo": "0",
+    "duration_ms": "280.917667"
+  },
+  "failures": [
+    {
+      "test": "not ok 1 - tests/active-events.test.mjs",
+      "code": "ERR_TEST_FAILURE",
+      "type": "testCodeFailure"
+    },
+    {
+      "test": "not ok 6 - tests/companion-ble.test.mjs",
+      "code": "ERR_TEST_FAILURE",
+      "type": "testCodeFailure"
+    },
+    {
+      "test": "not ok 8 - tests/environment-resume.test.mjs",
+      "code": "ERR_TEST_FAILURE",
+      "type": "testCodeFailure"
+    },
+    {
+      "test": "not ok 12 - tests/m2-social.test.mjs",
+      "code": "ERR_TEST_FAILURE",
+      "type": "testCodeFailure"
+    },
+    {
+      "missing": "legacy-review/source/tests/integration/m2-helper.mjs"
+    },
+    {
+      "missing": "legacy-review/source/tests/integration/m2-helper.mjs"
+    },
+    {
+      "missing": "jsqr"
+    }
+  ]
+}

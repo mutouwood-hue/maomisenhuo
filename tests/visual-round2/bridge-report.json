@@ -1,0 +1,37 @@
+{
+  "scope": "Desktop browser original Mf/Sf view and bridge checks only; no native persistence or hardware acceptance",
+  "outdoors": {
+    "readyArgs": [],
+    "active": true,
+    "location": "garden",
+    "mode": "walk",
+    "targets": 3,
+    "completed": 0,
+    "rewardCommitted": false
+  },
+  "clinic": {
+    "readyArgs": [],
+    "actualMouseHoldTools": 3,
+    "steps": 3,
+    "completed": true,
+    "rewardCommitted": false
+  },
+  "assetsSha256": {
+    "provenance.json": "82c3e6c3b7cb6842de759a3e9fc98f99e2b7cc7a1c2732ba53482af1e8e5285d",
+    "world.html": "410fed81929388f72c6ac81078d823ebd6591fe5ed005ccb1cd02e3b3daed338",
+    "world-core.js": "7e5bba7aa179e25c2cfd5a8cdbaf6abecbc370b72930f8a9d52444db60899858",
+    "minigame-core.js": "0a81de83fd2804aff3e5a47cfb3338d1fe73b13b8de9eeed890d0ed1bca851f3",
+    "clinic.html": "15ae5041dc66d76acf6b936e4686b0486a740a2d7fe6de4dd9dcb0413486f3ab",
+    "cat-source.js": "1a974e574b0a209b69f1daaffb7903eb96bd3fde36b4c1352a0167cafee6310c",
+    "renderer-core.js": "0fde64728569dccbb029d9a5e3bf420c6d4b26c610de2789bf4ca2d8fd19d649",
+    "renderer.html": "79b03b6aa582a198aef201140a72fdb886b82deda15a9235301fa0d7c910290c",
+    "minigame.html": "b38a33ace2733c45b860cf90a4b18536c226145a21d5c314eec3a1c789c73516",
+    "clinic-core.js": "839173269e2d84834f68b5c2328d3146e49a18febb593fe8aa32ff09947fe9aa"
+  },
+  "followup": {
+    "note": "Visual screenshots precede removal of automatic negative timeout. Rendering source is unchanged; current generated bridge late-response/cancel validation is independently recorded in test_world_response.py.",
+    "currentWorldCoreSha256": "1f50d88b6d08b6ccc6288177a1d514bde681ad270884473000b3bed79da37edf",
+    "tests": "tests/lifecycle-review/test_world_response.py",
+    "passed": 2
+  }
+}

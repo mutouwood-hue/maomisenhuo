@@ -1,0 +1,33 @@
+# ---- 构建产物（可重建，不入库） ----
+/build/
+/dist/
+/sdkconfig
+/sdkconfig.old
+*.elf
+*.map
+
+# ---- ESP-IDF 托管组件（由 dependencies.lock 还原） ----
+/managed_components/
+
+# ---- 第三方参考资料（体积大，非本项目代码） ----
+/_ref/waveshare-1.75C/
+/_ref/ws-components/
+
+# ---- tools/ 生成的参考中间产物（可重新生成） ----
+/_ref/cat_model.json
+/_ref/model-structure.txt
+/_ref/contact-sheet.png
+/_ref/render-*.png
+/_ref/strip-*.png
+
+# ---- 机器本地构建状态 ----
+/tools/.last-build.json
+
+# ---- 编辑器与系统杂项 ----
+.DS_Store
+Thumbs.db
+*.log
+
+# ---- python 字节码（tools/ 下的辅助脚本会产生） ----
+__pycache__/
+*.pyc

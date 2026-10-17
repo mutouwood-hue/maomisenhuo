@@ -1,0 +1,43 @@
+FRAME 0 2160 3627401df165fd37 47 217156
+SNAP horizontal-held 2200 3627401df165fd37
+FRAME 1 2200 3627401df165fd37 94 434312
+ORACLE horizontal-held 2200 0 3627401df165fd37
+FRAME 2 2200 50fcf7ab9ba77a17 105 480488
+SNAP horizontal-held 2240 50fcf7ab9ba77a17
+FRAME 3 2240 50fcf7ab9ba77a17 152 697644
+ORACLE horizontal-held 2240 0 50fcf7ab9ba77a17
+FRAME 4 2280 31eabe5d5ce685f0 163 743820
+SNAP horizontal-held 2280 31eabe5d5ce685f0
+FRAME 5 2280 31eabe5d5ce685f0 210 960976
+ORACLE horizontal-held 2280 0 31eabe5d5ce685f0
+FRAME 6 2320 cb0ee2ccc2caa9b0 221 1007152
+SNAP horizontal-held 2320 cb0ee2ccc2caa9b0
+FRAME 7 2320 cb0ee2ccc2caa9b0 268 1224308
+ORACLE horizontal-held 2320 0 cb0ee2ccc2caa9b0
+FRAME 8 2360 da3d85c27e028b70 279 1269652
+SNAP horizontal-held 2360 da3d85c27e028b70
+FRAME 9 2360 da3d85c27e028b70 326 1486808
+ORACLE horizontal-held 2360 0 da3d85c27e028b70
+FRAME 10 2400 7dc62d0f3bb8039c 339 1533660
+SNAP horizontal-held 2400 7dc62d0f3bb8039c
+FRAME 11 2400 7dc62d0f3bb8039c 386 1750816
+ORACLE horizontal-held 2400 0 7dc62d0f3bb8039c
+FRAME 12 2440 550cc7afb76aedba 396 1790200
+SNAP horizontal-held 2440 550cc7afb76aedba
+FRAME 13 2440 550cc7afb76aedba 443 2007356
+ORACLE horizontal-held 2440 0 550cc7afb76aedba
+FRAME 14 2480 bfbbe03927fdb983 453 2045340
+SNAP horizontal-held 2480 bfbbe03927fdb983
+FRAME 15 2480 bfbbe03927fdb983 500 2262496
+ORACLE horizontal-held 2480 0 bfbbe03927fdb983
+FRAME 16 2530 8af8a2a1b8e14c1a 510 2306348
+FRAME 17 2570 77a2e71e18784796 520 2344504
+FRAME 18 2610 3095267152b38f96 528 2375472
+FRAME 19 2650 05ed0d3f240f1e83 535 2403912
+FRAME 20 2690 8e36a350197e0c5f 582 2621068
+FRAME 21 2730 d9035a66db4b4505 628 2830832
+METRIC horizontal-commit ticks2740 frames22 flush628 pixels2830832 page3 face1 active0 settling0 emit0 pending0 live0 action0
+SNAP horizontal-final 2740 d9035a66db4b4505
+ORACLE horizontal-final 2740 0 d9035a66db4b4505
+REVIEW software_fixture_only case=horizontal-commit
+badge_ui: Original animation bank: available

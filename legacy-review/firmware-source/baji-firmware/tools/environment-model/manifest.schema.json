@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Baji environment real labeled audio manifest",
+  "type": "object",
+  "required": ["schema", "isRealLabeledAudio", "clips"],
+  "properties": {
+    "schema": {"const": "baji-environment-linear-v1"},
+    "isRealLabeledAudio": {"const": true},
+    "clips": {
+      "type": "array", "minItems": 13,
+      "items": {
+        "type": "object",
+        "required": ["id", "path", "groupId", "recordingId", "speakerGroupId", "locationGroupId", "sourceUrl", "license", "licenseUrl", "attribution", "authorizationRef", "label", "split", "sha256", "labeler", "captureDomain", "isUseAuthorized", "isPrivacyUseAuthorized"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "path": {"type": "string", "minLength": 1, "description": "Local 16kHz stereo PCM16 WAV relative to manifest; no network fetch."},
+          "groupId": {"type": "string", "minLength": 1},
+          "recordingId": {"type": "string", "minLength": 1},
+          "speakerGroupId": {"type": "string", "minLength": 1},
+          "locationGroupId": {"type": "string", "minLength": 1},
+          "sourceUrl": {"type": "string", "minLength": 1},
+          "licenseUrl": {"type": "string", "minLength": 1},
+          "attribution": {"type": "string", "minLength": 1},
+          "authorizationRef": {"type": "string", "minLength": 1},
+          "license": {"enum": ["CC0-1.0", "CC-BY-4.0", "CC-BY-3.0"]},
+          "label": {"enum": ["QUIET", "CONVERSATION", "NOISY", "MUSIC", "UNKNOWN"]},
+          "split": {"enum": ["TRAIN", "VALIDATION", "TEST", "OOD_TEST"]},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "labeler": {"type": "string", "minLength": 1},
+          "captureDomain": {"type": "string", "minLength": 1},
+          "isUseAuthorized": {"const": true},
+          "isPrivacyUseAuthorized": {"const": true}
+        },
+        "allOf": [{"if": {"properties": {"split": {"const": "OOD_TEST"}}}, "then": {"properties": {"label": {"const": "UNKNOWN"}}}, "else": {"properties": {"label": {"enum": ["QUIET", "CONVERSATION", "NOISY", "MUSIC"]}}}}]
+      }
+    }
+  }
+}

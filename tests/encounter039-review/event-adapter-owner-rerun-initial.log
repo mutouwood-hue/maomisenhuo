@@ -1,0 +1,454 @@
+TAP version 13
+# Subtest: independent Python binding vector 0 equals actual JS bytes and SHA
+ok 1 - independent Python binding vector 0 equals actual JS bytes and SHA
+  ---
+  duration_ms: 10.478
+  type: 'test'
+  ...
+# Subtest: independent Python binding vector 1 equals actual JS bytes and SHA
+ok 2 - independent Python binding vector 1 equals actual JS bytes and SHA
+  ---
+  duration_ms: 2.492292
+  type: 'test'
+  ...
+# Subtest: reject simulation without source promotion
+ok 3 - reject simulation without source promotion
+  ---
+  duration_ms: 0.595417
+  type: 'test'
+  ...
+# Subtest: reject oldprotocol without source promotion
+ok 4 - reject oldprotocol without source promotion
+  ---
+  duration_ms: 0.189875
+  type: 'test'
+  ...
+# Subtest: reject oldv without source promotion
+ok 5 - reject oldv without source promotion
+  ---
+  duration_ms: 0.602334
+  type: 'test'
+  ...
+# Subtest: reject unknownkind without source promotion
+ok 6 - reject unknownkind without source promotion
+  ---
+  duration_ms: 0.077625
+  type: 'test'
+  ...
+# Subtest: reject localiduppercase without source promotion
+ok 7 - reject localiduppercase without source promotion
+  ---
+  duration_ms: 0.248791
+  type: 'test'
+  ...
+# Subtest: reject selfpeer without source promotion
+ok 8 - reject selfpeer without source promotion
+  ---
+  duration_ms: 0.077625
+  type: 'test'
+  ...
+# Subtest: reject zeropeer without source promotion
+ok 9 - reject zeropeer without source promotion
+  ---
+  duration_ms: 0.289375
+  type: 'test'
+  ...
+# Subtest: reject badcounter without source promotion
+ok 10 - reject badcounter without source promotion
+  ---
+  duration_ms: 0.370875
+  type: 'test'
+  ...
+# Subtest: reject unsafecounter without source promotion
+ok 11 - reject unsafecounter without source promotion
+  ---
+  duration_ms: 0.132167
+  type: 'test'
+  ...
+# Subtest: reject eventid without source promotion
+ok 12 - reject eventid without source promotion
+  ---
+  duration_ms: 0.124166
+  type: 'test'
+  ...
+# Subtest: reject localEncounterZero without source promotion
+ok 13 - reject localEncounterZero without source promotion
+  ---
+  duration_ms: 0.062917
+  type: 'test'
+  ...
+# Subtest: reject peerEncounterMax without source promotion
+ok 14 - reject peerEncounterMax without source promotion
+  ---
+  duration_ms: 0.052209
+  type: 'test'
+  ...
+# Subtest: reject localPetBlank without source promotion
+ok 15 - reject localPetBlank without source promotion
+  ---
+  duration_ms: 0.044709
+  type: 'test'
+  ...
+# Subtest: reject petSpace without source promotion
+ok 16 - reject petSpace without source promotion
+  ---
+  duration_ms: 0.047542
+  type: 'test'
+  ...
+# Subtest: reject longPet without source promotion
+ok 17 - reject longPet without source promotion
+  ---
+  duration_ms: 0.043375
+  type: 'test'
+  ...
+# Subtest: reject unicodePet without source promotion
+ok 18 - reject unicodePet without source promotion
+  ---
+  duration_ms: 0.093125
+  type: 'test'
+  ...
+# Subtest: reject badtime without source promotion
+ok 19 - reject badtime without source promotion
+  ---
+  duration_ms: 0.04725
+  type: 'test'
+  ...
+# Subtest: reject unsafeTime without source promotion
+ok 20 - reject unsafeTime without source promotion
+  ---
+  duration_ms: 0.044875
+  type: 'test'
+  ...
+# Subtest: reject proofversion without source promotion
+ok 21 - reject proofversion without source promotion
+  ---
+  duration_ms: 0.052292
+  type: 'test'
+  ...
+# Subtest: reject methoddraw without source promotion
+ok 22 - reject methoddraw without source promotion
+  ---
+  duration_ms: 0.045125
+  type: 'test'
+  ...
+# Subtest: reject ramProof without source promotion
+ok 23 - reject ramProof without source promotion
+  ---
+  duration_ms: 0.049375
+  type: 'test'
+  ...
+# Subtest: reject incomplete without source promotion
+ok 24 - reject incomplete without source promotion
+  ---
+  duration_ms: 0.04825
+  type: 'test'
+  ...
+# Subtest: reject fakegift without source promotion
+ok 25 - reject fakegift without source promotion
+  ---
+  duration_ms: 0.043958
+  type: 'test'
+  ...
+# Subtest: reject fingerprint without source promotion
+ok 26 - reject fingerprint without source promotion
+  ---
+  duration_ms: 4.70975
+  type: 'test'
+  ...
+# Subtest: reject uppercaseFingerprint without source promotion
+ok 27 - reject uppercaseFingerprint without source promotion
+  ---
+  duration_ms: 0.376417
+  type: 'test'
+  ...
+# Subtest: reject wrongencounter without source promotion
+ok 28 - reject wrongencounter without source promotion
+  ---
+  duration_ms: 0.096125
+  type: 'test'
+  ...
+# Subtest: reject extrafield without source promotion
+ok 29 - reject extrafield without source promotion
+  ---
+  duration_ms: 0.0555
+  type: 'test'
+  ...
+# Subtest: each required key is required and exact extra undefined key rejected
+ok 30 - each required key is required and exact extra undefined key rejected
+  ---
+  duration_ms: 0.437667
+  type: 'test'
+  ...
+# Subtest: wrong Native device and unsupported objects reject
+ok 31 - wrong Native device and unsupported objects reject
+  ---
+  duration_ms: 0.128042
+  type: 'test'
+  ...
+# Subtest: async proof hashes an immutable copy of the actual checked tuple
+ok 32 - async proof hashes an immutable copy of the actual checked tuple
+  ---
+  duration_ms: 1.035541
+  type: 'test'
+  ...
+# Subtest: missing digest capability fails closed rather than trusting supplied fingerprint
+ok 33 - missing digest capability fails closed rather than trusting supplied fingerprint
+  ---
+  duration_ms: 0.291208
+  type: 'test'
+  ...
+# Subtest: care and false gift are accepted as distinct kinds, never completion
+ok 34 - care and false gift are accepted as distinct kinds, never completion
+  ---
+  duration_ms: 0.276667
+  type: 'test'
+  ...
+# Subtest: journal persists before any mutation and preserves exact pending command
+ok 35 - journal persists before any mutation and preserves exact pending command
+  ---
+  duration_ms: 18.629541
+  type: 'test'
+  ...
+# Subtest: semantic coalescing prevents frame/epoch heartbeat NVS writes
+ok 36 - semantic coalescing prevents frame/epoch heartbeat NVS writes
+  ---
+  duration_ms: 3.776916
+  type: 'test'
+  ...
+# Subtest: local storage failure blocks radio mutation
+ok 37 - local storage failure blocks radio mutation
+  ---
+  duration_ms: 0.835
+  type: 'test'
+  ...
+# Subtest: corrupt journal is preserved, never reset
+ok 38 - corrupt journal is preserved, never reset
+  ---
+  duration_ms: 0.490083
+  type: 'test'
+  ...
+# Subtest: invalid stats, enum, name and unsafe integers are rejected
+ok 39 - invalid stats, enum, name and unsafe integers are rejected
+  ---
+  duration_ms: 0.633042
+  type: 'test'
+  ...
+# Subtest: new client cannot overwrite existing owner
+ok 40 - new client cannot overwrite existing owner
+  ---
+  duration_ms: 0.427625
+  type: 'test'
+  ...
+# Subtest: explicit application rejection clears pending; Native no_change does not
+ok 41 - explicit application rejection clears pending; Native no_change does not
+  ---
+  duration_ms: 5.781583
+  type: 'test'
+  ...
+# Subtest: pending exact command survives constructing another adapter
+ok 42 - pending exact command survives constructing another adapter
+  ---
+  duration_ms: 2.137709
+  type: 'test'
+  ...
+# Subtest: durable receipt and actual read event required before ACK
+ok 43 - durable receipt and actual read event required before ACK
+  ---
+  duration_ms: 2.1865
+  type: 'test'
+  ...
+# Subtest: cross-device event and malformed gift rejected without ACK
+ok 44 - cross-device event and malformed gift rejected without ACK
+  ---
+  duration_ms: 0.902125
+  type: 'test'
+  ...
+# Subtest: retries require explicit action and scene pet payload is normalized
+ok 45 - retries require explicit action and scene pet payload is normalized
+  ---
+  duration_ms: 1.187833
+  type: 'test'
+  ...
+# Subtest: phone journal failure after device commit retains exact command for duplicate recovery
+ok 46 - phone journal failure after device commit retains exact command for duplicate recovery
+  ---
+  duration_ms: 1.689333
+  type: 'test'
+  ...
+# Subtest: timezone validation and phone offset are included in the retained command
+ok 47 - timezone validation and phone offset are included in the retained command
+  ---
+  duration_ms: 1.1965
+  type: 'test'
+  ...
+# Subtest: lost ACK recovery never replaces a fresh clock after device and phone restart
+ok 48 - lost ACK recovery never replaces a fresh clock after device and phone restart
+  ---
+  duration_ms: 4.59175
+  type: 'test'
+  ...
+# Subtest: same-instance explicit recovery also requires a current snapshot before coalescing
+ok 49 - same-instance explicit recovery also requires a current snapshot before coalescing
+  ---
+  duration_ms: 1.469125
+  type: 'test'
+  ...
+# Subtest: snapshot without epoch cannot suppress the first current clock in its generation
+ok 50 - snapshot without epoch cannot suppress the first current clock in its generation
+  ---
+  duration_ms: 2.023625
+  type: 'test'
+  ...
+# Subtest: Native checkpoint is mandatory before creating a journal
+ok 51 - Native checkpoint is mandatory before creating a journal
+  ---
+  duration_ms: 0.548667
+  type: 'test'
+  ...
+# Subtest: wire waits for Native pre-checkpoint and post-checkpoint gates public success
+ok 52 - wire waits for Native pre-checkpoint and post-checkpoint gates public success
+  ---
+  duration_ms: 1.221459
+  type: 'test'
+  ...
+# Subtest: Native failure, nonpersisted response and incorrect SHA block every wire mutation
+ok 53 - Native failure, nonpersisted response and incorrect SHA block every wire mutation
+  ---
+  duration_ms: 2.509291
+  type: 'test'
+  ...
+# Subtest: lost Native post-checkpoint retains exact pending and duplicate recovery needs fresh clock
+ok 54 - lost Native post-checkpoint retains exact pending and duplicate recovery needs fresh clock
+  ---
+  duration_ms: 1.418583
+  type: 'test'
+  ...
+# Subtest: Native post commit response lost can cold-recover authoritative next sequence
+ok 55 - Native post commit response lost can cold-recover authoritative next sequence
+  ---
+  duration_ms: 1.187625
+  type: 'test'
+  ...
+# Subtest: Local Storage projection failure after Native post commit is recoverable
+ok 56 - Local Storage projection failure after Native post commit is recoverable
+  ---
+  duration_ms: 0.938875
+  type: 'test'
+  ...
+# Subtest: connection generation changes during checkpoint never send to another session
+ok 57 - connection generation changes during checkpoint never send to another session
+  ---
+  duration_ms: 1.125125
+  type: 'test'
+  ...
+# Subtest: Native clear failure after a correlated rejection retains recoverable intent
+ok 58 - Native clear failure after a correlated rejection retains recoverable intent
+  ---
+  duration_ms: 0.916959
+  type: 'test'
+  ...
+# Subtest: checkpoint SHA is over exact UTF8 journal containing original Unicode pet name
+ok 59 - checkpoint SHA is over exact UTF8 journal containing original Unicode pet name
+  ---
+  duration_ms: 0.713
+  type: 'test'
+  ...
+# Subtest: uncertain ACK exact recovery checkpoints twice and removes stale read capability
+ok 60 - uncertain ACK exact recovery checkpoints twice and removes stale read capability
+  ---
+  duration_ms: 1.35775
+  type: 'test'
+  ...
+# Subtest: browser module defines a separate API and never attaches or touches Native/storage
+ok 61 - browser module defines a separate API and never attaches or touches Native/storage
+  ---
+  duration_ms: 0.510958
+  type: 'test'
+  ...
+# Subtest: separate journal never imports or rewrites legacy V2 pending/owner
+ok 62 - separate journal never imports or rewrites legacy V2 pending/owner
+  ---
+  duration_ms: 0.404917
+  type: 'test'
+  ...
+# Subtest: new family capability/proof/schema gates block every mutation even with fake ready state
+ok 63 - new family capability/proof/schema gates block every mutation even with fake ready state
+  ---
+  duration_ms: 1.268584
+  type: 'test'
+  ...
+# Subtest: simulation source, giftComplete=true and unimplemented peer proof are never promoted/ACKed
+ok 64 - simulation source, giftComplete=true and unimplemented peer proof are never promoted/ACKed
+  ---
+  duration_ms: 0.802708
+  type: 'test'
+  ...
+# Subtest: valid native-generation fixture proof is returned unchanged; only durable receipt permits ACK
+ok 65 - valid native-generation fixture proof is returned unchanged; only durable receipt permits ACK
+  ---
+  duration_ms: 3.265375
+  type: 'test'
+  ...
+# Subtest: proof read shares flight lease with scene mutation and rejects a generation changed during digest
+ok 66 - proof read shares flight lease with scene mutation and rejects a generation changed during digest
+  ---
+  duration_ms: 1.023167
+  type: 'test'
+  ...
+# Subtest: same event number conflicting proof revokes prior read authorization rather than overwriting
+ok 67 - same event number conflicting proof revokes prior read authorization rather than overwriting
+  ---
+  duration_ms: 1.252208
+  type: 'test'
+  ...
+# Subtest: malformed repeated proof revokes previous read authorization
+ok 68 - malformed repeated proof revokes previous read authorization
+  ---
+  duration_ms: 1.041958
+  type: 'test'
+  ...
+# Subtest: reconnect alone cannot ACK a prior generation read; a fresh actual read is required
+ok 69 - reconnect alone cannot ACK a prior generation read; a fresh actual read is required
+  ---
+  duration_ms: 1.392875
+  type: 'test'
+  ...
+# Subtest: fake ready without Native subscribed evidence cannot read or mutate
+ok 70 - fake ready without Native subscribed evidence cannot read or mutate
+  ---
+  duration_ms: 1.723583
+  type: 'test'
+  ...
+# Subtest: Native original-result verification callback is mandatory before journal creation
+ok 71 - Native original-result verification callback is mandatory before journal creation
+  ---
+  duration_ms: 0.328542
+  type: 'test'
+  ...
+# Subtest: unverified or mismatching durable result cannot write ACK pending or send ACK
+ok 72 - unverified or mismatching durable result cannot write ACK pending or send ACK
+  ---
+  duration_ms: 5.647833
+  type: 'test'
+  ...
+# Subtest: unknown ACK retry cannot bypass missing Native history after restart
+ok 73 - unknown ACK retry cannot bypass missing Native history after restart
+  ---
+  duration_ms: 1.203333
+  type: 'test'
+  ...
+# Subtest: durable verifier receives complete eventId for initial and exact pending ACK retry
+ok 74 - durable verifier receives complete eventId for initial and exact pending ACK retry
+  ---
+  duration_ms: 1.322292
+  type: 'test'
+  ...
+1..74
+# tests 74
+# suites 0
+# pass 74
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 154.0405

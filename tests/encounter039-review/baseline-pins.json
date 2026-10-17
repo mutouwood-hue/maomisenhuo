@@ -1,0 +1,16 @@
+{
+  "onlyReadExistingFrozenSources": true,
+  "pins": {
+    "artifacts/firmware-local-v3-visual038/source/main/local2_core.c": "1a2e22df6f16e93676727611bc3072d6803ed9e679dc41b9a0dce7cc9b4fe603",
+    "artifacts/firmware-local-v3-visual038/source/main/local2_core.h": "de714f53212f772e0ca6ae668a8680c71e53b24e913fd979a10b8906c772bb75",
+    "artifacts/firmware-local-v3-visual038/source/main/local2_peer.c": "b44a779663229e51c7b6f37d65b3945f56ff52e42b1cda95867349f6199a7e16",
+    "artifacts/firmware-local-v3-visual038/source/main/local2_peer.h": "3eb6e24ecdcb765839ce0785b87a2b31d958122734ec6ba6525a506f9fecc807",
+    "artifacts/firmware-local-v3-visual038/source/main/local2_wire.c": "48778300017ee9d458224dfd2e6b5a6324fd1f7b4a1069d8bfa7569c46c1edc3",
+    "artifacts/firmware-local-v3-visual038/source/main/local2_store.c": "d0b3ffa1097888d26e27e4f8a2304735c4e84be14244c28af8d73e8911061610",
+    "artifacts/firmware-local-v3-visual038/source/main/local2_store.h": "74be87b32c9db82ff5ecd0309cba84706883463224444bfcf90856f2363b837e",
+    "artifacts/html-offline-candidate/ui026/source/web/local-v2-transport.js": "ee656a4fd9ebe2012ca40898e686e43797bc719b806d349860eb6051a7c447a4",
+    "artifacts/html-offline-candidate/ui026/source/web/cflocal2-adapter.js": "29273cd113b1d41c7d4b885212845c6f910cff6b8db827f803e2b8fa75a88e5c",
+    "artifacts/html-offline-candidate/ui026/source/web/offline-device-events.js": "8ce6818c646f10af67d9ec48202000e23a0c998e05eb9d543244b7022c2d107c"
+  },
+  "designNotImplementationPass": true
+}

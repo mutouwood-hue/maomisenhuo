@@ -1,0 +1,23 @@
+{
+  "errors": [],
+  "source026Count": 159,
+  "source025Count": 155,
+  "protectedByteEqualCount": 36,
+  "apkAssetsExactCount": 34,
+  "sourceZipExactCount": 159,
+  "ownerNodeEvidenceSummary": {
+    "tests": 298,
+    "pass": 298,
+    "fail": 0,
+    "skipped": 0
+  },
+  "ownerPageEvidence": {
+    "profiles": 36,
+    "checks": 1284,
+    "controlsMeasured": 234,
+    "minimumNormalContrast": 5.484743966762003,
+    "minimumDisabledContrast": 5.484743966762003
+  },
+  "ownerKeyChecks": 11,
+  "readEndSourceStable": true
+}

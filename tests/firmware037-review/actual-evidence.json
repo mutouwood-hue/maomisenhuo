@@ -1,0 +1,282 @@
+{
+  "kind": "offline independent examination of retained actual037 and026 records, no new device actions",
+  "decision": "limited_actual_pass_app_preservation_pool_enable_sameepoch_engine_and_calibratedface2_LVGLcomposition_phone_reconnect",
+  "appSha256": "22392ed66544e517277550cb2facc4a2c8ea865641e8624e47eb73ab5b5cc9e9",
+  "appBytes": 6398128,
+  "physicalAppReadbackBytes": 6402048,
+  "sectorFfTailBytes": 3920,
+  "freshNvsPrefixPreservedByFlashAndActivation": true,
+  "whole32MiBGates": {
+    "current-protected-verify": {
+      "savedExitCode": 0,
+      "ranges": 4,
+      "logSha256": "eb46cdc30529c86a462803f030cbb9c706eeefea8d78012beb0b52bc9c1f6812"
+    },
+    "protected-verify": {
+      "savedExitCode": 0,
+      "ranges": 4,
+      "logSha256": "f375a37d01e175138b9a5b7814b19c74e726cf5552acbe643aefce1f26454607"
+    }
+  },
+  "backupMethod": "fresh128KiBphysicalprefix+priorverifiedimmutable ranges composed; saved all32MiB pre/post verifies, not new32MiB physical read",
+  "poolEnabledLog": "I (1738) mask_pool: optional12 enabled; pool=20592 PSRAM bytes; legacy4 retained",
+  "sessionSeconds": 417.797,
+  "singleResetMarkers": 1,
+  "commands": 15,
+  "startupDiagnosticErrors": 1,
+  "selectedEspErrors": 0,
+  "captures": [
+    {
+      "label": "cold-face0",
+      "id": 1,
+      "crc32": "916d195b",
+      "rawSha256": "5b0baa7ffbcfc294cf431614b59af5377b723cea7162815a5e3ac181a2688d30",
+      "pngSha256": "ca50bec62376543794702fe8f69ad670dac1fe194f61e0c8283d1b45f8c0bf65",
+      "physicalScanout": false
+    },
+    {
+      "label": "cold-face1",
+      "id": 2,
+      "crc32": "fc360f83",
+      "rawSha256": "29c2c015f7fb031b91ce7739ec034c25d64c4990c539d58fe63d9daae345d598",
+      "pngSha256": "8023ff51dd4b22d73630dd99396998da32059ff067c714196f2fee6f5889578f",
+      "physicalScanout": false
+    },
+    {
+      "label": "cold-face2",
+      "id": 3,
+      "crc32": "90043091",
+      "rawSha256": "01ae9d653f4ab54fdb0b04511a4f421047f96039549491429dd14203518e7e56",
+      "pngSha256": "689c12621dafcc5011d70479f632a1f8ff0d0629070b62e3e15a0d8560190cbc",
+      "physicalScanout": false
+    },
+    {
+      "label": "calibrated-aod-face2",
+      "id": 4,
+      "crc32": "fd61b203",
+      "rawSha256": "6ca0ff087c100535c90ecb21c4dae68f1f31ff9307d9a681ff9d2995bd265d18",
+      "pngSha256": "22efc9cabd8d878e8488f3ae3c1652a22855f90158025b74823cf27e198c51d4",
+      "physicalScanout": false
+    }
+  ],
+  "coldClockFalse": true,
+  "reconnectedClockTrue480": true,
+  "finalUSBState": {
+    "revision": 33,
+    "lastSeq": 42,
+    "pending": 0,
+    "lastAck": 9,
+    "nextEvent": 10,
+    "scene": 2,
+    "action": 0,
+    "clockValid": true,
+    "utcOffsetMinutes": 480
+  },
+  "steadyDelta": {
+    "nowUs": 98962734,
+    "rendered": 396,
+    "flushCount": 792,
+    "pixelsSubmitted": 3383424,
+    "inputPolls": 2998,
+    "pressedPolls": 0,
+    "renderUs": 1667377,
+    "meanRenderUs": 4210.54797979798,
+    "pixelsPerRender": 8544.0
+  },
+  "steadySinceUs": 302868469,
+  "steadyMemoryBeforeAfter": {
+    "dmaFree": [
+      71959,
+      71959
+    ],
+    "dmaLargest": [
+      31744,
+      31744
+    ],
+    "dmaMinimum": [
+      35700,
+      35700
+    ],
+    "psramFree": [
+      8234824,
+      8234824
+    ],
+    "buffer1Bytes": [
+      9320,
+      9320
+    ],
+    "buffer2Bytes": [
+      9320,
+      9320
+    ],
+    "buffer1DmaCapable": [
+      true,
+      true
+    ],
+    "buffer2DmaCapable": [
+      true,
+      true
+    ]
+  },
+  "noInterveningRecordedDiagnosticCommands": true,
+  "phoneAuthorityRevisions": [
+    89,
+    93
+  ],
+  "phoneEntryByteEqual": {
+    "cat-cflocal2-journal-v1": false,
+    "cat-cflocal2-source-identities-v1": true,
+    "pixel-cat-pet-v1": true,
+    "pg-social-v1": true,
+    "cat-cflocal2-event-ledger-v1": true,
+    "cat-cflocal2-commit-marker": true
+  },
+  "ledgerStatuses": {
+    "applied": 8,
+    "quarantined": 1
+  },
+  "coins": 24,
+  "xp": 67,
+  "counts": {
+    "feed": 2,
+    "pet": 11,
+    "sleep": 3
+  },
+  "phoneReadXML": {
+    "utc": "2026-10-16T04:47:57.394Z",
+    "generation": 5,
+    "seq": 41,
+    "revision": 32,
+    "ack": 9,
+    "pending": 0
+  },
+  "phoneRelease": "explicitdisconnectUI+Home+WMrecorded; gatt-release contains only newline, NO unregister proof",
+  "usbRelease": {
+    "observedAtUtc": "2026-10-16T04:52:52.915847+00:00",
+    "command": [
+      "lsof",
+      "/dev/cu.usbmodem2101"
+    ],
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "",
+    "meaning": "Current observation only; no process listed; earlier tool observation immediately after QUIT was also exit1/empty but not separately saved then"
+  },
+  "logBoundary": "global historical log contains2oldUiAutomation fatal outside current session, not new026crash or currentPID zero-error proof",
+  "noActualTouchFeedSwipeReward": true,
+  "visual": "Reviewer saw calibrated-aod-face2.png:12:47 and wakehint separated, phase absent. ActualLVGLcomposition not optical. OtherfaceAOD actual not validated here.",
+  "remaining": [
+    "old8pixelpartialedge residual",
+    "physicalswipe/opticaltearing/FPS",
+    "no strict035poolAB",
+    "physical3tapfeed/newcaregift/bilateralcompletion/powerloss/clockprecision"
+  ],
+  "evidenceHashes": {
+    "board": {
+      "command-15-state.log": "d1a2d075182fcfaaf90c89bfb8b33ed8717bc57a48a5c17b1cc930d2388ee8d5",
+      "before-ota1-slot8MiB.bin": "70e591ee0ed43d1e9e5de65d230a4b344c56773cb461f484a99d096561897bab",
+      "calibrated-aod-face2.json": "22db226d2ff0fdeb1ebdf43830bcd93f47bcf2a1d50e703a194f4ad3ea680f45",
+      "command-01-state.log": "96f439420dfb205bfddd6f2612620842cc2ed30bc387f81bc4ffa978ddcf74ec",
+      "command-11-capture.log": "67048fc6298ab137cded0bf302ed6316e6b0aba33120320ad17759f30396894d",
+      "expected-ota1-slot8MiB.bin": "df3515778331d084389b787c8a0281544455e8a61284d6c9cb938545802294d0",
+      "selector-copy1-fresh.bin": "f5ab818d800af4e3e1efd4c91587ff9019dfc243adb0bc2ef0c7eb4a0c9df16d",
+      "normal-boot-and-diagnostics.txt": "3f7ea8a703d3f247da74279b226b13cab84f3f1b71aa2496bd423d7e446adb31",
+      "normal-boot-and-diagnostics.bin": "3f7ea8a703d3f247da74279b226b13cab84f3f1b71aa2496bd423d7e446adb31",
+      "command-04-capture.log": "36ef9ba9a675ca5931441261d30431df98e67357e5a1a0c645dec6ad4eb396c6",
+      "composed-current-fullflash32MiB.bin": "200f538df7fa5f7a9cd5f6dec18ceda40b8b59b55a907a4dcf0bbfb7b5b34ca1",
+      "security.log": "2b60b53b6d26fc10eb1ecb3388a49c8a42452e62f567239ca794782dd6df7786",
+      "diagnostic_session.py": "3c0092e431d464f23d174e10f94e03f768abdd2f132751cc867d657be382b463",
+      "run_stage.py": "198523aceb273589d527145d4108151c44a85a70651cb29e380ac1f469913754",
+      "PLAN.json": "61e121327a22df2bf1de4845e519d511abeb4b16f0cfc1fe6916bfd6144e7c32",
+      "post-activation-first128KiB.bin": "2798b7bb883ba575e33f2a4d8f89f24c9aabb8ec37411a333aa3747c157b17eb",
+      "before-ota0-slot8MiB.bin": "105c1dd8402ea31b3de9a9b7d3c69f0d86a56fd578b4fde2e9f8e3fb7864faaa",
+      "RESULT.json": "5c04f4ac46459c47009a9ab0af0caa8d1bebb3beb8917ab169e73c6bda0adb92",
+      "command-07-view-2.log": "518384f2a2728deccbbb42beb163cf25651cb06c3a42bd7968e6171ad46c478c",
+      "command-08-capture.log": "ff0b317c1475b0a31328dba57a54d26e6e07bd6cddbb6f6e21107c63c4f2c893",
+      "steady-engine-window.json": "a6037c6526f44deb4ee5499c5d3d44c9e89846cfee9191600b8b45c4cd0a2d1c",
+      "backup.json": "520ca2d301bdc64989ca81e5a78305c57d47faf184cf70c88698b3ff35655602",
+      "review-release.json": "4ad3b92e6697f8b939a275199b850508b768a2e81b79114760e2587947f879aa",
+      "app-write.json": "22290e1b380a4a0867118d0f450615be9a86a667d2c84e1f4f2ff13c15633143",
+      "current-protected-verify.log": "eb46cdc30529c86a462803f030cbb9c706eeefea8d78012beb0b52bc9c1f6812",
+      "current-protected-verify.json": "aa64100ccb454565229018606fb43bd5633f57dbbaaaa4aded192d7d0c5e0258",
+      "app-readback.log": "cc62e87cc117133e6acfd692bf823a4b43dce3214ccea4a1c2cddd4c3df1c80a",
+      "selector-cleared-first128KiB.bin": "c9f4ac69c94612ceddb0e8d57da16b2c3a55a10786957a555696a37fb9c0d0cc",
+      "protected-verify.log": "f375a37d01e175138b9a5b7814b19c74e726cf5552acbe643aefce1f26454607",
+      "fresh-prefix128KiB.bin": "2798b7bb883ba575e33f2a4d8f89f24c9aabb8ec37411a333aa3747c157b17eb",
+      "selector-write.log": "08800a7d9ddd047dfcc776574ce781eb4da3be531add5d51d0f8515d85a32e8e",
+      "selector-clear-readback.json": "23c2db7020fc01923fd94322ba61d049915ef956297a87f0ed5e14753f8eb662",
+      "cold-face0.json": "0beddd99cefab205d60c006be16e4064ac2c6246e92c55733017ae2291c04900",
+      "selector-readback.log": "8d260623363ee011717c060a5c0c6796088fd813a79bb7fb6b37264e1dcedcf5",
+      "cold-face1.rgb565": "29c2c015f7fb031b91ce7739ec034c25d64c4990c539d58fe63d9daae345d598",
+      "before-first128KiB.bin": "2798b7bb883ba575e33f2a4d8f89f24c9aabb8ec37411a333aa3747c157b17eb",
+      "security.json": "99415a6c9aec6638c279f77f97c55d40d50f5088762ab3a7955562a26e2195f6",
+      "command-05-view-1.log": "db1a44e7839cc8c3030902fb04487e1c587c6e2a13ee965313c5e7fce4c16e31",
+      "cold-face1.json": "a5997efea111c24b3b8958bcdada188e90f948aac7288df3a7067b2b9e76f826",
+      "app-sector-readback.bin": "598cc3de936ece5283ca2b717015d1f6b8dc4a3a22008c014aaa2a1c083926ef",
+      "app-readback.json": "f87fb50b173c7c3cd07cf2a2a49684aba55f9ad2aec420680f032ce342857587",
+      "cold-face1.png": "8023ff51dd4b22d73630dd99396998da32059ff067c714196f2fee6f5889578f",
+      "README.md": "4c706a565bdd649fe65f932eaa0629994d2e7e18140ec4b4c7f1bef1686cf369",
+      "command-12-perf-reset.log": "869b578df095876e1ab1b28c89362cf34b1e2477eb3fbac41e6a4c22d67a7785",
+      "cold-face0.png": "ca50bec62376543794702fe8f69ad670dac1fe194f61e0c8283d1b45f8c0bf65",
+      "cold-face2.png": "689c12621dafcc5011d70479f632a1f8ff0d0629070b62e3e15a0d8560190cbc",
+      "command-02-perf.log": "276c165304540014700a600a8157344567c2b18e28f411c482764de568d1fc9a",
+      "cold-face2.json": "72a175484c75fc595e392c4ee2c84bfb0401cc0d983c4c2636a5de58fdc6a699",
+      "command-09-perf-reset.log": "85cefbe4404601fdfa9d8f0554a43f7c478fbb2214d4a99ada1caf2ca729843b",
+      "selector-write.json": "004c9d208aa3fe47b0b17a63fc253dfb0530190357a58961c96d2336eeaa2b49",
+      "selector-readback.json": "0553eb35a7e122601f2b08c437543baf2d050a35852f1e51c695961b4d9c2aff",
+      "before-assets-tail.bin": "68fa7a2744fad2fd53e7510ff198433eea8567a1b5d5b0c163f05a4bf77b317b",
+      "selector-clear-readback.log": "8efc5e5cf6dcfab878c51a2a133417683c71aaf86dc5780b13fe9c72be3f91d7",
+      "command-14-perf.log": "1af8ccd2ddc54ff084101dbd84f5400cd428973cda182c90eb89aae5de2983e4",
+      "backup.log": "d2654b8e084a9e3fd3e0d3cac89b6a5ed81850bb201acd9a8d6f5a81e39739ad",
+      "command-03-view-0.log": "e6a9a7eb33864d08d67d451aad9b002e3151ce618ed707a654edfa64329b56e7",
+      "calibrated-aod-face2.rgb565": "6ca0ff087c100535c90ecb21c4dae68f1f31ff9307d9a681ff9d2995bd265d18",
+      "private-media-verified.json": "ab7f704c0256266b25dccd6076f89e999c36df083008460dcf6f99c9db502c9e",
+      "cold-face0.rgb565": "5b0baa7ffbcfc294cf431614b59af5377b723cea7162815a5e3ac181a2688d30",
+      "protected-verify.json": "e3a1cef898d85059ef084caebe43ef0e59ff383405245ef52446af405b585abf",
+      "command-06-capture.log": "b3243ddab259a6113dd9eb9ae5393317809b8a8d13c6ef4927f76bff28ebb6b3",
+      "selector-clear.json": "466ac0b821fcfc7a0956769487f123a6694f7bd6ef77de0d156959ebfca700f6",
+      "command-13-perf.log": "db1126b9700a73c07dcda0fcadbc886cabd271144a85b593d597fdb0fc89d163",
+      "selector-clear.log": "b326a0ea2f78479f790c24e88991ac17e36b0c72c6df3cdf3578c360916b5c6f",
+      "usb-closed-readonly-observation.json": "e8ba48ae3b3deab8ba3eb25ea6cc536483736d5f9a7ba724366ec1f5caad2197",
+      "app-write.log": "f1e9d140eb2ec086834266977df64c387b037a4cc3d365f3272e157bb6114e0e",
+      "command-10-state.log": "3d542a774b72dd24cc1b70b371250b89883b1a4b4b1ab4d016c0e3d614c4f291",
+      "cold-face2.rgb565": "01ae9d653f4ab54fdb0b04511a4f421047f96039549491429dd14203518e7e56",
+      "calibrated-aod-face2.png": "22efc9cabd8d878e8488f3ae3c1652a22855f90158025b74823cf27e198c51d4",
+      "normal-boot.json": "52cda2c06dcf2eeb3387e6dcb96f167e131602eddfc896b3579a9a11d1b9ca91"
+    },
+    "phone": {
+      "before.json": "d419d0a1b9da1c3961a38c2859b1ccd58d8cd37df1d1b305d13a12f462ff9839",
+      "scan-results.xml": "b0569317bd48222579201f10c2bae39e84e2fe086e90d436726202dde6d32d98",
+      "scan-results.png": "8c741668de8d16d16164c7719aa2cd788f0d7bca5dd7f466b29ac38869ad1b0b",
+      "scan-observed.xml": "77b9d774b60dec9452717b44e007f49c1d2f52356336b0614e4e87e4c9141ed2",
+      "scan-observed.png": "541abaf75705c595a050915897be821e17cb5ff9ce63ba011cba687854d696a9",
+      "wm-after.txt": "40839e9789e50d00ce3acda29b9d7eb988ca441165a4f4d62bca8752d5abd8e1",
+      "connected-observed.png": "40134fa81ab5636d8ab10f7fc2f75baea03cd8364a6ff7f5dbe0aef03b4823ae",
+      "connected-observed.xml": "aac99ea20ecd250a1b28228da28ae289bf59b7e06493702b7f8d597fe238482e",
+      "phone-resumed.xml": "eddf24ef59bd09a2cc591741ca4d2e8e7fb57d22ff489768cda3b6772f5f71e9",
+      "phone-resumed.png": "efc683b1bc3a50d065b730a8f4d2ca20b893c8d230357b1c2c0c33dc8d7c9e2f",
+      "disconnected.xml": "3d6e9a22b8ff897af694577e2e388ffeb7dca1f74d54d9b24833be56ede5964f",
+      "disconnected.png": "4244f2b59966029b04b7a428fed09ad0dcb10c596352224899b47629e65cad63",
+      "preservation-and-release.json": "d243cb691a034d11a3444d482e8aafcec2af2eab65a2203ce5a0c7bb8100daff",
+      "diagnostics-fresh.png": "2d46b1c8d62aad1edca4b04b6db3f35f0b67fcea584e6dcfd6ad211822b6a709",
+      "diagnostics-fresh.xml": "3af8f96333f580030c323627964684f65c476669834dfa55fd476464b24a2511",
+      "released-home.png": "4e2768bbec5cad9a4b650fff682c8c639933e10baf9260f66990862a7f632487",
+      "released-home.xml": "c5d5d210279334757386fe937ae4960646e7bc4c6995c15cb1e90e2939dc8d25",
+      "logcat-after.txt": "573104c53799ec746cd3780f07091d567f330ba59c3baa49ec8ffddf26bae56e",
+      "disconnect-visible.xml": "4471325a1be707fb2c2b2c6e35091e8296ac56bf4d049b6d677f1ec165737c20",
+      "disconnect-visible.png": "b794038897aadd8391410859c3748d37605cc68662c2f237d610371d0b32b71e",
+      "device_ui.py": "9134e6c5afdce070cb6f3f269d15c5765f17ea02faa956e55d7cac43ca79ba97",
+      "badge-open.png": "2083e9347cea28399e1c9c14799efc5b6aae33909d8e25b80d57284e142ab822",
+      "latest.xml": "c5d5d210279334757386fe937ae4960646e7bc4c6995c15cb1e90e2939dc8d25",
+      "badge-open.xml": "8a3caa4c258bca7a9af81e689f74cb718e14eb01c4648c62b1991f1daf195a4f",
+      "room-after-disconnect.png": "d23f90452c85ba548ce9a34fc63f45497842154b1a260572d3747e30a041cb8b",
+      "room-after-disconnect.xml": "eddf24ef59bd09a2cc591741ca4d2e8e7fb57d22ff489768cda3b6772f5f71e9",
+      "diagnostics-visible.xml": "3c977a8635550f30cc68769c0321b63d3b3e5e0054184e3c3fee6651d3129af3",
+      "diagnostics-visible.png": "9bc67de205f830fbf98e23d28d0099f5682917d3563435cb58f1618596943726",
+      "gatt-release.txt": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+      "actions.json": "98960e7c7bfd9f0dae341eb49e767a2d8d0afdcf5401c56b58565c04e6152228",
+      "before-authority.json": "3a67f048cfe46f3526f9e4b600300d25e6cadbdb7fa6f6d708a326dea074f31c",
+      "after-authority.json": "ded5638918c8271c19b009431634fe7af37a31bf41b722df81aa44e34715bb81"
+    }
+  }
+}

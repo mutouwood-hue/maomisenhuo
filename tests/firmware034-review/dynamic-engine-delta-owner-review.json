@@ -1,0 +1,94 @@
+{
+  "reviewedAtUtc": "2026-10-16T02:51:34.268174+00:00",
+  "kind": "independent read-only arithmetic/semantic review of Root existing actual engine logs, not a fresh device run",
+  "sourceStartSha256": "2c710cbb0a0f162c9585968f42a9fabbfa18f925ec3bc54354507fee43db5cfd",
+  "sourceEndSha256": "52ebdf617d1f0effcd12dc1848909cf4940d2245dfd3a38b61faff87522d1f73",
+  "rootDeltaFile": "artifacts/device-integration/2026-10-16-firmware034-perf/previous-session-engine-delta.json",
+  "rootDeltaSha256": "b6f7ac8819a36dcb7affd6f382c880a458d54060ea203736689c85ed3df5de15",
+  "rootArithmeticMatches": true,
+  "sameSinceUs": 12041577,
+  "windowSeconds": 389.861443,
+  "metrics": {
+    "render": {
+      "countDelta": 1559,
+      "totalUsDelta": 106328860,
+      "meanUs": 68203.24567030148,
+      "cumulativeMaxStartUs": 147577,
+      "cumulativeMaxEndUs": 147577,
+      "isolatedWindowMaxNotAsserted": true
+    },
+    "flushSubmit": {
+      "countDelta": 73273,
+      "totalUsDelta": 23829156,
+      "meanUs": 325.2105959903375,
+      "cumulativeMaxStartUs": 540,
+      "cumulativeMaxEndUs": 1071,
+      "isolatedWindowMaxNotAsserted": true
+    },
+    "flushWait": {
+      "countDelta": 73273,
+      "totalUsDelta": 845494,
+      "meanUs": 11.538957051028346,
+      "cumulativeMaxStartUs": 116,
+      "cumulativeMaxEndUs": 135,
+      "isolatedWindowMaxNotAsserted": true
+    },
+    "inputInterval": {
+      "countDelta": 9357,
+      "totalUsDelta": 389917646,
+      "meanUs": 41671.22432403548,
+      "cumulativeMaxStartUs": 190690,
+      "cumulativeMaxEndUs": 190690,
+      "isolatedWindowMaxNotAsserted": true
+    },
+    "inputRead": {
+      "countDelta": 9357,
+      "totalUsDelta": 69316,
+      "meanUs": 7.40792989205942,
+      "cumulativeMaxStartUs": 109,
+      "cumulativeMaxEndUs": 271,
+      "isolatedWindowMaxNotAsserted": true
+    },
+    "appUiTick": {
+      "countDelta": 1559,
+      "totalUsDelta": 32021576,
+      "meanUs": 20539.817831943554,
+      "cumulativeMaxStartUs": 43220,
+      "cumulativeMaxEndUs": 43220,
+      "isolatedWindowMaxNotAsserted": true
+    }
+  },
+  "renderCompletedCountDelta": 1559,
+  "recordedIntermediateUsbCommands": [
+    "CFDIAG STATE",
+    "CFDIAG STATE"
+  ],
+  "noRecordedCaptureViewOrPerfResetWithinBracket": true,
+  "observedPressedPollsDelta": 0,
+  "dmaFreeStart": 72595,
+  "dmaFreeEnd": 72347,
+  "dmaLargestStart": 31744,
+  "dmaLargestEnd": 31744,
+  "dmaMinimumStart": 32944,
+  "dmaMinimumEnd": 32944,
+  "bufferBytes": [
+    9320,
+    9320
+  ],
+  "newNoResetProbe": {
+    "path": "artifacts/device-integration/2026-10-16-firmware034-perf",
+    "elapsedSeconds": 0.082,
+    "commandsSent": 0,
+    "bootMarkerSeen": true,
+    "cause": "unresolved open/close/queued logs; do not infer current clock or uninterrupted standby"
+  },
+  "newDeviceOperation": false,
+  "physicalSlideFpsOrTearFreeAccepted": false,
+  "limits": [
+    "UI mode not in existing diagnostics; no controlled comparison",
+    "Real phone connection/calibration is a potential workload confound",
+    "Render duration includes submit/wait; not full adapter handler or physical scanout",
+    "No per-frame trace/percentile/input-to-photon latency",
+    "Current clock/FIFO must be reread after boot-marker probe; historical clocktrue is not current guarantee"
+  ]
+}

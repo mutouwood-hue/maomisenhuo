@@ -1,0 +1,40 @@
+{
+  "missingTestInputs": [
+    {
+      "test": "tests/active-events.test.mjs",
+      "missing": "../../tests/integration/m2-helper.mjs"
+    },
+    {
+      "test": "tests/companion-ble.test.mjs",
+      "missingResource": "../../tests/integration/real-data-vectors.json"
+    },
+    {
+      "test": "tests/environment-resume.test.mjs",
+      "missing": "../../tests/integration/m2-helper.mjs"
+    }
+  ],
+  "directExternalImports": [],
+  "capacitorProjectPaths": [
+    {
+      "path": "../node_modules/.pnpm/@capacitor+android@8.5.3_@capacitor+core@8.5.3/node_modules/@capacitor/android/capacitor",
+      "exists": false
+    },
+    {
+      "path": "../node_modules/.pnpm/@capacitor+app@8.1.2_@capacitor+core@8.5.3/node_modules/@capacitor/app/android",
+      "exists": false
+    },
+    {
+      "path": "../node_modules/.pnpm/@capacitor+filesystem@8.1.4_@capacitor+core@8.5.3/node_modules/@capacitor/filesystem/android",
+      "exists": false
+    },
+    {
+      "path": "../node_modules/.pnpm/@capacitor+geolocation@8.2.3_@capacitor+core@8.5.3/node_modules/@capacitor/geolocation/android",
+      "exists": false
+    },
+    {
+      "path": "../node_modules/.pnpm/@capacitor+share@8.0.3_@capacitor+core@8.5.3/node_modules/@capacitor/share/android",
+      "exists": false
+    }
+  ],
+  "cordovaProjectExists": true
+}

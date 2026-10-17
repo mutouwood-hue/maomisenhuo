@@ -1,0 +1,97 @@
+{
+  "legacyOriginal": {
+    "bytes": 1384956,
+    "sha256": "c4f872d0bf8a899cf93a6aa877c13c5a5090e1f592729500bd2ef476205e9952",
+    "scripts": [
+      {
+        "attributes": "",
+        "bytes": 376323,
+        "sha256": "1a974e574b0a209b69f1daaffb7903eb96bd3fde36b4c1352a0167cafee6310c"
+      },
+      {
+        "attributes": "",
+        "bytes": 749893,
+        "sha256": "823ecfffb365cf99956d997f8bddbebfe58a49a647e7b71c1d83d4b0b7562e7a"
+      },
+      {
+        "attributes": " id=\"mobile-v3-js\"",
+        "bytes": 12960,
+        "sha256": "ef3a3141e32d46e7bafcdd0e91534d3f93b4d26d976e17bbf14ff60e0e44f090"
+      },
+      {
+        "attributes": " id=\"grad-v4-js\"",
+        "bytes": 17589,
+        "sha256": "7976b82074fac80a1eb254fb2c23ececc2f8d551cecae0dd1ccb79b36976b85a"
+      },
+      {
+        "attributes": " id=\"life-v5-js\"",
+        "bytes": 76545,
+        "sha256": "cd09a3821e2f44f362575b7028f0fa668a6ccccba2097af627ce0142452cde98"
+      },
+      {
+        "attributes": " id=\"blocks-v6-js\"",
+        "bytes": 49700,
+        "sha256": "f8ef366480c6317076aeb99a1860ba01a7cf643d76a50c8ef2ce26dc683d91b3"
+      }
+    ]
+  },
+  "currentOriginal": {
+    "bytes": 1566723,
+    "sha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+    "scripts": [
+      {
+        "attributes": " id=\"slot-shim\"",
+        "bytes": 830,
+        "sha256": "37dcec337c03208fc55e75e2a6a854e985d22adff7512048724f7e22e594b755"
+      },
+      {
+        "attributes": "",
+        "bytes": 376323,
+        "sha256": "1a974e574b0a209b69f1daaffb7903eb96bd3fde36b4c1352a0167cafee6310c"
+      },
+      {
+        "attributes": "",
+        "bytes": 757072,
+        "sha256": "5c86c49d55ad22ce72b88b838dad6d8bbf9d4b3704aa1bd8ed9ea8318d560b50"
+      },
+      {
+        "attributes": " id=\"mobile-v3-js\"",
+        "bytes": 12960,
+        "sha256": "ef3a3141e32d46e7bafcdd0e91534d3f93b4d26d976e17bbf14ff60e0e44f090"
+      },
+      {
+        "attributes": " id=\"grad-v4-js\"",
+        "bytes": 17706,
+        "sha256": "97a91d39a45f9291e9c3ed77dc35b1658f30e2d19d83a9f6505c53e81ae05089"
+      },
+      {
+        "attributes": " id=\"life-v5-js\"",
+        "bytes": 86367,
+        "sha256": "049f7cfca7aef9f50c2624e9658fbb0fe0b6dc1d3f2a726f37f69fe8f83dec65"
+      },
+      {
+        "attributes": " id=\"blocks-v6-js\"",
+        "bytes": 49700,
+        "sha256": "f8ef366480c6317076aeb99a1860ba01a7cf643d76a50c8ef2ce26dc683d91b3"
+      },
+      {
+        "attributes": " id=\"social-v7-js\"",
+        "bytes": 145625,
+        "sha256": "d5fd223b273e69f9f7f959cbe49939bbfb831525b962d397f058ea814326cdba"
+      }
+    ]
+  },
+  "wwwExists": true,
+  "androidPublicExists": true,
+  "nodeModulesExists": false,
+  "backendIncluded": false,
+  "assetDifferences": [],
+  "requiredExistingToolchain": {
+    ".tools/java/jdk-21.0.12.1+1/Contents/Home/bin/java": true,
+    ".tools/android-sdk/platforms/android-35/android.jar": true,
+    ".tools/android-sdk/platforms/android-36/android.jar": false,
+    ".tools/android-sdk/build-tools/36.0.0": false,
+    ".tools/gradle-8.14.3/bin/gradle": false,
+    ".tools/gradle-8.9/bin/gradle": true
+  }
+}

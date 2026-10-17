@@ -1,0 +1,16 @@
+package: name='com.catforest.worlddemo' versionCode='18' versionName='0.2.7-world-demo' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'
+minSdkVersion:'26'
+targetSdkVersion:'35'
+application-label:'猫咪森活·世界模拟'
+application-icon-160:'res/drawable/app_icon.xml'
+application: label='猫咪森活·世界模拟' icon='res/drawable/app_icon.xml'
+application-debuggable
+launchable-activity: name='com.catforest.htmlcandidate.WorldDemoActivity'  label='' icon=''
+feature-group: label=''
+  uses-feature: name='android.hardware.faketouch'
+  uses-implied-feature: name='android.hardware.faketouch' reason='default feature for all apps'
+main
+supports-screens: 'small' 'normal' 'large' 'xlarge'
+supports-any-density: 'true'
+locales: '--_--'
+densities: '160'

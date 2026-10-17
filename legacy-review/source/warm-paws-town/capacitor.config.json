@@ -1,0 +1,8 @@
+{
+  "appId": "com.warmpaws.town",
+  "appName": "暖爪小镇",
+  "webDir": "www",
+  "server": { "androidScheme": "https" },
+  "android": { "backgroundColor": "#edf7f6", "allowMixedContent": false },
+  "plugins": { "CapacitorHttp": { "enabled": false } }
+}

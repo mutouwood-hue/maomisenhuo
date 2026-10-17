@@ -1,0 +1,29 @@
+{
+  "scope": "overview PNG pixels viewed; no independent full-video frame decoding",
+  "files": {
+    "short-recall-overview.png": {
+      "bytes": 3679683,
+      "sha256": "e0507e46a12eb752eb7648c189035aa2f195f87127582696137477599ee3976e"
+    },
+    "normal-recall-overview.png": {
+      "bytes": 3104016,
+      "sha256": "feb8d21358bde45056f17919821204b6ea404b5191b69fdb23ec2059e1bab4a7"
+    },
+    "short-recall-actual.mp4": {
+      "bytes": 7246615,
+      "sha256": "137cd3a07c0222541a2f6b5f8d1ba4af86bf322f3caa3ca718862d824a40896e"
+    },
+    "normal-recall-actual.mp4": {
+      "bytes": 7348318,
+      "sha256": "24ad5721d9bc38bcda391a2d02410f4a5c4d6f80b51b34c59d7e21d837b85736"
+    },
+    "normal-bath-actual.mp4": {
+      "bytes": 29422167,
+      "sha256": "fa87305413f8c22c9ce88e42414b2c3b87d70495da472b5764ae672d72ab53b0"
+    },
+    "post-check.json": {
+      "bytes": 990,
+      "sha256": "9ee2f59ca02c3c7575a0412d7e09faffd902e138fc4fcd5c5746c5efc3863caf"
+    }
+  }
+}

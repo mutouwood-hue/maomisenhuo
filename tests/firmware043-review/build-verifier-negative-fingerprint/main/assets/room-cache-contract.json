@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "projection": {
+    "screen": 466,
+    "roi": 256,
+    "origin": [
+      233,
+      257
+    ],
+    "cameraYaw": -28,
+    "cameraPitch": 14,
+    "cameraDistance": 90,
+    "target": [
+      0,
+      8.6,
+      2.2
+    ],
+    "halfFovDegrees": 13.5,
+    "near": 35,
+    "far": 180,
+    "depthScale": 65000,
+    "depthTie": "later >= wins",
+    "props": true
+  },
+  "source042Sha256": "118e62218f56385e83e6fae898867efeec4ae2f42d1ea77b30141c07597e2b3a",
+  "pcatSha256": "82520ca7f00eb28f005795cc970746150d73075083d4032119d795d19c2d0b4e",
+  "format": "LE RGB565 then LE fixed u16 Z then u8 owner, full 466 rows",
+  "fingerprint": "b0fbaa2216744d2fa69b0b23862ef9866df294e21e4e4ad946b6e5da1d6302fa",
+  "payloadBytes": 1085780,
+  "blobBytes": 1085860,
+  "payloadCrc32": "62b68461",
+  "blobSha256": "ef5c4edbd59fb4dcbd4345d02b8e30beb3aa265da5d36105c5c38f24703e628d"
+}

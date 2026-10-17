@@ -1,0 +1,5 @@
+# M2 OTA 构建覆盖；使用 sdkconfig.defaults;sdkconfig.m2.defaults，不修改 legacy 已刷设备。
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions-m2.csv"
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+# 尚未配置制造可信根，禁止自动生成/烧写 secure-boot 密钥与 eFuse。

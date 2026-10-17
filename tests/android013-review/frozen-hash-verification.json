@@ -1,0 +1,13 @@
+{
+  "apk": {
+    "path": "deliverables/catforest-html-local-0.1.3-debug.apk",
+    "bytes": 858010,
+    "sha256": "528fe4bda291f2a416aaa82615dbc8fe4c18bbae5a30654a4683d70018aa9811"
+  },
+  "sourceFiles": 91,
+  "sourceMismatches": [],
+  "sourceZipFileCount": 91,
+  "sourceZipMismatches": [],
+  "apkAssetCount": 24,
+  "apkAssetMismatches": []
+}

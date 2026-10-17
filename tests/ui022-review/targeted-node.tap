@@ -1,0 +1,124 @@
+TAP version 13
+# Subtest: real original binder: wardrobe only clothes; adoption previews exactly match normal native options with original artwork
+ok 1 - real original binder: wardrobe only clothes; adoption previews exactly match normal native options with original artwork
+  ---
+  duration_ms: 215.704166
+  type: 'test'
+  ...
+# Subtest: all real preview/native-select changes and refreshes preserve entire current save and emit no store writes
+ok 2 - all real preview/native-select changes and refreshes preserve entire current save and emit no store writes
+  ---
+  duration_ms: 100.715583
+  type: 'test'
+  ...
+# Subtest: only original adoption button commits requested breed/name/sex and original12 coin cost once; old cat unchanged
+ok 3 - only original adoption button commits requested breed/name/sex and original12 coin cost once; old cat unchanged
+  ---
+  duration_ms: 105.742667
+  type: 'test'
+  ...
+# Subtest: real original adoption gates: low coins, six cats and reserved newborn capacity stay authoritative
+ok 4 - real original adoption gates: low coins, six cats and reserved newborn capacity stay authoritative
+  ---
+  duration_ms: 206.79825
+  type: 'test'
+  ...
+# Subtest: existing rare/adult cat identity survives preview and clothing remains original buy/equip
+ok 5 - existing rare/adult cat identity survives preview and clothing remains original buy/equip
+  ---
+  duration_ms: 84.545584
+  type: 'test'
+  ...
+# Subtest: preview enforces native disabled/options and does not rebuild selected card or touch frozen core
+ok 6 - preview enforces native disabled/options and does not rebuild selected card or touch frozen core
+  ---
+  duration_ms: 70.007375
+  type: 'test'
+  ...
+# Subtest: module installed before asynchronous original room/binder waits for real options/artwork without changing initial save
+ok 7 - module installed before asynchronous original room/binder waits for real options/artwork without changing initial save
+  ---
+  duration_ms: 81.445084
+  type: 'test'
+  ...
+# Subtest: all eight scripts are ordered, parse, and preserve latest social-v7
+ok 8 - all eight scripts are ordered, parse, and preserve latest social-v7
+  ---
+  duration_ms: 33.7115
+  type: 'test'
+  ...
+# Subtest: packaging keeps the complete original markup and CSS outside explicit safe-area/host wiring
+ok 9 - packaging keeps the complete original markup and CSS outside explicit safe-area/host wiring
+  ---
+  duration_ms: 5.706583
+  type: 'test'
+  ...
+# Subtest: actual navigation registration cannot bind body and bounce a nested button click back home
+ok 10 - actual navigation registration cannot bind body and bounce a nested button click back home
+  ---
+  duration_ms: 285.65775
+  type: 'test'
+  ...
+# Subtest: cancel and premature care never grant reward; completed care and goal grant once
+ok 11 - cancel and premature care never grant reward; completed care and goal grant once
+  ---
+  duration_ms: 4.241667
+  type: 'test'
+  ...
+# Subtest: complete family, wardrobe and world data survive native-free local reload and invalid import
+ok 12 - complete family, wardrobe and world data survive native-free local reload and invalid import
+  ---
+  duration_ms: 2.620375
+  type: 'test'
+  ...
+# Subtest: original NPC family flow keeps three cares and active-time requirements
+ok 13 - original NPC family flow keeps three cares and active-time requirements
+  ---
+  duration_ms: 4.426625
+  type: 'test'
+  ...
+# Subtest: network guard permits local/blob exports and rejects external service calls without touching storage
+ok 14 - network guard permits local/blob exports and rejects external service calls without touching storage
+  ---
+  duration_ms: 1.105208
+  type: 'test'
+  ...
+# Subtest: pause stops live capture and rejects a permission result that arrives after cancellation
+ok 15 - pause stops live capture and rejects a permission result that arrives after cancellation
+  ---
+  duration_ms: 0.603
+  type: 'test'
+  ...
+# Subtest: deferred original/Host/adapter scripts wait for Native authoritative result+owner+pending recovery, even when local social was corrupt
+ok 16 - deferred original/Host/adapter scripts wait for Native authoritative result+owner+pending recovery, even when local social was corrupt
+  ---
+  duration_ms: 186.254667
+  type: 'test'
+  ...
+# Subtest: Native recovery failure leaves original scripts inert and never publishes adapter checkpoint callback
+ok 17 - Native recovery failure leaves original scripts inert and never publishes adapter checkpoint callback
+  ---
+  duration_ms: 60.551416
+  type: 'test'
+  ...
+# Subtest: ordinary browser retains gameplay but cannot supply Native checkpoint or device ACK fallback
+ok 18 - ordinary browser retains gameplay but cannot supply Native checkpoint or device ACK fallback
+  ---
+  duration_ms: 48.722875
+  type: 'test'
+  ...
+# Subtest: Native A-slot recovery does not alter original B-slot save or expose raw cross-slot keys
+ok 19 - Native A-slot recovery does not alter original B-slot save or expose raw cross-slot keys
+  ---
+  duration_ms: 45.480292
+  type: 'test'
+  ...
+1..19
+# tests 19
+# suites 0
+# pass 19
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2498.976042

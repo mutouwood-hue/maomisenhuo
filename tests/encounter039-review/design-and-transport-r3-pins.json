@@ -1,0 +1,13 @@
+{
+  "scope": "design contract + early standalone transport only",
+  "pins": {
+    "protocol/local-encounter-v1/contract.json": "279a80222ebc7d1fc132f4e74dfac99be0c1fe1da589a7f9dadb482faa9cfcbe",
+    "artifacts/firmware-local-v4-encounter039/PROTOCOL-PROPOSAL.json": "7aab095dac7f35fdece3753c8e95045ec59725c870b552054b5024bdd63d5d1f",
+    "artifacts/local-ble-adapter/versions/encounter-v1/encounter-transport.js": "259d9f5dda96d3e93028422e7a51326f8542b8ea4665603ef195c0d2ab053bd2",
+    "protocol/local-encounter-v1/TRANSPORT-CONTRACT.json": "12cc4897f69d8c1b8c445ac06f955141f00cb5b9d2119e9bf8b37a834c349a35",
+    "tests/encounter039-review/transport-r3-boundaries.json": "4a7607655c6fc976cb35015cbfbd32d8bbabead805f287ccbc1fde4fa6a5c71f",
+    "tests/encounter039-review/transport-r3-owner-rerun.log": "19e112c1cc385650ea6969d3faa9cc336361559f610de62d7abc4c79f72e051d"
+  },
+  "implementationRelease": false,
+  "deviceRelease": false
+}

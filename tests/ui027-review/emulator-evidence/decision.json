@@ -1,0 +1,11 @@
+{
+  "decision": "limited_emulator_sample_flow_pass_not_physical_device_or_complete_world",
+  "confirmedP1P2": [],
+  "reviewedEvidencePins": 84,
+  "report": "tests/ui027-review/emulator-evidence/ACTUAL-EMULATOR-REVIEW.md",
+  "reportSha256": "f8ecd732d67636afbb3c3874a954e631a4fc557e75f609ffb8abc889fc2fc131",
+  "physicalDeviceAcceptance": false,
+  "productionEncounterConsumerAcceptance": false,
+  "performanceAcceptance": false,
+  "noReviewDeviceActions": true
+}

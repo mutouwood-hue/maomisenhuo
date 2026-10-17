@@ -1,0 +1,28 @@
+{
+  "softwareNotDevice": true,
+  "negative024": {
+    "applied": null,
+    "wire": {
+      "scene": "home",
+      "action": "idle",
+      "weather": "clear"
+    },
+    "overlayHidden": false,
+    "route": "home"
+  },
+  "fixed025": {
+    "applied": {
+      "schema": 1,
+      "source": "life-v5-applied",
+      "out": true,
+      "mode": "demo"
+    },
+    "wire": {
+      "scene": "away",
+      "action": "idle",
+      "weather": "clear"
+    },
+    "overlayHidden": false,
+    "route": "home"
+  }
+}

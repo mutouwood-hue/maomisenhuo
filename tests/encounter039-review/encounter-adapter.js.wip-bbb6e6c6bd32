@@ -1,0 +1,177 @@
+/* INDEPENDENT039 CANDIDATE. Strict family/scenes/journal and peer_complete codec; host Native deployment remains unavailable.
+ * No auto-attach, Native provision, radio startup, game writer or simulation promotion. */
+(function(root,factory){
+ const api=factory(typeof module==='object'&&module.exports?require('./encounter-transport.js'):root.CatEncounterV1Transport,typeof module==='object'&&module.exports?require('./encounter-event.js'):root.CatEncounterV1Event);
+ if(typeof module==='object'&&module.exports)module.exports=api;else root.CatEncounterV1=api;
+})(typeof globalThis!=='undefined'?globalThis:this,function(transport,eventCodec){
+'use strict';
+const KEY='cat-cflocal3-journal-v1',MAX=Number.MAX_SAFE_INTEGER;
+const SCENES=['home','departing','away','returning'],ACTIONS=['idle','walk','pet','feed','water','bath','play','sleep'],WEATHER=['clear','rain','snow'];
+const clone=x=>JSON.parse(JSON.stringify(x));
+function fail(code,message,outcome='no_change'){return Object.assign(new Error(message),{code,outcome});}
+const safe=n=>Number.isSafeInteger(n)&&n>=0;
+const ascii=(s,n)=>typeof s==='string'&&s.length>0&&s.length<=n&&/^[\x21-\x7e]+$/.test(s);
+const utf8len=s=>new TextEncoder().encode(s).length;
+function validateScene(s){
+  if(!s||!ascii(s.requestId,64)||!ascii(s.petId,64)||!safe(s.revision)||!SCENES.includes(s.scene)||!ACTIONS.includes(s.action)||!WEATHER.includes(s.weather))throw fail('INVALID_SCENE','场景或宠物标识无效。');
+  const p=s.pet;
+  if(!p||typeof p.name!=='string'||!p.name||utf8len(p.name)>24||/[\u0000-\u001f\ud800-\udfff]/u.test(p.name)||!ascii(p.breed,16)||!safe(p.coins)||['food','mood','clean','energy','health'].some(k=>!Number.isInteger(p[k])||p[k]<0||p[k]>100))throw fail('INVALID_SCENE','宠物状态超出设备范围。');
+  if(s.utcOffsetMinutes!==undefined&&(!Number.isInteger(s.utcOffsetMinutes)||s.utcOffsetMinutes< -840||s.utcOffsetMinutes>840))throw fail('INVALID_SCENE','手机时区无效。');
+  if(s.epochMs!==undefined&&(!safe(s.epochMs)||s.epochMs<1577836800000||s.epochMs>4102444800000))throw fail('INVALID_SCENE','校时时间无效。');
+}
+function petView(p){return Object.fromEntries(['name','breed','food','mood','clean','energy','health','coins'].map(k=>[k,p[k]]));}
+function offset(s){return s.utcOffsetMinutes??-new Date(s.epochMs??Date.now()).getTimezoneOffset();}
+function semantic(s){return JSON.stringify({petId:s.petId,sourceRevision:s.revision,scene:s.scene,action:s.action,weather:s.weather,utcOffsetMinutes:offset(s),pet:petView(s.pet)});}
+let active=null;
+class Journal{
+  constructor(storage,uuid){
+    if(!storage||typeof storage.getItem!=='function'||typeof storage.setItem!=='function')throw fail('LOCAL_STORAGE_FAILED','本地同步存档不可用。');
+    this.storage=storage;this.uuid=uuid;let raw;
+    try{raw=storage.getItem(KEY);}catch{throw fail('LOCAL_STORAGE_FAILED','无法读取同步存档。');}
+    if(raw===null){const id=uuid();if(!ascii(id,36))throw fail('LOCAL_STORAGE_FAILED','无法建立本地同步标识。');this.write({schema:1,protocol:'CFLOCAL3',proofVersion:1,clientId:id,devices:{}});}
+    else{
+      try{this.value=JSON.parse(raw);this.raw=raw;}catch{throw fail('LOCAL_STORAGE_FAILED','同步存档损坏；已保留原内容。');}
+      if(this.value?.schema!==1||this.value.protocol!=='CFLOCAL3'||this.value.proofVersion!==1||!ascii(this.value.clientId,36)||!this.value.devices||typeof this.value.devices!=='object'||Array.isArray(this.value.devices)||Object.keys(this.value.devices).length>32)throw fail('LOCAL_STORAGE_FAILED','同步存档格式不支持；已保留原内容。');
+      for(const [id,d] of Object.entries(this.value.devices))if(!/^[0-9a-f]{32}$/.test(id)||!safe(d.nextSeq)||d.nextSeq<1||!safe(d.syncRevision)||!(d.pending===null||(d.pending&&['snapshot','ack'].includes(d.pending.op)&&d.pending.seq===d.nextSeq&&ascii(d.pending.id,64)&&typeof d.pending.data==='object')))throw fail('LOCAL_STORAGE_FAILED','同步命令记录损坏；不会重置序号。');
+    }
+  }
+  write(value){
+    const raw=JSON.stringify(value);
+    try{this.storage.setItem(KEY,raw);if(this.storage.getItem(KEY)!==raw)throw Error('readback');}
+    catch{throw fail('LOCAL_STORAGE_FAILED','同步存档未确认写入；不会发送下一条指令。','unknown');}
+    this.value=clone(value);
+    this.raw=raw;
+  }
+  edit(edit){const value=clone(this.value);edit(value);this.write(value);}
+  device(id,hello){
+    if(!this.value.devices[id]){
+      if(Object.keys(this.value.devices).length===32)throw fail('LOCAL_STORAGE_FAILED','本机同步设备记录已满。');
+      if(hello.clientId!==null&&hello.clientId!==this.value.clientId)throw fail('OWNER_CONFLICT','此吧唧已有另一份手机同步存档，不能自动覆盖。');
+      this.edit(v=>{v.devices[id]={nextSeq:hello.lastSeq+1,syncRevision:0,lastSemantic:null,pending:null};});
+    }
+    return this.value.devices[id];
+  }
+}
+function createPorts({bridge,storage=globalThis.localStorage,uuid=()=>globalThis.crypto.randomUUID(),durableCheckpoint,verifyDurableReceipt,...options}={}){
+  if(typeof verifyDurableReceipt!=='function')throw fail('DURABLE_RECEIPT_GATE_REQUIRED','缺少原生结果与存档身份核验，不能建立相遇端口。');
+  if(typeof durableCheckpoint!=='function')throw fail('DURABLE_STORE_REQUIRED','原生持久存储尚未恢复，不能发送本地同步指令。');
+  if(!eventCodec?.validateEvent)throw fail('NOT_READY','相遇证明校验模块未加载。');
+  if(!transport?.createControl)throw fail('NOT_READY','CFLOCAL3 传输模块未加载。');
+  const control=transport.createControl({bridge,...options});
+  const journal=new Journal(storage,uuid);let busy=false;const readEvents=new Map(),confirmed=new Map();
+  async function checkpoint(raw){
+    try{
+      if(typeof globalThis.crypto?.subtle?.digest!=='function')throw Error('SHA-256 unavailable');
+      const bytes=new Uint8Array(await globalThis.crypto.subtle.digest('SHA-256',new TextEncoder().encode(raw)));
+      const expected=Array.from(bytes,n=>n.toString(16).padStart(2,'0')).join('');
+      const result=await durableCheckpoint(raw);
+      if(result?.persisted!==true||result.journalSha256!==expected)throw Error('Native checkpoint not confirmed');
+    }catch(error){throw fail('DURABLE_CHECKPOINT_FAILED','原生同步日志未确认保存；已保留原指令，请检查存储后显式重试。','unknown');}
+  }
+  function nativeEvidence(s){
+    const e=s?.evidence;
+    return control.protocolFamily==='cflocal3'&&e?.source==='native'&&safe(e.generation)&&e.generation>0&&e.serviceVerified===true&&e.rxVerified===true&&e.txVerified===true&&e.subscribed===true&&typeof e.deviceAddress==='string'&&/^(?:[0-9a-f]{2}:){5}[0-9a-f]{2}$/i.test(e.deviceAddress);
+  }
+  function sameSession(original,id){
+    const current=control.getState();
+    if(current.stage!=='ready_local'||current.hello?.protocol!=='CFLOCAL3'||current.hello.encounterProofVersion!==1||current.hello.storeSchema!==3||!current.hello.capabilities?.includes('encounter_complete_v1')||current.hello.deviceId!==id||!nativeEvidence(current)||current.evidence.generation!==original.evidence.generation)throw fail('STALE_GENERATION','读取证明期间连接已变化；事件保留，未确认删除。');
+    return current;
+  }
+  function ready(){
+    const s=control.getState();if(!nativeEvidence(s))throw fail('NATIVE_EVIDENCE_REQUIRED','缺少本次真实原生订阅证据。');if(s.stage!=='ready_local'||s.hello?.protocol!=='CFLOCAL3'||s.hello.encounterProofVersion!==1||s.hello.storeSchema!==3||!s.hello.capabilities?.includes('encounter_complete_v1'))throw fail('NOT_READY','新本地协议尚未就绪。');
+    const id=s.hello.deviceId;if(!/^[0-9a-f]{32}$/.test(id)||id==='0'.repeat(32))throw fail('UNSUPPORTED_PROTOCOL','设备身份格式不符。');
+    if(s.hello.clientId!==null&&s.hello.clientId!==journal.value.clientId)throw fail('OWNER_CONFLICT','吧唧已有另一份手机同步存档，不能覆盖。');
+    if(s.device?.clientId!==undefined&&s.device.clientId!==null&&s.device.clientId!==journal.value.clientId)throw fail('OWNER_CONFLICT','当前设备状态已属于另一份同步存档。');
+    const d=journal.device(id,s.hello);return {s,id,d};
+  }
+  async function exclusive(action){if(busy)throw fail('BUSY','上一条同步仍在确认。');busy=true;try{return await action();}finally{busy=false;}}
+  async function verifyReceipt(receipt,context){
+    if(!receipt||typeof receipt.eventId!=='string'||receipt.persisted!==true||!['applied','duplicate','quarantined'].includes(receipt.status)||!(/^[0-9a-f]{64}$/.test(receipt.saveDigest)))throw fail('DURABLE_RECEIPT_REQUIRED','确认记录不完整，不能重放。');
+    if(context.operation==='retry_ack'&&(!safe(context.pending?.data?.counter)||context.pending.data.counter<1||receipt.eventId!==context.deviceId+':'+context.pending.data.counter))throw fail('DURABLE_RECEIPT_REQUIRED','重试确认与设备事件编号不符。');
+    let proof;
+    try{proof=await verifyDurableReceipt(clone(receipt),clone(context));}catch{throw fail('DURABLE_RECEIPT_REQUIRED','原生历史结果或当前存档身份未核验，事件确认保留。');}
+    if(proof?.verified!==true||proof.eventId!==receipt.eventId||proof.saveDigest!==receipt.saveDigest)throw fail('DURABLE_RECEIPT_REQUIRED','缺少匹配的原生结果证据，不能确认事件。');
+  }
+  async function sendPending(id,{fresh=false}={}){
+    const p=journal.value.devices[id].pending;if(!p)throw fail('NO_PENDING','没有待确认指令。');
+    const attempt=control.getState(),raw=journal.raw;
+    if(p.op==='ack')await verifyReceipt({...p.data.receipt,eventId:p.data.eventId},{operation:'retry_ack',deviceId:id,event:null,pending:p});
+    await checkpoint(raw);
+    if(p.op==='ack')await verifyReceipt({...p.data.receipt,eventId:p.data.eventId},{operation:'retry_ack',deviceId:id,event:null,pending:p});
+    const current=control.getState();
+    if(current.stage!=='ready_local'||current.hello?.deviceId!==id||current.evidence?.generation!==attempt.evidence?.generation)
+      throw fail('STALE_GENERATION','保存日志期间连接已变化；原指令未改，请明确连接原设备后重试。','unknown');
+    let reply;
+    try{reply=await control.request(p.op,clone(p.data),{id:p.id,clientId:journal.value.clientId,seq:p.seq});}
+    catch(error){
+      // Only an application rejection can prove no change. Native failures may
+      // follow the final write, even if their platform error says no_change.
+      // A rejection does not advance seq. Retain the recoverable Native intent
+      // until the clear is itself durably committed; never drop it on I/O error.
+      if(error.applicationRejected===true&&error.outcome==='no_change'){
+        const next=clone(journal.value);next.devices[id].pending=null;
+        await checkpoint(JSON.stringify(next));journal.write(next);
+      }
+      throw error;
+    }
+    if(reply?.data?.persisted!==true||reply.data.seq!==p.seq)throw fail('MALFORMED_FRAME','缺少设备持久确认。','unknown');
+    const next=clone(journal.value),d=next.devices[id];d.nextSeq=p.seq+1;
+    if(p.op==='snapshot'){d.syncRevision=p.data.revision;d.lastSemantic=p.semantic;}d.pending=null;
+    // Keep the exact original pending in RAM/Web Storage until Native confirms
+    // the post-ACK state. A failed/unknown post checkpoint therefore retries
+    // the same command, even if the device already committed it.
+    await checkpoint(JSON.stringify(next));journal.write(next);
+    if(p.op==='snapshot'){
+      // Exact recovery proves the old durable snapshot only. The device may
+      // have rebooted, so its old epoch must not satisfy this connection's
+      // fresh-clock requirement or suppress the next current snapshot.
+      const stillCurrent=control.getState();
+      if(fresh&&stillCurrent.stage==='ready_local'&&stillCurrent.hello?.deviceId===id&&stillCurrent.evidence?.generation===attempt.evidence?.generation)
+        confirmed.set(id,{generation:attempt.evidence?.generation,semantic:p.semantic,revision:p.data.revision,clock:p.data.epochMs!==undefined});
+      else confirmed.delete(id);
+    }
+    if(p.op==='ack')readEvents.delete(p.data.eventId);
+    return reply;
+  }
+  const scenes={
+    pushScene(input){return exclusive(async()=>{
+      validateScene(input);const {s,id,d}=ready();if(d.pending)throw fail('PENDING_UNKNOWN','上一条指令结果待确认，请显式重试。','unknown');
+      const content=semantic(input);
+      if(d.lastSemantic===content&&confirmed.get(id)?.generation===s.evidence?.generation&&confirmed.get(id)?.semantic===content&&(input.epochMs===undefined||confirmed.get(id)?.clock))return {status:'device_persisted',revision:d.syncRevision,duplicate:true};
+      const revision=Math.max(d.syncRevision,s.device?.snapshot?.revision||0)+1;if(!safe(revision)||d.nextSeq>MAX)throw fail('SEQUENCE_EXHAUSTED','同步序号已用尽。');
+      const data={petId:input.petId,revision,scene:input.scene,action:input.action,weather:input.weather,pet:petView(input.pet)};if(input.epochMs!==undefined){data.epochMs=input.epochMs;data.utcOffsetMinutes=offset(input);}
+      journal.edit(v=>{v.devices[id].pending={id:input.requestId,seq:d.nextSeq,op:'snapshot',data,semantic:content};});
+      const reply=await sendPending(id,{fresh:true});return {status:'device_persisted',revision,duplicate:reply.data.duplicate===true};
+    });},
+    retryPending(command){return exclusive(async()=>{if(command?.origin!=='explicit_user_action')throw fail('USER_ACTION_REQUIRED','请显式确认重试同步。');const {id}=ready();return sendPending(id);});},
+    getPending(){const {id}=ready();return clone(journal.value.devices[id].pending);}
+  };
+  const events={
+    readNext(){return exclusive(async()=>{
+      const {s,id}=ready();const r=await control.request('events');
+      sameSession(s,id);
+      if(r?.generation!==s.evidence.generation||r.gattWriteCompleted!==true)throw fail('STALE_GENERATION','事件响应缺少当前传输完成证据。');
+      const input=r?.data?.event;if(input===null){readEvents.clear();return null;}
+      const before=typeof input?.eventId==='string'?readEvents.get(input.eventId):null;
+      if(before)readEvents.delete(input.eventId);
+      const e=await eventCodec.validateEvent(input,id);
+      sameSession(s,id);
+      const canonical=JSON.stringify(e);
+      if(before&&before.canonical!==canonical)throw fail('MALFORMED_FRAME','同一事件编号的证明内容冲突；事件保留。');
+      readEvents.set(e.eventId,{id,counter:e.counter,petId:e.petId,generation:s.evidence.generation,canonical,encounterId:e.kind==='peer_complete'?e.encounterId:null});return clone(e);
+    });},
+    acknowledge(receipt){return exclusive(async()=>{
+      const {s,id,d}=ready();const e=readEvents.get(receipt?.eventId);
+      if(!e||e.id!==id||e.generation!==s.evidence.generation||receipt.persisted!==true||!['applied','duplicate','quarantined'].includes(receipt.status)||!(/^[0-9a-f]{64}$/.test(receipt.saveDigest)))throw fail('DURABLE_RECEIPT_REQUIRED','原存档持久提交后才能确认事件。');
+      if(d.pending)throw fail('PENDING_UNKNOWN','上一条指令尚待确认。','unknown');
+      await verifyReceipt(receipt,{operation:'ack',deviceId:id,event:JSON.parse(e.canonical),pending:null});
+      sameSession(s,id);
+      const requestId=uuid();if(!ascii(requestId,64))throw fail('INVALID_REQUEST','无法建立事件确认标识。');
+      const data={counter:e.counter,eventId:receipt.eventId,receipt:{status:receipt.status,persisted:true,saveDigest:receipt.saveDigest}};
+      journal.edit(v=>{v.devices[id].pending={id:requestId,seq:d.nextSeq,op:'ack',data};});await sendPending(id);readEvents.delete(receipt.eventId);return {status:'device_persisted',eventId:receipt.eventId};
+    });}
+  };
+  const ports={control,scenes,events};active={control};return ports;
+}
+return {createPorts,receive(input){active?.control.receive(input);},validateScene,KEY};
+});

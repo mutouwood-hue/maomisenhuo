@@ -1,0 +1,9 @@
+# M2 双槽 OTA 布局；仅新刷写制造映像使用，禁止覆盖 legacy 存量分区。
+# Name,     Type, SubType, Offset,    Size,     Flags
+nvs,        data, nvs,     0x9000,    0x8000,
+phy_init,   data, phy,     0x11000,   0x1000,
+otadata,    data, ota,     0x12000,   0x2000,
+ota_0,      app,  ota_0,   0x20000,   0x800000,
+ota_1,      app,  ota_1,   0x820000,  0x800000,
+assets_a,   data, spiffs,  0x1020000, 0x700000,
+assets_b,   data, spiffs,  0x1720000, 0x700000,

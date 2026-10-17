@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: actual life-v5 applied work overlay maps away/idle; frozen024 negative has overlay but projects home
+ok 1 - actual life-v5 applied work overlay maps away/idle; frozen024 negative has overlay but projects home
+  ---
+  duration_ms: 342.148125
+  type: 'test'
+  ...
+# Subtest: getter reads only the last applied original syncNow, returns copies, and never writes game/social/cfg or starts sensors
+ok 2 - getter reads only the last applied original syncNow, returns copies, and never writes game/social/cfg or starts sensors
+  ---
+  duration_ms: 69.313875
+  type: 'test'
+  ...
+# Subtest: original recall button wins over unchanged work schedule for30minutes and only original expiry render restores away
+ok 3 - original recall button wins over unchanged work schedule for30minutes and only original expiry render restores away
+  ---
+  duration_ms: 81.421416
+  type: 'test'
+  ...
+# Subtest: original care capture listener recalls first without inventing reward; map follows actual room care after recall
+ok 4 - original care capture listener recalls first without inventing reward; map follows actual room care after recall
+  ---
+  duration_ms: 67.201417
+  type: 'test'
+  ...
+# Subtest: demo and original automatic day use applied outputs; commute stays home; unknown/absent/unready hook blocks nonworld
+ok 5 - demo and original automatic day use applied outputs; commute stays home; unknown/absent/unready hook blocks nonworld
+  ---
+  duration_ms: 209.282292
+  type: 'test'
+  ...
+# Subtest: explicit world wins over companion out or unavailable hook; only actual world source can set walk/rain/transitions
+ok 6 - explicit world wins over companion out or unavailable hook; only actual world source can set walk/rain/transitions
+  ---
+  duration_ms: 65.335458
+  type: 'test'
+  ...
+# Subtest: foreground gate retains original recall while suspended and coordinator needs explicit reauthorization after return
+ok 7 - foreground gate retains original recall while suspended and coordinator needs explicit reauthorization after return
+  ---
+  duration_ms: 71.222708
+  type: 'test'
+  ...
+# Subtest: hook build is mechanically limited to actual original closure and all original unrelated assets remain024
+ok 8 - hook build is mechanically limited to actual original closure and all original unrelated assets remain024
+  ---
+  duration_ms: 7.433458
+  type: 'test'
+  ...
+# Subtest: actual automatic day with explicit memory stays applies work and recall without claiming physical location
+ok 9 - actual automatic day with explicit memory stays applies work and recall without claiming physical location
+  ---
+  duration_ms: 53.072792
+  type: 'test'
+  ...
+# Subtest: packager rejects changed or missing original companion formula instead of silently shipping a missing hook
+ok 10 - packager rejects changed or missing original companion formula instead of silently shipping a missing hook
+  ---
+  duration_ms: 364.188542
+  type: 'test'
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2020.851666

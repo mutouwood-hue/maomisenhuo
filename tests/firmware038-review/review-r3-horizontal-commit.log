@@ -1,0 +1,26 @@
+FRAME 0 2160 3627401df165fd37 47 217156
+SNAP horizontal-held 2200 3627401df165fd37
+FRAME 1 2200 50fcf7ab9ba77a17 58 263332
+SNAP horizontal-held 2240 50fcf7ab9ba77a17
+FRAME 2 2280 31eabe5d5ce685f0 69 309508
+SNAP horizontal-held 2280 31eabe5d5ce685f0
+FRAME 3 2320 cb0ee2ccc2caa9b0 80 355684
+SNAP horizontal-held 2320 cb0ee2ccc2caa9b0
+FRAME 4 2360 da3d85c27e028b70 91 401028
+SNAP horizontal-held 2360 da3d85c27e028b70
+FRAME 5 2400 7dc62d0f3bb8039c 104 447880
+SNAP horizontal-held 2400 7dc62d0f3bb8039c
+FRAME 6 2440 550cc7afb76aedba 114 487264
+SNAP horizontal-held 2440 550cc7afb76aedba
+FRAME 7 2480 bfbbe03927fdb983 124 525248
+SNAP horizontal-held 2480 bfbbe03927fdb983
+FRAME 8 2530 8af8a2a1b8e14c1a 134 569100
+FRAME 9 2570 77a2e71e18784796 144 607256
+FRAME 10 2610 3095267152b38f96 152 638224
+FRAME 11 2650 05ed0d3f240f1e83 159 666664
+FRAME 12 2690 8e36a350197e0c5f 206 883820
+FRAME 13 2730 d9035a66db4b4505 252 1093584
+METRIC horizontal-commit ticks2740 frames14 flush252 pixels1093584 page3 face1 active0 settling0 emit0 pending0 live0 action0
+SNAP horizontal-final 2740 d9035a66db4b4505
+REVIEW software_fixture_only case=horizontal-commit
+badge_ui: Original animation bank: available

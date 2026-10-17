@@ -1,0 +1,20 @@
+{
+  "apkHash": "444d7d57a5ae62e2b3f61fe927534c83ce0e38012f4ff074e608fc208b25d25f",
+  "apkBytes": 615825,
+  "zipHash": "f5170d1600ac41d4254ecbe6cdbac096e614fb0f40fc44035322371cd976f8d7",
+  "zipBytes": 1136364,
+  "zipFileCount": 115,
+  "sourceFiles": 115,
+  "sourceMismatches": [],
+  "base015SourceMismatches": [],
+  "base015ApkMatches": true,
+  "base015ZipMatches": true,
+  "zipMismatches": [],
+  "apkAssetCount": 28,
+  "apkAssetMismatches": [],
+  "protectedFileCount": 38,
+  "protectedMismatch": [],
+  "oldWebCount": 15,
+  "oldGameCount": 8,
+  "javaCount": 4
+}

@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: same-clock negative025 reproduces bypass, while026 defers before UUID/digest/WAL/seal/ACK
+ok 1 - same-clock negative025 reproduces bypass, while026 defers before UUID/digest/WAL/seal/ACK
+  ---
+  duration_ms: 68.71375
+  type: 'test'
+  ...
+# Subtest: pre-bound original public aliases reject inside lease; getters and complete browser backup export stay read-only
+ok 2 - pre-bound original public aliases reject inside lease; getters and complete browser backup export stay read-only
+  ---
+  duration_ms: 12.73475
+  type: 'test'
+  ...
+# Subtest: foreground cancellation during asynchronous digest releases gate with no decision or runtime publication
+ok 3 - foreground cancellation during asynchronous digest releases gate with no decision or runtime publication
+  ---
+  duration_ms: 11.464125
+  type: 'test'
+  ...
+# Subtest: actual Native client lost commit+read reply blocks same-page retry; cold recreation dedups without reseeding RAM
+ok 4 - actual Native client lost commit+read reply blocks same-page retry; cold recreation dedups without reseeding RAM
+  ---
+  duration_ms: 16.818
+  type: 'test'
+  ...
+# Subtest: timestamp-less FIFO waits only original per-action threshold; rejected care never advances old timestamp
+ok 5 - timestamp-less FIFO waits only original per-action threshold; rejected care never advances old timestamp
+  ---
+  duration_ms: 28.816542
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 431.896208

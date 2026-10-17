@@ -1,0 +1,60 @@
+TAP version 13
+# Subtest: six decorative local icons keep all original labels, button nodes, order and delegated actions
+ok 1 - six decorative local icons keep all original labels, button nodes, order and delegated actions
+  ---
+  duration_ms: 336.40375
+  ...
+# Subtest: original NPC modal copy retains timing and real actions; text wrapping never touches pet data
+ok 2 - original NPC modal copy retains timing and real actions; text wrapping never touches pet data
+  ---
+  duration_ms: 54.84275
+  ...
+# Subtest: NPC banner is labeled game distance, while non-NPC text and live rhythm hints stay intact
+ok 3 - NPC banner is labeled game distance, while non-NPC text and live rhythm hints stay intact
+  ---
+  duration_ms: 49.862416
+  ...
+# Subtest: result copy is node-preserving and idempotent with long literal text and empty hints
+ok 4 - result copy is node-preserving and idempotent with long literal text and empty hints
+  ---
+  duration_ms: 37.579667
+  ...
+# Subtest: local vectors have a common small-size slot and readable default/disabled label contrast
+ok 5 - local vectors have a common small-size slot and readable default/disabled label contrast
+  ---
+  duration_ms: 1.760458
+  ...
+# Subtest: 017 leaves the other four rendered SVG definitions byte-identical to frozen016
+ok 6 - 017 leaves the other four rendered SVG definitions byte-identical to frozen016
+  ---
+  duration_ms: 0.192917
+  ...
+# Subtest: 017 original encounter CTA computed cascade exceeds 4.5 contrast enabled and disabled
+ok 7 - 017 original encounter CTA computed cascade exceeds 4.5 contrast enabled and disabled
+  ---
+  duration_ms: 81.915917
+  ...
+# Subtest: automatic original-modal decoration settles without a self-triggering frame loop
+ok 8 - automatic original-modal decoration settles without a self-triggering frame loop
+  ---
+  duration_ms: 45.494167
+  ...
+# Subtest: only life/wardrobe SVG output changes; original 26px slots, labels, targets and disabled state stay
+ok 9 - only life/wardrobe SVG output changes; original 26px slots, labels, targets and disabled state stay
+  ---
+  duration_ms: 206.728958
+  ...
+# Subtest: full original+Host+polish cascade yields opaque accessible CTA and preserves activation
+ok 10 - full original+Host+polish cascade yields opaque accessible CTA and preserves activation
+  ---
+  duration_ms: 195.649708
+  ...
+1..10
+# tests 10
+# suites 0
+# pass 10
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1166.928833

@@ -1,0 +1,61 @@
+{
+  "offline": true,
+  "deviceTouched": false,
+  "checks": [
+    {
+      "name": "BSP_exact_deployed_032_safe10_source",
+      "passed": true
+    },
+    {
+      "name": "one_literal_10_row_profile",
+      "passed": true
+    },
+    {
+      "name": "internal_draw_buffers",
+      "passed": true
+    },
+    {
+      "name": "requires_double_buffer",
+      "passed": true
+    },
+    {
+      "name": "no20row_probe_or_registration_retry",
+      "passed": true
+    },
+    {
+      "name": "no_clock_increase",
+      "passed": true
+    },
+    {
+      "name": "capture_64KiB_DMA_guard_unchanged",
+      "passed": true
+    },
+    {
+      "name": "all033_main_source_exact",
+      "passed": true
+    },
+    {
+      "name": "sdkconfig_exact033",
+      "passed": true
+    },
+    {
+      "name": "sdkconfig_defaults_exact033",
+      "passed": true
+    },
+    {
+      "name": "partition_table_source_exact033",
+      "passed": true
+    }
+  ],
+  "checkCount": 11,
+  "candidateBspSha256": "f3a86ce64f3117fc52b35c646ec652826a62a214a589a133dae3155e1016cc24",
+  "safe032BspSha256": "f3a86ce64f3117fc52b35c646ec652826a62a214a589a133dae3155e1016cc24",
+  "mainFileCount": 51,
+  "expectedPixelBytesPerBuffer": 9320,
+  "expectedTotalPixelBytes": 18640,
+  "previous20RowTotalPixelBytes": 37280,
+  "nominalReturnedInternalPixelBufferBytes": 18640,
+  "expectedFullScreenMinimumChunks": 47,
+  "actualHeapRecoveryNotMeasured": true,
+  "captureMayStillRefuseIfRuntimeBudgetInsufficient": true
+}

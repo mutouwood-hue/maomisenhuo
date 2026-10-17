@@ -1,0 +1,18 @@
+{
+  "generatedAt": "2026-10-16T03:32:27.290418+00:00",
+  "scope": "read-only source audit; no device operations",
+  "files": {
+    "artifacts/firmware-local-v3-perf034/source/main/badge_pages.c": "23d3249382522e5df723b5d7611769a455ebe6ffe269d445429fbbe769b72cc6",
+    "artifacts/firmware-local-v3-perf034/source/main/badge_gesture.c": "7c1287c077dfd17fb29bacf0aa5ef1eecf37561c5d454caed0ac0a1755b0ae16",
+    "artifacts/firmware-local-v3-perf034/source/main/badge_ui_contract.h": "a8338e96c5cdf62ba183630bdcf3eff04f4394c6c0c87098e47c738242653f8c",
+    "artifacts/firmware-local-v3-perf034/source/main/badge_diagnostics.c": "0af48d64cbc83af826772c7010825ac4630a6240de7db8078be7458809aaf373",
+    "artifacts/firmware-local-v3-perf034/source/main/local2_store.c": "d0b3ffa1097888d26e27e4f8a2304735c4e84be14244c28af8d73e8911061610",
+    "artifacts/firmware-local-v3-perf034/source/main/local2_core.c": "1a2e22df6f16e93676727611bc3072d6803ed9e679dc41b9a0dce7cc9b4fe603",
+    "artifacts/firmware-local-v3-perf034/source/main/local2_wire.c": "48778300017ee9d458224dfd2e6b5a6324fd1f7b4a1069d8bfa7569c46c1edc3",
+    "artifacts/html-offline-candidate/ui025/source/preview/offline-device-events.js": "9b1be94d1e6d44c9ccdee42b2156f0ee7f0bfdeb816f46d2217fdb00605e885e",
+    "artifacts/html-offline-candidate/ui025/source/preview/offline-event-store.js": "de67845a40a54b0a4a4de35230f984b8f82ba91b986583b5ab05dca1e07cc47c",
+    "artifacts/html-offline-candidate/ui025/source/preview/offline-scene-sync.js": "4868902efa98566fcf0d18cebedc64735824999b079f90c4520916fa788cdb80",
+    "artifacts/html-offline-candidate/ui025/source/preview/cflocal2-adapter.js": "29273cd113b1d41c7d4b885212845c6f910cff6b8db827f803e2b8fa75a88e5c",
+    "artifacts/html-offline-candidate/ui025/source/preview/game-03.js": "7444ee3fa01348b9b146ff5e3db30aed18132379663ac55f6c2c1dd7b56cc02f"
+  }
+}

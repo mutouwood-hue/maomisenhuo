@@ -1,0 +1,15 @@
+FRAME 0 2160 3627401df165fd37 47 217156
+SNAP horizontal-held 2200 3627401df165fd37
+FRAME 1 2200 3627401df165fd37 94 434312
+ORACLE horizontal-held 2200 0 3627401df165fd37
+FRAME 2 2250 ccf81dfcc31dbf7f 104 476328
+FRAME 3 2290 e11c405c97871880 114 517928
+FRAME 4 2330 021440afbc803060 124 559112
+FRAME 5 2370 ba74bbda67429620 134 599880
+FRAME 6 2410 4f4e40cac45f36b0 181 817036
+FRAME 7 2450 ff34156fe7392a7f 190 857388
+METRIC horizontal-rebound ticks2460 frames8 flush190 pixels857388 page3 face0 active0 settling0 emit0 pending0 live0 action0
+SNAP horizontal-final 2460 ff34156fe7392a7f
+ORACLE horizontal-final 2460 0 ff34156fe7392a7f
+REVIEW software_fixture_only case=horizontal-rebound
+badge_ui: Original animation bank: available

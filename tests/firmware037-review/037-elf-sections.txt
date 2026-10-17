@@ -1,0 +1,40 @@
+/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/build/cat_forest_badge.elf  :
+section                   size         addr
+.rtc.text                    0   1611653120
+.rtc.force_fast              0   1611653120
+.rtc_noinit                  0   1342177280
+.rtc.force_slow             32   1342177280
+.rtc_reserved               24   1611661288
+.iram0.vectors            1028   1077362688
+.iram0.text             109839   1077363716
+.dram0.dummy             94720   1070104576
+.dram0.data              19128   1070199296
+.noinit                      0   1070218424
+.dram0.bss               29320   1070218424
+.flash.text             786360   1107296288
+.flash_rodata_dummy     786432   1006632992
+.flash.appdesc             256   1007419424
+.flash.rodata          5481368   1007419680
+.ext_ram.dummy         6291424   1006632992
+.iram0.text_end            237   1077473555
+.iram0.data                  0   1077473792
+.iram0.bss                   0   1077473792
+.dram0.heap_start            0   1070247744
+.debug_aranges           68240            0
+.debug_info            5279243            0
+.debug_abbrev           515393            0
+.debug_line            4192279            0
+.debug_frame            172416            0
+.debug_str              594165            0
+.debug_loc             1973971            0
+.debug_ranges           315464            0
+.debug_line_str          10570            0
+.debug_loclists          81380            0
+.debug_rnglists           4145            0
+.comment                   181            0
+.xtensa.info                56            0
+.xt.prop                   240            0
+.xt.lit                      0            0
+Total                 26807911
+
+

@@ -1,0 +1,1484 @@
+{
+  "evidence": "virtual_fixture",
+  "passed": 28,
+  "failed": 0,
+  "steps": [
+    {
+      "name": "initialize → native-fixture scan/subscription → production HELLO/state",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "first owner scene survives JS schema and C persistence",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "same scene semantic projection does not write again",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "scene roundtrip departing/clear",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "scene roundtrip away/rain",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "scene roundtrip returning/rain",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "scene roundtrip home/clear",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "lost snapshot application ACK retains journal; explicit retry uses same bytes",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "CLI process restart + new JS adapter recover owner scene from one blob",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "synthetic device driver → real core care → real wire → JS read",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "no Host durable receipt means no wire ACK or dequeue",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "durable Host receipt → ACK lost → both processes restart → byte-identical duplicate ACK",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "synthetic peer receipt → real core gift → wire → JS event schema",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "Host fixture fsync/readback receipt precedes gift ACK",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "same synthetic peer receipt remains duplicate after delivery; no second event",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "durable event counter after ACK/restart does not reuse IDs",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "Host saved receipt then restart before ACK re-reads same event without reapplying",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "mixed FIFO event 4 care",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "mixed FIFO event 5 gift",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "mixed FIFO event 6 care",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "mixed FIFO drains only after each Host durable receipt",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "IR-03 real C process restart clears runtime clock while preserving lost-ACK pending",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "IR-03 explicit historical retry is exact bytes and durable duplicate, clock remains zero",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "IR-03 same semantics current snapshot gets next seq/revision and restores runtime clock",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "IR-03 100 same-semantic time samples emit no heartbeat or extra write",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "IR-03 first fresh no-epoch snapshot persists without claiming a clock",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "IR-03 no-epoch confirmation cannot suppress same-semantic later clock calibration",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    },
+    {
+      "name": "actual transport writes and notification reassembly use <=20-byte chunks",
+      "status": "passed",
+      "evidence": "virtual_fixture"
+    }
+  ],
+  "trace": [
+    {
+      "direction": "JS_to_C",
+      "op": "hello",
+      "id": "cfl2-1-q1",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q1",
+        "op": "hello",
+        "data": {
+          "protocol": "CFLOCAL2",
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "maxLine": 2048,
+          "lastSeq": 0,
+          "clientId": null,
+          "capabilities": [
+            "scene",
+            "snapshot",
+            "events",
+            "peer"
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-1-q2",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q2",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": false,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 0,
+          "clientId": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "scene-home",
+      "seq": 1,
+      "response": {
+        "v": 2,
+        "id": "scene-home",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 1,
+          "counter": 0,
+          "seq": 1
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-1-q3",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q3",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 1,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 1,
+            "scene": "home",
+            "action": "idle",
+            "weather": "clear",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "scene-1",
+      "seq": 2,
+      "response": {
+        "v": 2,
+        "id": "scene-1",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 2,
+          "counter": 0,
+          "seq": 2
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-1-q4",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q4",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 2,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 2,
+            "scene": "departing",
+            "action": "walk",
+            "weather": "clear",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "scene-2",
+      "seq": 3,
+      "response": {
+        "v": 2,
+        "id": "scene-2",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 3,
+          "counter": 0,
+          "seq": 3
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-1-q5",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q5",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 3,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 3,
+            "scene": "away",
+            "action": "walk",
+            "weather": "rain",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "scene-3",
+      "seq": 4,
+      "response": {
+        "v": 2,
+        "id": "scene-3",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 4,
+          "counter": 0,
+          "seq": 4
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-1-q6",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q6",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 4,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 4,
+            "scene": "returning",
+            "action": "walk",
+            "weather": "rain",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "scene-4",
+      "seq": 5,
+      "response": {
+        "v": 2,
+        "id": "scene-4",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 5,
+          "counter": 0,
+          "seq": 5
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-1-q7",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q7",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 5,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 5,
+            "scene": "home",
+            "action": "idle",
+            "weather": "clear",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "lost-scene",
+      "seq": 6,
+      "response": {
+        "v": 2,
+        "id": "lost-scene",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 6,
+          "counter": 0,
+          "seq": 6
+        },
+        "ok": true
+      }
+    },
+    {
+      "fixture": "dropped_application_response",
+      "op": "snapshot",
+      "id": "lost-scene"
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "hello",
+      "id": "cfl2-1-q8",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q8",
+        "op": "hello",
+        "data": {
+          "protocol": "CFLOCAL2",
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "maxLine": 2048,
+          "lastSeq": 6,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "capabilities": [
+            "scene",
+            "snapshot",
+            "events",
+            "peer"
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-1-q9",
+      "response": {
+        "v": 2,
+        "id": "cfl2-1-q9",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 6,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 6,
+            "scene": "away",
+            "action": "idle",
+            "weather": "rain",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "lost-scene",
+      "seq": 6,
+      "response": {
+        "v": 2,
+        "id": "lost-scene",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": true,
+          "revision": 6,
+          "counter": 0,
+          "seq": 6
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "hello",
+      "id": "cfl2-2-q1",
+      "response": {
+        "v": 2,
+        "id": "cfl2-2-q1",
+        "op": "hello",
+        "data": {
+          "protocol": "CFLOCAL2",
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "maxLine": 2048,
+          "lastSeq": 6,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "capabilities": [
+            "scene",
+            "snapshot",
+            "events",
+            "peer"
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-2-q2",
+      "response": {
+        "v": 2,
+        "id": "cfl2-2-q2",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 6,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 6,
+            "scene": "away",
+            "action": "idle",
+            "weather": "rain",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-2-q3",
+      "response": {
+        "v": 2,
+        "id": "cfl2-2-q3",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 0,
+          "lastSeq": 6,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 6,
+            "scene": "away",
+            "action": "idle",
+            "weather": "rain",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "fixture": "synthetic_driver_input",
+      "input": "!care 2",
+      "result": {
+        "virtual_fixture": true,
+        "synthetic_source": true,
+        "status": 0
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-2-q4",
+      "response": {
+        "v": 2,
+        "id": "cfl2-2-q4",
+        "op": "events",
+        "data": {
+          "event": {
+            "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:1",
+            "counter": 1,
+            "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "petId": "virtual-cat",
+            "source": "native_device",
+            "protocol": "CFLOCAL2",
+            "occurredAtMs": 1800000000000,
+            "kind": "care",
+            "action": "pet"
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "ack",
+      "id": "11111111-1111-4111-8111-000000000002",
+      "seq": 7,
+      "response": {
+        "v": 2,
+        "id": "11111111-1111-4111-8111-000000000002",
+        "op": "ack",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 6,
+          "counter": 1,
+          "seq": 7
+        },
+        "ok": true
+      }
+    },
+    {
+      "fixture": "dropped_application_response",
+      "op": "ack",
+      "id": "11111111-1111-4111-8111-000000000002"
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "hello",
+      "id": "cfl2-3-q1",
+      "response": {
+        "v": 2,
+        "id": "cfl2-3-q1",
+        "op": "hello",
+        "data": {
+          "protocol": "CFLOCAL2",
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "maxLine": 2048,
+          "lastSeq": 7,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "capabilities": [
+            "scene",
+            "snapshot",
+            "events",
+            "peer"
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-3-q2",
+      "response": {
+        "v": 2,
+        "id": "cfl2-3-q2",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 1,
+          "lastSeq": 7,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 6,
+            "scene": "away",
+            "action": "idle",
+            "weather": "rain",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "ack",
+      "id": "11111111-1111-4111-8111-000000000002",
+      "seq": 7,
+      "response": {
+        "v": 2,
+        "id": "11111111-1111-4111-8111-000000000002",
+        "op": "ack",
+        "data": {
+          "persisted": true,
+          "duplicate": true,
+          "revision": 6,
+          "counter": 1,
+          "seq": 7
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-3-q3",
+      "response": {
+        "v": 2,
+        "id": "cfl2-3-q3",
+        "op": "events",
+        "data": {
+          "event": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "fixture": "synthetic_driver_input",
+      "input": "!gift bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb 1",
+      "result": {
+        "virtual_fixture": true,
+        "synthetic_source": true,
+        "status": 0
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-3-q4",
+      "response": {
+        "v": 2,
+        "id": "cfl2-3-q4",
+        "op": "events",
+        "data": {
+          "event": {
+            "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:2",
+            "counter": 2,
+            "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "petId": "virtual-cat",
+            "source": "native_device",
+            "protocol": "CFLOCAL2",
+            "occurredAtMs": 1800000000000,
+            "kind": "gift",
+            "peerId": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+            "peerCounter": 1,
+            "giftId": "flower",
+            "quantity": 1,
+            "peerComplete": false
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "ack",
+      "id": "11111111-1111-4111-8111-000000000003",
+      "seq": 8,
+      "response": {
+        "v": 2,
+        "id": "11111111-1111-4111-8111-000000000003",
+        "op": "ack",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 6,
+          "counter": 2,
+          "seq": 8
+        },
+        "ok": true
+      }
+    },
+    {
+      "fixture": "synthetic_driver_input",
+      "input": "!gift bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb 1",
+      "result": {
+        "virtual_fixture": true,
+        "synthetic_source": true,
+        "status": 1
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-3-q5",
+      "response": {
+        "v": 2,
+        "id": "cfl2-3-q5",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 2,
+          "lastSeq": 8,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 6,
+            "scene": "away",
+            "action": "idle",
+            "weather": "rain",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "fixture": "synthetic_driver_input",
+      "input": "!care 4",
+      "result": {
+        "virtual_fixture": true,
+        "synthetic_source": true,
+        "status": 0
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-3-q6",
+      "response": {
+        "v": 2,
+        "id": "cfl2-3-q6",
+        "op": "events",
+        "data": {
+          "event": {
+            "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:3",
+            "counter": 3,
+            "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "petId": "virtual-cat",
+            "source": "native_device",
+            "protocol": "CFLOCAL2",
+            "occurredAtMs": 1800000000000,
+            "kind": "care",
+            "action": "water"
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "hello",
+      "id": "cfl2-4-q1",
+      "response": {
+        "v": 2,
+        "id": "cfl2-4-q1",
+        "op": "hello",
+        "data": {
+          "protocol": "CFLOCAL2",
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "maxLine": 2048,
+          "lastSeq": 8,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "capabilities": [
+            "scene",
+            "snapshot",
+            "events",
+            "peer"
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-4-q2",
+      "response": {
+        "v": 2,
+        "id": "cfl2-4-q2",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 1,
+          "lastAck": 2,
+          "lastSeq": 8,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 6,
+            "scene": "away",
+            "action": "idle",
+            "weather": "rain",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-4-q3",
+      "response": {
+        "v": 2,
+        "id": "cfl2-4-q3",
+        "op": "events",
+        "data": {
+          "event": {
+            "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:3",
+            "counter": 3,
+            "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "petId": "virtual-cat",
+            "source": "native_device",
+            "protocol": "CFLOCAL2",
+            "occurredAtMs": 1800000000000,
+            "kind": "care",
+            "action": "water"
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "ack",
+      "id": "11111111-1111-4111-8111-000000000004",
+      "seq": 9,
+      "response": {
+        "v": 2,
+        "id": "11111111-1111-4111-8111-000000000004",
+        "op": "ack",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 6,
+          "counter": 3,
+          "seq": 9
+        },
+        "ok": true
+      }
+    },
+    {
+      "fixture": "synthetic_driver_input",
+      "input": "!care 3",
+      "result": {
+        "virtual_fixture": true,
+        "synthetic_source": true,
+        "status": 0
+      }
+    },
+    {
+      "fixture": "synthetic_driver_input",
+      "input": "!gift cccccccccccccccccccccccccccccccc 1",
+      "result": {
+        "virtual_fixture": true,
+        "synthetic_source": true,
+        "status": 0
+      }
+    },
+    {
+      "fixture": "synthetic_driver_input",
+      "input": "!care 7",
+      "result": {
+        "virtual_fixture": true,
+        "synthetic_source": true,
+        "status": 0
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-4-q4",
+      "response": {
+        "v": 2,
+        "id": "cfl2-4-q4",
+        "op": "events",
+        "data": {
+          "event": {
+            "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:4",
+            "counter": 4,
+            "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "petId": "virtual-cat",
+            "source": "native_device",
+            "protocol": "CFLOCAL2",
+            "occurredAtMs": 1800000000000,
+            "kind": "care",
+            "action": "feed"
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "ack",
+      "id": "11111111-1111-4111-8111-000000000005",
+      "seq": 10,
+      "response": {
+        "v": 2,
+        "id": "11111111-1111-4111-8111-000000000005",
+        "op": "ack",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 6,
+          "counter": 4,
+          "seq": 10
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-4-q5",
+      "response": {
+        "v": 2,
+        "id": "cfl2-4-q5",
+        "op": "events",
+        "data": {
+          "event": {
+            "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:5",
+            "counter": 5,
+            "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "petId": "virtual-cat",
+            "source": "native_device",
+            "protocol": "CFLOCAL2",
+            "occurredAtMs": 1800000000000,
+            "kind": "gift",
+            "peerId": "cccccccccccccccccccccccccccccccc",
+            "peerCounter": 1,
+            "giftId": "flower",
+            "quantity": 1,
+            "peerComplete": false
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "ack",
+      "id": "11111111-1111-4111-8111-000000000006",
+      "seq": 11,
+      "response": {
+        "v": 2,
+        "id": "11111111-1111-4111-8111-000000000006",
+        "op": "ack",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 6,
+          "counter": 5,
+          "seq": 11
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-4-q6",
+      "response": {
+        "v": 2,
+        "id": "cfl2-4-q6",
+        "op": "events",
+        "data": {
+          "event": {
+            "eventId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:6",
+            "counter": 6,
+            "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+            "petId": "virtual-cat",
+            "source": "native_device",
+            "protocol": "CFLOCAL2",
+            "occurredAtMs": 1800000000000,
+            "kind": "care",
+            "action": "sleep"
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "ack",
+      "id": "11111111-1111-4111-8111-000000000007",
+      "seq": 12,
+      "response": {
+        "v": 2,
+        "id": "11111111-1111-4111-8111-000000000007",
+        "op": "ack",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 6,
+          "counter": 6,
+          "seq": 12
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "events",
+      "id": "cfl2-4-q7",
+      "response": {
+        "v": 2,
+        "id": "cfl2-4-q7",
+        "op": "events",
+        "data": {
+          "event": null
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "ir03-historic",
+      "seq": 13,
+      "response": {
+        "v": 2,
+        "id": "ir03-historic",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 7,
+          "counter": 6,
+          "seq": 13
+        },
+        "ok": true
+      }
+    },
+    {
+      "fixture": "dropped_application_response",
+      "op": "snapshot",
+      "id": "ir03-historic"
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "hello",
+      "id": "cfl2-5-q1",
+      "response": {
+        "v": 2,
+        "id": "cfl2-5-q1",
+        "op": "hello",
+        "data": {
+          "protocol": "CFLOCAL2",
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "maxLine": 2048,
+          "lastSeq": 13,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "capabilities": [
+            "scene",
+            "snapshot",
+            "events",
+            "peer"
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-5-q2",
+      "response": {
+        "v": 2,
+        "id": "cfl2-5-q2",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 6,
+          "lastSeq": 13,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 7,
+            "scene": "home",
+            "action": "idle",
+            "weather": "clear",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "ir03-historic",
+      "seq": 13,
+      "response": {
+        "v": 2,
+        "id": "ir03-historic",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": true,
+          "revision": 7,
+          "counter": 6,
+          "seq": 13
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "ir03-current",
+      "seq": 14,
+      "response": {
+        "v": 2,
+        "id": "ir03-current",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 8,
+          "counter": 6,
+          "seq": 14
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "hello",
+      "id": "cfl2-6-q1",
+      "response": {
+        "v": 2,
+        "id": "cfl2-6-q1",
+        "op": "hello",
+        "data": {
+          "protocol": "CFLOCAL2",
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "maxLine": 2048,
+          "lastSeq": 14,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "capabilities": [
+            "scene",
+            "snapshot",
+            "events",
+            "peer"
+          ]
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "state",
+      "id": "cfl2-6-q2",
+      "response": {
+        "v": 2,
+        "id": "cfl2-6-q2",
+        "op": "state",
+        "data": {
+          "deviceId": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "hasSnapshot": true,
+          "storageError": false,
+          "pending": 0,
+          "lastAck": 6,
+          "lastSeq": 14,
+          "clientId": "11111111-1111-4111-8111-000000000001",
+          "snapshot": {
+            "petId": "virtual-cat",
+            "revision": 8,
+            "scene": "home",
+            "action": "idle",
+            "weather": "clear",
+            "pet": {
+              "name": "小橘",
+              "breed": "orange",
+              "coins": 12,
+              "food": 70,
+              "mood": 80,
+              "clean": 90,
+              "energy": 85,
+              "health": 100
+            }
+          }
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "ir03-no-epoch",
+      "seq": 15,
+      "response": {
+        "v": 2,
+        "id": "ir03-no-epoch",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 9,
+          "counter": 6,
+          "seq": 15
+        },
+        "ok": true
+      }
+    },
+    {
+      "direction": "JS_to_C",
+      "op": "snapshot",
+      "id": "ir03-add-epoch",
+      "seq": 16,
+      "response": {
+        "v": 2,
+        "id": "ir03-add-epoch",
+        "op": "snapshot",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 10,
+          "counter": 6,
+          "seq": 16
+        },
+        "ok": true
+      }
+    }
+  ],
+  "persistedEvidence": {
+    "state.blob": {
+      "source": "virtual_fixture_synthetic_data_only",
+      "bytes": 535,
+      "sha256": "32e74ae9e4e042658482c87a9c0913d8f727d59ded13b28ab41cd58b11dee2d2"
+    },
+    "phone-journal.json": {
+      "source": "virtual_fixture_synthetic_data_only",
+      "bytes": 573,
+      "sha256": "af53aaa6f41cadd3c6157ffe963a36b54088d0286d03cd3297acff993edde803"
+    },
+    "host-receipts.json": {
+      "source": "virtual_fixture_synthetic_data_only",
+      "bytes": 817,
+      "sha256": "4d817fdb2c79a8df90ff521d4df3574679d527337a7dcb43bd8071d25061285c"
+    }
+  },
+  "limits": [
+    "Native result/subscription are fixture assertions, not Java/GATT evidence",
+    "Host receipt is synthetic disk consumer, not original game save writer/reward integration",
+    "File fsync/rename is host storage, not SDK NVS/real power cut",
+    "Gift input calls actual l2_receive_gift with synthetic peer source; real bilateral machine is separate peer suite"
+  ]
+}

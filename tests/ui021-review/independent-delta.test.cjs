@@ -1,0 +1,20 @@
+/* Read-only source fixture tests; no WebKit/device/storage/build/network. */
+const {test}=require('node:test'),assert=require('node:assert/strict'),path=require('node:path'),fs=require('node:fs');
+const root=path.resolve(__dirname,'../../artifacts/html-offline-candidate/ui021/source');
+const {fixture,read}=require(root+'/tests/page-ui-fixture.cjs');
+test('100 original N refreshes preserve all persistent decoration without observer repair',()=>{
+ const h=fixture();try{h.ui.decorate(h.w);const game=read('android/app/src/main/assets/game-03.js'),a=game.indexOf('function N(){m.title.textContent=window.__pgPlace'),b=game.indexOf('function G(){',a);assert.ok(a>=0&&b>a);assert.ok(game.includes('oe-Bi>250&&(Bi=oe,N(),t('));
+ const m=Object.fromEntries(['title','objective','hint','return','roam','fishing','rod','cursor','fish-label','event','event-title','event-copy','event-actions'].map(k=>[k,h.d.querySelector('.world-'+k)]));
+ const window=h.w;let z=true;const U='garden',Kh={garden:{name:'庭院'}},se={name:'探索',minSeconds:15},B='explore',Ae=new Set(),ee=[{}],me='自己走走',Te=false,De=()=>100,we=false,q=0,y={position:{distanceTo:()=>5}},gt={},Re=false,Le=.5,Ir=(v,a,b)=>Math.max(a,Math.min(b,v));
+ const N=eval('('+game.slice(a,b).trim()+')');const nodes=[m.roam,m.return,m.rod],images=nodes.map(n=>n.getAttribute('style'));
+ for(let i=0;i<100;i++){z=!!(i%2);N();for(let j=0;j<nodes.length;j++){const n=nodes[j];assert.ok(n.classList.contains('offline-persistent-icon'));assert.equal(n.querySelector('.offline-action-icon'),null);assert.equal(n.getAttribute('style'),images[j]);}assert.equal(m.roam.getAttribute('aria-pressed'),String(z));assert.equal(m.roam.textContent,z?'召回小猫':'自由活动');}
+ assert.match(read('web/offline-page-polish.css'),/\.world-roam\.offline-persistent-icon\[aria-pressed=true\]\s*\{\s*--offline-action-image:var\(--offline-recall-image\)/);
+ }finally{h.close();}
+});
+test('unknown mapped action values never fall back to a generic icon',()=>{const h=fixture();try{
+ h.open('world');const cases=[['#sc-hbody','we'],['#sc-hbody','h'],['#sc-hbody','htab'],['#world-panel','worldMode']];
+ for(const [parent,key]of cases){const b=h.d.createElement('button');b.dataset[key]='future-unmapped';b.textContent='未来原操作';let clicked=0;b.addEventListener('click',()=>clicked++);h.d.querySelector(parent).append(b);for(let i=0;i<3;i++)h.ui.decorate(h.w);assert.equal(b.querySelector('svg,.offline-action-icon'),null);assert.equal(b.classList.contains('offline-persistent-icon'),false);assert.equal(b.textContent,'未来原操作');b.click();assert.equal(clicked,1);}
+ }finally{h.close();}});
+test('nine inserted event choices and clinic instruments remain original text/node/listener',()=>{const h=fixture();try{const e=h.d.querySelector('.world-event-actions'),buttons=[];for(let i=0;i<9;i++){const b=h.d.createElement('button');b.textContent='原选项 '+i+' · 心情 +6';b.disabled=i===8;let called=0;b.addEventListener('click',()=>called++);e.append(b);buttons.push({b,label:b.textContent,count:()=>called});}for(let i=0;i<3;i++)h.ui.decorate(h.w);for(const {b,label,count}of buttons){assert.equal(b.textContent,label);assert.equal(b.querySelector('svg,.offline-action-icon'),null);assert.ok(b.classList.contains('offline-page-action'));b.click();assert.equal(count(),b.disabled?0:1);}for(const b of h.d.querySelectorAll('#clinic-dialog .clinic-instruments button'))assert.equal(b.querySelector('svg,.offline-action-icon'),null);
+ }finally{h.close();}});
+test('tip flow has no new lifetime/key writes and no fixed-bottom/zindex workaround',()=>{const css=read('web/offline-page-polish.css'),block=css.match(/#pg-think \.pg-tip\s*\{([^}]+)\}/)[1];assert.match(block,/position:static!important/);assert.match(block,/bottom:auto!important/);assert.doesNotMatch(block,/z-index|96px/);assert.match(css,/#pg-think:not\(\.tip\) \.pg-tip\s*\{\s*display:none/);const js=read('web/offline-page-icons.js');assert.doesNotMatch(js,/localStorage|pg-tip2|setTimeout|setInterval|\.click\(/);assert.match(css,/\.offline-action-icon\s*\{[^}]*background:transparent/);assert.match(css,/\.offline-page-action > \.offline-action-icon > svg > g\s*\{\s*stroke:currentColor/);});

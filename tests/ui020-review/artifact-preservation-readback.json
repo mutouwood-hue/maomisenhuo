@@ -1,0 +1,51 @@
+{
+  "ui019": {
+    "apk": {
+      "path": "deliverables/catforest-html-local-0.1.9-debug.apk",
+      "bytes": 616437,
+      "sha256": "75d2ca1c7bea8dc2741529f2f025ca4fd8802e6c8f381f8391d725dcdfe4881e"
+    },
+    "sourceArchive": {
+      "path": "deliverables/catforest-html-local-0.1.9-source.zip",
+      "files": 121,
+      "bytes": 1148538,
+      "sha256": "ea07aa34251cf1299b87a739b99b30e8548be4faf7f69e1eaf45352e25cdbd13",
+      "excluded": [
+        ".DS_Store",
+        ".build",
+        ".gradle",
+        "__pycache__",
+        "build",
+        "local.properties",
+        "node_modules",
+        "preview",
+        "signing keys"
+      ]
+    }
+  },
+  "ui020": {
+    "apk": {
+      "path": "deliverables/catforest-html-local-0.2.0-debug.apk",
+      "bytes": 623415,
+      "sha256": "991228214bb395311418a0260785b2678fea6f9344758a4a53eefa81fae15836"
+    },
+    "sourceArchive": {
+      "path": "deliverables/catforest-html-local-0.2.0-source.zip",
+      "files": 131,
+      "bytes": 1175446,
+      "sha256": "76fa7e8656750d3e1a8583c1cce30b8d7c83b1390386f0991177e0f68c928ee5",
+      "excluded": [
+        ".DS_Store",
+        ".build",
+        ".gradle",
+        "__pycache__",
+        "build",
+        "local.properties",
+        "node_modules",
+        "preview",
+        "signing keys"
+      ]
+    }
+  },
+  "sameCertificate": true
+}

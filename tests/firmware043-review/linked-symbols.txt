@@ -1,0 +1,4 @@
+3c525408 D _binary_pixel_cat_pcat_start
+3c557740 D _binary_pixel_cat_pcat_end
+3c557744 D _binary_room_cache_bin_start
+3c6608e8 D _binary_room_cache_bin_end

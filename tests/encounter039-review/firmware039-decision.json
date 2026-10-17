@@ -1,0 +1,21 @@
+{
+  "decision": "blocked",
+  "candidate": "0.3.9-local4",
+  "confirmed": [
+    {
+      "id": "E39-C01",
+      "priority": "P2",
+      "proof": "raw-digest-r2-negative.json"
+    },
+    {
+      "id": "E39-C02",
+      "priority": "P1",
+      "proof": "stale-consent-r2-negative.json"
+    }
+  ],
+  "independentCoreChecks": 658,
+  "hostOnly": true,
+  "migrationAuthorized": false,
+  "deviceRelease": false,
+  "report": "FIRMWARE039-REVIEW.md"
+}

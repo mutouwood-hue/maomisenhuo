@@ -1,0 +1,20 @@
+{
+  "apkHash": "75d2ca1c7bea8dc2741529f2f025ca4fd8802e6c8f381f8391d725dcdfe4881e",
+  "apkBytes": 616437,
+  "zipHash": "ea07aa34251cf1299b87a739b99b30e8548be4faf7f69e1eaf45352e25cdbd13",
+  "zipBytes": 1148538,
+  "zipFileCount": 121,
+  "sourceFiles": 121,
+  "sourceMismatches": [],
+  "base018SourceMismatches": [],
+  "base018ApkMatches": true,
+  "base018ZipMatches": true,
+  "zipMismatches": [],
+  "apkAssetCount": 29,
+  "apkAssetMismatches": [],
+  "protectedFileCount": 31,
+  "protectedMismatch": [],
+  "changedWeb": [
+    "web/offline-ui-polish.css"
+  ]
+}

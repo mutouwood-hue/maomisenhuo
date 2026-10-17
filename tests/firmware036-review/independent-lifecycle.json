@@ -1,0 +1,49 @@
+{
+  "kind": "host_capability_fixture_actual_private_c",
+  "compileCommand": [
+    "clang",
+    "-O2",
+    "-g",
+    "-fsanitize=address,undefined",
+    "-fno-omit-frame-pointer",
+    "-std=gnu11",
+    "-UNDEBUG",
+    "-DCF_PRIVATE=1",
+    "-DCATFOREST_MASK_POOL_HOST_TEST=1",
+    "-DLV_KCONFIG_IGNORE",
+    "-DLV_LVGL_H_INCLUDE_SIMPLE",
+    "-DLV_ASSERT_HANDLER=abort();",
+    "-DLV_CONF_PATH=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf036/source/tools/host_preview/lv_conf.h\"",
+    "-DMASK_SOURCE=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf036/source/private/lvgl_mask_pool/lv_draw_sw_mask.c\"",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf036/source/tools/host_preview/stubs",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf036/source/main",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf036/source/tools/host_preview",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl/src/draw/sw",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware036-review/independent_lifecycle.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware036-review/pool_port.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware036-review/malloc_port.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a",
+    "-lm",
+    "-o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware036-review/independent-lifecycle"
+  ],
+  "cases": [
+    {
+      "name": "shared",
+      "returncode": 0,
+      "output": "INDEPENDENT shared CHECKS 14 ALLOC 2 FREE 2"
+    },
+    {
+      "name": "saturated",
+      "returncode": 0,
+      "output": "INDEPENDENT saturated CHECKS 56 ALLOC 2 FREE 2"
+    },
+    {
+      "name": "pool-first",
+      "returncode": 0,
+      "output": "INDEPENDENT pool-first CHECKS 9 ALLOC 2 FREE 2"
+    }
+  ]
+}

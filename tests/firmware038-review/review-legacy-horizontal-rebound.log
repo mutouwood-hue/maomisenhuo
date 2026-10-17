@@ -1,0 +1,12 @@
+FRAME 0 2160 c52da77548012cab 47 217156
+SNAP horizontal-held 2200 c52da77548012cab
+FRAME 1 2250 a8f308d6e1d1bafb 94 434312
+FRAME 2 2290 3bbbd7f37a0b9f88 141 651468
+FRAME 3 2330 c5cbf3135f9e3258 188 868624
+FRAME 4 2370 fee60c3d4d3e5878 235 1085780
+FRAME 5 2410 4f4e40cac45f36b0 282 1302936
+FRAME 6 2450 ff34156fe7392a7f 291 1343288
+METRIC horizontal-rebound ticks2460 frames7 flush291 pixels1343288 page3 face0 active0 settling0 emit0 pending0 live0 action0
+SNAP horizontal-final 2460 ff34156fe7392a7f
+REVIEW software_fixture_only case=horizontal-rebound
+badge_ui: Original animation bank: available

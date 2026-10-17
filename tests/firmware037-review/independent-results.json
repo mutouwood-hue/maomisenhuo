@@ -1,0 +1,83 @@
+{
+  "hardware": false,
+  "kind": "productionpages_memoryports",
+  "compileCommand": [
+    "clang",
+    "-O3",
+    "-std=gnu11",
+    "-UNDEBUG",
+    "-DCATFOREST_MASK_POOL_HOST_TEST=1",
+    "-DEXPECT_FIXED=1",
+    "-DPREVIEW_SOURCE=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf037/source/tools/host_preview/preview.c\"",
+    "-DLV_KCONFIG_IGNORE",
+    "-DLV_LVGL_H_INCLUDE_SIMPLE",
+    "-DLV_CONF_PATH=\"/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf037/source/tools/host_preview/lv_conf.h\"",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf037/source/tools/host_preview/stubs",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf037/source/main",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf037/source/tools/host_preview",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl",
+    "-I/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components/lvgl__lvgl/src/draw/sw",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware037-review/independent_aod.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf037/source/main/badge_scene.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf037/source/private/lvgl_mask_pool/lv_draw_sw_mask.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware037-review/pool_port.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware037-review/pool_exit_proof.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/badge_gesture.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/diag_stubs.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f16.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_paw.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_n40.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_pet.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_idle.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_walk.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/cat_idle.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_assets.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/local2_fonts.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f20.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/game_attention.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/CMakeFiles/badge_host_preview.dir/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/source/main/assets/badge_f24.c.o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v3-perf034/host-build/lvgl/lib/liblvgl.a",
+    "-lm",
+    "-o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/firmware037-review/independent-aod"
+  ],
+  "cases": [
+    {
+      "face": 0,
+      "clockValid": 0,
+      "exitCode": 0,
+      "output": "INDEPENDENT face0 valid0 pixels614 bounds201,382,264,396 checks1285 domain0"
+    },
+    {
+      "face": 0,
+      "clockValid": 1,
+      "exitCode": 0,
+      "output": "INDEPENDENT face0 valid1 pixels614 bounds201,382,264,396 checks1285 domain0"
+    },
+    {
+      "face": 1,
+      "clockValid": 0,
+      "exitCode": 0,
+      "output": "INDEPENDENT face1 valid0 pixels614 bounds201,430,264,444 checks1285 domain0"
+    },
+    {
+      "face": 1,
+      "clockValid": 1,
+      "exitCode": 0,
+      "output": "INDEPENDENT face1 valid1 pixels614 bounds201,430,264,444 checks1285 domain0"
+    },
+    {
+      "face": 2,
+      "clockValid": 0,
+      "exitCode": 0,
+      "output": "INDEPENDENT face2 valid0 pixels614 bounds201,430,264,444 checks1285 domain0"
+    },
+    {
+      "face": 2,
+      "clockValid": 1,
+      "exitCode": 0,
+      "output": "INDEPENDENT face2 valid1 pixels614 bounds201,430,264,444 checks1285 domain0"
+    }
+  ]
+}

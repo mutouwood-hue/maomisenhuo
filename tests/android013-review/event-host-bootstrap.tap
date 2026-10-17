@@ -1,0 +1,300 @@
+TAP version 13
+# Subtest: complete backup contains original game, social, stable wire identity and durable receipts; fresh restore does not grant again
+ok 1 - complete backup contains original game, social, stable wire identity and durable receipts; fresh restore does not grant again
+  ---
+  duration_ms: 27.755333
+  ...
+# Subtest: same-generation old original import is blocked before real store rollback; applied reward and dedup both remain
+ok 2 - same-generation old original import is blocked before real store rollback; applied reward and dedup both remain
+  ---
+  duration_ms: 10.519708
+  ...
+# Subtest: older complete backup unions receipt history and never rolls adapter sequences backward
+ok 3 - older complete backup unions receipt history and never rolls adapter sequences backward
+  ---
+  duration_ms: 32.871375
+  ...
+# Subtest: backup association detects a same-cat game rollback mixed with newer receipts
+ok 4 - backup association detects a same-cat game rollback mixed with newer receipts
+  ---
+  duration_ms: 12.155292
+  ...
+# Subtest: restore never overwrites conflicting receipts, malformed social metadata, an owner or unknown pending command
+ok 5 - restore never overwrites conflicting receipts, malformed social metadata, an owner or unknown pending command
+  ---
+  duration_ms: 17.293875
+  ...
+# Subtest: busy or connected import fails before any write; damaged original JSON preserves all bytes
+ok 6 - busy or connected import fails before any write; damaged original JSON preserves all bytes
+  ---
+  duration_ms: 3.53475
+  ...
+# Subtest: backup crash at restore-prepared resumes all imported images and receipt history together
+ok 7 - backup crash at restore-prepared resumes all imported images and receipt history together
+  ---
+  duration_ms: 17.596875
+  ...
+# Subtest: backup crash at image:0 resumes all imported images and receipt history together
+ok 8 - backup crash at image:0 resumes all imported images and receipt history together
+  ---
+  duration_ms: 12.138083
+  ...
+# Subtest: backup crash at image:1 resumes all imported images and receipt history together
+ok 9 - backup crash at image:1 resumes all imported images and receipt history together
+  ---
+  duration_ms: 7.542625
+  ...
+# Subtest: backup crash at image:2 resumes all imported images and receipt history together
+ok 10 - backup crash at image:2 resumes all imported images and receipt history together
+  ---
+  duration_ms: 11.630209
+  ...
+# Subtest: backup crash at before-finalize resumes all imported images and receipt history together
+ok 11 - backup crash at before-finalize resumes all imported images and receipt history together
+  ---
+  duration_ms: 7.887667
+  ...
+# Subtest: identity merge cannot silently rebind another cat or assign one wire ID to two generations
+ok 12 - identity merge cannot silently rebind another cat or assign one wire ID to two generations
+  ---
+  duration_ms: 1.258875
+  ...
+# Subtest: import never reports success before Native confirmation; unknown committed full restore is authoritative at restart
+ok 13 - import never reports success before Native confirmation; unknown committed full restore is authoritative at restart
+  ---
+  duration_ms: 11.808625
+  ...
+# Subtest: production pre-head recovery completes A before original scripts and leaves B byte-identical
+ok 14 - production pre-head recovery completes A before original scripts and leaves B byte-identical
+  ---
+  duration_ms: 50.585375
+  ...
+# Subtest: corrupt ledger or foreign recovery image blocks original Storage writes without replacing the source bytes
+ok 15 - corrupt ledger or foreign recovery image blocks original Storage writes without replacing the source bytes
+  ---
+  duration_ms: 24.450625
+  ...
+# Subtest: normal original social wipe preserves event dedup, and another page ledger update stops a stale writer
+ok 16 - normal original social wipe preserves event dedup, and another page ledger update stops a stale writer
+  ---
+  duration_ms: 19.630291
+  ...
+# Subtest: initial corrupt social JSON is preserved before the original silent default saver can overwrite it
+ok 17 - initial corrupt social JSON is preserved before the original silent default saver can overwrite it
+  ---
+  duration_ms: 4.906
+  ...
+# Subtest: all five real physical cares use actual original rules, water=drink and play=tease without a game score
+ok 18 - all five real physical cares use actual original rules, water=drink and play=tease without a game score
+  ---
+  duration_ms: 45.6425
+  ...
+# Subtest: real flower grants exactly one inventory item and original social receipt; no invented friend/profile/card
+ok 19 - real flower grants exactly one inventory item and original social receipt; no invented friend/profile/card
+  ---
+  duration_ms: 7.811834
+  ...
+# Subtest: original eligibility rejection is explicit, durable, and never presented as an applied reward
+ok 20 - original eligibility rejection is explicit, durable, and never presented as an applied reward
+  ---
+  duration_ms: 13.569084
+  ...
+# Subtest: unsupported, forged, or cross-device events remain in FIFO and never produce a receipt or ACK
+ok 21 - unsupported, forged, or cross-device events remain in FIFO and never produce a receipt or ACK
+  ---
+  duration_ms: 24.102083
+  ...
+# Subtest: old-cat and generation mismatch is durably isolated without clearing or acknowledging the queue
+ok 22 - old-cat and generation mismatch is durably isolated without clearing or acknowledging the queue
+  ---
+  duration_ms: 9.5925
+  ...
+# Subtest: crash at before-prepare recovers once; no ACK precedes complete game+social+dedup commit
+ok 23 - crash at before-prepare recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 11.07025
+  ...
+# Subtest: crash at prepared recovers once; no ACK precedes complete game+social+dedup commit
+ok 24 - crash at prepared recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 15.406959
+  ...
+# Subtest: crash at image:0 recovers once; no ACK precedes complete game+social+dedup commit
+ok 25 - crash at image:0 recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 7.595042
+  ...
+# Subtest: crash at image:1 recovers once; no ACK precedes complete game+social+dedup commit
+ok 26 - crash at image:1 recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 5.574625
+  ...
+# Subtest: crash at before-finalize recovers once; no ACK precedes complete game+social+dedup commit
+ok 27 - crash at before-finalize recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 9.305
+  ...
+# Subtest: crash at finalized recovers once; no ACK precedes complete game+social+dedup commit
+ok 28 - crash at finalized recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 7.529791
+  ...
+# Subtest: crash at committed recovers once; no ACK precedes complete game+social+dedup commit
+ok 29 - crash at committed recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 6.85725
+  ...
+# Subtest: crash at hydrated recovers once; no ACK precedes complete game+social+dedup commit
+ok 30 - crash at hydrated recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 11.789041
+  ...
+# Subtest: crash at before-ack recovers once; no ACK precedes complete game+social+dedup commit
+ok 31 - crash at before-ack recovers once; no ACK precedes complete game+social+dedup commit
+  ---
+  duration_ms: 8.574208
+  ...
+# Subtest: write failure before/after durable decision or either original image does not ACK; restart rolls forward only a committed decision
+ok 32 - write failure before/after durable decision or either original image does not ACK; restart rolls forward only a committed decision
+  ---
+  duration_ms: 33.225167
+  ...
+# Subtest: ACK lost before or after device commit retries without a second award
+ok 33 - ACK lost before or after device commit retries without a second award
+  ---
+  duration_ms: 22.538125
+  ...
+# Subtest: game/social read or write health failures are never converted into quarantined terminal ACKs
+ok 34 - game/social read or write health failures are never converted into quarantined terminal ACKs
+  ---
+  duration_ms: 2.554959
+  ...
+# Subtest: an event changing under the same eventId, an external recovery conflict, and a corrupt journal all fail closed
+ok 35 - an event changing under the same eventId, an external recovery conflict, and a corrupt journal all fail closed
+  ---
+  duration_ms: 7.156416
+  ...
+# Subtest: a state change while hashing, pause, or a busy interaction cannot overwrite newer progress or ACK
+ok 36 - a state change while hashing, pause, or a busy interaction cannot overwrite newer progress or ACK
+  ---
+  duration_ms: 6.453667
+  ...
+# Subtest: fresh restore missing device lastAck history blocks any event read, award or ACK
+ok 37 - fresh restore missing device lastAck history blocks any event read, award or ACK
+  ---
+  duration_ms: 1.264875
+  ...
+# Subtest: pending ACK recovery requires matching durable result, digest and generation identity
+ok 38 - pending ACK recovery requires matching durable result, digest and generation identity
+  ---
+  duration_ms: 5.626166
+  ...
+# Subtest: actual scene map cannot sample partial original game/social images, and an ACK BUSY retains the durable result
+ok 39 - actual scene map cannot sample partial original game/social images, and an ACK BUSY retains the durable result
+  ---
+  duration_ms: 8.110834
+  ...
+# Subtest: synchronous backup/event SHA-256 matches independent Node crypto across Unicode, boundary and binary text
+ok 40 - synchronous backup/event SHA-256 matches independent Node crypto across Unicode, boundary and binary text
+  ---
+  duration_ms: 6.65425
+  ...
+# Subtest: Native pre-commit failure never changes original results or ACKs; uncertain committed decision is recovered once
+ok 41 - Native pre-commit failure never changes original results or ACKs; uncertain committed decision is recovered once
+  ---
+  duration_ms: 19.106625
+  ...
+# Subtest: pause after Native decision finishes result projection but leaves FIFO untouched until a fresh explicit connection
+ok 42 - pause after Native decision finishes result projection but leaves FIFO untouched until a fresh explicit connection
+  ---
+  duration_ms: 3.2305
+  ...
+# Subtest: deferred original/Host/adapter scripts wait for Native authoritative result+owner+pending recovery, even when local social was corrupt
+ok 43 - deferred original/Host/adapter scripts wait for Native authoritative result+owner+pending recovery, even when local social was corrupt
+  ---
+  duration_ms: 187.609792
+  ...
+# Subtest: Native recovery failure leaves original scripts inert and never publishes adapter checkpoint callback
+ok 44 - Native recovery failure leaves original scripts inert and never publishes adapter checkpoint callback
+  ---
+  duration_ms: 49.000208
+  ...
+# Subtest: ordinary browser retains gameplay but cannot supply Native checkpoint or device ACK fallback
+ok 45 - ordinary browser retains gameplay but cannot supply Native checkpoint or device ACK fallback
+  ---
+  duration_ms: 40.469208
+  ...
+# Subtest: Native A-slot recovery does not alter original B-slot save or expose raw cross-slot keys
+ok 46 - Native A-slot recovery does not alter original B-slot save or expose raw cross-slot keys
+  ---
+  duration_ms: 42.341125
+  ...
+# Subtest: actual original store write failure cannot send changed memory or retain synced status
+ok 47 - actual original store write failure cannot send changed memory or retain synced status
+  ---
+  duration_ms: 31.315667
+  ...
+# Subtest: initial original-save corruption and read exceptions block snapshots without replacing the data
+ok 48 - initial original-save corruption and read exceptions block snapshots without replacing the data
+  ---
+  duration_ms: 2.45125
+  ...
+# Subtest: identity persistence failure or corrupt identity journal blocks radio and preserves old bytes
+ok 49 - identity persistence failure or corrupt identity journal blocks radio and preserves old bytes
+  ---
+  duration_ms: 2.266625
+  ...
+# Subtest: original reset reuses cat-1 but stable wire identity blocks new generation and allows restoring the same save
+ok 50 - original reset reuses cat-1 but stable wire identity blocks new generation and allows restoring the same save
+  ---
+  duration_ms: 5.5905
+  ...
+# Subtest: different family import, active family cat change, and missing identity against existing device all fail closed
+ok 51 - different family import, active family cat change, and missing identity against existing device all fail closed
+  ---
+  duration_ms: 2.499125
+  ...
+# Subtest: production Host + adapter + transport require explicit connect and both durable ACK and final GATT completion
+ok 52 - production Host + adapter + transport require explicit connect and both durable ACK and final GATT completion
+  ---
+  duration_ms: 1563.160833
+  ...
+# Subtest: native owner wiring keeps V2 off JavascriptInterface, denies frames, and stops transports before WebView pause
+ok 53 - native owner wiring keeps V2 off JavascriptInterface, denies frames, and stops transports before WebView pause
+  ---
+  duration_ms: 1.630292
+  ...
+# Subtest: production event Host + original rules + durable ledger + real adapter/transport commits both stores before Native ACK
+ok 54 - production event Host + original rules + durable ledger + real adapter/transport commits both stores before Native ACK
+  ---
+  duration_ms: 912.033792
+  ...
+# Subtest: foreground failure is localized once, and the route helper does not repeat stale operation text
+ok 55 - foreground failure is localized once, and the route helper does not repeat stale operation text
+  ---
+  duration_ms: 91.35125
+  ...
+# Subtest: a blocked source export produces an explicitly labeled raw recovery backup including original social and dedup bytes
+ok 56 - a blocked source export produces an explicitly labeled raw recovery backup including original social and dedup bytes
+  ---
+  duration_ms: 50.66875
+  ...
+# Subtest: production adapter unknown ACK is journaled unchanged across reconnect and explicit recovery without a second game award
+ok 57 - production adapter unknown ACK is journaled unchanged across reconnect and explicit recovery without a second game award
+  ---
+  duration_ms: 393.640792
+  ...
+# Subtest: Native event fsync wait excludes original gameplay, observers, scene sampling and ACK until complete result projection
+ok 58 - Native event fsync wait excludes original gameplay, observers, scene sampling and ACK until complete result projection
+  ---
+  duration_ms: 817.833958
+  ...
+1..58
+# tests 58
+# suites 0
+# pass 58
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4457.143083

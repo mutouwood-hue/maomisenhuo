@@ -1,0 +1,39 @@
+{
+  "status": "R42-PROC-01_closed_for_pinned_wrapper_only_firmware042_not_released",
+  "initialScriptReportedAndToolReadSha256": "c732a6ed352a69b985ad28176f242b989ef4c55c36451b65e3a9390d65da7cd0",
+  "initialScriptByteSnapshot": "not retained; snapshot raced Root correction and saved e05e instead, preserved as stage-script-postfix-e05e.py",
+  "finding": "initial outer no-retry declaration did not disable esptool image2/block3 retries",
+  "closure": "actual installed flash block methods call injected pre-I/O failure once each after local wrapper; no device or serial I/O",
+  "freshSelectorIndependentReadOnlyParse": [
+    {
+      "copy": 0,
+      "seq": 1,
+      "state": 2,
+      "crcValid": true,
+      "validPerIDF": true,
+      "sectorSha256": "9749381a19fe46e33fbea84a945bf4cb8e2a74b1a8b1152089b039c8554fd83a"
+    },
+    {
+      "copy": 1,
+      "seq": 2,
+      "state": 4294967295,
+      "crcValid": true,
+      "validPerIDF": true,
+      "sectorSha256": "f5ab818d800af4e3e1efd4c91587ff9019dfc243adb0bc2ef0c7eb4a0c9df16d"
+    }
+  ],
+  "selectedCopyPerIDFMaxSequence": 1,
+  "selectedPartitionIndex": 1,
+  "offsetFromFrozen038Layout": 8519680,
+  "backupScope": "fresh prefix only; remaining composed bytes require current physical verify, not a fresh32MiB read",
+  "noNvsDecode": true,
+  "evidenceHashes": {
+    "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/fresh-prefix128KiB.bin": "377a52a6a144512c071d42ccd1e8491018b0367b7e408eb50718e24945b4aad2",
+    "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/run_stage.py": "e05e210b71f778434a66f172924c09af2e054bcb1696fd9673c8d9ec042be228",
+    "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/esptool_no_write_retry.py": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4",
+    ".tools/esp-idf/components/bootloader_support/src/bootloader_common_loader.c": "de0e6cbe7e1eea76af374fe867c11fcbf7e8cd17ab4fa2e123b10f7ce277ade5",
+    ".tools/esp-idf/components/bootloader_support/src/bootloader_utility.c": "3255f24b8dbcd437dd24b4b64e4a4bc6cd5e9cdbb2ab716e8c3a702875df9a94",
+    ".tools/idf-tools/python_env/idf5.5_py3.13_env/lib/python3.13/site-packages/esptool/loader.py": "6c5f0c4a9d2047adb1c9164aee66208018789a0f6531922204f6b280168c80e8",
+    ".tools/idf-tools/python_env/idf5.5_py3.13_env/lib/python3.13/site-packages/esptool/cmds.py": "d9786dda365985a97504153b5a45bebf55bdf5b8272bf16891ca682b47e2c3af"
+  }
+}

@@ -1,0 +1,166 @@
+[
+  {
+    "path": "src/ble/client.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/ble/panel.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/ble/protocol.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/active-events.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/ai-adapter.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/api-client.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/background-location.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/badge-sync-scheduler.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/badge-sync.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/cloud-save.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/life-provider.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/life-sync.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/main.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/outbox.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/prelude.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/companion/privacy-eligibility.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/mobile/life-panels.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/mobile/room-world.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/native/bridge.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/client.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/controller.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/environment-resume.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/environment-revoke.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/panel.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/peer-protocol.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/qr-scanner.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/update-uploader.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "src/social/view.js",
+    "pass": true,
+    "error": null
+  },
+  {
+    "path": "www/game-01.js",
+    "pass": true
+  },
+  {
+    "path": "www/game-02.js",
+    "pass": true
+  },
+  {
+    "path": "www/game-03.js",
+    "pass": true
+  },
+  {
+    "path": "www/game-04.js",
+    "pass": true
+  },
+  {
+    "path": "www/game-05.js",
+    "pass": true
+  },
+  {
+    "path": "www/game-06.js",
+    "pass": true
+  }
+]

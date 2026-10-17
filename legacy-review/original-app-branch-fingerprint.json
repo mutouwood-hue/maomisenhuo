@@ -1,0 +1,18 @@
+{
+  "scope": "offline original ota_0 only; source literal matches are not a complete build identity",
+  "matches": {
+    "main/main.c": [],
+    "firmware-v2/runtime/baji_main.c": [],
+    "main/ui/badge_onboarding.c": [],
+    "firmware-v2/render/baji_render.c": [
+      {
+        "literal": "遇见 %02X:%02X",
+        "offset": 23752
+      },
+      {
+        "literal": "%u / %u / %u",
+        "offset": 23860
+      }
+    ]
+  }
+}

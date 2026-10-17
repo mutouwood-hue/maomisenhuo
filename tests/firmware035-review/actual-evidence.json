@@ -1,0 +1,127 @@
+{
+  "kind": "offline_review_of_retained_actual_evidence_not_new_device_actions",
+  "limitedPass": [
+    "app physical-sector readback saved artifact exact",
+    "protected verification saved tool gates and fresh activationprefix exact",
+    "4strictCRC LVGLcompositions, not optical",
+    "101.285775s sameepoch engine delta",
+    "actualUSB clocktrue offset480 rev31 seq40 ack9 pending0"
+  ],
+  "appSha256": "b5f06e3140b13162fa0baa4bed68bc5cf1ae4312b8fcced644ce44d8c2b9918f",
+  "readbackBytes": 6397952,
+  "backupMethod": "fresh physical128KiB prefix + prior verified immutable ranges composed, then saved full-current verification; not fresh32MiB physical read",
+  "protectedGates": {
+    "current-protected-verify": {
+      "savedProcessExit": 0,
+      "matchedRanges": 4,
+      "logSha256": "ceaecfe2ad85b0fe7be2b5d60752cab1969adf65a684a5fb670157ffd9c02e5f"
+    },
+    "protected-verify": {
+      "savedProcessExit": 0,
+      "matchedRanges": 4,
+      "logSha256": "007bb9fcb1d5af0b9195ff0a75d3cd8bd8dce9896fcb50f0b3d77a27920e0238"
+    }
+  },
+  "activationPrefixExactFresh": true,
+  "sessionSeconds": 881.327,
+  "commandCount": 24,
+  "bootMarkers": 1,
+  "selectedEspErrors": 0,
+  "startupInvalidCommandErrors": 1,
+  "captures": [
+    {
+      "label": "cold-face0",
+      "captureId": 1,
+      "strictCRC": "e8fda3f7",
+      "rawSha256": "ea90f0a68795dd61e710e447c811f300a32b6f81c0aa0531af93d81d1bca9b47",
+      "pngSha256": "4a7ad52bab9ff7e75f7fe4f2cf7bf94f1367772d3e5485bd7a06e678be61b16d",
+      "physicalScanout": false
+    },
+    {
+      "label": "cold-face1",
+      "captureId": 2,
+      "strictCRC": "5a72f13e",
+      "rawSha256": "dad54c55b1f950e14ad08a28da0ef6ebfa8536ab051f4e91afc710a3ace8fb65",
+      "pngSha256": "7f11771a7b369f18ca2844821b0047e7d2a5737b3398ea74301c5875b127accf",
+      "physicalScanout": false
+    },
+    {
+      "label": "cold-face2",
+      "captureId": 3,
+      "strictCRC": "f15c3e02",
+      "rawSha256": "603d9a45df53a5d15d64b57e88696a627ab7867d5da2941ac72e8f25f6ac3446",
+      "pngSha256": "8f7efa1252c817a2026bec794f6f2ac68a112fca4778420d480cb323880736d9",
+      "physicalScanout": false
+    },
+    {
+      "label": "calibrated-face2",
+      "captureId": 4,
+      "strictCRC": "5ce64a8e",
+      "rawSha256": "b49bb1ee5e549c6416565502da77de6297805d580fede36aef670432a827e01d",
+      "pngSha256": "e62b5d3c466be48ec2c61e5be05b7152c8a831ea4ec1f800c708c0bbfb59336d",
+      "physicalScanout": false
+    }
+  ],
+  "steadyDelta": {
+    "nowUs": 101285775,
+    "rendered": 406,
+    "flushCount": 812,
+    "pixelsSubmitted": 3468864,
+    "inputPolls": 3039,
+    "pressedPolls": 0,
+    "renderUs": 1971841,
+    "meanRenderUs": 4856.751231527093,
+    "pixelsPerRender": 8544.0
+  },
+  "steadyEpoch": 434875356,
+  "noInterveningRecordedCommands": true,
+  "physicalTouchNotExercised": true,
+  "steadyModeNotSeparatelyTelemetered": true,
+  "finalUSBState": {
+    "revision": 31,
+    "scene": 2,
+    "action": 0,
+    "lastSeq": 40,
+    "pending": 0,
+    "lastAck": 9,
+    "nextEvent": 10,
+    "clockValid": true,
+    "utcOffsetMinutes": 480
+  },
+  "open": [
+    "AOD calibratedface2 wakehint/time overlap visually confirmed in logicalcomposition; notallvisualpass",
+    "034→0358pixelpartialedge residual remains",
+    "no matched034AB/FPS/swipe/scanouttearfree/no newcare or reward proof"
+  ],
+  "evidenceHashes": {
+    "actual035-calibrated-face2.rgb565": "b49bb1ee5e549c6416565502da77de6297805d580fede36aef670432a827e01d",
+    "actual035-cold-face0.png": "4a7ad52bab9ff7e75f7fe4f2cf7bf94f1367772d3e5485bd7a06e678be61b16d",
+    "actual035-cold-face1.png": "7f11771a7b369f18ca2844821b0047e7d2a5737b3398ea74301c5875b127accf",
+    "normal-boot-and-diagnostics.txt": "cd185769a00a3d195ef81f1e22415bb8359c7f34e0b8b87f1ab0aa66a82f688f",
+    "normal-boot-and-diagnostics.bin": "cd185769a00a3d195ef81f1e22415bb8359c7f34e0b8b87f1ab0aa66a82f688f",
+    "actual035-cold-face2.png": "8f7efa1252c817a2026bec794f6f2ac68a112fca4778420d480cb323880736d9",
+    "actual035-cold-face2.rgb565": "603d9a45df53a5d15d64b57e88696a627ab7867d5da2941ac72e8f25f6ac3446",
+    "actual035-cold-face0.rgb565": "ea90f0a68795dd61e710e447c811f300a32b6f81c0aa0531af93d81d1bca9b47",
+    "PLAN.json": "df4836cf540b0079c5768d86f1b3c55333b65199a48576fc73b821b8f8aad5c6",
+    "RESULT.json": "09debd1553ea6f80bdf2850b0df6339445c6732bd1009a51008852a9281ef492",
+    "steady-engine-window.json": "a18007b68f325e4298820c4c9260d3d3e97b7f5d7f18b2a5ef54a32a75c13b59",
+    "backup.json": "41fdeeac890b00da8c5568450737ceee5e2ade5d5d8096e6d58d598b88c583fb",
+    "app-write.json": "6af972648803c36d37a4aa3aaad0347e87d31859980ea6afb22e30c947e6f5c5",
+    "current-protected-verify.json": "373268a4144e44f0a851ff18a0bd79d721231b2dcca5e875b4012caee8c8a4e3",
+    "selector-clear-readback.json": "5433e9a19db20aa779d25be2030eefc3e8edfc5210d876d6a05f5e99e6eb1941",
+    "actual035-cold-face1.json": "0270e193a1fb5a32281556ba914769b3ee5617e2266879777e5857e8a9b0dc6f",
+    "security.json": "cf3a0066b83e506b4ef018f71568e234dcf95a9281aa5f998ea97637a7718766",
+    "actual035-cold-face0.json": "73f0d28b32525760bff828bc908930d0a5d6c9677d490e49df50224e1874f962",
+    "actual035-calibrated-face2.png": "e62b5d3c466be48ec2c61e5be05b7152c8a831ea4ec1f800c708c0bbfb59336d",
+    "app-readback.json": "4f0ed33a5a523a1ca3a30115ba36d9ec5a9bc02c207da349b63e314272765108",
+    "selector-write.json": "a5ecad7224c0e8c71e92162ff7a3a46a21613504c247a2056ff7bf4cf38705e1",
+    "selector-readback.json": "d92e824ac5a29671460a3a613a4ba4dc2a14f5597a8f5cc191c09bc84f273f39",
+    "actual035-cold-face2.json": "0aa60fc43840ab7c85500061e7add177656b5ca32582df42fe455d5811ce025c",
+    "actual035-cold-face1.rgb565": "dad54c55b1f950e14ad08a28da0ef6ebfa8536ab051f4e91afc710a3ace8fb65",
+    "actual035-calibrated-face2.json": "d95d3f2d5fb5ca04dc39c2def752cc6933ac592cf97a7bafe82b3b52694b4b24",
+    "capture-decode-results.json": "5e8602e16da43e2b1f5ad32ff2cf72a2592dcaeeb0264aeab3a604f724b03d65",
+    "protected-verify.json": "4f2e1eb882cc92667e515c472c380509be4c7a9953fc086897dcc7f9d8fb2435",
+    "selector-clear.json": "7b78cf21927a36bf8bd0b7753a943110d8c1896175b45a964c61de810f0c467d",
+    "normal-boot.json": "3124eba6ebfc4688b483b10075b0bb374d4f4e2e986c37ef1dfbfcc073778986"
+  }
+}

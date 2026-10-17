@@ -1,0 +1,34 @@
+{
+  "onlyNewTestsWrites": true,
+  "noGitNoDeviceNoDeletesDuringDiskHold": true,
+  "no036SourceCreated": true,
+  "frozen034035Verified": {
+    "firmware-local-v3-perf034": {
+      "sourceCount": 103,
+      "sourceHashesSha256": "56ca1342cb9fe8fd39b49fb2c2d1d2dd9d9edfc9babf6c3bf8b8958affc1b81c",
+      "manifestSha256": "bb780bf2a75d25ae48912f76a3c4af2b776e80c4239b3d15864ba4e76845ef57",
+      "appSha256": "7f438d6f92f597ae8dd183acadaad177aebe456f43a0791f0fb64e2fc1b13f4e",
+      "sourceZipSha256": "135f63a13fbeec0816363114de0c4acbaf02e373b14ccd5b9302cb48aa670d37"
+    },
+    "firmware-local-v3-perf035": {
+      "sourceCount": 103,
+      "sourceHashesSha256": "3ef08839617b726723af562d73794f6b372b8c829e47583f7baf5f3bf95ce1ee",
+      "manifestSha256": "b46641dcc04bee0b159fdc15fd5ebc773c27d41ce048a59bd8cb129043259b48",
+      "appSha256": "b5f06e3140b13162fa0baa4bed68bc5cf1ae4312b8fcced644ce44d8c2b9918f",
+      "sourceZipSha256": "3b4968665cce22ad8813385b297045052e6008ddbf9f917dc098aa727320bddf"
+    }
+  },
+  "evidenceSha256": {
+    "DRAG-HOTSPOT-READONLY.md": "81ecc6eea438be02e2c604314aad8ea5d18a37f87bd8ca079246ff198613b0e5",
+    "profile-steady/baseline034-sample.txt": "64acfd93b752c1264a7dd7801336af7740acad313c2b284cb3c6b755b2a0de2d",
+    "profile-steady/candidate035-sample.txt": "83cb0b5cfd8bc3e9e86f7d0b79c6c086bfdce2f5aa1aeb7cc8e5c3775c277b36",
+    "counters/counts.json": "6f8bd6797d82a1b713e228ccb201abb02992905d5b48deb3c50e3a1090db24da",
+    "mask-workingset/workingset.json": "35f9ffa4b347613ee4e17d891d7ec98e04b295bf2b519ae9d4c0cc2c0509b7ca",
+    "mask-workingset-recheck/workingset.json": "312db63861c40de49648c6632a2799db6cca04695615e77d55c8fdcf158f1f01",
+    "mask-workingset-paired/paired.json": "67075f5d424d9f6255b28d64e4821a648a72f20aa66418679aa09fccc96b6c91",
+    "mask-memory/memory.json": "dcb28b89e51c61afe5be4c769ccb028c0e685558b2501a572536f3e86bd3c1f3",
+    "render-cycles/cycles.json": "287eaf109b8ef0a337bd9973d550e5f86af57adcc66f49c01aa93529e1d5d1d3"
+  },
+  "proposalStatus": "Not implemented; optionalPSRAM pool/fallback must be independently reviewed/tested before any production change",
+  "physicalSwipeAndScanoutStillOpen": true
+}

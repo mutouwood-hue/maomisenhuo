@@ -1,0 +1,43 @@
+{
+  "released": true,
+  "status": "controlled_application_only_device_validation_released",
+  "version": "0.4.2-exact3d",
+  "appSha256": "b0d1704032c1067455b4355617924dadc63efa20a4ec245189e75d75b99f8bcc",
+  "appBytes": 6635696,
+  "manifestSha256": "384b90a1581654f09334de67abf2f9816871435bb001faca57af9d5a62300f45",
+  "elfSha256": "1a7408b2b225b8ef1e513156925bd5ca940fbf1fffe4a8e39411502d44bb8ac4",
+  "sourceZipSha256": "5f24cdf1bf7bba7acd8d641b92f1c5f485aa829417e843bfedc8aaf6e6e0224d",
+  "confirmedOpenP1P2": [],
+  "closedFinding": "R42-PROC-01 automatic esptool image/block retry disabled by pinned local wrapper",
+  "allowed": "Root-only current verified active OTA1 application sectors update and bounded one-shot technical benchmark; no selector/NVS/boot/other-slot writes",
+  "notAccepted": [
+    "continuous3D",
+    "A-art completion",
+    "target performance",
+    "physical touch/care/swipe",
+    "physical scanout/tear-free",
+    "power-loss atomic active-slot update",
+    "automatic rollback"
+  ],
+  "requiredExecutionArtifacts": [
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/run_stage.py",
+      "sha256": "163f45ba26e7edae535036c45675136ab43c9af54444081fcbb3d84fb9957910"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/esptool_no_write_retry.py",
+      "sha256": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/diagnostic_session.py",
+      "sha256": "7a32f845ea04d97bff56390702bac8a5bb73cdc7518666e865485f9849c9a5a2"
+    }
+  ],
+  "report": "tests/firmware042-review/REVIEW.md",
+  "reportSha256": "4ab4cef400a80504864e129fe99a2c70c0e33d4c59676edbb9b9fd5780efce0e",
+  "evidenceIndex": "tests/firmware042-review/review-evidence.json",
+  "evidenceIndexSha256": "a481546e8d171604620d1abd86c131b25ff6c81ba06346e6322def00c443ca17",
+  "evidencePinCount": 451,
+  "reviewerDeviceActions": false,
+  "createdAtUtc": "2026-10-16T11:22:11.831643+00:00"
+}

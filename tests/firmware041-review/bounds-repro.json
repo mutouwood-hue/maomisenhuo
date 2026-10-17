@@ -1,0 +1,1 @@
+{"source":"frozen041_actual_public_API","input":{"animation":"walk","seconds":0.37,"heading":180,"worldX":16,"worldZ":-16,"supportY":2,"props":true},"returnedSuccess":true,"roi":[210,124,256,256],"catBounds":[392,126,466,382],"bboxSamplesOutsideRoiAllocation":148,"fullTileVisibleCatPixels":6663,"fullTileCatPixelsOutsideReturnedROI":0,"virtualFixture":true}

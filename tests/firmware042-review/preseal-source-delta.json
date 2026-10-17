@@ -1,0 +1,26 @@
+{
+  "scope": "source relative paths excluding managed_components/build/host-build; final sealed source index still pending",
+  "sameCount": 97,
+  "changed": [
+    "CMakeLists.txt",
+    "main/CMakeLists.txt",
+    "main/badge_diagnostics.c",
+    "main/badge_diagnostics.h",
+    "main/badge_pages.c",
+    "main/badge_scene.c",
+    "main/badge_scene.h",
+    "tools/host_preview/CMakeLists.txt",
+    "tools/host_preview/diag_test.c",
+    "tools/host_preview/preview.c"
+  ],
+  "added": [
+    "main/assets/pixel-cat.pcat",
+    "main/badge_renderer_exact.c",
+    "main/badge_renderer_exact.h",
+    "main/badge_renderer_panel.c",
+    "main/badge_renderer_panel.h",
+    "tools/host_preview/renderer_fixture.c",
+    "tools/host_preview/scene_inspect.inc"
+  ],
+  "missing": []
+}

@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     'tests/firmware041-review/independent-geometry-r3'
+relocations:     []
+...

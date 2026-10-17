@@ -1,0 +1,4 @@
+/Users/zoumutou/coding/猫咪森活/tests/firmware035-review/bench-isolated.c:23:14: warning: variable 'diff' set but not used [-Wunused-but-set-variable]
+   23 |     unsigned diff=0;for(unsigned i=0;i<466*466;i++)if(saved[i]!=framebuffer[i]){
+      |              ^
+1 warning generated.

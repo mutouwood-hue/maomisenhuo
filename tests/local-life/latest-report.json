@@ -1,0 +1,9 @@
+{
+  "productionSource": "app/android/app/src/main/java/com/catforest/app/LocalLifeRules.kt",
+  "sourceSha256": "b9d52371615ac57ce2cc26c0196c939ec6c4227d54d9941e999c30684011d781",
+  "testSha256": "d1fe9702a88d5ed94a77fabc0a5289584cfdbd6d54df726f32049ece1ed1f039",
+  "passed": 20,
+  "exitCode": 0,
+  "output": "PASS old-save-migration-does-not-grant-items-or-reset-id\nPASS partial-corrupt-inventory-is-not-silently-repaired\nPASS strict-integer-and-unknown-item-rejection\nPASS sale-exact-prices-insufficient-stock-and-coin-limit\nPASS walk-requires-ordered-unique-original-nodes-and-token\nPASS failed-settlement-does-not-consume-session-or-reward\nPASS explore-original-yield-exact-rewards-and-orders-claim-once\nPASS fish-and-walk-original-commissions-are-not-repeatable\nPASS cancel-discards-pending-harvest-without-changing-care-state\nPASS disk-transaction-clone-retry-and-persisted-session-are-safe\nPASS rain-illness-original-effects-and-clinic-complete-recovery\nPASS raincoat-protects-at-choice-time-and-health-check-price-is-four\nPASS clinic-availability-and-insufficient-money-preserve-candidate\nPASS original-growth-boundaries-and-trait-tie-order\nPASS rain-presentation-fields-migrate-only-absent-whole-fields\nPASS observation-validates-source-story-and-current-session\nPASS rain-observation-is-persistent-idempotent-presentation-only\nPASS real-wipe-choice-clears-wet-once-without-prepaying-care-effects\nPASS outdoor-observation-ledger-is-bounded-unique-and-nonrain-does-not-wet\nPASS all-nine-choice-messages-distinguish-saved-choice-from-deferred-effects\nRESULT 20 passed, 0 failed\n",
+  "scope": "Production pure Kotlin helper host execution only; not APK, AtomicFile, renderer, BLE, firmware or hardware acceptance."
+}

@@ -1,0 +1,61 @@
+{
+  "virtual_fixture": true,
+  "actualCoreAndPureFSM": true,
+  "actualPlatformFunctionsVerbatim": [
+    "local2_peer_confirm",
+    "local2_peer_poll"
+  ],
+  "mocked": [
+    "FreeRTOS queue",
+    "store mutex",
+    "NimBLE conn globals",
+    "transport_poll",
+    "clock",
+    "RNG"
+  ],
+  "productionPeerSha256": "9f2543fd5129140c1434f88f73a6a24b3a67ad8f10c53368683ab8a2feed6b32",
+  "extractedFunctionsSha256": "0b006f24b347aae980ddd4d617850713c6367357cfd04d645ac05c7fc275573d",
+  "compile": [
+    "clang",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2",
+    "-I",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v4-encounter039/tests/stubs",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/encounter039-review/stale_consent_fixture.c",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/artifacts/firmware-local-v4-encounter039/evidence/wire-window-r2/local2_core.c",
+    "-o",
+    "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/tests/encounter039-review/stale-consent-r2"
+  ],
+  "cases": [
+    {
+      "case": "still-connected",
+      "durableConsent": true,
+      "persistDelta": 1,
+      "physicalConnAtPoll": 7,
+      "machineConnectedAfterPoll": true,
+      "bindingPeer": "22222222222222222222222222222222",
+      "generation": 1
+    },
+    {
+      "case": "disconnect-before-poll",
+      "durableConsent": true,
+      "persistDelta": 1,
+      "physicalConnAtPoll": 65535,
+      "machineConnectedAfterPoll": false,
+      "bindingPeer": "22222222222222222222222222222222",
+      "generation": 2
+    },
+    {
+      "case": "new-peer-before-poll",
+      "durableConsent": true,
+      "persistDelta": 1,
+      "physicalConnAtPoll": 8,
+      "machineConnectedAfterPoll": true,
+      "bindingPeer": "22222222222222222222222222222222",
+      "generation": 2
+    }
+  ]
+}

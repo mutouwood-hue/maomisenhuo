@@ -1,0 +1,66 @@
+{
+  "status": "pass",
+  "scope": "independent readback and Node fixture execution; no Android/WebKit rerun/3D/FPS/device or original gameplay reward claim",
+  "errors": [],
+  "runtimeChanged": [
+    "web/offline-page-icons.js",
+    "web/offline-page-polish.css"
+  ],
+  "changedPriorFiles": [
+    "README.md",
+    "android/app/build.gradle.kts",
+    "android/app/src/main/assets/offline-page-icons.js",
+    "android/app/src/main/assets/offline-page-polish.css",
+    "package.json",
+    "scripts/build_android.py",
+    "scripts/check_page_css.cjs",
+    "scripts/render_page_webkit.swift",
+    "scripts/seal_candidate.py",
+    "tests/page-css-engine.test.cjs",
+    "tests/page-icons.test.cjs",
+    "web/offline-page-icons.js",
+    "web/offline-page-polish.css"
+  ],
+  "addedFiles": [
+    "scripts/check_care_tip_css.cjs",
+    "scripts/check_icon_refresh.cjs",
+    "tests/care-tip-css.test.cjs",
+    "tests/icon-refresh-css.test.cjs"
+  ],
+  "ownerEvidence": {
+    "care": {
+      "kind": "owner_software_engine_evidence_readback_not_independent_layout_rerun",
+      "reports": 18,
+      "checks": 330,
+      "fixedProfiles": 12,
+      "negative020Profiles": 6,
+      "allMetadataHashesAndAssertionsReadbackPass": true,
+      "artifactSha256": "a6db5af345b85ab8a2e5f8a91d5152f2e74c960382c0aff9da8777ace2f3bcc1"
+    },
+    "refresh": {
+      "kind": "owner_software_engine_evidence_readback_not_independent_layout_rerun",
+      "reports": 4,
+      "checks": 124,
+      "fixedProfiles": 2,
+      "negative020Profiles": 2,
+      "allMetadataHashesAndAssertionsReadbackPass": true,
+      "artifactSha256": "d8d645b9ec347e1b5716d65dd5d13e0e551378074ac2a7dbc9b67842f9315833"
+    },
+    "pages": {
+      "kind": "owner_software_engine_evidence_readback_not_independent_layout_rerun",
+      "reports": 36,
+      "checks": 1284,
+      "fixedProfiles": 36,
+      "negative020Profiles": 0,
+      "allMetadataHashesAndAssertionsReadbackPass": true,
+      "artifactSha256": "cee2d3d821ebb49f9c840e44154b1d2fa75d8c6fa733539980499648d98c7031"
+    }
+  },
+  "independentNodeTests": 14,
+  "originalNRefreshesIndependent": 100,
+  "unknownActionFamiliesIndependent": 4,
+  "sourceStableAfterTests": true,
+  "old019020DeliverablesStillFrozen": true,
+  "manifestSha256": "73dfc1ae4dd01f2d0baa5231c425e1bf57815d7265a272748e40869717cb3233",
+  "FROZENSha256": "ba0a74ead07e2231ae671fb03810eeb3e6e7dc82631900eda7f03db1d6d52daa"
+}

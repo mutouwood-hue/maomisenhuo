@@ -1,0 +1,9 @@
+{
+  "softwareOnly": true,
+  "status": "passed",
+  "cases": 3,
+  "assertions": 12,
+  "sourcePagesSha256": "dd7e6efefa63e79b3639bb0d886eeb5976e892d031b53e82a0bd1fd4e726bc45",
+  "evidence": "trust-r2-negative.json",
+  "oldFailureEvidence": "trust-ee81-negative.json"
+}

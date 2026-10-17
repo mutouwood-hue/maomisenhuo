@@ -1,0 +1,27 @@
+{
+  "apkHash": "e860ae0c646c747b471f5cb198e4adb03f1ff07f664367790ddd084cdd849082",
+  "apkBytes": 609174,
+  "zipHash": "a731af8e63aca85781c0198e8f708e88ee569bcd0eb8c09085fa99b366ec6d00",
+  "zipFileCount": 101,
+  "sourceFiles": 101,
+  "sourceMismatches": [],
+  "base014SourceMismatches": [],
+  "base014ApkMatches": true,
+  "zipMismatches": [],
+  "apkAssetCount": 25,
+  "apkAssetMismatches": [],
+  "protectedFileCount": 53,
+  "protectedMismatch": [],
+  "changedPaths": [
+    "README.md",
+    "android/app/build.gradle.kts",
+    "android/app/src/main/assets/offline-room-bed.js",
+    "scripts/build_android.py",
+    "scripts/export_bed_geometry.cjs",
+    "scripts/render_bed_geometry.py",
+    "scripts/seal_candidate.py",
+    "tests/room-animation.test.cjs",
+    "tests/room-bed.test.cjs",
+    "web/offline-room-bed.js"
+  ]
+}

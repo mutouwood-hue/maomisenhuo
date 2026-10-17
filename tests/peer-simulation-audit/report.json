@@ -1,0 +1,921 @@
+{
+  "hostOnly": true,
+  "hardwareVerified": false,
+  "scope": "actual current037 peer/core C + memory atomic blob, queued virtual radio and simulated explicit consent; production framing helper extraction, not ESP/NVS/NimBLE/radio/physical UI",
+  "inputSha256": {
+    "artifacts/firmware-local-v3-perf037/source/main/local2_peer.c": "b44a779663229e51c7b6f37d65b3945f56ff52e42b1cda95867349f6199a7e16",
+    "artifacts/firmware-local-v3-perf037/source/main/local2_core.c": "1a2e22df6f16e93676727611bc3072d6803ed9e679dc41b9a0dce7cc9b4fe603",
+    "artifacts/firmware-local-v3-perf037/source/main/local2_peer.h": "3eb6e24ecdcb765839ce0785b87a2b31d958122734ec6ba6525a506f9fecc807",
+    "artifacts/firmware-local-v3-perf037/source/main/local2_core.h": "de714f53212f772e0ca6ae668a8680c71e53b24e913fd979a10b8906c772bb75",
+    "artifacts/firmware-local-v3-perf037/source/main/local2_wire.c": "48778300017ee9d458224dfd2e6b5a6324fd1f7b4a1069d8bfa7569c46c1edc3"
+  },
+  "sourceStable": true,
+  "tests": [
+    {
+      "name": "peer-suite",
+      "compileCommand": [
+        "cc",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main",
+        "/Users/zoumutou/coding/猫咪森活/tests/local2-peer/test_peer.c",
+        "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main/local2_peer.c",
+        "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main/local2_core.c",
+        "-o",
+        "/Users/zoumutou/coding/猫咪森活/tests/peer-simulation-audit/peer-suite"
+      ],
+      "exitCode": 0,
+      "lines": [
+        "PASS explicit consent, durable exchange, duplicate completion",
+        "PASS first HELLO/CONFIRM/GIFT/ACK/DONE drop retries",
+        "PASS nonce, identity and pre-confirm rejection",
+        "PASS interrupted confirmation never completes",
+        "PASS durable reserve failure cannot send success",
+        "PASS restart reuses pending durable outbox counter",
+        "PASS unrelated durable pending peer does not block current peer receipt",
+        "PASS incoming persist failure never ACKs receipt",
+        "PASS 32 peer watermark limit refuses unknown peer",
+        "PASS full durable event FIFO rejects without advancing watermark",
+        "PASS lost DONE, both reboot, new nonce + new physical consent: no second first-gift event"
+      ],
+      "fixtureSha256": "e32c2e70ccc483d086e2e1a0207f7dcf0cc4faef7ed26877b6d82d7abb6d688c"
+    },
+    {
+      "name": "reboot-after-complete",
+      "compileCommand": [
+        "cc",
+        "-std=c11",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-I",
+        "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main",
+        "/Users/zoumutou/coding/猫咪森活/tests/peer-simulation-audit/reboot-after-complete.c",
+        "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main/local2_peer.c",
+        "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main/local2_core.c",
+        "-o",
+        "/Users/zoumutou/coding/猫咪森活/tests/peer-simulation-audit/reboot-after-complete"
+      ],
+      "exitCode": 0,
+      "lines": [
+        "PASS reboot after full complete: receipts/ACK survive, runtime completion/consent reset, reconfirm completes without duplicate gift event"
+      ],
+      "fixtureSha256": "4ccdae9cb0d625a57c8a7ebae6ddb1c4d8367843b570b8bf282eb501383af5b5"
+    },
+    {
+      "name": "exact-production-framing",
+      "exitCode": 0,
+      "lines": [
+        "PASS exact production framing: fragmented roundtrip, identical retry, corruption/padding/order/sequence/size/schema rejection, pending backpressure"
+      ],
+      "originalExtractorSha256": "06a1597055c1beb1d96e36b2c29f09f4792f15dbc6bb693a26c8ce651e7db8b8",
+      "change": "only source path redirected to current037; actual C function extraction unchanged"
+    }
+  ],
+  "virtualCompileCommand": [
+    "cc",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main",
+    "/Users/zoumutou/coding/猫咪森活/tests/local2-peer/virtual_encounter.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main/local2_peer.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3-perf037/source/main/local2_core.c",
+    "-o",
+    "/Users/zoumutou/coding/猫咪森活/tests/peer-simulation-audit/virtual-encounter"
+  ],
+  "virtualFixtureSha256": "3a0e1143efe9e2892f3b77aa37cb0f9ea3f223955f2ca068daa6c706c690fc88",
+  "scenarios": [
+    {
+      "scenario": "none",
+      "exitCode": 0,
+      "finalStates": {
+        "A": {
+          "kind": "state",
+          "at_ms": 700,
+          "endpoint": "A",
+          "reason": "final",
+          "device_id": "11111111111111111111111111111111",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        },
+        "B": {
+          "kind": "state",
+          "at_ms": 700,
+          "endpoint": "B",
+          "reason": "final",
+          "device_id": "22222222222222222222222222222222",
+          "peer_id": "11111111111111111111111111111111",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        }
+      },
+      "events": {
+        "A": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "22222222222222222222222222222222",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ],
+        "B": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "11111111111111111111111111111111",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ]
+      },
+      "traceSha256": "1e26d5ae65cedbf814944c9ad816ef238ca07968da127f454b2f910fa7c4e250",
+      "blobs": {
+        "B.bin": {
+          "bytes": 518,
+          "sha256": "18190a38c201d36cadebbac76df92ec2050fff4d9b7361616a74a64eb1aa1142"
+        },
+        "A.bin": {
+          "bytes": 518,
+          "sha256": "0243aacc712407a9263c9b22ecb03a138e0c100b032b53f49b707071d80bc61e"
+        }
+      }
+    },
+    {
+      "scenario": "one-sided",
+      "exitCode": 0,
+      "finalStates": {
+        "A": {
+          "kind": "state",
+          "at_ms": 10000,
+          "endpoint": "A",
+          "reason": "final",
+          "device_id": "11111111111111111111111111111111",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "confirm",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": false,
+          "incoming_saved": false,
+          "incoming_new": false,
+          "outgoing_acked": false,
+          "complete": false,
+          "complete_count": 0,
+          "incoming_counter": 0,
+          "outgoing_counter": 0,
+          "pending_phone_events": 0,
+          "gift_change": 0,
+          "storage_status": "ok"
+        },
+        "B": {
+          "kind": "state",
+          "at_ms": 10000,
+          "endpoint": "B",
+          "reason": "final",
+          "device_id": "22222222222222222222222222222222",
+          "peer_id": "11111111111111111111111111111111",
+          "phase": "confirm",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": false,
+          "remote_confirmed": true,
+          "incoming_saved": false,
+          "incoming_new": false,
+          "outgoing_acked": false,
+          "complete": false,
+          "complete_count": 0,
+          "incoming_counter": 0,
+          "outgoing_counter": 0,
+          "pending_phone_events": 0,
+          "gift_change": 0,
+          "storage_status": "ok"
+        }
+      },
+      "events": {
+        "A": [],
+        "B": []
+      },
+      "traceSha256": "2a6cc42fc92799690628811489d5e51eceaa5aea59c92a3d9c4eea58a7098076",
+      "blobs": {
+        "B.bin": {
+          "bytes": 451,
+          "sha256": "caf67d1dc5e60609540a159f425be110c09ce5e2860835ce592f8037fd04594d"
+        },
+        "A.bin": {
+          "bytes": 451,
+          "sha256": "a5a352d4a640ae50304057d07b68d7e3135591aa91a41e078d9c2991f530a72c"
+        }
+      }
+    },
+    {
+      "scenario": "loss",
+      "exitCode": 0,
+      "finalStates": {
+        "A": {
+          "kind": "state",
+          "at_ms": 4500,
+          "endpoint": "A",
+          "reason": "final",
+          "device_id": "11111111111111111111111111111111",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        },
+        "B": {
+          "kind": "state",
+          "at_ms": 4500,
+          "endpoint": "B",
+          "reason": "final",
+          "device_id": "22222222222222222222222222222222",
+          "peer_id": "11111111111111111111111111111111",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        }
+      },
+      "events": {
+        "A": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "22222222222222222222222222222222",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ],
+        "B": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "11111111111111111111111111111111",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ]
+      },
+      "traceSha256": "060e657672b5934d5f484f00e103d2d1754855d10fec893c814a6427bcde5177",
+      "blobs": {
+        "B.bin": {
+          "bytes": 518,
+          "sha256": "18190a38c201d36cadebbac76df92ec2050fff4d9b7361616a74a64eb1aa1142"
+        },
+        "A.bin": {
+          "bytes": 518,
+          "sha256": "0243aacc712407a9263c9b22ecb03a138e0c100b032b53f49b707071d80bc61e"
+        }
+      }
+    },
+    {
+      "scenario": "disconnect",
+      "exitCode": 0,
+      "finalStates": {
+        "A": {
+          "kind": "state",
+          "at_ms": 1400,
+          "endpoint": "A",
+          "reason": "final",
+          "device_id": "11111111111111111111111111111111",
+          "peer_id": "",
+          "phase": "discovering",
+          "discoverable": true,
+          "connected": false,
+          "local_confirmed": false,
+          "remote_confirmed": false,
+          "incoming_saved": false,
+          "incoming_new": false,
+          "outgoing_acked": false,
+          "complete": false,
+          "complete_count": 0,
+          "incoming_counter": 0,
+          "outgoing_counter": 0,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        },
+        "B": {
+          "kind": "state",
+          "at_ms": 1400,
+          "endpoint": "B",
+          "reason": "final",
+          "device_id": "22222222222222222222222222222222",
+          "peer_id": "",
+          "phase": "discovering",
+          "discoverable": true,
+          "connected": false,
+          "local_confirmed": false,
+          "remote_confirmed": false,
+          "incoming_saved": false,
+          "incoming_new": false,
+          "outgoing_acked": false,
+          "complete": false,
+          "complete_count": 0,
+          "incoming_counter": 0,
+          "outgoing_counter": 0,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        }
+      },
+      "events": {
+        "A": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "22222222222222222222222222222222",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ],
+        "B": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "11111111111111111111111111111111",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ]
+      },
+      "traceSha256": "ec525469d7c4d8bbc2985195bc0ae869de9e0fd5b5a31205653fa3d2428e2443",
+      "blobs": {
+        "B.bin": {
+          "bytes": 527,
+          "sha256": "0eda9a5df98abd6ef26ce9a2baa4eea88a2c0a0da838eb20911ee604436d2470"
+        },
+        "A.bin": {
+          "bytes": 527,
+          "sha256": "fadf7b1c3ec1cb407b6e96e020bf1bcc0f3331bcacbafe17ac69f8e4bb977e16"
+        }
+      }
+    },
+    {
+      "scenario": "persist-failure",
+      "exitCode": 0,
+      "finalStates": {
+        "A": {
+          "kind": "state",
+          "at_ms": 8000,
+          "endpoint": "A",
+          "reason": "final",
+          "device_id": "11111111111111111111111111111111",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "blocked",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": false,
+          "incoming_new": false,
+          "outgoing_acked": false,
+          "complete": false,
+          "complete_count": 0,
+          "incoming_counter": 0,
+          "outgoing_counter": 1,
+          "pending_phone_events": 0,
+          "gift_change": 0,
+          "storage_status": "storage_error"
+        },
+        "B": {
+          "kind": "state",
+          "at_ms": 8000,
+          "endpoint": "B",
+          "reason": "final",
+          "device_id": "22222222222222222222222222222222",
+          "peer_id": "11111111111111111111111111111111",
+          "phase": "exchanging",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": false,
+          "complete": false,
+          "complete_count": 0,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        }
+      },
+      "events": {
+        "A": [],
+        "B": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "11111111111111111111111111111111",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ]
+      },
+      "traceSha256": "b557c97e336ac70b4d07f3b2ecd09b995f4f6518f9508d35547d539ec441c46c",
+      "blobs": {
+        "B.bin": {
+          "bytes": 527,
+          "sha256": "0eda9a5df98abd6ef26ce9a2baa4eea88a2c0a0da838eb20911ee604436d2470"
+        },
+        "A.bin": {
+          "bytes": 502,
+          "sha256": "50a8159c38c6efa7f83e87391fb54e99ab962e91a88b9bf4c6c1201d4dfc1f67"
+        }
+      }
+    },
+    {
+      "scenario": "restart-dedup",
+      "exitCode": 0,
+      "finalStates": {
+        "A": {
+          "kind": "state",
+          "at_ms": 7600,
+          "endpoint": "A",
+          "reason": "final",
+          "device_id": "11111111111111111111111111111111",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": false,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 0,
+          "storage_status": "ok"
+        },
+        "B": {
+          "kind": "state",
+          "at_ms": 7600,
+          "endpoint": "B",
+          "reason": "final",
+          "device_id": "22222222222222222222222222222222",
+          "peer_id": "11111111111111111111111111111111",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": false,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 0,
+          "storage_status": "ok"
+        }
+      },
+      "events": {
+        "A": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "22222222222222222222222222222222",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ],
+        "B": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "11111111111111111111111111111111",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ]
+      },
+      "traceSha256": "106044b7811d3b9a928e6b25fe7abecfc044a143f939f673be4808eaf5efa95a",
+      "blobs": {
+        "A-before-restart.bin": {
+          "bytes": 518,
+          "sha256": "0243aacc712407a9263c9b22ecb03a138e0c100b032b53f49b707071d80bc61e"
+        },
+        "B-before-restart.bin": {
+          "bytes": 518,
+          "sha256": "18190a38c201d36cadebbac76df92ec2050fff4d9b7361616a74a64eb1aa1142"
+        },
+        "B.bin": {
+          "bytes": 518,
+          "sha256": "18190a38c201d36cadebbac76df92ec2050fff4d9b7361616a74a64eb1aa1142"
+        },
+        "A.bin": {
+          "bytes": 518,
+          "sha256": "0243aacc712407a9263c9b22ecb03a138e0c100b032b53f49b707071d80bc61e"
+        }
+      }
+    },
+    {
+      "scenario": "same-counter",
+      "exitCode": 0,
+      "finalStates": {
+        "C": {
+          "kind": "state",
+          "at_ms": 1400,
+          "endpoint": "C",
+          "reason": "final",
+          "device_id": "33333333333333333333333333333333",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 2,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        },
+        "A": {
+          "kind": "state",
+          "at_ms": 1400,
+          "endpoint": "A",
+          "reason": "final",
+          "device_id": "11111111111111111111111111111111",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        },
+        "B": {
+          "kind": "state",
+          "at_ms": 1400,
+          "endpoint": "B",
+          "reason": "final",
+          "device_id": "22222222222222222222222222222222",
+          "peer_id": "33333333333333333333333333333333",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 2,
+          "incoming_counter": 1,
+          "outgoing_counter": 2,
+          "pending_phone_events": 2,
+          "gift_change": 2,
+          "storage_status": "ok"
+        }
+      },
+      "events": {
+        "C": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "22222222222222222222222222222222",
+            "peer_counter": 2,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ],
+        "A": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "22222222222222222222222222222222",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ],
+        "B": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "11111111111111111111111111111111",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          },
+          {
+            "event_counter": 2,
+            "kind": 2,
+            "peer_id": "33333333333333333333333333333333",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ]
+      },
+      "traceSha256": "c9a5a0bd00cd6ab872266857e6acf6fd9de7cc4804c7a29db51c7e787dd19440",
+      "blobs": {
+        "C.bin": {
+          "bytes": 518,
+          "sha256": "d2092444792bf968e180a1e0d7eb45cdf6e3b3ceb84cf834a9968d889695c886"
+        },
+        "B.bin": {
+          "bytes": 585,
+          "sha256": "f6e5192eb91c5dfa369f1c171f0f97f5d5a9dde91ab1adfd7db876e6c89913fe"
+        },
+        "A.bin": {
+          "bytes": 518,
+          "sha256": "0243aacc712407a9263c9b22ecb03a138e0c100b032b53f49b707071d80bc61e"
+        }
+      }
+    },
+    {
+      "scenario": "pending-peer",
+      "exitCode": 0,
+      "finalStates": {
+        "C": {
+          "kind": "state",
+          "at_ms": 5700,
+          "endpoint": "C",
+          "reason": "final",
+          "device_id": "33333333333333333333333333333333",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": true,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 2,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        },
+        "A": {
+          "kind": "state",
+          "at_ms": 6400,
+          "endpoint": "A",
+          "reason": "final",
+          "device_id": "11111111111111111111111111111111",
+          "peer_id": "22222222222222222222222222222222",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": false,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 1,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 1,
+          "gift_change": 1,
+          "storage_status": "ok"
+        },
+        "B": {
+          "kind": "state",
+          "at_ms": 6400,
+          "endpoint": "B",
+          "reason": "final",
+          "device_id": "22222222222222222222222222222222",
+          "peer_id": "11111111111111111111111111111111",
+          "phase": "complete",
+          "discoverable": true,
+          "connected": true,
+          "local_confirmed": true,
+          "remote_confirmed": true,
+          "incoming_saved": true,
+          "incoming_new": false,
+          "outgoing_acked": true,
+          "complete": true,
+          "complete_count": 2,
+          "incoming_counter": 1,
+          "outgoing_counter": 1,
+          "pending_phone_events": 2,
+          "gift_change": 2,
+          "storage_status": "ok"
+        }
+      },
+      "events": {
+        "C": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "22222222222222222222222222222222",
+            "peer_counter": 2,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ],
+        "A": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "22222222222222222222222222222222",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ],
+        "B": [
+          {
+            "event_counter": 1,
+            "kind": 2,
+            "peer_id": "11111111111111111111111111111111",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          },
+          {
+            "event_counter": 2,
+            "kind": 2,
+            "peer_id": "33333333333333333333333333333333",
+            "peer_counter": 1,
+            "gift_kind": 1,
+            "quantity": 1
+          }
+        ]
+      },
+      "traceSha256": "e7fe2c8e8efeed64b969da1419e1cb9d4fcbaa906cfc8e1257f6bf2cd54610ff",
+      "blobs": {
+        "C.bin": {
+          "bytes": 518,
+          "sha256": "d2092444792bf968e180a1e0d7eb45cdf6e3b3ceb84cf834a9968d889695c886"
+        },
+        "B.bin": {
+          "bytes": 585,
+          "sha256": "f6e5192eb91c5dfa369f1c171f0f97f5d5a9dde91ab1adfd7db876e6c89913fe"
+        },
+        "A.bin": {
+          "bytes": 518,
+          "sha256": "0243aacc712407a9263c9b22ecb03a138e0c100b032b53f49b707071d80bc61e"
+        }
+      }
+    }
+  ],
+  "mobileGiftBoundary026": {
+    "atUtc": "2026-10-16T04:42:36.632897+00:00",
+    "versionName": "0.2.6-html-local",
+    "versionCode": 17,
+    "apkSha256": "a780c0e48b9c2ac2c149e761171a6eb6e9098aee84507be5f6409a9527144ab8",
+    "sourceZipSha256FromFrozen": "c422abdcf2fbad3c48c2ce966bf2da9e7b18c2cee6e7ab2bf0c5b70715549abd",
+    "frozenJsonSha256": "da18f4abc4b8be0b219c631e95503610425af41b5ececb97c320dcac99bd111b",
+    "hostOnly": true,
+    "hardwareVerified": false,
+    "command": "node --test --test-name-pattern='real flower|unsupported, forged' artifacts/html-offline-candidate/ui026/source/tests/event-transaction.test.cjs",
+    "exitCode": 0,
+    "passed": 2,
+    "failed": 0,
+    "tap": "app026-gift-boundary.tap",
+    "tapSha256": "2508f1dfcdc1178b9674229839f73d801c3b9b857287d499e9e93b0051a18f16",
+    "sources": {
+      "tests/event-transaction.test.cjs": {
+        "sha256": "ae72fe05c5ccdfddfa99cbe94d7c49e193b7695c671d6c3689c25e34f7169e0e",
+        "frozenSha256": "ae72fe05c5ccdfddfa99cbe94d7c49e193b7695c671d6c3689c25e34f7169e0e",
+        "matchesFrozen": true
+      },
+      "tests/event-fixture.cjs": {
+        "sha256": "415105a4ebd0109ffee7e25795b78a2ea3bf542acbb56e32d024b819e5c742a6",
+        "frozenSha256": "415105a4ebd0109ffee7e25795b78a2ea3bf542acbb56e32d024b819e5c742a6",
+        "matchesFrozen": true
+      },
+      "web/offline-device-events.js": {
+        "sha256": "8ce6818c646f10af67d9ec48202000e23a0c998e05eb9d543244b7022c2d107c",
+        "frozenSha256": "8ce6818c646f10af67d9ec48202000e23a0c998e05eb9d543244b7022c2d107c",
+        "matchesFrozen": true
+      },
+      "web/offline-event-store.js": {
+        "sha256": "de67845a40a54b0a4a4de35230f984b8f82ba91b986583b5ab05dca1e07cc47c",
+        "frozenSha256": "de67845a40a54b0a4a4de35230f984b8f82ba91b986583b5ab05dca1e07cc47c",
+        "matchesFrozen": true
+      },
+      "web/offline-durable-store.js": {
+        "sha256": "6493ac2b307070a3c153fc6e62cb73945166a021f854a2e676336cfa684a23f9",
+        "frozenSha256": "6493ac2b307070a3c153fc6e62cb73945166a021f854a2e676336cfa684a23f9",
+        "matchesFrozen": true
+      },
+      "web/offline-scene-map.js": {
+        "sha256": "7b68b861b32cc81774d78af0990a97a0bfe55917fd8f500b948fe3db9434021e",
+        "frozenSha256": "7b68b861b32cc81774d78af0990a97a0bfe55917fd8f500b948fe3db9434021e",
+        "matchesFrozen": true
+      },
+      "android/app/src/main/assets/game-03.js": {
+        "sha256": "44ebeee5e7dd4684bad9d87568ff659fe17aa030516a00fc8c4841ecde400cd2",
+        "frozenSha256": "44ebeee5e7dd4684bad9d87568ff659fe17aa030516a00fc8c4841ecde400cd2",
+        "matchesFrozen": true
+      },
+      "original/game.html": {
+        "sha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+        "frozenSha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+        "matchesFrozen": true
+      },
+      "android/app/build.gradle.kts": {
+        "sha256": "39b3f398a0d1b53e7b7e96f539ca8c474d9347d834916471163207ef65221ef1",
+        "frozenSha256": "39b3f398a0d1b53e7b7e96f539ca8c474d9347d834916471163207ef65221ef1",
+        "matchesFrozen": true
+      }
+    },
+    "substitutes": [
+      "Native authority/storage is in-memory JS fixture, not Java/AtomicFile/FD.sync",
+      "ports.events.readNext/acknowledge are queued in-memory callbacks, not GATT/Android/BLE",
+      "actual packaged original vu store and 026 production consumer/ledger/durable recovery module are loaded"
+    ],
+    "scope": [
+      "one flower and original inbox receipt only; friends/cards remain empty",
+      "same event duplicates do not regrant",
+      "forged peerComplete:true rejects and no friend is created",
+      "unsupported or cross-device event guards in selected second test"
+    ],
+    "sourceProtected": true
+  }
+}

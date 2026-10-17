@@ -1,0 +1,8 @@
+3c525378 D _binary_pixel_cat_pcat_start
+3c525378 D pixel_cat_pcat
+3c5576b0 D _binary_pixel_cat_pcat_end
+3c5576b0 D pixel_cat_pcat_length
+3fca6290 00000080 b renderer_gate
+3fca6328 00000008 b renderer_ui_epoch
+4200d4c8 00000294 T badge_renderer_compute
+4200d78c 000001f4 T badge_renderer_report

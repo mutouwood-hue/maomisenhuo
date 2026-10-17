@@ -1,0 +1,26 @@
+{
+  "scope": "actual installed loader methods, injected FatalError before any device/port I/O",
+  "beforeDefaults": {
+    "wholeImageAttempts": 2,
+    "flashBlockAttempts": 3
+  },
+  "beforeActualMethodCommandCalls": {
+    "flash_block": 3,
+    "flash_defl_block": 3
+  },
+  "afterPolicy": {
+    "wholeImageAttempts": 1,
+    "flashBlockAttempts": 1
+  },
+  "afterActualMethodCommandCalls": {
+    "flash_block": 1,
+    "flash_defl_block": 1
+  },
+  "wholeImageSerialExceptionLoop": "static verified cmds range now one attempt; no reconnect/flash simulated",
+  "wrapperMainNotCalled": true,
+  "deviceActions": false,
+  "pins": {
+    "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/esptool_no_write_retry.py": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4",
+    "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042/run_stage.py": "e05e210b71f778434a66f172924c09af2e054bcb1696fd9673c8d9ec042be228"
+  }
+}

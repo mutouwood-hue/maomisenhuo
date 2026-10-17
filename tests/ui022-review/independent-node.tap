@@ -1,0 +1,40 @@
+TAP version 13
+# Subtest: real busy-care gate remains disabled while descendant preview only changes the form
+ok 1 - real busy-care gate remains disabled while descendant preview only changes the form
+  ---
+  duration_ms: 224.900917
+  type: 'test'
+  ...
+# Subtest: all preview SVGs exactly clone original eligible artwork without live breed-handler attributes
+ok 2 - all preview SVGs exactly clone original eligible artwork without live breed-handler attributes
+  ---
+  duration_ms: 97.339917
+  type: 'test'
+  ...
+# Subtest: stale preview cannot select a newly disabled or hidden native option before queued refresh
+ok 3 - stale preview cannot select a newly disabled or hidden native option before queued refresh
+  ---
+  duration_ms: 65.581333
+  type: 'test'
+  ...
+# Subtest: repeat decoration and disposal do not submit adoption, charge clothing or retain a live preview handler
+ok 4 - repeat decoration and disposal do not submit adoption, charge clothing or retain a live preview handler
+  ---
+  duration_ms: 80.697542
+  type: 'test'
+  ...
+# Subtest: generated index adds precisely new CSS/deferred module behind unchanged durable boot
+ok 5 - generated index adds precisely new CSS/deferred module behind unchanged durable boot
+  ---
+  duration_ms: 2.204417
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 959.0575

@@ -1,0 +1,9 @@
+{
+  "REVIEW.md": "2701a16226789cb3d95377793bfd334da2b2d66235c20a734e7f0c5747a05bd5",
+  "run-native-isolated.cjs": "086831681e7637bbd20bd23ecacfc155d2281a9bca14085edf3d1730465c07b2",
+  "stubs/android/util/AtomicFile.java": "3889afe7025e006f0b1ad17ba50a34e0b11f1e5f851a0cf5023f341599bd527e",
+  "native-production.tap": "7640fd9ce02ea7bf125cd3e344417da1437220a8192edd836a6ec0f55f5347ec",
+  "event-host-bootstrap.tap": "b0864f597b89d40776a18c3a6bff341acad9a4b75cf183c459a3ec79694834cb",
+  "frozen-hash-verification.json": "69b39a4a58653a511a24534d107f498d1c49840d09cc27b8cb3dda617ac85dda",
+  "apk-signature.txt": "c681eb578cede49a842cfdc8a536aa1471edd6fd716154fd0389e457abb27be5"
+}

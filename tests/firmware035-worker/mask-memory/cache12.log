@@ -1,0 +1,15 @@
+MEMORY cacheBufferPeak=9096 constructionPeakIncludingTemporary=12240 cleanupCount=620
+COUNTERS radiusCalls=686247 radiusHits=681194 radiusMisses=5053 decoderOpen=15121 decoderArea=148122 indexedLines=134420 indexedPixels=16701672
+RADIUS 2 353
+RADIUS 3 533
+RADIUS 4 350
+RADIUS 9 553
+RADIUS 197 533
+RADIUS 203 533
+RADIUS 209 553
+RADIUS 210 350
+RADIUS 218 350
+RADIUS 223 353
+RADIUS 227 592
+PROFILE iterations=40 wallUs=860859 flushes=27208 pixels=125447016
+badge_ui: Original animation bank: available

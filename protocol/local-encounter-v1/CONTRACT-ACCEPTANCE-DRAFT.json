@@ -1,0 +1,48 @@
+{
+  "status": "test requirements before implementation; not acceptance evidence",
+  "atUtc": "2026-10-16T08:52:34.469035+00:00",
+  "requiredCases": {
+    "versionGate": [
+      "old026 exact transport sends v2 HELLO to newwire: no scene/events/ACK mutation",
+      "new v3 transport rejects old038 v2/CFLOCAL2; no automatic fallback",
+      "newpeer framing rejects schema2 and oldpeer ignores3",
+      "missing/duplicate/unknown requiredproofversion rejected; max2048 includingLF"
+    ],
+    "identity": [
+      "same device as peer rejected",
+      "pet bound at durable consent; live cat switch does not rebind queued event",
+      "different identity on reconnect cannot overwrite pending encounter",
+      "canonical A/B encounterId equal and immutable; two counters conflict rejected"
+    ],
+    "durability": [
+      "crash before/after each durable callback and send; reload same encoded blob",
+      "queue full leaves completion recoverable without discarding old events",
+      "write failure neither emits completion event nor sends false persist certificate",
+      "event+first-complete watermark same commit",
+      "last message lost creates at most asymmetric progress, never false global-atomic claim",
+      "duplicate complete receipt across restart/reconnect no second event"
+    ],
+    "phoneConsumption": [
+      "gift(false),NPC,RAM state unsupported as encounter proof",
+      "sameevent and sameencounter under duplicate delivery cannot produce repeated worldgrowth",
+      "Native durable failure or unknown ACK retains exact intent; no early ACK",
+      "old identity/backup missing settled receipt blocked",
+      "simulation fixture source cannot enter production consumer or realNative"
+    ],
+    "storage": [
+      "actualschema2 fixtures preserve all currentcare/gift/owner/seq/counters on candidate migration",
+      "oldgift/outgoingACK cannot retroactively complete encounter",
+      "max32peers/200events/8192encoding and NVSspace bound proof",
+      "downgrade to038 after schema change is blocked, not a success claim",
+      "copy-under-new-key fork/resume requires explicit policy; no dual-key atomic claim"
+    ]
+  },
+  "physicalNotProven": [
+    "dualradio/RSSI",
+    "two real confirmation gestures",
+    "NimBLE framing scheduling and coexistence",
+    "both NVS powerloss",
+    "physical bilateral UI convergence"
+  ],
+  "noActualDeviceActions": true
+}

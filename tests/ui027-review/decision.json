@@ -1,0 +1,10 @@
+{
+  "decision": "allow_separate_package_controlled_install_only",
+  "confirmedP1P2": [],
+  "apkSha256": "8952dd53140106b309abce79688cf0cebfa89b7623c62002e5c7c69e27075e0a",
+  "sourceArchiveSha256": "67a51e7ffc71fe62ea6b0083f8d2ebe53be5e83742ccb85452e24a1d093257cb",
+  "independentTests": 3,
+  "targetedOwnerTestsIndependentlyRerun": 15,
+  "deviceActions": false,
+  "report": "tests/ui027-review/REVIEW.md"
+}

@@ -1,0 +1,3 @@
+CYCLES render=600 full47=501 fullPixels=501 partial=99
+PROFILE iterations=40 wallUs=922306 flushes=27252 pixels=125658136
+badge_ui: Original animation bank: available

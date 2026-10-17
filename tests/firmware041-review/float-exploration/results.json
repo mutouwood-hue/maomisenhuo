@@ -1,0 +1,384 @@
+{
+  "decision": "sealed_exploration_metrics_supported_not_exact_not_integrated",
+  "sourceZipFiles": 42,
+  "sourcePins": 41,
+  "evidencePins": 47,
+  "runtimeOnlyRasterDeltaVerified": true,
+  "referenceR2TwentyPinsUnchanged": true,
+  "independentlyRenderedSampleCount": 7,
+  "samples": [
+    {
+      "id": "paw-h180-04",
+      "kind": "model",
+      "rgbDifferentPixels": 1,
+      "coverageDifferentPixels": 0,
+      "ownerDifferentPixels": 0,
+      "maxChannelStepsRGB565": [
+        6,
+        14,
+        4
+      ],
+      "maxSharedCoveredDepthDifference": 1,
+      "writtenCountDelta": 0,
+      "examples": [
+        {
+          "xy": [
+            246,
+            314
+          ],
+          "reference": 37670,
+          "float": 24930
+        }
+      ]
+    },
+    {
+      "id": "walk-h45-02",
+      "kind": "model",
+      "rgbDifferentPixels": 1,
+      "coverageDifferentPixels": 0,
+      "ownerDifferentPixels": 0,
+      "maxChannelStepsRGB565": [
+        4,
+        19,
+        11
+      ],
+      "maxSharedCoveredDepthDifference": 1,
+      "writtenCountDelta": 1,
+      "examples": [
+        {
+          "xy": [
+            185,
+            273
+          ],
+          "reference": 27043,
+          "float": 35854
+        }
+      ]
+    },
+    {
+      "id": "walk-h180-00",
+      "kind": "model",
+      "rgbDifferentPixels": 1,
+      "coverageDifferentPixels": 0,
+      "ownerDifferentPixels": 0,
+      "maxChannelStepsRGB565": [
+        2,
+        15,
+        12
+      ],
+      "maxSharedCoveredDepthDifference": 1,
+      "writtenCountDelta": -1,
+      "examples": [
+        {
+          "xy": [
+            261,
+            275
+          ],
+          "reference": 40080,
+          "float": 35492
+        }
+      ]
+    },
+    {
+      "id": "idle-h90-12",
+      "kind": "model",
+      "rgbDifferentPixels": 0,
+      "coverageDifferentPixels": 0,
+      "ownerDifferentPixels": 0,
+      "maxChannelStepsRGB565": [
+        0,
+        0,
+        0
+      ],
+      "maxSharedCoveredDepthDifference": 1,
+      "writtenCountDelta": -1,
+      "examples": []
+    },
+    {
+      "id": "idle-h0-00",
+      "kind": "model",
+      "rgbDifferentPixels": 0,
+      "coverageDifferentPixels": 0,
+      "ownerDifferentPixels": 0,
+      "maxChannelStepsRGB565": [
+        0,
+        0,
+        0
+      ],
+      "maxSharedCoveredDepthDifference": 1,
+      "writtenCountDelta": 0,
+      "examples": []
+    },
+    {
+      "id": "mat-04",
+      "kind": "world",
+      "rgbDifferentPixels": 1,
+      "coverageDifferentPixels": 0,
+      "ownerDifferentPixels": 0,
+      "maxChannelStepsRGB565": [
+        5,
+        10,
+        2
+      ],
+      "maxSharedCoveredDepthDifference": 1,
+      "writtenCountDelta": 0,
+      "examples": [
+        {
+          "xy": [
+            167,
+            298
+          ],
+          "reference": 24930,
+          "float": 35492
+        }
+      ]
+    },
+    {
+      "id": "bowl-00",
+      "kind": "world",
+      "rgbDifferentPixels": 0,
+      "coverageDifferentPixels": 0,
+      "ownerDifferentPixels": 0,
+      "maxChannelStepsRGB565": [
+        0,
+        0,
+        0
+      ],
+      "maxSharedCoveredDepthDifference": 1,
+      "writtenCountDelta": 0,
+      "examples": []
+    }
+  ],
+  "allStoredSummaryArithmeticRecomputed": true,
+  "strictNonExactFrames": 28,
+  "hostMedianRatioRecomputed": 0.9489152761754692,
+  "rasterStaticCallsIndependentlyParsed": [
+    {
+      "line": 40,
+      "callee": "__truncdfsf2"
+    },
+    {
+      "line": 49,
+      "callee": "__subdf3"
+    },
+    {
+      "line": 50,
+      "callee": "__truncdfsf2"
+    },
+    {
+      "line": 52,
+      "callee": "fmaxf"
+    },
+    {
+      "line": 55,
+      "callee": "__divsf3"
+    },
+    {
+      "line": 90,
+      "callee": "floorf"
+    },
+    {
+      "line": 105,
+      "callee": "floorf"
+    },
+    {
+      "line": 120,
+      "callee": "floorf"
+    },
+    {
+      "line": 134,
+      "callee": "floorf"
+    },
+    {
+      "line": 149,
+      "callee": "floorf"
+    },
+    {
+      "line": 164,
+      "callee": "floorf"
+    },
+    {
+      "line": 241,
+      "callee": "__floatsidf"
+    },
+    {
+      "line": 246,
+      "callee": "__floatsidf"
+    },
+    {
+      "line": 249,
+      "callee": "fmax"
+    },
+    {
+      "line": 250,
+      "callee": "__fixdfsi"
+    },
+    {
+      "line": 257,
+      "callee": "__floatsidf"
+    },
+    {
+      "line": 262,
+      "callee": "__floatsidf"
+    },
+    {
+      "line": 265,
+      "callee": "fmax"
+    },
+    {
+      "line": 266,
+      "callee": "__fixdfsi"
+    },
+    {
+      "line": 271,
+      "callee": "__floatsidf"
+    },
+    {
+      "line": 276,
+      "callee": "__floatsidf"
+    },
+    {
+      "line": 279,
+      "callee": "fmin"
+    },
+    {
+      "line": 280,
+      "callee": "__fixdfsi"
+    },
+    {
+      "line": 285,
+      "callee": "__floatsidf"
+    },
+    {
+      "line": 290,
+      "callee": "__floatsidf"
+    },
+    {
+      "line": 293,
+      "callee": "fmin"
+    },
+    {
+      "line": 294,
+      "callee": "__fixdfsi"
+    },
+    {
+      "line": 299,
+      "callee": "__floatdisf"
+    },
+    {
+      "line": 303,
+      "callee": "__divsf3"
+    },
+    {
+      "line": 619,
+      "callee": "__floatdisf"
+    },
+    {
+      "line": 627,
+      "callee": "__floatdisf"
+    },
+    {
+      "line": 635,
+      "callee": "__floatdisf"
+    },
+    {
+      "line": 682,
+      "callee": "__divsf3"
+    }
+  ],
+  "staticCallCountsAreNotCycles": true,
+  "evidenceHashes": {
+    "artifacts/firmware-visual-prototype041/float-candidate/HANDOFF.md": "2d70706b3cf1f6a46f37de335dfa82aaadbb07163f06244e6de618a5fb0f49b0",
+    "artifacts/firmware-visual-prototype041/float-candidate/PROVENANCE.json": "4358f52a020dfbb09bd2570d8ed40f5cfa1d7544e58bb6486bfc54c17d46db4a",
+    "artifacts/firmware-visual-prototype041/float-candidate/README.md": "99d126ffbd4ef69b4666aadc4a6a2238cc3b2f442894d94701281fe643dec40c",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/analytic-sanitizer.json": "8ebd1c13cc92995ead0325aa05fba0d3fe39c128cfa4bd89afc122cfc279d6c6",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/c-cases.json": "cdf417952aac736445373a2ecb68db9476b1e5916f35162ac0c959f7cb588ff6",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/float-comparison.json": "02135a84276027e21cd1a1c321eac4d9c79d42a9047cd472fa864fca56a7eeab",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/js-oracle-cases.json": "54de8ab850765483b2d17d02a99f7c208f672b7f3f50d093452e0d9c360bbad0",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/memory-layout-host.json": "4933c29933ed2949db906cae5503b3220ba311ac2eff392b4f88f5f5f383eff7",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/memory-layout-s3.s": "d14ed7f4a08df327c0e1f9e3e738f0873a334c992d82b3e24756fe78bd1b9eff",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/model-comparison.json": "c8ebb29dab01d9edd110a034304efa07c2203d527749e17d98bf65f3d831f542",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/original-js-strict-result.log": "709080132e82e09c054413112f22afd55e20c10d812e177aa269317ff49cad34",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/renderer-s3-size.txt": "f8bb721be493a9d2ddb8c5d6d52248c72a06d2fcee839b7b3911adf37e3f618e",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/renderer-s3-undefined.txt": "c9f13388fe3499d794356446af960908ffcc3d0b72aa9b0119540de09519d68d",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/renderer-s3.s": "3a4465570eb970557fbe371f6ceae03843b571840c70b3ab15f78bbdcfa30740",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/renderer-s3.su": "de484fffa7676392320431ca75d995eab688c6546a3869bb8b17c709f7867f4b",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/target-compile.json": "54f50bda87eeb5db6fe7d1705ee6a58cfc344d8cdecf672e7ef28c386998ab47",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/variant-definition.json": "5004cc4e629d35303609f716ec86fc1ce83345ffd4b1693b1a2b7b522266dfa2",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/world-run.log": "063cba1ad58917947a092a016ebf7f3b375ea98a8cd57d58529e9a97201830b0",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/evidence/world-validation.json": "a38e6b3dd6bbeef6deba955dc4c26449b8f0eb3045d301628d619c2350994b95",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/source/main.c": "29b01803709439a3e63b9174d267c57398593dd5a69e8aa5c565924bdeec9108",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/source/renderer.c": "a48b4e3097eb4d164322dd5313122734cadae8e0c93bebda0df55f47948b6941",
+    "artifacts/firmware-visual-prototype041/float-candidate/pre-roi-fix/source/renderer.h": "fafee45dfc7923b099367ef3c7a96604852652b9dfa47717e6f7072f0d91e15c",
+    "artifacts/firmware-visual-prototype041/float-candidate/reference/badge-renderer.coverage.cjs": "2d9ad5eba9a6b7ba249a111fbc44a7c8a0db858e7aa1a844b07b5ea7a63f4016",
+    "artifacts/firmware-visual-prototype041/float-candidate/reference/badge-renderer.original.cjs": "8fa2efd134f942b9a52094162dc95ba03f78913a41a8f101180e727647dd4186",
+    "artifacts/firmware-visual-prototype041/float-candidate/reference/pixel-cat.pcat": "82520ca7f00eb28f005795cc970746150d73075083d4032119d795d19c2d0b4e",
+    "artifacts/firmware-visual-prototype041/float-candidate/source/main.c": "29b01803709439a3e63b9174d267c57398593dd5a69e8aa5c565924bdeec9108",
+    "artifacts/firmware-visual-prototype041/float-candidate/source/renderer.c": "3f68ae07029c239cb0a849649531fe5393e64c8d960fcdab5c95ed66ea70cff9",
+    "artifacts/firmware-visual-prototype041/float-candidate/source/renderer.h": "fafee45dfc7923b099367ef3c7a96604852652b9dfa47717e6f7072f0d91e15c",
+    "artifacts/firmware-visual-prototype041/float-candidate/tests/allocator_test.c": "fa65bd0fa0edeaaafd82d8c893148a2044537e71dc640f8c87cdcb40822ea86d",
+    "artifacts/firmware-visual-prototype041/float-candidate/tests/memory_layout.c": "90972699b222ba884705191c1cf32390bdb9e23d190020a406181ef5f83ea6ca",
+    "artifacts/firmware-visual-prototype041/float-candidate/tests/renderer_test.c": "a98057c2c86372e1c891e211abc074b39d6d23a0698805f6df4314989230a137",
+    "artifacts/firmware-visual-prototype041/float-candidate/tests/roi_bounds_test.c": "4de98d082d9b2cf2783c44f7041cfbf0a38cc41ba2bfe693386063e389bd932c",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/analyze_hotloop.py": "05f78ccbfe07462c8d44648da444ba81d813a5d694fd03ef93913e974962e766",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/compare_reference.py": "b5dd7baff76f78fa19a681427ff92ad33abdf6f332005bd01336ee4caeda437c",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/oracle.cjs": "efd8ff22e4995b0d427810d6bd8eadb16aacdf03bc87036704e9d1b535663499",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/oracle_batch.cjs": "b8f3717470e0f7a352e42857008914fddbd17632f911088d10bcf63d817d7e2a",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/run_all.py": "a1fbbf3db48448cd08ac43ffc502c73b8f1b39700321e8359991abac98ce4476",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/run_experiment.py": "628dde53afe1a80702308553c2aa72dfff78e3da8e8fee0c0532aaeb759d401f",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/target_evidence.py": "f9296aa58c2d3732fc4b0ca9828d0eca335e273076afad06a4019b4356230a00",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/validate_model.py": "1c66493966f124e7af5c6ea1224d7f12e78a29df6171a445682b5e8ba73f80eb",
+    "artifacts/firmware-visual-prototype041/float-candidate/tools/validate_world.py": "fc728a888d7f2588c7c1a24a31b131c400da007a1006052e8b4366095b01824c",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-bowl-09.png": "26e3f6034c713b043c788d9cb63304bfa6ffbea5b249e2f70a69341e510d5ced",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-idle-h0-00.png": "889221998cf8bd89be10efdfa958f2a720053cb32a01e96fac58adf0f1ca73de",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-idle-h180-00.png": "456b7d983acb69664db0441adc49c62615dfe5a43d2b25a4ac94a196da013fd3",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-look--32-10.png": "e099da03698e0efd269829071166b193de058b58403f17cca2a1c331799ffcc6",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-mat-09.png": "bec5539af56428271f22cd9566ccf9da823923f0b8c3a56614f20db1ef958b98",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-paw-h0-06.png": "7d7786bdc4b4cfe84f14fe725a77e741a4ac984d59e9b22ec5db967d694f64a0",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-post-00.png": "1adc3aff614bbdcb11adcbadedea80a4591c5bdd1bcf629a21dd79e0e880e876",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-post-05.png": "e405274ce39629353bd419497ecd47a8c2a3804c8303302c0c7e97098cc10ac4",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-post-09.png": "2f63f5955cf04751702311188071e00e87d6a47ee30a35df7de2249a77623653",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-room-no-cat.png": "c3d261a52cf99431566f56d93cf95812e231764242678f5f856f8679aba3c163",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/actual-c-walk-h90-03.png": "bf06c2c181b9ee505b8cd31e16216edec46c3b42582de31df3ce6f3ee953ded6",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/allocator-sanitizer.json": "5e25ed1d44c67936ca01c1b98c3afc76be2517906631482c16161354b1cea0aa",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/allocator-test-sanitized": "48ae7fd0d9437c6d99f7a1f9fbd92034e22d8f8fa9298aa15f06e39917f1b7d1",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/analytic-sanitizer.json": "8ebd1c13cc92995ead0325aa05fba0d3fe39c128cfa4bd89afc122cfc279d6c6",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/c-cases.json": "cb864eb84b7d479674059694c49fcb24e5bf284bfd2d28540bbf1a8ee3fa8dfa",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/float-comparison.json": "ad4bba0043978ea42a3738d59b570b3b0f448643207bf09dfb2daf33bdf11370",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/float-comparison.log": "e82c444dac5323c3c17690847532389dd867e6a114aa83b8d57e99bca67d4492",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/frozen-references-check.json": "a82bb0c9314058a1d1872c6c63aa2df8f4e768b23ef9ad710724b72f3420ae59",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/hotloop-target-analysis.json": "660c3f850ee5abde16e60a98d2a846710661aca558b50e69f07ef1183bc99407",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/js-oracle-cases.json": "54de8ab850765483b2d17d02a99f7c208f672b7f3f50d093452e0d9c360bbad0",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/largest-model-diff-float.png": "af3cc32aaee5b702bc526c58d088bfeb00389f82d9d0f5e1a8f6f286c11ab59d",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/largest-model-diff-reference.png": "2056981eedb61b5edda91e3cb34bb6b5f56abbf2bb957298db6cdb1cbb44ca44",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/libfloat.dylib": "afc3ba2bbf3ab66af50dda445219d3523043345cfc0ad9d6b37542f03648ffb4",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/libvr-world.dylib": "933ed5d03281fe9b8c0864404b41943ba2322b1d271ea9231e754172b63e25e5",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/libvr.dylib": "aa8f279a31ae6a455255eb56d2cd67cd96ec140ad22e08ac4126525686467291",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/memory-layout-host": "85e851a8439751adf2737d7fa2c9d01479a716dcecc7454ec56bfcb307d13ff4",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/memory-layout-host.json": "4933c29933ed2949db906cae5503b3220ba311ac2eff392b4f88f5f5f383eff7",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/memory-layout-s3.s": "d735ebc35b5b1c30d702355deac17435b8f3d93bb2a3fb728627966d48cda5e3",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/model-comparison.json": "bd228fbf5f6506d4834aa3928f33437540e51ffa0b9d9706fae2927dcb20525c",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/original-js-strict-result.log": "bb32a51c10a46c915accc08af7ae76167284c85b0165d08e7203a77b4101ede4",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/renderer-s3-size.txt": "7326ef1601587fe3522fa98dacce9087a44d84f083d8bbc4d50caa0b992f6906",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/renderer-s3-undefined.txt": "c9f13388fe3499d794356446af960908ffcc3d0b72aa9b0119540de09519d68d",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/renderer-s3.o": "5fb630d8d2553a48851661e3555c6f113243ee412edd3486405fc62b12729e2e",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/renderer-s3.s": "f1edc056f9703456ff00d60c14b6d9c0ba46269d4ced19187d5a2d517969c0c1",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/renderer-s3.su": "a6939bfe0923e8d5098a30058080ee7f4c1693e69011c30aab5d4fecac39b759",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/renderer-test-sanitized": "988896d5360ca22131ceac500ac4b8f71e0164410f2ad08cf9cdcf472e14bcb4",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/roi-float-boundary.json": "7e361164bcf3f8ea01f8c50674f9b73877328aa65d08407439da57d35136ead4",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/roi-float-sanitized": "f27c414ea9019ae937510a20b75d9c894f7f92fe0203c9fb42e2d516a86a4829",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/run-experiment.json": "be735ef13e1b443adf4bd96ef2dd63e9c91f1576f45697db9136dd1bb8755695",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/run-experiment.log": "59261494fca432e7bb1187d3a0b890f275669c9742ca0790347c6c14a7d988bf",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/source-delta.patch": "dd16e0fa70ee61d66fbaac0e1cc16fbde48bd18c0cf1bdfd502e980cf34d8e3c",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/strict-negative-status.json": "2d35a25b167862d4c30c90e3f8bf1b7ae80b3c0a3bcf99bec87589e852342a79",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/target-compile.json": "3811ee02a6822dfd60c720b8a27c5f2e93cf7eefb3da0cd18da3c5c186dd8912",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/target-run.log": "ee825a45da084694e5951d4fdef25778792fbc45a87eb4f58b1ea52950c8c663",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/variant-definition.json": "fd9c6e2aee942cd8c4f8c5bc15031ee5b93312f06dbb1e4522d40297c6c6072b",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/world-run.log": "063cba1ad58917947a092a016ebf7f3b375ea98a8cd57d58529e9a97201830b0",
+    "artifacts/firmware-visual-prototype041/float-candidate/evidence/world-validation.json": "af68b4c2f170f6faf44ec2468cb2841322254394d3ae5042e23e7b5952e8dc7d",
+    "artifacts/firmware-visual-prototype041/float-candidate/manifest.json": "24abd4a119a8859af307b67c4fb2f78c6ad9de565f744d7fa7c559b94c3aa8cb",
+    "artifacts/firmware-visual-prototype041/float-candidate/FROZEN.json": "0ac66be0dff0a0d19f2aae165544521aa361547fc53112ef512ff15f36226694",
+    "artifacts/firmware-visual-prototype041/float-candidate/source-hashes.json": "2bc864efbae83504cd2a86d5bb2b80428e97c02355ba831d53ae5f5ef302e268",
+    "artifacts/firmware-visual-prototype041/float-candidate/float-experiment-source.zip": "24383632907dcc1d3d50237f2f42350576048bd4c7e79999d42a92a57eef3211"
+  }
+}

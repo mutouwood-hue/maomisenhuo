@@ -1,0 +1,811 @@
+{
+  "kind": "independent_host_v3_UI_not_hardware",
+  "compileCommand": [
+    "clang",
+    "-std=gnu11",
+    "-O1",
+    "-Wall",
+    "-Wextra",
+    "-UNDEBUG",
+    "-DLV_KCONFIG_IGNORE",
+    "-DLV_LVGL_H_INCLUDE_SIMPLE",
+    "-DLV_CONF_PATH=\"/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/tools/host_preview/lv_conf.h\"",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/tools/host_preview/stubs",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/firmware/managed_components/lvgl__lvgl",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/tools/host_preview",
+    "-I",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/tools/host_preview/build-v3/lvgl",
+    "/Users/zoumutou/coding/猫咪森活/tests/local3-review/independent_runner.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/badge_scene.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/badge_gesture.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/local2_fonts.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/badge_f16.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/badge_f20.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/badge_f24.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/badge_n40.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/cat_idle.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/cat_paw.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/game_assets.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/game_idle.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/game_pet.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/game_walk.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/main/assets/game_attention.c",
+    "/Users/zoumutou/coding/猫咪森活/artifacts/firmware-local-v3/source/tools/host_preview/build-v3/lvgl/lib/liblvgl.a",
+    "-lm",
+    "-o",
+    "/Users/zoumutou/coding/猫咪森活/tests/local3-review/independent-runner"
+  ],
+  "compileReturncode": 0,
+  "compileOutput": "",
+  "sourceSha256": {
+    "artifacts/firmware-local-v3/source/main/badge_pages.c": "b4f1cddbc289f6119373fae7ca80696180ba6c06965784cf8e4cd9e0d74fe99d",
+    "artifacts/firmware-local-v3/source/main/badge_scene.c": "358f5de5766556ec8ad39fc606a563c38f75875088900c1325a7882473c7d68b",
+    "artifacts/firmware-local-v3/source/main/badge_scene.h": "1ce796c24793c88619a37460ba255d8c63584fc49dc6b50e2b9f00694e885527",
+    "artifacts/firmware-local-v3/source/main/badge_gesture.c": "7c1287c077dfd17fb29bacf0aa5ef1eecf37561c5d454caed0ac0a1755b0ae16",
+    "artifacts/firmware-local-v3/source/main/badge.h": "3bef73b259f8854da0599c3a5cbcf2ba881153735df4469e3bf3cdfc6d841998",
+    "artifacts/firmware-local-v3/source/main/badge_ui_contract.h": "a8338e96c5cdf62ba183630bdcf3eff04f4394c6c0c87098e47c738242653f8c",
+    "artifacts/firmware-local-v3/source/main/badge_ui_targets.h": "bd195d42df68382be63becbc41e2614d94bb5c2a8e202c2da3e1ec8ddf2bcaef",
+    "artifacts/firmware-local-v3/source/main/local2_core.h": "de714f53212f772e0ca6ae668a8680c71e53b24e913fd979a10b8906c772bb75",
+    "artifacts/firmware-local-v3/source/main/local2_store.h": "74be87b32c9db82ff5ecd0309cba84706883463224444bfcf90856f2363b837e",
+    "artifacts/firmware-local-v3/source/main/local2_peer.h": "3eb6e24ecdcb765839ce0785b87a2b31d958122734ec6ba6525a506f9fecc807",
+    "artifacts/firmware-local-v3/source/main/assets/game_assets.c": "784da17bd3d13d87c65db621b69aba35d762e34b58f9af9cd047e0bc1b99e74c",
+    "artifacts/firmware-local-v3/source/main/assets/badge_f20.c": "0069e6535d1522901a762514c7374706a4758b497933abf92f6c0f6a8f525b7e",
+    "artifacts/firmware-local-v3/source/main/assets/badge_n40.c": "b3598309b57945e0cd73ba8884e3cd987d8add50d3b810df6bc8e5bd1e16afe6",
+    "artifacts/firmware-local-v3/source/main/assets/badge_f24.c": "d9662fe0ac06c35691a92a61f1d48234279f581e4824eacba68ae0cf8da55d74",
+    "artifacts/firmware-local-v3/source/main/assets/badge_f16.c": "6a5570656e2ac4fc6eb95d80377fa07772407de395473257651ea1775b8b5b04",
+    "artifacts/firmware-local-v3/source/main/assets/game_pet.c": "2ed8c47e4066a4d01a8e4128828cd0e8a75c62cf7b80dc89c5818a954319af14",
+    "artifacts/firmware-local-v3/source/main/assets/cat_paw.c": "8d2918a5198fa991820c24f01b0f5d5b4ef2da2e8de427a437178cdca034e179",
+    "artifacts/firmware-local-v3/source/main/assets/cat_idle.c": "8889cf5d443b6c6a58af8577bdd17fc2c51107394fe35b721a09a725f509e649",
+    "artifacts/firmware-local-v3/source/main/assets/game_walk.c": "447b623dff702721f791c9d20b29bc1ec666463175115bdd169d18002239667d",
+    "artifacts/firmware-local-v3/source/main/assets/game_idle.c": "52dd1aed9a4e8499854374ce746d506fe384bf54265c50edc872fb38e664201e",
+    "artifacts/firmware-local-v3/source/main/assets/game_attention.c": "2332fe8f2617e18cde68d01fce073a4aa19c4c651abed903977b0793915aab1b",
+    "artifacts/firmware-local-v3/source/main/assets/local2_fonts.c": "4b56870f2751f0bcffd006f61dbcab407fe206f0e657e1cd50c70c5ba585fbaf",
+    "artifacts/firmware-local-v3/source/main/assets/local2_fonts.h": "134b55da2e87ad25ec1565f861dd2ba80feec280cb1b74cbdbebd48055faf782",
+    "artifacts/firmware-local-v3/source/main/assets/game_assets.h": "395599c7e352fc15e574c8ea305a6e11833970bbbca7737cb14b0b7c365133e0",
+    "artifacts/firmware-local-v3/source/main/assets/local2_title_glyph.inc": "208a2641afd7ba26ca6d462498924955f5128f4708643dd30b738d9903d815a1",
+    "artifacts/firmware-local-v3/source/main/assets/local2-title-font-provenance.json": "1e58e473bf845bc155736879c32ac8be753129b825eb7fc1931fb4ed8191b383",
+    "artifacts/firmware-local-v3/source/main/assets/game-font-provenance.json": "9f8f998d04e6b57f4b5ae194a3080190fba2dd00a7d4f43c25d4441de3637d5a",
+    "artifacts/firmware-local-v3/source/tools/generate_title_glyph.py": "4940c6bd1cf99c00ce6af1f74ef405b087d50ae5803a2185cb4dd22efd8b65c6",
+    "artifacts/firmware-local-v3/source/tools/host_preview/stubs/nvs.h": "f6e12180af7b82b5a8855ea541a6a217420465080ff210f3948f1c9f2a47042d",
+    "artifacts/firmware-local-v3/source/tools/host_preview/stubs/esp_log.h": "7232b97fbf80b7add6e71a0845e2858b1cdcbf17607ec2f4ceb36a0a36ac4912",
+    "artifacts/firmware-local-v3/source/tools/host_preview/stubs/esp_app_desc.h": "81bed3f57d4ff78adea364ef430f99050717b2950b7caee432bb611bee85478d",
+    "artifacts/firmware-local-v3/source/tools/host_preview/stubs/esp_err.h": "237c22a3769adc167cf482b3d9f00f9d26e8872db27b4e7a3dd5b7e364481498",
+    "artifacts/firmware-local-v3/source/tools/host_preview/stubs/bsp/esp-bsp.h": "9edfed81f86178280a270d0d002d76be7737ca82441fecdbc339bfc54a189569",
+    "artifacts/firmware-local-v3/source/tools/host_preview/stubs/bsp/display.h": "01488f28c2ca38bfb3307b66326b9e1eeb01868b338c247c61985548f83060a0",
+    "artifacts/firmware-local-v3/source/tools/host_preview/toast_cases.inc": "94b977962be7bbd86eb5a9d6e19df3e76c9df64fc425221d72c123f7533dcf1b",
+    "artifacts/firmware-local-v3/source/tools/host_preview/preview.c": "56310127517a2d35aa6b61d47d2aeb199cbf8731a8ed0143ded146db5a2060bb",
+    "artifacts/firmware-local-v3/source/tools/host_preview/lv_conf.h": "e956400c9c2e7016629fed1bbc1a3430bc2b3950d013833470a5221441a7644f",
+    "artifacts/firmware-local-v3/source/tools/host_preview/CMakeLists.txt": "775bda0673759441cfaae8222a01ec271921d2417ab5e530f826d46691b31aff",
+    "artifacts/firmware-local-v3/source/tools/host_preview/run_preview.py": "65ceb17e833264f134b8da1fcca994e15a0149aa190fa9dfaf055541a5e9abff",
+    "firmware/managed_components/lvgl__lvgl/lvgl.h": "bfd10da864777a7c44afd4c7de6ec4ededef6e7371a4108b64b80d5161a84400",
+    "firmware/managed_components/lvgl__lvgl/lv_version.h": "fa0c49e41ae3125e82bedcc3e62e7202b5340f7dd4cd51fd212c414361b59879",
+    "tests/local3-review/independent_runner.c": "47ea13d377418632ff624444527fe793cd8df4497100c98350d6de50dd4b8821",
+    "artifacts/firmware-local-v3/source/tools/host_preview/build-v3/lvgl/lib/liblvgl.a": "36ece55cb793096437ffd9291a04a0666734d6e2ec9e06bedbbf6e6774a625eb"
+  },
+  "ownerManifestSha256": "72d48f1b89c61962e03a5e47f8237860301e7505d2539f1c6571d2a4907581ed",
+  "ownerFramesAudited": 76,
+  "ownerImageHashes": [
+    {
+      "case": "boot",
+      "sha256": "2d72f1ce076338d91fc396daf64f32f83a6d6acdf9466ee05b0833a8c6dd678a",
+      "matches": true
+    },
+    {
+      "case": "pair",
+      "sha256": "ed6e07b9380dd9585c6caefdf6ef959b3e40fa00abf35feaacfe52a3d45dd771",
+      "matches": true
+    },
+    {
+      "case": "pair_connected",
+      "sha256": "3401d9b3888fce38b46a443cd3d1a7d85d3429839ad8800664ea72dc2b7b58b0",
+      "matches": true
+    },
+    {
+      "case": "pair_ready",
+      "sha256": "8cc1976405ba6b679e240de88c42106d81bceccbf56118ecc1a4c205052e7805",
+      "matches": true
+    },
+    {
+      "case": "guide_1",
+      "sha256": "47567a7d89370fb0809b83ef89288b563483421996de21d80842884301b4a792",
+      "matches": true
+    },
+    {
+      "case": "guide_2",
+      "sha256": "ee8369121325de1ebaeb01e222023e73e9b1988e365ec582ba00498c1d991344",
+      "matches": true
+    },
+    {
+      "case": "guide_3",
+      "sha256": "900f4f52d3161940ef30832b9d12d563a31c93ba1b658aa0ee6d0330732de7da",
+      "matches": true
+    },
+    {
+      "case": "guide_4",
+      "sha256": "f903bd8f67e06c0e3bd4654acc72f1a1966ba8ad5b8655ef958fdd0258403d8e",
+      "matches": true
+    },
+    {
+      "case": "guide_5",
+      "sha256": "b89a8a1fe19a82e2661dfb9bf5e1175ced355032877e9fdc043bd093888894cb",
+      "matches": true
+    },
+    {
+      "case": "main_a",
+      "sha256": "cfe6627baa2dc0941b304b6d0e22cd6421f1ba07a8a1b4381ddde95be36bb92e",
+      "matches": true
+    },
+    {
+      "case": "main_b",
+      "sha256": "8ada97c7ee23d6f205f653e97a7c83184ab4df4ff5dced42a5faf956e145f19c",
+      "matches": true
+    },
+    {
+      "case": "main_c",
+      "sha256": "0a6aecab103734660e1b6d665338691e1156bec4154a75928334b25a0d4db565",
+      "matches": true
+    },
+    {
+      "case": "care_menu",
+      "sha256": "9a9c3780418f7e7227c7d1ffe4b40bf05d3b8b76ecca71fb3c7cca74f81324a9",
+      "matches": true
+    },
+    {
+      "case": "status",
+      "sha256": "e8040e3ca225fd16f5a0f5473dd763a3f83daa226b3f7de3407fa658f0988bcc",
+      "matches": true
+    },
+    {
+      "case": "settings",
+      "sha256": "a9312d09cbf835dc5258e35ca8d95f7a6763d873ae5171122aeaac2a7bb6cff9",
+      "matches": true
+    },
+    {
+      "case": "device",
+      "sha256": "8952b2563c5fe3d66fa3b757f3b7b7f7b02a08e50ffa222b410a6f9f9f62c7a6",
+      "matches": true
+    },
+    {
+      "case": "touch_test",
+      "sha256": "bc408ed9ae73a51e2d04988df32e46478a5fbc5ae4060a8d3bae6d7940eb2512",
+      "matches": true
+    },
+    {
+      "case": "touch_complete",
+      "sha256": "e6967d73418d886b66dc345398f1940a1f87a6caafb85100c3c582ff82681b8d",
+      "matches": true
+    },
+    {
+      "case": "voice",
+      "sha256": "0696a16e8310e83f47b865f3cff8138daa99b56ecafeb65b622b2b8184f1ef1c",
+      "matches": true
+    },
+    {
+      "case": "main_low_stats",
+      "sha256": "8bd8886242a8b33540c238a54e22c31787ee05b0b3f8189f5efd280a11285b33",
+      "matches": true
+    },
+    {
+      "case": "storage_error",
+      "sha256": "198cf4719f6d8d9c3bc8a5759257fee6b943638f15eb9812c4b6603f23df5b58",
+      "matches": true
+    },
+    {
+      "case": "aod",
+      "sha256": "3c6ae319b46d0f17200e8626949c35e2361708f607ae74be146adad6ae209ecb",
+      "matches": true
+    },
+    {
+      "case": "welcome",
+      "sha256": "0704160bd469262a730ea2db2faf81f27d762b3cd1e32cb419a091339d450803",
+      "matches": true
+    },
+    {
+      "case": "main_b_clock",
+      "sha256": "e737493b70598c785cf51bd29e3feed83c8c7eedc5d1e29796a4c713e32b99ed",
+      "matches": true
+    },
+    {
+      "case": "historical_departing",
+      "sha256": "c7c58a73c669f7550fb8649578f6b26a0a0f33070e7c163de12a58f99c375b4a",
+      "matches": true
+    },
+    {
+      "case": "departing",
+      "sha256": "477b429dc70dbd677a1f06eaf93c4f16fac20c5da4b1c3bae89faf2011aedc18",
+      "matches": true
+    },
+    {
+      "case": "away_rain",
+      "sha256": "d9a00d6aed16449f78d12a64dfb1f295c250d09a993f3c5aa96a58d42ec8db28",
+      "matches": true
+    },
+    {
+      "case": "returning_snow",
+      "sha256": "0b3e48856fa0b8640baa45e7250c501e19a98d12de79e5f2c9e62ee3d98a91df",
+      "matches": true
+    },
+    {
+      "case": "care_feed",
+      "sha256": "d78125698c4c90f2823ed9e088f4c86c126c17ba8a39ad3c9cb857bba39c1e65",
+      "matches": true
+    },
+    {
+      "case": "care_water",
+      "sha256": "fc787dd7833fe6d7f4363ccf518bd7be70d5c5854edf4a35c74b8ff09b0351dc",
+      "matches": true
+    },
+    {
+      "case": "care_play",
+      "sha256": "d02297f13d64b0e7ffaa7966f5c568b02312a6b5ad2b8ea93ecc46f16aec1288",
+      "matches": true
+    },
+    {
+      "case": "care_sleep",
+      "sha256": "f9e22a22e5ec9aa7ccd40d75e21a76f27db1d2c1df59a7e0aa742edec2f7002f",
+      "matches": true
+    },
+    {
+      "case": "meet_confirm",
+      "sha256": "54d7b5d3b4f7f4d4121fd729b30668418fedf6c3b13f97cc72ad3f3c39c7b921",
+      "matches": true
+    },
+    {
+      "case": "gift_pending",
+      "sha256": "4d78185e6b57ca6fc4c40f4a307bde34e887f2e4552d9bfbd3d69cb4fb1430af",
+      "matches": true
+    },
+    {
+      "case": "gift_complete",
+      "sha256": "80019582c3719768c31e095b7917ed5d9aa183fbb029d7ab6d063a9aa8c42b8b",
+      "matches": true
+    },
+    {
+      "case": "action_feed",
+      "sha256": "18ef65a10d5433bd1f204e0f40b662a16859161203e0a8c84f8eed05149c122f",
+      "matches": true
+    },
+    {
+      "case": "action_water",
+      "sha256": "a935b33d7229c479386c9f5a5413230913e6fa0205872ec944e6966b9518930a",
+      "matches": true
+    },
+    {
+      "case": "action_bath",
+      "sha256": "bc17e40ea39cf4068aeb9b375d1bcf50b84070b3cfa2527479020892fbf35849",
+      "matches": true
+    },
+    {
+      "case": "action_play",
+      "sha256": "0c07ac94a1ef16bb60915d55e435a691e07f5f1d60e5bd69dad901504f478b62",
+      "matches": true
+    },
+    {
+      "case": "action_sleep",
+      "sha256": "18922d12262137462c55c647e8f0e0c090b273d84f4ef6f80efcb97003c1b564",
+      "matches": true
+    },
+    {
+      "case": "action_pet",
+      "sha256": "8ea380a2db79884fec7ca335a71ed8453578160ecbc78a25b67c075283fb1540",
+      "matches": true
+    },
+    {
+      "case": "input_test",
+      "sha256": "2b8e7a08f4d891523d590955db982c7f4dfec64ec24c8969bb9164a5898f2522",
+      "matches": true
+    },
+    {
+      "case": "main_c_clock",
+      "sha256": "6760cb956b02d73a6103cbaf1f84360c54cb4d7104a0989a756ff95ea12d74a5",
+      "matches": true
+    },
+    {
+      "case": "guide_wrong",
+      "sha256": "2d851c6d330334973467513b49810cad23e4034d02908dee082b797affa0fdfd",
+      "matches": true
+    },
+    {
+      "case": "guide_success",
+      "sha256": "a54ef7b2ee0d9a0dce7e733fca737f0149333003a57d7caa37854db99e3712db",
+      "matches": true
+    },
+    {
+      "case": "guide_skip",
+      "sha256": "3634f7a9eb2908e4f09bca5bc7093f30477b5413685111a5c703c3e34a586f79",
+      "matches": true
+    },
+    {
+      "case": "guide_hold",
+      "sha256": "8f5fad39f35b9ab13ffc352080828cadf13cd86da96d01c72ab2dd3e439771a3",
+      "matches": true
+    },
+    {
+      "case": "drag_up_mid",
+      "sha256": "993adf83b958aa61bf4a7ae148e00658e6a37370230e298a3ca93f0bfafb21f4",
+      "matches": true
+    },
+    {
+      "case": "drag_commit",
+      "sha256": "6cb4d4545d8fbfaeccfffdd0b1fa8da680a856cdd35a8d81e7ab3df4d0ff0428",
+      "matches": true
+    },
+    {
+      "case": "drag_rebound",
+      "sha256": "67d885fa66c8fb2a55e19dd71ef18b7856e3a4b0ee534999844bb16b0d84010f",
+      "matches": true
+    },
+    {
+      "case": "drag_no_target",
+      "sha256": "6b4f9499cfc4c93648b90229926fc42d8579ef7abd2dcdad92f2f39c2f1a99d6",
+      "matches": true
+    },
+    {
+      "case": "toast_0",
+      "sha256": "306fab4882fd7c164eadb5ba2f1f690013c5b7c5d13633a854ab750c5a3e106c",
+      "matches": true
+    },
+    {
+      "case": "toast_1",
+      "sha256": "4d84737b89806dfab6a964f5f1dbb5626ef419a610270edc571e80b1b24f15ce",
+      "matches": true
+    },
+    {
+      "case": "toast_2",
+      "sha256": "11ba93d77d3d6366178445bec93d0706d473fe784c159b0cbe0885556ccdc0e3",
+      "matches": true
+    },
+    {
+      "case": "toast_3",
+      "sha256": "74a674e46d1b80e0184bdf04d0326880b90d80fe0c5905b4ed6e32d75f973d64",
+      "matches": true
+    },
+    {
+      "case": "toast_4",
+      "sha256": "eeb1cb6f1e32b395e7e2a23879183f427eb73b4658181caeb6db94db25f22592",
+      "matches": true
+    },
+    {
+      "case": "toast_5",
+      "sha256": "e124867ff5b6cc134126d3f92612403e61a8257c056d107869b25f1717b8f50f",
+      "matches": true
+    },
+    {
+      "case": "toast_6",
+      "sha256": "ef833afe945bffc5e28bc846f56b4b0268737c1946a65f86c9bef96e1863a4be",
+      "matches": true
+    },
+    {
+      "case": "toast_7",
+      "sha256": "8eaf03520ff01d6e52024109dc3798863bc7f67fb0ba7ba0461248a0486b3a8d",
+      "matches": true
+    },
+    {
+      "case": "toast_8",
+      "sha256": "10cdcd745b4a4d82dea2f016ddf96cb51f5d0f6e5a9df80d4138d0889dbb52b2",
+      "matches": true
+    },
+    {
+      "case": "toast_9",
+      "sha256": "94889a9beeab7b6fc2f1cb20c149b89f5b88f859d4df5a889f81cc953a2d8940",
+      "matches": true
+    },
+    {
+      "case": "toast_10",
+      "sha256": "cf368f180de856943f35a4d64cb0be26830f5fc9dafa99967e735635eff5c402",
+      "matches": true
+    },
+    {
+      "case": "toast_11",
+      "sha256": "085dadb497c07d868fc487d860e5a88d3783cda337507c874fc0b347f6a7d282",
+      "matches": true
+    },
+    {
+      "case": "toast_12",
+      "sha256": "af21be6620ec4e4c51e3193b60747c9adcff1a0123440cc93a4d3d38caceaf8f",
+      "matches": true
+    },
+    {
+      "case": "toast_13",
+      "sha256": "9da8f7f3f10f009192edf6b29e414b839d492c43109b7d6f871b4bc5c568e6bc",
+      "matches": true
+    },
+    {
+      "case": "toast_14",
+      "sha256": "4e3ede2b9a55f4449c58ba8246c61db14901dde81264c6c9e6a7e735fbae0f1b",
+      "matches": true
+    },
+    {
+      "case": "toast_15",
+      "sha256": "bc3b6d508f4943d213b17af68b090c56c23223bdf8f3fecc5bbb848bc3a67de2",
+      "matches": true
+    },
+    {
+      "case": "toast_16",
+      "sha256": "7eae70eb1825a6088f5425d923255892422cb2d1a17e05472488ff86aac596c6",
+      "matches": true
+    },
+    {
+      "case": "toast_17",
+      "sha256": "a39f75f4fabea4e2baf41ecd1bd7a13d065d0b8307952bcc1655be1fd0a0821d",
+      "matches": true
+    },
+    {
+      "case": "toast_18",
+      "sha256": "bd0654484919767271c828109506201a4a1dfe9c7dc73984c27c4c4871c16ffa",
+      "matches": true
+    },
+    {
+      "case": "toast_19",
+      "sha256": "6172f66c192335b917d789805c45525d09ce5ba9cf937356fd779844b7682f18",
+      "matches": true
+    },
+    {
+      "case": "toast_20",
+      "sha256": "c076d63bdbbb39fe865446429ebeaa9b8c2d9d4bbb662ffb99af6964e59d68f9",
+      "matches": true
+    },
+    {
+      "case": "toast_21",
+      "sha256": "cd6697368d94589ac253c52ea2ddd1125687ffd0b06a2fa5ca5a3d2181ea7334",
+      "matches": true
+    },
+    {
+      "case": "toast_22",
+      "sha256": "1ff197fe54e4208193e4b330dde7abb446bfcd9b912cf86e1d881766ea750061",
+      "matches": true
+    },
+    {
+      "case": "toast_23",
+      "sha256": "b313d0fbd0e5d83b073b39dcd73412002ad30c49580245254422fb04481d8015",
+      "matches": true
+    },
+    {
+      "case": "toast_24",
+      "sha256": "f37e11a413e68d74702bae2beaed1a967a52ade5843445f5d32214fa0bebc98a",
+      "matches": true
+    }
+  ],
+  "manifestAuditErrors": [],
+  "handlerInventory": [
+    {
+      "id": "HIT_GUIDE",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        547,
+        549,
+        550,
+        722,
+        750
+      ]
+    },
+    {
+      "id": "HIT_SKIP",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        690
+      ]
+    },
+    {
+      "id": "HIT_CONNECT_HELP",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        693
+      ]
+    },
+    {
+      "id": "HIT_HOME_ALERT",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        695
+      ]
+    },
+    {
+      "id": "HIT_CAT",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        697
+      ]
+    },
+    {
+      "id": "HIT_HOME_HOLD",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        1226
+      ]
+    },
+    {
+      "id": "HIT_FEED",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        700
+      ]
+    },
+    {
+      "id": "HIT_WATER",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        701
+      ]
+    },
+    {
+      "id": "HIT_PLAY",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        702
+      ]
+    },
+    {
+      "id": "HIT_SLEEP",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        703
+      ]
+    },
+    {
+      "id": "HIT_CARE_ACTION",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        706,
+        812
+      ]
+    },
+    {
+      "id": "HIT_STATUS_GEAR",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        712
+      ]
+    },
+    {
+      "id": "HIT_BRIGHTNESS",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        714
+      ]
+    },
+    {
+      "id": "HIT_VOICE_SETTING",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        718
+      ]
+    },
+    {
+      "id": "HIT_DISCOVERY",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        719
+      ]
+    },
+    {
+      "id": "HIT_AOD_SETTING",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        720
+      ]
+    },
+    {
+      "id": "HIT_VERSION",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        1228
+      ]
+    },
+    {
+      "id": "HIT_DEVICE",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        721,
+        728,
+        729,
+        749
+      ]
+    },
+    {
+      "id": "HIT_GUIDE_REVIEW",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        722,
+        750
+      ]
+    },
+    {
+      "id": "HIT_SYNC_HELP",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        725
+      ]
+    },
+    {
+      "id": "HIT_PENDING",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        726
+      ]
+    },
+    {
+      "id": "HIT_DEVICE_GUIDE",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        728
+      ]
+    },
+    {
+      "id": "HIT_DEVICE_BACK",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        729
+      ]
+    },
+    {
+      "id": "HIT_TOUCH0",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        732
+      ]
+    },
+    {
+      "id": "HIT_TOUCH1",
+      "evidence": "dynamic TOUCH0+i",
+      "lines": []
+    },
+    {
+      "id": "HIT_TOUCH2",
+      "evidence": "dynamic TOUCH0+i",
+      "lines": []
+    },
+    {
+      "id": "HIT_TOUCH3",
+      "evidence": "dynamic TOUCH0+i",
+      "lines": []
+    },
+    {
+      "id": "HIT_TOUCH4",
+      "evidence": "dynamic TOUCH0+i",
+      "lines": []
+    },
+    {
+      "id": "HIT_VOICE_BACK",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        740
+      ]
+    },
+    {
+      "id": "HIT_WELCOME",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        741
+      ]
+    },
+    {
+      "id": "HIT_MEET_CONFIRM",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        743
+      ]
+    },
+    {
+      "id": "HIT_MEET_CLOSE",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        721,
+        749
+      ]
+    },
+    {
+      "id": "HIT_MEET_BACK",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        722,
+        750
+      ]
+    },
+    {
+      "id": "HIT_GIFT_CLOSE",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        681
+      ]
+    },
+    {
+      "id": "HIT_WAKE",
+      "evidence": "direct actual-handler enum reference",
+      "lines": [
+        796
+      ]
+    },
+    {
+      "id": "HIT_RESET_UNAVAILABLE",
+      "evidence": "unavailable",
+      "lines": []
+    }
+  ],
+  "limits": [
+    "Read-only prebuilt LVGL static library reused; pages,scene,gesture and font/sprite sources compiled here",
+    "Owner fixture BSP/domain/peer/NVS and pointer feed helpers reused, owner main and 424 assertions not called",
+    "No real storage/core/BLE/audio/physical panel or device test"
+  ],
+  "cases": [
+    {
+      "case": "modal_sleep",
+      "independentChecks": 14,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "modal_play",
+      "independentChecks": 6,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "modal_drag",
+      "independentChecks": 26,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "toast_text_input",
+      "independentChecks": 182,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "guide_actual",
+      "independentChecks": 18,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "guide_persistence",
+      "independentChecks": 22,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "drag_boundaries",
+      "independentChecks": 15,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "classifier",
+      "independentChecks": 14,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "clock_empty",
+      "independentChecks": 16,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    },
+    {
+      "case": "registry_geometry",
+      "independentChecks": 1560,
+      "status": "passed",
+      "hardware": false,
+      "exitCode": 0
+    }
+  ],
+  "passed": 10,
+  "failed": 0,
+  "independentChecks": 1873,
+  "sourceStable": true
+}

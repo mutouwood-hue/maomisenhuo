@@ -1,0 +1,14 @@
+{
+  "decision": "limited_actual_evidence_pass",
+  "version": "0.3.8-local3",
+  "appSha256": "fcdd98ee3fdee872abd64737f83f4d3f1077ff0f991a3f55322ed5d5e173625b",
+  "newConfirmedBlockingP1P2": [],
+  "actualEvidencePins": 116,
+  "physicalVisualAcceptance": "pending user unavailable",
+  "physicalSwipeAcceptance": "pending; final pressedPolls=0",
+  "physicalCareAcceptance": "pending; no new care or reward",
+  "tearFreeClaim": false,
+  "strict037AB": false,
+  "review": "ACTUAL-DEVICE-REVIEW.md",
+  "evidence": "actual-evidence.json"
+}

@@ -1,0 +1,55 @@
+{
+  "status": "DESIGN DRAFT ONLY — not a supported production contract",
+  "atUtc": "2026-10-16T08:51:10.790366+00:00",
+  "owners": {
+    "root": [
+      "protocol/local-encounter-v1/**",
+      "artifacts/local-ble-adapter/versions/encounter-v1/**"
+    ],
+    "firmware_repair": [
+      "artifacts/firmware-local-v4-encounter039/**"
+    ],
+    "integration_review": [
+      "tests/encounter039-review/**"
+    ],
+    "B": "new independent Android candidate directory to be confirmed"
+  },
+  "frozenBaseline": [
+    "038 firmware/source/app and026Android/code17"
+  ],
+  "devicePolicy": {
+    "flashNewEncounterCandidate": false,
+    "upgradeRealNvsSchema": false,
+    "modifyOfficialUserSave": false,
+    "secondPhysicalBadgeAvailable": false,
+    "phoneInstallation": "only after independent review and explicit isolated demo-package/data strategy; Root sole device operator"
+  },
+  "scope": [
+    "key confirmation first",
+    "no new cloud dependencies",
+    "no old gift/NPC/runtime complete conversion",
+    "new independent persistent peer_complete event and source dedup",
+    "simulation visibly separated from production"
+  ],
+  "proposedPhoneWire": {
+    "v": 3,
+    "protocol": "CFLOCAL3",
+    "requiredCapability": "encounter_complete_v1",
+    "noFallbackToV2": true,
+    "rawGattServiceReuse": "proposed; Native bytes route only, strict HELLO must separate application family",
+    "journalKey": "cat-cflocal3-journal-v1",
+    "newGlobal": "CatEncounterV1"
+  },
+  "openDecisions": [
+    "durable bilateral receipt semantics/persisted phase progression from firmware proposal",
+    "canonical encounter id and per-peer first completion award scope",
+    "local pet identity binding and no inferred historical encounter",
+    "storage schema migration/bounds/rollback policy",
+    "B demo package/data isolation"
+  ],
+  "checkpointsBeijing": [
+    "22:00 evaluate",
+    "23:00 freeze; reserve23:00–24:00 packaging"
+  ],
+  "implementationMayUseDraftAsProduction": false
+}

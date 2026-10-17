@@ -1,0 +1,319 @@
+{
+  "virtual_fixture": true,
+  "sourceBlobUntouched": true,
+  "actualPinned040WireCore": true,
+  "hostFileStoreNotNVS": true,
+  "cliSha256": "21aceae2aabd1aaa127ccb7b2aeb334a48d562cce9c8fc15f93b1409a2474681",
+  "inputFsmBlobSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+  "cases": [
+    {
+      "case": "onechar",
+      "digestLength": 1,
+      "request": {
+        "v": 3,
+        "id": "raw-ack-onechar",
+        "op": "ack",
+        "data": {
+          "counter": 1,
+          "eventId": "11111111111111111111111111111111:1",
+          "receipt": {
+            "status": "applied",
+            "persisted": true,
+            "saveDigest": "x"
+          }
+        },
+        "clientId": "11111111-2222-4333-8444-555555555555",
+        "seq": 2
+      },
+      "response": {
+        "v": 3,
+        "id": "raw-ack-onechar",
+        "op": "ack",
+        "ok": false,
+        "error": {
+          "code": "invalid",
+          "outcome": "no_change"
+        }
+      },
+      "before": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "after": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "beforeSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "afterSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "changed": false
+    },
+    {
+      "case": "63lower",
+      "digestLength": 63,
+      "request": {
+        "v": 3,
+        "id": "raw-ack-63lower",
+        "op": "ack",
+        "data": {
+          "counter": 1,
+          "eventId": "11111111111111111111111111111111:1",
+          "receipt": {
+            "status": "applied",
+            "persisted": true,
+            "saveDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clientId": "11111111-2222-4333-8444-555555555555",
+        "seq": 2
+      },
+      "response": {
+        "v": 3,
+        "id": "raw-ack-63lower",
+        "op": "ack",
+        "ok": false,
+        "error": {
+          "code": "invalid",
+          "outcome": "no_change"
+        }
+      },
+      "before": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "after": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "beforeSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "afterSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "changed": false
+    },
+    {
+      "case": "65lower",
+      "digestLength": 65,
+      "request": {
+        "v": 3,
+        "id": "raw-ack-65lower",
+        "op": "ack",
+        "data": {
+          "counter": 1,
+          "eventId": "11111111111111111111111111111111:1",
+          "receipt": {
+            "status": "applied",
+            "persisted": true,
+            "saveDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clientId": "11111111-2222-4333-8444-555555555555",
+        "seq": 2
+      },
+      "response": {
+        "v": 3,
+        "id": "raw-ack-65lower",
+        "op": "ack",
+        "ok": false,
+        "error": {
+          "code": "invalid",
+          "outcome": "no_change"
+        }
+      },
+      "before": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "after": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "beforeSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "afterSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "changed": false
+    },
+    {
+      "case": "64upper",
+      "digestLength": 64,
+      "request": {
+        "v": 3,
+        "id": "raw-ack-64upper",
+        "op": "ack",
+        "data": {
+          "counter": 1,
+          "eventId": "11111111111111111111111111111111:1",
+          "receipt": {
+            "status": "applied",
+            "persisted": true,
+            "saveDigest": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+          }
+        },
+        "clientId": "11111111-2222-4333-8444-555555555555",
+        "seq": 2
+      },
+      "response": {
+        "v": 3,
+        "id": "raw-ack-64upper",
+        "op": "ack",
+        "ok": false,
+        "error": {
+          "code": "invalid",
+          "outcome": "no_change"
+        }
+      },
+      "before": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "after": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "beforeSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "afterSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "changed": false
+    },
+    {
+      "case": "64nonhex",
+      "digestLength": 64,
+      "request": {
+        "v": 3,
+        "id": "raw-ack-64nonhex",
+        "op": "ack",
+        "data": {
+          "counter": 1,
+          "eventId": "11111111111111111111111111111111:1",
+          "receipt": {
+            "status": "applied",
+            "persisted": true,
+            "saveDigest": "gggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg"
+          }
+        },
+        "clientId": "11111111-2222-4333-8444-555555555555",
+        "seq": 2
+      },
+      "response": {
+        "v": 3,
+        "id": "raw-ack-64nonhex",
+        "op": "ack",
+        "ok": false,
+        "error": {
+          "code": "invalid",
+          "outcome": "no_change"
+        }
+      },
+      "before": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "after": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "beforeSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "afterSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "changed": false
+    },
+    {
+      "case": "64valid",
+      "digestLength": 64,
+      "request": {
+        "v": 3,
+        "id": "raw-ack-64valid",
+        "op": "ack",
+        "data": {
+          "counter": 1,
+          "eventId": "11111111111111111111111111111111:1",
+          "receipt": {
+            "status": "applied",
+            "persisted": true,
+            "saveDigest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        },
+        "clientId": "11111111-2222-4333-8444-555555555555",
+        "seq": 2
+      },
+      "response": {
+        "v": 3,
+        "id": "raw-ack-64valid",
+        "op": "ack",
+        "data": {
+          "persisted": true,
+          "duplicate": false,
+          "revision": 1,
+          "counter": 1,
+          "seq": 2
+        },
+        "ok": true
+      },
+      "before": {
+        "nextEvent": 2,
+        "lastAck": 0,
+        "eventCount": 1,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 1,
+        "lastSeq": 1
+      },
+      "after": {
+        "nextEvent": 2,
+        "lastAck": 1,
+        "eventCount": 0,
+        "peerCount": 1,
+        "outgoingCount": 0,
+        "bindingCount": 0,
+        "lastSeq": 2
+      },
+      "beforeSha256": "ba7f98e4843852340a95e9387b8bb0d1cda369b2a63186cadf600c221704b572",
+      "afterSha256": "c517960e6c6c73be20c7b5613800a9861471428a9f95833dd7a853a6fd8e6d15",
+      "changed": true
+    }
+  ]
+}

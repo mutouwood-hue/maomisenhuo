@@ -1,0 +1,28 @@
+{
+  "virtual_fixture": true,
+  "actualProductionPagesSha256": "32e3d559e47902310045f0ad955bcda17d73e938a69645625c792540fb8d30e7",
+  "actualLVGL": true,
+  "peerQueueBoundaryStubbed": "records actual token; actual poll separately verified",
+  "originalHostPreviewReused": true,
+  "newIndependentCases": [
+    "peer identity",
+    "link generation",
+    "connection handle",
+    "local counter",
+    "remote counter",
+    "fingerprint",
+    "valid=false"
+  ],
+  "cases": [
+    {
+      "case": "independent_intent",
+      "assertions": 46465,
+      "missingGlyphs": 0
+    },
+    {
+      "case": "input_test",
+      "assertions": 46848,
+      "missingGlyphs": 0
+    }
+  ]
+}

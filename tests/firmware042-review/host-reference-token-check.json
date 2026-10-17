@@ -1,0 +1,8 @@
+{
+  "scope": "clang preprocessed host branches; remove neutral VR_PHASE ((void)0); whitespace normalization; excludes platform hooks",
+  "match": false,
+  "hashes": [
+    "23806595857394f635794057b28b49c3ca91b8833db1c078348f5f286446f8a7",
+    "850fc24748fd5e8849172561dee3b0a1d97a75325e83ac0dc3393f079ff3227d"
+  ]
+}

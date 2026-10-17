@@ -1,0 +1,16 @@
+dependencies:
+  # Waveshare's own BSP for this exact board. It brings in the CO5300 QSPI panel
+  # driver, the CST9217 touch controller, the LVGL adapter and the audio codecs.
+  waveshare/esp32_s3_touch_amoled_1_75c:
+    version: "^3.0.0"
+  lvgl/lvgl:
+    version: "9.5.0"
+    public: true
+  # The lower physical key (GPIO0). Already in the tree as a transitive dependency of
+  # the BSP -- dependencies.lock pins 4.2.1 -- but badge_hw.c includes its headers
+  # directly, so it is declared here rather than relied on by accident.
+  #
+  # It is here for its debounce, not its convenience: a probe measured 3 presses making
+  # 6 level changes with ISR counts of x1,x3,x1,x3,x1,x4 (docs/hardware-buttons.md §3.1).
+  espressif/button:
+    version: "^4.2.1"

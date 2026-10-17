@@ -1,0 +1,70 @@
+TAP version 13
+# Subtest: real packaged original arm runs once after1000ms hold, release preserves armed and original15s expiry
+ok 1 - real packaged original arm runs once after1000ms hold, release preserves armed and original15s expiry
+  ---
+  duration_ms: 146.779833
+  ...
+# Subtest: short release never arms and a timer-delayed valid release uses elapsed1000ms fallback once
+ok 2 - short release never arms and a timer-delayed valid release uses elapsed1000ms fallback once
+  ---
+  duration_ms: 58.94125
+  ...
+# Subtest: pointercancel before threshold cancels without release-fallback activation
+ok 3 - pointercancel before threshold cancels without release-fallback activation
+  ---
+  duration_ms: 42.52025
+  ...
+# Subtest: pointerleave before threshold cancels without release-fallback activation
+ok 4 - pointerleave before threshold cancels without release-fallback activation
+  ---
+  duration_ms: 41.514959
+  ...
+# Subtest: lostpointercapture before threshold cancels without release-fallback activation
+ok 5 - lostpointercapture before threshold cancels without release-fallback activation
+  ---
+  duration_ms: 33.772583
+  ...
+# Subtest: pointer captured slide outside cancels; secondary fingers and foreign pointerup cannot complete
+ok 6 - pointer captured slide outside cancels; secondary fingers and foreign pointerup cannot complete
+  ---
+  duration_ms: 31.253125
+  ...
+# Subtest: closing or resetting original modal cancels pending hold synchronously; reopen has no stale state
+ok 7 - closing or resetting original modal cancels pending hold synchronously; reopen has no stale state
+  ---
+  duration_ms: 41.145542
+  ...
+# Subtest: background, blur and pagehide cancel pending hold and cannot arm later
+ok 8 - background, blur and pagehide cancel pending hold and cannot arm later
+  ---
+  duration_ms: 104.579
+  ...
+# Subtest: selection/context menu suppression is key-scoped and CSS retains48px target
+ok 9 - selection/context menu suppression is key-scoped and CSS retains48px target
+  ---
+  duration_ms: 41.717417
+  ...
+# Subtest: cancellation past1000ms with a delayed timer never uses successful-release fallback
+ok 10 - cancellation past1000ms with a delayed timer never uses successful-release fallback
+  ---
+  duration_ms: 89.472375
+  ...
+# Subtest: persisted pagehide cancels old hold but restored page accepts a fresh original hold
+ok 11 - persisted pagehide cancels old hold but restored page accepts a fresh original hold
+  ---
+  duration_ms: 31.844958
+  ...
+# Subtest: reversing only018 key hooks recreates frozen017 social script byte-for-byte, including all rules and awards
+ok 12 - reversing only018 key hooks recreates frozen017 social script byte-for-byte, including all rules and awards
+  ---
+  duration_ms: 5.100916
+  ...
+1..12
+# tests 12
+# suites 0
+# pass 12
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 997.446166

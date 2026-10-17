@@ -1,0 +1,251 @@
+{
+  "source": {
+    "file": "小橘电子宠物.html",
+    "htmlSha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+    "inlineScriptSha256": "5c86c49d55ad22ce72b88b838dad6d8bbf9d4b3704aa1bd8ed9ea8318d560b50",
+    "staticSlices": {
+      "bfStart": 644065,
+      "body": 644197,
+      "catLoad": 649856,
+      "furniture": 650001,
+      "effects": 651784
+    },
+    "method": "Original bf static statements + original Three geometry/math classes; data-only Renderer/Controls; no cat loader, DOM, RAF, original HTML execution or app bootstrap"
+  },
+  "counts": {
+    "meshes": 173,
+    "triangles": 2754
+  },
+  "noCat": true,
+  "status": "Optional future room background; not part of current original badge black home-screen restoration; not registered into firmware",
+  "tools": {
+    "render_original_room.py": "fb7098fea0acde96506cfc29ccd6ef6c6b230b10c465d867c91249ac1afe681a",
+    "render_original_room.mjs": "6092c30bfe621be90b72a3a2553ddadcfca85beb364cc4af04bd34ef01246ede"
+  },
+  "runtime": {
+    "python": "3.13.3",
+    "numpy": "2.5.3",
+    "pillow": "12.3.0"
+  },
+  "geometrySha256": "714df99d2c2b2a742ad2f9a893f92fc5e0c4ba9332bd9885a6842c3b8392a079",
+  "renderer": "Offline NumPy perspective-correct barycentric z-buffer, normal matrices, front-face culling, alpha blend, 3x3 PCF directional depth map; Lambert/pi + fitted ACES/exposure1.22, sRGB output",
+  "limitations": [
+    "Not a browser screenshot or exact Three MeshStandard PBR match; no specular reflections, WebGL PCSS, environment maps or runtime effects",
+    "233px image is opaque RGB; circle previews are labeled non-device and intentionally mask the square outside the physical round screen",
+    "No cat/shadow of cat; animated cat must be composited separately; proposed sprite rectangle is metadata only, not painted into background"
+  ],
+  "cameras": [
+    {
+      "name": "a-original-three-quarter",
+      "position": [
+        31,
+        30,
+        -47
+      ],
+      "target": [
+        0,
+        11,
+        1
+      ],
+      "fov": 48,
+      "projectedOriginalHomeFeet466": [
+        251.79,
+        330.77
+      ],
+      "proposedSpriteBox466": [
+        137,
+        142,
+        192,
+        208
+      ],
+      "images": [
+        "a-original-three-quarter-233.png",
+        "a-original-three-quarter-466-circle-preview.png",
+        "a-original-three-quarter-full.png"
+      ]
+    },
+    {
+      "name": "b-front-room",
+      "position": [
+        8,
+        27,
+        -47
+      ],
+      "target": [
+        0,
+        11,
+        1.5
+      ],
+      "fov": 52,
+      "projectedOriginalHomeFeet466": [
+        239.89,
+        342.3
+      ],
+      "proposedSpriteBox466": [
+        137,
+        142,
+        192,
+        208
+      ],
+      "images": [
+        "b-front-room-233.png",
+        "b-front-room-466-circle-preview.png",
+        "b-front-room-full.png"
+      ]
+    },
+    {
+      "name": "c-close-three-quarter",
+      "position": [
+        28,
+        25,
+        -42
+      ],
+      "target": [
+        0,
+        10,
+        1
+      ],
+      "fov": 52,
+      "projectedOriginalHomeFeet466": [
+        252.68,
+        326.11
+      ],
+      "proposedSpriteBox466": [
+        137,
+        142,
+        192,
+        208
+      ],
+      "images": [
+        "c-close-three-quarter-233.png",
+        "c-close-three-quarter-466-circle-preview.png",
+        "c-close-three-quarter-full.png"
+      ]
+    }
+  ],
+  "originalCamera": {
+    "position": [
+      31,
+      26,
+      -43
+    ],
+    "fov": 35,
+    "near": 0.1,
+    "far": 180,
+    "target": [
+      0,
+      7,
+      1
+    ]
+  },
+  "lights": [
+    {
+      "type": "HemisphereLight",
+      "color": [
+        1,
+        0.9386857284565036,
+        0.8069522576650873
+      ],
+      "intensity": 2.6,
+      "groundColor": [
+        0.22322795730611386,
+        0.3371636150376657,
+        0.2917706498067336
+      ],
+      "position": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "type": "DirectionalLight",
+      "color": [
+        1,
+        0.8713671191959567,
+        0.651405637412793
+      ],
+      "intensity": 3.1,
+      "position": [
+        -15,
+        37,
+        -23
+      ],
+      "target": [
+        0,
+        5,
+        0
+      ]
+    },
+    {
+      "type": "DirectionalLight",
+      "color": [
+        0.6866853124288865,
+        0.8879231178794775,
+        0.8631572134510892
+      ],
+      "intensity": 1.15,
+      "position": [
+        22,
+        19,
+        8
+      ],
+      "target": [
+        0,
+        0,
+        0
+      ]
+    }
+  ],
+  "selected": null,
+  "artifacts": {
+    "a-original-three-quarter-233-rgb565le.raw": {
+      "bytes": 108578,
+      "sha256": "424e832b972b8ad00f4bdc5bdd3cabe4f897e73231f48b9e7c93019950ecd923"
+    },
+    "c-close-three-quarter-466-circle-preview.png": {
+      "bytes": 85642,
+      "sha256": "83147c16986c8b670680cfaa812ee6466d8f6ae287c6be41337e4ffab1088dd2"
+    },
+    "a-original-three-quarter-233.png": {
+      "bytes": 36339,
+      "sha256": "77af0487e343364ee7b615de33365b9295a602f91cb92a298d08cee7ac99a6f0"
+    },
+    "c-close-three-quarter-233-rgb565le.raw": {
+      "bytes": 108578,
+      "sha256": "43b47eec84e7bae2bdd79d319a50a27b616255066f3653fa49cccd482f384b0d"
+    },
+    "b-front-room-233-rgb565le.raw": {
+      "bytes": 108578,
+      "sha256": "13f1508c2977f532b53cddb1b44c872229eb09e671e1879f107f44ce3fc47e0d"
+    },
+    "b-front-room-466-circle-preview.png": {
+      "bytes": 80201,
+      "sha256": "9035c29d50b42e6d2ecbf9517e9acd6694b13e66896ed11a5546b3886ebf625e"
+    },
+    "b-front-room-full.png": {
+      "bytes": 113173,
+      "sha256": "131a0226bda552d9861d6c544784e77627a5ebf8bfbedb383090852416f0b84b"
+    },
+    "c-close-three-quarter-full.png": {
+      "bytes": 111426,
+      "sha256": "96d4b083a1398727b7851f62b6e7d2a28e030056e311cabb69e23c669e57954c"
+    },
+    "a-original-three-quarter-full.png": {
+      "bytes": 117871,
+      "sha256": "cb2bf0c664b2109a43015816607fa18931ded7ab3099f00a515e9c0c30502df9"
+    },
+    "a-original-three-quarter-466-circle-preview.png": {
+      "bytes": 89751,
+      "sha256": "c973b4d8e5025488ad1e0f7d8bdffb7c8911a61f47a1b3337ef920e9ac869de9"
+    },
+    "c-close-three-quarter-233.png": {
+      "bytes": 34694,
+      "sha256": "46cebab9f9d98df8a5788060c6ad9fe9e65bc002110cebf1eab02b3ef3ef2813"
+    },
+    "b-front-room-233.png": {
+      "bytes": 32116,
+      "sha256": "f9c60149cd969b7eda87dd3db2f6fd8716702b5e5aa9d05a2acf531e82eb2458"
+    }
+  }
+}

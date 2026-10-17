@@ -1,0 +1,2 @@
+NEGATIVE {"case":"local-offline-fresh","live":false,"observedLocal":true,"action":7,"expectedLocalPet":true,"phase":"窝里休息","syntheticNativeEmits":1}
+badge_ui: Original animation bank: available

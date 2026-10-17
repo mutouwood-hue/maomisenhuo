@@ -1,0 +1,62 @@
+{
+  "offline": true,
+  "synthetic_fixture_not_device": true,
+  "cases": [
+    {
+      "name": "complete_fixture",
+      "passed": true
+    },
+    {
+      "name": "console_interleaved",
+      "passed": true
+    },
+    {
+      "name": "missing_chunk",
+      "passed": true
+    },
+    {
+      "name": "duplicate",
+      "passed": true
+    },
+    {
+      "name": "reordered",
+      "passed": true
+    },
+    {
+      "name": "bad_crc",
+      "passed": true
+    },
+    {
+      "name": "wrong_id",
+      "passed": true
+    },
+    {
+      "name": "aborted",
+      "passed": true
+    },
+    {
+      "name": "no_end",
+      "passed": true
+    },
+    {
+      "name": "bad_format",
+      "passed": true
+    },
+    {
+      "name": "multiple_begin",
+      "passed": true
+    },
+    {
+      "name": "payload_corruption",
+      "passed": true
+    },
+    {
+      "name": "unknown_size",
+      "passed": true
+    },
+    {
+      "name": "DATA_after_END",
+      "passed": true
+    }
+  ]
+}

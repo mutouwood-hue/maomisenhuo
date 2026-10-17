@@ -1,0 +1,78 @@
+{
+  "atUtc": "2026-10-16T04:22:48.377335+00:00",
+  "decision": "release_for_sole_integrator_controlled_application_only_device_validation_after_fresh_backup_and_partition_protection_gates",
+  "noConfirmedP1P2InReviewed036Delta": true,
+  "app": {
+    "path": "deliverables/cat-forest-badge-0.3.6-local3.bin",
+    "bytes": 6397888,
+    "sha256": "a34cfaafc09d8af59ddda076906b17eac1543d0f6b454bff70048d90a0c51ff7",
+    "description": {
+      "version": "0.3.6-local3",
+      "projectName": "cat_forest_badge",
+      "idfVersion": "v5.5.5",
+      "secureVersion": 0,
+      "elfSha256": "532a99e5ef1de5d2ad3334110408222b845b832fa649d1ab82001d6a861778fc"
+    }
+  },
+  "elf": {
+    "path": "build/cat_forest_badge.elf",
+    "sha256": "532a99e5ef1de5d2ad3334110408222b845b832fa649d1ab82001d6a861778fc"
+  },
+  "sourceZip": {
+    "path": "deliverables/cat-forest-badge-0.3.6-local3-source.zip",
+    "bytes": 2700569,
+    "sha256": "3e8ce0b488a068f8c32603ff263ac8f6d06a0bd001bc1cb9f2b9c2877e19ac34",
+    "sourceFiles": 107,
+    "allSourceEntriesReadBackExact": true,
+    "noBuildTreesOrBinaries": true,
+    "externalDependencies": "fixed ESP-IDF5.5.5+workspace readonly managed_components; host replay needs034 compiled LVGL/assets"
+  },
+  "runtimeHashes": {
+    "cmake/private-mask-override.cmake": "97364f14d960b152daf7beef4e7ccbfe5807d6225e834efba1f1a07a6cdd5e2f",
+    "private/lvgl_mask_pool/LICENCE.txt": "27a80bd36832ab42d35ad60c08b2b230a807a9bc0d58e94ec1531543dc49cbe8",
+    "private/lvgl_mask_pool/catforest_mask_pool.inc": "87398a51fcf5d733c8cf62bc06a02cf64f792c659935ec0c9b5a6b34c33b665d",
+    "private/lvgl_mask_pool/lv_draw_sw_mask.c": "e08181e1c661fd56031515b5b6af9c642a03b58e95fa2be97bf9227c3dbd1d13"
+  },
+  "source107Stable": true,
+  "allMain51Exact035": true,
+  "executed": {
+    "unitSuccessfulCases": 19,
+    "expectedOriginalFallbackSIGABRTs": 3,
+    "rasterRadiusInverseHashesExact": 470,
+    "pthreadRasters": 2000,
+    "independentLifecycleCases": 3,
+    "independentLifecycleAssertions": 79,
+    "frameVariants": 11,
+    "intermediateFramesPerVariant": 1204,
+    "frameLogicalTicksAndHashesExact": true,
+    "frameSequenceSha256": "e30741247bded2feee7b512988f2933412970c71910c609972271a3b9b138b8b",
+    "actualTargetTUWerrorExit": 0,
+    "targetSinglePrivateTUAndNoHostMacros": true,
+    "targetLibrarySingleMaskMember": true,
+    "publicSymbolsExact035": 11,
+    "privateStaticBssBytes": 347,
+    "actualTotalDramBssDelta": 344
+  },
+  "ownerEvidenceReviewedNotIndependentlyRerun": [
+    "48FULL layouts/46416font checks",
+    "diag34",
+    "decoder14",
+    "immutability59",
+    "5interleaved performance rounds",
+    "fullESP-IDFbuild"
+  ],
+  "fixtureLimits": [
+    "Host PSRAM capability and malloc substitutes; no actual SPIRAM latency/capabilities/heap promise",
+    "pthread replaces mutex call sites, not FreeRTOS scheduling or concurrent fullLVGL init/deinit",
+    "Precompiled035-compatible034 LVGL/asset objects reused; modified mask and production pages/scene freshly compiled",
+    "No device/serial/ADB/reset/flash/physical care evidence from reviewer"
+  ],
+  "openUnchanged": [
+    "035partial8pixelcosmetic differences vs034",
+    "035AODcalibratedtime/wakehintoverlap",
+    "actualESPpoolenable/fallbackstatus and PSRAM/internalheap/min/largest",
+    "same-statePERFandactualphysicalswipe/scanouttearing",
+    "legacy4extremeOOMstillasserts"
+  ],
+  "writes": "tests/firmware036-review only; no Git/deletion/frozen source/owner evidence/device actions"
+}

@@ -1,0 +1,68 @@
+{
+  "baseline": "小橘电子宠物.html plus latest user statement: no cloud, real badge connection required",
+  "reviewMode": "read-only source comparison; no fresh screenshot audit",
+  "recommendation": "restore corrected HTML views/gameplay; selectively reuse Android container/mobile adapters/verified transport; do not accept whole old package",
+  "focus": [
+    "encounter radar/cards/tab navigation vs combined operational form",
+    "dex pixels/categories/seen-owned-locked states vs six-breed text list",
+    "game-integrated local device connection without accounts/endpoints/cloud sync"
+  ],
+  "cloudDependencies": {
+    "ui": [
+      "src/companion/main.js:18",
+      "src/social/view.js:1"
+    ],
+    "initializationAndTimers": [
+      "src/companion/main.js:100-139"
+    ],
+    "deviceAuthorization": [
+      "src/companion/main.js:98",
+      "src/companion/badge-sync.js:29-45"
+    ],
+    "eventSettlement": [
+      "src/companion/badge-sync.js:37-45",
+      "src/companion/active-events.js"
+    ],
+    "social": [
+      "src/social/client.js",
+      "src/social/panel.js:21-28"
+    ],
+    "lifeAndConsent": [
+      "src/companion/life-sync.js",
+      "src/companion/privacy-eligibility.js",
+      "src/social/environment-revoke.js",
+      "src/social/environment-resume.js"
+    ],
+    "updates": [
+      "src/social/update-uploader.js"
+    ],
+    "historicalState": [
+      "companion:<userId>:*",
+      "companion-session",
+      "local game family save",
+      "pending consent/revoke markers"
+    ]
+  },
+  "cloudRemovalConstraints": [
+    "do not merely hide buttons while keeping cloud gates",
+    "do not bypass signature checks or forge authorization",
+    "keep single complete-family local writer and persistent-before-ACK/event dedup",
+    "preserve existing data and backups; no automatic deletion",
+    "confirm firmware protocol before adapter changes"
+  ],
+  "validation": {
+    "syntaxPass": 34,
+    "tapPass": 65,
+    "tapFail": 4,
+    "webBuild": "blocked missing esbuild",
+    "androidBuild": "not run; missing inspected SDK36/Gradle8.14.3/dependency paths",
+    "runtime": "not performed",
+    "sourceArchiveDifferences": 0
+  },
+  "deliverables": [
+    "COMPARISON.md",
+    "README.md",
+    "ui-source-audit.json",
+    "web-build-attempt.json"
+  ]
+}

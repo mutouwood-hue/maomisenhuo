@@ -1,0 +1,100 @@
+TAP version 13
+# Subtest: bounded street uses only host allocations with twelve shared material variants
+ok 1 - bounded street uses only host allocations with twelve shared material variants
+  ---
+  duration_ms: 2.702542
+  type: 'test'
+  ...
+# Subtest: original cat route and original movement clamp reach both explicit endpoints
+ok 2 - original cat route and original movement clamp reach both explicit endpoints
+  ---
+  duration_ms: 2.087459
+  type: 'test'
+  ...
+# Subtest: rebuild is deterministic and does not retain allocations across host scene owners
+ok 3 - rebuild is deterministic and does not retain allocations across host scene owners
+  ---
+  duration_ms: 1.982834
+  type: 'test'
+  ...
+# Subtest: independent fixture never reads persistent Storage; production port unavailable and all growth stays visual with one skippable guide
+ok 4 - independent fixture never reads persistent Storage; production port unavailable and all growth stays visual with one skippable guide
+  ---
+  duration_ms: 147.060584
+  type: 'test'
+  ...
+# Subtest: actual Ef no-reward street entry then original garden activity then home reuses original store/cat and cancels unfinished activity
+ok 5 - actual Ef no-reward street entry then original garden activity then home reuses original store/cat and cancels unfinished activity
+  ---
+  duration_ms: 85.735958
+  type: 'test'
+  ...
+# Subtest: actual Ef: pause during async world load never activates late renderer; foreground return is home and requires explicit entry
+ok 6 - actual Ef: pause during async world load never activates late renderer; foreground return is home and requires explicit entry
+  ---
+  duration_ms: 49.160917
+  type: 'test'
+  ...
+# Subtest: actual Ef: failed entry releases gate; repeated suspend/resume and close free controller-owned resources
+ok 7 - actual Ef: failed entry releases gate; repeated suspend/resume and close free controller-owned resources
+  ---
+  duration_ms: 45.603042
+  type: 'test'
+  ...
+# Subtest: new Activity/package/HTML contain no native, radio or persistent-save integration; original vu formulas byte-identical to026
+ok 8 - new Activity/package/HTML contain no native, radio or persistent-save integration; original vu formulas byte-identical to026
+  ---
+  duration_ms: 13.882083
+  type: 'test'
+  ...
+# Subtest: typed unavailable rejects native-looking, simulation, NPC and gift attempts equally; no consumer/dedup/production seed proof is claimed
+ok 9 - typed unavailable rejects native-looking, simulation, NPC and gift attempts equally; no consumer/dedup/production seed proof is claimed
+  ---
+  duration_ms: 36.946042
+  type: 'test'
+  ...
+# Subtest: original prototype NPC worldGrow exits before touching any seed/reward data in demo; visual button never calls completeMeet/socialGrant
+ok 10 - original prototype NPC worldGrow exits before touching any seed/reward data in demo; visual button never calls completeMeet/socialGrant
+  ---
+  duration_ms: 37.336333
+  type: 'test'
+  ...
+# Subtest: actual Ef navigation away during pending demo load keeps user-selected original panel and never late-activates or bounces home
+ok 11 - actual Ef navigation away during pending demo load keeps user-selected original panel and never late-activates or bounces home
+  ---
+  duration_ms: 43.458583
+  type: 'test'
+  ...
+# Subtest: late original room-ready callback rechecks foreground, and Back cancels care or collapses world sheet before navigation
+ok 12 - late original room-ready callback rechecks foreground, and Back cancels care or collapses world sheet before navigation
+  ---
+  duration_ms: 38.87325
+  type: 'test'
+  ...
+# Subtest: actual bf room: physical adjacent expansion and inset streetscape preserve original cat/bed/camera/materials
+ok 13 - actual bf room: physical adjacent expansion and inset streetscape preserve original cat/bed/camera/materials
+  ---
+  duration_ms: 110.745583
+  type: 'test'
+  ...
+# Subtest: actual original room: repeated restore/reapply/dispose frees only owned unique resources once
+ok 14 - actual original room: repeated restore/reapply/dispose frees only owned unique resources once
+  ---
+  duration_ms: 65.205334
+  type: 'test'
+  ...
+# Subtest: options and layout fail closed before changing original room
+ok 15 - options and layout fail closed before changing original room
+  ---
+  duration_ms: 56.909791
+  type: 'test'
+  ...
+1..15
+# tests 15
+# suites 0
+# pass 15
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1439.357833

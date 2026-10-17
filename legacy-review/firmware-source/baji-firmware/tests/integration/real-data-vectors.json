@@ -1,0 +1,79 @@
+{
+  "warning": "PUBLIC TEST-ONLY KEY. Do not provision in real firmware or production backend.",
+  "version": 1,
+  "deviceId": "aabbccddeeff",
+  "testKeyBase64": "AAECAwQFBgcICQoLDA0ODxAREhMUFRYXGBkaGxwdHh8=",
+  "challengeId": "00112233-4455-6677-8899-aabbccddeeff",
+  "sessionId": "ffeeddcc-bbaa-9988-7766-554433221100",
+  "eventId": "9007199254740993",
+  "challenge": {
+    "length": 56,
+    "hex": "00112233445566778899aabbccddeefffffefdfcfbfaf9f8f7f6f5f4f3f2f1f0efeeedecebeae9e8e7e6e5e4e3e2e1e024fcce6a40e20100",
+    "base64": "ABEiM0RVZneImaq7zN3u///+/fz7+vn49/b19PPy8fDv7u3s6+rp6Ofm5eTj4uHgJPzOakDiAQA=",
+    "crc32": "8dae2d00"
+  },
+  "proof": {
+    "length": 32,
+    "hex": "b36e8f27c52b3803436d2434f414e9856218363ba301bab2d1301153441d71b0",
+    "base64": "s26PJ8UrOANDbSQ09BTphWIYNjujAbqy0TARU0QdcbA=",
+    "crc32": "6c0b2e9e"
+  },
+  "grant": {
+    "length": 69,
+    "hex": "01ffeeddccbbaa998877665544332211006cffce6a00112233445566778899aabbccddeeffe99dcc794aefeb703ab5c6fb3c670b55130bb3a1ec1eea569d1ade12d854c6ee",
+    "base64": "Af/u3cy7qpmId2ZVRDMiEQBs/85qABEiM0RVZneImaq7zN3u/+mdzHlK7+twOrXG+zxnC1UTC7Oh7B7qVp0a3hLYVMbu",
+    "crc32": "ebdcb6d9"
+  },
+  "event": {
+    "length": 48,
+    "hex": "0100000000002000e8fbce6a010000009bd0714ffac8b6ef73d1a183301cf77418182a564d03af6edb0fc9fe41105120",
+    "base64": "AQAAAAAAIADo+85qAQAAAJvQcU/6yLbvc9GhgzAc93QYGCpWTQOvbtsPyf5BEFEg",
+    "crc32": "0f519ecb"
+  },
+  "ack": {
+    "length": 60,
+    "hex": "ffeeddccbbaa9988776655443322110001000000010000000000200036274177917f9c502b3dd033599c0137b6cce341661faaea623525041c3ac54f",
+    "base64": "/+7dzLuqmYh3ZlVEMyIRAAEAAAABAAAAAAAgADYnQXeRf5xQKz3QM1mcATe2zONBZh+q6mI1JQQcOsVP",
+    "crc32": "b2fa4e75"
+  },
+  "time": {
+    "length": 58,
+    "hex": "ffeeddccbbaa9988776655443322110002000000e8fbce6ae00199192fad371743ba8e6149299731997e24189e46adaddf2ecb6ce3f04490dbf8",
+    "base64": "/+7dzLuqmYh3ZlVEMyIRAAIAAADo+85q4AGZGS+tNxdDuo5hSSmXMZl+JBieRq2t3y7LbOPwRJDb+A==",
+    "crc32": "27702221"
+  },
+  "grantFrames": [
+    "424a0110010009000734124500d9b6dceb000000",
+    "424a011102000c0034120001ffeeddccbbaa9988",
+    "424a011103000c0034120177665544332211006c",
+    "424a011104000c00341202ffce6a001122334455",
+    "424a011105000c0034120366778899aabbccddee",
+    "424a011106000c00341204ffe99dcc794aefeb70",
+    "424a011107000c003412053ab5c6fb3c670b5513",
+    "424a011108000c003412060bb3a1ec1eea569d1a",
+    "424a011109000900341207de12d854c6ee000000",
+    "424a01120a000200341200000000000000000000"
+  ],
+  "signedAckFrames": [
+    "424a0110010009000834123c00754efab2000000",
+    "424a011102000c00341200ffeeddccbbaa998877",
+    "424a011103000c00341201665544332211000100",
+    "424a011104000c00341202000001000000000020",
+    "424a011105000c003412030036274177917f9c50",
+    "424a011106000c003412042b3dd033599c0137b6",
+    "424a011107000c00341205cce341661faaea6235",
+    "424a01110800090034120625041c3ac54f000000",
+    "424a011209000200341200000000000000000000"
+  ],
+  "standardCrc32": {
+    "ascii": "123456789",
+    "expectedHex": "cbf43926",
+    "actualHex": "cbf43926"
+  },
+  "domainLengths": {
+    "BAJI-BIND-v1": 12,
+    "BAJI-GRANT-v1": 13,
+    "BAJI-EVENT-v1": 13,
+    "BAJI-SYNC-v1": 12
+  }
+}

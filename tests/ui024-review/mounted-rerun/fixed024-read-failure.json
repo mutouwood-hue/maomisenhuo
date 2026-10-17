@@ -1,0 +1,915 @@
+{
+  "baseline023": false,
+  "eventsEnabled": false,
+  "scenario": "readFailure",
+  "refreshAttempts": 3,
+  "presentationProbe": true,
+  "browserAnchorInsideDevice": null,
+  "refreshDisabled": false,
+  "diagnosticText": "连接详情与本地诊断只在点击刷新时读取设备。结果仅代表读取完成时，后续动作需再刷新；不自动重连或确认事件。事件水位不单独证明奖励已发放，具体结果看上方真实事件提示。真实新本地握手已核对。上次读回已过期。正在同步或结算，请稍后手动刷新。 已请求本机保存位置；请在系统窗口确认保存。刷新连接详情导出本地诊断 JSON实际读取记录手机读取完成时间（UTC）2026-10-16T02:09:47.476Z本次读取 generation2结果有效性已过期来源：读取时的 HELLO 握手协议CFLOCAL2握手设备 ID0123456789abcdef0123456789abcdef声明能力（不等于全部实测通过）scene、snapshot、events来源：设备 state 响应设备 ID0123456789abcdef0123456789abcdef本地客户端 ID未绑定（null）设备已处理指令序号1设备已确认事件水位0设备待确认事件数0设备存储错误否设备已有场景快照是设备快照摘要快照猫 IDcat-7486d933-50a5-4d3f-82fd-d435edcf52b2快照版本1快照场景在家（home）快照动作休息（idle）快照天气晴天（clear）校时可观测性设备时钟当前 BLE 未提供 clockValid / now，尚不能核实校时。",
+  "normal500msPollSuppressed": true,
+  "memorySceneChangedWithoutDOMMutation": true,
+  "priorCommands": 4,
+  "commandsAfterExplicitDiagnostic": [
+    {
+      "op": "state"
+    },
+    {
+      "op": "state"
+    },
+    {
+      "op": "state"
+    }
+  ],
+  "journalChanged": false,
+  "authorityChanged": false,
+  "beforeJournalSha256": "07c1ec9123b1991042e989b8ac01ecfc13479cb5fee15bc6615fd3386976b180",
+  "afterJournalSha256": "07c1ec9123b1991042e989b8ac01ecfc13479cb5fee15bc6615fd3386976b180",
+  "statusUnchanged": true,
+  "status": "synced",
+  "exportRequests": 1,
+  "observerRecords": [
+    [
+      {
+        "type": "childList",
+        "target": "offline-device-status",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-device-note",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-device-start",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-device-primary",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-device-disconnect",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-legacy-panel",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-scan",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-retry",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-v2-retry",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "BODY",
+        "attribute": "class",
+        "value": "offline-obscured",
+        "inDevice": false
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "future-device-presentation-fixture",
+        "attribute": "hidden",
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "future-device-presentation-fixture",
+        "attribute": "hidden",
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-legacy-panel",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-scan",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-retry",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-v2-retry",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "attributes",
+        "target": "offline-legacy-panel",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-scan",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-retry",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-v2-retry",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "attributes",
+        "target": "offline-legacy-panel",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-scan",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "attributes",
+        "target": "offline-v2-retry",
+        "attribute": "hidden",
+        "value": "",
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "offline-v2-retry",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ],
+    [
+      {
+        "type": "childList",
+        "target": "P",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      },
+      {
+        "type": "childList",
+        "target": "DIV",
+        "attribute": null,
+        "value": null,
+        "inDevice": true
+      }
+    ]
+  ],
+  "sourceSha256": "4868902efa98566fcf0d18cebedc64735824999b079f90c4520916fa788cdb80"
+}

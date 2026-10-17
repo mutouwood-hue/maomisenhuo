@@ -1,0 +1,109 @@
+{
+  "scope": "actual production core + actual NVS adapter; SDK/NVS/mutex I/O doubles on host; no hardware/radio acceptance",
+  "core": {
+    "checks": 2685,
+    "failures": 0,
+    "maxEncodedBytes": 5739,
+    "coreBytes": 34104,
+    "savedBytes": 12936
+  },
+  "storeScenarios": [
+    {
+      "scenario": "new",
+      "checks": 23,
+      "failures": 0
+    },
+    {
+      "scenario": "load",
+      "checks": 24,
+      "failures": 0
+    },
+    {
+      "scenario": "alloc",
+      "checks": 5,
+      "failures": 0
+    },
+    {
+      "scenario": "mutex_alloc",
+      "checks": 5,
+      "failures": 0
+    },
+    {
+      "scenario": "nvs_init",
+      "checks": 6,
+      "failures": 0
+    },
+    {
+      "scenario": "nvs_open",
+      "checks": 7,
+      "failures": 0
+    },
+    {
+      "scenario": "get_size",
+      "checks": 11,
+      "failures": 0
+    },
+    {
+      "scenario": "get_read",
+      "checks": 12,
+      "failures": 0
+    },
+    {
+      "scenario": "corrupt",
+      "checks": 12,
+      "failures": 0
+    },
+    {
+      "scenario": "oversize",
+      "checks": 9,
+      "failures": 0
+    },
+    {
+      "scenario": "init_set_fail",
+      "checks": 10,
+      "failures": 0
+    },
+    {
+      "scenario": "init_commit_fail",
+      "checks": 11,
+      "failures": 0
+    },
+    {
+      "scenario": "set_fail",
+      "checks": 27,
+      "failures": 0
+    },
+    {
+      "scenario": "commit_old",
+      "checks": 28,
+      "failures": 0
+    },
+    {
+      "scenario": "commit_new",
+      "checks": 27,
+      "failures": 0
+    },
+    {
+      "scenario": "lock_busy",
+      "checks": 24,
+      "failures": 0
+    },
+    {
+      "scenario": "concurrent",
+      "checks": 347,
+      "failures": 0
+    }
+  ],
+  "checks": 3273,
+  "failures": 0,
+  "maxEncodedBytes": 5739,
+  "coreBytes": 34104,
+  "sourceSha256": {
+    "artifacts/firmware-local-v2/source/main/local2_core.c": "02c8706020559a1e220b0b848faa47171bcabb7e1e26c7f0aa4372d027f49623",
+    "artifacts/firmware-local-v2/source/main/local2_core.h": "de714f53212f772e0ca6ae668a8680c71e53b24e913fd979a10b8906c772bb75",
+    "artifacts/firmware-local-v2/source/main/local2_store.c": "d0b3ffa1097888d26e27e4f8a2304735c4e84be14244c28af8d73e8911061610",
+    "artifacts/firmware-local-v2/source/main/local2_store.h": "74be87b32c9db82ff5ecd0309cba84706883463224444bfcf90856f2363b837e",
+    "tests/local2-core/test_core.c": "9398a512e52961c7622a82c061637f27ceb98f5162d3f957a52096d4969255f2",
+    "tests/local2-core/test_store.c": "5d2167cacec055658206b57084f2a5295a71b6803b2ccd4f52a0ba4fd82e374b"
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "atUtc": "2026-10-16T09:25:19.941232+00:00",
+  "scope": "future production consumer prerequisites; not an implemented reward transaction or an instruction to grant seeds",
+  "productionConsumerImplementedThisRound": false,
+  "world027Mode": "closed admission / unavailable production port; simulation-only isolated app",
+  "invariants": [
+    "Native subscribed evidence+strict CFLOCAL3proof negotiation, actual device/event parse and SHA checked before admission",
+    "bind original consentpet/savegeneration; never switch delayed event to currently visible cat",
+    "persist immutable event outcome keyeddeviceId:eventCounter AND businessdedup keyedencounterId in same Native-authoritative transaction with originalgame/world result",
+    "a second eventcounter for sameencounterId must record duplicate outcome without another worldgrowth/seed; conflicting tuple for sameencounterId is blocked, not silently merged",
+    "verifier independently rereads durable original result, canonicalproof/encounterdedup and current sourceidentity; no verification solely from pendingtransportjournal or from suppliedreceiptboolean",
+    "no ACK if Native seal/write/readback/digest missing, outcomeunknown, interrupted identity or restoremissinghistory; keep same head and exactpending",
+    "pause/generationchange cancels furtherdelivery; alreadycommitted durable outcome recoverable; do not reapply on callbackloss or exact ACK retry",
+    "backups include complete linked originalworldresult+bothdedup indexes+identity+journal; oldbackupmissing settled results cannot override or blindACK",
+    "lifetime device-pair firstproof does not define seedquantity/currency/caps; businesspolicy must be explicitly selected and existingrules tested before production reward",
+    "NPC/giftfalse/RAMcomplete/simulation_fixture never admitted into production; originalcompleteMeet/worldGrow demo must remain gated",
+    "physical radio/gesture/AndroidAtomicFile/ESP NVS and realworldgrowth acceptance each remain separate"
+  ],
+  "fixtureCeiling": "Root hostreceiptstore fsync+oneencounter-record fixture and B closedadmission tests do not prove Native/game seed transaction or businessdedup implementation",
+  "devicePolicy": "Do not flash039 on user038; do not install worlddemo over正式package or migrate用户schema under this scope"
+}

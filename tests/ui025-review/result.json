@@ -1,0 +1,25 @@
+{
+  "kind": "read-only source/package and isolated host review; no device",
+  "status": "pass_for_serial_data_preserving_install_and_natural_work_recall_acceptance",
+  "sourceHashesStableAfterExecution": true,
+  "prior024SourceApkZipFrozen": true,
+  "originalLifeClosureTestsRerun": 10,
+  "reviewerAddedOriginalClosureBoundaryTests": 4,
+  "testsFail": 0,
+  "testsSkipped": 0,
+  "game06ReadonlyHookRemovalExact024": true,
+  "hookInsertionCounts": [
+    1,
+    1,
+    1
+  ],
+  "runtimeHashes": {
+    "web/offline-scene-map.js": "7b68b861b32cc81774d78af0990a97a0bfe55917fd8f500b948fe3db9434021e",
+    "android/app/src/main/assets/game-06.js": "26381bd28b92a381f4e6f5c040fa9ca87254167fc4920acbfc5d590bd97d00ea",
+    "scripts/build_assets.py": "b5fe6dcad9046bb3f0a74a934c16b1198f338a6373ada9b34d03b05e1338e3fb"
+  },
+  "originalGameHtmlSha256": "3e1b68b6dcef89ce6003961e0abb41354785443bd0427b83ed70f7589fd8af53",
+  "ownerFullNodeTestsReadback": 281,
+  "ownerFullNodeRerunByReviewer": false,
+  "actualDeviceValidated": false
+}

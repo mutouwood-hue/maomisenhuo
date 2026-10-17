@@ -1,0 +1,19 @@
+{
+  "virtual_fixture": true,
+  "realAdapterAndEventCodec": true,
+  "originalAction": "pet",
+  "secondRead": "MALFORMED_FRAME",
+  "thirdRead": {
+    "action": "pet",
+    "kind": "care",
+    "occurredAtMs": null,
+    "petId": "pet-1",
+    "counter": 1,
+    "eventId": "0123456789abcdef0123456789abcdef:1",
+    "deviceId": "0123456789abcdef0123456789abcdef",
+    "protocol": "CFLOCAL3",
+    "source": "native_device"
+  },
+  "wireAckCount": 1,
+  "verifier": "owner Native fixture verified=true; NOT actual Native history or reward writer"
+}

@@ -1,0 +1,168 @@
+{
+  "version": "local-adapter-contract-2026-10-15-draft1",
+  "status": "phone_internal_API_contract_not_new_firmware_wire_format",
+  "currentWire": {
+    "family": "legacy-e7f1-bj20",
+    "service": "e7f1a000-1c9b-4a7e-9d2f-3b8c5e6f7a00",
+    "rx": "e7f1a000-1c9b-4a7e-9d2f-3b8c5e6f7a01",
+    "tx": "e7f1a000-1c9b-4a7e-9d2f-3b8c5e6f7a02",
+    "frameBytes": 20,
+    "magic": [
+      66,
+      74
+    ],
+    "version": 1,
+    "payloadMax": 12,
+    "sequenceMin": 1,
+    "sequenceMax": 65535,
+    "ackOpcode": 128,
+    "stateNotifyOpcode": 129,
+    "stateNotifySequence": 0,
+    "knownRequests": {
+      "HELLO": 1,
+      "GET_STATE": 2,
+      "START_LOCAL": 3,
+      "PING": 4,
+      "SET_FACE": 5
+    }
+  },
+  "startup": {
+    "installListenersOnly": true,
+    "requestPermissionsAutomatically": false,
+    "scanAutomatically": false,
+    "connectAutomatically": false,
+    "startLocalAutomatically": false,
+    "restoreCloudSession": false,
+    "sensitiveCaptureEnabled": false
+  },
+  "readyLocalRequires": [
+    "actual native generation and selected device",
+    "service/RX/TX characteristic discovery succeeded",
+    "CCCD subscribed successfully",
+    "HELLO write completed + matching generation/sequence/opcode ACK status0 with valid 8B hello/version1/caps15",
+    "GET_STATE write completed + matching generation/sequence/opcode ACK status0 with valid 10B device state"
+  ],
+  "nativeReadyEventMapsTo": "handshaking",
+  "readinessDoesNotImply": [
+    "petSnapshotSynced",
+    "cloudAccountBound",
+    "friendshipConfirmed",
+    "newFirmwareCapabilityVerified"
+  ],
+  "capabilitiesInitial": {
+    "legacyControl": "unverified",
+    "snapshotSync": "unavailable",
+    "durableEvents": "unavailable",
+    "peerEncounter": "unavailable"
+  },
+  "capabilitiesAfterValidHandshake": {
+    "legacyControl": "verified",
+    "snapshotSync": "unavailable",
+    "durableEvents": "unavailable",
+    "peerEncounter": "unavailable"
+  },
+  "requestInvariants": [
+    "one outstanding application command",
+    "both GATT write and correlated application ACK required",
+    "current generation only",
+    "no mutation auto replay after timeout/disconnect",
+    "timeout mutation result is unknown",
+    "sequence exhaustion requires reconnect, no wrap in same generation",
+    "HELLO MAC not assumed equal to USB or BLE MAC before firmware review"
+  ],
+  "startLocalCompletion": "Only ACK confirms command acceptance; subsequent validated GET_STATE and old firmware screen contract determine actual local/tutorial state. No hardcoded successful screen mapping yet.",
+  "stateRevision": "UInt16 device UI revision only; modular delta in (0,32768) considered newer; not pet-save revision or account identity.",
+  "allowedTransitions": {
+    "disconnected": [
+      "permission_required",
+      "bluetooth_off",
+      "connecting",
+      "scanning",
+      "error"
+    ],
+    "permission_required": [
+      "disconnected",
+      "scanning",
+      "bluetooth_off",
+      "error"
+    ],
+    "bluetooth_off": [
+      "disconnected",
+      "scanning",
+      "permission_required",
+      "error"
+    ],
+    "scanning": [
+      "selecting",
+      "disconnected",
+      "permission_required",
+      "bluetooth_off",
+      "error"
+    ],
+    "selecting": [
+      "scanning",
+      "connecting",
+      "disconnected",
+      "error"
+    ],
+    "connecting": [
+      "discovering",
+      "disconnected",
+      "error"
+    ],
+    "discovering": [
+      "subscribing",
+      "disconnected",
+      "error"
+    ],
+    "subscribing": [
+      "handshaking",
+      "disconnected",
+      "error"
+    ],
+    "handshaking": [
+      "ready_local",
+      "disconnected",
+      "error"
+    ],
+    "ready_local": [
+      "connecting",
+      "disconnected",
+      "permission_required",
+      "bluetooth_off",
+      "error"
+    ],
+    "error": [
+      "disconnected",
+      "permission_required",
+      "bluetooth_off",
+      "scanning"
+    ]
+  },
+  "newDataAndPeerPorts": "absent until old firmware source and negotiated support verified; no numeric opcodes/object kinds allocated in this draft",
+  "durableEventOrdering": [
+    "device persists event+monotonic eventId",
+    "phone checks petId/type and applies event once in complete local save transaction",
+    "phone persists result and dedup receipt",
+    "phone transmits terminal ACK only after persistence",
+    "device persists queue removal or rejection quarantine",
+    "phone pushes committed view; device persistence receipt gates synced UI"
+  ],
+  "storageFailurePolicy": "no terminal ACK; keep event eligible, show local error; not semantic rejection",
+  "realEncounterPolicy": "NPC/BroadcastChannel/parseCode check alone cannot create verified peer receipt; original rules applied once only after actual required peer/input confirmation and local persistence",
+  "constraints": [
+    "no cloud/API credentials/login",
+    "no location/environment/voice/child capture",
+    "no new key creation or permission grant in analysis",
+    "no device writes/installation/connection in analysis"
+  ],
+  "reconnectException": "disconnected->connecting only for a bounded foreground reconnect lease from the same explicitly selected device with permissions still valid; no startup auto-connect or mutation replay.",
+  "requestIdMeaning": "UI requestId is a local trace only, not an existing firmware durable idempotency key.",
+  "legacyFirmwareReviewed": true,
+  "sharedUuidVariants": {
+    "classic": "type/length/payload social protocol, no BJ20 assumption",
+    "BAJI_V2": "BJ20 fixed20 base control confirmed",
+    "readiness": "Strict HELLO/ACK detects supported variant; UUID match alone never suffices"
+  },
+  "dataCloudBoundary": "V2 private EVENT/PET/LIFE/TIME/precise ACK require signed session; no cloud-free capability is inferred or advertised by current basic adapter."
+}

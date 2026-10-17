@@ -1,0 +1,14 @@
+Undefined symbols for architecture arm64:
+  "_host_renderer_prepare", referenced from:
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      _renderer_lifecycle_checks in ui-gate-pages.o
+      ...
+ld: symbol(s) not found for architecture arm64
+clang++: error: linker command failed with exit code 1 (use -v to see invocation)

@@ -1,0 +1,49 @@
+{
+  "scope": "Offline source/AST and sealed historical file checks, no script imports or hardware calls",
+  "allPass": true,
+  "allowedPreparationOnly": [
+    "security",
+    "backup",
+    "verify-current"
+  ],
+  "securityResetsAppToRom": true,
+  "writeRelease": false,
+  "predecessorDeltaExact": true,
+  "wrapperByteIdentical": true,
+  "all59PriorPinsExact": true,
+  "known043ComposedImageSha256NotFreshRead": "a85de6c2a7b62932ffe379829e2fc21b6fd811518d50fa9df14a37754ecd4387",
+  "freshPrefixAndFullPhysicalDigestStillRequired": true,
+  "candidateReleaseAndNewHelperStillRequired": true,
+  "pins": [
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1209Z-warm044/run_stage.py",
+      "bytes": 7515,
+      "sha256": "63eefe77ea88a4bf85a970ffac9f8056d03070b7e4033280c23e00159e2a252d"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1209Z-warm044/esptool_no_write_retry.py",
+      "bytes": 594,
+      "sha256": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1209Z-warm044/PREPARATION.json",
+      "bytes": 538,
+      "sha256": "0c9431602a60e7f2a360f60169fc685d116c6435a1f7fed95bf48ebb4d4dc262"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/FINAL-INDEX.json",
+      "bytes": 9357,
+      "sha256": "6f5c491d2862426297daf117220c35a0e4822e34957a06a70c736597a7ded9b6"
+    },
+    {
+      "path": "artifacts/firmware-visual-integration043/deliverables/cat-forest-badge-0.4.3-exactcache.bin",
+      "bytes": 7723088,
+      "sha256": "905552f2f35dc56942b226e9d8558ae98bf31e0e07765ae0c1ba81ab32e88cc2"
+    },
+    {
+      "path": "tests/firmware044-review/check_preparation.py",
+      "bytes": 4082,
+      "sha256": "e200c11e8d21d628a8f8031d2be2cccb5fe003f446ff1bc4c317c2fe6570eae6"
+    }
+  ]
+}

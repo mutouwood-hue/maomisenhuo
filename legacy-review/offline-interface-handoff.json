@@ -1,0 +1,51 @@
+{
+  "createdAtUtc": "2026-10-15T14:43:32.730501+00:00",
+  "decision": "corrected HTML + latest user instruction; no cloud account, master, save, or backend requirement",
+  "phase": "analysis_and_internal_interface_contract_only",
+  "productCodeChanged": false,
+  "UIFilesChanged": false,
+  "deviceAccess": false,
+  "buildOrTestsRun": false,
+  "dataDeletedOrMigrated": false,
+  "phoneThreadNotified": {
+    "threadId": "01a13fb0-0cdc-7687-a6dd-3dd5299cd0fa",
+    "toolConfirmed": true
+  },
+  "files": [
+    {
+      "path": "docs/offline-local-architecture.md",
+      "bytes": 13561,
+      "sha256": "70bc06ff8258be33cc1450d221c609547407c1e2fbf8eedfd3465fb7580d47ef"
+    },
+    {
+      "path": "legacy-review/cloud-dependency-map.json",
+      "bytes": 10708,
+      "sha256": "afdb699bfca2e32d8c370c5ce857396e659101726aff2bbfe7b20ac74bf1de29"
+    },
+    {
+      "path": "protocol/local/README.md",
+      "bytes": 7948,
+      "sha256": "daa5c0afb8e8675bb3ab450ae61a81a04ab05834f574d66596bf79cfe9aaf1be"
+    },
+    {
+      "path": "protocol/local/interface.d.ts",
+      "bytes": 6443,
+      "sha256": "536589032141a903eac93f61020ce7a549a1c197165a63011d409e5b19544cfc"
+    },
+    {
+      "path": "protocol/local/contract.json",
+      "bytes": 5344,
+      "sha256": "3bdfb65714dae915c603a28dc3ac123b6e4ae0406936c41c5c5eeba60362826a"
+    },
+    {
+      "path": "legacy-review/LOCAL-INTERFACE-HANDOFF.md",
+      "bytes": 1242,
+      "sha256": "c364a049f6830309a0801c1bf62219bf8d9a7e72da8a74cd7451d577d82da551"
+    }
+  ],
+  "remaining": [
+    "Original badge source/version needed to verify local entry and signed-object boundary",
+    "New data/peer ports are proposals absent at runtime until actual firmware capabilities and protocol are verified",
+    "Phone candidate cloud separation and real integration acceptance belong to next authorized implementation phase"
+  ]
+}

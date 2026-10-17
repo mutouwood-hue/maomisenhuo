@@ -1,0 +1,12 @@
+{
+  "candidate": "ui023",
+  "kind": "read-only source association; virtual_fixture reproduction, not device",
+  "files": {
+    "source/web/offline-scene-sync.js": "632bf1dab23aa8fc72c39534e2c1722ee176921749753a395d64f1e1ca6f9856",
+    "source/web/offline-device-diagnostics.js": "a3457ddb6ad9042e758ad41a3f191d049e4577a1a076de1625453f0a093883a8",
+    "source/web/offline-host.css": "fe405014753a7c77ea303377fd7abab3b8346ca5c0fbc9c7f105b1d5945750a0",
+    "source/web/cflocal2-adapter.js": "29273cd113b1d41c7d4b885212845c6f910cff6b8db827f803e2b8fa75a88e5c",
+    "source/web/local-v2-transport.js": "ee656a4fd9ebe2012ca40898e686e43797bc719b806d349860eb6051a7c447a4",
+    "source/tests/v2-host-integration.test.cjs": "7f6f90f857911a866b57cbb229db5bf41c5c35a136b0e5d549d12c818850a8e3"
+  }
+}

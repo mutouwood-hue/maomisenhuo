@@ -1,0 +1,17 @@
+{
+  "hostOnly": true,
+  "hardwareVerified": false,
+  "files": {
+    "REPORT.md": "112e7caaa2610bfed5779d6e82ffdbaaad63f94bd670a6f27bfb33a47eca4ef6",
+    "report.json": "e0f2c7d7614c8b958022d36e56ea8693e4bbd14b4729d4b5de157f40dc1e8385",
+    "source-comparison.json": "f3c9265a4be2c6c1a8ca86d985d051395d278d4713d8499fdc73ee533fe82133",
+    "peer-suite.log": "807bf2104a23e813372f6859b1281790ac1092081d653418e5793c4e40011415",
+    "reboot-after-complete.log": "6721057eec4b4f4e51acf05ab5461e53b7958668dc19c95ab323a6c9fc10cb1c",
+    "framing.log": "d11a0e8e9a7ec6231ecc3a56a21dabab5e99c0c7f159be3f617c33e7d50c003d",
+    "app-gift-boundary.tap": "5dd03d13675348e2287d9136e93da577b260f3ca42fc34e9873b389fef0a5a65",
+    "app026-gift-boundary.tap": "2508f1dfcdc1178b9674229839f73d801c3b9b857287d499e9e93b0051a18f16",
+    "app026-gift-boundary.json": "0bd1b597719854608104fdbd56fc7eb7cd6419979fba5c7b48fc5a307de88949",
+    "run_current.py": "1593d9c021ef738209f803c95bf2946c597a1baaa04a63acb8d9100961ff1855",
+    "reboot-after-complete.c": "4ccdae9cb0d625a57c8a7ebae6ddb1c4d8367843b570b8bf282eb501383af5b5"
+  }
+}

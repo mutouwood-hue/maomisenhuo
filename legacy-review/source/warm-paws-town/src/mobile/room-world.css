@@ -1,0 +1,180 @@
+/* 唯一样式真源：original/game.html 实际加载的内联样式与 :root 色彩。
+   这里是追加的共享移动适配层，不创建第二套 token。
+   待设计系统补档：原作没有 spacing/font/radius token，暂集中沿用原作
+   移动刻度（6/8/12px 间距、11px 文本、14px 圆角、44px 触控下限）。 */
+#m-room-info[hidden],
+#m-world-home[hidden] {
+  display: none !important;
+}
+
+#m-world-home {
+  display: none;
+}
+
+@media (max-width:600px) {
+  #m-room-info {
+    position: fixed;
+    z-index: 14;
+    top: calc(env(safe-area-inset-top) + 112px);
+    left: calc(env(safe-area-inset-left) + 12px);
+    right: calc(env(safe-area-inset-right) + 76px);
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 220px);
+    overflow: auto;
+    scrollbar-width: thin;
+    overscroll-behavior: contain;
+    pointer-events: auto;
+  }
+
+  /* 重置原作多个 !important 固定偏移，所有提示进入同一自然布局流。 */
+  #m-room-info > #pg-sync,
+  #m-room-info > #message,
+  #m-room-info > #action-status,
+  #m-room-info > #ambient-status,
+  body:has(.interaction-panel:not([hidden])) #m-room-info > #action-status {
+    position: relative !important;
+    inset: auto !important;
+    transform: none;
+    width: auto;
+    max-width: none !important;
+    min-width: 0;
+    flex: none;
+    margin: 0;
+    padding: 8px 12px !important;
+    border-radius: 14px;
+    font-size: 11px !important;
+    line-height: 1.6 !important;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    text-align: left;
+  }
+
+  #m-room-info > #pg-sync {
+    align-items: flex-start;
+    min-height: 44px;
+    pointer-events: auto;
+  }
+
+  #m-room-info > #pg-sync b {
+    white-space: normal;
+    overflow: visible;
+  }
+
+  #m-room-info > #message.m-faded {
+    display: none;
+  }
+
+  #m-world-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 32;
+    top: calc(env(safe-area-inset-top) + 112px);
+    right: calc(env(safe-area-inset-right) + 12px);
+    min-width: 76px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border-radius: 14px;
+    border-color: var(--line);
+    background: var(--paper);
+    color: var(--ink);
+    box-shadow: var(--shadow);
+    touch-action: manipulation;
+  }
+
+  #m-world-home:focus-visible {
+    outline: 2px solid var(--orange-dark);
+    outline-offset: 2px;
+  }
+
+  /* 返回按钮与户外顶部卡片分区，抽屉 z=31，返回按钮不受收起影响。 */
+  body[data-view=world] .world-top {
+    right: calc(env(safe-area-inset-right) + 100px);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  body[data-view=world] .world-top .world-card {
+    max-width: 100%;
+  }
+
+  body[data-view=world] .world-top button {
+    max-width: 100%;
+    white-space: normal;
+    min-height: 44px;
+  }
+}
+
+/* 宽屏保留原对话位置，生活同步与两个同位状态排列成独立行。 */
+@media (min-width:601px) {
+  #m-room-status {
+    position: absolute;
+    z-index: 2;
+    top: 23px;
+    right: 22px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    max-width: calc(100% - 178px);
+    max-height: calc(100% - 180px);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  #m-room-status > #pg-sync,
+  #m-room-status > #action-status,
+  #m-room-status > #ambient-status,
+  body:has(.interaction-panel:not([hidden])) #m-room-status > #action-status {
+    position: relative !important;
+    inset: auto !important;
+    transform: none;
+    flex: none;
+    min-width: 0;
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  #m-room-status > #pg-sync {
+    align-items: flex-start;
+    text-align: left;
+    min-height: 44px;
+  }
+
+  #m-room-status > #pg-sync b {
+    white-space: normal;
+    overflow: visible;
+  }
+}
+
+@media (max-width:900px) and (min-width:601px) and (max-height:600px) {
+  #m-world-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    z-index: 32;
+    top: calc(env(safe-area-inset-top) + 12px);
+    right: calc(env(safe-area-inset-right) + 12px);
+    min-width: 76px;
+    min-height: 44px;
+    padding: 8px 12px;
+    border-radius: 14px;
+    background: var(--paper);
+    color: var(--ink);
+    border-color: var(--line);
+    box-shadow: var(--shadow);
+    touch-action: manipulation;
+  }
+}
+
+@media (max-width:600px) and (max-height:600px) {
+  #m-room-info {
+    max-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 196px);
+  }
+}

@@ -1,0 +1,65 @@
+TAP version 13
+# Subtest: deferred original/Host/adapter scripts wait for Native authoritative result+owner+pending recovery, even when local social was corrupt
+ok 1 - deferred original/Host/adapter scripts wait for Native authoritative result+owner+pending recovery, even when local social was corrupt
+  ---
+  duration_ms: 205.345167
+  ...
+# Subtest: Native recovery failure leaves original scripts inert and never publishes adapter checkpoint callback
+ok 2 - Native recovery failure leaves original scripts inert and never publishes adapter checkpoint callback
+  ---
+  duration_ms: 56.16625
+  ...
+# Subtest: ordinary browser retains gameplay but cannot supply Native checkpoint or device ACK fallback
+ok 3 - ordinary browser retains gameplay but cannot supply Native checkpoint or device ACK fallback
+  ---
+  duration_ms: 45.959083
+  ...
+# Subtest: Native A-slot recovery does not alter original B-slot save or expose raw cross-slot keys
+ok 4 - Native A-slot recovery does not alter original B-slot save or expose raw cross-slot keys
+  ---
+  duration_ms: 47.156875
+  ...
+# Subtest: short-screen rail keeps original entries and offers bounded paging down to badge, then back to top
+ok 5 - short-screen rail keeps original entries and offers bounded paging down to badge, then back to top
+  ---
+  duration_ms: 190.453334
+  ...
+# Subtest: six decorative local icons keep all original labels, button nodes, order and delegated actions
+ok 6 - six decorative local icons keep all original labels, button nodes, order and delegated actions
+  ---
+  duration_ms: 365.459041
+  ...
+# Subtest: original NPC modal copy retains timing and real actions; text wrapping never touches pet data
+ok 7 - original NPC modal copy retains timing and real actions; text wrapping never touches pet data
+  ---
+  duration_ms: 68.562667
+  ...
+# Subtest: NPC banner is labeled game distance, while non-NPC text and live rhythm hints stay intact
+ok 8 - NPC banner is labeled game distance, while non-NPC text and live rhythm hints stay intact
+  ---
+  duration_ms: 58.426334
+  ...
+# Subtest: result copy is node-preserving and idempotent with long literal text and empty hints
+ok 9 - result copy is node-preserving and idempotent with long literal text and empty hints
+  ---
+  duration_ms: 37.416625
+  ...
+# Subtest: local vectors have a common small-size slot and readable default/disabled label contrast
+ok 10 - local vectors have a common small-size slot and readable default/disabled label contrast
+  ---
+  duration_ms: 1.730292
+  ...
+# Subtest: automatic original-modal decoration settles without a self-triggering frame loop
+ok 11 - automatic original-modal decoration settles without a self-triggering frame loop
+  ---
+  duration_ms: 46.835542
+  ...
+1..11
+# tests 11
+# suites 0
+# pass 11
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1145.139708

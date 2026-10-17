@@ -1,0 +1,1 @@
+{"virtual_fixture":true,"actualPinnedCore":true,"checks":658,"passed":true,"maxEncodedBytes":7860,"schema2NoAutomaticWrite":true,"syntheticPrecompletionDerivedFromActualTwoFsmBlob":true,"writeFailureBeforeAndAfterDiskCommit":true,"full200FifoThenAckRecovery":true,"completionAckReleasesSlotRetainsWatermark":true}

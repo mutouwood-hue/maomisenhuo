@@ -1,0 +1,22 @@
+{
+  "main/badge_pages.c": {
+    "actualSha256": "ee81dda54a9631eb05e227f9967af9e03405c7fa9f1159577a02aaf8b8a75b27",
+    "windowSha256": "ee81dda54a9631eb05e227f9967af9e03405c7fa9f1159577a02aaf8b8a75b27",
+    "exactWindow": true
+  },
+  "main/badge_scene.c": {
+    "actualSha256": "4f38f94c630839c9aca50449fa26d5941056791bd94e894b3e602034739a785b",
+    "windowSha256": "4f38f94c630839c9aca50449fa26d5941056791bd94e894b3e602034739a785b",
+    "exactWindow": true
+  },
+  "main/badge_scene.h": {
+    "actualSha256": "adf163808a668ba52f70ba39a94714dd6d0f4b2f983b55aee23813c2336f5e02",
+    "windowSha256": "adf163808a668ba52f70ba39a94714dd6d0f4b2f983b55aee23813c2336f5e02",
+    "exactWindow": true
+  },
+  "tools/host_preview/preview.c": {
+    "actualSha256": "2d0465db85a26f1d74eca1879b312f0df2d3f07a8e551e03fe33133bf30ee2cd",
+    "windowSha256": "2d0465db85a26f1d74eca1879b312f0df2d3f07a8e551e03fe33133bf30ee2cd",
+    "exactWindow": true
+  }
+}

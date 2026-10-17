@@ -1,0 +1,83 @@
+{
+  "offline": true,
+  "hardware": false,
+  "records": {
+    "4": {
+      "cacheBufferPeak": 5292,
+      "constructionPeakIncludingTemporary": 8876,
+      "cleanupCount": 620,
+      "radiusCalls": 686247,
+      "radiusHits": 482831,
+      "radiusMisses": 203416,
+      "decoderOpen": 15121,
+      "decoderArea": 148122,
+      "indexedLines": 134420,
+      "indexedPixels": 16701672,
+      "iterations": 40,
+      "wallUs": 1047986,
+      "flushes": 27208,
+      "pixels": 125447016
+    },
+    "8": {
+      "cacheBufferPeak": 9024,
+      "constructionPeakIncludingTemporary": 12162,
+      "cleanupCount": 620,
+      "radiusCalls": 686247,
+      "radiusHits": 645908,
+      "radiusMisses": 40339,
+      "decoderOpen": 15121,
+      "decoderArea": 148122,
+      "indexedLines": 134420,
+      "indexedPixels": 16701672,
+      "iterations": 40,
+      "wallUs": 888231,
+      "flushes": 27208,
+      "pixels": 125447016
+    },
+    "12": {
+      "cacheBufferPeak": 9096,
+      "constructionPeakIncludingTemporary": 12240,
+      "cleanupCount": 620,
+      "radiusCalls": 686247,
+      "radiusHits": 681194,
+      "radiusMisses": 5053,
+      "decoderOpen": 15121,
+      "decoderArea": 148122,
+      "indexedLines": 134420,
+      "indexedPixels": 16701672,
+      "iterations": 40,
+      "wallUs": 860859,
+      "flushes": 27208,
+      "pixels": 125447016
+    },
+    "16": {
+      "cacheBufferPeak": 9096,
+      "constructionPeakIncludingTemporary": 12240,
+      "cleanupCount": 620,
+      "radiusCalls": 686247,
+      "radiusHits": 681194,
+      "radiusMisses": 5053,
+      "decoderOpen": 15121,
+      "decoderArea": 148122,
+      "indexedLines": 134420,
+      "indexedPixels": 16701672,
+      "iterations": 40,
+      "wallUs": 1164790,
+      "flushes": 27208,
+      "pixels": 125447016
+    }
+  },
+  "targetDescriptorBytesStaticAssert": 28,
+  "targetCompileUsesActual035SdkFlags": true,
+  "extraInternalGlobalBssVs4": {
+    "8": 112,
+    "12": 224,
+    "16": 336
+  },
+  "limits": [
+    "Mask raw allocation bytes plus temp; excludes allocator headers, global descriptors, other concurrently drawn objects and tasks",
+    "Host counters, not target heap measurement",
+    "No OOM fallback implemented; future budget gate required",
+    "No device/source/config changes"
+  ]
+}

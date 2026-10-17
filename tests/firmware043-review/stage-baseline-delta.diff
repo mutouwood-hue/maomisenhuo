@@ -1,0 +1,38 @@
+--- 042-stage163f
++++ 043-stagecb4f
+@@ -10,7 +10,7 @@
+ 
+ B = Path(__file__).resolve().parent
+ R = B.parents[3]
+-P = R / 'artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T0802Z-visual038'
++P = R / 'artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1052Z-3d042'
+ STAGES = ('security', 'backup', 'verify-current', 'app-write', 'app-readback', 'verify-protected')
+ stage = sys.argv[1]
+ assert stage in STAGES
+@@ -101,19 +101,19 @@
+ elif stage == 'backup':
+     fresh = (B / 'fresh-prefix128KiB.bin').read_bytes()
+     assert len(fresh) == 0x20000
+-    old = bytearray((P / 'composed-current-fullflash32MiB.bin').read_bytes())
++    old = bytearray((P / 'composed-before-fullflash32MiB.bin').read_bytes())
+     assert len(old) == 0x2000000
+-    old[0x820000:0x1020000] = (P / 'expected-ota1-slot8MiB.bin').read_bytes()
+-    historic = (P / 'post-activation-first128KiB.bin').read_bytes()
++    old[0x820000:0x1020000] = (P / 'expected-ota1.bin').read_bytes()
++    historic = (P / 'fresh-prefix128KiB.bin').read_bytes()
+     assert fresh[:0x9000] == historic[:0x9000]
+     assert fresh[0x11000:] == historic[0x11000:]
+     assert sha(fresh[0x8000:0x8c00]) == 'a83d5badd3817619dc7dbd12fda088c39004b91e14413b24d20f2dd0b9097be4'
+-    # Latest selector is byte-identical to verified038 metadata: copy1 seq2 selects OTA1.
++    # Latest selector must remain identical to verified042 metadata: copy1 seq2 selects OTA1.
+     assert sha(fresh[0x13000:0x14000]) == 'f5ab818d800af4e3e1efd4c91587ff9019dfc243adb0bc2ef0c7eb4a0c9df16d'
+     old[:0x20000] = fresh
+-    current038 = (R / 'artifacts/firmware-local-v3-visual038/deliverables/cat-forest-badge-0.3.8-local3.bin').read_bytes()
+-    assert sha(current038) == 'fcdd98ee3fdee872abd64737f83f4d3f1077ff0f991a3f55322ed5d5e173625b'
+-    assert old[0x820000:0x820000 + len(current038)] == current038
++    current042 = (R / 'artifacts/firmware-visual-integration042/deliverables/cat-forest-badge-0.4.2-exact3d.bin').read_bytes()
++    assert sha(current042) == 'b0d1704032c1067455b4355617924dadc63efa20a4ec245189e75d75b99f8bcc'
++    assert old[0x820000:0x820000 + len(current042)] == current042
+     for filename, begin, end in [('before-prefix.bin', 0, 0x20000), ('before-ota0.bin', 0x20000, 0x820000),
+                                   ('before-ota1.bin', 0x820000, 0x1020000), ('before-assets-tail.bin', 0x1020000, 0x2000000)]:
+         (B / filename).write_bytes(old[begin:end])

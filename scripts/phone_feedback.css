@@ -1,0 +1,36 @@
+.cat-feedback{position:absolute;inset:0;z-index:2;pointer-events:none;overflow:hidden;--cat-x:50%;--cat-y:48%;--rain-opacity:1}
+.cat-feedback-caption{position:absolute;left:7%;right:7%;bottom:9px;width:fit-content;max-width:86%;margin:auto;border-radius:13px;background:#fff8e8e8;color:#45594d;padding:7px 11px;font:12px/1.5 system-ui,sans-serif;box-shadow:0 2px 8px #253f2d12}
+.cat-feedback-caption:empty{display:none}.cat-feedback-rain{position:absolute;inset:0;opacity:0;background:linear-gradient(#62788526,#9cbad00d);transition:opacity .25s}
+.cat-feedback[data-rain=true] .cat-feedback-rain{opacity:var(--rain-opacity)}.cat-feedback-rain i{position:absolute;width:1.5px;height:15px;background:#d3edf4a1;top:-20px;transform:rotate(15deg);animation:cat-feedback-rainfall .7s linear infinite}
+.cat-feedback:not([data-rain=true]) .cat-feedback-rain i{animation-play-state:paused}
+@keyframes cat-feedback-rainfall{to{top:110%;transform:translateX(-18px) rotate(15deg)}}
+.cat-feedback-particles{position:absolute;left:var(--cat-x);top:var(--cat-y);width:1px;height:1px;display:none;color:#dd927f;font:18px system-ui}
+.cat-feedback[data-pose=nuzzle] .cat-feedback-particles,.cat-feedback[data-pose=relief] .cat-feedback-particles,.cat-feedback[data-pose=proud] .cat-feedback-particles,.cat-feedback[data-pose=pounce] .cat-feedback-particles,.cat-feedback[data-pose=watch] .cat-feedback-particles{display:block}
+.cat-feedback-particles span{position:absolute;left:calc((var(--i) - 2.5)*12px);top:-15px;animation:cat-feedback-float 1.3s ease-out infinite;animation-delay:calc(var(--i)*-.13s)}
+@keyframes cat-feedback-float{0%{transform:translateY(0) scale(.6);opacity:0}25%{opacity:.9}100%{transform:translateY(-40px) scale(1);opacity:0}}
+.cat-feedback-cloth{position:absolute;left:var(--cat-x);top:var(--cat-y);width:45px;height:32px;border-radius:7px;background:repeating-linear-gradient(0deg,#f4d7bc,#f4d7bc 5px,#fae8d1 6px,#fae8d1 9px);border:1px solid #c8a989;box-shadow:1px 2px 4px #3f4d4325;display:none}
+.cat-feedback[data-pose=wipe] .cat-feedback-cloth{display:block;animation:cat-feedback-wipe .55s ease-in-out 3}
+@keyframes cat-feedback-wipe{0%,100%{transform:translate(-30px,0) rotate(-12deg)}50%{transform:translate(10px,17px) rotate(9deg)}}
+.cat-feedback[data-wet=true]:not([data-pose=wipe])::after{content:"💧";position:absolute;left:calc(var(--cat-x) + 21px);top:calc(var(--cat-y) - 15px);font:14px system-ui;opacity:.8}
+.cat-feedback[data-paused=true]{visibility:hidden}.pet-world-ui{z-index:4}
+.world-event{top:auto!important;bottom:76px;transform:translateX(-50%)!important;max-height:46%;overflow-y:auto}
+@media(prefers-reduced-motion:reduce){.cat-feedback *{animation:none!important;transition:none!important}.cat-feedback[data-rain=true] .cat-feedback-rain i{top:20%;height:7px}.cat-feedback-particles span{opacity:.6}}
+.cat-feedback-wipe-target,.cat-feedback-wipe-cancel{display:none}
+.cat-feedback[data-wiping=true]{z-index:5}
+.cat-feedback[data-wiping=true] .cat-feedback-wipe-target{display:block;position:absolute;inset:0;pointer-events:auto;touch-action:none}
+.cat-feedback[data-wiping=true] .cat-feedback-cloth{display:block;animation:none;z-index:1}
+.cat-feedback[data-wiping=true] .cat-feedback-wipe-cancel{display:block;position:absolute;right:12px;top:60px;z-index:2;pointer-events:auto;border:0;border-radius:12px;padding:10px;background:#fff8e8;color:#45594d}
+.cat-feedback[data-wiping=true] .cat-feedback-caption{z-index:2}
+/* Keep the cat and gesture surface visible while the event is being chosen. */
+.world-event{top:auto!important;bottom:10px!important;max-height:34%;padding:8px!important;font-size:11px!important}
+.world-event h3{font-size:14px!important;margin:0 0 4px!important}
+.world-event p{margin:3px 0!important;line-height:1.3!important}
+.world-event button{padding:6px!important;margin-top:4px!important;font-size:11px!important}
+.cat-feedback[data-wiping=true] .cat-feedback-caption{bottom:65px}
+/* Actual emulator review: keep cancel away from the sheltered cat's face. */
+.cat-feedback[data-wiping=true] .cat-feedback-wipe-cancel{top:auto;bottom:12px;font:12px/1.3 system-ui;padding:8px 12px}
+#world:has(.cat-feedback[data-wiping=true]) .world-bottom{visibility:hidden}
+.cat-feedback[data-scene=world] .cat-feedback-caption{bottom:76px}
+.world-event{max-height:46%}
+.world-event-title{font-size:14px!important;line-height:1.2!important}
+.world-event-actions button{min-height:0!important;line-height:1.2!important;padding:5px 8px!important;margin-top:3px!important}

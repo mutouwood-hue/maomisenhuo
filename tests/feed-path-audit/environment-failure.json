@@ -1,0 +1,15 @@
+{
+  "command": "node --test artifacts/html-offline-candidate/ui025/source/tests/event-transaction.test.cjs > tests/feed-path-audit/original-event-transaction.tap",
+  "session": 80842,
+  "exitCode": 7,
+  "error": "ENOSPC: no space left on device, write",
+  "stack": "node:fs:923 writeSync -> SyncWriteStream._write; node v22.19.0",
+  "outputFile": "original-event-transaction.tap",
+  "observedBytes": 0,
+  "result": "environment failure; no pass claim",
+  "otherFailures": [
+    "heredoc temporary file creation failed ENOSPC",
+    "apply_patch REPORT.md failed write"
+  ],
+  "laterRecovery": "Root recovered free space; independent new focused fixture has separate output, old 0B evidence preserved"
+}

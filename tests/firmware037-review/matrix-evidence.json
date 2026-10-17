@@ -1,0 +1,4362 @@
+{
+  "hardware": false,
+  "caseCountPerVersion": 48,
+  "totalCases": 96,
+  "checks": 10704,
+  "allPass": true,
+  "explicitPoolAllocationRelease": true,
+  "negative036OverlapReproduced": true,
+  "allAwakeAndCompanionFramesExact036": true,
+  "intentionalStandbyChanges": [
+    "037-clock0-face0-mode2-low0",
+    "037-clock0-face0-mode3-low0",
+    "037-clock0-face1-mode2-low0",
+    "037-clock0-face1-mode2-low1",
+    "037-clock0-face1-mode3-low0",
+    "037-clock0-face1-mode3-low1",
+    "037-clock0-face2-mode2-low0",
+    "037-clock0-face2-mode2-low1",
+    "037-clock0-face2-mode3-low0",
+    "037-clock0-face2-mode3-low1",
+    "037-clock1-face0-mode2-low0",
+    "037-clock1-face0-mode3-low0",
+    "037-clock1-face1-mode2-low0",
+    "037-clock1-face1-mode2-low1",
+    "037-clock1-face1-mode3-low0",
+    "037-clock1-face1-mode3-low1",
+    "037-clock1-face2-mode2-low0",
+    "037-clock1-face2-mode2-low1",
+    "037-clock1-face2-mode3-low0",
+    "037-clock1-face2-mode3-low1"
+  ],
+  "syntheticProductionWakeNoDomainWrites": true,
+  "records": {
+    "036-clock0-face0-mode0-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "c66cb6ae9b421ba753300db8fe3f6691e6473e6688d30c6d3118d175614d587d"
+    },
+    "036-clock0-face0-mode0-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "f37bea608a26e0d4755a9323577351b607d408e1eb4329900ccec030c8818d4c"
+    },
+    "036-clock0-face0-mode1-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "c66cb6ae9b421ba753300db8fe3f6691e6473e6688d30c6d3118d175614d587d"
+    },
+    "036-clock0-face0-mode1-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "f37bea608a26e0d4755a9323577351b607d408e1eb4329900ccec030c8818d4c"
+    },
+    "036-clock0-face0-mode2-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "a083b33f4425ea9278525d89ccf04c6d49f2928d33c32b42fd8022bc50b357f1"
+    },
+    "036-clock0-face0-mode2-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "500ccf44d74c9040cddeb5ce107567d16d2154f5e551a47f77338c1ae93403bd"
+    },
+    "036-clock0-face0-mode3-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "a083b33f4425ea9278525d89ccf04c6d49f2928d33c32b42fd8022bc50b357f1"
+    },
+    "036-clock0-face0-mode3-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "500ccf44d74c9040cddeb5ce107567d16d2154f5e551a47f77338c1ae93403bd"
+    },
+    "036-clock0-face1-mode0-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "faab6f66ae3344bf061408778246d4b2dc312a10ddfa3ecfd1bc654d12e7466e"
+    },
+    "036-clock0-face1-mode0-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "faab6f66ae3344bf061408778246d4b2dc312a10ddfa3ecfd1bc654d12e7466e"
+    },
+    "036-clock0-face1-mode1-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "faab6f66ae3344bf061408778246d4b2dc312a10ddfa3ecfd1bc654d12e7466e"
+    },
+    "036-clock0-face1-mode1-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "faab6f66ae3344bf061408778246d4b2dc312a10ddfa3ecfd1bc654d12e7466e"
+    },
+    "036-clock0-face1-mode2-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "5e9250b03f5f3a1b1f1fc288a19d8ab1c2f7072d9fc46a739dc7c321e57d8624"
+    },
+    "036-clock0-face1-mode2-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "5e9250b03f5f3a1b1f1fc288a19d8ab1c2f7072d9fc46a739dc7c321e57d8624"
+    },
+    "036-clock0-face1-mode3-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "5e9250b03f5f3a1b1f1fc288a19d8ab1c2f7072d9fc46a739dc7c321e57d8624"
+    },
+    "036-clock0-face1-mode3-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "5e9250b03f5f3a1b1f1fc288a19d8ab1c2f7072d9fc46a739dc7c321e57d8624"
+    },
+    "036-clock0-face2-mode0-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "bc1370893ca6f0f9204cb771ce82f21cfbbd5fdd3c705108e3d9ef0682cdbe21"
+    },
+    "036-clock0-face2-mode0-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "bc1370893ca6f0f9204cb771ce82f21cfbbd5fdd3c705108e3d9ef0682cdbe21"
+    },
+    "036-clock0-face2-mode1-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "bc1370893ca6f0f9204cb771ce82f21cfbbd5fdd3c705108e3d9ef0682cdbe21"
+    },
+    "036-clock0-face2-mode1-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "bc1370893ca6f0f9204cb771ce82f21cfbbd5fdd3c705108e3d9ef0682cdbe21"
+    },
+    "036-clock0-face2-mode2-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "83e6add664c7bbc787bf7317ef413e991a33466700d6e8b46388ab89ab03073d"
+    },
+    "036-clock0-face2-mode2-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "83e6add664c7bbc787bf7317ef413e991a33466700d6e8b46388ab89ab03073d"
+    },
+    "036-clock0-face2-mode3-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "83e6add664c7bbc787bf7317ef413e991a33466700d6e8b46388ab89ab03073d"
+    },
+    "036-clock0-face2-mode3-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "83e6add664c7bbc787bf7317ef413e991a33466700d6e8b46388ab89ab03073d"
+    },
+    "036-clock1-face0-mode0-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "0285fe9236110c1a619d4daffa7e49da43dbfcec5f010d5894feb3c52f741c68"
+    },
+    "036-clock1-face0-mode0-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "3063f327657e2ed5ec9ed42057de17ec38c10b94931fadec9bff69abbfeb2197"
+    },
+    "036-clock1-face0-mode1-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "0285fe9236110c1a619d4daffa7e49da43dbfcec5f010d5894feb3c52f741c68"
+    },
+    "036-clock1-face0-mode1-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "3063f327657e2ed5ec9ed42057de17ec38c10b94931fadec9bff69abbfeb2197"
+    },
+    "036-clock1-face0-mode2-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "5b6f3c1f4fbc733d7ec2e49ac115b38273a66b4b103eac7235e83d0cb716dbcf"
+    },
+    "036-clock1-face0-mode2-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9bf6b2752d2ce753d46f2178a03387954c034888cafd0ef675d3558bdb51f90d"
+    },
+    "036-clock1-face0-mode3-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "5b6f3c1f4fbc733d7ec2e49ac115b38273a66b4b103eac7235e83d0cb716dbcf"
+    },
+    "036-clock1-face0-mode3-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9bf6b2752d2ce753d46f2178a03387954c034888cafd0ef675d3558bdb51f90d"
+    },
+    "036-clock1-face1-mode0-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9a65feff1c2908c69745273cfaeec173488a7224ecb8fcb53259670171e492f8"
+    },
+    "036-clock1-face1-mode0-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9a65feff1c2908c69745273cfaeec173488a7224ecb8fcb53259670171e492f8"
+    },
+    "036-clock1-face1-mode1-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9a65feff1c2908c69745273cfaeec173488a7224ecb8fcb53259670171e492f8"
+    },
+    "036-clock1-face1-mode1-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9a65feff1c2908c69745273cfaeec173488a7224ecb8fcb53259670171e492f8"
+    },
+    "036-clock1-face1-mode2-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "c2a8c0d3ca43d13cd6d837b58721d486e0742a065258dae2d3628409b13d31a2"
+    },
+    "036-clock1-face1-mode2-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "c2a8c0d3ca43d13cd6d837b58721d486e0742a065258dae2d3628409b13d31a2"
+    },
+    "036-clock1-face1-mode3-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "c2a8c0d3ca43d13cd6d837b58721d486e0742a065258dae2d3628409b13d31a2"
+    },
+    "036-clock1-face1-mode3-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "c2a8c0d3ca43d13cd6d837b58721d486e0742a065258dae2d3628409b13d31a2"
+    },
+    "036-clock1-face2-mode0-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "b79e85c3552a2c8beb27c74daa10c6b7413511ee6a8a8150eb968cb9f5cf6fec"
+    },
+    "036-clock1-face2-mode0-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "b79e85c3552a2c8beb27c74daa10c6b7413511ee6a8a8150eb968cb9f5cf6fec"
+    },
+    "036-clock1-face2-mode1-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "b79e85c3552a2c8beb27c74daa10c6b7413511ee6a8a8150eb968cb9f5cf6fec"
+    },
+    "036-clock1-face2-mode1-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "b79e85c3552a2c8beb27c74daa10c6b7413511ee6a8a8150eb968cb9f5cf6fec"
+    },
+    "036-clock1-face2-mode2-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "b1f59a3ab2ba457298f9453fe0cf9f7a14a315f6b9e1a5d08fbb8ce86515477b"
+    },
+    "036-clock1-face2-mode2-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "b1f59a3ab2ba457298f9453fe0cf9f7a14a315f6b9e1a5d08fbb8ce86515477b"
+    },
+    "036-clock1-face2-mode3-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "b1f59a3ab2ba457298f9453fe0cf9f7a14a315f6b9e1a5d08fbb8ce86515477b"
+    },
+    "036-clock1-face2-mode3-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 8,
+      "allPass": true,
+      "sha256": "b1f59a3ab2ba457298f9453fe0cf9f7a14a315f6b9e1a5d08fbb8ce86515477b"
+    },
+    "037-clock0-face0-mode0-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "c66cb6ae9b421ba753300db8fe3f6691e6473e6688d30c6d3118d175614d587d"
+    },
+    "037-clock0-face0-mode0-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "f37bea608a26e0d4755a9323577351b607d408e1eb4329900ccec030c8818d4c"
+    },
+    "037-clock0-face0-mode1-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "c66cb6ae9b421ba753300db8fe3f6691e6473e6688d30c6d3118d175614d587d"
+    },
+    "037-clock0-face0-mode1-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "f37bea608a26e0d4755a9323577351b607d408e1eb4329900ccec030c8818d4c"
+    },
+    "037-clock0-face0-mode2-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "500ccf44d74c9040cddeb5ce107567d16d2154f5e551a47f77338c1ae93403bd"
+    },
+    "037-clock0-face0-mode2-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "500ccf44d74c9040cddeb5ce107567d16d2154f5e551a47f77338c1ae93403bd"
+    },
+    "037-clock0-face0-mode3-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "500ccf44d74c9040cddeb5ce107567d16d2154f5e551a47f77338c1ae93403bd"
+    },
+    "037-clock0-face0-mode3-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 0,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "500ccf44d74c9040cddeb5ce107567d16d2154f5e551a47f77338c1ae93403bd"
+    },
+    "037-clock0-face1-mode0-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "faab6f66ae3344bf061408778246d4b2dc312a10ddfa3ecfd1bc654d12e7466e"
+    },
+    "037-clock0-face1-mode0-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "faab6f66ae3344bf061408778246d4b2dc312a10ddfa3ecfd1bc654d12e7466e"
+    },
+    "037-clock0-face1-mode1-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "faab6f66ae3344bf061408778246d4b2dc312a10ddfa3ecfd1bc654d12e7466e"
+    },
+    "037-clock0-face1-mode1-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "faab6f66ae3344bf061408778246d4b2dc312a10ddfa3ecfd1bc654d12e7466e"
+    },
+    "037-clock0-face1-mode2-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "d00479c9a12f3daa2696806240042e630c6c66e0cca149d1d80ff2297bcf46e9"
+    },
+    "037-clock0-face1-mode2-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "d00479c9a12f3daa2696806240042e630c6c66e0cca149d1d80ff2297bcf46e9"
+    },
+    "037-clock0-face1-mode3-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "d00479c9a12f3daa2696806240042e630c6c66e0cca149d1d80ff2297bcf46e9"
+    },
+    "037-clock0-face1-mode3-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 1,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "d00479c9a12f3daa2696806240042e630c6c66e0cca149d1d80ff2297bcf46e9"
+    },
+    "037-clock0-face2-mode0-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "bc1370893ca6f0f9204cb771ce82f21cfbbd5fdd3c705108e3d9ef0682cdbe21"
+    },
+    "037-clock0-face2-mode0-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "bc1370893ca6f0f9204cb771ce82f21cfbbd5fdd3c705108e3d9ef0682cdbe21"
+    },
+    "037-clock0-face2-mode1-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "bc1370893ca6f0f9204cb771ce82f21cfbbd5fdd3c705108e3d9ef0682cdbe21"
+    },
+    "037-clock0-face2-mode1-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "bc1370893ca6f0f9204cb771ce82f21cfbbd5fdd3c705108e3d9ef0682cdbe21"
+    },
+    "037-clock0-face2-mode2-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "d14298e7856f5a3efe9d0e226a50266eb68fecece231685d745ac399bafe9000"
+    },
+    "037-clock0-face2-mode2-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "d14298e7856f5a3efe9d0e226a50266eb68fecece231685d745ac399bafe9000"
+    },
+    "037-clock0-face2-mode3-low0": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "d14298e7856f5a3efe9d0e226a50266eb68fecece231685d745ac399bafe9000"
+    },
+    "037-clock0-face2-mode3-low1": {
+      "hardware": false,
+      "clockValid": false,
+      "face": 2,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          387,
+          312,
+          409
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "需手机校时"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "d14298e7856f5a3efe9d0e226a50266eb68fecece231685d745ac399bafe9000"
+    },
+    "037-clock1-face0-mode0-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "0285fe9236110c1a619d4daffa7e49da43dbfcec5f010d5894feb3c52f741c68"
+    },
+    "037-clock1-face0-mode0-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "3063f327657e2ed5ec9ed42057de17ec38c10b94931fadec9bff69abbfeb2197"
+    },
+    "037-clock1-face0-mode1-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "0285fe9236110c1a619d4daffa7e49da43dbfcec5f010d5894feb3c52f741c68"
+    },
+    "037-clock1-face0-mode1-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "3063f327657e2ed5ec9ed42057de17ec38c10b94931fadec9bff69abbfeb2197"
+    },
+    "037-clock1-face0-mode2-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9bf6b2752d2ce753d46f2178a03387954c034888cafd0ef675d3558bdb51f90d"
+    },
+    "037-clock1-face0-mode2-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9bf6b2752d2ce753d46f2178a03387954c034888cafd0ef675d3558bdb51f90d"
+    },
+    "037-clock1-face0-mode3-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9bf6b2752d2ce753d46f2178a03387954c034888cafd0ef675d3558bdb51f90d"
+    },
+    "037-clock1-face0-mode3-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 0,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          51,
+          312,
+          73
+        ],
+        "hidden": false,
+        "fontLine": 23,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9bf6b2752d2ce753d46f2178a03387954c034888cafd0ef675d3558bdb51f90d"
+    },
+    "037-clock1-face1-mode0-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9a65feff1c2908c69745273cfaeec173488a7224ecb8fcb53259670171e492f8"
+    },
+    "037-clock1-face1-mode0-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9a65feff1c2908c69745273cfaeec173488a7224ecb8fcb53259670171e492f8"
+    },
+    "037-clock1-face1-mode1-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9a65feff1c2908c69745273cfaeec173488a7224ecb8fcb53259670171e492f8"
+    },
+    "037-clock1-face1-mode1-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "9a65feff1c2908c69745273cfaeec173488a7224ecb8fcb53259670171e492f8"
+    },
+    "037-clock1-face1-mode2-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "64ee8febfb785fa4105bfbbc9a1d5a4894056ecb6cbee66691d4d2ebec70e763"
+    },
+    "037-clock1-face1-mode2-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "64ee8febfb785fa4105bfbbc9a1d5a4894056ecb6cbee66691d4d2ebec70e763"
+    },
+    "037-clock1-face1-mode3-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "64ee8febfb785fa4105bfbbc9a1d5a4894056ecb6cbee66691d4d2ebec70e763"
+    },
+    "037-clock1-face1-mode3-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 1,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "64ee8febfb785fa4105bfbbc9a1d5a4894056ecb6cbee66691d4d2ebec70e763"
+    },
+    "037-clock1-face2-mode0-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 0,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "b79e85c3552a2c8beb27c74daa10c6b7413511ee6a8a8150eb968cb9f5cf6fec"
+    },
+    "037-clock1-face2-mode0-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 0,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "b79e85c3552a2c8beb27c74daa10c6b7413511ee6a8a8150eb968cb9f5cf6fec"
+    },
+    "037-clock1-face2-mode1-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 1,
+      "low": false,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "b79e85c3552a2c8beb27c74daa10c6b7413511ee6a8a8150eb968cb9f5cf6fec"
+    },
+    "037-clock1-face2-mode1-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 1,
+      "low": true,
+      "brightnessStub": 75,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          381,
+          357,
+          399
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": ""
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 51,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "b79e85c3552a2c8beb27c74daa10c6b7413511ee6a8a8150eb968cb9f5cf6fec"
+    },
+    "037-clock1-face2-mode2-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 2,
+      "low": false,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "6910b288b2b36e3faf9f2d02c8f5545c22fa9bb15cdf684b8f938342eddb3637"
+    },
+    "037-clock1-face2-mode2-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 2,
+      "low": true,
+      "brightnessStub": 35,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "6910b288b2b36e3faf9f2d02c8f5545c22fa9bb15cdf684b8f938342eddb3637"
+    },
+    "037-clock1-face2-mode3-low0": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 3,
+      "low": false,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "6910b288b2b36e3faf9f2d02c8f5545c22fa9bb15cdf684b8f938342eddb3637"
+    },
+    "037-clock1-face2-mode3-low1": {
+      "hardware": false,
+      "clockValid": true,
+      "face": 2,
+      "mode": 3,
+      "low": true,
+      "brightnessStub": 0,
+      "clock": {
+        "bounds": [
+          153,
+          382,
+          312,
+          413
+        ],
+        "hidden": false,
+        "fontLine": 32,
+        "text": "20:34"
+      },
+      "hint": {
+        "bounds": [
+          108,
+          429,
+          357,
+          447
+        ],
+        "hidden": false,
+        "fontLine": 19,
+        "text": "轻点唤醒"
+      },
+      "phase": {
+        "bounds": [
+          103,
+          117,
+          362,
+          135
+        ],
+        "hidden": true,
+        "fontLine": 19,
+        "text": "上次：在家陪伴"
+      },
+      "checks": 172,
+      "negativeOverlapReproductions": 0,
+      "allPass": true,
+      "sha256": "6910b288b2b36e3faf9f2d02c8f5545c22fa9bb15cdf684b8f938342eddb3637"
+    }
+  },
+  "limits": [
+    "Actual production source with memory-only clock/domain/brightness/input ports",
+    "Fixed fixture time20:34 is not a fresh hardware clock reading",
+    "OFF images are software compositions; physical panel would have zero brightness",
+    "Painted wake text corners checked against round screen; transparent250px label container not claimed contained",
+    "No actual PSRAM latency/heap, physical touch, scanout, tearing or FPS proof"
+  ]
+}

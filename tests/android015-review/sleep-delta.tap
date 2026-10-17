@@ -1,0 +1,50 @@
+TAP version 13
+# Subtest: actual kitten sleep machine completes approach/lie/wake/hop/home with no bed or neighbor mesh penetration
+ok 1 - actual kitten sleep machine completes approach/lie/wake/hop/home with no bed or neighbor mesh penetration
+  ---
+  duration_ms: 3975.47825
+  ...
+# Subtest: actual adult sleep machine completes approach/lie/wake/hop/home with no bed or neighbor mesh penetration
+ok 2 - actual adult sleep machine completes approach/lie/wake/hop/home with no bed or neighbor mesh penetration
+  ---
+  duration_ms: 4068.16225
+  ...
+# Subtest: bed support fits adult/kitten side-rest, clears walls and actual bathtub/climbing footprints
+ok 3 - bed support fits adult/kitten side-rest, clears walls and actual bathtub/climbing footprints
+  ---
+  duration_ms: 154.465584
+  ...
+# Subtest: lie/wake pose resets each frame without growing kitten head or accumulating a translation
+ok 4 - lie/wake pose resets each frame without growing kitten head or accumulating a translation
+  ---
+  duration_ms: 347.757083
+  ...
+# Subtest: resting neck and face follow the torso without the 014 head tower, with original head scale
+ok 5 - resting neck and face follow the torso without the 014 head tower, with original head scale
+  ---
+  duration_ms: 79.232583
+  ...
+# Subtest: original entire store factory and care orchestrator prefix are byte-identical to 014
+ok 6 - original entire store factory and care orchestrator prefix are byte-identical to 014
+  ---
+  duration_ms: 9.498167
+  ...
+# Subtest: kitten cancel at each sleep transition resets roll, home position and whiskers without completing
+ok 7 - kitten cancel at each sleep transition resets roll, home position and whiskers without completing
+  ---
+  duration_ms: 11934.358709
+  ...
+# Subtest: adult cancel at each sleep transition resets roll, home position and whiskers without completing
+ok 8 - adult cancel at each sleep transition resets roll, home position and whiskers without completing
+  ---
+  duration_ms: 11289.581292
+  ...
+1..8
+# tests 8
+# suites 0
+# pass 8
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 23848.172375

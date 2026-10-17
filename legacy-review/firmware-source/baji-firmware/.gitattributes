@@ -1,0 +1,19 @@
+# 行尾策略：源码统一 LF，保证跨平台一致
+* text=auto eol=lf
+
+# 二进制资产：禁止任何行尾/编码转换
+*.bin      -text
+*.png      -text
+*.jpg      -text
+*.jpeg     -text
+*.gif      -text
+*.zip      -text
+*.glb      -text
+*.bbmodel  -text
+
+# 参考资料（Notion 交付的原型 HTML、说明、模型等）：逐字节原样保存
+# 这些是规则基线与取证依据，行尾被改写会破坏可追溯性
+/_ref/**   -text
+
+# ESP-IDF 锁文件：原样保存，避免出现“永久已修改”的假脏状态
+/dependencies.lock -text

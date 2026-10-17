@@ -1,0 +1,66 @@
+{
+  "kind": "actual_android_existing_capture_readonly_no_new_device_action",
+  "captures": [
+    {
+      "checkpoint": "normal-bath-start",
+      "png": "artifacts/device-integration/2026-10-16-ui020/normal-bath-start.png",
+      "pngSha256": "a12f04c40cce603ec7aa2a7c525912213c2b177303025aacb520c87c7f291149",
+      "xml": "artifacts/device-integration/2026-10-16-ui020/normal-bath-start.xml",
+      "xmlSha256": "b547cb9efb3b88cbe634a260c5536c98d9329059d45fca6253c2d33975e4ee7b",
+      "tip": [
+        39,
+        2161,
+        929,
+        2242
+      ],
+      "notice": [
+        39,
+        2122,
+        955,
+        2242
+      ],
+      "intersection": [
+        39,
+        2161,
+        929,
+        2242
+      ],
+      "fractionTipBoxOverlapped": 1.0
+    },
+    {
+      "checkpoint": "short-bath-start",
+      "png": "artifacts/device-integration/2026-10-16-ui020/short-bath-start.png",
+      "pngSha256": "57be650390a7fec964013e859564ed5f5f77fefae8caa97f4bae4381a8747c22",
+      "xml": "artifacts/device-integration/2026-10-16-ui020/short-bath-start.xml",
+      "xmlSha256": "b97f314b750cb93e3ba4fa81208e4c4b3162ada66400b8d3057a48d6e620da9c",
+      "tip": [
+        36,
+        1452,
+        828,
+        1524
+      ],
+      "notice": [
+        36,
+        1416,
+        852,
+        1524
+      ],
+      "intersection": [
+        36,
+        1452,
+        828,
+        1524
+      ],
+      "fractionTipBoxOverlapped": 1.0
+    }
+  ],
+  "sourceSha256": {
+    "artifacts/html-offline-candidate/ui020/source/web/offline-page-polish.css": "8e79385407333619f44874232b569b733758a7d1ba1d22ff990784115d7c37df",
+    "artifacts/html-offline-candidate/ui020/source/web/offline-host.css": "61b8b7815a196da4a4e252deaf2b65846b6aa1e301bada474a4811b60addda45",
+    "artifacts/html-offline-candidate/ui020/source/android/app/src/main/assets/game-06.js": "c42cccb88beb0ce7724e22c261d3a01996af47f65f1fb46a3fac5242280e43c6",
+    "artifacts/html-offline-candidate/ui019/source/web/offline-host.css": "61b8b7815a196da4a4e252deaf2b65846b6aa1e301bada474a4811b60addda45",
+    "artifacts/html-offline-candidate/ui019/source/android/app/src/main/assets/game-06.js": "c42cccb88beb0ce7724e22c261d3a01996af47f65f1fb46a3fac5242280e43c6"
+  },
+  "hostCssUnchanged": true,
+  "game06Unchanged": true
+}

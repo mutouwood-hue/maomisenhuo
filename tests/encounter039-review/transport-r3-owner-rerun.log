@@ -1,0 +1,47 @@
+PASS initialize is listener-only; permissions precede unknown Bluetooth; explicit route required
+PASS real subscribed evidence + HELLO/state; UTF8 split bytewise; peer only declared
+PASS connect result may precede subscribed event; writes may precede app ACK
+PASS early app ACK cannot settle before final GATT completion
+PASS mutation needs persisted identity, stable exact wire order, no native sequence allocation
+PASS public operations/extras/oversize are rejected before any write
+PASS one app operation in flight; no automatic queue/replay
+PASS missing native evidence never ready and disconnects
+PASS wrong hello protocol never ready and disconnects
+PASS missing capabilities never ready and disconnects
+PASS wrong device id never ready and disconnects
+PASS unsafe hello seq never ready and disconnects
+PASS wrong state device never ready and disconnects
+PASS legacy bytes never ready and disconnects
+PASS invalid UTF8 never ready and disconnects
+PASS duplicate escaped key never ready and disconnects
+PASS bad JSON never ready and disconnects
+PASS oversized line never ready and disconnects
+PASS stale frame timeout never ready and disconnects
+PASS stale write completion never ready and disconnects
+PASS id/op mismatch never ready and disconnects
+PASS wrong response id cannot settle request
+PASS negative app code/no_change passes through and does not replay
+PASS storage unknown rejects and disconnects without retry
+PASS native failure is never marked as an application rejection
+PASS public state response updates authoritative link data exactly once
+PASS new module exposes only its own explicit route and preserves same-route ready
+PASS permission denial and native mode rollback failure remain honest
+PASS disconnect and stale events cannot revive readiness
+PASS unexpected native disconnect requires a fresh scan selection
+PASS strict JSON rejects duplicate nested keys, depth, NUL, prototype keys safely and unsafe numbers
+PASS old CFLOCAL2 family rejects without application mutation or fallback
+PASS missing proof capability rejects without application mutation or fallback
+PASS missing proof version rejects without application mutation or fallback
+PASS future proof version rejects without application mutation or fallback
+PASS old store schema rejects without application mutation or fallback
+PASS new control rejects actual old wire envelope without fallback
+PASS unmodified packed026 transport fragments HELLOv2 then rejects strict candidatev3 before state or mutation
+PASS new family explicit mode cannot silently select legacy v2 family
+PASS nonUUID hello owner rejects before ready or mutation
+PASS nonUUID state owner rejects before ready or mutation
+PASS uppercase hello device rejects before ready or mutation
+PASS uppercase state device rejects before ready or mutation
+PASS null owner positive seq rejects before ready or mutation
+PASS UUID owner zero seq rejects before ready or mutation
+PASS well-formed owner UUID with positive sequence remains supported
+PASS 46 encounter v3 transport fixture suites; no radio/device

@@ -1,0 +1,35 @@
+{
+  "scope": "early host JS implementation review; not frozen full deliverable or device release",
+  "source": {
+    "encounter-adapter.js": "b8624e3fea9092e8b0a6ff49a9f184c0e64f8754195f5b56e99ca10526222ecb",
+    "encounter-event.js": "898218eafa5329ed355555c4b4c45ee8a740ca0ddd9dd1de37c68290a6486917",
+    "encounter-transport.js": "259d9f5dda96d3e93028422e7a51326f8542b8ea4665603ef195c0d2ab053bd2"
+  },
+  "pins": {
+    "artifacts/local-ble-adapter/versions/encounter-v1/encounter-adapter.js": "b8624e3fea9092e8b0a6ff49a9f184c0e64f8754195f5b56e99ca10526222ecb",
+    "artifacts/local-ble-adapter/versions/encounter-v1/encounter-event.js": "898218eafa5329ed355555c4b4c45ee8a740ca0ddd9dd1de37c68290a6486917",
+    "artifacts/local-ble-adapter/versions/encounter-v1/encounter-transport.js": "259d9f5dda96d3e93028422e7a51326f8542b8ea4665603ef195c0d2ab053bd2",
+    "protocol/local-encounter-v1/contract.json": "b0200d97751f997029ec6af7d605938e6730ebf4969b3074d736bba12570d2f4",
+    "protocol/local-encounter-v1/binding-vectors.json": "b6a4d2ca9ca635526baccf61d1951625485833d2527df6fb9753ac1712d6d922",
+    "artifacts/local-ble-adapter/versions/encounter-v1/test-encounter-event.cjs": "9811be6a444fe9564bd5dfcbd6717c503077784fbba374e9440746be393da10d",
+    "artifacts/local-ble-adapter/versions/encounter-v1/test-encounter-journal.cjs": "a83562092437f92797b5c1631f10ecb131ec0232def688a15d9b043decc6a7c1",
+    "tests/encounter039-review/event-conflict-reacceptance.json": "fa28eefb8637541b43878a9599d95fe6269b5c899e2d655fb3764a271b232bc9",
+    "tests/encounter039-review/event-keyorder-conflict.json": "9d18d334307b8693a3a70002706d8d3873b5602e035d7c1f1534f5809537cb6a",
+    "tests/encounter039-review/peer-proof-conflict-old-negative.json": "f371364fa906261f1cdae2e9a66b242f4d5b45a378c083614b4c026c41f2d48f",
+    "tests/encounter039-review/event-conflict-r5.json": "fa0d29230717cc9f74f886a8c3d0b8060bec9c5ba42fec5afcb07de77accc0f5",
+    "tests/encounter039-review/event-keyorder-r5.json": "8e96391d87cdc2f777dec88c5678a25b0c762648369a209c21228e1f3bd2f801",
+    "tests/encounter039-review/peer-proof-conflict-r5.json": "1fc6f8d7e18a349901ce43e5dc53512d5b55194b6c9a2cec886e8151f10e3c7c",
+    "tests/encounter039-review/event-adapter-owner-rerun-initial.log": "ce4c3a3848cd6f6d64fcc9ceccea3cb02bd49c25667bbb005bff52654ab62b98",
+    "tests/encounter039-review/event-adapter-owner-rerun-r5.log": "d771893b646beeaedb4266dae96869ea766fbff0f8f8d93e4603fbfc24c534f5",
+    "tests/encounter039-review/independent-binding-vectors.json": "d55f88c8a8b27a933c75f5f453e219617cb10b4e209770b7420f2b0a542968bb",
+    "tests/encounter039-review/independent-binding-report.json": "27791f45f4872656ad1a1e83dd478a862a96d9ef8e326c29ff5c8978d4f076d4"
+  },
+  "newBlockingFindingsAfterFix": [],
+  "closedFindings": [
+    "E39-A01",
+    "E39-A02"
+  ],
+  "actual039WireCoreIntegrationPassed": false,
+  "productionNativeProvisioned": false,
+  "deviceRelease": false
+}

@@ -1,0 +1,52 @@
+{
+  "bg_main_a": {
+    "width": 466,
+    "height": 466,
+    "bytes": 434312
+  },
+  "bg_main_b": {
+    "width": 466,
+    "height": 466,
+    "bytes": 434312
+  },
+  "bg_main_c": {
+    "width": 466,
+    "height": 466,
+    "bytes": 434312
+  },
+  "still_care_menu": {
+    "width": 466,
+    "height": 466,
+    "bytes": 434312
+  },
+  "still_status": {
+    "width": 466,
+    "height": 466,
+    "bytes": 434312
+  },
+  "still_settings": {
+    "width": 466,
+    "height": 466,
+    "bytes": 434312
+  },
+  "catA": {
+    "width": 2352,
+    "height": 113,
+    "bytes": 1063104,
+    "x": 150,
+    "y": 152,
+    "w": 98,
+    "h": 113,
+    "n": 24
+  },
+  "catB": {
+    "width": 2088,
+    "height": 101,
+    "bytes": 843552,
+    "x": 158,
+    "y": 138,
+    "w": 87,
+    "h": 101,
+    "n": 24
+  }
+}

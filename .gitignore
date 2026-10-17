@@ -1,0 +1,17 @@
+.DS_Store
+.tools/
+**/build/
+/build-game/
+**/.gradle/
+**/local.properties
+**/managed_components/
+**/sdkconfig.old
+logs/
+artifacts/
+*.jks
+*.keystore
+*.key
+*.pem
+
+# 超过 GitHub 100MB 单文件上限的源码归档
+baji-firmware-src.zip

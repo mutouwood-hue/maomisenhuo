@@ -1,0 +1,3 @@
+
+CFDIAG RENDER {"schema":1,"source":"diagnostic_render_sample","sample":1,"valid":true,"published":false,"error":"NONE","contextBytes":431880,"contextExternalRam":true,"pcatBytes":205624,"pcatDrom":true,"roi":[152,102,256,256],"catBounds":[202,124,358,338],"triangles":458,"tested":271886,"inside":114658,"written":91904,"poseUs":10,"geometryUs":10,"rasterUsIncludingYield":16410,"totalUs":16450,"phase":5,"completeFrame":true,"partialCounters":false,"yieldCount":1,"crc32":"be209397","dmaBefore":68000,"dmaAfter":68000,"dmaMin":35000,"dmaLargest":31744,"psramBefore":8000000,"psramAfter":8000000,"usbStackFreeMinimumBytes":5120,"domainActionEmitted":false,"physicalScanoutMeasured":false}
+

@@ -1,0 +1,112 @@
+TAP version 13
+# Subtest: local→device→local uses same original4s context; defer keeps FIFO with zero ledger/Native/ACK changes
+ok 1 - local→device→local uses same original4s context; defer keeps FIFO with zero ledger/Native/ACK changes
+  ---
+  duration_ms: 66.309958
+  type: 'test'
+  ...
+# Subtest: distinct counters and legal timestamp-less backlog wait then replan latest state; no fabricated event time
+ok 2 - distinct counters and legal timestamp-less backlog wait then replan latest state; no fabricated event time
+  ---
+  duration_ms: 10.886167
+  type: 'test'
+  ...
+# Subtest: deferred head re-evaluates latest original eligibility, rather than caching a stale reward plan
+ok 3 - deferred head re-evaluates latest original eligibility, rather than caching a stale reward plan
+  ---
+  duration_ms: 6.270083
+  type: 'test'
+  ...
+# Subtest: gift and quarantined events preserve every existing cooldown timestamp without refreshing it
+ok 4 - gift and quarantined events preserve every existing cooldown timestamp without refreshing it
+  ---
+  duration_ms: 18.126333
+  type: 'test'
+  ...
+# Subtest: already settled duplicate and unknown ACK retry never seed or refresh cooldowns
+ok 5 - already settled duplicate and unknown ACK retry never seed or refresh cooldowns
+  ---
+  duration_ms: 8.127958
+  type: 'test'
+  ...
+# Subtest: Native precommit failure and committed-but-lost response publish no speculative live runtime
+ok 6 - Native precommit failure and committed-but-lost response publish no speculative live runtime
+  ---
+  duration_ms: 6.731541
+  type: 'test'
+  ...
+# Subtest: all public original writes really reject during Native await and commit→hydrate, including reentry and DOM clicks
+ok 7 - all public original writes really reject during Native await and commit→hydrate, including reentry and DOM clicks
+  ---
+  duration_ms: 13.036917
+  type: 'test'
+  ...
+# Subtest: capture detects runtime-only drift while hashing and aborts before Native/WAL/ACK
+ok 8 - capture detects runtime-only drift while hashing and aborts before Native/WAL/ACK
+  ---
+  duration_ms: 9.658458
+  type: 'test'
+  ...
+# Subtest: pause after successful Native commit finishes runtime+game projection but no ACK; explicit later retry is duplicate
+ok 9 - pause after successful Native commit finishes runtime+game projection but no ACK; explicit later retry is duplicate
+  ---
+  duration_ms: 12.536
+  type: 'test'
+  ...
+# Subtest: normal import/reset retain original RAM clear; owner flush/hydrate closes on success and exceptions with no deadlock
+ok 10 - normal import/reset retain original RAM clear; owner flush/hydrate closes on success and exceptions with no deadlock
+  ---
+  duration_ms: 11.00775
+  type: 'test'
+  ...
+# Subtest: actual durable backup ordinary import uses owned path and clears RAM while preserving unchanged format
+ok 11 - actual durable backup ordinary import uses owned path and clears RAM while preserving unchanged format
+  ---
+  duration_ms: 9.739458
+  type: 'test'
+  ...
+# Subtest: crash/recreation keeps durable result and dedup but does not claim original RAM debounce survives process restart
+ok 12 - crash/recreation keeps durable result and dedup but does not claim original RAM debounce survives process restart
+  ---
+  duration_ms: 8.87775
+  type: 'test'
+  ...
+# Subtest: runtime identity, original independent action thresholds and returned copies cannot silently clear or invent context
+ok 13 - runtime identity, original independent action thresholds and returned copies cannot silently clear or invent context
+  ---
+  duration_ms: 1.068666
+  type: 'test'
+  ...
+# Subtest: generated original game differs from025 only by runtime constructor/install hooks, not reward rules or cooldown constants
+ok 14 - generated original game differs from025 only by runtime constructor/install hooks, not reward rules or cooldown constants
+  ---
+  duration_ms: 3.324625
+  type: 'test'
+  ...
+# Subtest: pending ACK validation and replay cannot seed or refresh already settled runtime
+ok 15 - pending ACK validation and replay cannot seed or refresh already settled runtime
+  ---
+  duration_ms: 5.577
+  type: 'test'
+  ...
+# Subtest: hydrate or digest exceptions release owned gate and inputs, without replaying a blocked write or rewarding twice
+ok 16 - hydrate or digest exceptions release owned gate and inputs, without replaying a blocked write or rewarding twice
+  ---
+  duration_ms: 26.476834
+  type: 'test'
+  ...
+# Subtest: actual original clinic completion runtime survives gift/care hydration without inventing a clinic cooldown
+ok 17 - actual original clinic completion runtime survives gift/care hydration without inventing a clinic cooldown
+  ---
+  duration_ms: 17.718167
+  type: 'test'
+  ...
+1..17
+# tests 17
+# suites 0
+# pass 17
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 719.847291

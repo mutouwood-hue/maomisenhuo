@@ -1,0 +1,46 @@
+{
+  "checkedAtUtc": "2026-10-15T14:31:25.181987+00:00",
+  "mode": "static read-only; no installs, dependency installation, network, radio, reset, flash or test execution",
+  "source": "legacy-review/source/warm-paws-town",
+  "sourceHashes": {
+    "src/ble/protocol.js": "ded0e878da81d1bd91d1bbcc95f664b6c18abaec2a7982e91351389f4b99bd1f",
+    "src/ble/client.js": "00e36d89f7cc028a521cfc40815e769f26f5a4025af78a615173ef2aeefe8a8a",
+    "src/ble/panel.js": "6f4ac241f1fd29c6336a3d0ed9564f48ba61e212ff38b220c79a9eb387d97d74",
+    "src/companion/badge-sync.js": "be4e463e3703d0df8baf70053fe3a3c80b9870fa1f3594e09020ccf1894cf8d2",
+    "android/app/src/main/java/com/warmpaws/town/ble/BleLocalPlugin.java": "19275803e4587db5c2b87fabba81926bc88852bccaca0c5f4cd5829b78aed610",
+    "capacitor.config.json": "01d54cb3afcf36a601a79a469930b3204efb1e29d6838ac5b2bc3ae2b0228f01",
+    "original/game.html": "c4f872d0bf8a899cf93a6aa877c13c5a5090e1f592729500bd2ef476205e9952"
+  },
+  "legacy": {
+    "packageId": "com.warmpaws.town",
+    "transport": "e7f1a000-1c9b-4a7e-9d2f-3b8c5e6f7a00/01/02",
+    "frame": "exact 20 bytes; BJ magic 0x42 0x4a; version1; opcode; LE16 sequence; payload length<=12; reserved0; zero padding",
+    "hello": "opcode1 ACK data8; protocol1 caps15 MAC6",
+    "getState": "opcode2 ACK data10; STATE unsolicited opcode0x81 sequence0",
+    "startLocal": "opcode3 explicit UI button; initialization does not automatically send it; reconnect only HELLO+GET_STATE",
+    "applicationAck": "requires same sequence+opcode and completed GATT write; status0; timeout mutation outcome unknown, no automatic retry",
+    "security": "native transport declares no bonding/cloud identity; local ready explicitly not account authentication or ownership binding",
+    "cloudExtensions": "caps opcode6; paginated object reads19; staged begin16/data17/commit18; per-objectCRC32, object<=512; cloud provisioning/session/signing separate from local transport"
+  },
+  "newCandidate": {
+    "packageId": "com.catforest.app",
+    "transport": "7b2e1000-6a6d-4d8f-9c45-4f4d43415431 / 1001 / 1002",
+    "frame": "NDJSON up to2048, protocolVersion/petId/deviceId",
+    "security": "authenticated/bonded NimBLE transport",
+    "storage": "Native PetStore and cat_forest/state_v1 firmware NVS"
+  },
+  "originalDeviceEvidence": "original-device-ble-fingerprint.json",
+  "conclusions": [
+    "All three legacy UUIDs found together in original ota_0 app binary; strong evidence original device belongs to legacy interface family",
+    "Legacy UI requires explicit START_LOCAL separately from read handshake; cannot prove exact screen exit branch without original firmware source",
+    "Do not describe local protocol readiness as account binding, or imply current new App can control old device",
+    "No direct state/protocol compatibility or safe storage migration is established",
+    "Preserve old full experience first and compare new functionality before selecting merge baseline"
+  ],
+  "remaining": [
+    "Original firmware source path and actual compiled-version mapping",
+    "Static decode of legacy firmware command/state transition and resource handling",
+    "Complete original cloud/object-extension capability and default-disabled sensitive feature review",
+    "Fresh build/runtime evidence only after review and authorization"
+  ]
+}

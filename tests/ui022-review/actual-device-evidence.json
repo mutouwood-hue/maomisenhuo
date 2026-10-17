@@ -1,0 +1,207 @@
+{
+  "status": "limited_visual_form_pass",
+  "scope": "independent read-only review of root actual screenshots and XML; no new device operations",
+  "apkSha256": "e2c0fc3cfafc7231dbb0bac96e69e54f2c3b3b02052cd7da72aa8a5c9a005d0f",
+  "viewedFrames": {
+    "normal-family-six-full": {
+      "pngSha256": "109e1bd7a4305e1d873703faa6fbe6cac09d95dd5fabd371688f0844fbc4f489",
+      "xmlSha256": "c9a6f776c142c1d449bdf02ddcae0b1fdf298e30b858d18d892d7f6f28f62f03",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "normal-preview-orange": {
+      "pngSha256": "1d0f80d13e1648a4a77c38a873e05eb6dc15c86fb58c48bc77b84740ac7935da",
+      "xmlSha256": "71a13751cab4ff3a70b1a0baf13c273149f69105d4388be0617987ddfaabebd6",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "normal-preview-silver": {
+      "pngSha256": "da112fba77d8be5c10484f4ef5b2ea4d602d6f3fb602c9036b874462938259b0",
+      "xmlSha256": "c8452c98a555eeda4fbe3505b8cff539037395e7ee3d10c662000ecc1c3c4989",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "normal-native-breed-options": {
+      "pngSha256": "6f200d742dd305de6d4f680e2442953e12ee91b2650d8cedf36f65cd81475021",
+      "xmlSha256": "64e43fc6ff1d54d7060bc2381b4b0bf6f21af14fd5f3335d5a255157a893e7b2",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "normal-native-breed-selected": {
+      "pngSha256": "184088553b50f3e2f897c6aa03de5bc0faf4e919996e7f689370f0414376a482",
+      "xmlSha256": "295d9cd277059579008ce562acce1e31df8e5442e23afac55429f82fcd4e090b",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "normal-selected-preview-readback": {
+      "pngSha256": "5d9e1befdd52333211b9517274ad070a189a35316e03c9438a4b62ff2684fcc0",
+      "xmlSha256": "d6edeeac06fef35039df9589b473f19ee24ad9a2d37b85c346a628d6439a670c",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "normal-wardrobe-top": {
+      "pngSha256": "3d8f037ba6f1092c234276ffb390202c916f514430a0f63f6b1c5676f0d2d983",
+      "xmlSha256": "63da79ade26346169b0a6ccb928501cdb64a56cbd96afb990d5071246d58e3a4",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "normal-wardrobe-actual-end": {
+      "pngSha256": "5779b8d51fe5b7efb6bbbab5fa897adf1627a28e36b61f6d24b956a7a5dfe756",
+      "xmlSha256": "8acb770f25df96f7a85a4e008d976e54649d9ce058114a312b74d3d774828aec",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "short-wardrobe-end": {
+      "pngSha256": "e2bcb13b92417f85eb095be16fcd048a7122f8974d68c05e1c49144181dc7f01",
+      "xmlSha256": "23147a9f2f25e21adcf124bd68c2e6c8324c9304acb8cc9792bfdfd4a1336279",
+      "pixels": [
+        1080,
+        1920
+      ],
+      "pixelsViewed": true
+    },
+    "mid-wardrobe-end": {
+      "pngSha256": "285475b1c9ce01418c11ede319a196d2cf23e52bf8a89634e05ab2993ee05a67",
+      "xmlSha256": "74d7b41515cd4a7b6b370588fa6ac74f3fed053697351142d0984693e5dd1cd2",
+      "pixels": [
+        1170,
+        2532
+      ],
+      "pixelsViewed": true
+    },
+    "short-family-form": {
+      "pngSha256": "123c1d798fc46643f184dc82cd0c4342ca5118cd282e711fd34ce9db2dbe4571",
+      "xmlSha256": "7f2ed2e0d9c8de9b86394177151a10568c8dd0c1eea790efcc1ef07e7b0a3fa1",
+      "pixels": [
+        1080,
+        1920
+      ],
+      "pixelsViewed": true
+    },
+    "short-family-footer": {
+      "pngSha256": "350695b85f35a434a5c7f41f0ce648ddbba6fd22ad0dfce59b4343554162dbdd",
+      "xmlSha256": "a9a8a45183264d957639876ed28254465c804a087dc88aa3f2d02c5345fd0e74",
+      "pixels": [
+        1080,
+        1920
+      ],
+      "pixelsViewed": true
+    },
+    "mid-family-footer": {
+      "pngSha256": "d691bc564274c429856b2ddab9353d995def5f23134a55d6e0859a4e4f750a67",
+      "xmlSha256": "13e7ec363e3becbb24a495cb05aba27db2b90d3e4100932674b0dd2c535f7e43",
+      "pixels": [
+        1170,
+        2532
+      ],
+      "pixelsViewed": true
+    },
+    "short-family-previews": {
+      "pngSha256": "53b106370b4584bb39fa7b3ef7bdd43d94bac0844c76d74a597f8960943370a0",
+      "xmlSha256": "e7aea82da53ff685ee2ea6ed820629a1d69050baba09f7af2ab4114676fa1d98",
+      "pixels": [
+        1080,
+        1920
+      ],
+      "pixelsViewed": true
+    },
+    "mid-family-previews": {
+      "pngSha256": "a0c2383fc4ee01630b2d9bc6c72bbe9220339b7a6259b9f6e68dd7c95b567c33",
+      "xmlSha256": "85492fefc953eda6dfefc951f7e292f36d0ebc3dfe2e2806fef790e5174bb8cd",
+      "pixels": [
+        1170,
+        2532
+      ],
+      "pixelsViewed": true
+    },
+    "normal-family-footer": {
+      "pngSha256": "1996eaa37310fa8c36582faabbc72f770fd79057a3233dcd5feb62fe8c043fc9",
+      "xmlSha256": "6489206812133c82f51fa4bdd7bb2c67b4c2674ca5e5b6117d0c3edc05c1321a",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "normal-closed-family": {
+      "pngSha256": "6f7b9037fd8b8491858c2c9ccab7a102ff1145061319e70856160c56e874dd41",
+      "xmlSha256": "00ab8ab4838f5f934892a01aae516fd69e2215c6ec7c2a4f7bd0262a4afb4c9b",
+      "pixels": [
+        1200,
+        2670
+      ],
+      "pixelsViewed": true
+    },
+    "short-family-closed": {
+      "pngSha256": "a8d29bf517e9c91847c67bf2921a2f0e182f8ef4bf5d50267f13c5fdbeaef5c8",
+      "xmlSha256": "37e1a0f17c6cdc2d7cafd47babced214261e7198055c3c2dba36f4309bd15de0",
+      "pixels": [
+        1080,
+        1920
+      ],
+      "pixelsViewed": true
+    },
+    "mid-family-closed": {
+      "pngSha256": "f013bfaa4c19b744bdaa4c20993f44157a6d456cdee183fdff1e9d0749a150a7",
+      "xmlSha256": "3a2f0f956db1cbca297ce6d43fbf1fda0545162437e12fdd04849c328abfe603",
+      "pixels": [
+        1170,
+        2532
+      ],
+      "pixelsViewed": true
+    }
+  },
+  "allResultMediaHashesRechecked": 42,
+  "selectReadback": {
+    "normal-preview-orange": "橘白田园猫",
+    "normal-preview-silver": "银虎斑",
+    "normal-native-breed-selected": "布偶猫",
+    "normal-selected-preview-readback": "布偶猫"
+  },
+  "installArchiveChecks": [
+    {
+      "file": "before-022-app-data.tar",
+      "sha256": "2ff03c714c6a3aa1a06cb56fed1c65d1da1333db62f963995904af0c59abe03c",
+      "recordedFileHashesVerified": 13
+    },
+    {
+      "file": "after-install-before-launch.tar",
+      "sha256": "2ff03c714c6a3aa1a06cb56fed1c65d1da1333db62f963995904af0c59abe03c",
+      "recordedFileHashesVerified": 13
+    }
+  ],
+  "authorityRawHashUnchanged": true,
+  "authorityRevision59": "root record; raw bytes/hash verified without decoding private receipts",
+  "noSubmissionTapsInActionLog": true,
+  "postCheckSha256": "a3deed96778e45f3363718ea212fabdde8d1123aa1e351d73917223513afd74f",
+  "limits": [
+    "no actual system1.6 font-scale proof",
+    "no economy/adoption/mating/dress actions or rule completion proved",
+    "no BLE/clock/FIFO inference",
+    "AX dump checked/selected flags not used as proof of visual selected card; paint inspected in PNG"
+  ]
+}

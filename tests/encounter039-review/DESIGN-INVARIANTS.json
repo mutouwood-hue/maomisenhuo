@@ -1,0 +1,41 @@
+{
+  "status": "independent design review only; no039 implementation or device release",
+  "baseline": "frozen038 schema2; installed038 and actual116 evidence unchanged",
+  "scope": "explicit physical-button consent first; drawing confirmation excluded from critical path; one real hardware device available",
+  "requiredInvariants": [
+    {"id":"E01","rule":"Before sending consent, atomically persist local consent bound to protocol version, encounter identity, both device identities and both pet identities. A tap/send enqueue/RAM flag is not durable consent.","negative":"Crash after button input but before persist; peer/pet changes before delayed CONFIRM."},
+    {"id":"E02","rule":"Encounter identity is canonical and direction-independent where compared, while each receipt has explicit sender/recipient roles. Bind fresh transcript/nonces and persistent monotonic IDs; reconnect resumes the same durable encounter, never assigns new reward IDs for retries.","negative":"A/B role reversal; A and C share counter1; stale nonce/session payload replay; integer overflow."},
+    {"id":"E03","rule":"Remote durable receipt must explicitly attest its own committed consent/identity/proof stage. Local receipt of ACK, send() success, gift persist, RSSI, nonce or successful connection alone cannot substitute.","negative":"Send queue accepts but packet never reaches peer; ACK before peer NVS commit; fabricated legacy gift evidence."},
+    {"id":"E04","rule":"One local completion transition appends exactly one peer_complete event and its permanent completion/dedup watermark in one validated single-blob commit. Publish success/send committed proof only after success; ambiguous persistence blocks writes and requires reload.","negative":"Fail between watermark and event; event FIFO full; write returns uncertain after actual commit; restart/replay after phone ACK removed event."},
+    {"id":"E05","rule":"Define completion as a local durable knowledge state, not simultaneous mutual knowledge. Last-message loss may leave asymmetric peer states; show pending/locally committed/remote proof observed separately. Retransmit stable proof after restart without replaying one-shot rewards.","negative":"Drop last DONE/receipt forever; A committed then B resets; arbitrary ACK-of-ACK loss. Never infer both screens completed simultaneously."},
+    {"id":"E06","rule":"gift and peer_complete are distinct event kinds and dedup namespaces. Legacy schema2 gift/first-outgoing/peer ACK/RAM completeCount migrate with no encounter completion invented.","negative":"One-way flower only; old peer record with both gift directions; gift and completion delivered/ACKed in either order."},
+    {"id":"E07","rule":"Bounded capacities remain explicit: encoded blob<=8192, FIFO<=200, peers<=32, safe integer counters. Completion capacity is reserved or commit fails unchanged with retryable status; never evict unACKed event or permanent completion proof to make room.","negative":"200th/201st FIFO, 32nd/33rd peer, all maximum IDs, 32 pending encounters, peer with full historical metadata, exhaustion during inbound completion."},
+    {"id":"E08","rule":"Provide exact worst-case encoded-size arithmetic and actual encoder tests, plus 32KiB NVS old/new blob and garbage-collection allocation budget. An8192 array or existing5739-byte sample is not migration/GC proof.","negative":"Maximum schema2 migration plus new pending proof; alternating full blob writes across pageGC, no erase/reinitialize on ENOSPC."},
+    {"id":"E09","rule":"Migration preserves schema2 identity, snapshot, owner request/seq/hash/result, next counters, pending200 FIFO order/IDs, all32 peers/outgoing states, gift receipts and ACK watermarks. New encounter fields initialize explicitly unknown/not completed. Reject truncated/unknown/corrupt bytes without resetting.","negative":"Valid schema2 at all capacity boundaries; CRC mismatch/unknown schema; persist failure before/after migration; idempotent reload/migrate."},
+    {"id":"E10","rule":"State downgrade boundary must be explicit.038 decoder accepts only schema2. Overwriting its state key with a new schema prevents038 domain load. Keeping an old key permits baseline byte preservation only;039 progress and later038 writes can fork. Do not claim lossless rollback without a tested reconciliation/disable boundary.","negative":"039 completion pending then038 rollback and new care/snapshot then039 return; device/event counter reuse across forks; dual-key partial commit."},
+    {"id":"E11","rule":"Old026 handshake allows extra capability strings. Mere advertisement of encounter capability is not failclosed. Require explicit compatible activation/version gate and preserve unsupported FIFO head/noACK/no mutation. New event is never disguised as gift(peerComplete=true) or care.","negative":"Actual unmodified026 HELLO+state+events+pump/ACK retries; old client reconnecting to new completed event; missing capability; malformed/unknown event; race with existing pending journal."},
+    {"id":"E12","rule":"Phone consumes new event through durable Native receipt before ACK, with exact encounter+device+pet matching and idempotent ledger/relationship write. Duplicate/receipt/ACK retry must not regrant flower, add friend twice or alter old care cooldown.","negative":"Native seal succeeds but reply lost; pause before ACK; app restart; wrong current pet; old receipt; duplicate counter from different device."},
+    {"id":"E13","rule":"Store mutex encloses all core mutations and proof validation/commit; send callback only queues immutable copied bytes, never waits/reenters or holds UI/radio lock. Delayed events must match current peer/session/consent generation.","negative":"Disconnect/cancel while queued proof sends; blocked queue; callback reentry; concurrent snapshot/ACK/peer mutation; stale pointer lifetime."},
+    {"id":"E14","rule":"Consent withdrawal/expiry/supersession and post-commit dismissal have separate meanings. Cancellation before commitment cannot complete; committed historical proof cannot be silently deleted by dismissing UI. No clock-validity dependency or reset can fabricate elapsed consent.","negative":"Cancel at every message/persist boundary; clockfalse/offset change; timed-out peer reconnect; hold release leaking into PET."},
+    {"id":"E15","rule":"Protocol receipts are uncredentialed device statements, not authenticated account identity, signature, precise distance or anti-cloning guarantee. Host virtual two-machine proof and one-board fixtures must retain their evidence labels.","negative":"Clone/public deviceId collision; synthetic peer fixtures; no second physical radio. Never claim dual-radio or simultaneous physical completion."}
+  ],
+  "requiredArtifactsBeforeRelease": [
+    "Root-frozen normative protocol/state meanings and canonical transcript/identity encoding",
+    "Migration/downgrade decision and exact capacity/NVS allocation budget",
+    "Two production state machines with durable file store fault matrix at every commit/send boundary; explicitly virtual_fixture",
+    "Unmodified026 adapter/consumer compatibility negative controls and phone exactly-once Native receipt tests",
+    "Frozen source/app/ELF/ZIP hashes and independent final audit; no automatic installation or NVS migration"
+  ],
+  "baselineSourceReferences": {
+    "schema2Only": "artifacts/firmware-local-v3-visual038/source/main/local2_core.c:58",
+    "singleBlobCommit": "artifacts/firmware-local-v3-visual038/source/main/local2_core.c:63",
+    "giftEventAtomicallyQueued": "artifacts/firmware-local-v3-visual038/source/main/local2_core.c:72-93",
+    "ramConsent": "artifacts/firmware-local-v3-visual038/source/main/local2_peer.c:45-47",
+    "ramCompletion": "artifacts/firmware-local-v3-visual038/source/main/local2_peer.c:94-122",
+    "nvsCommit": "artifacts/firmware-local-v3-visual038/source/main/local2_store.c:15-19",
+    "wireGiftNotPeerComplete": "artifacts/firmware-local-v3-visual038/source/main/local2_wire.c:121",
+    "old026ExtraCapabilitiesAllowed": "artifacts/html-offline-candidate/ui026/source/web/local-v2-transport.js:87-91",
+    "old026UnknownKindNoACK": "artifacts/html-offline-candidate/ui026/source/web/cflocal2-adapter.js:142",
+    "old026GiftFalseOnly": "artifacts/html-offline-candidate/ui026/source/web/offline-device-events.js:15-18"
+  }
+}

@@ -1,0 +1,173 @@
+{
+  "scope": "host actual C vs both unmodified original JS and alpha-instrumented JS; no device",
+  "cases": [
+    {
+      "input": [
+        "idle",
+        0.31,
+        0,
+        0,
+        0
+      ],
+      "roi": [
+        130,
+        130,
+        256,
+        256
+      ],
+      "rgbSha256": "45e0ee48737a15e3f38784cc66d5b56bccd666a6c1dda80842ce9d9e9e2dd937",
+      "alphaSha256": "4ca0135d6b6f4b143554e52167c7b8bef7c35930c9cf06b4e0314acc364ac2de",
+      "originalAndCoverageRGBExact": true,
+      "CAndOriginalRGBExact": true,
+      "CAndCoverageAlphaExact": true,
+      "outside": 0
+    },
+    {
+      "input": [
+        "idle",
+        1.6,
+        180,
+        0,
+        0
+      ],
+      "roi": [
+        110,
+        132,
+        256,
+        256
+      ],
+      "rgbSha256": "da73ecbafc7857b054aaf2c17306d9d08341a0091ca8897fb8070463e1cdbef7",
+      "alphaSha256": "ac7977723604a30f275eee791f7916a7d0c786d37392eee4e5f4a3f8dfbef526",
+      "originalAndCoverageRGBExact": true,
+      "CAndOriginalRGBExact": true,
+      "CAndCoverageAlphaExact": true,
+      "outside": 0
+    },
+    {
+      "input": [
+        "walk",
+        0.125,
+        45,
+        0,
+        0
+      ],
+      "roi": [
+        100,
+        126,
+        256,
+        256
+      ],
+      "rgbSha256": "4ba84f84ae981d1710ebb7d8177254ea8fdd712f45d93a49200a7a8c301277f7",
+      "alphaSha256": "1ee3293dc0b7a63fa7751ca2d6b28e45e1afeba0197477582bfcb4f4a1e7ed90",
+      "originalAndCoverageRGBExact": true,
+      "CAndOriginalRGBExact": true,
+      "CAndCoverageAlphaExact": true,
+      "outside": 0
+    },
+    {
+      "input": [
+        "walk",
+        0.78,
+        270,
+        0,
+        0
+      ],
+      "roi": [
+        114,
+        124,
+        256,
+        256
+      ],
+      "rgbSha256": "61d7e384b277fcfefefac4115a54ca801eb44c7598c64cb97caa9b792dadc816",
+      "alphaSha256": "99f6b088dd6e4c99dfc45155bc9a7529d35271e303a7570c7c2e366004824615",
+      "originalAndCoverageRGBExact": true,
+      "CAndOriginalRGBExact": true,
+      "CAndCoverageAlphaExact": true,
+      "outside": 0
+    },
+    {
+      "input": [
+        "paw",
+        0.93,
+        90,
+        0,
+        0
+      ],
+      "roi": [
+        102,
+        124,
+        256,
+        256
+      ],
+      "rgbSha256": "4e57356f3dfd7ad87b1a7c8927010c2441f17f634c17b36bbd9254b3c2b83765",
+      "alphaSha256": "b2cd4158cd06ec1db68789e2cf82c47d38d81aa8497d0aaecec41b477e819138",
+      "originalAndCoverageRGBExact": true,
+      "CAndOriginalRGBExact": true,
+      "CAndCoverageAlphaExact": true,
+      "outside": 0
+    },
+    {
+      "input": [
+        "idle",
+        0.7,
+        0,
+        -32,
+        10
+      ],
+      "roi": [
+        130,
+        126,
+        256,
+        256
+      ],
+      "rgbSha256": "21380f089a4104a1fefc658d4301b9880858ccdaec1e6ed5c3afd43ed5210da6",
+      "alphaSha256": "6401a9483b68d7d6b7242b71a610b3760e632bb17d8cf0b9fd706a5d16104d09",
+      "originalAndCoverageRGBExact": true,
+      "CAndOriginalRGBExact": true,
+      "CAndCoverageAlphaExact": true,
+      "outside": 0
+    },
+    {
+      "input": [
+        "idle",
+        0.7,
+        0,
+        32,
+        -10
+      ],
+      "roi": [
+        116,
+        132,
+        256,
+        256
+      ],
+      "rgbSha256": "63d30759c29ab0a05a28d728af59f6f5ff964d2c323a15c8dda57eb11bf0a31a",
+      "alphaSha256": "9ea55a2490cb8594425eaaa119f21262b74584d084c27631e42115d9e5cae3e2",
+      "originalAndCoverageRGBExact": true,
+      "CAndOriginalRGBExact": true,
+      "CAndCoverageAlphaExact": true,
+      "outside": 0
+    },
+    {
+      "input": [
+        "paw",
+        2.4,
+        0,
+        0,
+        0
+      ],
+      "roi": [
+        130,
+        130,
+        256,
+        256
+      ],
+      "rgbSha256": "a300d27d0cb44d9611c5d3a760d7d5355fc82a7c87162f8dccb0138d60fc75e0",
+      "alphaSha256": "3d49b42fed7bb7150260f1097bb81e8c9106318fa9efd1bc7aee1fe103317f26",
+      "originalAndCoverageRGBExact": true,
+      "CAndOriginalRGBExact": true,
+      "CAndCoverageAlphaExact": true,
+      "outside": 0
+    }
+  ]
+}

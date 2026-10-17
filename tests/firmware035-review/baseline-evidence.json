@@ -1,0 +1,40 @@
+{
+  "scope": "read-only034 baseline and035 review plan; no035 source read or device action",
+  "034SourceAllFrozen": true,
+  "sourceHashes": {
+    "artifacts/firmware-local-v3-perf034/source/main/badge_diagnostics.c": "0af48d64cbc83af826772c7010825ac4630a6240de7db8078be7458809aaf373",
+    "artifacts/firmware-local-v3-perf034/source/main/badge_pages.c": "23d3249382522e5df723b5d7611769a455ebe6ffe269d445429fbbe769b72cc6",
+    "artifacts/firmware-local-v3-perf034/source/main/badge_scene.c": "358f5de5766556ec8ad39fc606a563c38f75875088900c1325a7882473c7d68b",
+    "firmware/managed_components/lvgl__lvgl/src/core/lv_refr.c": "6520b6348cfb5849153a924d8505557f00aea2007258ec7705665ffaf8f5db81",
+    "firmware/managed_components/lvgl__lvgl/src/core/lv_obj_style.c": "d24368d4e32072f578341eac004bd811a037825db5cf409e70821ec92c8dce02",
+    "firmware/managed_components/lvgl__lvgl/src/widgets/label/lv_label.c": "7adc870f2c902a66e37a9c728ec98b29df4feb4afe3ae1f499131a3cb5124c87",
+    "firmware/managed_components/espressif__esp_lvgl_adapter/src/display/bridge/v9/lvgl_bridge_v9.c": "424e7ef240aee67da6a42f9f065bcdc1114393ab7ea38e4f7e449edfcb33f2ed",
+    "firmware/managed_components/espressif__esp_lvgl_adapter/src/display/display_manager.c": "f058caf78a25003c60f7a86751cb25ae94606563c424cbe841fd024163a5ece7"
+  },
+  "sampleHashes": {
+    "command-10-perf.log": "2c710cbb0a0f162c9585968f42a9fabbfa18f925ec3bc54354507fee43db5cfd",
+    "command-13-perf.log": "52ebdf617d1f0effcd12dc1848909cf4940d2245dfd3a38b61faff87522d1f73"
+  },
+  "sameSinceUs": 12041577,
+  "delta": {
+    "nowUs": 389861443,
+    "rendered": 1559,
+    "refreshRequests": 1559,
+    "flushCount": 73273,
+    "pixelsSubmitted": 338546204,
+    "pressedPolls": 0
+  },
+  "fullFramePixels": 217156,
+  "expectedFullFrameFlushChunks": 47,
+  "fullFrameIdentitiesExact": true,
+  "observedRefreshesPerSecond": 3.9988565886470595,
+  "metricDeltaMeansUs": {
+    "render": 68203.24567030148,
+    "flushSubmit": 325.2105959903375,
+    "flushWait": 11.538957051028346,
+    "inputRead": 7.40792989205942,
+    "appUiTick": 20539.817831943554
+  },
+  "notPureRenderCPUOrPhysicalFPS": true,
+  "target035NotReviewedOrReleased": true
+}

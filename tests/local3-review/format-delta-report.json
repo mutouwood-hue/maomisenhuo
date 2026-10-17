@@ -1,0 +1,46 @@
+{
+  "kind": "read_only_exact_four_format_insertions_not_build",
+  "passed": true,
+  "oldSha256": "ea578da18502e72aa4a2aab0a22065523b3c69b51fbb7eb82a776a1050732e17",
+  "newSha256": "89c1196c87d122d1e1b3ac220cfefffcc779aa00391803c70b8693fe980dde93",
+  "diffSha256": "106af24a43669d0c45ceda8db4911c00828bd24335807f4e9dbdaf2f556ae698",
+  "diffMatchesFullSources": true,
+  "hunks": 4,
+  "insertions": [
+    {
+      "operation": "insert",
+      "oldLine": 891,
+      "newLine": 891,
+      "old": "",
+      "new": "\n    "
+    },
+    {
+      "operation": "insert",
+      "oldLine": 910,
+      "newLine": 911,
+      "old": "",
+      "new": "\n    "
+    },
+    {
+      "operation": "insert",
+      "oldLine": 969,
+      "newLine": 971,
+      "old": "",
+      "new": "\n    "
+    },
+    {
+      "operation": "insert",
+      "oldLine": 1278,
+      "newLine": 1281,
+      "old": "",
+      "new": "\n    "
+    }
+  ],
+  "sourceLengthIncreaseBytes": 20,
+  "lineIncrease": 4,
+  "tokenCountIncludingUnchangedCommentsAndLiterals": 16377,
+  "tokensIdentical": true,
+  "allQuotedLiteralsAndCommentsPreserved": true,
+  "formatCheckScriptSha256": "f6709592db1c6b1b029bda061b252256b9d021cea8fb79dd152436b4091dd831",
+  "readEndSourceStable": true
+}

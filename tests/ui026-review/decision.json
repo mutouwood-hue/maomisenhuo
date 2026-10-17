@@ -1,0 +1,92 @@
+{
+  "atUtc": "2026-10-16T04:09:33.605027+00:00",
+  "decision": "release_for_sole_integrator_preserve_data_install_and_controlled_actual_acceptance",
+  "noConfirmedP1P2InReviewedDelta": true,
+  "scope": "frozen026 original same-session care runtime, owned write freeze, consumer defer and backup lease; not hardware feeding acceptance",
+  "apk": {
+    "path": "deliverables/catforest-html-local-0.2.6-debug.apk",
+    "bytes": 889633,
+    "sha256": "a780c0e48b9c2ac2c149e761171a6eb6e9098aee84507be5f6409a9527144ab8"
+  },
+  "sourceArchive": {
+    "path": "deliverables/catforest-html-local-0.2.6-source.zip",
+    "files": 159,
+    "bytes": 1248030,
+    "sha256": "c422abdcf2fbad3c48c2ce966bf2da9e7b18c2cee6e7ab2bf0c5b70715549abd",
+    "excluded": [
+      ".DS_Store",
+      ".build",
+      ".gradle",
+      "__pycache__",
+      "build",
+      "local.properties",
+      "node_modules",
+      "preview",
+      "signing keys"
+    ]
+  },
+  "certificate": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+  "runtimeSourceHashes": {
+    "scripts/care-runtime.cjs": "d65f8ca338ed170d39aa9e568ff87853c4b61539d746ab760e05ccbc1b038b77",
+    "scripts/build_assets.py": "59988e0241a2de6d28a611cb89cc902ee55c7cdbbceffa7c4419db3e9cf2213e",
+    "web/offline-device-events.js": "8ce6818c646f10af67d9ec48202000e23a0c998e05eb9d543244b7022c2d107c",
+    "web/offline-device-backup.js": "68fe5b9514309e5a622d9cb57a4f8bf333ee99d279d922722c5e86250120c2e7",
+    "android/app/src/main/assets/game-03.js": "44ebeee5e7dd4684bad9d87568ff659fe17aa030516a00fc8c4841ecde400cd2"
+  },
+  "manifestSha256": "4ba17cd90dc0e5e400bbb31d1bfccce54156d1ca1a75128dc9bc890274e6412c",
+  "frozenSha256": "da18f4abc4b8be0b219c631e95503610425af41b5ececb97c320dcac99bd111b",
+  "sourceHashesSha256": "4f0eb42ec7ff2796d2f222fd6f0e9f0118dcb6bd630e212eb0d8fc68508179d0",
+  "source159StableBeforeAfter": true,
+  "commands": [
+    {
+      "name": "package-readonly",
+      "command": [
+        "python3",
+        "/Users/zoumutou/coding/猫咪森活/tests/ui026-review/verify_readonly.py"
+      ],
+      "exitCode": 0,
+      "log": "package-readonly.log"
+    },
+    {
+      "name": "owner-runtime-isolated-rerun",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "/Users/zoumutou/coding/猫咪森活/tests/ui026-review/runtime-rerun.test.cjs"
+      ],
+      "exitCode": 0,
+      "log": "owner-runtime-isolated-rerun.log",
+      "tests": 17,
+      "pass": 17,
+      "fail": 0,
+      "skipped": 0
+    },
+    {
+      "name": "independent-runtime",
+      "command": [
+        "node",
+        "--test",
+        "--test-concurrency=1",
+        "/Users/zoumutou/coding/猫咪森活/tests/ui026-review/independent-runtime.test.cjs"
+      ],
+      "exitCode": 0,
+      "log": "independent-runtime.log",
+      "tests": 5,
+      "pass": 5,
+      "fail": 0,
+      "skipped": 0
+    }
+  ],
+  "independentlyExecutedProductionDirectedCases": 22,
+  "ownerFull298NotIndependentlyRerun": true,
+  "fixtureBoundary": "Original production vu, source/consumer, backup mount, Native JS client; explicit memory RPC/GATT ports/time. No Java/fsync/radio/device/physical-care evidence.",
+  "originalCooldownPersistence": "RAM only, original process recreation clears timestamps; durable receipt duplicates do not reseed them.",
+  "remaining": [
+    "Root fresh preserve-data install and APK readback/storage comparison",
+    "Real physical bowl three-tap feeding remains pending, empty FIFO is not a new-care pass",
+    "No new physical clock/gesture/FPS/tearfree/powerloss/bilateral gift proof",
+    "Standard Gradle lint incomplete offline; standalone lint evidence only; actual system1.6font not newly tested",
+    "Inherited schedule work pill text after recall remains outside026"
+  ]
+}

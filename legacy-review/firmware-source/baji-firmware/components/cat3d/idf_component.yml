@@ -1,0 +1,4 @@
+dependencies:
+  # The CO5300 QSPI panel driver and the LVGL 9 adapter used by the BSP both
+  # require the ESP-IDF v5.5 line or newer.
+  idf: ">=5.5.5"

@@ -1,0 +1,32 @@
+{
+  "scope": "read-only static/AST and existing baseline file verification; no imports/execution of hardware script",
+  "allowedPreparationStages": [
+    "security",
+    "backup",
+    "verify-current"
+  ],
+  "securityNote": "security enters ROM using usb_reset; no flash write, but it resets running app/RAM",
+  "writeAllowed": false,
+  "reasonWriteBlocked": "043 candidate not frozen/reviewed; exact candidate+independent release+execution SHA gate still required",
+  "reverseBaselineDeltaExact042": true,
+  "helperAndWrapperByteIdentical042": true,
+  "predecessor042PhysicalVerifyAndAppReadbackEvidencePinned": true,
+  "known042WholeImageSha256NotFreshRead": "1a92e6a73134b0aabb76a6f922596ed63a971851eab8ca0eb0625bfa00f96255",
+  "executionArtifacts": [
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/run_stage.py",
+      "sha256": "cb4f0303e0b87a127101770b7655ba4713388bef008e7cd0082bf8acaeb3afb9"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/diagnostic_session.py",
+      "sha256": "7a32f845ea04d97bff56390702bac8a5bb73cdc7518666e865485f9849c9a5a2"
+    },
+    {
+      "path": "artifacts/device-backups/esp-usb-7c0c5f423684/2026-10-16T1145Z-cache043/esptool_no_write_retry.py",
+      "sha256": "14e37af0c6f38c2f4792e0e80d068517b5826263d7bdb6d2a0fa80880fe9b4e4"
+    }
+  ],
+  "preparationMetadataSha256": "381827e9da7dffd1a64b1627cb56c5fd2e49b61f07c7261f690b75a0ae9c2c6f",
+  "scriptSourceSha256": "3b9694c9712bc1c6c67a2d6e6cdc9cd73d6f83577e2ab451b3b57e58c3e07ca6",
+  "allPass": true
+}

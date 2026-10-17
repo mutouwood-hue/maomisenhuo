@@ -1,0 +1,39 @@
+{
+  "atUtc": "2026-10-15T15:09:55.314882+00:00",
+  "archive": {
+    "path": "baji-firmware-src.zip",
+    "sha256": "43772d2a5d14eef81988039b193e27721ebab91e9275de9d8ee24b98c8723965",
+    "safe": true,
+    "extractedFiles": 7515,
+    "readOnlySource": "legacy-review/firmware-source/baji-firmware"
+  },
+  "criticalConclusions": [
+    "classic and V2 share e7f1 UUIDs but different wire formats; strict BJ20 HELLO required",
+    "V2 START_LOCAL can enter local guide without provision; not account binding",
+    "GET_STATE is UI state, not pet statistics",
+    "V2 private event export and PET/LIFE/TIME/precise ACK remain signed-session gated; no cloud-free sync is claimed",
+    "classic has richer spec-driven UI/realtime3D; V2 limited10screen/opaque24-frame cats and RAM guide/face",
+    "default partition differs from actual OTA layout; automatic erase/old queue-drop must not be inherited"
+  ],
+  "reports": [
+    "firmware-build-review.md",
+    "firmware-ui-review.md",
+    "firmware-protocol-review.md"
+  ],
+  "adapter": {
+    "directory": "artifacts/local-ble-adapter",
+    "status": "stable_owner_integration",
+    "javaSDK35Compile": true,
+    "nodeFixtureTests": "15/15",
+    "actualJavaFramePolicyJVMChecks": "10047/10047",
+    "nativeAndJsHashesFrozen": true,
+    "phoneOwnerNotified": true
+  },
+  "productWrites": "only independent adapter dir + reports/contracts; no phone UI/Host/Manifest, original source or main firmware modifications in this turn",
+  "hardware": {
+    "accessedThisTurn": false,
+    "flashed": false,
+    "rawBackupsPreserved": true
+  },
+  "next": "Phone owner integrates and delivers stable APK/hash; root uniquely installs preserving both app data and verifies actual UI, system permission, scan/strict handshake/explicit local start. Later local data protocol needs explicit new firmware capability, never fake signed grants."
+}

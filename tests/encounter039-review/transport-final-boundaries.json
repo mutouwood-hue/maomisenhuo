@@ -1,0 +1,41 @@
+{
+  "virtual_fixture": true,
+  "reusesOwnerNativeFixture": true,
+  "independentBoundaryCases": [
+    {
+      "case": "nonuuid hello owner",
+      "result": {
+        "rejected": "UNSUPPORTED_PROTOCOL",
+        "commands": [
+          "hello"
+        ]
+      }
+    },
+    {
+      "case": "nonuuid state owner",
+      "result": {
+        "rejected": "UNSUPPORTED_PROTOCOL",
+        "commands": [
+          "hello",
+          "state"
+        ]
+      }
+    },
+    {
+      "case": "uppercase device identity",
+      "result": {
+        "rejected": "UNSUPPORTED_PROTOCOL",
+        "commands": [
+          "hello"
+        ]
+      }
+    },
+    {
+      "case": "explicit legacy route result",
+      "result": {
+        "rejected": "BAD_REQUEST",
+        "additionalNativeRPC": 0
+      }
+    }
+  ]
+}

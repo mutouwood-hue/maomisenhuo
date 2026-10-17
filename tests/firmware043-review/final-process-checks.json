@@ -1,0 +1,12 @@
+{
+  "rootExpectedMathMatchesIndependentWorker": true,
+  "rootExecutionPinsExact": true,
+  "securityBackupAndFullCurrentVerifyCompleted": true,
+  "fourPhysicalDigestRangesVerified": true,
+  "vendorLifetimeBarriersUnchanged042": {
+    "artifacts/firmware-visual-integration043/source/managed_components/lvgl__lvgl/src/core/lv_refr.c": "6520b6348cfb5849153a924d8505557f00aea2007258ec7705665ffaf8f5db81",
+    "artifacts/firmware-visual-integration043/source/managed_components/lvgl__lvgl/src/draw/sw/lv_draw_sw.c": "ae0de2eaed665616501d30116285a5dbd6e328a95a71f0934d161d12522f8393",
+    "artifacts/firmware-visual-integration043/source/managed_components/lvgl__lvgl/src/draw/snapshot/lv_snapshot.c": "3a9fb55f63d8f03d5cc0fb8b8d03f198558538021f82b4a6bce5b77da4dd23cc",
+    "artifacts/firmware-visual-integration043/source/managed_components/espressif__esp_lvgl_adapter/src/adapter/esp_lv_adapter.c": "3aaf0e1b79c8f89afb1224f5f08957aee3e76e1ae2d9d3ae626d717a6b42b2f5"
+  }
+}

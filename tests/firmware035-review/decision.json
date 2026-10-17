@@ -1,0 +1,134 @@
+{
+  "decision": "release_for_Root_controlled_app_only_device_validation",
+  "notGeneralAcceptance": true,
+  "appSha256": "b5f06e3140b13162fa0baa4bed68bc5cf1ae4312b8fcced644ce44d8c2b9918f",
+  "elfSha256": "bdec36570128e679ef5c204e4b32964e5c28a3e17b58c93b95a66665b14620b4",
+  "sourceZipSha256": "3b4968665cce22ad8813385b297045052e6008ddbf9f917dc098aa727320bddf",
+  "P1P2NewBlockerConfirmed": false,
+  "knownCosmeticResidual": {
+    "toast-font": {
+      "pixels": 8,
+      "bounds": [
+        227,
+        144,
+        238,
+        144
+      ],
+      "maxRGB565Delta": [
+        7,
+        5,
+        3
+      ],
+      "differentPixels": [
+        [
+          67331,
+          49834,
+          64333
+        ],
+        [
+          67332,
+          49834,
+          64333
+        ],
+        [
+          67333,
+          49834,
+          64333
+        ],
+        [
+          67334,
+          49834,
+          64333
+        ],
+        [
+          67339,
+          49834,
+          64333
+        ],
+        [
+          67340,
+          49834,
+          64333
+        ],
+        [
+          67341,
+          49834,
+          64333
+        ],
+        [
+          67342,
+          49834,
+          64333
+        ]
+      ]
+    },
+    "toast-gone": {
+      "pixels": 8,
+      "bounds": [
+        227,
+        144,
+        238,
+        144
+      ],
+      "maxRGB565Delta": [
+        7,
+        5,
+        3
+      ],
+      "differentPixels": [
+        [
+          67331,
+          49834,
+          64333
+        ],
+        [
+          67332,
+          49834,
+          64333
+        ],
+        [
+          67333,
+          49834,
+          64333
+        ],
+        [
+          67334,
+          49834,
+          64333
+        ],
+        [
+          67339,
+          49834,
+          64333
+        ],
+        [
+          67340,
+          49834,
+          64333
+        ],
+        [
+          67341,
+          49834,
+          64333
+        ],
+        [
+          67342,
+          49834,
+          64333
+        ]
+      ]
+    }
+  },
+  "releaseScopeExcludes": [
+    "physical_slide_or_tearfree",
+    "pixel_exact_continuous_partial_render",
+    "phone025_care_rule_or_cooldown_fix",
+    "new_reward_or_real_feed_completion",
+    "old_clock_reused_after_reset"
+  ],
+  "newArtifactsBytes": 30501973,
+  "gitCommands": 0,
+  "deleteOrCleanupCommands": 0,
+  "deviceActions": 0,
+  "productSourceEdits": 0
+}

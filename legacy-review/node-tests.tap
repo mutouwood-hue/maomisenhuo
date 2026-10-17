@@ -1,0 +1,506 @@
+TAP version 13
+# node:internal/modules/esm/resolve:274
+#     throw new ERR_MODULE_NOT_FOUND(
+#           ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/zoumutou/coding/猫咪森活/legacy-review/source/tests/integration/m2-helper.mjs' imported from /Users/zoumutou/coding/猫咪森活/legacy-review/source/warm-paws-town/tests/active-events.test.mjs
+#     at finalizeResolution (node:internal/modules/esm/resolve:274:11)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:10)
+#     at defaultResolve (node:internal/modules/esm/resolve:983:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:717:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:694:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:308:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:183:49) {
+#   code: 'ERR_MODULE_NOT_FOUND',
+#   url: 'file:///Users/zoumutou/coding/%E7%8C%AB%E5%92%AA%E6%A3%AE%E6%B4%BB/legacy-review/source/tests/integration/m2-helper.mjs'
+# }
+# Node.js v22.19.0
+# Subtest: tests/active-events.test.mjs
+not ok 1 - tests/active-events.test.mjs
+  ---
+  duration_ms: 98.940833
+  type: 'test'
+  location: '/Users/zoumutou/coding/猫咪森活/legacy-review/source/warm-paws-town/tests/active-events.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: coalesces marks; whole 9/3/4 lease; new mark during ACK stays pending
+ok 2 - coalesces marks; whole 9/3/4 lease; new mark during ACK stays pending
+  ---
+  duration_ms: 11.726
+  type: 'test'
+  ...
+# Subtest: no session or occupied transport retains pending; owner race never writes
+ok 3 - no session or occupied transport retains pending; owner race never writes
+  ---
+  duration_ms: 0.48425
+  type: 'test'
+  ...
+# Subtest: foreground/peer/ENV changes during HTTP prevent write and retain pending
+ok 4 - foreground/peer/ENV changes during HTTP prevent write and retain pending
+  ---
+  duration_ms: 0.303125
+  type: 'test'
+  ...
+# Subtest: generation race after device await retains pending and skips remaining kinds
+ok 5 - generation race after device await retains pending and skips remaining kinds
+  ---
+  duration_ms: 0.299625
+  type: 'test'
+  ...
+# Subtest: failed ACK retries after five seconds with same pending, not rebinding
+ok 6 - failed ACK retries after five seconds with same pending, not rebinding
+  ---
+  duration_ms: 0.41075
+  type: 'test'
+  ...
+# Subtest: visible old session, wrong kind, or malformed layout never writes
+ok 7 - visible old session, wrong kind, or malformed layout never writes
+  ---
+  duration_ms: 1.090042
+  type: 'test'
+  ...
+# Subtest: state revisions accept wraparound and reject duplicate, stale and half-range frames
+ok 8 - state revisions accept wraparound and reject duplicate, stale and half-range frames
+  ---
+  duration_ms: 4.26525
+  type: 'test'
+  ...
+# Subtest: GET_STATE ACK cannot roll back a newer notification and returns accepted state
+ok 9 - GET_STATE ACK cannot roll back a newer notification and returns accepted state
+  ---
+  duration_ms: 0.821166
+  type: 'test'
+  ...
+# Subtest: handshake keeps newer state received before GET_STATE ACK
+ok 10 - handshake keeps newer state received before GET_STATE ACK
+  ---
+  duration_ms: 6.05
+  type: 'test'
+  ...
+# Subtest: fixed20 requests validate every opcode, sequence, length and zero padding
+ok 11 - fixed20 requests validate every opcode, sequence, length and zero padding
+  ---
+  duration_ms: 1.192291
+  type: 'test'
+  ...
+# Subtest: inbound strict framing rejects reserved, padding, length, opcode and sequence errors
+ok 12 - inbound strict framing rejects reserved, padding, length, opcode and sequence errors
+  ---
+  duration_ms: 0.341083
+  type: 'test'
+  ...
+# Subtest: HELLO and ten-byte state decode contract without claiming cloud ownership
+ok 13 - HELLO and ten-byte state decode contract without claiming cloud ownership
+  ---
+  duration_ms: 0.202333
+  type: 'test'
+  ...
+# Subtest: ACK requires both sequence and original opcode and actual GATT completion
+ok 14 - ACK requires both sequence and original opcode and actual GATT completion
+  ---
+  duration_ms: 3.033792
+  type: 'test'
+  ...
+# Subtest: GATT write completion alone is not application ACK; timeout never retries mutation
+ok 15 - GATT write completion alone is not application ACK; timeout never retries mutation
+  ---
+  duration_ms: 10.287208
+  type: 'test'
+  ...
+# Subtest: PING exact echo and nonzero statuses reject correlated requests
+ok 16 - PING exact echo and nonzero statuses reject correlated requests
+  ---
+  duration_ms: 0.888542
+  type: 'test'
+  ...
+# Subtest: disconnect rejects pending and isolates stale generations and listener teardown
+ok 17 - disconnect rejects pending and isolates stale generations and listener teardown
+  ---
+  duration_ms: 0.770542
+  type: 'test'
+  ...
+# Subtest: reconnect performs only HELLO + GET_STATE and restores state before ready
+ok 18 - reconnect performs only HELLO + GET_STATE and restores state before ready
+  ---
+  duration_ms: 2.252958
+  type: 'test'
+  ...
+# Subtest: commands are single-flight and sequence never wraps into a stale ACK
+ok 19 - commands are single-flight and sequence never wraps into a stale ACK
+  ---
+  duration_ms: 1.654334
+  type: 'test'
+  ...
+# Subtest: native source gate: CCCD success establishes ready without initial READ
+ok 20 - native source gate: CCCD success establishes ready without initial READ
+  ---
+  duration_ms: 0.554
+  type: 'test'
+  ...
+# Subtest: native source gate: stale reconnect cannot clear newer task; lost gate/device cancels intent
+ok 21 - native source gate: stale reconnect cannot clear newer task; lost gate/device cancels intent
+  ---
+  duration_ms: 0.255167
+  type: 'test'
+  ...
+# Subtest: AI text sending requires explicit per-message consent before any network
+ok 22 - AI text sending requires explicit per-message consent before any network
+  ---
+  duration_ms: 3.344458
+  type: 'test'
+  ...
+# Subtest: one stay and resumed sampling never request scene generation
+ok 23 - one stay and resumed sampling never request scene generation
+  ---
+  duration_ms: 4.036625
+  type: 'test'
+  ...
+# Subtest: two independent stays request cached recipe then generation through API without a provider key
+ok 24 - two independent stays request cached recipe then generation through API without a provider key
+  ---
+  duration_ms: 0.180291
+  type: 'test'
+  ...
+# Subtest: pending scene response is discarded after clear or account change
+ok 25 - pending scene response is discarded after clear or account change
+  ---
+  duration_ms: 1.414583
+  type: 'test'
+  ...
+# node:internal/fs/promises:641
+#   return new FileHandle(await PromisePrototypeThen(
+#                         ^
+# Error: ENOENT: no such file or directory, open '/Users/zoumutou/coding/猫咪森活/legacy-review/source/tests/integration/real-data-vectors.json'
+#     at async open (node:internal/fs/promises:641:25)
+#     at async readFile (node:internal/fs/promises:1245:14)
+#     at async file:///Users/zoumutou/coding/%E7%8C%AB%E5%92%AA%E6%A3%AE%E6%B4%BB/legacy-review/source/warm-paws-town/tests/companion-ble.test.mjs:3:26 {
+#   errno: -2,
+#   code: 'ENOENT',
+#   syscall: 'open',
+#   path: '/Users/zoumutou/coding/猫咪森活/legacy-review/source/tests/integration/real-data-vectors.json'
+# }
+# Node.js v22.19.0
+# Subtest: tests/companion-ble.test.mjs
+not ok 6 - tests/companion-ble.test.mjs
+  ---
+  duration_ms: 93.064666
+  type: 'test'
+  location: '/Users/zoumutou/coding/猫咪森活/legacy-review/source/warm-paws-town/tests/companion-ble.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: cloud concurrent mutation remains dirty, conflict keeps backup, corrupt metadata does not crash
+ok 27 - cloud concurrent mutation remains dirty, conflict keeps backup, corrupt metadata does not crash
+  ---
+  duration_ms: 0.894417
+  type: 'test'
+  ...
+# Subtest: device apply is actual import and durable metadata without reloading before ACK
+ok 28 - device apply is actual import and durable metadata without reloading before ACK
+  ---
+  duration_ms: 0.157625
+  type: 'test'
+  ...
+# Subtest: outbox retry uses same persisted batch and terminal rejection does not poison head
+ok 29 - outbox retry uses same persisted batch and terminal rejection does not poison head
+  ---
+  duration_ms: 60.341709
+  type: 'test'
+  ...
+# Subtest: API centrally unwraps envelope and exposes CAS business error
+ok 30 - API centrally unwraps envelope and exposes CAS business error
+  ---
+  duration_ms: 0.501542
+  type: 'test'
+  ...
+# node:internal/modules/esm/resolve:274
+#     throw new ERR_MODULE_NOT_FOUND(
+#           ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find module '/Users/zoumutou/coding/猫咪森活/legacy-review/source/tests/integration/m2-helper.mjs' imported from /Users/zoumutou/coding/猫咪森活/legacy-review/source/warm-paws-town/tests/environment-resume.test.mjs
+#     at finalizeResolution (node:internal/modules/esm/resolve:274:11)
+#     at moduleResolve (node:internal/modules/esm/resolve:859:10)
+#     at defaultResolve (node:internal/modules/esm/resolve:983:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:717:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:694:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:308:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:183:49) {
+#   code: 'ERR_MODULE_NOT_FOUND',
+#   url: 'file:///Users/zoumutou/coding/%E7%8C%AB%E5%92%AA%E6%A3%AE%E6%B4%BB/legacy-review/source/tests/integration/m2-helper.mjs'
+# }
+# Node.js v22.19.0
+# Subtest: tests/environment-resume.test.mjs
+not ok 8 - tests/environment-resume.test.mjs
+  ---
+  duration_ms: 94.8565
+  type: 'test'
+  location: '/Users/zoumutou/coding/猫咪森活/legacy-review/source/warm-paws-town/tests/environment-resume.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: cloud off then failed signed11 retains pending; retry after 5s requires actual ACK
+ok 32 - cloud off then failed signed11 retains pending; retry after 5s requires actual ACK
+  ---
+  duration_ms: 2.214084
+  type: 'test'
+  ...
+# Subtest: STOP precedes failed HTTP; owner race and fresh revoke during ACK never clear
+ok 33 - STOP precedes failed HTTP; owner race and fresh revoke during ACK never clear
+  ---
+  duration_ms: 0.225583
+  type: 'test'
+  ...
+# Subtest: signed11 checks visible off revision, session and owner across awaits
+ok 34 - signed11 checks visible off revision, session and owner across awaits
+  ---
+  duration_ms: 0.466917
+  type: 'test'
+  ...
+# Subtest: no consent or samples has empty day, not fabricated home, work or steps
+ok 35 - no consent or samples has empty day, not fabricated home, work or steps
+  ---
+  duration_ms: 16.683042
+  type: 'test'
+  ...
+# Subtest: fifteen minute stays become one visit, not one visit per GPS sample
+ok 36 - fifteen minute stays become one visit, not one visit per GPS sample
+  ---
+  duration_ms: 13.690125
+  type: 'test'
+  ...
+# Subtest: unknown intervals do not become a fabricated long stay
+ok 37 - unknown intervals do not become a fabricated long stay
+  ---
+  duration_ms: 0.177584
+  type: 'test'
+  ...
+# Subtest: step counter first read, reset, pause and day boundary only establish baseline
+ok 38 - step counter first read, reset, pause and day boundary only establish baseline
+  ---
+  duration_ms: 3.314333
+  type: 'test'
+  ...
+# Subtest: revoke and seven-day purge erase sensitive derived data
+ok 39 - revoke and seven-day purge erase sensitive derived data
+  ---
+  duration_ms: 0.5365
+  type: 'test'
+  ...
+# Subtest: API dates use explicit Shanghai timezone not host locale
+ok 40 - API dates use explicit Shanghai timezone not host locale
+  ---
+  duration_ms: 0.247875
+  type: 'test'
+  ...
+# Subtest: real bridge sends challenge before role and proof waits for actual MATCHED canonical
+ok 41 - real bridge sends challenge before role and proof waits for actual MATCHED canonical
+  ---
+  duration_ms: 7.620416
+  type: 'test'
+  ...
+# Subtest: 118 byte challenge rejects wrong session encounter self MAC and expiry before BLE writes
+ok 42 - 118 byte challenge rejects wrong session encounter self MAC and expiry before BLE writes
+  ---
+  duration_ms: 0.676
+  type: 'test'
+  ...
+# Subtest: peer status strict IDLE and real capability gates do not require peerReady before challenge
+ok 43 - peer status strict IDLE and real capability gates do not require peerReady before challenge
+  ---
+  duration_ms: 1.686875
+  type: 'test'
+  ...
+# Subtest: peer MATCHED requires both matched and ready plus valid count
+ok 44 - peer MATCHED requires both matched and ready plus valid count
+  ---
+  duration_ms: 0.214583
+  type: 'test'
+  ...
+# Subtest: canonical knock uses positive uint16LE and pattern is unique four to nine points
+ok 45 - canonical knock uses positive uint16LE and pattern is unique four to nine points
+  ---
+  duration_ms: 0.243958
+  type: 'test'
+  ...
+# Subtest: privacy absent provider, expired, malformed, and 404 fail closed without claiming guardian
+ok 46 - privacy absent provider, expired, malformed, and 404 fail closed without claiming guardian
+  ---
+  duration_ms: 0.221125
+  type: 'test'
+  ...
+# node:internal/modules/package_json_reader:266
+#   throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);
+#         ^
+# Error [ERR_MODULE_NOT_FOUND]: Cannot find package 'jsqr' imported from /Users/zoumutou/coding/猫咪森活/legacy-review/source/warm-paws-town/src/social/qr-scanner.js
+#     at Object.getPackageJSONURL (node:internal/modules/package_json_reader:266:9)
+#     at packageResolve (node:internal/modules/esm/resolve:767:81)
+#     at moduleResolve (node:internal/modules/esm/resolve:853:18)
+#     at defaultResolve (node:internal/modules/esm/resolve:983:11)
+#     at \#cachedDefaultResolve (node:internal/modules/esm/loader:717:20)
+#     at ModuleLoader.resolve (node:internal/modules/esm/loader:694:38)
+#     at ModuleLoader.getModuleJobForImport (node:internal/modules/esm/loader:308:38)
+#     at ModuleJob._link (node:internal/modules/esm/module_job:183:49) {
+#   code: 'ERR_MODULE_NOT_FOUND'
+# }
+# Node.js v22.19.0
+# Subtest: tests/m2-social.test.mjs
+not ok 12 - tests/m2-social.test.mjs
+  ---
+  duration_ms: 64.4595
+  type: 'test'
+  location: '/Users/zoumutou/coding/猫咪森活/legacy-review/source/warm-paws-town/tests/m2-social.test.mjs:1:1'
+  failureType: 'testCodeFailure'
+  exitCode: 1
+  signal: ~
+  error: 'test failed'
+  code: 'ERR_TEST_FAILURE'
+  ...
+# Subtest: OTA uploader relays begin/chunks/finish and requires VERIFIED status
+ok 48 - OTA uploader relays begin/chunks/finish and requires VERIFIED status
+  ---
+  duration_ms: 9.388125
+  type: 'test'
+  ...
+# Subtest: OTA invalid artifact never begins writing
+ok 49 - OTA invalid artifact never begins writing
+  ---
+  duration_ms: 1.0955
+  type: 'test'
+  ...
+# Subtest: OTA generation change stops before next chunk or finish
+ok 50 - OTA generation change stops before next chunk or finish
+  ---
+  duration_ms: 0.957334
+  type: 'test'
+  ...
+# Subtest: OTA binary downloader rejects external URL without forwarding bearer
+ok 51 - OTA binary downloader rejects external URL without forwarding bearer
+  ---
+  duration_ms: 0.303209
+  type: 'test'
+  ...
+# Subtest: OTA malformed manifests fail before writes
+ok 52 - OTA malformed manifests fail before writes
+  ---
+  duration_ms: 1.613459
+  type: 'test'
+  ...
+# Subtest: OTA envelope wrong kind/session/manifest/chunk/finish fails closed
+ok 53 - OTA envelope wrong kind/session/manifest/chunk/finish fails closed
+  ---
+  duration_ms: 3.17375
+  type: 'test'
+  ...
+# Subtest: OTA final status must match kind/version/size
+ok 54 - OTA final status must match kind/version/size
+  ---
+  duration_ms: 2.956791
+  type: 'test'
+  ...
+# Subtest: OTA status state combinations reject inconsistent fields
+ok 55 - OTA status state combinations reject inconsistent fields
+  ---
+  duration_ms: 0.25625
+  type: 'test'
+  ...
+# Subtest: web mode does not replace geolocation or activate native listeners
+ok 56 - web mode does not replace geolocation or activate native listeners
+  ---
+  duration_ms: 3.903459
+  type: 'test'
+  ...
+# Subtest: Blob exports become UTF8 cache files shared by the system
+ok 57 - Blob exports become UTF8 cache files shared by the system
+  ---
+  duration_ms: 9.694125
+  type: 'test'
+  ...
+# Subtest: normal links retain their original click behavior
+ok 58 - normal links retain their original click behavior
+  ---
+  duration_ms: 0.50325
+  type: 'test'
+  ...
+# Subtest: back button closes an active extension before minimizing
+ok 59 - back button closes an active extension before minimizing
+  ---
+  duration_ms: 3.648458
+  type: 'test'
+  ...
+# Subtest: back button returns from an open or collapsed world sheet without minimizing
+ok 60 - back button returns from an open or collapsed world sheet without minimizing
+  ---
+  duration_ms: 3.713334
+  type: 'test'
+  ...
+# Subtest: back button returns from world even without an open sheet
+ok 61 - back button returns from world even without an open sheet
+  ---
+  duration_ms: 1.559083
+  type: 'test'
+  ...
+# Subtest: back button closes ordinary sheet rather than leaving the app
+ok 62 - back button closes ordinary sheet rather than leaving the app
+  ---
+  duration_ms: 1.363541
+  type: 'test'
+  ...
+# Subtest: geolocation cancellation clears the actual native watch ID
+ok 63 - geolocation cancellation clears the actual native watch ID
+  ---
+  duration_ms: 1.216333
+  type: 'test'
+  ...
+# Subtest: leaving app stops foreground sampling; resume respects opt-in
+ok 64 - leaving app stops foreground sampling; resume respects opt-in
+  ---
+  duration_ms: 1.143333
+  type: 'test'
+  ...
+# Subtest: original HTML is an exact copy of the authorized source
+ok 65 - original HTML is an exact copy of the authorized source
+  ---
+  duration_ms: 5.85525
+  type: 'test'
+  ...
+# Subtest: all original scripts are preserved in original order and parse
+ok 66 - all original scripts are preserved in original order and parse
+  ---
+  duration_ms: 42.806042
+  type: 'test'
+  ...
+# Subtest: packaging preserves original markup and CSS outside explicit adapter wiring
+ok 67 - packaging preserves original markup and CSS outside explicit adapter wiring
+  ---
+  duration_ms: 7.470166
+  type: 'test'
+  ...
+# Subtest: mobile adapters load after original rules and match their maintained source
+ok 68 - mobile adapters load after original rules and match their maintained source
+  ---
+  duration_ms: 5.658375
+  type: 'test'
+  ...
+# Subtest: Android uses HTTPS assets and declares independent location foreground service without boot restart
+ok 69 - Android uses HTTPS assets and declares independent location foreground service without boot restart
+  ---
+  duration_ms: 1.118
+  type: 'test'
+  ...
+1..69
+# tests 69
+# suites 0
+# pass 65
+# fail 4
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 280.917667

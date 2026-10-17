@@ -1,0 +1,53 @@
+{
+  "softwareOnly": true,
+  "production": "source-r3",
+  "negative": "source-r3-legacy; only bounded_face=false",
+  "cases": [
+    {
+      "variant": "037",
+      "case": "vertical-up",
+      "exit": 0,
+      "frames": 11,
+      "ticks": [
+        2160,
+        2200,
+        2240,
+        2280,
+        2320,
+        2360,
+        2440,
+        2480,
+        2520,
+        2560,
+        2600
+      ],
+      "metrics": [
+        "METRIC vertical-up ticks2620 frames11 flush472 pixels2170204 page4 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "0409deb489f6a5f66added21a8de59311740065d41097a9d00ecbf08020cdbf2"
+    },
+    {
+      "variant": "037",
+      "case": "vertical-down",
+      "exit": 0,
+      "frames": 11,
+      "ticks": [
+        2160,
+        2200,
+        2240,
+        2280,
+        2320,
+        2360,
+        2440,
+        2480,
+        2520,
+        2560,
+        2600
+      ],
+      "metrics": [
+        "METRIC vertical-down ticks2620 frames11 flush472 pixels2170204 page6 face0 active0 settling0 emit0 pending0 live0 action0"
+      ],
+      "outputSha256": "4bb9781e34ccc6857d4ff99eeff6869c4e49167d22a9ea95d4e40d518e5481f3"
+    }
+  ]
+}
