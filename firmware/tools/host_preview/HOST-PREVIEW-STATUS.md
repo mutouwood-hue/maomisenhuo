@@ -25,8 +25,10 @@ python firmware/tools/host_preview/run_preview.py --output artifacts/firmware-lo
   **因此房间背景是空的，页面布局与文字/图元仍是真实生产代码绘制。**
 - `run_preview.py`：`ROOT` 改为本仓根；Windows 下可执行文件加 `.exe`。
 
-## 现状（2026-10-18 00:20）
+## 现状（2026-10-18 01:35）
 
 - 已渲染 **41 个用例**成功（含 boot / guide_1–5 / main_a / main_b / main_c / care_menu / care_* / action_* / status / settings / device / aod / away_rain / returning_snow / gift_* / drag_* 等）。
-- 未跑通：`input_test` 用例在本机退出码 `0xC0000409`（栈缓冲越界保护），发生在该用例自身，不影响其它页面；未定位。
+- **已接门禁**：`python firmware/tools/ui_gate.py` 固定渲染 27 屏并校验「全部出图 + 字形不缺 + 命中区与标签都在 safeR=212 内」，已并入 `work/integrated/test-badge.py` 作为第 4 个套件（可用 `--skip-ui` 跳过）。
+- 门禁上线当天抓到一个真实越界：care_menu 的「清洁需兼容手机确认」标签最大角半径 212.05，已上移 6px 修正。
+- 未跑通：`input_test` 用例在本机退出码 `0xC0000409`（栈缓冲越界保护），发生在该用例自身，不影响其它页面；未定位，未纳入门禁用例。
 - 不是真机证据：不覆盖触摸采样、圆屏真实裁剪、TE/局部刷新、帧率与功耗；空房间画布也不代表真机配色。
