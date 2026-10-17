@@ -32,7 +32,7 @@
 | 文件 | pass/fail | 首个失败 | 归类 |
 |---|---|---|---|
 | companion-scene | 7/3 | `ENOENT …\ui024\source\…\game-06.js` | **环境 fixture 缺失**，非产品缺陷（历史分类已记） |
-| gameplay | 6/2 | `changed-script 数 5 !== 4`；第二条为打包文本比对 | 已验证**不是行尾问题**：把 CRLF 归一化后仍失败，说明是内容级差异，需逐段定位。下轮处理 |
+| gameplay | 6/2 | 见下方「gameplay 两条红的精确定位」 | 已定位到具体原因，均为**测试期望落后于产品演进**，但需要逐条确认后再改 |
 | host | 8/1 | drawer pause 深比较 `[undefined]` vs `[false]` | 既有失败（历史已记） |
 | local-v2-transport | **31/0** | — | **已修**：测试桩缺 `beginFlight`/`endFlight`，补齐后全部通过并已进套件 |
 | scene-sync | 8/0 | — | 通过 |
@@ -60,3 +60,15 @@ python work/integrated/test-phone.py        # 期望 111/111
 $env:NODE_PATH = (Resolve-Path work/prd-next/phone/source/node_modules)
 cd app; node --test --test-concurrency=1 tests/<name>.test.cjs
 ```
+
+## 5. gameplay 两条红的精确定位（2026-10-18 02:50）
+
+用脚本逐字节 diff 得到，不再靠猜：
+
+1. **`/本次不记录环境标签/` 已不再匹配**。手机侧环境感知被改为「仅由吧唧提供、手机不录音」后，
+   `game-08.js` 的文案变成：`环境感知仅由已连接且具备该能力的吧唧提供；手机不采集环境录音。`
+   → 测试仍按旧口径断言。这是**产品文案演进**，不是缺陷；更新断言前要确认用哪一版口径。
+2. **打包后的 `index.html` 与原型的差异不止 safe-area**。已排除行尾（强制 LF 后仍差）与 safe-area
+   注入（`env()`→`var(--x, env())` 已归一后仍差），差异仍在 CSS/标记段，需继续按段比对。
+
+在此之前的两条已确认并**已验证无效**的假设（已全部回滚，未留在代码里）：行尾 CRLF、`changed` 数 4→5。
