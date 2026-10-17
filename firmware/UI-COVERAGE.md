@@ -32,8 +32,8 @@
 | 12 | settings 设置 | 已实现：亮度/语音唤醒/附近可被发现/息屏常显、设备与同步、重看引导 | `settings.png` |
 | 13 | touch_test 触摸自检 | 已实现：五靶点 + 完成页 | `touch_test.png`、`touch_complete.png` |
 | 14 | voice 按住说话 | 占位：明确显示语音不可用，未启麦克风 | `voice.png` |
-| 15 | meet 附近有小猫 | 已实现：双方各自确认 + 确认交换野花 | `meet_confirm.png` |
-| 16 | meet_tap 碰一碰确认 | **未实现**：按用户决定改为吧唧画图/按按键，画面未设计 | — |
+| 15 | meet 附近有小猫 | 已实现 + 10-18 新增暗号：「画图」（3×3 连线，最多 6 格）/「按键」（3~5 下节奏，短·长），结果显示在对方 ID 下方 | `meet_confirm.png`、`meet_draw.png`、`meet_beat.png` |
+| 16 | meet_tap 碰一碰确认 | 部分：画图/按键两种确认入口已上屏且能记录暗号；暗号尚未写入 peer 协议，也不参与加好友判定 | 同上 |
 | 17 | meet_scan 扫码确认 | **已取消**（用户决定） | — |
 | 18 | meet_done 成为朋友 | **未实现**：缺少成为好友的结果页 | — |
 | 19 | away 小猫在外面 | 已实现（含雨/雪变体） | `away_rain.png`、`returning_snow.png`、`departing.png` |
