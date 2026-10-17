@@ -34,5 +34,8 @@ python firmware/tools/host_preview/run_preview.py --output artifacts/firmware-lo
   1. 睡觉完成后断言回 HOME —— 现在按设计进 `PAGE_SLEEPING`，已改成断言睡眠页 + 轻点回 HOME；
   2. 断言 HOME 横向拖动会进跟手预览（`ui_drag.to_face`）—— 053 起 HOME 横向是「松手切表盘」，不再有跟手预览；
   3. 回弹结束断言页面 y 严格为 0 —— 主机缓动末帧取整会留 1px（实测 -1），按 ±1 容忍。
-- 仍剩一处：**弹窗在拖动中到达时页面停在旧偏移（实测 -80）**。根因是 `drag_cancel()` 里归一页面位置的分支受 `stage_root` 保护，而预览宿主没有创建 `stage_root`；真机路径有它，所以这是**宿主差异，不是固件缺陷**，但要在宿主复现就得补 stage_root 的构造，暂未做，故 `input_test` 仍未纳入门禁。
+- 仍剩两处，都在 `modal_and_route_checks()`，属该函数整体落后于 053+ 的设计，暂不再逐个修：
+  1. **弹窗在拖动中到达后页面停在旧偏移**（实测 -80）。已确认 `stage_root` 非空、`drag_cancel()` 确实执行（`ui_drag` 归零），但 `lv_obj_set_pos(...,0,0)` 之后读到的 y 仍是 -80，怀疑是 LVGL 布局/滚动语义在宿主上的差异；去掉 `drag_cancel()` 里 `stage_root` 保护后现象不变，已回滚该改动。
+  2. **横向扫动后断言 `face==0`** —— 现在 HOME 横向按设计是松手切表盘，扫完应为 `face==1`。
+  结论：`input_test` 暂不纳入门禁；要跑通它得先按现行设计整体重写 `modal_and_route_checks()`，这是一件独立工作。
 - 不是真机证据：不覆盖触摸采样、圆屏真实裁剪、TE/局部刷新、帧率与功耗；空房间画布也不代表真机配色。
