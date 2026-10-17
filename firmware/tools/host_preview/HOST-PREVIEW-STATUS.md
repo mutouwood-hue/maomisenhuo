@@ -30,5 +30,9 @@ python firmware/tools/host_preview/run_preview.py --output artifacts/firmware-lo
 - 已渲染 **41 个用例**成功（含 boot / guide_1–5 / main_a / main_b / main_c / care_menu / care_* / action_* / status / settings / device / aod / away_rain / returning_snow / gift_* / drag_* 等）。
 - **已接门禁**：`python firmware/tools/ui_gate.py` 固定渲染 27 屏并校验「全部出图 + 字形不缺 + 命中区与标签都在 safeR=212 内」，已并入 `work/integrated/test-badge.py` 作为第 4 个套件（可用 `--skip-ui` 跳过）。
 - 门禁上线当天抓到一个真实越界：care_menu 的「清洁需兼容手机确认」标签最大角半径 212.05，已上移 6px 修正。
-- 未跑通：`input_test` 用例在本机退出码 `0xC0000409`（栈缓冲越界保护），发生在该用例自身，不影响其它页面；未定位，未纳入门禁用例。
+- 未跑通：`input_test` 用例在本机退出码 `0xC0000409`。**它不是栈溢出，而是 harness 里的断言失败**（断言 → `__fastfail`）。2026-10-18 定位到三处陈旧断言并已修正：
+  1. 睡觉完成后断言回 HOME —— 现在按设计进 `PAGE_SLEEPING`，已改成断言睡眠页 + 轻点回 HOME；
+  2. 断言 HOME 横向拖动会进跟手预览（`ui_drag.to_face`）—— 053 起 HOME 横向是「松手切表盘」，不再有跟手预览；
+  3. 回弹结束断言页面 y 严格为 0 —— 主机缓动末帧取整会留 1px（实测 -1），按 ±1 容忍。
+- 仍剩一处：**弹窗在拖动中到达时页面停在旧偏移（实测 -80）**。根因是 `drag_cancel()` 里归一页面位置的分支受 `stage_root` 保护，而预览宿主没有创建 `stage_root`；真机路径有它，所以这是**宿主差异，不是固件缺陷**，但要在宿主复现就得补 stage_root 的构造，暂未做，故 `input_test` 仍未纳入门禁。
 - 不是真机证据：不覆盖触摸采样、圆屏真实裁剪、TE/局部刷新、帧率与功耗；空房间画布也不代表真机配色。
