@@ -378,6 +378,8 @@ static lv_obj_t *home_action_prop,*gift_popup,*gift_popup_title,*gift_popup_icon
 static lv_obj_t *setting_discover,*meet_state,*meet_id,*meet_confirm_label;
 static lv_obj_t *ring_missing,*ring_marker,*ring_hours[4],*guide_progress,*feedback_ring,*heart_legend;
 static lv_obj_t *heart_dots[L2_DAY_HEART_MAX],*heart_count_label;
+/* 待机常显（AOD）用的大时钟与日期，只在 MODE_AOD 显示，时间来自手机校时。 */
+static lv_obj_t *aod_clock;
 static badge_scene_t *guide_scene;
 static lv_obj_t *stage_root,*peek_root,*peek_rings[2],*peek_arcs[5],*peek_clock,*peek_phase,*peek_missing,*peek_heading,*peek_weather,*peek_action,*peek_marker,*peek_heart,*peek_hours[4];
 static badge_scene_t *peek_scene;
@@ -868,7 +870,7 @@ static void set_mode(ui_mode_t next)
         for(unsigned i=0;i<5;i++) hide(home_arcs[i],true);
         for(unsigned i=0;i<2;i++) hide(day_rings[i],true);
         set_label(home_hint,"轻点唤醒",face ? 438 : 390);hide(home_hint,false);hide(face_phase,true);hide(face_weather,true);hide(face_action,true);hide(ring_missing,true);hide(heart_legend,true);hide(ring_marker,true);for(unsigned i=0;i<4;i++)hide(ring_hours[i],true);
-    } else if(!presentation_contact||was_standby)update_face();
+    } else if(!presentation_contact||was_standby)update_face();update_clock();
     dirty=true;
 }
 static void input_event(lv_event_t *event)
@@ -1104,6 +1106,7 @@ static void build_home_care(void)
     const int hx[]={233,409,233,57},hy[]={57,233,409,233};const char *hours[]={"0","6","12","18"};
     for(unsigned i=0;i<4;i++)ring_hours[i]=label(pages[PAGE_HOME],hx[i],hy[i],28,hours[i],true,ZIP_UI_COLOR_DIM);
     home_clock=label(pages[PAGE_HOME],233,70,160,"--:--",false,ZIP_UI_COLOR_TEXT);
+    aod_clock=label(pages[PAGE_HOME],233,150,220,"--:--",false,ZIP_UI_COLOR_TEXT);lv_obj_set_style_text_font(aod_clock,&badge_n40,0);hide(aod_clock,true);
     home_bt=icon(pages[PAGE_HOME],ICON_BT_OFF,196,112,1);
     home_link=label(pages[PAGE_HOME],258,112,70,"--%",true,ZIP_UI_COLOR_SUB);
     home_alert=shape(pages[PAGE_HOME],209,116,48,48,ZIP_UI_COLOR_WARN,LV_RADIUS_CIRCLE);
@@ -1327,6 +1330,23 @@ static void update_clock(void)
     else strcpy(text,face?"  :  ":"需手机校时");
     lv_obj_set_style_text_font(home_clock,face&&valid?&badge_n40:&local2_font20,0);
     set_label(home_clock,valid?text:"需手机校时",face?398:62);
+    /* AOD：大时钟 + 日期；没有可靠时间就显示 --:-- 与提示，不猜。 */
+    if(aod_clock){
+        char clock_text[16];
+        if(valid){
+            time_t wall=(time_t)(epoch/1000+(int64_t)local2_clock_utc_offset_minutes()*60);
+            struct tm local; 
+            if(gmtime_r(&wall,&local)){
+                snprintf(clock_text,sizeof(clock_text),"%02d:%02d",local.tm_hour,local.tm_min);
+
+            } else { strcpy(clock_text,"--:--"); }
+        } else { strcpy(clock_text,"--:--"); }
+        /* AOD 且有可靠时间：大时钟接管，隐藏小时间；否则保持原有"需手机校时"提示，不重复。 */
+        bool aod=mode==MODE_AOD;
+        if(aod&&valid){ set_label(aod_clock,clock_text,150);hide(aod_clock,false);hide(home_clock,true); }
+        else { hide(aod_clock,true);hide(home_clock,false); }
+
+    }
     hide(ring_hours[2],true); /* Bottom numeral would collide with the real clock. */
     /* Current time and the RAM history scrub cursor remain separate. */
     hide(ring_marker,true);

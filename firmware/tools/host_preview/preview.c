@@ -244,6 +244,7 @@ static void choose(const char *name,const char *clip,int frame)
             refresh_state();
         }
         if(!strcmp(name,"aod")){last_input=lv_tick_get()-41000;advance(40);}
+        if(!strcmp(name,"aod_clock")){clock_valid=true;refresh_state();last_input=lv_tick_get()-41000;advance(40);}
     }
     if(clip) {
         const badge_scene_assets_t *bank=badge_game_assets();

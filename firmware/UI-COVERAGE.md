@@ -21,7 +21,7 @@
 | 1 | main_a 主表盘 A | 已实现：原猫 idle/paw、五项状态弧、摸摸 | `main_a.png` |
 | 2 | main_b 主表盘 B（24 小时时间环） | 已实现：0/6/12/18 刻度、游标、日期、当前时间与猫 | `main_b.png`（`facecheck-0049`） |
 | 3 | main_c 主表盘 C（时间环 + 心动） | 已实现（10-18 新增心动标记）：一天资料可选 hearts 驱动环上心动点与「心动 N」；无数据时不显示 | `main_c.png`、`main_c_hearts.png` |
-| 4 | aod 待机常显 | 部分：降亮度 + 轻点唤醒；无带时钟常显、无抬腕唤醒 | `aod.png` |
+| 4 | aod 待机常显 | 已实现（10-18 新增时钟）：降亮度 + 轻点唤醒；有可靠手机校时则显示大字时钟，无校时保留「需手机校时」提示，不猜时间 | `aod.png`、`aod_clock.png` |
 | 5 | care_menu 照料轮盘 | 已实现：喂食/喝水/清洁/逗猫/睡觉 | `care_menu.png` |
 | 6 | care_feed 喂食中 | 已实现：轻点碗三次 | `care_feed.png` |
 | 7 | care_water 喂水中 | 已实现 | `care_water.png` |
