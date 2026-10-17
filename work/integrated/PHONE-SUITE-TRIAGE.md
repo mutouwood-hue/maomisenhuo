@@ -37,7 +37,7 @@
 | local-v2-transport | **31/0** | — | **已修**：测试桩缺 `beginFlight`/`endFlight`，补齐后全部通过并已进套件 |
 | scene-sync | 8/0 | — | 通过 |
 | source-save-and-identity | 5/0 | — | 通过 |
-| v2-host-integration | **8/0** | — | **用例全过，但进程不退出**：用 `--test-timeout=20000` 可跑完 8 条，之后挂住不返回（疑似 JSDOM/定时器句柄未释放）；`--test-force-exit` 也无效。因此暂不进门禁 |
+| v2-host-integration | **8/0** | — | **单跑通过、进程不退出**：单独运行时加 `--test-timeout=25000 --test-force-exit` 可在 32s 正常退出并 8/8 通过；但与其它文件同批跑时，第 8 条会在 `until()` 的 2s 边界上超时失败（负载敏感、fixture 等待太紧），故不纳入门禁 |
 
 其余文件本轮未逐个复跑；历史分类里 care-runtime / device-diagnostics / event-transaction /
 family-ui / meet-key / mounted-diagnostics / native-bootstrap 等均有已记录的失败或超时。
