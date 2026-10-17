@@ -32,12 +32,12 @@
 | 文件 | pass/fail | 首个失败 | 归类 |
 |---|---|---|---|
 | companion-scene | 7/3 | `ENOENT …\ui024\source\…\game-06.js` | **环境 fixture 缺失**，非产品缺陷（历史分类已记） |
-| gameplay | 6/2 | `changed-script 数 5 !== 4` | 断言硬编码 4；本轮新增一个构建补丁后应改为 5。其后还有旧 social 文案 regex 失败（历史已记） |
+| gameplay | 6/2 | `changed-script 数 5 !== 4`；第二条为打包文本比对 | 已验证**不是行尾问题**：把 CRLF 归一化后仍失败，说明是内容级差异，需逐段定位。下轮处理 |
 | host | 8/1 | drawer pause 深比较 `[undefined]` vs `[false]` | 既有失败（历史已记） |
 | local-v2-transport | **31/0** | — | **已修**：测试桩缺 `beginFlight`/`endFlight`，补齐后全部通过并已进套件 |
 | scene-sync | 8/0 | — | 通过 |
 | source-save-and-identity | 5/0 | — | 通过 |
-| v2-host-integration | — | 整文件 **>45s 超时** | 需单独排查（可能残留定时器） |
+| v2-host-integration | **8/0** | — | **用例全过，但进程不退出**：用 `--test-timeout=20000` 可跑完 8 条，之后挂住不返回（疑似 JSDOM/定时器句柄未释放）；`--test-force-exit` 也无效。因此暂不进门禁 |
 
 其余文件本轮未逐个复跑；历史分类里 care-runtime / device-diagnostics / event-transaction /
 family-ui / meet-key / mounted-diagnostics / native-bootstrap 等均有已记录的失败或超时。
