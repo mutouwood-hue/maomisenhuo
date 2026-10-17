@@ -32,7 +32,7 @@ LV_FONT_DECLARE(badge_f24);
 LV_FONT_DECLARE(badge_n40);
 
 typedef enum { PAGE_BOOT, PAGE_PAIR, PAGE_GUIDE, PAGE_HOME, PAGE_CARE, PAGE_CARE_ACTION,
-    PAGE_STATUS, PAGE_SETTINGS, PAGE_DEVICE, PAGE_TOUCH, PAGE_VOICE, PAGE_WELCOME, PAGE_MEET, PAGE_COUNT } page_t;
+    PAGE_STATUS, PAGE_SETTINGS, PAGE_DEVICE, PAGE_TOUCH, PAGE_VOICE, PAGE_WELCOME, PAGE_MEET, PAGE_SLEEPING, PAGE_COUNT } page_t;
 typedef enum { MODE_PLAY, MODE_COMP, MODE_AOD, MODE_OFF } ui_mode_t;
 typedef enum { ICON_PAW, ICON_TAP, ICON_UP, ICON_DOWN, ICON_HOLD, ICON_LR,
     ICON_BOWL, ICON_WATER, ICON_FEATHER, ICON_MOON, ICON_GEAR, ICON_MIC,
@@ -710,7 +710,7 @@ static void begin_care(l2_action_t action)
 }
 static void finish_care(void)
 {
-    if(emit_care(care_action)) navigate(PAGE_HOME);
+    if(emit_care(care_action)) navigate(care_action==L2_ACTION_SLEEP?PAGE_SLEEPING:PAGE_HOME);
     else set_label(care_action_hint,"尚未保存，轻点重试",106);
 }
 static void care_step(void)
@@ -760,6 +760,7 @@ static void tap(int x,int y)
         }
         break;
     case PAGE_STATUS: if(target_hit(HIT_STATUS_GEAR,x,y)) navigate(PAGE_SETTINGS); break;
+    case PAGE_SLEEPING: navigate(PAGE_HOME); break;
     case PAGE_SETTINGS:
         if(target_hit(HIT_BRIGHTNESS,x,y)) {
             uint8_t next=brightness==45 ? 75 : brightness==75 ? 100 : 45;
@@ -1181,6 +1182,11 @@ static void build_touch_voice(void)
     lv_obj_t *confirm=shape(s,123,308,220,48,ZIP_UI_COLOR_CARD,18);
     lv_obj_add_flag(confirm,LV_OBJ_FLAG_USER_1);meet_confirm_label=label(confirm,110,24,210,"等待连接",true,ZIP_UI_COLOR_ACCENT);
     pill(s,"关闭发现",173,392,112,36);pill(s,"返回",293,392,112,36);
+    /* 睡觉完成后的「睡着了」屏：只显示月亮与唤醒提示，轻点回 HOME。 */
+    s=pages[PAGE_SLEEPING];title(s,150,220,"睡着了");
+    icon(s,ICON_MOON,233,214,6);
+    label(s,233,304,300,"小猫睡得很香\n梦里在追蝴蝶",true,ZIP_UI_COLOR_SUB);
+    label(s,233,398,220,"轻点唤醒",true,ZIP_UI_COLOR_DIM);
 }
 static void build_layers(void)
 {

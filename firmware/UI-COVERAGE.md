@@ -6,8 +6,11 @@
 
 ## 覆盖结论
 
-23 屏中：**已实现 14 屏**、**部分实现 2 屏**（aod、voice）、**未实现 6 屏**（main_b、main_c、sleeping、meet_tap、meet_done、lowbat）、
+23 屏中：**已实现 16 屏**、**部分实现 1 屏**（voice 占位）、**未实现 5 屏**（main_c 的心动列表、meet_tap、meet_done、lowbat）、
 **已取消 1 屏**（meet_scan：用户已决定不再开发手机扫码相遇确认）。
+
+> 更正（10-18）：main_b「24 小时时间环」**已实现**，之前判空白是预览夹具用 `swipe` 切表盘没生效，改为直接设置 face 后正常出图。
+> aod 也已具备降亮度 + 轻点唤醒。main_c 的表盘本身存在（face=2），缺的是「心动」记录列表。
 
 判定口径：以渲染结果为准。渲成空白或与另一屏像素一致的，一律按未实现计，不按源码里是否存在同名枚举计。
 
@@ -16,15 +19,15 @@
 | # | 原始屏幕 | 状态 | 证据 |
 |---|---|---|---|
 | 1 | main_a 主表盘 A | 已实现：原猫 idle/paw、五项状态弧、摸摸 | `main_a.png` |
-| 2 | main_b 主表盘 B（24 小时时间环） | **未实现为独立表盘**：预览渲成空白；一天环目前只在 HOME 内嵌绘制 | `main_b.png`（空白） |
-| 3 | main_c 主表盘 C（时间环 + 心动） | **未实现**：预览与 main_a 像素一致，无心动列表 | `main_c.png` |
+| 2 | main_b 主表盘 B（24 小时时间环） | 已实现：0/6/12/18 刻度、游标、日期、当前时间与猫 | `main_b.png`（`facecheck-0049`） |
+| 3 | main_c 主表盘 C（时间环 + 心动） | 部分：表盘存在（face=2 显示猫与环），**缺心动记录列表** | `main_c.png` |
 | 4 | aod 待机常显 | 部分：降亮度 + 轻点唤醒；无带时钟常显、无抬腕唤醒 | `aod.png` |
 | 5 | care_menu 照料轮盘 | 已实现：喂食/喝水/清洁/逗猫/睡觉 | `care_menu.png` |
 | 6 | care_feed 喂食中 | 已实现：轻点碗三次 | `care_feed.png` |
 | 7 | care_water 喂水中 | 已实现 | `care_water.png` |
 | 8 | care_play 逗猫中 | 已实现：划动陪扑 | `care_play.png` |
 | 9 | care_sleep 哄睡 | 已实现：按住月亮 1.5 秒 | `care_sleep.png` |
-| 10 | sleeping 睡着了 | **未实现**：没有独立睡眠页，完成即回 HOME | — |
+| 10 | sleeping 睡着了 | 已实现（10-18 新增）：睡觉完成并持久提交后进入，显示月亮与"轻点唤醒"，轻点回 HOME | `sleeping.png` |
 | 11 | status 状态 | 已实现：五项数值、喵币、队列与连接 | `status.png` |
 | 12 | settings 设置 | 已实现：亮度/语音唤醒/附近可被发现/息屏常显、设备与同步、重看引导 | `settings.png` |
 | 13 | touch_test 触摸自检 | 已实现：五靶点 + 完成页 | `touch_test.png`、`touch_complete.png` |

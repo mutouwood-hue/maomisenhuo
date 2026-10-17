@@ -218,10 +218,12 @@ static void choose(const char *name,const char *clip,int frame)
         if(!strcmp(name,"touch_complete"))for(unsigned i=0;i<5;i++)tap(target_x[i],target_y[i]);
     }
     else if(!strcmp(name,"voice"))select_page(PAGE_VOICE);
+    else if(!strcmp(name,"sleeping"))select_page(PAGE_SLEEPING);
+    else if(!strcmp(name,"main_b_direct")){select_page(PAGE_HOME);face=1;update_face();clock_valid=true;refresh_state();advance(120);}
     else {
         select_page(PAGE_HOME);
-        if(!strcmp(name,"main_b") || !strcmp(name,"main_b_clock")) {swipe(BADGE_GESTURE_LEFT);clock_valid=!strcmp(name,"main_b_clock");refresh_state();}
-        if(!strcmp(name,"main_c")||!strcmp(name,"main_c_clock")){swipe(BADGE_GESTURE_LEFT);advance(260);swipe(BADGE_GESTURE_LEFT);clock_valid=!strcmp(name,"main_c_clock");advance(260);refresh_state();}
+        if(!strcmp(name,"main_b") || !strcmp(name,"main_b_clock")) {face=1;update_face();clock_valid=!strcmp(name,"main_b_clock");refresh_state();}
+        if(!strcmp(name,"main_c")||!strcmp(name,"main_c_clock")){face=2;update_face();clock_valid=!strcmp(name,"main_c_clock");refresh_state();}
         if(!strcmp(name,"departing") || !strcmp(name,"away_rain") || !strcmp(name,"returning_snow")) {
             domain_fixture.snapshot.scene=!strcmp(name,"departing")?L2_SCENE_DEPARTING:!strcmp(name,"away_rain")?L2_SCENE_AWAY:L2_SCENE_RETURNING;
             domain_fixture.snapshot.weather=!strcmp(name,"away_rain")?L2_WEATHER_RAIN:!strcmp(name,"returning_snow")?L2_WEATHER_SNOW:L2_WEATHER_CLEAR;
