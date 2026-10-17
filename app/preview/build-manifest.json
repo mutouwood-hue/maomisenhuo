@@ -40,7 +40,7 @@
       "index": 6,
       "file": "game-06.js",
       "sourceSha256": "049f7cfca7aef9f50c2624e9658fbb0fe0b6dc1d3f2a726f37f69fe8f83dec65",
-      "packagedSha256": "9cff2179e081100f453482105240381d054cd48d899c50c27a99181b1d0bab26",
+      "packagedSha256": "bf534741b2facb84195661c9ce454e6ac786ee401eb756b179984878859e33b0",
       "changed": true
     },
     {
@@ -85,6 +85,7 @@
     "retain-manual-selection-through-original-page-render",
     "original-playback-uses-same-time-renderer-as-touch",
     "places-demo-only-fictional-data",
+    "life-demo-off-by-default-explicit-opt-in",
     "archive-silently-without-daily-review-push",
     "places-heading-matches-actual-source",
     "places-real-empty-state-copy",

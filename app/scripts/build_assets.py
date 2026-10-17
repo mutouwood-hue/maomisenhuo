@@ -103,6 +103,7 @@ mov.addEventListener('pointerdown',e=>{if(!M)return;if(M.tab==='rhythm'&&e.targe
         end=js.index('if(sg!==lastSeg)',start)
         js=once(js,js[start:end],"    L.hostSelectDayTime(m,ring.querySelector('svg'),'replay',t/1000);",'original-playback-uses-same-time-renderer-as-touch')
         js=once(js,'L.places=()=>cfg.demo||!geo.length?DEMO_PLACES.map(p=>({...p,name:names[p.id]||p.name})):realPlaces();','L.places=()=>cfg.demo?DEMO_PLACES.map(p=>({...p,name:names[p.id]||p.name})):realPlaces();','places-demo-only-fictional-data')
+        js=once(js,"keepDays:7,demo:true},load(KEY.cfg,{}))","keepDays:7,demo:/[?&]demo=1(&|$)/.test(location.search)},load(KEY.cfg,{}))",'life-demo-off-by-default-explicit-opt-in')
         js=once(js,"if(added){bump();const y=dayKey(new Date(Date.now()-864e5));if(added===y){setTimeout(()=>L.toast?.('昨天的生活圆环已自动生成，去「今日生活」看看'),2500)}gtrack('life_ring_auto',{days:H.length})}","if(added){bump();gtrack('life_ring_auto',{days:H.length})}",'archive-silently-without-daily-review-push')
         js=once(js,"${L.cfg.demo?'演示：虚构地点':'根据定位聚类，仅保存在本机'}","${L.cfg.demo?'虚构地点 · 未采集真实位置':pl.length?'根据本机定位记录聚类':'暂无可展示的真实地点'}",'places-heading-matches-actual-source')
         js=once(js,"  const pl=L.places().filter(p=>p.id!=='home');\n  return `<section", "  const pl=L.places().filter(p=>p.id!=='home');\n  const empty=L.geoCount()?'已有本机定位记录，尚未识别出家以外的常去地点。':'还没有真实定位记录；不会用虚构地点填充。是否开启位置由你决定。';\n  return `<section",'places-real-empty-state-copy')

@@ -8,6 +8,8 @@
 **/sdkconfig.old
 logs/
 artifacts/
+**/.build/
+app/.build/
 *.jks
 *.keystore
 *.key

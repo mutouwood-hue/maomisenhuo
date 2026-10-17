@@ -405,7 +405,7 @@ const L=window.__pgLife=window.__pgLife||{};
 const KEY={cfg:'pg-life-cfg',geo:'pg-life-geo',mom:'pg-life-moments',names:'pg-life-names',claim:'pg-life-claim'};
 const load=(k,d)=>{try{return JSON.parse(localStorage.getItem(k))??d}catch{return d}};
 const save=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch{}};
-const cfg=Object.assign({sync:false,geo:false,motion:false,voice:false,scene:false,keepDays:7,demo:true},load(KEY.cfg,{}));
+const cfg=Object.assign({sync:false,geo:false,motion:false,voice:false,scene:false,keepDays:7,demo:/[?&]demo=1(&|$)/.test(location.search)},load(KEY.cfg,{}));
 L.cfg=cfg;L.saveCfg=()=>save(KEY.cfg,cfg);
 L.store={load,save,KEY};
 /* 活动类型 */
