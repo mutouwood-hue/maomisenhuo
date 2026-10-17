@@ -417,6 +417,9 @@ static void day_refresh(void);
 static void day_project(void);
 static bool day_begin(lv_point_t);
 static void day_move(lv_point_t);
+static void meet_mark_reset(bool draw);
+static void meet_beat(void);
+static void meet_draw_point(int x,int y);
 static void day_draw(lv_event_t *);
 
 static bool domain_waiting,gift_popup_new;
@@ -428,6 +431,12 @@ static uint32_t care_started,care_last_step,care_sample_ms;
 static lv_point_t care_sample;
 static bool care_save_attempted;
 static lv_obj_t *care_action_icon,*care_action_title,*care_action_hint,*care_action_count;
+/* 相遇：友谊暗号（画图 / 按键）。本机记录并展示，尚未纳入吧唧间 peer 协议。 */
+static char meet_mark[24];
+static lv_obj_t *meet_mark_label;
+static bool meet_draw_mode;
+static unsigned meet_draw_cells, meet_beats;
+static uint32_t meet_last_beat_ms;
 static badge_gesture_t gesture;
 static bool has_previous, dirty=true, held_action, ignore_contact, guide_done, guide_review;
 static bool aod_enabled=true, toast_active,guide_mastered,guide_completed_now;
@@ -480,7 +489,7 @@ static ui_hit_target_t ui_target(ui_hit_id_t id)
         R("brightness",PAGE_SETTINGS,233,126,310,48),R("voice-off",PAGE_SETTINGS,233,178,310,48),R("nearby-discovery",PAGE_SETTINGS,233,230,310,48),R("aod-setting",PAGE_SETTINGS,233,282,310,48),R("version-hold",PAGE_SETTINGS,233,346,270,48),R("device-sync",PAGE_SETTINGS,173,392,112,36),R("review-guide",PAGE_SETTINGS,293,392,112,36),
         R("sync-help",PAGE_DEVICE,233,292,220,40),R("pending-events",PAGE_DEVICE,173,348,112,40),R("device-guide",PAGE_DEVICE,293,348,112,40),R("device-back",PAGE_DEVICE,233,405,130,36),
         R("touch-0",PAGE_TOUCH,113,113,52,52),R("touch-1",PAGE_TOUCH,353,113,52,52),R("touch-2",PAGE_TOUCH,353,353,52,52),R("touch-3",PAGE_TOUCH,113,353,52,52),R("touch-4",PAGE_TOUCH,233,233,52,52),
-        C("voice-explanation-back",PAGE_VOICE,233,233,212),R("welcome-enter",PAGE_WELCOME,233,402,130,36),R("peer-confirm",PAGE_MEET,233,332,220,48),R("peer-close",PAGE_MEET,173,392,112,36),R("peer-back",PAGE_MEET,293,392,112,36),R("gift-close",-1,233,360,140,40),C("aod-first-contact",PAGE_HOME,233,233,212),
+        C("voice-explanation-back",PAGE_VOICE,233,233,212),R("welcome-enter",PAGE_WELCOME,233,402,130,36),R("peer-confirm",PAGE_MEET,351,322,104,40),R("peer-draw",PAGE_MEET,129,322,104,40),R("peer-beat",PAGE_MEET,240,322,104,40),R("peer-close",PAGE_MEET,173,392,112,36),R("peer-back",PAGE_MEET,293,392,112,36),R("gift-close",-1,233,360,140,40),C("aod-first-contact",PAGE_HOME,233,233,212),
         {"legacy-reset-unavailable",-1,0,0,0,0,UI_HIT_UNAVAILABLE,false}
 #undef R
 #undef C
@@ -791,7 +800,9 @@ static void tap(int x,int y)
     case PAGE_VOICE: if(target_hit(HIT_VOICE_BACK,x,y))navigate(PAGE_HOME); break;
     case PAGE_WELCOME: if(target_hit(HIT_WELCOME,x,y))navigate(PAGE_HOME); break;
     case PAGE_MEET:
-        if(target_hit(HIT_MEET_CONFIRM,x,y)) {
+        if(target_hit(HIT_MEET_DRAW,x,y)) {meet_mark_reset(true);announce("在圆屏上画连线，最多 6 格");}
+        else if(target_hit(HIT_MEET_BEAT,x,y)) meet_beat();
+        else if(target_hit(HIT_MEET_CONFIRM,x,y)) {
             if(peer.phase==L2P_CONFIRM && !peer.local_confirmed)local2_peer_confirm();
             else if(peer.phase==L2P_DISABLED) {local2_peer_set_discoverable(true);announce("已请求附近发现");}
             else if(peer.phase==L2P_BLOCKED) {local2_peer_set_discoverable(false);announce("请重开附近发现");navigate(PAGE_SETTINGS);}
@@ -886,6 +897,7 @@ static void input_event(lv_event_t *event)
         badge_gesture_begin(&gesture,point.x,point.y,last_input);
         if(current_page==PAGE_CARE_ACTION) {care_sample=point;care_sample_ms=last_input;care_save_attempted=false;}
         if(current_page==PAGE_TOUCH) show_point(point);
+        if(current_page==PAGE_MEET&&meet_draw_mode) meet_draw_point(point.x,point.y);
     } else if(code==LV_EVENT_PRESSING) {
         /* Screen objects can be non-clickable; the input-device path always
          * owns the contact. Sampling here also covers actual fast-play strokes. */
@@ -924,6 +936,7 @@ static void object_pressing(lv_event_t *event)
         care_sample=point;care_sample_ms=last_input;
     }
     if(current_page==PAGE_TOUCH) show_point(point);
+    if(current_page==PAGE_MEET&&meet_draw_mode) meet_draw_point(point.x,point.y);
     if(current_page==PAGE_GUIDE&&!ignore_contact)lv_obj_set_pos(guide_icon,point.x-8,point.y-8);
 }
 static lv_obj_t *new_screen(void)
@@ -1165,6 +1178,46 @@ static void build_settings_device(void)
     pill(s,"同步说明",233,292,220,40); pill(s,"待同步",173,348,112,40); pill(s,"重看引导",293,348,112,40);
     pill(s,"返回",233,405,130,36);
 }
+/* 相遇暗号：3x3 九宫格连线（画图）与敲击节奏（按键），本机记录并展示。 */
+static unsigned meet_cell_of(int x,int y)
+{
+    unsigned cx=x<155?0u:x<311?1u:2u, cy=y<155?0u:y<311?1u:2u;
+    return cy*3u+cx+1u;
+}
+static void meet_mark_show(void)
+{
+    char text[48];
+    snprintf(text,sizeof(text),"%s%s",meet_draw_mode?"图案：":"节奏：",meet_mark[0]?meet_mark:"未记录");
+    if(meet_mark_label)set_label(meet_mark_label,text,292);
+}
+static void meet_mark_reset(bool draw)
+{
+    meet_mark[0]=0;meet_draw_cells=0;meet_beats=0;meet_last_beat_ms=0;meet_draw_mode=draw;
+    meet_mark_show();
+}
+static void meet_draw_point(int x,int y)
+{
+    if(!meet_draw_mode)return;
+    unsigned cell=meet_cell_of(x,y);size_t n=strlen(meet_mark);
+    if(n&&meet_mark[n-1]==(char)('0'+(int)cell))return;
+    if(meet_draw_cells>=6)return;
+    char piece[3];snprintf(piece,sizeof(piece),"%u",cell);
+    if(n)strncat(meet_mark,"-",sizeof(meet_mark)-n-1);
+    strncat(meet_mark,piece,sizeof(meet_mark)-strlen(meet_mark)-1);
+    meet_draw_cells++;meet_mark_show();
+}
+static void meet_beat(void)
+{
+    uint32_t now=lv_tick_get();
+    if(meet_draw_mode||meet_beats>=5)meet_mark_reset(false);
+    if(meet_beats){
+        size_t n=strlen(meet_mark);
+        const char *piece=(now-meet_last_beat_ms<450u)?"短":"长";
+        if(n)strncat(meet_mark,"-",sizeof(meet_mark)-n-1);
+        strncat(meet_mark,piece,sizeof(meet_mark)-strlen(meet_mark)-1);
+    }
+    meet_beats++;meet_last_beat_ms=now;meet_mark_show();
+}
 static void build_touch_voice(void)
 {
     lv_obj_t *s=pages[PAGE_TOUCH]; title(s,64,180,"触摸自检");
@@ -1176,11 +1229,16 @@ static void build_touch_voice(void)
     label(s,233,266,240,"语音暂未启用",false,ZIP_UI_COLOR_TEXT);
     label(s,233,318,280,"麦克风保持关闭\n当前不会录音或上传声音\n提示音硬件尚未验证",true,ZIP_UI_COLOR_SUB);
     label(s,233,384,220,"松手后轻点返回",true,ZIP_UI_COLOR_DIM);
-    s=pages[PAGE_MEET];title(s,64,200,"附近的小猫");icon(s,ICON_FLOWER,233,166,5);
-    meet_state=label(s,233,248,300,"附近发现已关闭",false,ZIP_UI_COLOR_TEXT);
-    meet_id=label(s,233,285,280,"",true,ZIP_UI_COLOR_SUB);
-    lv_obj_t *confirm=shape(s,123,308,220,48,ZIP_UI_COLOR_CARD,18);
-    lv_obj_add_flag(confirm,LV_OBJ_FLAG_USER_1);meet_confirm_label=label(confirm,110,24,210,"等待连接",true,ZIP_UI_COLOR_ACCENT);
+    s=pages[PAGE_MEET];title(s,64,200,"附近的小猫");icon(s,ICON_FLOWER,233,158,4);
+    meet_state=label(s,233,224,300,"附近发现已关闭",false,ZIP_UI_COLOR_TEXT);
+    meet_id=label(s,233,250,280,"",true,ZIP_UI_COLOR_SUB);
+    meet_mark_label=label(s,233,278,320,"节奏：未记录",true,ZIP_UI_COLOR_SUB);
+    lv_obj_t *draw_btn=shape(s,77,302,104,40,ZIP_UI_COLOR_CARD,18);
+    label(draw_btn,52,20,100,"画图",true,ZIP_UI_COLOR_TEXT);
+    lv_obj_t *beat_btn=shape(s,188,302,104,40,ZIP_UI_COLOR_CARD,18);
+    label(beat_btn,52,20,100,"按键",true,ZIP_UI_COLOR_TEXT);
+    lv_obj_t *confirm=shape(s,299,302,104,40,ZIP_UI_COLOR_CARD,18);
+    lv_obj_add_flag(confirm,LV_OBJ_FLAG_USER_1);meet_confirm_label=label(confirm,52,20,100,"等待连接",true,ZIP_UI_COLOR_ACCENT);
     pill(s,"关闭发现",173,392,112,36);pill(s,"返回",293,392,112,36);
     /* 睡觉完成后的「睡着了」屏：只显示月亮与唤醒提示，轻点回 HOME。 */
     s=pages[PAGE_SLEEPING];title(s,150,220,"睡着了");
@@ -1206,8 +1264,8 @@ static void update_peer(void)
 {
     local2_peer_get_view(&peer);
     const char *status=peer.phase==L2P_DISABLED ? "附近发现已关闭" : peer.phase==L2P_DISCOVERING ? "正在寻找附近吧唧" : peer.phase==L2P_HELLO ? "已连接，正在交换信息" : peer.phase==L2P_CONFIRM ? "请双方在各自吧唧上确认" : peer.phase==L2P_EXCHANGING ? "正在保存礼物" : peer.phase==L2P_WAIT_DONE ? "已保存，等待对方确认" : peer.phase==L2P_COMPLETE ? "双方已确认" : "会面未完成，请重试";
-    set_label(meet_state,status,248);
-    char text[100];size_t id_len=strlen(peer.peer_id);snprintf(text,sizeof(text),"%s%s",id_len ? "对方：" : "",id_len>12 ? peer.peer_id+id_len-12 : peer.peer_id);set_label(meet_id,text,285);
+    set_label(meet_state,status,224);
+    char text[100];size_t id_len=strlen(peer.peer_id);snprintf(text,sizeof(text),"%s%s",id_len ? "对方：" : "",id_len>12 ? peer.peer_id+id_len-12 : peer.peer_id);set_label(meet_id,text,250);
     const char *button=peer.phase==L2P_DISABLED ? "开启附近发现" : peer.phase==L2P_DISCOVERING ? "正在寻找" : peer.phase==L2P_HELLO ? "正在交换信息" : peer.phase==L2P_CONFIRM ? (peer.local_confirmed ? "已确认，等待对方" : "确认交换野花") : peer.phase==L2P_EXCHANGING ? "交换中" : peer.phase==L2P_WAIT_DONE ? "等待确认" : peer.phase==L2P_COMPLETE ? "完成，回小屋" : "关闭后重试";
     set_label(meet_confirm_label,button,24);
     set_label(setting_discover,peer.discoverable ? "开启" : "关闭",230);

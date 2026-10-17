@@ -219,6 +219,8 @@ static void choose(const char *name,const char *clip,int frame)
     }
     else if(!strcmp(name,"voice"))select_page(PAGE_VOICE);
     else if(!strcmp(name,"sleeping"))select_page(PAGE_SLEEPING);
+    else if(!strcmp(name,"meet_draw")) {peer_fixture.phase=L2P_CONFIRM;peer_fixture.discoverable=peer_fixture.connected=true;strcpy(peer_fixture.peer_id,"00000000000000000000000000000001");select_page(PAGE_MEET);refresh_state();meet_mark_reset(true);meet_draw_point(113,113);meet_draw_point(233,233);meet_draw_point(353,353);}
+    else if(!strcmp(name,"meet_beat")) {peer_fixture.phase=L2P_CONFIRM;peer_fixture.discoverable=peer_fixture.connected=true;strcpy(peer_fixture.peer_id,"00000000000000000000000000000001");select_page(PAGE_MEET);refresh_state();meet_mark_reset(false);meet_beat();advance(200);meet_beat();advance(700);meet_beat();}
     else if(!strcmp(name,"main_b_direct")){select_page(PAGE_HOME);face=1;update_face();clock_valid=true;refresh_state();advance(120);}
     else {
         select_page(PAGE_HOME);
