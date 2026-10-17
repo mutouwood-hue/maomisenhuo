@@ -1,0 +1,9 @@
+{
+  "source": "parent explicit038 install handoff",
+  "apk": "artifacts/html-offline-candidate/ui038/deliverables/catforest-little-moments-0.3.8-debug.apk",
+  "bytes": 819895,
+  "versionCode": 29,
+  "sha256": "b25d2c457baed7eaae8323f996096afe4ecf4c125eb7b7c200eef520cce50897",
+  "status": "metadata matched, install after firmware safety step",
+  "conceptCircularUI": "not authorized; excluded"
+}

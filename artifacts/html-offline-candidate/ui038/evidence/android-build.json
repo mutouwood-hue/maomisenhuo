@@ -1,0 +1,18 @@
+{
+  "atUtc": "2026-10-17T00:40:40.434614+00:00",
+  "command": [
+    "/Users/zoumutou/coding/猫咪森活/.tools/gradle-8.9/bin/gradle",
+    "--offline",
+    "--no-daemon",
+    "--console=plain",
+    ":app:assembleDebug"
+  ],
+  "exitCode": 0,
+  "offlineGradle": true,
+  "lintRequested": false,
+  "installedOnDevice": false,
+  "apk": "deliverables/catforest-little-moments-0.3.8-debug.apk",
+  "bytes": 819895,
+  "sha256": "b25d2c457baed7eaae8323f996096afe4ecf4c125eb7b7c200eef520cce50897",
+  "packageId": "com.catforest.htmlcandidate"
+}

@@ -1,0 +1,38 @@
+--- 052/CMakeLists.txt
++++ 053/CMakeLists.txt
+@@ -282,8 +282,8 @@
+     endforeach()
+ 
+ endfunction()
+-set(PROJECT_VER "0.5.2-day-expectation")
+-project(cat_forest_badge VERSION 0.5.2)
++set(PROJECT_VER "0.5.3-day-startup")
++project(cat_forest_badge VERSION 0.5.3)
+ include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
+ foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
+         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION
+--- 052/main/badge_pages.c
++++ 053/main/badge_pages.c
+@@ -1405,7 +1405,10 @@
+     current_page=PAGE_BOOT; boot_started=last_input=navigation_started=lv_tick_get();
+     lv_indev_set_long_press_time(touch_indev,ZIP_UI_LONGPRESSMS); lv_indev_add_event_cb(touch_indev,input_event,LV_EVENT_ALL,NULL);
+     for(unsigned i=0;i<PAGE_COUNT;i++)hide(pages[i],i!=PAGE_BOOT);
+-    hide(peek_root,true);lv_screen_load(stage_root); bsp_display_brightness_set(brightness); refresh_state(); lv_timer_create(tick,33,NULL);
++    hide(peek_root,true);lv_screen_load(stage_root); bsp_display_brightness_set(brightness);
++    /* The existing GUI timer owns the first domain/time projection. Do not nest
++     * refresh_state (large domain views + text/layout) inside main bootstrap. */
++    dirty=true;lv_timer_create(tick,33,NULL);
+     ESP_LOGI("badge_ui","Original animation bank: %s",badge_scene_has_animation(home_scene) ? "available" : "RECOVERY FALLBACK ONLY");
+     bsp_display_unlock(); return true;
+ }
+--- 052/main/local2_wire.c
++++ 053/main/local2_wire.c
+@@ -143,7 +143,7 @@
+         if(valid&&!strcmp(op,"hello")){
+             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
+             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
+-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));num(d,"connectionLeaseMs",45000);cJSON_AddStringToObject(d,"firmware","0.5.2-day-expectation");result=L2_OK;
++            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));num(d,"connectionLeaseMs",45000);cJSON_AddStringToObject(d,"firmware","0.5.3-day-startup");result=L2_OK;
+         }else if(valid&&!strcmp(op,"state")){cJSON_AddItemToObject(r,"data",state_json(core));result=L2_OK;
+         }else if(valid&&!strcmp(op,"events")){cJSON *d=cJSON_AddObjectToObject(r,"data"),*e=next_event(core);if(e){cJSON_AddItemToObject(d,"event",e);result=L2_OK;}
+         }else if(valid&&!strcmp(op,"day")){

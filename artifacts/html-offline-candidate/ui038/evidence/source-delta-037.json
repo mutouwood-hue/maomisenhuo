@@ -1,0 +1,143 @@
+{
+  "against": "037/ffdabe74",
+  "changed": [
+    {
+      "path": "android/app/build.gradle.kts",
+      "oldSha256": "60895b11d114cf3617ad42ed4ff694eb95d55c45731af6d401b5c59feb4d930a",
+      "newSha256": "96110d1d76f014a4806c903155d1585cb993ec33b0423ee0fd5c65eb27517978",
+      "generated": false
+    },
+    {
+      "path": "android/app/src/main/assets/build-manifest.json",
+      "oldSha256": "6a94a5b7a1b25635af47ab83d8469cabe8de12f2cd09a305bd004eecf29a4bbf",
+      "newSha256": "c195e07636672844798d90568b5219d4b4a47c5dc4443979e4860f4b9a150849",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/daily-ring-center.inc.js",
+      "oldSha256": null,
+      "newSha256": "abd9f5caf63258a8469f1867d2ca6ce7fa4e80a44c52ae8a82266ef071e9ee24",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/daily-ring-segments.inc.js",
+      "oldSha256": "c5f988f96f6686aeb8514b8687c4954c39acbea881753c796fa0373bd835aacd",
+      "newSha256": "5f1ef2270d01c555342e78f3c3adabc7a101667d7c8a95553b6f0c9c63d01abf",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/daily-selection.inc.js",
+      "oldSha256": "3d597cb1cf5cbea083eaab05f8f5b4d761d49a5baab32098065ccbb7da37c171",
+      "newSha256": "e25b33c1f5479458a8af884e9c5a6606718f430fe742b3ab3f3e6cdb9e22b13a",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/game-06.js",
+      "oldSha256": "dc353518efd7f4875076366b3b395ed1c14c53a058031bddf21edb2eb21e60af",
+      "newSha256": "efc9bddcfb0673adc63e95d2133bbacedf19049c7b69ed50cef24bcda01d49f3",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/life-companion.css",
+      "oldSha256": "f890c01b3df513eabda497273803ead390ef8b23651e6906a692a3536077cd5b",
+      "newSha256": "19ff529e3a40a128eb753ae6d4bc29af00979257382ca03690ee2f3be537e99f",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/life-navigation.js",
+      "oldSha256": "b3f82b9da35a588cf799b2a7f250b19376da8ae34ddfd99736c79cd3f49da522",
+      "newSha256": "728e2825a93f00a8172e7e23dc866e603456908bab66687f793cbcb2154316fc",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/original-town-runtime.js",
+      "oldSha256": "46cc2d33493343c3137ad995a3aea184686ffc6bf2b6ca27f6f964a8dceb035b",
+      "newSha256": "0d40bcc2a60ac0e00695668ab3a7e6fc6589090730d1dd9441c494ddb50ae5fc",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/town-contact-runtime.inc.js",
+      "oldSha256": null,
+      "newSha256": "3693a85527fb9de9006493412f0c936e2e5ff50facf5759584ff20164dae0f78",
+      "generated": true
+    },
+    {
+      "path": "android/app/src/main/assets/town-player-runtime.inc.js",
+      "oldSha256": "5a27a3fce0bf7779a0561cf38f13e9384d117ba061ec00c0118bc0efc66508e2",
+      "newSha256": "564f19cbd71c35d7694dba9f9609001a68a4e803312884c1a04682ecca2af11f",
+      "generated": true
+    },
+    {
+      "path": "scripts/build_android.py",
+      "oldSha256": "6757d65b912edc47a05c0e06fea92500f09da42003e32c64d9b7b803f2245bae",
+      "newSha256": "232913f246fe3eba3b15526da167b2c25641f9b2fd918b10b3d750b3c87dda8f",
+      "generated": false
+    },
+    {
+      "path": "scripts/build_assets.py",
+      "oldSha256": "34e6f7f49d4aa44688362b60f7e79614e294b49e8ab6ef074f5078d296fccdf6",
+      "newSha256": "187ec4bdabe7586d57bfc2894acfeae72072725319f7db51ae8b7abd5d84dbf8",
+      "generated": false
+    },
+    {
+      "path": "scripts/build_town.py",
+      "oldSha256": "8cded42d59bee61e62892225644d80dff2b3098e2409e9cc4024e9f77b378350",
+      "newSha256": "ef09371697c90f8684aac071b1ff8197c1940c3a5c6f1f3a8d0f086168547a7c",
+      "generated": false
+    },
+    {
+      "path": "scripts/seal_candidate.py",
+      "oldSha256": "9d721495a5310771c129b2f6bbf74b3fa29942c40b85ef3d9a2a29d7d6369945",
+      "newSha256": "f34cc6532d2e9f73f7ed72895112e274482eb0b8e31fd9f95adf1a57729cda5b",
+      "generated": false
+    },
+    {
+      "path": "web/daily-ring-center.inc.js",
+      "oldSha256": null,
+      "newSha256": "abd9f5caf63258a8469f1867d2ca6ce7fa4e80a44c52ae8a82266ef071e9ee24",
+      "generated": false
+    },
+    {
+      "path": "web/daily-ring-segments.inc.js",
+      "oldSha256": "c5f988f96f6686aeb8514b8687c4954c39acbea881753c796fa0373bd835aacd",
+      "newSha256": "5f1ef2270d01c555342e78f3c3adabc7a101667d7c8a95553b6f0c9c63d01abf",
+      "generated": false
+    },
+    {
+      "path": "web/daily-selection.inc.js",
+      "oldSha256": "3d597cb1cf5cbea083eaab05f8f5b4d761d49a5baab32098065ccbb7da37c171",
+      "newSha256": "e25b33c1f5479458a8af884e9c5a6606718f430fe742b3ab3f3e6cdb9e22b13a",
+      "generated": false
+    },
+    {
+      "path": "web/life-companion.css",
+      "oldSha256": "f890c01b3df513eabda497273803ead390ef8b23651e6906a692a3536077cd5b",
+      "newSha256": "19ff529e3a40a128eb753ae6d4bc29af00979257382ca03690ee2f3be537e99f",
+      "generated": false
+    },
+    {
+      "path": "web/life-navigation.js",
+      "oldSha256": "b3f82b9da35a588cf799b2a7f250b19376da8ae34ddfd99736c79cd3f49da522",
+      "newSha256": "728e2825a93f00a8172e7e23dc866e603456908bab66687f793cbcb2154316fc",
+      "generated": false
+    },
+    {
+      "path": "web/original-town-runtime.js",
+      "oldSha256": "46cc2d33493343c3137ad995a3aea184686ffc6bf2b6ca27f6f964a8dceb035b",
+      "newSha256": "0d40bcc2a60ac0e00695668ab3a7e6fc6589090730d1dd9441c494ddb50ae5fc",
+      "generated": false
+    },
+    {
+      "path": "web/town-contact-runtime.inc.js",
+      "oldSha256": null,
+      "newSha256": "3693a85527fb9de9006493412f0c936e2e5ff50facf5759584ff20164dae0f78",
+      "generated": false
+    },
+    {
+      "path": "web/town-player-runtime.inc.js",
+      "oldSha256": "5a27a3fce0bf7779a0561cf38f13e9384d117ba061ec00c0118bc0efc66508e2",
+      "newSha256": "564f19cbd71c35d7694dba9f9609001a68a4e803312884c1a04682ecca2af11f",
+      "generated": false
+    }
+  ]
+}

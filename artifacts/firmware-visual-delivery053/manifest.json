@@ -1,0 +1,38 @@
+{
+  "version": "0.5.3-day-startup",
+  "packagedAtUtc": "2026-10-17T00:48:01.103895+00:00",
+  "baseline": "0.5.2-day-expectation",
+  "artifacts": [
+    {
+      "path": "deliverables/cat-forest-badge-0.5.3-day-startup.bin",
+      "bytes": 6879040,
+      "sha256": "1c33fcde117226e57570e724961968fc30f994a0784c86f26914085b234ca5bd"
+    },
+    {
+      "path": "deliverables/cat-forest-badge-0.5.3-day-startup.elf",
+      "bytes": 20743468,
+      "sha256": "595ce6618746778bf7b0fb365b95f6692b0fa67e4e389e7e064af9c5d8b4d59d"
+    },
+    {
+      "path": "deliverables/cat-forest-badge-0.5.3-day-startup-source.zip",
+      "bytes": 3673933,
+      "sha256": "5e679693cb22221a738e12c946a5f8d3c5a9253fbcc2209644199d679e419d5b"
+    }
+  ],
+  "sourceEntries": 224,
+  "changedSourceEntries": 5,
+  "build": "Ordinary ESP-IDF5.5.5 application build completed",
+  "technicalTestsRun": false,
+  "benchmarksRun": false,
+  "automatedApplicationValidation": false,
+  "deviceActions": false,
+  "phoneIntegrationRequired": false,
+  "matchingPhone": "038 code29 preserve-data installed; ordinary startup after053",
+  "TEenabled": false,
+  "physicalBoardRevisionVerified": false,
+  "bufferRows": 48,
+  "dmaPairFallbackRows": 10,
+  "userHardwareAcceptance": "pending",
+  "saveReset": false,
+  "slideRefreshIssue": "pending physical acceptance; configured48-row DMA pair and optional TE default OFF; no tests"
+}

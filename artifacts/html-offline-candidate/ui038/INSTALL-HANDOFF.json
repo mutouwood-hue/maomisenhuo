@@ -1,0 +1,45 @@
+{
+  "status": "ready_wait_for_parent_device_coordination",
+  "packageId": "com.catforest.htmlcandidate",
+  "versionName": "0.3.8-little-moments",
+  "versionCode": 29,
+  "apk": "/Users/zoumutou/coding/猫咪森活/artifacts/html-offline-candidate/ui038/deliverables/catforest-little-moments-0.3.8-debug.apk",
+  "bytes": 819895,
+  "sha256": "b25d2c457baed7eaae8323f996096afe4ecf4c125eb7b7c200eef520cce50897",
+  "certificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+  "sourceArchive": {
+    "path": "deliverables/catforest-little-moments-0.3.8-source.zip",
+    "bytes": 1552958,
+    "files": 223,
+    "sha256": "c093594be1f075e938bb174fb3455bc565eb8fd2d2eabcc2c1c8cadd790d8e87"
+  },
+  "baseline": "037 frozen, user-reported bridge/dual-connection/manual-drag confirmed",
+  "preserveData": true,
+  "uninstallOrClearData": false,
+  "bindingChange": false,
+  "deviceActionsThisThread": false,
+  "installCoordinator": "Parent schedules sole device owner A",
+  "doNotInstallUntilParentCoordinates": true,
+  "changes": [
+    "Finite scene-only resident/player contact: approach12s, choose8s, action4s, overall20s cap; NPC contact0.9s",
+    "Unified exit releases holds/cards/membership; same pair10s cooldown and spatial separation required; player destination immediately cancels contact",
+    "Scatter paths use original roads, building/river guards and swept occupancy; original037 bridge lease/traffic policy retained",
+    "Future presentation uses actual local Date, never demo fixNow: exact approved title/bubble/card, pale dashed now-to-selection arcs and selected dot",
+    "Solid ring bands and record markers capped at actual now; future never borrows past/planned event; empty past and inferred/demo records remain distinct",
+    "Reuse original daily cat in gentle look-around animation; single owned visible animation, cleanup on past/current/tab/background/pagehide",
+    "Arched bridge picking uses actual deck mesh before original graph/lease; neutral persistent navigation guide and three-second factual invalid-tap messages",
+    "No new growth/events/rewards, no clock/day/save/Native/adapter/BLE/AI changes"
+  ],
+  "notRun": [
+    "technical tests",
+    "runtime previews",
+    "execution validation",
+    "performance experiments",
+    "devices/ADB/serial",
+    "paid API calls"
+  ],
+  "acceptance": "038 normal user use pending; ordinary compile is not runtime/visual validation",
+  "attachmentRead": false,
+  "attachmentId": "libfile_5a6c9708401481918a85c2447769cfba",
+  "notion": "https://app.notion.com/p/3fbc209ad67f8139952bf584fd05e3b6"
+}

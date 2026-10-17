@@ -1,0 +1,35 @@
+{
+  "baseline": "052",
+  "changedOrAdded": [
+    {
+      "path": "CMakeLists.txt",
+      "kind": "file",
+      "bytes": 18164,
+      "sha256": "702d7bb9859d9fec7cccfde55cd9bc6757ed52ce86557ef7af7674504a7760d0"
+    },
+    {
+      "path": "main/badge_pages.c",
+      "kind": "file",
+      "bytes": 84927,
+      "sha256": "4e9e4be0c4b46655a880a08dabadba9dc2247e7f91169ef21da5e79db87df378"
+    },
+    {
+      "path": "main/local2_wire.c",
+      "kind": "file",
+      "bytes": 16951,
+      "sha256": "0cc9ba045b7d75fad7ba0ea0fccd85ea875fc42372f31166f73a09b9d071d907"
+    },
+    {
+      "path": "sdkconfig",
+      "kind": "file",
+      "bytes": 102742,
+      "sha256": "88df424825108174dab79a95ca66fdba8040609f25c480690b56dbb8151967e1"
+    },
+    {
+      "path": "sdkconfig.defaults",
+      "kind": "file",
+      "bytes": 1516,
+      "sha256": "adc1ca9576822f4cd709db903ef1d56ce379208e49dd773e91919612456b5ea2"
+    }
+  ]
+}
