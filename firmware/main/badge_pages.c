@@ -1143,7 +1143,7 @@ static void build_home_care(void)
         /* Keep labels inside the circular safe region, separate from hit disks. */
         label(pages[PAGE_CARE],xs[i],ys[i]+42,44,names[i],true,ZIP_UI_COLOR_TEXT);
     }
-    care_bath_hint=label(pages[PAGE_CARE],233,416,180,"",true,ZIP_UI_COLOR_SUB);
+    care_bath_hint=label(pages[PAGE_CARE],233,410,180,"",true,ZIP_UI_COLOR_SUB);
     welcome_scene=badge_scene_create(pages[PAGE_WELCOME]);
     welcome_title=title(pages[PAGE_WELCOME],64,200,"欢迎回家");
     welcome_sub=label(pages[PAGE_WELCOME],233,108,280,"随时可在设置中重学",false,ZIP_UI_COLOR_TEXT);
@@ -1396,7 +1396,7 @@ static void refresh_state(void)
     snprintf(text,sizeof(text),"%s · 待确认 %u\n上滑返回小屋",link,domain.pending_events);set_label(status_sync,text,363);
     if(available) snprintf(text,sizeof(text),"喵币 %llu · 下滑返回",(unsigned long long)v.snapshot.coins);else strcpy(text,"喵币 -- · 下滑返回");set_label(care_coins,text,88);
     for(unsigned i=0;i<5;i++)lv_obj_set_style_opa(care_icons[i],available&&(i!=4||domain.bath_allowed) ? LV_OPA_COVER : LV_OPA_40,0);
-    set_label(care_bath_hint,domain.bath_allowed ? "清洁可离线·重启再确认" : "清洁需兼容手机确认",416);
+    set_label(care_bath_hint,domain.bath_allowed ? "清洁可离线·重启再确认" : "清洁需兼容手机确认",410);
     const char *short_state=!available ? "等你连手机" : !live_context ? "上次状态" : domain.snapshot.scene==L2_SCENE_HOME ? "在家陪你" : domain.snapshot.scene==L2_SCENE_TOWN ? "镇街散步" : domain.snapshot.scene==L2_SCENE_GARDEN ? "庭院玩耍" : domain.snapshot.scene==L2_SCENE_DEPARTING ? "准备出门" : domain.snapshot.scene==L2_SCENE_RETURNING ? "正在回家" : "在外面玩";
     if(available && observed_action==L2_ACTION_SLEEP)short_state="窝里休息";
     if(face==0)set_label(face_phase,short_state,126);
