@@ -34,7 +34,7 @@
 | companion-scene | 7/3 | `ENOENT …\ui024\source\…\game-06.js` | **环境 fixture 缺失**，非产品缺陷（历史分类已记） |
 | gameplay | 6/2 | `changed-script 数 5 !== 4` | 断言硬编码 4；本轮新增一个构建补丁后应改为 5。其后还有旧 social 文案 regex 失败（历史已记） |
 | host | 8/1 | drawer pause 深比较 `[undefined]` vs `[false]` | 既有失败（历史已记） |
-| local-v2-transport | 17/14 | `Unexpected native method beginFlight` | 测试桩早于 `beginFlight` 协议，属**陈旧桩** |
+| local-v2-transport | **31/0** | — | **已修**：测试桩缺 `beginFlight`/`endFlight`，补齐后全部通过并已进套件 |
 | scene-sync | 8/0 | — | 通过 |
 | source-save-and-identity | 5/0 | — | 通过 |
 | v2-host-integration | — | 整文件 **>45s 超时** | 需单独排查（可能残留定时器） |

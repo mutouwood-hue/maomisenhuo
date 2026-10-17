@@ -10,6 +10,7 @@ const {test}=require('node:test');
 class Fixture {
   constructor(options = {}) {
     this.options = options; this.calls = []; this.commands = []; this.rawCommands = []; this.fragments=[]; this.bytes=[]; this.generation=0; this.mode='off'; this.disconnected=0; this.held=[];
+    this.flights=[];this.endedFlights=[];
     this.control = createControl({bridge:{postMessage:json=>this.post(JSON.parse(json))},commandTimeoutMs:options.timeout ?? 150,nativeTimeoutMs:options.nativeTimeout ?? 150});
   }
   send(event) { this.control.receive(event); }
@@ -54,6 +55,8 @@ class Fixture {
         this.result(request,{generation:this.options.wrongWriteGeneration?this.generation+1:this.generation});
         if(command && this.options.ackFirst===false)queueMicrotask(()=>this.reply(command));return;
       }
+      case 'beginFlight': this.flights.push({id:request.args.id,generation:request.args.generation}); return this.result(request,{generation:this.generation});
+      case 'endFlight': this.endedFlights.push(request.args.id); return this.result(request,{generation:this.generation});
       case 'disconnect':this.disconnected++;return this.result(request,{generation:this.generation});
       case 'dispose':return this.result(request,{});
       default:throw new Error('Unexpected native method '+request.method);
