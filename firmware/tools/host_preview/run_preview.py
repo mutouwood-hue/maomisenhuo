@@ -2,10 +2,10 @@
 """Compile local LVGL/production C and convert its RGB565 flushes to PNG. No network/device/UI."""
 from pathlib import Path
 import re
-import argparse, datetime, hashlib, json, math, shutil, struct, subprocess, sys, zlib
+import argparse, datetime, hashlib, json, math, os, shutil, struct, subprocess, sys, zlib
 HERE=Path(__file__).resolve().parent
 FIRMWARE=HERE.parents[1]
-ROOT=FIRMWARE.parents[2]
+ROOT=FIRMWARE.parent
 DEFAULT_CASES=['boot','pair','pair_connected','pair_ready',*[f'guide_{i}' for i in range(1,6)],'main_a','main_b','main_c','care_menu','status','settings','device','touch_test','touch_complete','voice','main_low_stats','storage_error','aod','welcome','main_b_clock','historical_departing','departing','away_rain','returning_snow','care_feed','care_water','care_play','care_sleep','meet_confirm','gift_pending','gift_complete','action_feed','action_water','action_bath','action_play','action_sleep','action_pet','input_test','main_c_clock','guide_wrong','guide_success','guide_skip','guide_hold','drag_up_mid','drag_commit','drag_rebound','drag_no_target']
 def production_toasts():
     return sorted(set(t for call in re.findall(r'announce\((.*?)\);',(FIRMWARE/'main/badge_pages.c').read_text()) for t in re.findall(r'"([^"\\]*(?:\\.[^"\\]*)*)"',call)))
@@ -41,7 +41,7 @@ def main():
     header=HERE/'toast_cases.inc'
     if a.no_build:assert header.read_text()==expected,'Toast test list stale; rebuild current harness'
     else:header.write_text(expected)
-    build=HERE/'build-v3';binary=build/'badge_host_preview'
+    build=HERE/'build-v3';binary=build/('badge_host_preview.exe' if os.name=='nt' else 'badge_host_preview')
     cmake=shutil.which('cmake') or next(iter(ROOT.glob('.tools/idf-tools/tools/cmake/*/CMake.app/Contents/bin/cmake')),None)
     if not cmake:raise SystemExit('Project-local CMake is not installed')
     if not a.no_build:
