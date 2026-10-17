@@ -377,6 +377,7 @@ static lv_obj_t *care_icons[5],*care_bath_hint;
 static lv_obj_t *home_action_prop,*gift_popup,*gift_popup_title,*gift_popup_icon,*gift_popup_sub;
 static lv_obj_t *setting_discover,*meet_state,*meet_id,*meet_confirm_label;
 static lv_obj_t *ring_missing,*ring_marker,*ring_hours[4],*guide_progress,*feedback_ring,*heart_legend;
+static lv_obj_t *heart_dots[L2_DAY_HEART_MAX],*heart_count_label;
 static badge_scene_t *guide_scene;
 static lv_obj_t *stage_root,*peek_root,*peek_rings[2],*peek_arcs[5],*peek_clock,*peek_phase,*peek_missing,*peek_heading,*peek_weather,*peek_action,*peek_marker,*peek_heart,*peek_hours[4];
 static badge_scene_t *peek_scene;
@@ -625,6 +626,20 @@ static bool save_guide(bool skipped)
     if(result!=ESP_OK) { announce("引导未存请重试"); return false; }
     guide_done=true;guide_mastered=!skipped;return true;
 }
+/* 心动标记：主表盘 C 上按分钟位置点亮的小点（数据来自一天资料的可选 hearts）。 */
+static void place_hearts(void)
+{
+    unsigned n=(face==2&&previous.bound)?day_view.heart_count:0;
+    for(unsigned i=0;i<L2_DAY_HEART_MAX;i++){
+        if(i>=n){hide(heart_dots[i],true);continue;}
+        double a=(double)day_view.hearts[i]/1440.0*6.283185307179586;
+        lv_obj_set_pos(heart_dots[i],(int)(233.0+150.0*sin(a))-4,(int)(233.0-150.0*cos(a))-4);
+        hide(heart_dots[i],false);
+    }
+    hide(heart_legend,n==0);
+    hide(heart_count_label,n==0);
+    if(n){char t[24];snprintf(t,sizeof(t),"心动 %u",n);set_label(heart_count_label,t,365);lv_obj_set_pos(heart_legend,246,356);}
+}
 static void update_face(void)
 {
     day_pending=true;
@@ -642,6 +657,7 @@ static void update_face(void)
     hide(face_gift,true);hide(home_hint,true);hide(face_weather,false);hide(face_action,face!=0);
     lv_obj_set_y(home_alert,108);hide(face_phase,false);
     set_label(face_phase,"等待手机状态",126);set_label(face_weather,"天气待同步",face?342:363);
+    place_hearts();
     dirty=true;update_clock();
 }
 
@@ -1082,6 +1098,9 @@ static void build_home_care(void)
     ring_missing=label(pages[PAGE_HOME],233,365,270,"日程待手机同步",true,ZIP_UI_COLOR_SUB);
     heart_legend=icon(pages[PAGE_HOME],ICON_HEART,100,365,1);lv_obj_set_style_image_opa(heart_legend,LV_OPA_40,0);hide(heart_legend,true);
     ring_marker=shape(pages[PAGE_HOME],0,0,10,10,ZIP_UI_COLOR_TEXT,LV_RADIUS_CIRCLE);hide(ring_marker,true);
+    /* 心动标记：主表盘 C 上按分钟位置点亮的小点，数据来自手机一天资料的可选 hearts。 */
+    for(unsigned i=0;i<L2_DAY_HEART_MAX;i++){heart_dots[i]=shape(pages[PAGE_HOME],0,0,9,9,ZIP_UI_COLOR_ACCENT,LV_RADIUS_CIRCLE);hide(heart_dots[i],true);}
+    heart_count_label=label(pages[PAGE_HOME],286,365,150,"",true,ZIP_UI_COLOR_COIN);hide(heart_count_label,true);
     const int hx[]={233,409,233,57},hy[]={57,233,409,233};const char *hours[]={"0","6","12","18"};
     for(unsigned i=0;i<4;i++)ring_hours[i]=label(pages[PAGE_HOME],hx[i],hy[i],28,hours[i],true,ZIP_UI_COLOR_DIM);
     home_clock=label(pages[PAGE_HOME],233,70,160,"--:--",false,ZIP_UI_COLOR_TEXT);

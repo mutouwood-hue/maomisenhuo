@@ -188,10 +188,19 @@ function createPorts({bridge,storage=globalThis.localStorage,uuid=()=>globalThis
     for(const row of input.segments){if(!Array.isArray(row)||row.length!==5||row.some(n=>!Number.isInteger(n))||row[0]<end||row[0]<0||row[1]<=row[0]||row[1]>input.cutoff||row[2]<0||row[2]>6||row[3]<0||row[3]>2||row[4]<0||row[4]>7||(input.mode==='demo'&&row[3]!==2))throw fail('INVALID_DAY','一天记录的时间或来源无效。');end=row[1];}
     const transfer=uuid(),parts=Math.max(1,Math.ceil(input.segments.length/16));
     if(!/^[0-9a-f-]{36}$/i.test(transfer))throw fail('INVALID_REQUEST','无法建立一天展示标识。');
+    /* 心动标记可选：仅当固件声明 day_hearts_v1 时随第一片发送，不改变既有一天资料语义。 */
+    let hearts=null;
+    if(input.hearts!==undefined){
+      if(!Array.isArray(input.hearts)||input.hearts.length>12)throw fail('INVALID_DAY','心动标记格式无效。');
+      let last=-1;
+      for(const m of input.hearts){if(!Number.isInteger(m)||m<0||m>input.cutoff||m<last)throw fail('INVALID_DAY','心动标记的时间无效。');last=m;}
+      if(s.hello.capabilities.includes('day_hearts_v1'))hearts=input.hearts.slice();
+    }
     for(let part=0;part<parts;part++){
       const current=control.getState();
       if(current.stage!=='ready_local'||current.hello?.deviceId!==id||current.evidence?.generation!==generation)throw fail('STALE_GENERATION','连接已变化，一天展示尚未确认。');
       const data={schema:1,transfer,date:input.date,zone:input.zone,cutoff:input.cutoff,mode:input.mode,clientId:journal.value.clientId,petId:input.petId,part,parts,segments:input.segments.slice(part*16,(part+1)*16)};
+      if(hearts&&part===0)data.hearts=hearts;
       const reply=await control.request('day',data),a=reply?.data,after=control.getState();
       if(after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==generation)throw fail('STALE_GENERATION','一天展示读回已过期。');
       if(a?.accepted!==true||a.volatile!==true||a.complete!==(part===parts-1)||a.part!==part||a.date!==input.date||a.count!==Math.min(input.segments.length,(part+1)*16))throw fail('MALFORMED_FRAME','一天展示未收到完整RAM接收确认。');

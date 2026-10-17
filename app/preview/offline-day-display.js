@@ -18,6 +18,12 @@ root.CatOfflineDayDisplay={read(petId){
     segments.push([segment.start,stop,k<0?6:k,mode==='demo'?2:segment.guess?1:0,p<0?7:p]);
   }
   if(segments.length>96)throw Object.assign(Error('今天超过96段，未截断或合并来源。'),{code:'TOO_MANY_DAY_SEGMENTS'});
-  return {schema:1,petId,date:`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`,zone:-date.getTimezoneOffset(),cutoff,mode,segments};
+  /* 心动标记：同一份生活记录里真实发生过的时刻，按分钟去重排序，最多 12 个。 */
+  const moments=typeof L.moments==='function'?L.moments(date):[];
+  const dayStart=new Date(date);dayStart.setHours(0,0,0,0);
+  const hearts=[...new Set((Array.isArray(moments)?moments:[])
+    .map(m=>Math.floor((m?.t-dayStart.getTime())/60000))
+    .filter(v=>Number.isInteger(v)&&v>=0&&v<=cutoff))].sort((a,b)=>a-b).slice(0,12);
+  return {schema:1,petId,date:`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`,zone:-date.getTimezoneOffset(),cutoff,mode,segments,hearts};
 }};
 })(globalThis);

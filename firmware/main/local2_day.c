@@ -15,6 +15,9 @@ int zone;
 unsigned cutoff,part,parts,count;
 bool demo;
 l2_day_segment_t rows[16];
+/* Optional heartfelt moments (minutes of day), only on part 0. */
+unsigned heart_count;
+uint16_t hearts[L2_DAY_HEART_MAX];
 } day_part_t;
 
 static day_slot_t *slots;
@@ -56,7 +59,7 @@ unsigned max=days[m-1]+(m==2&&y%4==0&&(y%100!=0||y%400==0));
 return d>=1&&(unsigned)d<=max;
 }
 static bool parse(const cJSON*d,day_part_t*p){
- static const char*keys[]={"schema","transfer","date","zone","cutoff","mode","clientId","petId","part","parts","segments"};
+ static const char*keys[]={"schema","transfer","date","zone","cutoff","mode","clientId","petId","part","parts","segments","hearts"};
 
  if(!cJSON_IsObject(d))return false;
 unsigned fields=0;
@@ -64,11 +67,11 @@ for(const cJSON*x=d->child;
 x;
 x=x->next){bool found=false;
 for(unsigned i=0;
-i<11;
+i<12;
 i++)if(!strcmp(x->string,keys[i]))found=true;
 if(!found)return false;
 fields++;
-}if(fields!=11)return false;
+}if(fields!=11&&fields!=12)return false;
 
  memset(p,0,sizeof(*p));
 int n;
@@ -111,7 +114,19 @@ j++)if(!number(cJSON_GetArrayItem(r,(int)j),0,max[j],v+j))return false;
   p->rows[i]=(l2_day_segment_t){(uint16_t)v[0],(uint16_t)v[1],(uint8_t)v[2],(uint8_t)v[3],(uint8_t)v[4]};
 end=(unsigned)v[1];
 
- }return true;
+ }
+/* hearts 为可选字段：仅在 part 0 携带，按分钟升序、不得晚于真实截止点。 */
+ const cJSON*h=get(d,"hearts");
+ if(h){
+   if(p->part!=0||!cJSON_IsArray(h)||cJSON_GetArraySize(h)>(int)L2_DAY_HEART_MAX)return false;
+   int prev=-1;
+   for(int i=0;i<cJSON_GetArraySize(h);i++){
+     if(!number(cJSON_GetArrayItem(h,i),0,1440,&n))return false;
+     if(n<prev||(unsigned)n>p->cutoff)return false;
+     p->hearts[p->heart_count++]=(uint16_t)n;prev=n;
+   }
+ }
+ return true;
 
 }
 static bool metadata(const day_slot_t*s,const day_part_t*p){return !strcmp(s->transfer,p->transfer)&&!strcmp(s->owner,p->owner)&&!strcmp(s->pet,p->pet)&&!strcmp(s->view.date,p->date)&&s->view.zone==p->zone&&s->view.cutoff==p->cutoff&&s->view.demo==p->demo&&s->parts==p->parts;
@@ -164,6 +179,8 @@ strcpy(s->view.date,p.date);
 s->view.zone=p.zone;
 s->view.cutoff=p.cutoff;
 s->view.demo=p.demo;
+s->view.heart_count=(uint8_t)p.heart_count;
+if(p.heart_count)memcpy(s->view.hearts,p.hearts,p.heart_count*sizeof p.hearts[0]);
 s->parts=(uint8_t)p.parts;
 receiving=true;
 }

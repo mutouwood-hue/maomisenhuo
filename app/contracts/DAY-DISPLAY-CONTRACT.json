@@ -25,7 +25,8 @@
       "petId": "current bound petId, equality must match saved snapshot",
       "part": "zero-based integer0..parts-1",
       "parts": "integer1..6; ceil(rows/16), empty day uses1",
-      "segments": "array of <=16 rows: [startMinute,endMinute,kindInt,sourceInt,placeInt]"
+      "segments": "array of <=16 rows: [startMinute,endMinute,kindInt,sourceInt,placeInt]",
+      "hearts": "optional and ONLY when HELLO advertises day_hearts_v1: array of <=12 ascending minute integers 0..cutoff, carried on part 0 only; absent means no heart markers"
     }
   },
   "enum": {

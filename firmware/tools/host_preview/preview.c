@@ -219,6 +219,7 @@ static void choose(const char *name,const char *clip,int frame)
     }
     else if(!strcmp(name,"voice"))select_page(PAGE_VOICE);
     else if(!strcmp(name,"sleeping"))select_page(PAGE_SLEEPING);
+    else if(!strcmp(name,"main_c_hearts")){select_page(PAGE_HOME);face=2;clock_valid=true;refresh_state();day_view.heart_count=5;day_view.hearts[0]=180;day_view.hearts[1]=330;day_view.hearts[2]=620;day_view.hearts[3]=780;day_view.hearts[4]=1070;update_face();advance(120);}
     else if(!strcmp(name,"meet_done")) {peer_fixture.phase=L2P_COMPLETE;peer_fixture.discoverable=peer_fixture.connected=true;peer_fixture.complete=true;strcpy(peer_fixture.peer_id,"00000000000000000000000000000001");select_page(PAGE_MEET);refresh_state();advance(120);}
     else if(!strcmp(name,"meet_draw")) {peer_fixture.phase=L2P_CONFIRM;peer_fixture.discoverable=peer_fixture.connected=true;strcpy(peer_fixture.peer_id,"00000000000000000000000000000001");select_page(PAGE_MEET);refresh_state();meet_mark_reset(true);meet_draw_point(113,113);meet_draw_point(233,233);meet_draw_point(353,353);}
     else if(!strcmp(name,"meet_beat")) {peer_fixture.phase=L2P_CONFIRM;peer_fixture.discoverable=peer_fixture.connected=true;strcpy(peer_fixture.peer_id,"00000000000000000000000000000001");select_page(PAGE_MEET);refresh_state();meet_mark_reset(false);meet_beat();advance(200);meet_beat();advance(700);meet_beat();}
