@@ -1,0 +1,35 @@
+{
+  "source": "firmware/managed_components/lvgl__lvgl/scripts/built_in_font/SourceHanSansSC-Normal.otf",
+  "source_sha256": "1ee89e1669362dee13851129c0a8a791a87521eb4148e5efbf5d26596738e25b",
+  "font_name": [
+    "Source Han Sans SC",
+    "Normal"
+  ],
+  "license": "SIL Open Font License 1.1",
+  "license_path": "artifacts/firmware-local-v2/source/main/assets/OFL-1.1.txt",
+  "codepoints": [
+    "U+54AA"
+  ],
+  "text": "咪",
+  "bpp": 4,
+  "sizes": [
+    {
+      "pixels": 20,
+      "line_height": 23,
+      "base_line": 5,
+      "bitmap_bytes": 200
+    },
+    {
+      "pixels": 24,
+      "line_height": 30,
+      "base_line": 7,
+      "bitmap_bytes": 288
+    }
+  ],
+  "method": "Pillow FreeType grayscale, baseline ls, linear nearest 4bpp quantization; no artwork generation",
+  "pillow_version": "12.3.0",
+  "generator": "artifacts/firmware-local-v2/source/tools/generate_title_glyph.py",
+  "output": "artifacts/firmware-local-v2/source/main/assets/local2_title_glyph.inc",
+  "output_sha256": "208a2641afd7ba26ca6d462498924955f5128f4708643dd30b738d9903d815a1",
+  "original_fonts_modified": false
+}

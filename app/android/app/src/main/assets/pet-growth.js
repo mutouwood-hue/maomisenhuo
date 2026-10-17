@@ -1,0 +1,3 @@
+/* Reuse original skeleton/animation, varying anatomy once after each authored pose reset. */
+(function(w){'use strict';const stages={baby:{head:1.22,body:[.90,.84,.90],leg:.82},kitten:{head:1.22,body:[.90,.84,.90],leg:.82},young:{head:1.09,body:[.98,.94,1.02],leg:.94},adult:{head:1,body:[1.02,1.02,1.08],leg:1}};
+w.CatPetGrowth=Object.freeze({apply(bones,stage){const p=stages[stage]||stages.adult;for(const [name,bone]of bones){if(name==='head')bone.scale.multiplyScalar(p.head);else if(name==='body')bone.scale.multiply({x:p.body[0],y:p.body[1],z:p.body[2]});else if(/^(front|back)_(left|right)$/.test(name))bone.scale.y*=p.leg;}}});})(window);

@@ -2,6 +2,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "lvgl.h"
+#include "local2_core.h"
 
 /* Original PCAT poses; walk/attention are local presentation, never a wire event.
  * Every sprite uses one shared 192x208 canvas and foot anchor (96,196).
@@ -32,3 +33,28 @@ void badge_scene_play(badge_scene_t *scene, badge_scene_clip_id_t clip, uint32_t
 void badge_scene_tick(badge_scene_t *scene, uint32_t now, bool animate);
 void badge_scene_set_dimmed(badge_scene_t *scene, bool dimmed);
 bool badge_scene_has_animation(const badge_scene_t *scene);
+/* Presentation only: saved context is static until a fresh snapshot this boot.
+ * action is a short actual observed/locally persisted action, never inferred stats. */
+void badge_scene_set_context(badge_scene_t *,bool known,l2_scene_t,l2_weather_t,l2_action_t,bool live);
+
+/* Local presentation only; no domain events, storage or timer changes. */
+void badge_scene_enable_world(badge_scene_t *);
+void badge_scene_set_overlay(badge_scene_t *,bool);
+void badge_scene_set_slide_offset(badge_scene_t *,int);
+
+bool badge_scene_is_warm(const badge_scene_t *scene);
+bool badge_scene_thought_visible(const badge_scene_t *scene,uint32_t now);
+
+bool badge_scene_light_background(const badge_scene_t *scene);
+
+void badge_scene_set_interacting(badge_scene_t *scene,bool active);
+int badge_scene_prop_offset(const badge_scene_t *scene);
+
+void badge_scene_cancel_prop(badge_scene_t *scene);
+
+void badge_scene_day_preview(badge_scene_t *scene,bool known,unsigned kind,unsigned minute);
+
+/* Neutral anticipation presentation only; no event or historical action. */
+void badge_scene_day_expectation(badge_scene_t *scene);
+
+void badge_scene_day_current(badge_scene_t *,bool known,l2_scene_t,l2_weather_t,l2_action_t,bool live);

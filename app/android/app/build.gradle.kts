@@ -1,21 +1,20 @@
-plugins { id("com.android.application"); id("org.jetbrains.kotlin.android") }
-
+plugins { id("com.android.application") }
 android {
-    namespace = "com.catforest.app"
+    namespace = "com.catforest.htmlcandidate"
     compileSdk = 35
     buildToolsVersion = "35.0.0"
+    buildFeatures { buildConfig = true }
     defaultConfig {
-        applicationId = "com.catforest.app"
+        applicationId = "com.catforest.htmlcandidate"
         minSdk = 26
         targetSdk = 35
-        versionCode = 3
-        versionName = "0.3.0"
+        versionCode = 30
+        versionName = "0.3.9-care-lock"
     }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
-    kotlinOptions { jvmTarget = "17" }
     signingConfigs {
         getByName("debug") {
-            storeFile = rootProject.file("../../.tools/signing/catforest-debug.keystore")
+            storeFile = rootProject.file("../.build/debug.keystore")
             storePassword = "android"
             keyAlias = "androiddebugkey"
             keyPassword = "android"
