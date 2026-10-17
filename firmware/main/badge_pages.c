@@ -32,7 +32,7 @@ LV_FONT_DECLARE(badge_f24);
 LV_FONT_DECLARE(badge_n40);
 
 typedef enum { PAGE_BOOT, PAGE_PAIR, PAGE_GUIDE, PAGE_HOME, PAGE_CARE, PAGE_CARE_ACTION,
-    PAGE_STATUS, PAGE_SETTINGS, PAGE_DEVICE, PAGE_TOUCH, PAGE_VOICE, PAGE_WELCOME, PAGE_MEET, PAGE_SLEEPING, PAGE_COUNT } page_t;
+    PAGE_STATUS, PAGE_SETTINGS, PAGE_DEVICE, PAGE_TOUCH, PAGE_VOICE, PAGE_WELCOME, PAGE_MEET, PAGE_MEET_DONE, PAGE_SLEEPING, PAGE_COUNT } page_t;
 typedef enum { MODE_PLAY, MODE_COMP, MODE_AOD, MODE_OFF } ui_mode_t;
 typedef enum { ICON_PAW, ICON_TAP, ICON_UP, ICON_DOWN, ICON_HOLD, ICON_LR,
     ICON_BOWL, ICON_WATER, ICON_FEATHER, ICON_MOON, ICON_GEAR, ICON_MIC,
@@ -770,6 +770,7 @@ static void tap(int x,int y)
         break;
     case PAGE_STATUS: if(target_hit(HIT_STATUS_GEAR,x,y)) navigate(PAGE_SETTINGS); break;
     case PAGE_SLEEPING: navigate(PAGE_HOME); break;
+    case PAGE_MEET_DONE: navigate(PAGE_HOME); break;
     case PAGE_SETTINGS:
         if(target_hit(HIT_BRIGHTNESS,x,y)) {
             uint8_t next=brightness==45 ? 75 : brightness==75 ? 100 : 45;
@@ -1240,6 +1241,11 @@ static void build_touch_voice(void)
     lv_obj_t *confirm=shape(s,299,302,104,40,ZIP_UI_COLOR_CARD,18);
     lv_obj_add_flag(confirm,LV_OBJ_FLAG_USER_1);meet_confirm_label=label(confirm,52,20,100,"等待连接",true,ZIP_UI_COLOR_ACCENT);
     pill(s,"关闭发现",173,392,112,36);pill(s,"返回",293,392,112,36);
+    /* 双方确认后的结果页。 */
+    s=pages[PAGE_MEET_DONE];title(s,74,180,"成为朋友");
+    icon(s,ICON_FLOWER,233,200,6);
+    label(s,233,286,300,"你们交换了野花\n它会把这份礼物带回家",true,ZIP_UI_COLOR_SUB);
+    label(s,233,398,220,"轻点回小屋",true,ZIP_UI_COLOR_DIM);
     /* 睡觉完成后的「睡着了」屏：只显示月亮与唤醒提示，轻点回 HOME。 */
     s=pages[PAGE_SLEEPING];title(s,150,220,"睡着了");
     icon(s,ICON_MOON,233,214,6);
@@ -1265,6 +1271,7 @@ static void update_peer(void)
     local2_peer_get_view(&peer);
     const char *status=peer.phase==L2P_DISABLED ? "附近发现已关闭" : peer.phase==L2P_DISCOVERING ? "正在寻找附近吧唧" : peer.phase==L2P_HELLO ? "已连接，正在交换信息" : peer.phase==L2P_CONFIRM ? "请双方在各自吧唧上确认" : peer.phase==L2P_EXCHANGING ? "正在保存礼物" : peer.phase==L2P_WAIT_DONE ? "已保存，等待对方确认" : peer.phase==L2P_COMPLETE ? "双方已确认" : "会面未完成，请重试";
     set_label(meet_state,status,224);
+    if(current_page==PAGE_MEET&&peer.phase==L2P_COMPLETE)navigate(PAGE_MEET_DONE);
     char text[100];size_t id_len=strlen(peer.peer_id);snprintf(text,sizeof(text),"%s%s",id_len ? "对方：" : "",id_len>12 ? peer.peer_id+id_len-12 : peer.peer_id);set_label(meet_id,text,250);
     const char *button=peer.phase==L2P_DISABLED ? "开启附近发现" : peer.phase==L2P_DISCOVERING ? "正在寻找" : peer.phase==L2P_HELLO ? "正在交换信息" : peer.phase==L2P_CONFIRM ? (peer.local_confirmed ? "已确认，等待对方" : "确认交换野花") : peer.phase==L2P_EXCHANGING ? "交换中" : peer.phase==L2P_WAIT_DONE ? "等待确认" : peer.phase==L2P_COMPLETE ? "完成，回小屋" : "关闭后重试";
     set_label(meet_confirm_label,button,24);
