@@ -1,0 +1,1346 @@
+[
+  {
+    "path": ".gitignore",
+    "kind": "file",
+    "bytes": 68,
+    "sha256": "166a47e24599a30bc4df0447d344f5fe1c46c3da9c444edf4644d0bf3fd48b30"
+  },
+  {
+    "path": "ACTIVITY-PROPOSAL-REVIEW.md",
+    "kind": "file",
+    "bytes": 14145,
+    "sha256": "293769024bb800733c56667f745bdbf15662e0a4343e6b1ef984d3f9d4ee4f8c"
+  },
+  {
+    "path": "CMakeLists.txt",
+    "kind": "file",
+    "bytes": 18164,
+    "sha256": "702d7bb9859d9fec7cccfde55cd9bc6757ed52ce86557ef7af7674504a7760d0"
+  },
+  {
+    "path": "README.md",
+    "kind": "file",
+    "bytes": 5876,
+    "sha256": "a9a7d1b63f5f57dfdcd5de94b473dd650a0d6c4bb9484b29a741f4bcbdcc6ccc"
+  },
+  {
+    "path": "UI-COVERAGE.md",
+    "kind": "file",
+    "bytes": 3346,
+    "sha256": "5b9e79abaf7f00c978c407a5fc103f8f2714da46efff8175515eb4e68f11222d"
+  },
+  {
+    "path": "cmake/private-adapter051-integrity.cmake",
+    "kind": "file",
+    "bytes": 41332,
+    "sha256": "3e6bbed621ce532f2ae0ddd15f3314bfd50687f1edc97c9b76532b5ea6d67907"
+  },
+  {
+    "path": "cmake/private-bsp-integrity.cmake",
+    "kind": "file",
+    "bytes": 5864,
+    "sha256": "463f5475b8e4266e1b4469c3c9c0119e60d8c7ec8b55dd1c7e0a65d5e1d44c8a"
+  },
+  {
+    "path": "cmake/private-mask-override.cmake",
+    "kind": "file",
+    "bytes": 3371,
+    "sha256": "97364f14d960b152daf7beef4e7ccbfe5807d6225e834efba1f1a07a6cdd5e2f"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/.component_hash",
+    "kind": "file",
+    "bytes": 64,
+    "sha256": "150006aeb3f4840adad8378b05e39667a812d90bd5a240082f612cafc076971c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/0001-bugfix-ppa-Temporary-fix-for-the-PPA-hang-issue.patch",
+    "kind": "file",
+    "bytes": 2261,
+    "sha256": "e51b5bc1762083e050719d8b5d1332f053212294360ef82f1276e03c8bb4afc5"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/CHANGELOG.md",
+    "kind": "file",
+    "bytes": 7776,
+    "sha256": "49caeefd862f3c5a2ee86990fbe96a6db26a0a69274377daa633937fa7640549"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/CHECKSUMS.json",
+    "kind": "file",
+    "bytes": 14701,
+    "sha256": "66f064c35f804d002d9c3d2c8b31185e48d907c18070ba968b20b0cd7e42de19"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 15914,
+    "sha256": "9007fa9cf691c53b7a5f0b1575a0d772e840ebb4f31a9d5a019a43765c3dd6a4"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/Kconfig",
+    "kind": "file",
+    "bytes": 4334,
+    "sha256": "4b58e5a59cc2b98af2222bff2d84a1e728c3dacebf0143f61a4582ef1d529e2b"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/LICENSE",
+    "kind": "file",
+    "bytes": 11363,
+    "sha256": "862f600b4c27954a54933f5c00fe4d92bae02bab216d795876ebd76aa6f5538d"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/MIGRATION_GUIDE.md",
+    "kind": "file",
+    "bytes": 7981,
+    "sha256": "99f6d7ea06c756c5200423568708d0b02396fc7cc7aeac67e0bba020203d8003"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/README.md",
+    "kind": "file",
+    "bytes": 33028,
+    "sha256": "d77edc40f2ee25e52262803e47bfbd9c233bb9ac54efdc0be8125bab87df0a9a"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/README_CN.md",
+    "kind": "file",
+    "bytes": 31725,
+    "sha256": "72fc1678b6092173560f4eb570959050fbd5eff4d2f468ed514061e36cf33dbd"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 427,
+    "sha256": "07a77b666ee4d4d3a95617ef2b3b25b907628bde648e9c1f61bd8204c2b87cb6"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/main/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 130,
+    "sha256": "6c638f622251c2e631a32f27add40c500892cb8e60eadb871884208971b64c57"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/main/dummy_panel.c",
+    "kind": "file",
+    "bytes": 5825,
+    "sha256": "7cfe7d7cf13f5bc3abfa21777b6771c9540455495c78fa6c061a90f93cfd2132"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/main/dummy_panel.h",
+    "kind": "file",
+    "bytes": 1197,
+    "sha256": "9fc2ce6c145814ef1a814fe9fe067cf5c1e1c1bf37414b0a90ee770beac41f27"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/main/idf_component.yml",
+    "kind": "file",
+    "bytes": 195,
+    "sha256": "934eb20b4fcf8e462732fc078c59dc3176b1f351f565967d7726763cf2605c16"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/main/test_esp_lvgl_adapter_fps.c",
+    "kind": "file",
+    "bytes": 23298,
+    "sha256": "b7457f39fd39aa585a88490bdb67204aaccc92e8988431535621de096c73fb8d"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/metrics/convert_xunit_to_metric_json.py",
+    "kind": "file",
+    "bytes": 5523,
+    "sha256": "a4b0e19f5f526d3bac216aeb23e2c58f8c4c2c007f7f12e3c58970a3e86d43c5"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/metrics/schema.yml",
+    "kind": "file",
+    "bytes": 2101,
+    "sha256": "6b97fe0ad4463fee58c643c1a08f9d9e41f2a91888a1ff9b818f579ea9a68093"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/partitions.csv",
+    "kind": "file",
+    "bytes": 174,
+    "sha256": "6a7de1eea314ba7ddbfc3b4e1086b5a8f26d707d253403b8da2a1d2728291987"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/pytest_adapter_ci_smoke.py",
+    "kind": "file",
+    "bytes": 7078,
+    "sha256": "c8878e9f4357f62032afaa49bde1ee1f99818dd01be836720568baddc308b6f6"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/sdkconfig.ci.p4rev3",
+    "kind": "file",
+    "bytes": 87,
+    "sha256": "3e700d03725dd2f9c5ac035986c65b81ead7d4deec34d273a810392ced91dd1f"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/sdkconfig.ci.rgb888",
+    "kind": "file",
+    "bytes": 27,
+    "sha256": "11891b2bd68da9783dce35e30cead4999315774181cab9f8324c499ec092da02"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/sdkconfig.defaults",
+    "kind": "file",
+    "bytes": 632,
+    "sha256": "58daf6c1106f87e29d9f88a28dee778f3b21e19b93c4b1917af3e862cee7942e"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/sdkconfig.defaults.esp32p4",
+    "kind": "file",
+    "bytes": 265,
+    "sha256": "f159bd4ac24de562b55981b73cf0fa2e6769b42f77a18f1dad608eb7169a8f73"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/benchmark/sdkconfig.defaults.esp32s3",
+    "kind": "file",
+    "bytes": 212,
+    "sha256": "ea7a275d705bdb72ce61f35ee3721baf0b9533e0082b6f5de042d0ffd13532c9"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/idf_component.yml",
+    "kind": "file",
+    "bytes": 913,
+    "sha256": "56b4821fafe70129b41057e237107b0f3ecce452bb013ab054b156feac86daa0"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/include/esp_lv_adapter.h",
+    "kind": "file",
+    "bytes": 26531,
+    "sha256": "ae5520679cc1614267fdf0bc58685500b4db6816bdf9e747a43e32529ffbe22c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/include/esp_lv_adapter_display.h",
+    "kind": "file",
+    "bytes": 25154,
+    "sha256": "5197deca90d13b98e12407df534d960ab6421d103c7b74735df964bc44fc8c1c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/include/esp_lv_adapter_input.h",
+    "kind": "file",
+    "bytes": 11435,
+    "sha256": "6d5f26271a23ee1ba972364e353ac84b04155b9fb41e8273fa76816ecfe42979"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/adapter/adapter_internal.h",
+    "kind": "file",
+    "bytes": 14235,
+    "sha256": "b1d376275ff143aa121eaa7dd1cd72cbf50e18e5aba695e300f498fcbcc44327"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/adapter/esp_lv_adapter.c",
+    "kind": "file",
+    "bytes": 72534,
+    "sha256": "3aaf0e1b79c8f89afb1224f5f08957aee3e76e1ae2d9d3ae626d717a6b42b2f5"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/bridge/common/display_bridge_common.c",
+    "kind": "file",
+    "bytes": 42668,
+    "sha256": "a52fc128c46443d40fe6d2984afd40087282d98595b66e8b8b6ced92036ae66f"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/bridge/common/display_bridge_common.h",
+    "kind": "file",
+    "bytes": 20917,
+    "sha256": "759abdb662730b43ce6bcd2bc81defc012d68d751c002d9ea1068ac5d9cc9b82"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/bridge/v8/lvgl_bridge_v8.c",
+    "kind": "file",
+    "bytes": 122343,
+    "sha256": "9acf12e44c4a029fc097b0a5586de4ccc855314cfbb9a641b200afa092c34f51"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/bridge/v8/lvgl_ppa_accel_v8.c",
+    "kind": "file",
+    "bytes": 11635,
+    "sha256": "451023600815bf2bac59c5a9af95685608ec2caead8af14242d7a9c021d44b19"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/bridge/v9/lvgl_bridge_v9.c",
+    "kind": "file",
+    "bytes": 128743,
+    "sha256": "424e7ef240aee67da6a42f9f065bcdc1114393ab7ea38e4f7e449edfcb33f2ed"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/bridge/v9/lvgl_ppa_accel_v9.c",
+    "kind": "file",
+    "bytes": 29097,
+    "sha256": "3b163b322ec30395354300a7f2e379c6f4560f757cf1ff40a66051267c9ebb8c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/display_manager.c",
+    "kind": "file",
+    "bytes": 77654,
+    "sha256": "2ac198b38eff9fba7cb2d6555513a1ea4c5aaf5606a6e504131f6c60b5b5b94f"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/display_manager.h",
+    "kind": "file",
+    "bytes": 8848,
+    "sha256": "f1ee323218e47763995231dc961d83532a8f5995e57c5192d225bfaf0443f5d2"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/display_te_sync.c",
+    "kind": "file",
+    "bytes": 17215,
+    "sha256": "5c4466c5a927cedc7582c7505c03a42f6e2f0f8148ebc098d90a459b7a08e212"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/display_te_sync.h",
+    "kind": "file",
+    "bytes": 1209,
+    "sha256": "45df725e5dfc7f60e5199f644625dae4e73203668934e36c92fb26d3cbc50a35"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/ports/display_bridge.h",
+    "kind": "file",
+    "bytes": 6024,
+    "sha256": "320265b9c8cdf4039ff2f26d2e8b95d26b9f72a957d34fce717d137fce110e67"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/ports/lvgl_port_alignment.h",
+    "kind": "file",
+    "bytes": 989,
+    "sha256": "3f114c851f7a871007a0ef759c450b0af8d185590df20beb37482bf003896998"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/display/ports/lvgl_port_ppa.h",
+    "kind": "file",
+    "bytes": 818,
+    "sha256": "cfcb8c67dbf7c467c692b865312f6267f2eaecdf79c088303d66e2170edc6704"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/freetype/esp_lv_adapter_freetype_ftmodule.h",
+    "kind": "file",
+    "bytes": 891,
+    "sha256": "318726850533157cc0aa119dc6dd188c431a8abda00efc3b952d61b131a08372"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/freetype/esp_lv_adapter_freetype_ftoption.h",
+    "kind": "file",
+    "bytes": 921,
+    "sha256": "70e3c4fd8685495c767fc5a4aceb38fabd1b0fe451317ff24e71c42302007f61"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/input/button_compat.h",
+    "kind": "file",
+    "bytes": 1305,
+    "sha256": "e508fc7f5192c58dfea09c28eec5cfc7fce0faa3a6ef72f2615217267c040d89"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/input/esp_lv_adapter_input_button.c",
+    "kind": "file",
+    "bytes": 13788,
+    "sha256": "6c3cbe6e003b6ca425612c130fe62befde19dada699ce5c89821405a7842f9c6"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/input/esp_lv_adapter_input_knob.c",
+    "kind": "file",
+    "bytes": 14816,
+    "sha256": "29f014264031a6cb020aa0170602f36fb2ca436ebe0790f0f7b68f9d20a86c2e"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/src/input/esp_lv_adapter_input_touch.c",
+    "kind": "file",
+    "bytes": 51223,
+    "sha256": "213e44b7ac3190a1c0c493d24934aa7ea9d38b9d0a1280a58e6dd85219b3cd7c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 428,
+    "sha256": "40ba23c17b2276ac4b799a96891c2abe48cc811f7e99eb6d799858eaec2a0dfd"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/assets/fonts/DejaVuSans.ttf",
+    "kind": "file",
+    "bytes": 720856,
+    "sha256": "4a2438171a9144a2c698a36a64b10116c4c9db9112cd12361296f9eb0bd8cbed"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/assets/images/red_jpg.jpg",
+    "kind": "file",
+    "bytes": 731,
+    "sha256": "f5534a7911b279dd06ac50ab8b78031efa2be16fd162d97d6f1313b227eb6a73"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/assets/images/red_png.png",
+    "kind": "file",
+    "bytes": 1035,
+    "sha256": "3e072d739279ea26e956488ef58cfabc217395318455f343d260db562306270c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 1958,
+    "sha256": "3bb072b70b7cf0b8d2f4361030da501765e815f4299140b6c14fc9e5284be02d"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/helpers/lcd_orientation_helper.c",
+    "kind": "file",
+    "bytes": 3502,
+    "sha256": "87e9158941f12631a5a9fa4c26a23a1d1c77770cc914fb0f0d72dfde7ea13c18"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/helpers/lcd_orientation_helper.h",
+    "kind": "file",
+    "bytes": 495,
+    "sha256": "5f7070db7747ef4095cd96a339388765081ae2d3888493734c5523dadfccc28c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/hw_init.c",
+    "kind": "file",
+    "bytes": 452,
+    "sha256": "fac7c4b0992c1784792ea8441ae3869b622c39184c278003aa91e7ff745b0306"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/hw_init.h",
+    "kind": "file",
+    "bytes": 1939,
+    "sha256": "6e37f683aa6ac679efc6820de7a5926fa2243ff1b4aaef60362bd66736c66a61"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/idf_component.yml",
+    "kind": "file",
+    "bytes": 421,
+    "sha256": "6e29a0f5d5c4d263d01fbc6b99542e8f56ba5fe90b158f1756f6991e751c97cd"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/input/knob_init.c",
+    "kind": "file",
+    "bytes": 1675,
+    "sha256": "f8795687efb0137866662b2cb742e5d02e5932962dac7a740de2d3ce365f693d"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/input/touch_init.c",
+    "kind": "file",
+    "bytes": 6451,
+    "sha256": "e170b120575581d0771f5638e0960fe8f60a2136764ef0a7778b3ede1985adb2"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/input/touch_rotation_helper.c",
+    "kind": "file",
+    "bytes": 1961,
+    "sha256": "bc6c2ab0cb72a9829acbb0315650b26c214f1de93ebaf09feabc0572d97bcb08"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/input/touch_rotation_helper.h",
+    "kind": "file",
+    "bytes": 530,
+    "sha256": "1296e8ca345c1ae90ae895300d4d5f90bdbcefbd0f585c6d45b99df355c45ac4"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/lcd/lcd_init_mipi_dsi.c",
+    "kind": "file",
+    "bytes": 3857,
+    "sha256": "c7d20e670b3dc4e6e53df450a88403951c5f6421275d4f0afefc3c78734013fb"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/lcd/lcd_init_spi_with_psram.c",
+    "kind": "file",
+    "bytes": 5950,
+    "sha256": "d723b53a4ebc558b48e5d0b52adf766f23de8b8230b3de656fb59f77bf313107"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/components/hw_init/lcd/lcd_init_spi_without_psram.c",
+    "kind": "file",
+    "bytes": 4399,
+    "sha256": "b6efaa0ce31b6f00b2fe6b57dc6da52899462638d6e3aaee2de591236ce67d0c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/main/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 974,
+    "sha256": "7332b65b19e3873156904a0d1cfb433886ca81d8c48bea288adb8f9933001114"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/main/idf_component.yml",
+    "kind": "file",
+    "bytes": 165,
+    "sha256": "c7e1c35dc23286d9c123bf6b9c727f2419b263139cdd8d2083e3001d4294505f"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/main/mmap_generate_fonts.h",
+    "kind": "file",
+    "bytes": 427,
+    "sha256": "7ff427ac648b518da9c3842d74f385131de5442999dcdc690f4645e79a93d069"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/main/mmap_generate_images.h",
+    "kind": "file",
+    "bytes": 485,
+    "sha256": "7cd495baba7bd7ba86d59a7373ed8d905c6173dfe9fc4dd320d1c1f3696b500a"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/main/test_esp_lvgl_adapter_features.c",
+    "kind": "file",
+    "bytes": 14419,
+    "sha256": "6f651294e4f26cbded42f655d4e1731b74b51428ca0266a3fb13e56e8b01289b"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/partitions.csv",
+    "kind": "file",
+    "bytes": 260,
+    "sha256": "c7715aa9a181bc281a128730c0be8dc8cd3996fb8d7eca6502980a37c7b0f016"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/pytest_adapter_lvgl8.py",
+    "kind": "file",
+    "bytes": 5483,
+    "sha256": "e0d4a25ce5a43eb0d7100c7d97e2ee0c0f9e0c58694b9abc323f7b818b45ff3b"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/sdkconfig.ci.p4rev3",
+    "kind": "file",
+    "bytes": 87,
+    "sha256": "3e700d03725dd2f9c5ac035986c65b81ead7d4deec34d273a810392ced91dd1f"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/sdkconfig.defaults",
+    "kind": "file",
+    "bytes": 642,
+    "sha256": "9ea2be56459ab6cc9ef79880e0ad9d48b5d0d527bb06ff726fec9efeca4862d2"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/sdkconfig.defaults.esp32c3",
+    "kind": "file",
+    "bytes": 291,
+    "sha256": "444e495591f98bb5e028fcc18e352e8899508e3972862ace97dda3b1ad7b990f"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/sdkconfig.defaults.esp32p4",
+    "kind": "file",
+    "bytes": 495,
+    "sha256": "388b947fc44168f4f0228ae99cbd397d570eb58cc8c60f9e445b51c11efe92a5"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl8/sdkconfig.defaults.esp32s3",
+    "kind": "file",
+    "bytes": 473,
+    "sha256": "72716f57bea6d7448cc5692777c9b388f638963b10a5f5906f72f2cc8aab5263"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 428,
+    "sha256": "75811d596fd91ee1227a3904ea3521d8989cbb9a8ab24b3376dcde34b3ce641e"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/assets/fonts/DejaVuSans.ttf",
+    "kind": "file",
+    "bytes": 720856,
+    "sha256": "4a2438171a9144a2c698a36a64b10116c4c9db9112cd12361296f9eb0bd8cbed"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/assets/images/red_jpg.jpg",
+    "kind": "file",
+    "bytes": 731,
+    "sha256": "f5534a7911b279dd06ac50ab8b78031efa2be16fd162d97d6f1313b227eb6a73"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/assets/images/red_png.png",
+    "kind": "file",
+    "bytes": 1035,
+    "sha256": "3e072d739279ea26e956488ef58cfabc217395318455f343d260db562306270c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 1958,
+    "sha256": "3bb072b70b7cf0b8d2f4361030da501765e815f4299140b6c14fc9e5284be02d"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/helpers/lcd_orientation_helper.c",
+    "kind": "file",
+    "bytes": 3502,
+    "sha256": "87e9158941f12631a5a9fa4c26a23a1d1c77770cc914fb0f0d72dfde7ea13c18"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/helpers/lcd_orientation_helper.h",
+    "kind": "file",
+    "bytes": 495,
+    "sha256": "5f7070db7747ef4095cd96a339388765081ae2d3888493734c5523dadfccc28c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/hw_init.c",
+    "kind": "file",
+    "bytes": 452,
+    "sha256": "fac7c4b0992c1784792ea8441ae3869b622c39184c278003aa91e7ff745b0306"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/hw_init.h",
+    "kind": "file",
+    "bytes": 1939,
+    "sha256": "6e37f683aa6ac679efc6820de7a5926fa2243ff1b4aaef60362bd66736c66a61"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/idf_component.yml",
+    "kind": "file",
+    "bytes": 421,
+    "sha256": "6e29a0f5d5c4d263d01fbc6b99542e8f56ba5fe90b158f1756f6991e751c97cd"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/input/knob_init.c",
+    "kind": "file",
+    "bytes": 1675,
+    "sha256": "f8795687efb0137866662b2cb742e5d02e5932962dac7a740de2d3ce365f693d"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/input/touch_init.c",
+    "kind": "file",
+    "bytes": 6451,
+    "sha256": "e170b120575581d0771f5638e0960fe8f60a2136764ef0a7778b3ede1985adb2"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/input/touch_rotation_helper.c",
+    "kind": "file",
+    "bytes": 1961,
+    "sha256": "bc6c2ab0cb72a9829acbb0315650b26c214f1de93ebaf09feabc0572d97bcb08"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/input/touch_rotation_helper.h",
+    "kind": "file",
+    "bytes": 530,
+    "sha256": "1296e8ca345c1ae90ae895300d4d5f90bdbcefbd0f585c6d45b99df355c45ac4"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/lcd/lcd_init_mipi_dsi.c",
+    "kind": "file",
+    "bytes": 3857,
+    "sha256": "c7d20e670b3dc4e6e53df450a88403951c5f6421275d4f0afefc3c78734013fb"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/lcd/lcd_init_spi_with_psram.c",
+    "kind": "file",
+    "bytes": 5950,
+    "sha256": "d723b53a4ebc558b48e5d0b52adf766f23de8b8230b3de656fb59f77bf313107"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/components/hw_init/lcd/lcd_init_spi_without_psram.c",
+    "kind": "file",
+    "bytes": 4399,
+    "sha256": "b6efaa0ce31b6f00b2fe6b57dc6da52899462638d6e3aaee2de591236ce67d0c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/main/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 974,
+    "sha256": "7332b65b19e3873156904a0d1cfb433886ca81d8c48bea288adb8f9933001114"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/main/idf_component.yml",
+    "kind": "file",
+    "bytes": 165,
+    "sha256": "d868abe6f5e767282565d70a8fced51c3f4591328add68b7e6c39a1e4be89a71"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/main/mmap_generate_fonts.h",
+    "kind": "file",
+    "bytes": 427,
+    "sha256": "7ff427ac648b518da9c3842d74f385131de5442999dcdc690f4645e79a93d069"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/main/mmap_generate_images.h",
+    "kind": "file",
+    "bytes": 485,
+    "sha256": "7cd495baba7bd7ba86d59a7373ed8d905c6173dfe9fc4dd320d1c1f3696b500a"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/main/test_esp_lvgl_adapter_features.c",
+    "kind": "file",
+    "bytes": 15007,
+    "sha256": "4bed9aab93f9d333da54d8cbca429aa96d3f98e757d576916cd0b5efd4f2f231"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/partitions.csv",
+    "kind": "file",
+    "bytes": 260,
+    "sha256": "c7715aa9a181bc281a128730c0be8dc8cd3996fb8d7eca6502980a37c7b0f016"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/pytest_adapter_lvgl9.py",
+    "kind": "file",
+    "bytes": 5482,
+    "sha256": "4e8adb5f0c0e0cc85d7addc2f81e1c5ad0ac823fb84916eaedcd39e7bf555dff"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/sdkconfig.ci.p4rev3",
+    "kind": "file",
+    "bytes": 87,
+    "sha256": "3e700d03725dd2f9c5ac035986c65b81ead7d4deec34d273a810392ced91dd1f"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/sdkconfig.defaults",
+    "kind": "file",
+    "bytes": 1027,
+    "sha256": "7c8213bfc1f147cb6a2ef1d538dcc3dc8bd1b1c5c2929622fed6c28171e8ffde"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/sdkconfig.defaults.esp32c3",
+    "kind": "file",
+    "bytes": 162,
+    "sha256": "b9a6ef4d74fc3125731bf43e75fc1c189754ef006e8e71b946351b9c49ea354d"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/sdkconfig.defaults.esp32p4",
+    "kind": "file",
+    "bytes": 405,
+    "sha256": "540953536eaf7db422e936a02cc30688af40cf86666973001ae08ef4acdd354c"
+  },
+  {
+    "path": "components/espressif__esp_lvgl_adapter/test_apps/lvgl9/sdkconfig.defaults.esp32s3",
+    "kind": "file",
+    "bytes": 425,
+    "sha256": "5d67f9874ddde2587fd08a8b4021dd3ef059b65790191db7aeaacd179d27c684"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/.component_hash",
+    "kind": "file",
+    "bytes": 64,
+    "sha256": "41c8fd69b80da3c9518a00fd639a03fc717ae8070a55510045b44f617de55f7b"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/CHECKSUMS.json",
+    "kind": "file",
+    "bytes": 1500,
+    "sha256": "1c3b40f9e5ea3cc9f1bfbe97d1b00acc1916b5acc981f56c49e1b441c018543c"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 557,
+    "sha256": "93a4296767641478746149085e22e9013ff41f2df95a7d400c511d53974e52fd"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/Kconfig",
+    "kind": "file",
+    "bytes": 2933,
+    "sha256": "95a609d2347eab1daf8d59d2505bf4516dbfceaf0c4090c3475826d7850a3454"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/LICENSE",
+    "kind": "file",
+    "bytes": 11358,
+    "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/README.md",
+    "kind": "file",
+    "bytes": 637,
+    "sha256": "7f8e0a6e9c25bd60ed86023becb044a98c1615a71498c53a5a0f04b576a01d0a"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/esp32_s3_touch_amoled_1_75c.c",
+    "kind": "file",
+    "bytes": 19039,
+    "sha256": "c57b0ead6714ac6c6bf20a8181505b567a2ff57c024de7fe90cb3161fd1a1db8"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/idf_component.yml",
+    "kind": "file",
+    "bytes": 724,
+    "sha256": "a3e186931a83c91602cee07f6565bd34b139e4dbc5cf7f387ebdc69e61901697"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/include/bsp/config.h",
+    "kind": "file",
+    "bytes": 575,
+    "sha256": "9c2b3229543db1cebb75cdc9a1411f24480543b410cc12a6263553dcbfcc9dec"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/include/bsp/display.h",
+    "kind": "file",
+    "bytes": 3623,
+    "sha256": "4f59347f6822ab486c0286e8a5aa5e66c510b0fd380fa34ec593d667066b517f"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/include/bsp/esp-bsp.h",
+    "kind": "file",
+    "bytes": 58,
+    "sha256": "85ec4aa21825e034a0a820e20b910539f99a6a5381a609340ec798673d38238a"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/include/bsp/esp32_s3_touch_amoled_1_75c.h",
+    "kind": "file",
+    "bytes": 8610,
+    "sha256": "08daff1f681e40f333d05fde61f304b1c8b82186bcfc818eb3b33e73dcabf1a2"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/include/bsp/touch.h",
+    "kind": "file",
+    "bytes": 743,
+    "sha256": "392994093891b0d16b1976fd4a85de9585853f8762431c6612edbc699f9d2c4f"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/lcd_partial_te.c",
+    "kind": "file",
+    "bytes": 4954,
+    "sha256": "4c374633c5cb0c8c0c16b67aa7dbf2246bbab0c9e2a85ea248dd9571051858de"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/lcd_partial_te.h",
+    "kind": "file",
+    "bytes": 208,
+    "sha256": "2a7d9e3393b84edc58ec96bc05d1e78b336c50ac45ed7eb0b4b891ffb5bf39c7"
+  },
+  {
+    "path": "components/waveshare__esp32_s3_touch_amoled_1_75c/priv_include/bsp_err_check.h",
+    "kind": "file",
+    "bytes": 1502,
+    "sha256": "63599e8d8623716579e7cda929e0656fe71e9d8640025140fa3c8c85d37f5c97"
+  },
+  {
+    "path": "dependencies.lock",
+    "kind": "file",
+    "bytes": 9810,
+    "sha256": "9784e8828862c06dd8d46bf0ba4706d3040fdbe2c0677e996f0b9d6a4ad6f25a"
+  },
+  {
+    "path": "main/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 1240,
+    "sha256": "49769646869c1b9dcac3b9daafaf20ea234965e1db9b4e7d7263ca9705db90e1"
+  },
+  {
+    "path": "main/assets/FONT-PROVENANCE.txt",
+    "kind": "file",
+    "bytes": 650,
+    "sha256": "271e0f64c0adb62b28916541531ab0d345ebd436f5430caea38137c5f94d3e56"
+  },
+  {
+    "path": "main/assets/OFL-1.1.txt",
+    "kind": "file",
+    "bytes": 4301,
+    "sha256": "6a73f9541c2de74158c0e7cf6b0a58ef774f5a780bf191f2d7ec9cc53efe2bf2"
+  },
+  {
+    "path": "main/assets/badge_f16.c",
+    "kind": "file",
+    "bytes": 272796,
+    "sha256": "6a5570656e2ac4fc6eb95d80377fa07772407de395473257651ea1775b8b5b04"
+  },
+  {
+    "path": "main/assets/badge_f20.c",
+    "kind": "file",
+    "bytes": 4910489,
+    "sha256": "0069e6535d1522901a762514c7374706a4758b497933abf92f6c0f6a8f525b7e"
+  },
+  {
+    "path": "main/assets/badge_f24.c",
+    "kind": "file",
+    "bytes": 523674,
+    "sha256": "d9662fe0ac06c35691a92a61f1d48234279f581e4824eacba68ae0cf8da55d74"
+  },
+  {
+    "path": "main/assets/badge_n40.c",
+    "kind": "file",
+    "bytes": 23623,
+    "sha256": "b3598309b57945e0cd73ba8884e3cd987d8add50d3b810df6bc8e5bd1e16afe6"
+  },
+  {
+    "path": "main/assets/cat-sprites-manifest.json",
+    "kind": "file",
+    "bytes": 1172,
+    "sha256": "3f8e1ef86b8f72251b9ea88174224d853bbac34fddde5f4d7f6b73c29b4036d3"
+  },
+  {
+    "path": "main/assets/cat_idle.c",
+    "kind": "file",
+    "bytes": 675612,
+    "sha256": "8889cf5d443b6c6a58af8577bdd17fc2c51107394fe35b721a09a725f509e649"
+  },
+  {
+    "path": "main/assets/cat_paw.c",
+    "kind": "file",
+    "bytes": 675608,
+    "sha256": "8d2918a5198fa991820c24f01b0f5d5b4ef2da2e8de427a437178cdca034e179"
+  },
+  {
+    "path": "main/assets/game-font-provenance.json",
+    "kind": "file",
+    "bytes": 776,
+    "sha256": "9f8f998d04e6b57f4b5ae194a3080190fba2dd00a7d4f43c25d4441de3637d5a"
+  },
+  {
+    "path": "main/assets/game_assets.c",
+    "kind": "file",
+    "bytes": 1832,
+    "sha256": "784da17bd3d13d87c65db621b69aba35d762e34b58f9af9cd047e0bc1b99e74c"
+  },
+  {
+    "path": "main/assets/game_assets.h",
+    "kind": "file",
+    "bytes": 2919,
+    "sha256": "395599c7e352fc15e574c8ea305a6e11833970bbbca7737cb14b0b7c365133e0"
+  },
+  {
+    "path": "main/assets/game_attention.c",
+    "kind": "file",
+    "bytes": 3051393,
+    "sha256": "13b47a2e62494f446e15d00838fc38917d6d347c4abecf74810987c9941a6d5a"
+  },
+  {
+    "path": "main/assets/game_idle.c",
+    "kind": "file",
+    "bytes": 5085177,
+    "sha256": "b4c07dd70b586b604832069fb61f27f763f442acc94c383adc246f59c2c9e0cf"
+  },
+  {
+    "path": "main/assets/game_pet.c",
+    "kind": "file",
+    "bytes": 6102093,
+    "sha256": "d44993d78560bcadf395b86a63528cca41135c08cee7d3782aa68b584c451033"
+  },
+  {
+    "path": "main/assets/game_walk.c",
+    "kind": "file",
+    "bytes": 2542647,
+    "sha256": "f1f2c60dc74cbe2771b679bd83c917b0d690d788807fa63ada7844c6a96bade7"
+  },
+  {
+    "path": "main/assets/local2-title-font-provenance.json",
+    "kind": "file",
+    "bytes": 1102,
+    "sha256": "1e58e473bf845bc155736879c32ac8be753129b825eb7fc1931fb4ed8191b383"
+  },
+  {
+    "path": "main/assets/local2_fonts.c",
+    "kind": "file",
+    "bytes": 529,
+    "sha256": "4816fc3be0586bb9d51fc8003f23e759f16d6437cec345eb33ccb40cf2036999"
+  },
+  {
+    "path": "main/assets/local2_fonts.h",
+    "kind": "file",
+    "bytes": 201,
+    "sha256": "134b55da2e87ad25ec1565f861dd2ba80feec280cb1b74cbdbebd48055faf782"
+  },
+  {
+    "path": "main/assets/local2_same_size_glyphs.inc",
+    "kind": "file",
+    "bytes": 4837436,
+    "sha256": "70d8c93fba91cebf5ad0ae6637badd3effd4aa5506828b3a13fb38f1674f586a"
+  },
+  {
+    "path": "main/assets/local2_title_glyph.inc",
+    "kind": "file",
+    "bytes": 5414,
+    "sha256": "208a2641afd7ba26ca6d462498924955f5128f4708643dd30b738d9903d815a1"
+  },
+  {
+    "path": "main/assets/ui-contract-source.json",
+    "kind": "file",
+    "bytes": 3970,
+    "sha256": "9d03d76a68a430bfbd9104e00a7eb9d07da2cb89b1884b56a7368b22904d92e4"
+  },
+  {
+    "path": "main/assets/warm-room.rgb565",
+    "kind": "file",
+    "bytes": 434312,
+    "sha256": "e254c78b1345cff0c5d174b4d5021e62387ac564879b324b9aca4f2736f72878"
+  },
+  {
+    "path": "main/assets/warm_room.c",
+    "kind": "file",
+    "bytes": 348,
+    "sha256": "2fed3af362d8e3ba85308b249ea18e9aff49ec15c2dddabf8c0053fb121f130f"
+  },
+  {
+    "path": "main/badge.h",
+    "kind": "file",
+    "bytes": 1350,
+    "sha256": "3bef73b259f8854da0599c3a5cbcf2ba881153735df4469e3bf3cdfc6d841998"
+  },
+  {
+    "path": "main/badge_ble.c",
+    "kind": "file",
+    "bytes": 11405,
+    "sha256": "5ec70dda848e45d27139178df315012abb7345d3a47433da903820e553a38d27"
+  },
+  {
+    "path": "main/badge_day_ui.inc",
+    "kind": "file",
+    "bytes": 9988,
+    "sha256": "01b2389c720ec9fba2132248189704c83440cca9e75cdf7565432a67274a7b16"
+  },
+  {
+    "path": "main/badge_diagnostics.c",
+    "kind": "file",
+    "bytes": 12830,
+    "sha256": "0af48d64cbc83af826772c7010825ac4630a6240de7db8078be7458809aaf373"
+  },
+  {
+    "path": "main/badge_diagnostics.h",
+    "kind": "file",
+    "bytes": 489,
+    "sha256": "e3729bc6878c02bff281ede2373cc7e1690b622c70d6cff5155d42c9feb75ace"
+  },
+  {
+    "path": "main/badge_display_capture.h",
+    "kind": "file",
+    "bytes": 1978,
+    "sha256": "a8e6df877539bc37422a61952e1bef8981bc331f3c65104f39e4b8031399ad90"
+  },
+  {
+    "path": "main/badge_gesture.c",
+    "kind": "file",
+    "bytes": 1978,
+    "sha256": "7c1287c077dfd17fb29bacf0aa5ef1eecf37561c5d454caed0ac0a1755b0ae16"
+  },
+  {
+    "path": "main/badge_gesture.h",
+    "kind": "file",
+    "bytes": 962,
+    "sha256": "a5eaf6b238e043eb4d4b6dc286108437108744801e111d9ec731e7a9ef9dc2ba"
+  },
+  {
+    "path": "main/badge_local2_facade.c",
+    "kind": "file",
+    "bytes": 2914,
+    "sha256": "4dea03de06fe6a739c05cefdf41e465d51c8678de3e13391f36479780db3ebea"
+  },
+  {
+    "path": "main/badge_pages.c",
+    "kind": "file",
+    "bytes": 84927,
+    "sha256": "4e9e4be0c4b46655a880a08dabadba9dc2247e7f91169ef21da5e79db87df378"
+  },
+  {
+    "path": "main/badge_scene.c",
+    "kind": "file",
+    "bytes": 22832,
+    "sha256": "edeaf90fafba203e0a80b76b18401b27418bfaf3b50269bb84ad5c63bc94a876"
+  },
+  {
+    "path": "main/badge_scene.h",
+    "kind": "file",
+    "bytes": 2746,
+    "sha256": "b56d9bce4ad0d81a57273d18d3f55117b5d6b6c7c7b3ebba0109a78e6914e5a5"
+  },
+  {
+    "path": "main/badge_state.c",
+    "kind": "file",
+    "bytes": 11032,
+    "sha256": "2213d540323cec507d6532de7e078248b1d104de0998174cfa50a5377ca53481"
+  },
+  {
+    "path": "main/badge_ui_contract.h",
+    "kind": "file",
+    "bytes": 1292,
+    "sha256": "a8338e96c5cdf62ba183630bdcf3eff04f4394c6c0c87098e47c738242653f8c"
+  },
+  {
+    "path": "main/badge_ui_targets.h",
+    "kind": "file",
+    "bytes": 827,
+    "sha256": "bd195d42df68382be63becbc41e2614d94bb5c2a8e202c2da3e1ec8ddf2bcaef"
+  },
+  {
+    "path": "main/badge_wire.c",
+    "kind": "file",
+    "bytes": 1241,
+    "sha256": "99a767fe1f8e2d14f672271983a61fee5e17928e73e00cb3efee3cb30024dd97"
+  },
+  {
+    "path": "main/badge_wire.h",
+    "kind": "file",
+    "bytes": 194,
+    "sha256": "a927d49bdf0ca89ae414568bdaa11dede8cda5e745dc7f0329f4dc96ffffb563"
+  },
+  {
+    "path": "main/idf_component.yml",
+    "kind": "file",
+    "bytes": 151,
+    "sha256": "91b34edb60b90fb0e42be67fa63b32228b777e610d318d34e4bc82009fc4eae6"
+  },
+  {
+    "path": "main/local2_ble.c",
+    "kind": "file",
+    "bytes": 9508,
+    "sha256": "2994586896b606620f3c6c67bbe2bc0237ff2a2953f334e1e564d6ffef23e98f"
+  },
+  {
+    "path": "main/local2_ble.h",
+    "kind": "file",
+    "bytes": 123,
+    "sha256": "4e6af8464df779637f99dfa2593dbcb4eba8e439b8e683731abae855d83249a2"
+  },
+  {
+    "path": "main/local2_core.c",
+    "kind": "file",
+    "bytes": 26219,
+    "sha256": "725970b202753fae5bcd2199e97a82f8b0dc75720fd48dd64e0977dfa75ff612"
+  },
+  {
+    "path": "main/local2_core.h",
+    "kind": "file",
+    "bytes": 5619,
+    "sha256": "2786b78de3fea84ac967a912189c6e8cc79853976c74ce2f1b60e1753b7a03a4"
+  },
+  {
+    "path": "main/local2_day.c",
+    "kind": "file",
+    "bytes": 7237,
+    "sha256": "54d672adfa4ecdfdf307d76a8d1fc330d509420c791526ce4ba2d00b8ddc3670"
+  },
+  {
+    "path": "main/local2_day.h",
+    "kind": "file",
+    "bytes": 663,
+    "sha256": "13d92a2683124a98549faa3a6de4a15495e365f5c28650006074d9819ee795f6"
+  },
+  {
+    "path": "main/local2_peer.c",
+    "kind": "file",
+    "bytes": 23483,
+    "sha256": "b44a779663229e51c7b6f37d65b3945f56ff52e42b1cda95867349f6199a7e16"
+  },
+  {
+    "path": "main/local2_peer.h",
+    "kind": "file",
+    "bytes": 2748,
+    "sha256": "3eb6e24ecdcb765839ce0785b87a2b31d958122734ec6ba6525a506f9fecc807"
+  },
+  {
+    "path": "main/local2_store.c",
+    "kind": "file",
+    "bytes": 3034,
+    "sha256": "d0b3ffa1097888d26e27e4f8a2304735c4e84be14244c28af8d73e8911061610"
+  },
+  {
+    "path": "main/local2_store.h",
+    "kind": "file",
+    "bytes": 613,
+    "sha256": "74be87b32c9db82ff5ecd0309cba84706883463224444bfcf90856f2363b837e"
+  },
+  {
+    "path": "main/local2_wire.c",
+    "kind": "file",
+    "bytes": 16951,
+    "sha256": "0cc9ba045b7d75fad7ba0ea0fccd85ea875fc42372f31166f73a09b9d071d907"
+  },
+  {
+    "path": "main/local2_wire.h",
+    "kind": "file",
+    "bytes": 378,
+    "sha256": "09c756b30ad7f84a8d1e28cf704792410807898855773747a022b23c7a2cf5a6"
+  },
+  {
+    "path": "main/main.c",
+    "kind": "file",
+    "bytes": 804,
+    "sha256": "173d065fe68cd53b471ced4cabdcdc6dcd9a771100977049059dec5a15cfae35"
+  },
+  {
+    "path": "managed_components",
+    "kind": "symlink",
+    "target": "/Users/zoumutou/coding/\u732b\u54aa\u68ee\u6d3b/firmware/managed_components",
+    "sha256": "15e77f6c0a56bf3bdba32d18b846c647526287503688a2b25ea8199ca930e305"
+  },
+  {
+    "path": "partitions.csv",
+    "kind": "file",
+    "bytes": 366,
+    "sha256": "09fc932049fe06c1eb696b49af5ea7c1f50866ba6212433ca2e7d16be779a648"
+  },
+  {
+    "path": "private/lvgl_mask_pool/LICENCE.txt",
+    "kind": "file",
+    "bytes": 1072,
+    "sha256": "27a80bd36832ab42d35ad60c08b2b230a807a9bc0d58e94ec1531543dc49cbe8"
+  },
+  {
+    "path": "private/lvgl_mask_pool/catforest_mask_pool.inc",
+    "kind": "file",
+    "bytes": 7184,
+    "sha256": "87398a51fcf5d733c8cf62bc06a02cf64f792c659935ec0c9b5a6b34c33b665d"
+  },
+  {
+    "path": "private/lvgl_mask_pool/lv_draw_sw_mask.c",
+    "kind": "file",
+    "bytes": 45261,
+    "sha256": "e08181e1c661fd56031515b5b6af9c642a03b58e95fa2be97bf9227c3dbd1d13"
+  },
+  {
+    "path": "sdkconfig",
+    "kind": "file",
+    "bytes": 102742,
+    "sha256": "88df424825108174dab79a95ca66fdba8040609f25c480690b56dbb8151967e1"
+  },
+  {
+    "path": "sdkconfig.defaults",
+    "kind": "file",
+    "bytes": 1516,
+    "sha256": "adc1ca9576822f4cd709db903ef1d56ce379208e49dd773e91919612456b5ea2"
+  },
+  {
+    "path": "tools/host_preview/CMakeLists.txt",
+    "kind": "file",
+    "bytes": 1701,
+    "sha256": "37146e157c223aef7360153005f61bc1a6c123bc1501ea5708893ee90430a1c2"
+  },
+  {
+    "path": "tools/host_preview/FINAL-UI-REPORT.md",
+    "kind": "file",
+    "bytes": 380,
+    "sha256": "15d5b09315d18dcb077474997851582c66a82ae5a7a96cfa3d75ad7f99dd9ee2"
+  },
+  {
+    "path": "tools/host_preview/README.md",
+    "kind": "file",
+    "bytes": 581,
+    "sha256": "2254a7b958abeb3d578bf2fbd6f31f08fc3dd9da2f326d547f62eeca0d55b56d"
+  },
+  {
+    "path": "tools/host_preview/UI-HANDOFF.md",
+    "kind": "file",
+    "bytes": 220,
+    "sha256": "d6ac151099314259cfb8480de3cb14973c4bc2a29bf87e92e401aa2c30cc1d83"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs/driver/usb_serial_jtag.h",
+    "kind": "file",
+    "bytes": 513,
+    "sha256": "1fb5a75e18cf062ddac2f0b9007422d31df08861abfad4b4da379549f7e2d361"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs/driver/usb_serial_jtag_vfs.h",
+    "kind": "file",
+    "bytes": 104,
+    "sha256": "4c56ce9653bc6cfafc528fc82942dc83d8b075b8832c2c5bf8156a97f064a974"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs/esp_heap_caps.h",
+    "kind": "file",
+    "bytes": 368,
+    "sha256": "59e1d9bc6eb106b826838d3f66d5214b2a6032442d042e7f913adb5dbbd5b6a6"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs/esp_memory_utils.h",
+    "kind": "file",
+    "bytes": 101,
+    "sha256": "beb94f56e60d9ce4c98be7b54b17a55129d2464131d3a3dfaab827f8503f151f"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs/esp_rom_crc.h",
+    "kind": "file",
+    "bytes": 94,
+    "sha256": "c8e8f57b40ad251a727e6acff003d22a38932c79e55674c6ae9e8a9f1219679d"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs/freertos/FreeRTOS.h",
+    "kind": "file",
+    "bytes": 108,
+    "sha256": "24b7484487ee2b236b451691f7e6c14dbdc53b0336ee006014c9114d281da052"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs/freertos/task.h",
+    "kind": "file",
+    "bytes": 138,
+    "sha256": "aeb92094cfac2d2bc33c4d876f221dc4699b8e36709b1699e708d1b7a5e69ec4"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs/mbedtls/base64.h",
+    "kind": "file",
+    "bytes": 119,
+    "sha256": "73a1cd3b1646a61bb7cc25a7f06fefda4bcde2b9287965e54e7b459659c88c25"
+  },
+  {
+    "path": "tools/host_preview/diag_stubs.c",
+    "kind": "file",
+    "bytes": 202,
+    "sha256": "fa3da35fbbc9bec9e41a1d757dc5a18d4af6ad3b4c400fae2d2c43545dca68db"
+  },
+  {
+    "path": "tools/host_preview/diag_test.c",
+    "kind": "file",
+    "bytes": 7152,
+    "sha256": "2587cc514d7d9fbbe9aec1eee3da001095922efb511cf99754b4847fa9d9c49f"
+  },
+  {
+    "path": "tools/host_preview/export_motion.py",
+    "kind": "file",
+    "bytes": 3235,
+    "sha256": "6ab481f73cc7f816cc4a0c49374dd61f1e4f88c42587284758471fe9806bf039"
+  },
+  {
+    "path": "tools/host_preview/font_codepoints.h",
+    "kind": "file",
+    "bytes": 22988,
+    "sha256": "ebbe47b301f59c95ba103e6eec9de04591ba9dbca21ae33d10c715d254b34b6a"
+  },
+  {
+    "path": "tools/host_preview/lv_conf.h",
+    "kind": "file",
+    "bytes": 625,
+    "sha256": "168fe95b547c5a65b3e097c5bda7272f69dd7ef2a8f970f515d425f334f0a245"
+  },
+  {
+    "path": "tools/host_preview/preview.c",
+    "kind": "file",
+    "bytes": 41559,
+    "sha256": "2d0465db85a26f1d74eca1879b312f0df2d3f07a8e551e03fe33133bf30ee2cd"
+  },
+  {
+    "path": "tools/host_preview/replay_virtual_peer.py",
+    "kind": "file",
+    "bytes": 7474,
+    "sha256": "7f89d1e65ed0df17189f6d7386ea951dfa49ab6a92dc6f644215870133fc9d51"
+  },
+  {
+    "path": "tools/host_preview/run_preview.py",
+    "kind": "file",
+    "bytes": 10665,
+    "sha256": "f20e9d520330e0065ed9ad91d43919f0be36c466d7fb7cf79cd92f2b457cc058"
+  },
+  {
+    "path": "tools/host_preview/stubs/bsp/display.h",
+    "kind": "file",
+    "bytes": 34,
+    "sha256": "01488f28c2ca38bfb3307b66326b9e1eeb01868b338c247c61985548f83060a0"
+  },
+  {
+    "path": "tools/host_preview/stubs/bsp/esp-bsp.h",
+    "kind": "file",
+    "bytes": 264,
+    "sha256": "9edfed81f86178280a270d0d002d76be7737ca82441fecdbc339bfc54a189569"
+  },
+  {
+    "path": "tools/host_preview/stubs/esp_app_desc.h",
+    "kind": "file",
+    "bytes": 117,
+    "sha256": "81bed3f57d4ff78adea364ef430f99050717b2950b7caee432bb611bee85478d"
+  },
+  {
+    "path": "tools/host_preview/stubs/esp_err.h",
+    "kind": "file",
+    "bytes": 110,
+    "sha256": "237c22a3769adc167cf482b3d9f00f9d26e8872db27b4e7a3dd5b7e364481498"
+  },
+  {
+    "path": "tools/host_preview/stubs/esp_log.h",
+    "kind": "file",
+    "bytes": 248,
+    "sha256": "dcccbde410e2682600467cd0c53565b510343c4f7d9502fbad95fafff97a4e16"
+  },
+  {
+    "path": "tools/host_preview/stubs/esp_timer.h",
+    "kind": "file",
+    "bytes": 135,
+    "sha256": "de61395c4018271fdad68e7b5a3b7e3bf7b4706ab8cbb17e327ab46f4c093d2f"
+  },
+  {
+    "path": "tools/host_preview/stubs/nvs.h",
+    "kind": "file",
+    "bytes": 367,
+    "sha256": "f6e12180af7b82b5a8855ea541a6a217420465080ff210f3948f1c9f2a47042d"
+  },
+  {
+    "path": "tools/host_preview/toast_cases.inc",
+    "kind": "file",
+    "bytes": 838,
+    "sha256": "94b977962be7bbd86eb5a9d6e19df3e76c9df64fc425221d72c123f7533dcf1b"
+  }
+]

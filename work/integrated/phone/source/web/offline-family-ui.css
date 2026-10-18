@@ -1,0 +1,19 @@
+/* The old renderer keeps this node; its current-cat breed changer is not an entry. */
+#shop-panel #breed-list{display:none!important}
+.offline-adopt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0 16px}
+.offline-adopt-card{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-width:48px;min-height:112px;padding:12px 8px;box-sizing:border-box;border:2px solid #938a73;border-radius:12px;background:#fffaf0;color:#3a493e;font:inherit;font-weight:700;line-height:1.5;white-space:normal;overflow-wrap:anywhere;cursor:pointer}
+.offline-adopt-card[aria-pressed=true]{border-color:#3b6150;background:#e2eddf;color:#254635}
+.offline-adopt-card:focus-visible{outline:3px solid #345c8a;outline-offset:2px}
+.offline-adopt-card:disabled{opacity:1;background:#eee9df;color:#57554c;cursor:default}
+.offline-adopt-card .breed-face{display:block;width:64px;height:54px;flex:none;pointer-events:none}
+#family-panel .adopt-controls>*{min-width:0;min-height:48px;box-sizing:border-box}
+#family-panel .adopt-controls{flex-wrap:wrap}
+#offline-adopt-note{overflow-wrap:anywhere}
+#shop-panel button.life-button{min-height:48px}
+#family-panel .adopt-controls>select,#family-panel .adopt-controls>input{font:inherit;line-height:1.5;color:#3a493e;background-color:#fffaf0;border:1px solid #938a73;border-radius:8px;padding:10px 12px}
+#family-panel .adopt-controls>select{appearance:none;-webkit-appearance:none;padding-right:30px;background-image:linear-gradient(45deg,transparent 50%,#3a493e 50%),linear-gradient(135deg,#3a493e 50%,transparent 50%);background-size:6px 6px,6px 6px;background-position:calc(100% - 18px) 50%,calc(100% - 12px) 50%;background-repeat:no-repeat}
+#family-panel .adopt-controls>button,#shop-panel button.life-button{color:#304b3b;background:#e2eddf;border-color:#71866d;opacity:1}
+#family-panel .adopt-controls>button:disabled,#shop-panel button.life-button:disabled{color:#57554c;background:#eee9df;border-color:#938a73;opacity:1}
+/* A full row preserves the longest breed name even with enlarged text. */
+#family-panel .adopt-controls{display:grid;grid-template-columns:minmax(0,1fr)}
+#family-panel .adopt-controls>*{width:100%}

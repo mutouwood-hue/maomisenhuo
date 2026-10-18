@@ -14,3 +14,16 @@ app/.build/
 *.keystore
 *.key
 *.pem
+
+# 依赖与构建中间产物：可离线复原，不入库
+**/node_modules/
+**/__pycache__/
+work/integrated/badge/
+work/integrated/badge-logs*/
+work/integrated/neighbor-*/
+work/integrated/zlib-*/
+firmware/tools/host_preview/build-v3/
+*.log
+
+# 交付包单独放在 deliverables/，不走忽略规则
+!deliverables/

@@ -1,0 +1,2619 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>喵喵瀑布镇 - 梦幻体素猫咪小镇</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=ZCOOL+KuaiLe&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #1a1829;
+            font-family: 'Noto Sans SC', sans-serif;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        #canvas-container {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .title-font {
+            font-family: 'ZCOOL KuaiLe', cursive, sans-serif;
+        }
+        /* 电影黑边过渡 */
+        .letterbox {
+            transition: height 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+            pointer-events: none;
+        }
+        /* 毛玻璃拟态卡片 */
+        .glass-panel {
+            background: rgba(28, 25, 43, 0.68);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 228, 205, 0.18);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 180, 140, 0.1);
+        }
+        .btn-glow {
+            transition: all 0.25s ease;
+        }
+        .btn-glow:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(251, 146, 60, 0.45);
+        }
+        .btn-glow:active {
+            transform: translateY(0px);
+        }
+        /* 聊天气泡与猫咪状态标签 */
+        #cat-thought-bubble {
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-4px); }
+        }
+        .floating-badge {
+            animation: floatSlow 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="relative">
+
+    <!-- 3D 渲染容器 -->
+    <div id="canvas-container"></div>
+
+    <!-- 电影模式上下黑边 (Cinematic Letterbox) -->
+    <div id="letterbox-top" class="letterbox fixed top-0 left-0 w-full h-0 bg-black/90 z-10 flex items-center justify-between px-6 overflow-hidden">
+        <div class="flex items-center space-x-3 text-amber-300/80 text-xs tracking-widest uppercase">
+            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+            <span>CINEMATIC CAT CAM // AUTO-DIRECTOR</span>
+            <span id="cam-avoid-badge" class="hidden px-2 py-0.5 rounded bg-amber-500/20 border border-amber-400/40 text-amber-200 text-[10px] font-mono">⚡ 镜头避障已介入</span>
+            <span id="cam-xray-badge" class="hidden px-2 py-0.5 rounded bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 text-[10px] font-mono">👁️ 遮挡物半透明透视</span>
+        </div>
+        <div id="shot-code-display" class="text-white/60 text-xs font-mono">FOV: 45mm | SHOT: TRACKING</div>
+    </div>
+    <div id="letterbox-bottom" class="letterbox fixed bottom-0 left-0 w-full h-0 bg-black/90 z-10"></div>
+
+    <!-- 顶部小镇标题与时间光照切换栏 -->
+    <div class="fixed top-4 left-4 right-4 z-20 flex flex-wrap justify-between items-start gap-3 pointer-events-none">
+        <!-- 左侧标题卡片 -->
+        <div class="glass-panel rounded-2xl px-5 py-3.5 text-amber-50 pointer-events-auto flex items-center space-x-3.5">
+            <div class="w-11 h-11 rounded-xl bg-gradient-to-br from-amber-400 to-rose-500 flex items-center justify-center shadow-lg text-2xl">
+                🐾
+            </div>
+            <div>
+                <div class="flex items-center space-x-2">
+                    <h1 class="title-font text-xl sm:text-2xl tracking-wide text-amber-200">喵喵瀑布镇</h1>
+                    <span class="text-xs px-2 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-200">Voxel Haven</span>
+                    <span id="assembly-status-pill" class="text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/30 border border-emerald-400/40 text-emerald-200 font-medium">✨ 高空落下组装中...</span>
+                </div>
+                <p class="text-xs text-amber-100/70 mt-0.5">遍地体素繁花 · 高空落下Q弹组装 · 智能避障跟拍与遮挡半透明透视</p>
+            </div>
+        </div>
+
+        <!-- 右侧光影氛围与重播组装按钮面板 -->
+        <div class="glass-panel rounded-2xl p-2 text-amber-50 pointer-events-auto flex flex-wrap items-center gap-1.5">
+            <button onclick="replayTownAssembly()" class="btn-glow px-3 py-1.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-md flex items-center space-x-1 mr-1">
+                <span>🧱 重播小镇组装</span>
+            </button>
+            <div class="h-4 w-[1px] bg-white/15 mx-0.5 hidden sm:block"></div>
+            <button id="btn-time-sunset" onclick="setLightingMood('sunset')" class="px-3 py-1.5 rounded-xl text-xs font-medium bg-amber-500/30 text-amber-200 border border-amber-400/40 transition">
+                🌇 梦幻黄昏
+            </button>
+            <button id="btn-time-day" onclick="setLightingMood('day')" class="px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-white/10 text-amber-100/70 transition">
+                ☀️ 晴朗午后
+            </button>
+            <button id="btn-time-night" onclick="setLightingMood('night')" class="px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-white/10 text-amber-100/70 transition">
+                🏮 暖灯夜色
+            </button>
+        </div>
+    </div>
+
+    <!-- 3D 空间映射的猫咪头顶心情气泡 -->
+    <div id="cat-thought-bubble" class="fixed top-0 left-0 z-15 opacity-0 -translate-x-1/2 -translate-y-full pointer-events-none">
+        <div class="bg-white/95 text-slate-800 px-3 py-1.5 rounded-2xl shadow-xl border-2 border-amber-300 text-xs font-bold flex items-center space-x-1.5 whitespace-nowrap">
+            <span id="bubble-emoji" class="text-sm">🐟</span>
+            <span id="bubble-text">今天鲜鱼店进货啦！</span>
+        </div>
+        <div class="w-2.5 h-2.5 bg-white border-r-2 border-b-2 border-amber-300 rotate-45 mx-auto -mt-1.5"></div>
+    </div>
+
+    <!-- 底部交互与电影跟拍控制中心 -->
+    <div class="fixed bottom-5 left-1/2 -translate-x-1/2 z-20 w-[94%] max-w-3xl pointer-events-none flex flex-col items-center space-y-3">
+        
+        <!-- 跟随状态下的猫咪信息与运镜状态卡片 -->
+        <div id="follow-hud" class="glass-panel rounded-2xl px-5 py-3.5 w-full pointer-events-auto hidden transition-all duration-300">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <!-- 猫咪身份与动作 -->
+                <div class="flex items-center space-x-3.5">
+                    <div id="cat-avatar-dot" class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shadow-inner border border-white/20 bg-amber-500/30">
+                        🐱
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span id="hud-cat-name" class="font-bold text-base text-amber-200">橘座大叔</span>
+                            <span id="hud-cat-role" class="text-xs px-2 py-0.5 rounded-md bg-white/10 text-amber-100/90">拉面馆常客</span>
+                        </div>
+                        <div class="flex items-center space-x-3 mt-1 text-xs text-amber-100/80">
+                            <span>当前动作：<strong id="hud-cat-action" class="text-emerald-300">漫步巡街</strong></span>
+                            <span class="text-white/20">|</span>
+                            <span>目的地：<strong id="hud-cat-target" class="text-amber-300">喵鲜鱼铺</strong></span>
+                        </div>
+                    <!-- 电影运镜实时说明与切换 -->
+                <div class="flex items-center justify-between sm:justify-end space-x-2.5 border-t sm:border-t-0 pt-2 sm:pt-0 border-white/10">
+                    <div class="text-left sm:text-right mr-1">
+                        <div class="flex items-center sm:justify-end space-x-1.5">
+                            <span class="text-[11px] uppercase tracking-wider text-amber-300/70">电影运镜模式</span>
+                            <span id="hud-avoid-indicator" class="text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">视野畅通</span>
+                        </div>
+                        <div id="hud-shot-name" class="text-xs font-semibold text-rose-300 mt-0.5">侧面平滑跟拍 (Steadicam Side)</div>
+                    </div>
+                    <button onclick="cycleCameraShotOverride()" title="手动切换机位" class="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-amber-100 text-xs font-medium border border-white/15 transition flex items-center space-x-1">
+                        <span>🎥 切机位</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主控制按钮栏 -->
+        <div class="glass-panel rounded-2xl p-2 pointer-events-auto flex flex-wrap items-center justify-center gap-2 shadow-2xl">
+            <button id="btn-follow-toggle" onclick="toggleFollowMode()" class="btn-glow px-5 py-2.5 rounded-xl font-bold text-sm bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-lg flex items-center space-x-2">
+                <span id="follow-btn-icon">🎬</span>
+                <span id="follow-btn-text">跟随猫咪 (电影运镜)</span>
+            </button>
+
+            <button id="btn-prev-cat" onclick="switchFollowedCat(-1)" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-amber-100 border border-white/10 transition flex items-center space-x-1">
+                <span>⏮️ 上一只</span>
+            </button>
+
+            <button id="btn-next-cat" onclick="switchFollowedCat(1)" class="px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-white/10 hover:bg-white/20 text-amber-100 border border-white/10 transition flex items-center space-x-1">
+                <span>下一只 ⏭️</span>
+            </button>
+
+            <div class="h-5 w-[1px] bg-white/15 mx-1 hidden sm:block"></div>
+
+            <button onclick="resetOverviewCamera()" class="px-3.5 py-2.5 rounded-xl text-xs font-medium bg-white/5 hover:bg-white/15 text-amber-100/80 transition flex items-center space-x-1">
+                <span>🗺️ 全景俯瞰</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 右下角操作提示浮窗 -->
+    <div class="fixed bottom-5 right-5 z-10 hidden lg:block pointer-events-none">
+        <div class="glass-panel rounded-xl px-3.5 py-2.5 text-[11px] text-amber-100/70 space-y-1">
+            <div>🖱️ <strong>左键拖拽</strong>：360° 环绕观察</div>
+            <div>🖱️ <strong>右键拖拽</strong>：平移视野焦点</div>
+            <div>⚙️ <strong>滚轮缩放</strong>：拉近细节 / 远眺全镇</div>
+            <div>🐾 <strong>点击小猫</strong>：直接锁定电影跟拍</div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // 1. 全局配置、场景初始化与柔和梦幻配色
+        // ==========================================
+        let scene, camera, renderer, clock;
+        let raycaster, mouse, collisionRaycaster;
+
+        // 相机控制变量（支持自由环绕缩放 & 电影级跟拍平滑过渡）
+        const orbitState = {
+            isDraggingLeft: false,
+            isDraggingRight: false,
+            prevX: 0,
+            prevY: 0,
+            theta: Math.PI * 0.22,     // 水平角度
+            phi: Math.PI * 0.34,       // 俯仰角度
+            radius: 68,                // 距离
+            target: new THREE.Vector3(0, 4, 0),
+            velTheta: 0,
+            velPhi: 0,
+            velRadius: 0
+        };
+
+        // 电影跟拍状态
+        const followState = {
+            active: false,
+            catIndex: 0,
+            shotOverride: null,        // 用户手动指定的镜头模式（null 则根据猫咪动作智能导演）
+            shotTimer: 0,
+            orbitAngle: 0,
+            currentCamPos: new THREE.Vector3(45, 38, 45),
+            currentLookAt: new THREE.Vector3(0, 4, 0),
+            currentFov: 45,
+            isAvoidingObstacle: false,
+            occludedCount: 0
+        };
+
+        // 开场高空落下组装动画系统状态 (Sky-Drop Assembly System)
+        const assemblySystem = {
+            active: true,
+            startTime: 0,
+            duration: 2.8,
+            items: [] // { obj, targetY, targetScale, delay, duration, dropHeight }
+        };
+
+        // 动态遮挡半透明与碰撞避让集合 (Dynamic Occlusion & Camera Collision)
+        const occludableGroups = []; // { group, meshes, materials, currentOpacity, targetOpacity, boundingSphere }
+        const cameraColliderMeshes = []; // 用于射线碰撞检测的所有实体网格
+
+        // 动画环境元素集合
+        const cats = [];
+        const flowerClusters = []; // 地面五彩体素小花簇
+        const waterfallParticles = [];
+        const splashParticles = [];
+        const sakuraPetals = [];
+        const smokePuffs = [];
+        const floatingLanterns = [];
+        const fishList = [];
+        const interactiveMeshes = [];
+        const lampPointLights = [];
+        const windowMaterials = [];
+        let windmillBlades = null;
+        let waterwheelMesh = null;
+        let riverWaterMesh = null;
+
+        // 光照对象引用
+        let hemiLight, dirLight, ambientLight;
+        let currentMood = 'sunset';
+
+        // 体素材质缓存池（提升性能与统一质感）
+        const matCache = {};
+        function getVoxelMat(hexColor, options = {}) {
+            const key = `${hexColor}_${options.emissive || 0}_${options.roughness || 0.82}_${options.transparent || false}_${options.opacity || 1}`;
+            if (!matCache[key]) {
+                matCache[key] = new THREE.MeshStandardMaterial({
+                    color: hexColor,
+                    roughness: options.roughness !== undefined ? options.roughness : 0.82,
+                    metalness: options.metalness !== undefined ? options.metalness : 0.06,
+                    emissive: options.emissive ? new THREE.Color(options.emissive) : new THREE.Color(0x000000),
+                    emissiveIntensity: options.emissiveIntensity !== undefined ? options.emissiveIntensity : 1.0,
+                    transparent: options.transparent || false,
+                    opacity: options.opacity !== undefined ? options.opacity : 1.0,
+                    flatShading: true
+                });
+            }
+            return matCache[key];
+        }
+
+        // 共享基础单位立方体几何体
+        const unitBoxGeo = new THREE.BoxGeometry(1, 1, 1);
+
+        // 工具函数：创建体素块
+        function createVoxel(w, h, d, colorHex, x, y, z, parent, matOptions = {}, castShadow = true, receiveShadow = true) {
+            const mat = getVoxelMat(colorHex, matOptions);
+            const mesh = new THREE.Mesh(unitBoxGeo, mat);
+            mesh.scale.set(w, h, d);
+            mesh.position.set(x, y, z);
+            mesh.castShadow = castShadow;
+            mesh.receiveShadow = receiveShadow;
+            if (parent) parent.add(mesh);
+            return mesh;
+        }
+
+        // ==========================================
+        // 1B. 注册高空落下组装动画 & 注册可半透明遮挡建筑组
+        // ==========================================
+        function registerSkyDrop(obj, delay, duration = 0.68, dropHeight = 46, scaleEffect = true) {
+            const targetY = obj.position.y;
+            const targetScale = obj.scale.clone();
+            assemblySystem.items.push({
+                obj,
+                targetY,
+                targetScale,
+                delay,
+                duration,
+                dropHeight,
+                scaleEffect
+            });
+        }
+
+        // 将建筑、树木、拱桥或巨石注册为可遮挡透视&镜头碰撞检测对象
+        function registerOccludableStructure(group, isCameraCollider = true, options = {}) {
+            const meshes = [];
+            const clonedMats = [];
+
+            group.traverse((child) => {
+                if (child.isMesh && child.material && child.visible && child.material.visible !== false) {
+                    // 为每个可半透明组克隆独立材质，避免修改全局缓存导致全镇变透明
+                    const matClone = child.material.clone();
+                    matClone.userData = {
+                        baseOpacity: matClone.opacity !== undefined ? matClone.opacity : 1.0,
+                        baseTransparent: matClone.transparent || false
+                    };
+                    child.material = matClone;
+                    child.userData.baseCastShadow = child.castShadow;
+                    child.userData.occludableGroupRef = group;
+                    meshes.push(child);
+                    clonedMats.push(matClone);
+                    if (isCameraCollider) {
+                        cameraColliderMeshes.push(child);
+                    }
+                }
+            });
+
+            // 大体量地形类结构（悬崖、拱桥、广场）按"单个体素块"逐块透视，避免一靠近就整片山体发白
+            const units = options.perMesh
+                ? meshes.map((m, k) => ({ meshes: [m], materials: [clonedMats[k]] }))
+                : [{ meshes, materials: clonedMats }];
+            units.forEach(u => occludableGroups.push({
+                group,
+                meshes: u.meshes,
+                materials: u.materials,
+                solid: isCameraCollider,      // 实体：参与镜头避让；非实体（树/灯/桥）：只做 X-Ray 透视
+                dynamic: !!options.dynamic,   // 会转动的物体（风车/水车）需持续刷新包围盒
+                everyFrame: !!options.everyFrame, // 移动物体（猫咪）每帧刷新包围盒
+                catIndex: options.catIndex !== undefined ? options.catIndex : -1,
+                box: null,
+                boxReady: false,
+                holdTimer: 0,
+                wantOpacity: 1.0,
+                currentOpacity: 1.0,
+                targetOpacity: 1.0
+            }));
+        }
+
+        // 触发/重播全镇从空中落下组装动画
+        window.replayTownAssembly = function() {
+            if (!clock) return;
+            assemblySystem.active = true;
+            assemblySystem.startTime = clock.getElapsedTime();
+
+            const pill = document.getElementById('assembly-status-pill');
+            if (pill) {
+                pill.textContent = '✨ 高空落下组装中...';
+                pill.className = 'text-[11px] px-2.5 py-0.5 rounded-full bg-emerald-500/30 border border-emerald-400/40 text-emerald-200 font-medium animate-pulse';
+            }
+
+            assemblySystem.items.forEach(item => {
+                item.obj.position.y = item.targetY + item.dropHeight;
+                if (item.scaleEffect) {
+                    item.obj.scale.set(0.001, 0.001, 0.001);
+                }
+            });
+        };
+
+        // Ease-Out-Back + 落地轻弹曲线
+        function easeOutBackBounce(t) {
+            if (t <= 0) return 0;
+            if (t >= 1) return 1;
+            const c1 = 1.45;
+            const c3 = c1 + 1;
+            return 1 + c3 * Math.pow(t - 1, 3) + c1 * Math.pow(t - 1, 2);
+        }
+
+        function updateSkyDropAssembly(elapsed) {
+            if (!assemblySystem.active) return;
+            const localTime = elapsed - assemblySystem.startTime;
+            let allFinished = true;
+
+            for (let i = 0; i < assemblySystem.items.length; i++) {
+                const item = assemblySystem.items[i];
+                const t = (localTime - item.delay) / item.duration;
+
+                if (t <= 0) {
+                    allFinished = false;
+                    item.obj.position.y = item.targetY + item.dropHeight;
+                    if (item.scaleEffect) {
+                        item.obj.scale.set(0.001, 0.001, 0.001);
+                    }
+                } else if (t < 1.0) {
+                    allFinished = false;
+                    const eased = easeOutBackBounce(t);
+                    item.obj.position.y = item.targetY + item.dropHeight * (1.0 - eased);
+                    if (item.scaleEffect) {
+                        // 落地瞬间带有一点果冻挤压回弹感
+                        const squash = 1.0 + Math.sin(t * Math.PI * 2.5) * 0.12 * (1.0 - t);
+                        const sFactor = Math.min(1.15, Math.max(0.05, eased));
+                        item.obj.scale.set(
+                            item.targetScale.x * sFactor * squash,
+                            item.targetScale.y * (sFactor / squash),
+                            item.targetScale.z * sFactor * squash
+                        );
+                    }
+                } else {
+                    item.obj.position.y = item.targetY;
+                    if (item.scaleEffect) {
+                        item.obj.scale.copy(item.targetScale);
+                    }
+                }
+            }
+
+            if (allFinished) {
+                assemblySystem.active = false;
+                const pill = document.getElementById('assembly-status-pill');
+                if (pill) {
+                    pill.textContent = '🏡 小镇组装完成';
+                    pill.className = 'text-[11px] px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-400/30 text-amber-200 font-medium';
+                }
+            }
+        }
+
+        // ==========================================
+        // 2. 生成式柔和天空盒与环境光照
+        // ==========================================
+        let skyDomeMesh = null;
+        function createSkyDome() {
+            const skyGeo = new THREE.SphereGeometry(260, 32, 24);
+            const skyMat = new THREE.ShaderMaterial({
+                uniforms: {
+                    topColor: { value: new THREE.Color(0x2b1e4a) },
+                    midColor: { value: new THREE.Color(0xb85d79) },
+                    bottomColor: { value: new THREE.Color(0xffb88c) }
+                },
+                vertexShader: `
+                    varying vec3 vWorldPosition;
+                    void main() {
+                        // 天空球始终以相机为中心，用局部方向计算渐变，任意缩放都不会被远裁剪面切出黑洞
+                        vWorldPosition = position;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform vec3 topColor;
+                    uniform vec3 midColor;
+                    uniform vec3 bottomColor;
+                    varying vec3 vWorldPosition;
+                    void main() {
+                        float h = normalize(vWorldPosition).y;
+                        vec3 col = mix(bottomColor, midColor, smoothstep(-0.05, 0.25, h));
+                        col = mix(col, topColor, smoothstep(0.25, 0.75, h));
+                        gl_FragColor = vec4(col, 1.0);
+                    }
+                `,
+                side: THREE.BackSide,
+                depthWrite: false
+            });
+            const sky = new THREE.Mesh(skyGeo, skyMat);
+            sky.name = 'skyDome';
+            sky.frustumCulled = false;
+            sky.renderOrder = -1;
+            scene.add(sky);
+            skyDomeMesh = sky;
+        }
+
+        function setupLighting() {
+            ambientLight = new THREE.AmbientLight(0xffdec7, 0.45);
+            scene.add(ambientLight);
+
+            hemiLight = new THREE.HemisphereLight(0xffb58a, 0x3b2d54, 0.65);
+            hemiLight.position.set(0, 60, 0);
+            scene.add(hemiLight);
+
+            dirLight = new THREE.DirectionalLight(0xffa970, 1.25);
+            dirLight.position.set(48, 62, 38);
+            dirLight.castShadow = true;
+            dirLight.shadow.mapSize.width = 2048;
+            dirLight.shadow.mapSize.height = 2048;
+            dirLight.shadow.camera.near = 10;
+            dirLight.shadow.camera.far = 160;
+            const d = 55;
+            dirLight.shadow.camera.left = -d;
+            dirLight.shadow.camera.right = d;
+            dirLight.shadow.camera.top = d;
+            dirLight.shadow.camera.bottom = -d;
+            dirLight.shadow.bias = -0.0005;
+            scene.add(dirLight);
+        }
+
+        // 切换小镇昼夜/黄昏氛围
+        window.setLightingMood = function(mood) {
+            currentMood = mood;
+            const sky = scene.getObjectByName('skyDome');
+            const btnSunset = document.getElementById('btn-time-sunset');
+            const btnDay = document.getElementById('btn-time-day');
+            const btnNight = document.getElementById('btn-time-night');
+
+            [btnSunset, btnDay, btnNight].forEach(b => {
+                b.className = "px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-white/10 text-amber-100/70 transition";
+            });
+
+            if (mood === 'sunset') {
+                btnSunset.className = "px-3 py-1.5 rounded-xl text-xs font-medium bg-amber-500/30 text-amber-200 border border-amber-400/40 transition";
+                sky.material.uniforms.topColor.value.setHex(0x2b1e4a);
+                sky.material.uniforms.midColor.value.setHex(0xb85d79);
+                sky.material.uniforms.bottomColor.value.setHex(0xffb88c);
+                scene.fog.color.setHex(0xd98a82);
+                ambientLight.color.setHex(0xffdec7);
+                ambientLight.intensity = 0.45;
+                hemiLight.color.setHex(0xffb58a);
+                hemiLight.groundColor.setHex(0x3b2d54);
+                dirLight.color.setHex(0xffa970);
+                dirLight.intensity = 1.25;
+                dirLight.position.set(48, 52, 38);
+                lampPointLights.forEach(l => l.intensity = 1.1);
+                windowMaterials.forEach(m => m.emissiveIntensity = 0.9);
+            } else if (mood === 'day') {
+                btnDay.className = "px-3 py-1.5 rounded-xl text-xs font-medium bg-sky-500/30 text-sky-200 border border-sky-400/40 transition";
+                sky.material.uniforms.topColor.value.setHex(0x38bdf8);
+                sky.material.uniforms.midColor.value.setHex(0x93c5fd);
+                sky.material.uniforms.bottomColor.value.setHex(0xfef3c7);
+                scene.fog.color.setHex(0xbae6fd);
+                ambientLight.color.setHex(0xffffff);
+                ambientLight.intensity = 0.6;
+                hemiLight.color.setHex(0xe0f2fe);
+                hemiLight.groundColor.setHex(0x4d7c0f);
+                dirLight.color.setHex(0xfffbeb);
+                dirLight.intensity = 1.35;
+                dirLight.position.set(35, 78, 25);
+                lampPointLights.forEach(l => l.intensity = 0.25);
+                windowMaterials.forEach(m => m.emissiveIntensity = 0.25);
+            } else if (mood === 'night') {
+                btnNight.className = "px-3 py-1.5 rounded-xl text-xs font-medium bg-indigo-500/30 text-indigo-200 border border-indigo-400/40 transition";
+                sky.material.uniforms.topColor.value.setHex(0x090a1a);
+                sky.material.uniforms.midColor.value.setHex(0x1b1e3d);
+                sky.material.uniforms.bottomColor.value.setHex(0x2e294e);
+                scene.fog.color.setHex(0x181730);
+                ambientLight.color.setHex(0x6366f1);
+                ambientLight.intensity = 0.28;
+                hemiLight.color.setHex(0x312e81);
+                hemiLight.groundColor.setHex(0x0f172a);
+                dirLight.color.setHex(0x818cf8);
+                dirLight.intensity = 0.45;
+                dirLight.position.set(-40, 65, -30);
+                lampPointLights.forEach(l => l.intensity = 1.9);
+                windowMaterials.forEach(m => m.emissiveIntensity = 1.45);
+            }
+        };
+
+        // ==========================================
+        // 3. 构建体素地形、悬崖、瀑布与溪流
+        // ==========================================
+        function buildTerrainAndWaterfall() {
+            const terrainGroup = new THREE.Group();
+            scene.add(terrainGroup);
+
+            // 1) 底部深色水池底座与小镇双岛草地（第一阶段落下组装：0.0s - 0.55s）
+            const westIslandGroup = new THREE.Group();
+            terrainGroup.add(westIslandGroup);
+            createVoxel(33, 4, 64, 0x5c4738, -19.5, -2, 0, westIslandGroup); // 泥土层
+            createVoxel(33.4, 1.2, 64.4, 0x7cb368, -19.5, 0.4, 0, westIslandGroup); // 青草层
+            registerSkyDrop(westIslandGroup, 0.0, 0.55, 35, false);
+
+            const eastIslandGroup = new THREE.Group();
+            terrainGroup.add(eastIslandGroup);
+            createVoxel(33, 4, 64, 0x5c4738, 19.5, -2, 0, eastIslandGroup);
+            createVoxel(33.4, 1.2, 64.4, 0x82b96c, 19.5, 0.4, 0, eastIslandGroup);
+            registerSkyDrop(eastIslandGroup, 0.08, 0.55, 35, false);
+
+            const riverbedGroup = new THREE.Group();
+            terrainGroup.add(riverbedGroup);
+            // 中央河床底层 (x: -4 到 4)
+            createVoxel(10, 2, 64, 0x475569, 0, -2.5, 0, riverbedGroup);
+
+            // 河道两侧鹅卵石堤岸
+            for (let z = -31; z <= 31; z += 2) {
+                const hLeft = 0.8 + (Math.sin(z * 0.5) * 0.2);
+                const hRight = 0.8 + (Math.cos(z * 0.5) * 0.2);
+                createVoxel(1.4, hLeft, 1.9, z % 4 === 0 ? 0x94a3b8 : 0x64748b, -3.2, 0.1, z, riverbedGroup);
+                createVoxel(1.4, hRight, 1.9, z % 4 === 0 ? 0x64748b : 0x94a3b8, 3.2, 0.1, z, riverbedGroup);
+            }
+            registerSkyDrop(riverbedGroup, 0.14, 0.55, 35, false);
+
+            // 2) 北侧壮观的多层体素岩石悬崖（第二阶段落下组装：0.35s - 1.05s）
+            const cliffGroup = new THREE.Group();
+            terrainGroup.add(cliffGroup);
+
+            // 左侧高山岩体 (x: -35 到 -3.5)
+            createVoxel(31, 14, 15, 0x57534e, -19, 6.5, -26, cliffGroup);
+            createVoxel(31.4, 1.2, 15.4, 0x65a358, -19, 13.8, -26, cliffGroup); // 崖顶草坪
+
+            // 右侧高山岩体 (x: 3.5 到 35)
+            createVoxel(31, 14, 15, 0x57534e, 19, 6.5, -26, cliffGroup);
+            createVoxel(31.4, 1.2, 15.4, 0x65a358, 19, 13.8, -26, cliffGroup);
+
+            // 悬崖源头后山背景层
+            createVoxel(70, 20, 8, 0x44403c, 0, 9.5, -35, cliffGroup);
+            createVoxel(70.4, 1.4, 8.4, 0x528c49, 0, 19.8, -35, cliffGroup);
+
+            // 悬崖自然层叠体素岩石细节（打破呆板立方体）
+            const rockColors = [0x57534e, 0x78716c, 0x44403c, 0x64748b];
+            for (let i = 0; i < 65; i++) {
+                const isLeft = Math.random() > 0.5;
+                const rx = isLeft ? (-4.5 - Math.random() * 28) : (4.5 + Math.random() * 28);
+                const rz = -17.5 - Math.random() * 6;
+                const rw = 2 + Math.random() * 4.5;
+                const rh = 2 + Math.random() * 10;
+                const rd = 2 + Math.random() * 4;
+                const col = rockColors[i % rockColors.length];
+                createVoxel(rw, rh, rd, col, rx, rh / 2, rz, cliffGroup);
+                // 岩石顶部青苔点缀
+                if (Math.random() > 0.45) {
+                    createVoxel(rw + 0.2, 0.6, rd + 0.2, 0x6ea85e, rx, rh + 0.2, rz, cliffGroup);
+                }
+            }
+
+            // 瀑布两侧凸出的巨型猫耳形状奇岩
+            createVoxel(4, 16, 5, 0x64748b, -5.2, 8, -21, cliffGroup);
+            createVoxel(4, 16, 5, 0x64748b, 5.2, 8, -21, cliffGroup);
+
+            // 3) 崖顶源头水池与瀑布主体
+            // 崖顶水道
+            createVoxel(7.2, 1.2, 14, 0x38bdf8, 0, 13.5, -26, cliffGroup, { roughness: 0.2, transparent: true, opacity: 0.88 });
+            // 瀑布垂直水幕背板
+            createVoxel(6.6, 14.5, 1.5, 0x22d3ee, 0, 6.5, -18.8, cliffGroup, { roughness: 0.15, transparent: true, opacity: 0.82 });
+
+            registerSkyDrop(cliffGroup, 0.35, 0.68, 48, true);
+            registerOccludableStructure(cliffGroup, true, { perMesh: true });
+
+            // 中央主河道水面
+            const waterMat = getVoxelMat(0x2dd4bf, { roughness: 0.15, metalness: 0.1, transparent: true, opacity: 0.84 });
+            riverWaterMesh = new THREE.Mesh(new THREE.BoxGeometry(6.4, 1.2, 64), waterMat);
+            riverWaterMesh.position.set(0, -0.6, 0);
+            riverWaterMesh.receiveShadow = true;
+            terrainGroup.add(riverWaterMesh);
+            registerSkyDrop(riverWaterMesh, 0.22, 0.55, 32, false);
+
+            // 4) 动态瀑布体素流体粒子与底部水花泡泡
+            const dropGeo = new THREE.BoxGeometry(0.95, 1.4, 0.95);
+            const dropColors = [0x67e8f9, 0xa5f3fc, 0x38bdf8, 0xe0f2fe];
+            for (let i = 0; i < 110; i++) {
+                const mat = getVoxelMat(dropColors[i % dropColors.length], {
+                    emissive: 0x0284c7,
+                    emissiveIntensity: 0.25,
+                    transparent: true,
+                    opacity: 0.9
+                });
+                const drop = new THREE.Mesh(dropGeo, mat);
+                resetWaterfallDrop(drop, true);
+                scene.add(drop);
+                waterfallParticles.push(drop);
+            }
+
+            // 瀑布底部拍打的白色体素泡沫
+            const foamGeo = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+            const foamMat = getVoxelMat(0xffffff, { emissive: 0xe0f2fe, emissiveIntensity: 0.4, transparent: true, opacity: 0.85 });
+            for (let i = 0; i < 45; i++) {
+                const foam = new THREE.Mesh(foamGeo, foamMat);
+                foam.userData = {
+                    baseX: (Math.random() - 0.5) * 6.5,
+                    baseZ: -17.5 + (Math.random() - 0.5) * 3.5,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 2 + Math.random() * 3
+                };
+                foam.position.set(foam.userData.baseX, 0.3, foam.userData.baseZ);
+                scene.add(foam);
+                splashParticles.push(foam);
+            }
+
+            // 河道中的锦鲤小鱼
+            for (let i = 0; i < 8; i++) {
+                const fishGroup = new THREE.Group();
+                const fColor = i % 2 === 0 ? 0xf97316 : 0xf43f5e;
+                createVoxel(0.35, 0.25, 0.7, fColor, 0, 0, 0, fishGroup);
+                createVoxel(0.2, 0.2, 0.35, 0xffffff, 0, 0, -0.45, fishGroup);
+                fishGroup.userData = {
+                    zCenter: -10 + i * 5,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.8 + Math.random() * 0.6,
+                    radiusX: 1.2 + Math.random() * 0.8
+                };
+                scene.add(fishGroup);
+                fishList.push(fishGroup);
+            }
+        }
+
+        function resetWaterfallDrop(drop, randomProgress = false) {
+            const progress = randomProgress ? Math.random() : 0;
+            drop.userData = {
+                progress: progress,
+                speed: 0.45 + Math.random() * 0.25,
+                xOffset: (Math.random() - 0.5) * 5.8,
+                zOffset: (Math.random() - 0.5) * 0.8
+            };
+        }
+
+        // ==========================================
+        // 4. 铺设石板路、朱红拱桥、河岸木栈道与中央喷泉广场
+        // ==========================================
+        function buildRoadsAndBridges() {
+            const roadGroup = new THREE.Group();
+            scene.add(roadGroup);
+
+            // 石板路铺设函数
+            function layCobblePath(xStart, zStart, xEnd, zEnd, width = 3.2) {
+                const steps = Math.max(Math.abs(xEnd - xStart), Math.abs(zEnd - zStart));
+                for (let i = 0; i <= steps; i += 1.4) {
+                    const t = steps === 0 ? 0 : i / steps;
+                    const cx = xStart + (xEnd - xStart) * t;
+                    const cz = zStart + (zEnd - zStart) * t;
+                    const col = (Math.floor(i) % 2 === 0) ? 0xd6d3d1 : 0xa8a29e;
+                    createVoxel(width, 0.25, 1.2, col, cx, 1.02, cz, roadGroup);
+                }
+            }
+
+            // 左侧主街南北通道 (x = -9.5)
+            layCobblePath(-9.5, -14, -9.5, 24, 3.6);
+            // 右侧主街南北通道 (x = 9.5)
+            layCobblePath(9.5, -14, 9.5, 24, 3.6);
+            // 连接各店铺的支路
+            layCobblePath(-17, -6, -9.5, -6, 2.8);
+            layCobblePath(-17, 7, -9.5, 7, 2.8);
+            layCobblePath(-15, 19, -9.5, 19, 2.8);
+            layCobblePath(9.5, -7, 17, -7, 2.8);
+            layCobblePath(9.5, 7, 17, 7, 2.8);
+            layCobblePath(9.5, 19, 15, 19, 2.8);
+
+            // 中央猫咪跨河拱桥 (z = 2, x 从 -5 到 5)
+            const bridgeGroup = new THREE.Group();
+            bridgeGroup.position.set(0, 0, 2);
+            roadGroup.add(bridgeGroup);
+
+            for (let bx = -5; bx <= 5; bx += 1) {
+                const archY = 1.15 + Math.cos((bx / 5.5) * (Math.PI / 2)) * 1.65;
+                // 桥面木板
+                createVoxel(0.95, 0.35, 4.4, 0xb45309, bx, archY, 0, bridgeGroup);
+                // 两侧朱红栏杆立柱
+                if (Math.abs(bx) % 2 === 0) {
+                    createVoxel(0.35, 1.3, 0.35, 0xdc2626, bx, archY + 0.7, -2.0, bridgeGroup);
+                    createVoxel(0.35, 1.3, 0.35, 0xdc2626, bx, archY + 0.7, 2.0, bridgeGroup);
+                    // 柱顶金色猫耳装饰球
+                    createVoxel(0.45, 0.35, 0.45, 0xfbbf24, bx, archY + 1.4, -2.0, bridgeGroup);
+                    createVoxel(0.45, 0.35, 0.45, 0xfbbf24, bx, archY + 1.4, 2.0, bridgeGroup);
+                }
+                // 栏杆扶手
+                createVoxel(1.05, 0.22, 0.22, 0xef4444, bx, archY + 1.05, -2.0, bridgeGroup);
+                createVoxel(1.05, 0.22, 0.22, 0xef4444, bx, archY + 1.05, 2.0, bridgeGroup);
+            }
+
+            // 南侧河面踏脚石桥 (z = 16, x 从 -3.5 到 3.5)
+            for (let sx = -3; sx <= 3; sx += 1.5) {
+                createVoxel(1.1, 0.8, 1.3, 0xe2e8f0, sx, 0.2, 16 + (sx % 2) * 0.2, roadGroup);
+            }
+
+            // 左侧黄金猫咪纪念喷泉小广场 (x = -9.5, z = 2)
+            const plazaGroup = new THREE.Group();
+            plazaGroup.position.set(-9.5, 1.0, 2);
+            roadGroup.add(plazaGroup);
+            createVoxel(7.5, 0.3, 7.5, 0xe7e5e4, 0, 0.05, 0, plazaGroup);
+            // 喷泉池座
+            createVoxel(3.8, 0.9, 3.8, 0xa8a29e, 0, 0.45, 0, plazaGroup);
+            createVoxel(3.1, 0.7, 3.1, 0x38bdf8, 0, 0.65, 0, plazaGroup, { transparent: true, opacity: 0.85 });
+            // 黄金招财猫雕像
+            createVoxel(1.3, 1.5, 1.3, 0xfbbf24, 0, 1.4, 0, plazaGroup, { metalness: 0.4, roughness: 0.3 });
+            createVoxel(1.1, 1.0, 1.1, 0xfbbf24, 0, 2.4, 0, plazaGroup, { metalness: 0.4, roughness: 0.3 });
+            // 雕像猫耳
+            createVoxel(0.35, 0.45, 0.35, 0xf59e0b, -0.35, 3.05, 0, plazaGroup);
+            createVoxel(0.35, 0.45, 0.35, 0xf59e0b, 0.35, 3.05, 0, plazaGroup);
+            // 举起的招财右爪
+            createVoxel(0.35, 0.8, 0.35, 0xfde047, 0.7, 2.2, 0.3, plazaGroup);
+
+            // 注册石板路、跨河拱桥与喷泉广场的高空落下组装与遮挡检测
+            registerSkyDrop(roadGroup, 0.26, 0.58, 36, false);
+            registerSkyDrop(bridgeGroup, 0.52, 0.65, 42, true);
+            registerSkyDrop(plazaGroup, 0.62, 0.65, 40, true);
+            registerOccludableStructure(bridgeGroup, false, { perMesh: true });
+            registerOccludableStructure(plazaGroup, false, { perMesh: true });
+        }
+
+        // ==========================================
+        // 5. 构建小镇核心商业建筑群（体素精细建模）
+        // ==========================================
+        // 辅助函数：创建发光温暖窗户
+        function createWarmWindow(w, h, d, x, y, z, parent) {
+            const winMat = getVoxelMat(0xfef08a, {
+                emissive: 0xf59e0b,
+                emissiveIntensity: 0.95,
+                roughness: 0.2
+            });
+            windowMaterials.push(winMat);
+            const mesh = new THREE.Mesh(unitBoxGeo, winMat);
+            mesh.scale.set(w, h, d);
+            mesh.position.set(x, y, z);
+            parent.add(mesh);
+            // 窗框
+            createVoxel(w + 0.2, 0.2, d + 0.1, 0x451a03, x, y + h / 2, z, parent);
+            createVoxel(w + 0.2, 0.2, d + 0.1, 0x451a03, x, y - h / 2, z, parent);
+        }
+
+        // 辅助函数：创建屋顶猫耳造型装饰
+        function addCatEarsOnRoof(x, y, z, colorHex, innerColorHex, parent, scale = 1) {
+            const earGroup = new THREE.Group();
+            earGroup.position.set(x, y, z);
+            earGroup.scale.set(scale, scale, scale);
+            parent.add(earGroup);
+
+            // 左耳与右耳阶梯体素
+            [-1.6, 1.6].forEach(offsetX => {
+                createVoxel(1.4, 0.8, 0.8, colorHex, offsetX, 0.4, 0, earGroup);
+                createVoxel(1.0, 0.8, 0.7, colorHex, offsetX, 1.1, 0, earGroup);
+                createVoxel(0.6, 0.6, 0.6, colorHex, offsetX, 1.7, 0, earGroup);
+                // 粉色内耳窝
+                createVoxel(0.7, 0.7, 0.85, innerColorHex, offsetX, 0.85, 0.05, earGroup);
+            });
+        }
+
+        function buildTownBuildings() {
+            const buildingsGroup = new THREE.Group();
+            scene.add(buildingsGroup);
+
+            // ----------------------------------------------------
+            // 建筑 1：【喵鲜鱼铺】(Fresh Fish Market) - 河岸左上 (-18.5, 1, -7)
+            // ----------------------------------------------------
+            const fishShop = new THREE.Group();
+            fishShop.position.set(-18.5, 1, -7);
+            buildingsGroup.add(fishShop);
+
+            // 地基与木质主体
+            createVoxel(9.5, 0.6, 8.5, 0x78716c, 0, 0.3, 0, fishShop);
+            createVoxel(8.6, 6.2, 7.6, 0xfef3c7, 0, 3.6, 0, fishShop);
+            // 海洋蓝木质护墙板
+            createVoxel(8.8, 2.2, 7.8, 0x0284c7, 0, 1.6, 0, fishShop);
+            // 阶梯海蓝色瓦片屋顶
+            for (let i = 0; i < 5; i++) {
+                createVoxel(9.8 - i * 1.4, 0.75, 8.8 - i * 1.2, i % 2 === 0 ? 0x0369a1 : 0x0284c7, 0, 7.0 + i * 0.7, 0, fishShop);
+            }
+            // 屋顶巨型立体体素鲷鱼招牌
+            const bigFishSign = new THREE.Group();
+            bigFishSign.position.set(1.2, 11.2, 1.5);
+            fishShop.add(bigFishSign);
+            createVoxel(3.2, 1.8, 0.9, 0x38bdf8, 0, 0, 0, bigFishSign);
+            createVoxel(1.2, 2.2, 0.7, 0x0284c7, -2.0, 0, 0, bigFishSign); // 鱼尾
+            createVoxel(0.4, 0.4, 1.05, 0x0f172a, 0.9, 0.3, 0, bigFishSign); // 鱼眼
+            // 门前蓝白条纹遮阳篷（面向东侧主街 +X）
+            for (let strip = -3.2; strip <= 3.2; strip += 1.05) {
+                const col = Math.round(strip) % 2 === 0 ? 0x38bdf8 : 0xffffff;
+                createVoxel(2.2, 0.4, 0.95, col, 4.9, 4.3, strip, fishShop);
+            }
+            // 冰鲜鱼摊位与小鱼干架
+            createVoxel(1.8, 1.3, 5.2, 0x93c5fd, 5.1, 0.9, 0, fishShop);
+            createVoxel(0.9, 0.35, 1.2, 0xf97316, 5.2, 1.65, -1.2, fishShop); // 三文鱼片
+            createVoxel(0.9, 0.35, 1.2, 0x38bdf8, 5.2, 1.65, 0.8, fishShop);  // 鲜鲭鱼
+            // 窗户
+            createWarmWindow(0.3, 2.2, 2.6, 4.32, 3.6, -1.8, fishShop);
+            createWarmWindow(0.3, 2.2, 2.6, 4.32, 3.6, 1.8, fishShop);
+            createWarmWindow(2.8, 2.0, 0.3, 0, 4.2, 3.82, fishShop);
+
+            // ----------------------------------------------------
+            // 建筑 2：【肉垫烘焙坊】(Cat Paw Bakery) - 主街左下 (-19, 1, 7.5)
+            // ----------------------------------------------------
+            const bakery = new THREE.Group();
+            bakery.position.set(-19, 1, 7.5);
+            buildingsGroup.add(bakery);
+
+            // 奶油色主体与焦糖木柱
+            createVoxel(9.5, 0.6, 9.0, 0xa8a29e, 0, 0.3, 0, bakery);
+            createVoxel(8.6, 6.5, 8.0, 0xfffbeb, 0, 3.8, 0, bakery);
+            createVoxel(8.8, 1.8, 8.2, 0xd97706, 0, 1.4, 0, bakery);
+            // 草莓粉焦糖波浪屋顶
+            for (let i = 0; i < 5; i++) {
+                createVoxel(10.0 - i * 1.5, 0.8, 9.2 - i * 1.3, i % 2 === 0 ? 0xf472b6 : 0xfb7185, 0, 7.3 + i * 0.75, 0, bakery);
+            }
+            addCatEarsOnRoof(2.2, 10.6, 0, 0xf472b6, 0xfef08a, bakery, 1.1);
+            // 砖砌面包烤炉烟囱（带动态炊烟点位）
+            createVoxel(1.6, 5.5, 1.6, 0xb45309, -2.5, 9.8, -2.0, bakery);
+            // 粉白遮阳篷与户外牛角包甜点展示台
+            for (let strip = -3.2; strip <= 3.2; strip += 1.05) {
+                const col = Math.round(strip) % 2 === 0 ? 0xfb7185 : 0xfff1f2;
+                createVoxel(2.2, 0.4, 0.95, col, 4.9, 4.4, strip, bakery);
+            }
+            createVoxel(1.6, 1.4, 4.5, 0x78350f, 5.1, 1.0, -0.5, bakery);
+            // 金色猫爪吐司模型
+            createVoxel(0.8, 0.7, 0.8, 0xf59e0b, 5.1, 1.9, -1.5, bakery);
+            createVoxel(0.8, 0.7, 0.8, 0xfbbf24, 5.1, 1.9, 0.2, bakery);
+            createWarmWindow(0.3, 2.4, 3.4, 4.32, 3.6, 0, bakery);
+            createWarmWindow(3.0, 2.2, 0.3, 0, 4.0, 4.02, bakery);
+
+            // ----------------------------------------------------
+            // 建筑 3：【深夜喵拉面馆】(Meow Ramen) - 街角南侧 (-16.5, 1, 19.5)
+            // ----------------------------------------------------
+            const ramenShop = new THREE.Group();
+            ramenShop.position.set(-16.5, 1, 19.5);
+            buildingsGroup.add(ramenShop);
+
+            // 传统日式深色木屋主体
+            createVoxel(8.2, 0.6, 7.6, 0x57534e, 0, 0.3, 0, ramenShop);
+            createVoxel(7.4, 5.8, 6.8, 0x451a03, 0, 3.4, 0, ramenShop);
+            createVoxel(7.0, 5.4, 6.4, 0xfef3c7, 0, 3.4, 0, ramenShop);
+            // 飞檐黛瓦屋顶
+            for (let i = 0; i < 4; i++) {
+                createVoxel(9.2 - i * 1.4, 0.7, 8.6 - i * 1.3, 0x1e293b, 0, 6.5 + i * 0.65, 0, ramenShop);
+            }
+            // 屋顶大号拉面碗立体模型
+            createVoxel(2.6, 1.4, 2.6, 0xdc2626, 0.8, 9.5, 0, ramenShop);
+            createVoxel(2.2, 0.4, 2.2, 0xfef08a, 0.8, 10.3, 0, ramenShop); // 面汤
+            createVoxel(0.25, 2.4, 0.25, 0xd97706, 1.5, 11.1, 0, ramenShop); // 筷子
+            // 门前红色暖帘 (Noren) 与拉面吧台高脚凳
+            for (let nz = -2.2; nz <= 2.2; nz += 1.1) {
+                createVoxel(0.2, 1.5, 0.85, 0xdc2626, 4.2, 4.2, nz, ramenShop);
+            }
+            // 食客木质吧台与三张小圆凳
+            createVoxel(1.4, 1.3, 5.2, 0xb45309, 4.5, 0.95, 0, ramenShop);
+            [-1.6, 0, 1.6].forEach(sz => {
+                createVoxel(0.8, 0.8, 0.8, 0x78350f, 5.8, 0.7, sz, ramenShop);
+            });
+            createWarmWindow(0.3, 2.2, 4.2, 3.72, 3.2, 0, ramenShop);
+
+            // ----------------------------------------------------
+            // 建筑 4：【樱花猫咪咖啡馆】(Sakura Cat Cafe) - 右岛北侧 (18.5, 1, -7.5)
+            // ----------------------------------------------------
+            const catCafe = new THREE.Group();
+            catCafe.position.set(18.5, 1, -7.5);
+            buildingsGroup.add(catCafe);
+
+            // 一层抹茶绿与薄荷奶油墙体
+            createVoxel(10.0, 0.6, 9.2, 0x78716c, 0, 0.3, 0, catCafe);
+            createVoxel(9.0, 5.6, 8.2, 0xecfdf5, 0, 3.3, 0, catCafe);
+            createVoxel(9.2, 1.8, 8.4, 0x10b981, 0, 1.4, 0, catCafe);
+            // 二层阳光露台与阁楼
+            createVoxel(9.6, 0.5, 8.8, 0xd97706, 0, 6.2, 0, catCafe);
+            createVoxel(5.6, 4.2, 5.6, 0xfef2f2, 1.2, 8.5, 0, catCafe);
+            // 阁楼珊瑚粉尖顶与猫耳
+            for (let i = 0; i < 4; i++) {
+                createVoxel(6.8 - i * 1.3, 0.7, 6.8 - i * 1.3, 0xfb7185, 1.2, 10.9 + i * 0.65, 0, catCafe);
+            }
+            addCatEarsOnRoof(1.2, 13.4, 0, 0xfb7185, 0xfff1f2, catCafe, 1.15);
+            // 咖啡馆前庭阳伞桌椅（西侧朝向溪流 -X）
+            [-2.4, 2.4].forEach(tz => {
+                // 小圆桌
+                createVoxel(1.6, 1.1, 1.6, 0xfef3c7, -6.2, 0.85, tz, catCafe);
+                // 遮阳伞柱与伞面
+                createVoxel(0.25, 2.8, 0.25, 0x78350f, -6.2, 2.2, tz, catCafe);
+                createVoxel(2.8, 0.4, 2.8, tz < 0 ? 0xf43f5e : 0x10b981, -6.2, 3.6, tz, catCafe);
+                createVoxel(2.0, 0.4, 2.0, 0xffffff, -6.2, 3.9, tz, catCafe);
+            });
+            createWarmWindow(0.3, 2.6, 4.8, -4.52, 3.5, 0, catCafe);
+            createWarmWindow(0.3, 2.0, 3.0, -1.62, 8.5, 0, catCafe);
+
+            // ----------------------------------------------------
+            // 建筑 5：【魔法毛线杂货铺】(Yarn & Toy Atelier) - 右岛中南 (18.5, 1, 7.5)
+            // ----------------------------------------------------
+            const yarnShop = new THREE.Group();
+            yarnShop.position.set(18.5, 1, 7.5);
+            buildingsGroup.add(yarnShop);
+
+            createVoxel(8.6, 0.6, 8.2, 0x78716c, 0, 0.3, 0, yarnShop);
+            createVoxel(7.6, 6.0, 7.2, 0xf5f3ff, 0, 3.5, 0, yarnShop);
+            createVoxel(7.8, 1.8, 7.4, 0x7c3aed, 0, 1.4, 0, yarnShop);
+            // 梦幻紫罗兰阶梯屋顶
+            for (let i = 0; i < 5; i++) {
+                createVoxel(8.8 - i * 1.4, 0.75, 8.4 - i * 1.3, i % 2 === 0 ? 0x8b5cf6 : 0xa78bfa, 0, 6.8 + i * 0.7, 0, yarnShop);
+            }
+            // 屋顶巨型彩色毛线球装饰
+            createVoxel(2.4, 2.4, 2.4, 0xf43f5e, -0.5, 11.2, 0.5, yarnShop);
+            createVoxel(2.6, 1.6, 1.6, 0xfb7185, -0.5, 11.2, 0.5, yarnShop);
+            createVoxel(0.25, 3.2, 0.25, 0xfde047, 0.2, 12.0, 0.5, yarnShop); // 毛线针
+            createWarmWindow(0.3, 2.4, 4.0, -3.82, 3.6, 0, yarnShop);
+
+            // ----------------------------------------------------
+            // 建筑 6：【喵喵钟楼与大风车】(Windmill & Clock Tower) - 左崖顶 (-21, 14, -25)
+            // ----------------------------------------------------
+            const windmillTower = new THREE.Group();
+            windmillTower.position.set(-21, 14, -25);
+            buildingsGroup.add(windmillTower);
+
+            createVoxel(7.5, 11, 7.5, 0xfef3c7, 0, 5.5, 0, windmillTower);
+            createVoxel(8.0, 2.5, 8.0, 0x78350f, 0, 1.25, 0, windmillTower);
+            for (let i = 0; i < 5; i++) {
+                createVoxel(8.6 - i * 1.4, 0.9, 8.6 - i * 1.4, 0xd97706, 0, 11.4 + i * 0.8, 0, windmillTower);
+            }
+            addCatEarsOnRoof(0, 15.2, 0, 0xd97706, 0xfef08a, windmillTower, 1.2);
+            createWarmWindow(2.4, 2.4, 0.3, 0, 6.5, 3.78, windmillTower);
+
+            // 旋转风车叶片组件
+            windmillBlades = new THREE.Group();
+            windmillBlades.position.set(0, 9.2, 4.2);
+            windmillTower.add(windmillBlades);
+            createVoxel(1.2, 1.2, 1.2, 0x451a03, 0, 0, 0, windmillBlades);
+            for (let b = 0; b < 4; b++) {
+                const bladeArm = new THREE.Group();
+                bladeArm.rotation.z = (Math.PI / 2) * b;
+                createVoxel(0.4, 7.5, 0.3, 0x78350f, 0, 4.0, 0, bladeArm);
+                createVoxel(1.8, 5.5, 0.15, 0xfef9c3, 0.9, 4.6, 0.1, bladeArm);
+                windmillBlades.add(bladeArm);
+            }
+
+            // ----------------------------------------------------
+            // 建筑 7：【崖顶猫神社与观景凉亭】(Cliffside Cat Shrine) - 右崖顶 (19, 14, -25)
+            // ----------------------------------------------------
+            const shrine = new THREE.Group();
+            shrine.position.set(19, 14, -25);
+            buildingsGroup.add(shrine);
+
+            createVoxel(8.5, 1.0, 8.5, 0xd6d3d1, 0, 0.5, 0, shrine);
+            // 四根朱红亭柱
+            [[-3.2, -3.2], [3.2, -3.2], [-3.2, 3.2], [3.2, 3.2]].forEach(([px, pz]) => {
+                createVoxel(0.7, 5.2, 0.7, 0xdc2626, px, 3.1, pz, shrine);
+            });
+            for (let i = 0; i < 4; i++) {
+                createVoxel(10.0 - i * 1.8, 0.75, 10.0 - i * 1.8, 0x991b1b, 0, 5.8 + i * 0.7, 0, shrine);
+            }
+            addCatEarsOnRoof(0, 8.6, 0, 0xdc2626, 0xfbbf24, shrine, 1.1);
+            // 崖边朱红鸟居 (Torii Gate)
+            const torii = new THREE.Group();
+            torii.position.set(-7.5, 14, -19.5);
+            buildingsGroup.add(torii);
+            createVoxel(0.65, 5.5, 0.65, 0xdc2626, -2.2, 2.75, 0, torii);
+            createVoxel(0.65, 5.5, 0.65, 0xdc2626, 2.2, 2.75, 0, torii);
+            createVoxel(6.4, 0.6, 0.85, 0xdc2626, 0, 5.4, 0, torii);
+            createVoxel(7.2, 0.45, 1.0, 0x1e293b, 0, 5.85, 0, torii);
+            createVoxel(5.2, 0.45, 0.6, 0xdc2626, 0, 4.2, 0, torii);
+
+            // ----------------------------------------------------
+            // 建筑 8：【溪畔旋转水车】(Riverside Waterwheel) - 瀑布下游 (-3.8, 1.6, -12)
+            // ----------------------------------------------------
+            waterwheelMesh = new THREE.Group();
+            waterwheelMesh.position.set(-3.4, 1.6, -12);
+            buildingsGroup.add(waterwheelMesh);
+            createVoxel(0.8, 0.8, 0.8, 0x451a03, 0, 0, 0, waterwheelMesh);
+            for (let w = 0; w < 8; w++) {
+                const spoke = new THREE.Group();
+                spoke.rotation.x = (Math.PI / 4) * w;
+                createVoxel(0.3, 5.2, 0.3, 0x78350f, 0, 0, 0, spoke);
+                createVoxel(0.9, 0.35, 1.1, 0xb45309, 0.2, 2.5, 0, spoke);
+                waterwheelMesh.add(spoke);
+            }
+
+            // 第三阶段（0.75s - 1.65s）：各大商业建筑逐栋从高空落下Q弹组装，并注册动态半透明遮挡与镜头碰撞
+            const allMajorBuildings = [fishShop, bakery, ramenShop, catCafe, yarnShop, windmillTower, shrine, torii, waterwheelMesh];
+            allMajorBuildings.forEach((bGroup, idx) => {
+                registerSkyDrop(bGroup, 0.75 + idx * 0.09, 0.72, 48, true);
+                registerOccludableStructure(bGroup, true, { dynamic: bGroup === waterwheelMesh || bGroup === windmillTower });
+            });
+        }
+
+        // ==========================================
+        // 6. 构建植物群落（樱花树、青松、五彩体素地面小花簇）与暖色街灯
+        // ==========================================
+        function buildFloraAndLanterns() {
+            const envGroup = new THREE.Group();
+            scene.add(envGroup);
+
+            // 樱花树生成函数
+            function createSakuraTree(x, y, z, scale = 1.0, delayIdx = 0) {
+                const tree = new THREE.Group();
+                tree.position.set(x, y, z);
+                tree.scale.set(scale, scale, scale);
+                envGroup.add(tree);
+
+                createVoxel(1.1, 4.2, 1.1, 0x5c4033, 0, 2.1, 0, tree);
+                createVoxel(0.7, 2.2, 0.7, 0x5c4033, 0.6, 3.8, 0.4, tree);
+                // 多层梦幻粉色树冠
+                createVoxel(4.6, 2.2, 4.6, 0xf9a8d4, 0, 4.8, 0, tree);
+                createVoxel(3.8, 2.0, 3.8, 0xf472b6, 0.5, 6.0, 0.4, tree);
+                createVoxel(3.2, 1.8, 3.2, 0xfbcfe8, -0.6, 6.4, -0.4, tree);
+                createVoxel(2.2, 1.2, 2.2, 0xfff1f2, 0, 7.2, 0, tree);
+
+                registerSkyDrop(tree, 1.35 + delayIdx * 0.045, 0.62, 40, true);
+                registerOccludableStructure(tree, false);
+            }
+
+            // 翠绿松树生成函数
+            function createPineTree(x, y, z, scale = 1.0, delayIdx = 0) {
+                const pine = new THREE.Group();
+                pine.position.set(x, y, z);
+                pine.scale.set(scale, scale, scale);
+                envGroup.add(pine);
+
+                createVoxel(0.9, 3.0, 0.9, 0x451a03, 0, 1.5, 0, pine);
+                createVoxel(3.8, 1.8, 3.8, 0x15803d, 0, 3.2, 0, pine);
+                createVoxel(3.0, 1.8, 3.0, 0x16a34a, 0, 4.6, 0, pine);
+                createVoxel(2.0, 1.6, 2.0, 0x22c55e, 0, 5.9, 0, pine);
+                createVoxel(1.0, 1.2, 1.0, 0x4ade80, 0, 6.9, 0, pine);
+
+                registerSkyDrop(pine, 1.42 + delayIdx * 0.045, 0.62, 40, true);
+                registerOccludableStructure(pine, false);
+            }
+
+            // 种植樱花树与松树
+            const sakuraCoords = [
+                [-6.5, 1, -13], [7.2, 1, -13], [-27, 1, 0], [27, 1, -1],
+                [14, 1, 18], [-26, 1, 16], [8, 14, -22], [-11, 14, -22],
+                [26, 1, -15], [-26, 1, -15]
+            ];
+            sakuraCoords.forEach(([x, y, z], idx) => createSakuraTree(x, y, z, 0.85 + (idx % 3) * 0.18, idx));
+
+            const pineCoords = [
+                [-30, 14, -28], [-13, 14, -30], [11, 14, -30], [29, 14, -27],
+                [-29, 1, -20], [29, 1, 14], [-28, 1, 24], [27, 1, 24]
+            ];
+            pineCoords.forEach(([x, y, z], idx) => createPineTree(x, y, z, 0.9 + (idx % 3) * 0.2, idx));
+
+            // ----------------------------------------------------
+            // 重点新增：地面上丰富的五彩体素小花簇与草丛 (Voxel Flowers & Grass Clusters)
+            // ----------------------------------------------------
+            const flowerPalettes = [
+                { petal: 0xf472b6, center: 0xfef08a }, // 樱花粉
+                { petal: 0xfacc15, center: 0xf97316 }, // 向日葵柠檬黄
+                { petal: 0x38bdf8, center: 0xffffff }, // 勿忘我天空蓝
+                { petal: 0xc084fc, center: 0xfef08a }, // 薰衣草紫
+                { petal: 0xfb7185, center: 0xfff1f2 }, // 珊瑚红郁金香
+                { petal: 0xffffff, center: 0xfbbf24 }  // 雏菊纯白
+            ];
+
+            function createVoxelFlowerCluster(x, y, z, delayIdx) {
+                const cluster = new THREE.Group();
+                cluster.position.set(x, y, z);
+                envGroup.add(cluster);
+
+                // 底层深浅不一的体素小草叶底座
+                const grassCol = delayIdx % 2 === 0 ? 0x4ade80 : 0x22c55e;
+                createVoxel(0.75, 0.22, 0.75, grassCol, 0, 0.11, 0, cluster, {}, false, true);
+                createVoxel(0.22, 0.45, 0.22, 0x16a34a, -0.25, 0.25, 0.2, cluster, {}, false, true);
+                createVoxel(0.2, 0.38, 0.2, 0x15803d, 0.25, 0.2, -0.2, cluster, {}, false, true);
+
+                // 每个花簇包含 2~3 朵高低错落的立体体素小花
+                const flowerCount = 2 + (delayIdx % 2);
+                for (let f = 0; f < flowerCount; f++) {
+                    const palette = flowerPalettes[(delayIdx + f) % flowerPalettes.length];
+                    const fx = (f === 0) ? -0.18 : (f === 1 ? 0.2 : 0.0);
+                    const fz = (f === 0) ? -0.15 : (f === 1 ? 0.16 : -0.22);
+                    const stemH = 0.42 + (f * 0.14);
+
+                    // 翠绿花茎
+                    createVoxel(0.12, stemH, 0.12, 0x16a34a, fx, stemH / 2 + 0.1, fz, cluster, {}, false, true);
+                    // 十字立体花瓣或郁金香杯状花冠
+                    createVoxel(0.38, 0.14, 0.22, palette.petal, fx, stemH + 0.16, fz, cluster, {}, false, true);
+                    createVoxel(0.22, 0.14, 0.38, palette.petal, fx, stemH + 0.16, fz, cluster, {}, false, true);
+                    // 花蕊
+                    createVoxel(0.16, 0.18, 0.16, palette.center, fx, stemH + 0.2, fz, cluster, {}, false, true);
+                }
+
+                cluster.userData = {
+                    swayPhase: Math.random() * Math.PI * 2,
+                    swaySpeed: 1.8 + Math.random() * 1.4
+                };
+                flowerClusters.push(cluster);
+
+                // 第四阶段（1.45s - 2.15s）：五彩小花像雨点一样轻快落下生长
+                registerSkyDrop(cluster, 1.45 + (delayIdx % 35) * 0.02, 0.52, 26, true);
+            }
+
+            // 检查坐标是否避开河道、石板主路和建筑底座，使小花自然分布在草坪、河岸、树下与小径旁
+            function isValidFlowerSpot(x, z) {
+                // 避开中央溪流 (-4.4 ~ 4.4)
+                if (Math.abs(x) < 4.5) return false;
+                // 避开东西两条南北向主石板路 (-11.3 ~ -7.7, 7.7 ~ 11.3)
+                if (Math.abs(x - (-9.5)) < 2.1 || Math.abs(x - 9.5) < 2.1) return false;
+                // 避开主要建筑占地包围盒
+                const buildingBoxes = [
+                    { x: -18.5, z: -7, rx: 6.0, rz: 5.2 },  // 鲜鱼铺
+                    { x: -19.0, z: 7.5, rx: 6.0, rz: 5.5 }, // 烘焙坊
+                    { x: -16.5, z: 19.5, rx: 5.5, rz: 5.0 },// 拉面馆
+                    { x: -9.5,  z: 2.0, rx: 4.5, rz: 4.5 }, // 喷泉广场
+                    { x: 18.5,  z: -7.5, rx: 6.5, rz: 5.5 },// 猫咖
+                    { x: 18.5,  z: 7.5, rx: 5.5, rz: 5.2 }  // 毛线铺
+                ];
+                for (let b of buildingBoxes) {
+                    if (Math.abs(x - b.x) < b.rx && Math.abs(z - b.z) < b.rz) return false;
+                }
+                return true;
+            }
+
+            // 1) 在河岸两侧、石板路边缘和精选景点周围固定生成精致花带
+            const curatedFlowerSpots = [
+                [-5.2, 1, -11], [-5.5, 1, -7], [-5.2, 1, -2.5], [-5.5, 1, 6.5], [-5.2, 1, 11.5], [-5.5, 1, 19.5],
+                [5.2, 1, -11],  [5.5, 1, -7],  [5.2, 1, -2.5],  [5.5, 1, 6.5],  [5.2, 1, 11.5],  [5.5, 1, 19.5],
+                [-12.8, 1, -2], [-12.8, 1, 13], [12.5, 1, -2],  [12.5, 1, 13],
+                [8.5, 1, 17.5], [13.5, 1, 21.5], [16.5, 1, 16.5], [-24.5, 1, 1.5], [24.5, 1, 1.5],
+                // 崖顶花园小花
+                [-12, 14, -20], [-8, 14, -23], [9, 14, -20], [13, 14, -23]
+            ];
+            let flowerIdx = 0;
+            curatedFlowerSpots.forEach(([fx, fy, fz]) => {
+                createVoxelFlowerCluster(fx, fy, fz, flowerIdx++);
+            });
+
+            // 2) 在左右两岛绿茵草地上自然随机散布 95 簇五彩小花与草丛
+            let seed = 42;
+            function pseudoRand() {
+                seed = (seed * 1664525 + 1013904223) % 4294967296;
+                return seed / 4294967296;
+            }
+            for (let i = 0; i < 135; i++) {
+                const isLeft = pseudoRand() > 0.48;
+                const rx = isLeft ? (-4.8 - pseudoRand() * 28.5) : (4.8 + pseudoRand() * 28.5);
+                const rz = -15.5 + pseudoRand() * 44.5;
+                if (isValidFlowerSpot(rx, rz)) {
+                    createVoxelFlowerCluster(rx, 1.0, rz, flowerIdx++);
+                }
+            }
+
+            // 暖色日式街灯生成函数
+            function createStreetLantern(x, y, z, attachPointLight = false, idx = 0) {
+                const lamp = new THREE.Group();
+                lamp.position.set(x, y, z);
+                envGroup.add(lamp);
+
+                createVoxel(0.6, 0.5, 0.6, 0x57534e, 0, 0.25, 0, lamp);
+                createVoxel(0.28, 3.4, 0.28, 0x292524, 0, 1.9, 0, lamp);
+                createVoxel(1.2, 0.25, 0.28, 0x292524, 0.4, 3.5, 0, lamp);
+                // 暖光灯笼芯
+                const lanternMat = getVoxelMat(0xfef08a, {
+                    emissive: 0xf97316,
+                    emissiveIntensity: 1.4
+                });
+                const core = new THREE.Mesh(new THREE.BoxGeometry(0.65, 0.85, 0.65), lanternMat);
+                core.position.set(0.8, 3.0, 0);
+                lamp.add(core);
+                createVoxel(0.9, 0.2, 0.9, 0x1e293b, 0.8, 3.5, 0, lamp);
+
+                if (attachPointLight) {
+                    const pLight = new THREE.PointLight(0xff9e44, 1.1, 18, 1.8);
+                    pLight.position.set(x + 0.8, y + 3.0, z);
+                    scene.add(pLight);
+                    lampPointLights.push(pLight);
+                }
+
+                registerSkyDrop(lamp, 1.25 + idx * 0.04, 0.58, 34, true);
+                registerOccludableStructure(lamp, false); // 街灯贴近镜头时也能 X-Ray 透视
+            }
+
+            const lampCoords = [
+                [-6.8, 1, -4, true], [-6.8, 1, 9, true], [-12.5, 1, 15, false],
+                [6.8, 1, -4, true], [6.8, 1, 9, true], [12.5, 1, 15, false],
+                [-5.5, 1, 2, false], [5.5, 1, 2, false]
+            ];
+            lampCoords.forEach(([x, y, z, hasLight], idx) => createStreetLantern(x, y, z, hasLight, idx));
+
+            // 飘落的樱花花瓣粒子 (Sakura Petals)
+            const petalGeo = new THREE.BoxGeometry(0.28, 0.08, 0.28);
+            const petalMat = getVoxelMat(0xfbcfe8, { emissive: 0xf472b6, emissiveIntensity: 0.3 });
+            for (let i = 0; i < 85; i++) {
+                const petal = new THREE.Mesh(petalGeo, petalMat);
+                petal.position.set(
+                    (Math.random() - 0.5) * 62,
+                    2 + Math.random() * 24,
+                    (Math.random() - 0.5) * 56
+                );
+                petal.userData = {
+                    speedY: 1.2 + Math.random() * 1.2,
+                    swaySpeed: 1.5 + Math.random() * 2.0,
+                    phase: Math.random() * Math.PI * 2
+                };
+                scene.add(petal);
+                sakuraPetals.push(petal);
+            }
+
+            // 烘焙坊烟囱袅袅炊烟 (Smoke Puffs)
+            const smokeGeo = new THREE.BoxGeometry(0.6, 0.6, 0.6);
+            for (let i = 0; i < 10; i++) {
+                const sMat = getVoxelMat(0xf8fafc, { transparent: true, opacity: 0.65 });
+                const puff = new THREE.Mesh(smokeGeo, sMat.clone());
+                puff.userData = { progress: i / 10 };
+                scene.add(puff);
+                smokePuffs.push(puff);
+            }
+
+            // 空中缓缓解锁漂浮的祈福孔明灯
+            for (let i = 0; i < 12; i++) {
+                const lGroup = new THREE.Group();
+                createVoxel(0.7, 0.95, 0.7, 0xfef08a, 0, 0, 0, lGroup, { emissive: 0xf97316, emissiveIntensity: 1.2 });
+                lGroup.position.set(
+                    (Math.random() - 0.5) * 58,
+                    12 + Math.random() * 22,
+                    -25 + Math.random() * 50
+                );
+                lGroup.userData = {
+                    baseY: lGroup.position.y,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.6 + Math.random() * 0.6
+                };
+                scene.add(lGroup);
+                floatingLanterns.push(lGroup);
+            }
+        }
+
+        // ==========================================
+        // 7. 猫咪小镇导航路网与 12 只特色体素猫咪系统
+        // ==========================================
+        const townWaypoints = {
+            plazaWest:   { x: -9.5, y: 1.0, z: 2.0,  name: '招财猫喷泉广场' },
+            bridgeWest:  { x: -5.2, y: 1.0, z: 2.0,  name: '朱红拱桥西口' },
+            bridgePeak:  { x: 0.0,  y: 2.8, z: 2.0,  name: '跨河拱桥中央' },
+            bridgeEast:  { x: 5.2,  y: 1.0, z: 2.0,  name: '朱红拱桥东口' },
+            fishShop:    { x: -11.8,y: 1.0, z: -7.0, name: '喵鲜鱼铺摊前' },
+            waterfallW:  { x: -6.5, y: 1.0, z: -13.5,name: '瀑布西侧观景岸' },
+            bakery:      { x: -11.8,y: 1.0, z: 7.5,  name: '肉垫烘焙坊门前' },
+            ramen:       { x: -10.2,y: 1.0, z: 18.5, name: '深夜喵拉面馆' },
+            southWest:   { x: -5.2, y: 1.0, z: 16.0, name: '溪流踏脚石西岸' },
+            steppingMid: { x: 0.0,  y: 0.8, z: 16.0, name: '溪流踏脚石中央' },
+            southEast:   { x: 5.2,  y: 1.0, z: 16.0, name: '溪流踏脚石东岸' },
+            plazaEast:   { x: 9.5,  y: 1.0, z: 2.0,  name: '樱花东街路口' },
+            catCafe:     { x: 10.5, y: 1.0, z: -7.5, name: '樱花猫咪咖啡馆' },
+            waterfallE:  { x: 6.8,  y: 1.0, z: -13.5,name: '瀑布东侧垂钓台' },
+            yarnShop:    { x: 11.8, y: 1.0, z: 7.5,  name: '魔法毛线杂货铺' },
+            gardenSouth: { x: 11.0, y: 1.0, z: 19.0, name: '南岸樱花小花园' }
+        };
+
+        const waypointEdges = {
+            plazaWest:   ['bridgeWest', 'fishShop', 'bakery', 'waterfallW'],
+            bridgeWest:  ['plazaWest', 'bridgePeak'],
+            bridgePeak:  ['bridgeWest', 'bridgeEast'],
+            bridgeEast:  ['bridgePeak', 'plazaEast'],
+            fishShop:    ['plazaWest', 'waterfallW'],
+            waterfallW:  ['fishShop', 'plazaWest'],
+            bakery:      ['plazaWest', 'ramen', 'southWest'],
+            ramen:       ['bakery', 'southWest'],
+            southWest:   ['bakery', 'ramen', 'steppingMid'],
+            steppingMid: ['southWest', 'southEast'],
+            southEast:   ['steppingMid', 'yarnShop', 'gardenSouth'],
+            plazaEast:   ['bridgeEast', 'catCafe', 'yarnShop', 'waterfallE'],
+            catCafe:     ['plazaEast', 'waterfallE'],
+            waterfallE:  ['catCafe', 'plazaEast'],
+            yarnShop:    ['plazaEast', 'southEast', 'gardenSouth'],
+            gardenSouth: ['yarnShop', 'southEast']
+        };
+
+        // 12 只性格各异的猫咪档案
+        const catProfiles = [
+            { name: '橘座大叔', role: '拉面馆常客', coat: 0xf97316, accent: 0xffffff, ear: 0xfda4af, accessory: 'scarf_red', startNode: 'ramen', emoji: '🍜', thoughts: ['拉面汤头真香喵~', '再去鲜鱼店看看！', '吃饱喝足晒太阳~'] },
+            { name: '糯米团子', role: '烘焙坊试吃员', coat: 0xffffff, accent: 0xfef08a, ear: 0xf9a8d4, accessory: 'chef_hat', startNode: 'bakery', emoji: '🥐', thoughts: ['刚出炉的猫爪吐司！', '身上都是奶油香~', '跑快点去桥上看风景！'] },
+            { name: '煤球警长', role: '瀑布镇巡逻官', coat: 0x1e293b, accent: 0x334155, ear: 0xf43f5e, accessory: 'bell_gold', startNode: 'bridgePeak', emoji: '🐾', thoughts: ['今日小镇治安良好！', '谁偷吃了小鱼干？', '本警长眼神犀利！'] },
+            { name: '三花小町', role: '猫咖看板娘', coat: 0xfffbeb, accent: 0xf97316, ear: 0xfb7185, accessory: 'ribbon_pink', startNode: 'catCafe', emoji: '🌸', thoughts: ['樱花落满屋顶啦~', '欢迎光临喵喵咖啡馆', '今天要拍美美的特写！'] },
+            { name: '海盐船长', role: '鲜鱼铺品鉴师', coat: 0x64748b, accent: 0xf8fafc, ear: 0xfda4af, accessory: 'sailor_collar', startNode: 'fishShop', emoji: '🐟', thoughts: ['今天的秋刀鱼超新鲜！', '去瀑布边看锦鲤咯~', '海风的味道喵！'] },
+            { name: '奶酪布丁', role: '追蝴蝶探险家', coat: 0xfbbf24, accent: 0xffffff, ear: 0xfda4af, accessory: 'scarf_blue', startNode: 'plazaWest', emoji: '🦋', thoughts: ['哇！快看那片花瓣！', '冲鸭！全速奔跑！', '在桥头歇一歇脚~'] },
+            { name: '暹罗摩卡', role: '观瀑吟游诗人', coat: 0xfef3c7, accent: 0x451a03, ear: 0x451a03, accessory: 'bell_gold', startNode: 'waterfallE', emoji: '🌊', thoughts: ['瀑布的水声真治愈...', '灵感涌现喵！', '发呆是猫生的正经事'] },
+            { name: '紫芋毛球', role: '毛线屋小帮手', coat: 0xc084fc, accent: 0xf5f3ff, ear: 0xf472b6, accessory: 'ribbon_pink', startNode: 'yarnShop', emoji: '🧶', thoughts: ['粉色毛线球最棒了！', '别把毛线团弄乱呀~', '伸个大大的懒腰！'] },
+            { name: '抹茶大福', role: '樱花树睡神', coat: 0x86efac, accent: 0xffffff, ear: 0xfda4af, accessory: 'leaf_hat', startNode: 'gardenSouth', emoji: '🍵', thoughts: ['呼噜噜...再睡五分钟', '阳光暖洋洋的喵~', '梦里全是小鱼干！'] },
+            { name: '虎斑闪电', role: '跨河跑酷选手', coat: 0xd97706, accent: 0x78350f, ear: 0xfda4af, accessory: 'scarf_red', startNode: 'steppingMid', emoji: '⚡', thoughts: ['看我飞跃踏脚石！', '小镇最快肉垫就是我', '风在耳边呼呼吹~'] },
+            { name: '蜜桃甜心', role: '许愿喷泉守护者', coat: 0xfda4af, accent: 0xfff1f2, ear: 0xf43f5e, accessory: 'ribbon_pink', startNode: 'plazaEast', emoji: '💖', thoughts: ['向黄金招财猫许个愿~', '今天也是元气满满！', '跟好朋友打个招呼~'] },
+            { name: '星空夜影', role: '夜灯守望喵', coat: 0x312e81, accent: 0xe0e7ff, ear: 0x818cf8, accessory: 'bell_gold', startNode: 'waterfallW', emoji: '✨', thoughts: ['水花里有彩虹的光！', '最喜欢黄昏的暖灯笼', '静静看着大家忙碌~'] }
+        ];
+
+        // 动作中文名映射
+        const actionNamesMap = {
+            WANDER: '悠闲漫步 (Walking)',
+            RUN: '欢快奔跑 (Zoomies!)',
+            ADMIRE: '驻足赏景 (Admiring View)',
+            SNIFF_FLOWER: '轻嗅路边小花 (Sniffing Flowers)',
+            NAP: '惬意打盹 (Catnap Zzz)',
+            GROOM: '端坐舔爪 (Grooming)',
+            PLAY: '扑蝶雀跃 (Playful Jump)'
+        };
+
+        // 创建精致可动画体素猫咪模型
+        function createCatCharacter(profile, index) {
+            const catRoot = new THREE.Group();
+            const rig = new THREE.Group();
+            rig.scale.set(0.88, 0.88, 0.88);
+            catRoot.add(rig);
+
+            // 1. 躯干 (BodyPivot)
+            const bodyPivot = new THREE.Group();
+            bodyPivot.position.set(0, 0.72, 0);
+            rig.add(bodyPivot);
+
+            createVoxel(0.82, 0.68, 1.35, profile.coat, 0, 0, 0, bodyPivot);
+            // 胸前与肚皮雪白绒毛
+            createVoxel(0.68, 0.52, 0.45, profile.accent, 0, -0.05, 0.52, bodyPivot);
+
+            // 配饰系统
+            if (profile.accessory === 'scarf_red' || profile.accessory === 'scarf_blue') {
+                const sCol = profile.accessory === 'scarf_red' ? 0xef4444 : 0x38bdf8;
+                createVoxel(0.9, 0.24, 0.45, sCol, 0, 0.15, 0.52, bodyPivot);
+            } else if (profile.accessory === 'bell_gold') {
+                createVoxel(0.88, 0.18, 0.35, 0xdc2626, 0, 0.12, 0.52, bodyPivot);
+                createVoxel(0.26, 0.26, 0.26, 0xfbbf24, 0, -0.05, 0.72, bodyPivot);
+            } else if (profile.accessory === 'sailor_collar') {
+                createVoxel(0.92, 0.16, 0.55, 0x0284c7, 0, 0.22, 0.48, bodyPivot);
+            }
+
+            // 2. 头部 (HeadPivot)
+            const headPivot = new THREE.Group();
+            headPivot.position.set(0, 0.48, 0.58);
+            bodyPivot.add(headPivot);
+
+            createVoxel(0.96, 0.82, 0.88, profile.coat, 0, 0.22, 0, headPivot);
+            // 脸颊花纹
+            createVoxel(1.02, 0.32, 0.45, profile.accent, 0, 0.08, 0.1, headPivot);
+            // 立体双耳
+            [-0.32, 0.32].forEach(ex => {
+                createVoxel(0.28, 0.36, 0.26, profile.coat, ex, 0.72, -0.05, headPivot);
+                createVoxel(0.16, 0.22, 0.28, profile.ear, ex, 0.70, 0.02, headPivot);
+            });
+            // 明亮大眼睛与高光
+            [-0.24, 0.24].forEach(eyeX => {
+                createVoxel(0.18, 0.22, 0.1, 0x0f172a, eyeX, 0.24, 0.43, headPivot);
+                createVoxel(0.07, 0.08, 0.12, 0xffffff, eyeX + 0.04, 0.28, 0.44, headPivot);
+            });
+            // 粉色小鼻头与胡须
+            createVoxel(0.16, 0.11, 0.12, 0xfb7185, 0, 0.12, 0.46, headPivot);
+            createVoxel(1.22, 0.04, 0.04, 0xffffff, 0, 0.10, 0.38, headPivot);
+
+            // 头顶小配饰
+            if (profile.accessory === 'chef_hat') {
+                createVoxel(0.55, 0.45, 0.55, 0xffffff, 0, 0.82, 0, headPivot);
+            } else if (profile.accessory === 'ribbon_pink') {
+                createVoxel(0.38, 0.22, 0.22, 0xf43f5e, -0.32, 0.62, 0.15, headPivot);
+            } else if (profile.accessory === 'leaf_hat') {
+                createVoxel(0.48, 0.12, 0.48, 0x22c55e, 0, 0.68, 0, headPivot);
+            }
+
+            // 3. 四条可动小短腿 (Legs)
+            const legs = [];
+            const legPositions = [
+                [-0.28, -0.32, 0.44],  // 左前 FL
+                [0.28, -0.32, 0.44],   // 右前 FR
+                [-0.28, -0.32, -0.44], // 左后 BL
+                [0.28, -0.32, -0.44]   // 右后 BR
+            ];
+            legPositions.forEach(([lx, ly, lz]) => {
+                const legPivot = new THREE.Group();
+                legPivot.position.set(lx, ly, lz);
+                createVoxel(0.24, 0.46, 0.24, profile.coat, 0, -0.18, 0, legPivot);
+                createVoxel(0.25, 0.14, 0.28, profile.accent, 0, -0.36, 0.03, legPivot); // 白手套肉垫
+                bodyPivot.add(legPivot);
+                legs.push(legPivot);
+            });
+
+            // 4. 灵动高翘尾巴 (TailPivot)
+            const tailPivot = new THREE.Group();
+            tailPivot.position.set(0, 0.18, -0.66);
+            bodyPivot.add(tailPivot);
+            createVoxel(0.2, 0.2, 0.55, profile.coat, 0, 0.15, -0.22, tailPivot);
+            createVoxel(0.18, 0.48, 0.18, profile.accent, 0, 0.42, -0.44, tailPivot);
+
+            // 射线检测透明包围盒（方便玩家直接点击猫咪跟拍）
+            const hitBox = new THREE.Mesh(
+                new THREE.BoxGeometry(2.2, 2.2, 2.4),
+                new THREE.MeshBasicMaterial({ visible: false })
+            );
+            hitBox.position.set(0, 1.0, 0);
+            hitBox.userData = { catIndex: index };
+            catRoot.add(hitBox);
+            interactiveMeshes.push(hitBox);
+
+            // 初始位置与导航状态
+            const startWp = townWaypoints[profile.startNode];
+            const neighbors = waypointEdges[profile.startNode];
+            const nextNodeKey = neighbors[Math.floor(Math.random() * neighbors.length)];
+            const nextWp = townWaypoints[nextNodeKey];
+
+            catRoot.position.set(startWp.x, startWp.y, startWp.z);
+            scene.add(catRoot);
+
+            // 第五阶段（1.95s - 2.65s）：12只小猫从空中轻巧落下就位
+            registerSkyDrop(catRoot, 1.95 + index * 0.045, 0.58, 28, true);
+
+            return {
+                index,
+                profile,
+                root: catRoot,
+                rig,
+                bodyPivot,
+                headPivot,
+                legs,
+                tailPivot,
+                currentNode: profile.startNode,
+                targetNode: nextNodeKey,
+                startPos: new THREE.Vector3(startWp.x, startWp.y, startWp.z),
+                targetPos: new THREE.Vector3(nextWp.x, nextWp.y, nextWp.z),
+                segmentProgress: Math.random() * 0.6,
+                state: index % 3 === 0 ? 'RUN' : 'WANDER', // WANDER, RUN, ADMIRE, SNIFF_FLOWER, NAP, GROOM, PLAY
+                stateTimer: 4 + Math.random() * 6,
+                animPhase: Math.random() * Math.PI * 2,
+                thoughtIndex: 0
+            };
+        }
+
+        function initAllCats() {
+            catProfiles.forEach((profile, idx) => {
+                cats.push(createCatCharacter(profile, idx));
+            });
+            // 其他猫咪挡在镜头前时同样 X-Ray 透视（正在跟拍的猫咪除外）
+            cats.forEach((cat, idx) => {
+                registerOccludableStructure(cat.root, false, { everyFrame: true, catIndex: idx });
+            });
+        }
+
+        // 更新所有猫咪的 AI 行为与骨骼动画
+        function updateCats(dt, elapsed) {
+            // 在开场高空落下组装未完成前，小猫保持可爱准备姿态不乱跑
+            if (assemblySystem.active && (elapsed - assemblySystem.startTime) < 2.35) {
+                return;
+            }
+
+            cats.forEach((cat) => {
+                cat.stateTimer -= dt;
+                cat.animPhase += dt * (cat.state === 'RUN' ? 15 : 8);
+
+                // 状态移动或原地动作逻辑
+                if (cat.state === 'WANDER' || cat.state === 'RUN') {
+                    const moveSpeed = cat.state === 'RUN' ? 5.6 : 2.5;
+                    const dist = cat.startPos.distanceTo(cat.targetPos);
+                    const step = (moveSpeed * dt) / Math.max(0.5, dist);
+                    cat.segmentProgress += step;
+
+                    if (cat.segmentProgress >= 1.0) {
+                        // 抵达路点，决定下一步是驻足欣赏/嗅地面小花/打盹/玩耍，还是继续前往下一站
+                        cat.segmentProgress = 0;
+                        cat.currentNode = cat.targetNode;
+                        cat.startPos.copy(cat.targetPos);
+
+                        // 判断是否在特殊景点触发特色动作
+                        const roll = Math.random();
+                        if ((cat.currentNode === 'bridgePeak' || cat.currentNode === 'waterfallW' || cat.currentNode === 'waterfallE') && roll < 0.55) {
+                            cat.state = 'ADMIRE';
+                            cat.stateTimer = 5.5 + Math.random() * 3.0;
+                            cat.thoughtIndex = (cat.thoughtIndex + 1) % cat.profile.thoughts.length;
+                        } else if (roll < 0.25) {
+                            cat.state = 'SNIFF_FLOWER';
+                            cat.stateTimer = 4.5 + Math.random() * 2.5;
+                        } else if (roll < 0.40) {
+                            cat.state = 'NAP';
+                            cat.stateTimer = 6.0 + Math.random() * 4.0;
+                        } else if (roll < 0.55) {
+                            cat.state = 'GROOM';
+                            cat.stateTimer = 4.5 + Math.random() * 2.5;
+                        } else if (roll < 0.68) {
+                            cat.state = 'PLAY';
+                            cat.stateTimer = 4.0 + Math.random() * 2.5;
+                        } else {
+                            pickNextDestination(cat);
+                        }
+                    } else {
+                        // 沿路径插值前进（如果在拱桥或踏脚石上，自动拟合拱形高度）
+                        cat.root.position.lerpVectors(cat.startPos, cat.targetPos, cat.segmentProgress);
+                        if ((cat.currentNode === 'bridgeWest' && cat.targetNode === 'bridgePeak') ||
+                            (cat.currentNode === 'bridgePeak' && cat.targetNode === 'bridgeEast') ||
+                            (cat.currentNode === 'bridgeEast' && cat.targetNode === 'bridgePeak') ||
+                            (cat.currentNode === 'bridgePeak' && cat.targetNode === 'bridgeWest')) {
+                            const bx = cat.root.position.x;
+                            cat.root.position.y = 1.25 + Math.cos((bx / 5.5) * (Math.PI / 2)) * 1.65;
+                        }
+
+                        // 平滑朝向目标方向
+                        const dir = new THREE.Vector3().subVectors(cat.targetPos, cat.startPos).normalize();
+                        if (dir.lengthSq() > 0.001) {
+                            const targetYaw = Math.atan2(dir.x, dir.z);
+                            let diff = targetYaw - cat.root.rotation.y;
+                            while (diff > Math.PI) diff -= Math.PI * 2;
+                            while (diff < -Math.PI) diff += Math.PI * 2;
+                            cat.root.rotation.y += diff * Math.min(1, dt * 10);
+                        }
+                    }
+                } else {
+                    // 原地动作计时结束，恢复移动
+                    if (cat.stateTimer <= 0) {
+                        pickNextDestination(cat);
+                    }
+                }
+
+                // ----------------------------------------------------
+                // 基于动作状态的精细骨骼动画表现
+                // ----------------------------------------------------
+                const p = cat.animPhase;
+                // 先重置姿态基准
+                cat.bodyPivot.position.set(0, 0.72, 0);
+                cat.bodyPivot.rotation.set(0, 0, 0);
+                cat.headPivot.rotation.set(0, 0, 0);
+
+                if (cat.state === 'WANDER') {
+                    // 轻快漫步四肢交替摆动
+                    cat.legs[0].rotation.x = Math.sin(p) * 0.55;
+                    cat.legs[1].rotation.x = -Math.sin(p) * 0.55;
+                    cat.legs[2].rotation.x = -Math.sin(p) * 0.55;
+                    cat.legs[3].rotation.x = Math.sin(p) * 0.55;
+                    cat.bodyPivot.position.y = 0.72 + Math.abs(Math.sin(p * 2)) * 0.08;
+                    cat.bodyPivot.rotation.z = Math.sin(p) * 0.05;
+                    cat.headPivot.rotation.y = Math.sin(elapsed * 2 + cat.index) * 0.15;
+                    cat.tailPivot.rotation.y = Math.cos(p) * 0.45;
+                    cat.tailPivot.rotation.x = 0.2;
+                } else if (cat.state === 'RUN') {
+                    // 欢快奔跑（前后肢同步腾跃）
+                    cat.legs[0].rotation.x = Math.sin(p) * 0.95;
+                    cat.legs[1].rotation.x = Math.sin(p + 0.3) * 0.95;
+                    cat.legs[2].rotation.x = -Math.sin(p) * 0.95;
+                    cat.legs[3].rotation.x = -Math.sin(p + 0.3) * 0.95;
+                    cat.bodyPivot.position.y = 0.78 + Math.abs(Math.sin(p)) * 0.26;
+                    cat.bodyPivot.rotation.x = -0.18 + Math.cos(p) * 0.18;
+                    cat.tailPivot.rotation.x = -0.35 + Math.sin(p) * 0.25;
+                } else if (cat.state === 'ADMIRE') {
+                    // 驻足凝望瀑布或小镇风景（自动面向北侧瀑布方向）
+                    const waterfallDir = Math.atan2(0 - cat.root.position.x, -19 - cat.root.position.z);
+                    let diff = waterfallDir - cat.root.rotation.y;
+                    while (diff > Math.PI) diff -= Math.PI * 2;
+                    while (diff < -Math.PI) diff += Math.PI * 2;
+                    cat.root.rotation.y += diff * Math.min(1, dt * 4);
+
+                    cat.bodyPivot.rotation.x = -0.22; // 乖巧端坐昂首
+                    cat.headPivot.rotation.x = -0.25 + Math.sin(elapsed * 2) * 0.08;
+                    cat.headPivot.rotation.y = Math.sin(elapsed * 1.4) * 0.32;
+                    cat.legs.forEach(l => l.rotation.x = 0);
+                    cat.tailPivot.rotation.y = Math.sin(elapsed * 3) * 0.5;
+                } else if (cat.state === 'SNIFF_FLOWER') {
+                    // 俯身凑近地面小花轻轻嗅闻（鼻尖微颤、尾巴欢快摇摆）
+                    cat.bodyPivot.position.y = 0.62;
+                    cat.bodyPivot.rotation.x = 0.28;
+                    cat.headPivot.rotation.x = 0.38 + Math.sin(elapsed * 14) * 0.07;
+                    cat.headPivot.rotation.y = Math.sin(elapsed * 2.5) * 0.22;
+                    cat.legs[0].rotation.x = -0.25;
+                    cat.legs[1].rotation.x = -0.25;
+                    cat.legs[2].rotation.x = 0.1;
+                    cat.legs[3].rotation.x = 0.1;
+                    cat.tailPivot.rotation.y = Math.sin(elapsed * 7) * 0.55;
+                } else if (cat.state === 'NAP') {
+                    // 蜷缩打盹呼吸起伏
+                    cat.bodyPivot.position.y = 0.42;
+                    cat.bodyPivot.rotation.z = 0.22;
+                    cat.headPivot.rotation.x = 0.35 + Math.sin(elapsed * 2.2) * 0.06;
+                    cat.headPivot.rotation.z = -0.2;
+                    cat.legs.forEach(l => l.rotation.x = 1.25);
+                    cat.tailPivot.rotation.y = Math.sin(elapsed * 1.2) * 0.15;
+                } else if (cat.state === 'GROOM') {
+                    // 端坐抬起右前爪舔毛
+                    cat.bodyPivot.rotation.x = -0.32;
+                    cat.legs[0].rotation.x = 0;
+                    cat.legs[1].rotation.x = -1.35 + Math.sin(elapsed * 8) * 0.25; // 抬起右爪
+                    cat.legs[2].rotation.x = 0.4;
+                    cat.legs[3].rotation.x = 0.4;
+                    cat.headPivot.rotation.x = 0.25 + Math.sin(elapsed * 8) * 0.18;
+                    cat.headPivot.rotation.z = 0.2;
+                } else if (cat.state === 'PLAY') {
+                    // 原地转圈扑蝶跳跃
+                    cat.root.rotation.y += dt * 2.4;
+                    const jump = Math.max(0, Math.sin(elapsed * 6.5));
+                    cat.bodyPivot.position.y = 0.72 + jump * 0.65;
+                    cat.bodyPivot.rotation.x = -jump * 0.35;
+                    cat.legs[0].rotation.x = -jump * 0.9;
+                    cat.legs[1].rotation.x = -jump * 0.9;
+                    cat.tailPivot.rotation.y = Math.sin(elapsed * 12) * 0.6;
+                }
+            });
+        }
+
+        function pickNextDestination(cat) {
+            const neighbors = waypointEdges[cat.currentNode];
+            const nextKey = neighbors[Math.floor(Math.random() * neighbors.length)];
+            cat.targetNode = nextKey;
+            cat.targetPos.set(
+                townWaypoints[nextKey].x + (Math.random() - 0.5) * 1.2,
+                townWaypoints[nextKey].y,
+                townWaypoints[nextKey].z + (Math.random() - 0.5) * 1.2
+            );
+            cat.state = Math.random() < 0.35 ? 'RUN' : 'WANDER';
+            cat.stateTimer = 5 + Math.random() * 6;
+            cat.thoughtIndex = (cat.thoughtIndex + 1) % cat.profile.thoughts.length;
+        }
+
+        // ==========================================
+        // 8. 电影级智能运镜追踪、镜头避让与近处遮挡半透明透视系统
+        // ==========================================
+        // 镜头机位配置说明（绝不死板跟在正后方）
+        const cinematicShotTypes = {
+            SIDE_TRACKING: {
+                code: 'FOV: 42mm | SHOT: STEADICAM SIDE-TRACK',
+                name: '侧面平行跟拍 (Steadicam Side)',
+                fov: 42
+            },
+            LOW_HERO: {
+                code: 'FOV: 54mm | SHOT: LOW-ANGLE HERO TRACK',
+                name: '低角度动感仰拍 (Low-Angle Action)',
+                fov: 54
+            },
+            OVER_SHOULDER_VISTA: {
+                code: 'FOV: 38mm | SHOT: OVER-THE-SHOULDER VISTA',
+                name: '过肩远眺瀑布景深 (Over-Shoulder Vista)',
+                fov: 38
+            },
+            FLOWER_MACRO: {
+                code: 'FOV: 34mm | SHOT: LOW PETAL MACRO',
+                name: '花丛微距低角特写 (Flower Sniff Macro)',
+                fov: 34
+            },
+            ORBIT_CLOSEUP: {
+                code: 'FOV: 32mm | SHOT: 360° ORBIT PORTRAIT',
+                name: '360° 环绕柔光特写 (Orbit Close-Up)',
+                fov: 32
+            },
+            CRANE_ESTABLISHING: {
+                code: 'FOV: 46mm | SHOT: DYNAMIC CRANE SWEEP',
+                name: '摇臂俯冲全景伴随 (Cinema Crane Sweep)',
+                fov: 46
+            }
+        };
+
+        const shotKeys = Object.keys(cinematicShotTypes);
+
+        // 根据猫咪当前动作自动选择最具电影感的运镜，或使用用户手动切换的机位
+        function resolveActiveShotType(cat) {
+            if (followState.shotOverride) {
+                return followState.shotOverride;
+            }
+            switch (cat.state) {
+                case 'WANDER':       return 'SIDE_TRACKING';
+                case 'RUN':          return 'LOW_HERO';
+                case 'ADMIRE':       return 'OVER_SHOULDER_VISTA';
+                case 'SNIFF_FLOWER': return 'FLOWER_MACRO';
+                case 'NAP':
+                case 'GROOM':        return 'ORBIT_CLOSEUP';
+                case 'PLAY':         return 'CRANE_ESTABLISHING';
+                default:             return 'SIDE_TRACKING';
+            }
+        }
+
+        // ----------------------------------------------------
+        // 平滑工具：临界阻尼弹簧 (SmoothDamp)，保证位置/角度/距离都具备速度连续性，彻底消除抖动与顿挫
+        // ----------------------------------------------------
+        function smoothDamp(cur, target, state, key, smoothTime, dt) {
+            const st = Math.max(0.0001, smoothTime);
+            const omega = 2.0 / st;
+            const x = omega * dt;
+            const exp = 1.0 / (1.0 + x + 0.48 * x * x + 0.235 * x * x * x);
+            const change = cur - target;
+            const vel = state[key] || 0;
+            const temp = (vel + omega * change) * dt;
+            state[key] = (vel - omega * temp) * exp;
+            return target + (change + temp) * exp;
+        }
+        function wrapAngle(a) {
+            a = (a + Math.PI) % (Math.PI * 2);
+            if (a < 0) a += Math.PI * 2;
+            return a - Math.PI;
+        }
+        function smoothDampAngle(cur, target, state, key, smoothTime, dt) {
+            return smoothDamp(cur, cur + wrapAngle(target - cur), state, key, smoothTime, dt);
+        }
+        function smoothDampVec3(cur, target, velVec, smoothTime, dt) {
+            const s = { x: velVec.x, y: velVec.y, z: velVec.z };
+            cur.x = smoothDamp(cur.x, target.x, s, 'x', smoothTime, dt);
+            cur.y = smoothDamp(cur.y, target.y, s, 'y', smoothTime, dt);
+            cur.z = smoothDamp(cur.z, target.z, s, 'z', smoothTime, dt);
+            velVec.set(s.x, s.y, s.z);
+            return cur;
+        }
+        function smoothstep01(e0, e1, v) {
+            const t = Math.min(1, Math.max(0, (v - e0) / (e1 - e0)));
+            return t * t * (3 - 2 * t);
+        }
+
+        // 跟拍镜头"球面支架"状态：相机围绕猫咪做 方位角/仰角/距离 三轴独立弹簧运动
+        // —— 切换机位时镜头沿弧线绕行，而不是直线穿过猫咪或建筑
+        const camRig = {
+            initialized: false,
+            focus: new THREE.Vector3(),
+            focusVel: new THREE.Vector3(),
+            look: new THREE.Vector3(),
+            lookOff: new THREE.Vector3(),
+            lookVel: new THREE.Vector3(),
+            orbitDir: 1, orbitCheck: 0,
+            az: 0, el: 0.3, dist: 6,
+            collDist: 999,
+            heading: 0,
+            avoidAz: 0, avoidAzTarget: 0,
+            avoidEl: 0, avoidElTarget: 0,
+            avoidTimer: 0,
+            groundLift: 0,
+            userYaw: 0, userYawIdle: 0,
+            userFov: 0,
+            lastShot: null,
+            vel: {}
+        };
+
+        // 世界包围盒缓存（用于快速粗筛遮挡与近距离检测）
+        let boxRefreshTimer = 0;
+        function refreshOccluderBoxes(force, onlyEveryFrame) {
+            for (let i = 0; i < occludableGroups.length; i++) {
+                const item = occludableGroups[i];
+                if (onlyEveryFrame && !item.everyFrame) continue;
+                if (!item.box) item.box = new THREE.Box3();
+                if (item.everyFrame) { item.box.makeEmpty(); for (let m = 0; m < item.meshes.length; m++) item.box.expandByObject(item.meshes[m]); continue; }
+                if (force || item.dynamic || !item.boxReady) {
+                    item.box.makeEmpty();
+                    for (let m = 0; m < item.meshes.length; m++) item.box.expandByObject(item.meshes[m]);
+                    item.boxReady = !assemblySystem.active;
+                }
+            }
+        }
+
+        // 射线检测：从 from 到 to 之间是否被"实体"遮挡（建筑/悬崖），返回最近命中距离
+        const _ray = new THREE.Ray();
+        const _tmpV = new THREE.Vector3();
+        const _tmpV2 = new THREE.Vector3();
+        function firstSolidHit(from, dir, maxDist) {
+            _ray.set(from, dir);
+            let best = Infinity;
+            for (let i = 0; i < occludableGroups.length; i++) {
+                const item = occludableGroups[i];
+                if (!item.solid || !item.box || item.box.isEmpty()) continue;
+                const hp = _ray.intersectBox(item.box, _tmpV);
+                if (!hp && !item.box.containsPoint(from)) continue;
+                if (hp && hp.distanceTo(from) > Math.min(best, maxDist)) continue;
+                collisionRaycaster.set(from, dir);
+                collisionRaycaster.near = 0.3;
+                collisionRaycaster.far = Math.min(best, maxDist);
+                const hits = collisionRaycaster.intersectObjects(item.meshes, false);
+                if (hits.length > 0 && hits[0].distance < best) best = hits[0].distance;
+            }
+            return best;
+        }
+
+        // ----------------------------------------------------
+        // 核心算法 A：智能镜头避让 (Camera Collision Avoidance v2)
+        // 1) 优先"绕开"：理想方位被实体挡住时，左右/上下搜索最近的无遮挡机位，并带迟滞避免来回横跳
+        // 2) 兜底"推近"：仍有遮挡时平滑拉近（快进慢出），绝不瞬移
+        // 3) 树木/灯笼/拱桥等非实体遮挡物不推镜头，交给 X-Ray 透视处理
+        // ----------------------------------------------------
+        function sphericalDir(az, el, out) {
+            const ce = Math.cos(el);
+            return out.set(Math.sin(az) * ce, Math.sin(el), Math.cos(az) * ce);
+        }
+        function isViewClear(focus, az, el, dist) {
+            const dir = sphericalDir(az, el, _tmpV2).clone();
+            return firstSolidHit(focus, dir, dist + 0.6) > dist * 0.92;
+        }
+        function updateAvoidanceSearch(dt, focus, baseAz, baseEl, dist) {
+            camRig.avoidTimer -= dt;
+            if (camRig.avoidTimer > 0) return;
+            camRig.avoidTimer = 0.18; // 节流：每 0.18s 评估一次，降低开销并避免抖动
+
+            // 当前偏置机位仍然通畅 → 若原始机位也通畅则逐步回归，否则保持（迟滞）
+            const curOk = isViewClear(focus, baseAz + camRig.avoidAzTarget, baseEl + camRig.avoidElTarget, dist);
+            if (camRig.avoidAzTarget !== 0 || camRig.avoidElTarget !== 0) {
+                if (isViewClear(focus, baseAz, baseEl, dist)) {
+                    camRig.avoidAzTarget = 0; camRig.avoidElTarget = 0;
+                    return;
+                }
+                if (curOk) return;
+            } else if (curOk) {
+                return;
+            }
+
+            const candidates = [];
+            const azSteps = [0.35, -0.35, 0.7, -0.7, 1.1, -1.1, 1.6, -1.6];
+            const elSteps = [0, 0.22, 0.45];
+            for (const de of elSteps) {
+                for (const da of (de === 0 ? azSteps : [0].concat(azSteps))) {
+                    candidates.push([da, de]);
+                }
+            }
+            // 优先选择离当前偏置最近的可行解，保持运动连续
+            candidates.sort((a, b) => {
+                const ca = Math.abs(a[0] - camRig.avoidAzTarget) + Math.abs(a[1]) * 1.6;
+                const cb = Math.abs(b[0] - camRig.avoidAzTarget) + Math.abs(b[1]) * 1.6;
+                return ca - cb;
+            });
+            for (const [da, de] of candidates) {
+                if (isViewClear(focus, baseAz + da, Math.min(1.35, baseEl + de), dist)) {
+                    camRig.avoidAzTarget = da;
+                    camRig.avoidElTarget = de;
+                    return;
+                }
+            }
+            // 找不到通畅机位：抬高一些，剩下交给推近 + X-Ray
+            camRig.avoidAzTarget = 0;
+            camRig.avoidElTarget = 0.35;
+        }
+
+        // ----------------------------------------------------
+        // 核心算法 B：视线遮挡 & 近距离物体 X-Ray 透视 (v2)
+        // - 视线遮挡：相机→目标之间按相机空间扇形发射 5 条射线（覆盖猫咪身体），先包围盒粗筛再精确检测
+        // - 近距离：按"相机到物体包围盒表面"的真实距离判断（而非物体中心），贴脸的树干、灯笼、屋檐都能透视
+        // - 距离越近越透明；淡出快、淡入慢，并带 0.35s 保持时间，杜绝闪烁
+        // ----------------------------------------------------
+        function updateDynamicOcclusionTransparency(dt, targetWorldPos, isFollow) {
+            boxRefreshTimer -= dt;
+            if (boxRefreshTimer <= 0 || assemblySystem.active) {
+                refreshOccluderBoxes(false);
+                boxRefreshTimer = 0.5;
+            } else {
+                refreshOccluderBoxes(false, true);
+            }
+            const skipCat = isFollow ? followState.catIndex : -2;
+
+            const camPos = camera.position;
+            const toTarget = _tmpV.subVectors(targetWorldPos, camPos);
+            const distToTarget = toTarget.length();
+
+            const camForward = new THREE.Vector3();
+            camera.getWorldDirection(camForward);
+            const camRight = new THREE.Vector3().crossVectors(camForward, camera.up).normalize();
+            const camUp = new THREE.Vector3().crossVectors(camRight, camForward).normalize();
+
+            // 每组目标不透明度（取最小值）
+            for (let i = 0; i < occludableGroups.length; i++) occludableGroups[i].wantOpacity = 1.0;
+
+            // 1) 视线遮挡检测
+            let sightBlocked = false;
+            if (distToTarget > 0.8) {
+                const spread = isFollow ? 0.55 : 2.2;
+                const offsets = [[0, 0], [spread, 0.25], [-spread, 0.25], [0, spread * 0.9], [0, -0.25]];
+                const rayFar = Math.max(0.3, distToTarget - (isFollow ? 0.55 : 2.0));
+                for (const [ox, oy] of offsets) {
+                    const p = targetWorldPos.clone().addScaledVector(camRight, ox).addScaledVector(camUp, oy);
+                    const dir = p.sub(camPos).normalize();
+                    _ray.set(camPos, dir);
+                    for (let i = 0; i < occludableGroups.length; i++) {
+                        const item = occludableGroups[i];
+                        if (!item.box || item.box.isEmpty() || item.wantOpacity <= 0.16 || item.catIndex === skipCat) continue;
+                        const hp = _ray.intersectBox(item.box, _tmpV2);
+                        if (!hp || hp.distanceTo(camPos) > rayFar) continue;
+                        collisionRaycaster.set(camPos, dir);
+                        collisionRaycaster.near = 0.05;
+                        collisionRaycaster.far = rayFar;
+                        if (collisionRaycaster.intersectObjects(item.meshes, false).length > 0) {
+                            item.wantOpacity = Math.min(item.wantOpacity, 0.16);
+                            // 只有遮挡物尚未淡化完成时才需要猫咪剪影兜底
+                            if (item.currentOpacity > 0.45) sightBlocked = true;
+                        }
+                    }
+                }
+            }
+
+            // 2) 近距离 X-Ray：物体表面离镜头太近且位于视野内 → 按距离渐进透明
+            const nearRadius = isFollow ? 4.2 : 9.0;
+            const closest = new THREE.Vector3();
+            for (let i = 0; i < occludableGroups.length; i++) {
+                const item = occludableGroups[i];
+                if (!item.box || item.box.isEmpty() || item.catIndex === skipCat) continue;
+                const d = item.box.distanceToPoint(camPos);
+                if (d > nearRadius) continue;
+                if (d > 0.001) {
+                    item.box.clampPoint(camPos, closest);
+                    const toObj = closest.sub(camPos).normalize();
+                    if (camForward.dot(toObj) < -0.15) continue; // 在镜头后方的不处理
+                } // d≈0：相机在包围盒内部，必须透视
+                const t = d / nearRadius; // 0 = 贴脸, 1 = 边界
+                const op = d < 0.6 ? 0.0 : 0.08 + 0.77 * t * t; // 贴脸/镜头在物体内部 → 完全隐藏，杜绝满屏发白
+                item.wantOpacity = Math.min(item.wantOpacity, op);
+            }
+
+            // 3) 平滑插值（淡出快 / 淡入慢 / 保持时间）
+            let activeOccludedCount = 0;
+            const fadeOut = 1.0 - Math.exp(-12.0 * dt);
+            const fadeIn = 1.0 - Math.exp(-3.5 * dt);
+            for (let i = 0; i < occludableGroups.length; i++) {
+                const item = occludableGroups[i];
+                if (item.wantOpacity < 0.99) {
+                    item.holdTimer = 0.35;
+                    item.targetOpacity = item.wantOpacity;
+                } else {
+                    item.holdTimer = (item.holdTimer || 0) - dt;
+                    if (item.holdTimer <= 0) item.targetOpacity = 1.0;
+                }
+                if (item.targetOpacity < 0.99) activeOccludedCount++;
+
+                if (Math.abs(item.currentOpacity - item.targetOpacity) > 0.003) {
+                    const k = item.targetOpacity < item.currentOpacity ? fadeOut : fadeIn;
+                    item.currentOpacity += (item.targetOpacity - item.currentOpacity) * k;
+                    if (Math.abs(item.currentOpacity - item.targetOpacity) <= 0.003) item.currentOpacity = item.targetOpacity;
+                    const isFading = item.currentOpacity < 0.985;
+                    for (let m = 0; m < item.materials.length; m++) {
+                        const mat = item.materials[m];
+                        mat.transparent = isFading ? true : mat.userData.baseTransparent;
+                        mat.opacity = mat.userData.baseOpacity * item.currentOpacity;
+                        mat.depthWrite = !isFading;
+                        mat.visible = item.currentOpacity > 0.03;
+                    }
+                    for (let m = 0; m < item.meshes.length; m++) {
+                        // 半透明时不投射阴影，避免"透明了但阴影还很重"的违和感
+                        item.meshes[m].castShadow = item.currentOpacity > 0.5 ? item.meshes[m].userData.baseCastShadow : false;
+                    }
+                }
+            }
+
+            followState.occludedCount = activeOccludedCount;
+            followState.sightBlocked = sightBlocked;
+        }
+
+        // 被遮挡时的猫咪 X-Ray 轮廓（穿透墙体可见的发光剪影）
+        const xrayGhostMat = new THREE.MeshBasicMaterial({
+            color: 0x67e8f9, transparent: true, opacity: 0, depthTest: false, depthWrite: false
+        });
+        let xrayGhostCat = null;
+        let xrayGhostOpacity = 0;
+        function ensureXrayGhost(cat) {
+            if (xrayGhostCat === cat) return;
+            if (xrayGhostCat && xrayGhostCat.ghosts) xrayGhostCat.ghosts.forEach(g => g.visible = false);
+            xrayGhostCat = cat;
+            if (!cat.ghosts) {
+                cat.ghosts = [];
+                const meshes = [];
+                cat.root.traverse(o => { if (o.isMesh && !o.userData.isGhost && o.material && o.material.visible !== false) meshes.push(o); });
+                meshes.forEach(o => {
+                    const g = new THREE.Mesh(o.geometry, xrayGhostMat);
+                    g.userData.isGhost = true;
+                    g.renderOrder = 999;
+                    g.castShadow = false; g.receiveShadow = false;
+                    g.raycast = () => {};
+                    o.add(g);
+                    cat.ghosts.push(g);
+                });
+            }
+        }
+        function updateXrayGhost(dt, cat, show) {
+            if (cat) ensureXrayGhost(cat);
+            const target = show ? 0.32 : 0;
+            xrayGhostOpacity += (target - xrayGhostOpacity) * (1 - Math.exp(-(show ? 10 : 5) * dt));
+            xrayGhostMat.opacity = xrayGhostOpacity;
+            const vis = xrayGhostOpacity > 0.01;
+            if (xrayGhostCat && xrayGhostCat.ghosts) xrayGhostCat.ghosts.forEach(g => g.visible = vis);
+        }
+
+        // 每种机位的"理想球面参数"：方位角(相对猫咪朝向)、仰角、距离、注视点前探
+        function getShotSpec(shotKey, cat, elapsed) {
+            const sideSign = (cat.index % 2 === 0) ? 1 : -1;
+            switch (shotKey) {
+                case 'SIDE_TRACKING':
+                    return { relAz: sideSign * 1.22, el: 0.30 + Math.sin(elapsed * 0.6) * 0.02, dist: 6.6, lead: 1.6, lookY: 1.05, focusTime: 0.22 };
+                case 'LOW_HERO':
+                    return { relAz: sideSign * 0.45, el: 0.06 + Math.sin(elapsed * 1.6) * 0.012, dist: 5.4, lead: -0.3, lookY: 1.15, focusTime: 0.16 };
+                case 'OVER_SHOULDER_VISTA':
+                    return { relAz: Math.PI - 0.47, el: 0.30, dist: 3.8, lead: 0, lookY: 0.8, vista: true, focusTime: 0.3 };
+                case 'FLOWER_MACRO':
+                    return { relAz: 0.64, el: 0.07, dist: 4.2, lead: 0.45, lookY: 0.65, focusTime: 0.3 };
+                case 'ORBIT_CLOSEUP':
+                    return { orbit: 0.32, el: 0.28 + Math.sin(elapsed * 0.5) * 0.04, dist: 4.4, lead: 0, lookY: 0.75, focusTime: 0.35 };
+                case 'CRANE_ESTABLISHING':
+                    return { orbit: 0.26, el: 0.48 + Math.sin(elapsed * 0.45) * 0.16, dist: 9.2, lead: 0, lookY: 1.0, focusTime: 0.3 };
+            }
+            return { relAz: 1.2, el: 0.3, dist: 6.5, lead: 1.5, lookY: 1.0, focusTime: 0.25 };
+        }
+
+        function updateCameraSystem(dt, elapsed) {
+            if (followState.active && cats.length > 0) {
+                const cat = cats[followState.catIndex];
+                const shotKey = resolveActiveShotType(cat);
+                const shotCfg = cinematicShotTypes[shotKey];
+                const spec = getShotSpec(shotKey, cat, elapsed);
+                const catPos = cat.root.position;
+
+                // 初始化：从当前相机位置反推球面参数，进入跟拍时无缝滑入
+                if (!camRig.initialized) {
+                    camRig.focus.copy(catPos).add(new THREE.Vector3(0, 1.0, 0));
+                    camRig.focusVel.set(0, 0, 0);
+                    camRig.look.copy(followState.currentLookAt);
+                    camRig.lookOff.subVectors(followState.currentLookAt, camRig.focus).clampLength(0, 3);
+                    camRig.lookVel.set(0, 0, 0);
+                    const off = new THREE.Vector3().subVectors(camera.position, camRig.focus);
+                    camRig.dist = Math.max(1.5, off.length());
+                    camRig.collDist = camRig.dist;
+                    camRig.az = Math.atan2(off.x, off.z);
+                    camRig.el = Math.asin(Math.min(0.99, Math.max(-0.99, off.y / camRig.dist)));
+                    camRig.heading = cat.root.rotation.y;
+                    camRig.avoidAz = camRig.avoidAzTarget = 0;
+                    camRig.avoidEl = camRig.avoidElTarget = 0;
+                    camRig.groundLift = 0;
+                    camRig.vel = {};
+                    camRig.lastShot = null;
+                    camRig.initialized = true;
+                }
+
+                // 1) 平滑猫咪朝向（大惯性），避免猫咪转身时镜头甩动
+                camRig.heading = smoothDampAngle(camRig.heading, cat.root.rotation.y, camRig.vel, 'heading', 1.1, dt);
+                const fwd = new THREE.Vector3(Math.sin(camRig.heading), 0, Math.cos(camRig.heading));
+
+                // 2) 平滑焦点（猫咪胸口），吸收走路颠簸
+                const focusTarget = catPos.clone().add(new THREE.Vector3(0, 1.0, 0));
+                smoothDampVec3(camRig.focus, focusTarget, camRig.focusVel, spec.focusTime, dt);
+
+                // 3) 机位切换：环绕机位从当前方位角接续，不会突然跳到另一侧
+                if (camRig.lastShot !== shotKey) {
+                    if (spec.orbit) followState.orbitAngle = camRig.az - camRig.userYaw;
+                    camRig.lastShot = shotKey;
+                }
+                let baseAz;
+                if (spec.orbit) {
+                    // 环绕前方若被建筑挡住则平滑反向（钟摆式环绕），避免绕进墙里把镜头挤到猫脸上
+                    camRig.orbitCheck -= dt;
+                    if (camRig.orbitCheck <= 0 && !assemblySystem.active) {
+                        camRig.orbitCheck = 0.2;
+                        const ahead = followState.orbitAngle + camRig.userYaw + camRig.orbitDir * 0.45;
+                        if (!isViewClear(camRig.focus, ahead, spec.el, spec.dist)) {
+                            const back = followState.orbitAngle + camRig.userYaw - camRig.orbitDir * 0.45;
+                            if (isViewClear(camRig.focus, back, spec.el, spec.dist)) camRig.orbitDir *= -1;
+                        }
+                    }
+                    camRig.orbitSpeed = smoothDamp(camRig.orbitSpeed || 0, spec.orbit * camRig.orbitDir, camRig.vel, 'orbitSpeed', 0.8, dt);
+                    followState.orbitAngle += dt * camRig.orbitSpeed;
+                    baseAz = followState.orbitAngle;
+                } else {
+                    baseAz = camRig.heading + spec.relAz;
+                }
+
+                // 用户拖拽的方位偏移：闲置 2.5s 后缓慢回正
+                camRig.userYawIdle += dt;
+                if (camRig.userYawIdle > 2.5 && !spec.orbit) {
+                    camRig.userYaw = smoothDamp(camRig.userYaw, 0, camRig.vel, 'userYaw', 1.6, dt);
+                }
+                baseAz += camRig.userYaw;
+
+                // 4) 智能避让：搜索无遮挡方位/仰角
+                if (!assemblySystem.active) {
+                    updateAvoidanceSearch(dt, camRig.focus, baseAz, spec.el, spec.dist);
+                }
+                camRig.avoidAz = smoothDamp(camRig.avoidAz, camRig.avoidAzTarget, camRig.vel, 'avoidAz', 0.75, dt);
+                camRig.avoidEl = smoothDamp(camRig.avoidEl, camRig.avoidElTarget, camRig.vel, 'avoidEl', 0.75, dt);
+
+                const targetAz = baseAz + camRig.avoidAz;
+                const targetEl = Math.min(1.35, spec.el + camRig.avoidEl);
+
+                // 5) 球面三轴弹簧
+                camRig.az = smoothDampAngle(camRig.az, targetAz, camRig.vel, 'az', spec.orbit ? 0.35 : 0.85, dt);
+                camRig.el = smoothDamp(camRig.el, targetEl, camRig.vel, 'el', 0.7, dt);
+                camRig.dist = smoothDamp(camRig.dist, spec.dist, camRig.vel, 'dist', 0.8, dt);
+
+                // 6) 兜底推近：快进(防穿模)慢出(防回弹抖动)
+                const dir = sphericalDir(camRig.az, camRig.el, new THREE.Vector3());
+                let hitDist = assemblySystem.active ? Infinity : firstSolidHit(camRig.focus, dir, camRig.dist + 0.8);
+                const safeDist = hitDist < Infinity ? Math.max(2.2, hitDist - 0.7) : 999;
+                const wantColl = Math.min(safeDist, camRig.dist);
+                if (wantColl < camRig.collDist) {
+                    camRig.collDist = smoothDamp(camRig.collDist, wantColl, camRig.vel, 'coll', 0.25, dt);
+                    camRig.collDist = Math.max(camRig.collDist, wantColl); // 不超调
+                } else {
+                    camRig.collDist = smoothDamp(camRig.collDist, wantColl, camRig.vel, 'coll', 0.9, dt);
+                }
+                const finalDist = Math.min(camRig.dist, camRig.collDist);
+                followState.isAvoidingObstacle = (camRig.dist - finalDist > 0.4) || Math.abs(camRig.avoidAzTarget) > 0.01 || camRig.avoidElTarget > 0.01;
+
+                const camPos = camRig.focus.clone().addScaledVector(dir, finalDist);
+
+                // 7) 地形防穿模：悬崖区高度用平滑过渡，避免跨区时镜头突然弹起
+                const cliffT = smoothstep01(-17.4, -18.8, camPos.z);
+                const minGroundY = 1.6 + (15.2 - 1.6) * cliffT;
+                const liftNeeded = Math.max(0, minGroundY - camPos.y);
+                camRig.groundLift = liftNeeded > camRig.groundLift
+                    ? smoothDamp(camRig.groundLift, liftNeeded, camRig.vel, 'lift', 0.15, dt)
+                    : smoothDamp(camRig.groundLift, liftNeeded, camRig.vel, 'lift', 0.6, dt);
+                // 抬升同样走弹簧；短暂的轻微穿插由近距离 X-Ray 隐藏，不再硬性钳制导致镜头"弹一下"
+                camPos.y += Math.max(camRig.groundLift, liftNeeded - 0.6);
+                if (liftNeeded > 0.3) followState.isAvoidingObstacle = true;
+
+                // 8) 注视点：略微领先猫咪行进方向，远眺镜头偏向瀑布
+                // 注视偏移量单独平滑，再叠加到已平滑的焦点上 → 猫咪奔跑时也稳稳锁在画面构图位，不会"甩出画面"
+                const lookOffTarget = new THREE.Vector3().addScaledVector(fwd, spec.lead);
+                lookOffTarget.y += spec.lookY - 1.0;
+                if (spec.vista) {
+                    const vistaPull = new THREE.Vector3(0, 6.3, -18).sub(camRig.focus).multiplyScalar(0.4);
+                    lookOffTarget.add(vistaPull);
+                }
+                smoothDampVec3(camRig.lookOff, lookOffTarget, camRig.lookVel, 0.45, dt);
+                camRig.look.copy(camRig.focus).add(camRig.lookOff);
+
+                followState.currentCamPos.copy(camPos);
+                followState.currentLookAt.copy(camRig.look);
+                const fovTarget = Math.max(25, Math.min(68, shotCfg.fov + camRig.userFov));
+                followState.currentFov = smoothDamp(followState.currentFov, fovTarget, camRig.vel, 'fov', 0.6, dt);
+
+                camera.position.copy(camPos);
+                camera.lookAt(camRig.look);
+                camera.fov = followState.currentFov;
+                camera.updateProjectionMatrix();
+
+                // 视线遮挡 / 近距离 X-Ray 透视
+                updateDynamicOcclusionTransparency(dt, catPos.clone().add(new THREE.Vector3(0, 0.9, 0)), true);
+                updateXrayGhost(dt, cat, followState.sightBlocked);
+
+                updateFollowHUD(cat, shotCfg);
+                updateThoughtBubble(cat);
+
+            } else {
+                camRig.initialized = false;
+                updateXrayGhost(dt, null, false);
+
+                // 自由探索环绕模式 (Orbit & Zoom Controls)
+                orbitState.theta += orbitState.velTheta;
+                orbitState.phi += orbitState.velPhi;
+                orbitState.radius += orbitState.velRadius;
+
+                orbitState.velTheta *= 0.88;
+                orbitState.velPhi *= 0.88;
+                orbitState.velRadius *= 0.85;
+
+                orbitState.phi = Math.max(0.18, Math.min(Math.PI * 0.46, orbitState.phi));
+                orbitState.radius = Math.max(16, Math.min(115, orbitState.radius));
+
+                const desiredX = orbitState.target.x + orbitState.radius * Math.sin(orbitState.phi) * Math.sin(orbitState.theta);
+                const desiredY = orbitState.target.y + orbitState.radius * Math.cos(orbitState.phi);
+                const desiredZ = orbitState.target.z + orbitState.radius * Math.sin(orbitState.phi) * Math.cos(orbitState.theta);
+
+                followState.currentCamPos.lerp(new THREE.Vector3(desiredX, desiredY, desiredZ), 1 - Math.exp(-5 * dt));
+                followState.currentLookAt.lerp(orbitState.target, 1 - Math.exp(-5 * dt));
+                followState.currentFov += (45 - followState.currentFov) * (1 - Math.exp(-4 * dt));
+
+                camera.position.copy(followState.currentCamPos);
+                camera.lookAt(followState.currentLookAt);
+                camera.fov = followState.currentFov;
+                camera.updateProjectionMatrix();
+
+                updateDynamicOcclusionTransparency(dt, orbitState.target, false);
+            }
+        }
+
+        // 更新跟随界面 HUD 与猫咪头顶 2D 映射气泡
+        function updateFollowHUD(cat, shotCfg) {
+            document.getElementById('hud-cat-name').textContent = cat.profile.name;
+            document.getElementById('hud-cat-role').textContent = cat.profile.role;
+            document.getElementById('cat-avatar-dot').textContent = cat.profile.emoji;
+            document.getElementById('hud-cat-action').textContent = actionNamesMap[cat.state] || cat.state;
+            document.getElementById('hud-cat-target').textContent = townWaypoints[cat.targetNode].name;
+            document.getElementById('hud-shot-name').textContent = shotCfg.name;
+            document.getElementById('shot-code-display').textContent = `${shotCfg.code} | TARGET: ${cat.profile.name}`;
+
+            // 更新镜头避障与遮挡透视状态指示器
+            const avoidBadge = document.getElementById('cam-avoid-badge');
+            const xrayBadge = document.getElementById('cam-xray-badge');
+            const hudIndicator = document.getElementById('hud-avoid-indicator');
+
+            if (followState.isAvoidingObstacle) {
+                avoidBadge.classList.remove('hidden');
+            } else {
+                avoidBadge.classList.add('hidden');
+            }
+
+            if (followState.occludedCount > 0) {
+                xrayBadge.classList.remove('hidden');
+            } else {
+                xrayBadge.classList.add('hidden');
+            }
+
+            if (followState.isAvoidingObstacle && followState.occludedCount > 0) {
+                hudIndicator.textContent = `⚡ 避障 & 透视(${followState.occludedCount})`;
+                hudIndicator.className = 'text-[10px] px-1.5 py-0.2 rounded bg-amber-500/30 text-amber-200 border border-amber-400/40';
+            } else if (followState.occludedCount > 0) {
+                hudIndicator.textContent = `👁️ 遮挡半透明(${followState.occludedCount})`;
+                hudIndicator.className = 'text-[10px] px-1.5 py-0.2 rounded bg-cyan-500/30 text-cyan-200 border border-cyan-400/40';
+            } else if (followState.isAvoidingObstacle) {
+                hudIndicator.textContent = '⚡ 智能避障跟拍';
+                hudIndicator.className = 'text-[10px] px-1.5 py-0.2 rounded bg-amber-500/30 text-amber-200 border border-amber-400/40';
+            } else {
+                hudIndicator.textContent = '✨ 视野畅通';
+                hudIndicator.className = 'text-[10px] px-1.5 py-0.2 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-400/30';
+            }
+        }
+
+        function updateThoughtBubble(cat) {
+            const bubble = document.getElementById('cat-thought-bubble');
+            const headWorldPos = cat.root.position.clone().add(new THREE.Vector3(0, 2.25, 0));
+            headWorldPos.project(camera);
+
+            if (headWorldPos.z > 1.0) {
+                bubble.style.opacity = '0';
+                return;
+            }
+            const x = (headWorldPos.x * 0.5 + 0.5) * window.innerWidth;
+            const y = (-(headWorldPos.y * 0.5) + 0.5) * window.innerHeight;
+
+            bubble.style.left = `${x}px`;
+            bubble.style.top = `${y}px`;
+            bubble.style.opacity = '1';
+            document.getElementById('bubble-emoji').textContent = cat.profile.emoji;
+            document.getElementById('bubble-text').textContent = cat.profile.thoughts[cat.thoughtIndex];
+        }
+
+        // ==========================================
+        // 9. UI 交互按钮与鼠标触控事件绑定
+        // ==========================================
+        window.toggleFollowMode = function(forceEnable = null) {
+            const nextState = forceEnable !== null ? forceEnable : !followState.active;
+            followState.active = nextState;
+            followState.shotOverride = null;
+            camRig.initialized = false;
+            camRig.userYaw = 0;
+            camRig.userFov = 0;
+
+            const hud = document.getElementById('follow-hud');
+            const btnText = document.getElementById('follow-btn-text');
+            const btnIcon = document.getElementById('follow-btn-icon');
+            const lbTop = document.getElementById('letterbox-top');
+            const lbBottom = document.getElementById('letterbox-bottom');
+            const bubble = document.getElementById('cat-thought-bubble');
+
+            if (followState.active) {
+                hud.classList.remove('hidden');
+                btnText.textContent = '退出跟拍 (自由探索)';
+                btnIcon.textContent = '🔓';
+                lbTop.style.height = '38px';
+                lbBottom.style.height = '32px';
+            } else {
+                hud.classList.add('hidden');
+                btnText.textContent = '跟随猫咪 (电影运镜)';
+                btnIcon.textContent = '🎬';
+                lbTop.style.height = '0px';
+                lbBottom.style.height = '0px';
+                bubble.style.opacity = '0';
+                // 将当前跟拍的猫咪位置设为自由相机的环绕中心，实现无缝退出
+                const cat = cats[followState.catIndex];
+                if (cat) {
+                    orbitState.target.copy(cat.root.position).setY(3.0);
+                    orbitState.radius = 45;
+                }
+            }
+        };
+
+        window.switchFollowedCat = function(step) {
+            followState.catIndex = (followState.catIndex + step + cats.length) % cats.length;
+            followState.shotOverride = null;
+            if (!followState.active) {
+                toggleFollowMode(true);
+            }
+        };
+
+        window.cycleCameraShotOverride = function() {
+            if (!followState.active) return;
+            if (!followState.shotOverride) {
+                followState.shotOverride = shotKeys[0];
+            } else {
+                const idx = shotKeys.indexOf(followState.shotOverride);
+                if (idx === shotKeys.length - 1) {
+                    followState.shotOverride = null; // 回到 AI 自动导演模式
+                } else {
+                    followState.shotOverride = shotKeys[idx + 1];
+                }
+            }
+        };
+
+        window.resetOverviewCamera = function() {
+            if (followState.active) {
+                toggleFollowMode(false);
+            }
+            orbitState.target.set(0, 4, 0);
+            orbitState.theta = Math.PI * 0.22;
+            orbitState.phi = Math.PI * 0.34;
+            orbitState.radius = 68;
+        };
+
+        function setupInteractionEvents() {
+            const dom = renderer.domElement;
+            raycaster = new THREE.Raycaster();
+            collisionRaycaster = new THREE.Raycaster();
+            mouse = new THREE.Vector2();
+
+            let pointerDownPos = { x: 0, y: 0 };
+
+            dom.addEventListener('pointerdown', (e) => {
+                pointerDownPos = { x: e.clientX, y: e.clientY };
+                if (e.button === 0) {
+                    orbitState.isDraggingLeft = true;
+                } else if (e.button === 2) {
+                    orbitState.isDraggingRight = true;
+                }
+                orbitState.prevX = e.clientX;
+                orbitState.prevY = e.clientY;
+            });
+
+            window.addEventListener('pointermove', (e) => {
+                if (!orbitState.isDraggingLeft && !orbitState.isDraggingRight) return;
+                const dx = e.clientX - orbitState.prevX;
+                const dy = e.clientY - orbitState.prevY;
+                orbitState.prevX = e.clientX;
+                orbitState.prevY = e.clientY;
+
+                // 如果用户在跟随模式下主动大幅度拖拽画面，允许平滑旋转环绕特写角度，或按右键平移退出跟随
+                if (followState.active) {
+                    if (orbitState.isDraggingLeft) {
+                        camRig.userYaw -= dx * 0.008;
+                        camRig.userYawIdle = 0;
+                    }
+                    return;
+                }
+
+                if (orbitState.isDraggingLeft) {
+                    orbitState.velTheta = -dx * 0.0045;
+                    orbitState.velPhi = -dy * 0.0040;
+                } else if (orbitState.isDraggingRight) {
+                    const forward = new THREE.Vector3();
+                    camera.getWorldDirection(forward);
+                    forward.y = 0;
+                    forward.normalize();
+                    const right = new THREE.Vector3().crossVectors(forward, new THREE.Vector3(0, 1, 0)).normalize();
+                    orbitState.target.addScaledVector(right, -dx * 0.06);
+                    orbitState.target.addScaledVector(forward, dy * 0.06);
+                }
+            });
+
+            window.addEventListener('pointerup', (e) => {
+                orbitState.isDraggingLeft = false;
+                orbitState.isDraggingRight = false;
+
+                // 检测是否是点击猫咪
+                const moveDist = Math.hypot(e.clientX - pointerDownPos.x, e.clientY - pointerDownPos.y);
+                if (moveDist < 6 && e.button === 0) {
+                    mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+                    mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+                    raycaster.setFromCamera(mouse, camera);
+                    const hits = raycaster.intersectObjects(interactiveMeshes, false);
+                    if (hits.length > 0) {
+                        const clickedCatIndex = hits[0].object.userData.catIndex;
+                        if (clickedCatIndex !== undefined) {
+                            followState.catIndex = clickedCatIndex;
+                            followState.shotOverride = null;
+                            toggleFollowMode(true);
+                        }
+                    }
+                }
+            });
+
+            dom.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                if (followState.active) {
+                    camRig.userFov = Math.max(-18, Math.min(22, camRig.userFov + e.deltaY * 0.02));
+                } else {
+                    orbitState.velRadius += e.deltaY * 0.018;
+                }
+            }, { passive: false });
+
+            dom.addEventListener('contextmenu', (e) => e.preventDefault());
+
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // ==========================================
+        // 10. 环境细节动画更新（瀑布水花、风车、水车、樱花、炊烟、游鱼）
+        // ==========================================
+        function updateEnvironmentAnimations(dt, elapsed) {
+            // 1. 瀑布水流与顺流而下的河面水波粒子
+            waterfallParticles.forEach((drop) => {
+                drop.userData.progress += drop.userData.speed * dt;
+                if (drop.userData.progress >= 1.0) {
+                    resetWaterfallDrop(drop, false);
+                }
+                const p = drop.userData.progress;
+                if (p < 0.16) {
+                    // 崖顶水道向前奔涌
+                    const t = p / 0.16;
+                    drop.position.set(
+                        drop.userData.xOffset,
+                        14.0,
+                        -25.0 + t * 6.5
+                    );
+                    drop.scale.set(0.85, 0.45, 1.3);
+                } else if (p < 0.56) {
+                    // 垂直飞流直下
+                    const t = (p - 0.16) / 0.40;
+                    drop.position.set(
+                        drop.userData.xOffset,
+                        14.0 - (t * t) * 14.0,
+                        -18.3 + t * 1.4 + drop.userData.zOffset * 0.3
+                    );
+                    drop.scale.set(0.75, 1.65, 0.75);
+                } else {
+                    // 汇入小镇中央溪流向南流淌
+                    const t = (p - 0.56) / 0.44;
+                    drop.position.set(
+                        drop.userData.xOffset * 0.85,
+                        0.08 + Math.sin(t * 25 + elapsed * 5) * 0.06,
+                        -16.8 + t * 48.0
+                    );
+                    drop.scale.set(0.9, 0.25, 1.4);
+                }
+            });
+
+            // 2. 瀑布底部拍打飞溅的白色体素泡沫
+            splashParticles.forEach((foam) => {
+                const wave = Math.sin(elapsed * foam.userData.speed + foam.userData.phase);
+                foam.position.y = 0.2 + Math.abs(wave) * 1.35;
+                foam.position.x = foam.userData.baseX + Math.cos(elapsed * 2 + foam.userData.phase) * 0.35;
+                const s = 0.5 + (1 - Math.abs(wave)) * 0.85;
+                foam.scale.set(s, s, s);
+                foam.rotation.y += dt * 1.8;
+                foam.rotation.z += dt * 1.2;
+            });
+
+            // 3. 风车与溪畔水车匀速转动
+            if (windmillBlades) {
+                windmillBlades.rotation.z -= dt * 0.75;
+            }
+            if (waterwheelMesh) {
+                waterwheelMesh.rotation.x += dt * 1.35;
+            }
+
+            // 3B. 地面五彩体素小花簇随微风轻轻摇曳
+            flowerClusters.forEach((cluster) => {
+                const sway = Math.sin(elapsed * cluster.userData.swaySpeed + cluster.userData.swayPhase) * 0.065;
+                cluster.rotation.z = sway;
+                cluster.rotation.x = sway * 0.6;
+            });
+
+            // 4. 漫天飘落的樱花花瓣
+            sakuraPetals.forEach((petal) => {
+                petal.position.y -= petal.userData.speedY * dt;
+                petal.position.x += Math.sin(elapsed * petal.userData.swaySpeed + petal.userData.phase) * dt * 1.2;
+                petal.position.z += Math.cos(elapsed * petal.userData.swaySpeed + petal.userData.phase) * dt * 0.8;
+                petal.rotation.x += dt * 1.5;
+                petal.rotation.z += dt * 2.0;
+                if (petal.position.y < 0.2) {
+                    petal.position.y = 24 + Math.random() * 6;
+                    petal.position.x = (Math.random() - 0.5) * 60;
+                    petal.position.z = (Math.random() - 0.5) * 55;
+                }
+            });
+
+            // 5. 肉垫烘焙坊屋顶烟囱袅袅炊烟 (-21.5, 12.8, 5.5)
+            smokePuffs.forEach((puff) => {
+                puff.userData.progress += dt * 0.22;
+                if (puff.userData.progress >= 1.0) {
+                    puff.userData.progress = 0;
+                }
+                const t = puff.userData.progress;
+                puff.position.set(
+                    -21.5 + Math.sin(t * 6 + elapsed) * (t * 1.2),
+                    13.2 + t * 7.5,
+                    5.5 + t * 1.8
+                );
+                const scale = 0.6 + t * 1.6;
+                puff.scale.set(scale, scale, scale);
+                puff.material.opacity = (1.0 - t) * 0.6;
+                puff.rotation.y = t * 3;
+            });
+
+            // 6. 河道锦鲤游动与空中祈福灯笼摇曳
+            fishList.forEach((fish) => {
+                const t = elapsed * fish.userData.speed + fish.userData.phase;
+                const nx = Math.sin(t) * fish.userData.radiusX;
+                const nz = fish.userData.zCenter + Math.cos(t * 0.7) * 2.5;
+                const dx = nx - fish.position.x;
+                const dz = nz - fish.position.z;
+                fish.position.set(nx, -0.05, nz);
+                if (Math.hypot(dx, dz) > 0.001) {
+                    fish.rotation.y = Math.atan2(dx, dz);
+                }
+            });
+
+            floatingLanterns.forEach((l) => {
+                l.position.y = l.userData.baseY + Math.sin(elapsed * l.userData.speed + l.userData.phase) * 1.2;
+                l.rotation.y += dt * 0.35;
+            });
+        }
+
+        // ==========================================
+        // 11. 主程序入口与渲染循环
+        // ==========================================
+        function initApp() {
+            const container = document.getElementById('canvas-container');
+
+            scene = new THREE.Scene();
+            scene.fog = new THREE.FogExp2(0xd98a82, 0.0068);
+
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.5, 320);
+            camera.position.copy(followState.currentCamPos);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            renderer.shadowMap.enabled = true;
+            renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+            renderer.outputEncoding = THREE.sRGBEncoding;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.08;
+            container.appendChild(renderer.domElement);
+
+            clock = new THREE.Clock();
+
+            // 构建梦幻小镇全场景
+            createSkyDome();
+            setupLighting();
+            buildTerrainAndWaterfall();
+            buildRoadsAndBridges();
+            buildTownBuildings();
+            buildFloraAndLanterns();
+            initAllCats();
+            setupInteractionEvents();
+
+            // 启动开场高空落下Q弹组装动画
+            replayTownAssembly();
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const dt = Math.min(clock.getDelta(), 0.1);
+            const elapsed = clock.getElapsedTime();
+
+            updateSkyDropAssembly(elapsed);
+            updateCats(dt, elapsed);
+            updateEnvironmentAnimations(dt, elapsed);
+            updateCameraSystem(dt, elapsed);
+            if (skyDomeMesh) skyDomeMesh.position.copy(camera.position);
+
+            renderer.render(scene, camera);
+        }
+
+        window.onload = function() {
+            initApp();
+            animate();
+        };
+    </script>
+</body>
+</html>

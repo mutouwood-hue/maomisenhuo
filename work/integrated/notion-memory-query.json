@@ -1,0 +1,226 @@
+﻿{
+  "has_more": false,
+  "next_cursor": null,
+  "results": [
+    {
+      "cover": null,
+      "created_by": {
+        "id": "3ebc209a-d67f-81ec-9d66-0027c2188e7b",
+        "object": "user"
+      },
+      "created_time": "2026-10-17T09:38:00.000Z",
+      "icon": null,
+      "id": "3fcc209a-d67f-8185-97c0-c94af9cd7fdb",
+      "in_trash": false,
+      "is_archived": false,
+      "is_locked": false,
+      "last_edited_by": {
+        "id": "3ebc209a-d67f-81ec-9d66-0027c2188e7b",
+        "object": "user"
+      },
+      "last_edited_time": "2026-10-17T09:38:00.000Z",
+      "object": "page",
+      "parent": {
+        "data_source_id": "ddd3b04b-7667-4d27-86e4-6893da3422cc",
+        "database_id": "6e677a09-b621-4fa5-a876-4f34739139aa",
+        "type": "data_source_id"
+      },
+      "properties": {
+        "名称": {
+          "id": "title",
+          "title": [
+            {
+              "annotations": {
+                "bold": false,
+                "code": false,
+                "color": "default",
+                "italic": false,
+                "strikethrough": false,
+                "underline": false
+              },
+              "href": null,
+              "plain_text": "禁用 6 个开机自启项以降低常驻内存（pi-web-ui / KimiCU / Andisplay / GameViewer / cc-switch / codex-sanitizer）",
+              "text": {
+                "content": "禁用 6 个开机自启项以降低常驻内存（pi-web-ui / KimiCU / Andisplay / GameViewer / cc-switch / codex-sanitizer）",
+                "link": null
+              },
+              "type": "text"
+            }
+          ],
+          "type": "title"
+        },
+        "来源": {
+          "id": "OK_%3B",
+          "rich_text": [
+            {
+              "annotations": {
+                "bold": false,
+                "code": false,
+                "color": "default",
+                "italic": false,
+                "strikethrough": false,
+                "underline": false
+              },
+              "href": null,
+              "plain_text": "本机内存排查 · DSH 会话 2026-10-17",
+              "text": {
+                "content": "本机内存排查 · DSH 会话 2026-10-17",
+                "link": null
+              },
+              "type": "text"
+            }
+          ],
+          "type": "rich_text"
+        },
+        "状态": {
+          "id": "dcsj",
+          "select": {
+            "color": "green",
+            "id": "9be0c334-bd4d-45be-8bea-2ebf36586b10",
+            "name": "现行"
+          },
+          "type": "select"
+        },
+        "类型": {
+          "id": "o%3E~C",
+          "select": {
+            "color": "purple",
+            "id": "687a5b2a-9dd0-4ba3-ac3d-051e0f9ecad5",
+            "name": "决定"
+          },
+          "type": "select"
+        },
+        "记录日期": {
+          "date": {
+            "end": null,
+            "start": "2026-10-17",
+            "time_zone": null
+          },
+          "id": "%5EiS%5E",
+          "type": "date"
+        },
+        "项目": {
+          "id": "%7B%7CK%40",
+          "select": {
+            "color": "gray",
+            "id": "de9bc31a-b40a-4604-99c4-5b2a2abf7ac5",
+            "name": "通用"
+          },
+          "type": "select"
+        }
+      },
+      "public_url": null,
+      "url": "https://app.notion.com/p/6-pi-web-ui-KimiCU-Andisplay-GameViewer-cc-switch-codex-sanitizer-3fcc209ad67f818597c0c94af9cd7fdb"
+    },
+    {
+      "cover": null,
+      "created_by": {
+        "id": "3ebc209a-d67f-81ec-9d66-0027c2188e7b",
+        "object": "user"
+      },
+      "created_time": "2026-10-17T09:16:00.000Z",
+      "icon": null,
+      "id": "3fcc209a-d67f-81b8-96c6-e69776fd10a2",
+      "in_trash": false,
+      "is_archived": false,
+      "is_locked": false,
+      "last_edited_by": {
+        "id": "3ebc209a-d67f-81ec-9d66-0027c2188e7b",
+        "object": "user"
+      },
+      "last_edited_time": "2026-10-17T09:16:00.000Z",
+      "object": "page",
+      "parent": {
+        "data_source_id": "ddd3b04b-7667-4d27-86e4-6893da3422cc",
+        "database_id": "6e677a09-b621-4fa5-a876-4f34739139aa",
+        "type": "data_source_id"
+      },
+      "properties": {
+        "名称": {
+          "id": "title",
+          "title": [
+            {
+              "annotations": {
+                "bold": false,
+                "code": false,
+                "color": "default",
+                "italic": false,
+                "strikethrough": false,
+                "underline": false
+              },
+              "href": null,
+              "plain_text": "Notion 接入走官方 ntn CLI，不用 MCP",
+              "text": {
+                "content": "Notion 接入走官方 ntn CLI，不用 MCP",
+                "link": null
+              },
+              "type": "text"
+            }
+          ],
+          "type": "title"
+        },
+        "来源": {
+          "id": "OK_%3B",
+          "rich_text": [
+            {
+              "annotations": {
+                "bold": false,
+                "code": false,
+                "color": "default",
+                "italic": false,
+                "strikethrough": false,
+                "underline": false
+              },
+              "href": null,
+              "plain_text": "DSH 会话：接入 /prompts/setup 时确认。ntn 在 %USERPROFILE%\\.dsh\\tools\\ntn\\，必须钉 NOTION_API_VERSION=2026-03-11（developers.notion.com 被网络阻断，拉不到 OpenAPI spec）；多行正文走 md2notion.ps1 而非 --content。",
+              "text": {
+                "content": "DSH 会话：接入 /prompts/setup 时确认。ntn 在 %USERPROFILE%\\.dsh\\tools\\ntn\\，必须钉 NOTION_API_VERSION=2026-03-11（developers.notion.com 被网络阻断，拉不到 OpenAPI spec）；多行正文走 md2notion.ps1 而非 --content。",
+                "link": null
+              },
+              "type": "text"
+            }
+          ],
+          "type": "rich_text"
+        },
+        "状态": {
+          "id": "dcsj",
+          "select": {
+            "color": "green",
+            "id": "9be0c334-bd4d-45be-8bea-2ebf36586b10",
+            "name": "现行"
+          },
+          "type": "select"
+        },
+        "类型": {
+          "id": "o%3E~C",
+          "select": {
+            "color": "purple",
+            "id": "687a5b2a-9dd0-4ba3-ac3d-051e0f9ecad5",
+            "name": "决定"
+          },
+          "type": "select"
+        },
+        "记录日期": {
+          "date": {
+            "end": null,
+            "start": "2026-10-17",
+            "time_zone": null
+          },
+          "id": "%5EiS%5E",
+          "type": "date"
+        },
+        "项目": {
+          "id": "%7B%7CK%40",
+          "select": {
+            "color": "gray",
+            "id": "de9bc31a-b40a-4604-99c4-5b2a2abf7ac5",
+            "name": "通用"
+          },
+          "type": "select"
+        }
+      },
+      "public_url": null,
+      "url": "https://app.notion.com/p/Notion-ntn-CLI-MCP-3fcc209ad67f81b896c6e69776fd10a2"
+    }
+  ]
+}

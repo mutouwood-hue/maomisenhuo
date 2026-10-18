@@ -1,0 +1,2 @@
+const test=require('node:test'),assert=require('node:assert/strict'),cp=require('node:child_process'),path=require('node:path');
+test('family/wardrobe actual original forms, live preview and production CSS in WebKit at360/390 and1.6text',{timeout:180000},()=>{const r=cp.spawnSync(process.execPath,[path.resolve(__dirname,'../scripts/check_family_css.cjs')],{encoding:'utf8',timeout:170000});assert.equal(r.status,0,r.stdout+r.stderr);assert.match(r.stdout,/"pass":true/);});

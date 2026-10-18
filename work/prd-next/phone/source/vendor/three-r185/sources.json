@@ -1,0 +1,37 @@
+[
+  {
+    "file": "SphereGeometry.js",
+    "url": "https://raw.githubusercontent.com/mrdoob/three.js/r185/src/geometries/SphereGeometry.js",
+    "sha256": "3a824a3cb7bbc16516b8ed5a40a6815857e5d6a3c9406d445e34175179bf9081"
+  },
+  {
+    "file": "AmbientLight.js",
+    "url": "https://raw.githubusercontent.com/mrdoob/three.js/r185/src/lights/AmbientLight.js",
+    "sha256": "38bf70b78fecb527e9bb63073d6123f5748810d0b0f06eb84e5c8f8b0f3e9633"
+  },
+  {
+    "file": "PointLight.js",
+    "url": "https://raw.githubusercontent.com/mrdoob/three.js/r185/src/lights/PointLight.js",
+    "sha256": "1ad93ac773bd881f30d923624e663b237c1209d29aa14e9bc7ae5ea81ab4365f"
+  },
+  {
+    "file": "PointLightShadow.js",
+    "url": "https://raw.githubusercontent.com/mrdoob/three.js/r185/src/lights/PointLightShadow.js",
+    "sha256": "ce69df14975daa360e54e4cabcaaa0bbaca90c1e3a3813a66fdf7ff451545413"
+  },
+  {
+    "file": "FogExp2.js",
+    "url": "https://raw.githubusercontent.com/mrdoob/three.js/r185/src/scenes/FogExp2.js",
+    "sha256": "c1fbafffb04670fc17fc64ec313c5209a0bdc7191a064fd50d8a3e8ac30ff43c"
+  },
+  {
+    "file": "Clock.js",
+    "url": "https://raw.githubusercontent.com/mrdoob/three.js/r185/src/core/Clock.js",
+    "sha256": "3face6f02cfaf83e89ec8d2f4ca1718eb3228dc2517cf71118e981ba9009434b"
+  },
+  {
+    "file": "LICENSE",
+    "url": "https://raw.githubusercontent.com/mrdoob/three.js/r185/LICENSE",
+    "sha256": "8b378ebe60e2fe500158cb0ac71cb5e8b7d92953c2abcc63a0eb90499653b5bc"
+  }
+]

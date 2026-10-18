@@ -1,0 +1,99 @@
+{
+  "revision": 1,
+  "status": "frozen_minimum_contract_for_A_firmware_and_B_phone_implementation",
+  "protocol": "CFLOCAL2 v2 additive display only",
+  "capability": "day_view",
+  "op": "day",
+  "MAX_LINE_BYTES_EXCLUSIVE": 2048,
+  "MAX_ENCODED_FRAME_BYTES": 1900,
+  "fragmentTransport": "unchanged existing20byte GATT writes assembling newline JSON",
+  "MAX_SEGMENTS": 96,
+  "ROWS_PER_PART": 16,
+  "MAX_PARTS": 6,
+  "request": {
+    "v": 2,
+    "id": "existing unique request id <=64 ASCII",
+    "op": "day",
+    "data": {
+      "schema": 1,
+      "transfer": "UUID string36, fresh for each whole-day transfer",
+      "date": "YYYY-MM-DD local date",
+      "zone": "integer utc offset minutes -840..840",
+      "cutoff": "integer minute0..1440, actual source cutoff, not future",
+      "mode": "demo|automatic",
+      "clientId": "existing adapter journal clientId, equality must match device saved owner",
+      "petId": "current bound petId, equality must match saved snapshot",
+      "part": "zero-based integer0..parts-1",
+      "parts": "integer1..6; ceil(rows/16), empty day uses1",
+      "segments": "array of <=16 rows: [startMinute,endMinute,kindInt,sourceInt,placeInt]"
+    }
+  },
+  "enum": {
+    "kind": [
+      "sleep",
+      "home",
+      "commute",
+      "work",
+      "out",
+      "move",
+      "none"
+    ],
+    "source": [
+      "observed",
+      "inferred",
+      "demo"
+    ],
+    "place": [
+      "none",
+      "home",
+      "work",
+      "food",
+      "cafe",
+      "park",
+      "river",
+      "other"
+    ]
+  },
+  "sourceRules": [
+    "Phone uses original __pgLife.day().segs, not a synthetic new store. Original cfg.demo is explicitly mode demo, source=2 for every demo row.",
+    "Automatic guess=true maps source1; automatic !guess maps source0. Do not equate day.real=true with all observed.",
+    "Project only start<cutoff and clamp end<=cutoff; discard zero-length future rows; do not fill missing gaps.",
+    "start/end must integers0..1440, start<end, ascending nonoverlapping across whole transfer; unknown kind maps none6. Place maps category/id to enum only, no coordinates/private place names.",
+    "If >96 filtered rows, explicitly report TOO_MANY_DAY_SEGMENTS; do not silently truncate/merge across provenance or invent coverage.",
+    "mode/date/zone/cutoff/clientId/petId/transfer/parts identical in all parts; first part0 replaces staging. Part must equal expected next index; exact duplicate same transfer/part may respond accepted but must not append twice.",
+    "Device accepts only current saved owner clientId and petId; no bound snapshot or owner mismatch rejects, no mutation of binding.",
+    "Cache in RAM only. Atomic replace visible day only after last valid part. Incomplete failed transfer leaves last complete day visible/labelled old, never claims new complete. Date change replaces whole complete day; fresh boot empty until phone resends.",
+    "Empty day part0/parts1/segments[] commits explicit empty for that date.",
+    "Commands do not use mutation seq, do not advance lastSeq/lastAck/scene revision, do not write NVS/journal/event receipt or invoke reward. Owner copied inside data, not top-level mutation envelope."
+  ],
+  "response": {
+    "v": 2,
+    "id": "same request id",
+    "op": "day",
+    "ok": true,
+    "data": {
+      "accepted": true,
+      "complete": "true only final successful part",
+      "part": "accepted part index",
+      "date": "same date",
+      "count": "number staged/committed rows so far",
+      "volatile": true
+    }
+  },
+  "errors": "existing ok:false/error code/outcome:no_change for malformed, invalid bounds, wrong owner/pet, out-of-order. No persisted:true. RAM staging errors may discard staging only; no save writes.",
+  "phoneABI": {
+    "transport": "Add day to OPS whitelist only, not MUTATIONS. Native frame allow op day and its bounded data while retaining main-frame/foreground/owner lifecycle.",
+    "port": "B explicitly authorized to add candidate-copy display port in031 (frozen Root originals untouched). Suggested ports.display.pushDay(projection): obtains ready() owner/journal, adds bound clientId/petId, sends parts serially with control.request(day,...), verifies every ack/date/part/complete.",
+    "coordinator": "Reuse same SceneCoordinator flight lease; only after explicit current connection authorization and successful current scene handshake. No concurrent day requests with scene/events/retry/diagnostic. BUSY schedules later, never halts ordinary scene/event path or creates mutation journal.",
+    "cadence": "Send after explicit scene connection confirmed, and changed original day signature, at most once per minute; on reboot/new generation resend full current day; unknown failure report day not synced, no success claim."
+  },
+  "firmwareABI": {
+    "module": "new local2_day.c/.h RAM cache protected by its own guard, no persistent schema changes; wire day handler under saved-owner validation.",
+    "render": "daily face1 draws true segments, per-source style with demo/inferred label; current clock separate from scrub cursor. Missing gap labels unknown, no fabricated clip.",
+    "scrub": "Only daily face outer edge origin (radius>=185 <=233) locks gesture. atan2 mapped0at12clock, unwrap delta across0, CW forward/CCW back, clamp0..cutoff/available recorded range, selected minute held after release. Suppress central page swipe/tap while locked, cancel cleanly, no separate replay button.",
+    "actionMapping": "Use original badge 2D clips/known backgrounds as presentation only: home idle, sleep static rest, commute attention/window, work/out garden idle, move garden walk, none unknown. No care events/rewards or claimed live action.",
+    "touchPriority": "Scrub changes coalesced to existing UI tick, pause decorative scene animation, no full page follow drag.",
+    "phoneSourceReference": "artifacts/daily-ring-2026-10-16/SOURCE-FINDINGS.json"
+  },
+  "tests": "User forbids technical tests; source implementation, ordinary build/packaging and authorized device install only; actual operation by user."
+}

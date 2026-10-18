@@ -1,0 +1,202 @@
+[
+  {
+    "test": "ble-adapter.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\ble-adapter.test.log"
+  },
+  {
+    "test": "care-runtime.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\care-runtime.test.log"
+  },
+  {
+    "test": "care-tip-css.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\care-tip-css.test.log"
+  },
+  {
+    "test": "cflocal2-durable-boundaries.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\cflocal2-durable-boundaries.test.log"
+  },
+  {
+    "test": "cflocal2-durable-independent.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\cflocal2-durable-independent.test.log"
+  },
+  {
+    "test": "cflocal2-journal.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\cflocal2-journal.test.log"
+  },
+  {
+    "test": "companion-scene.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\companion-scene.test.log"
+  },
+  {
+    "test": "device-diagnostics.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\device-diagnostics.test.log"
+  },
+  {
+    "test": "diagnostics-css.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\diagnostics-css.test.log"
+  },
+  {
+    "test": "diagnostics-view.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\diagnostics-view.test.log"
+  },
+  {
+    "test": "event-backup.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\event-backup.test.log"
+  },
+  {
+    "test": "event-browser-storage.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\event-browser-storage.test.log"
+  },
+  {
+    "test": "event-transaction.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\event-transaction.test.log"
+  },
+  {
+    "test": "family-css.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\family-css.test.log"
+  },
+  {
+    "test": "family-ui.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\family-ui.test.log"
+  },
+  {
+    "test": "gameplay.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\gameplay.test.log"
+  },
+  {
+    "test": "host.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\host.test.log"
+  },
+  {
+    "test": "icon-refresh-css.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\icon-refresh-css.test.log"
+  },
+  {
+    "test": "key-css-engine.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\key-css-engine.test.log"
+  },
+  {
+    "test": "life-navigation-focused.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\life-navigation-focused.test.log"
+  },
+  {
+    "test": "local-v2-transport.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\local-v2-transport.test.log"
+  },
+  {
+    "test": "meet-key.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\meet-key.test.log"
+  },
+  {
+    "test": "memorial-backup-focused.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\memorial-backup-focused.test.log"
+  },
+  {
+    "test": "mounted-diagnostics.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\mounted-diagnostics.test.log"
+  },
+  {
+    "test": "native-bootstrap.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\native-bootstrap.test.log"
+  },
+  {
+    "test": "native-canonical-focused.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\native-canonical-focused.test.log"
+  },
+  {
+    "test": "native-durable.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\native-durable.test.log"
+  },
+  {
+    "test": "native-insets.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\native-insets.test.log"
+  },
+  {
+    "test": "page-css-engine.test.cjs",
+    "status": "fail",
+    "log": "regression-logs\\page-css-engine.test.log"
+  },
+  {
+    "test": "page-icons.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\page-icons.test.log"
+  },
+  {
+    "test": "prd-experience.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\prd-experience.test.log"
+  },
+  {
+    "test": "rail-overflow.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\rail-overflow.test.log"
+  },
+  {
+    "test": "room-animation.test.cjs",
+    "status": "timeout",
+    "log": "regression-logs\\room-animation.test.log"
+  },
+  {
+    "test": "room-bed.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\room-bed.test.log"
+  },
+  {
+    "test": "room-dock.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\room-dock.test.log"
+  },
+  {
+    "test": "scene-map.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\scene-map.test.log"
+  },
+  {
+    "test": "scene-sync.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\scene-sync.test.log"
+  },
+  {
+    "test": "source-save-and-identity.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\source-save-and-identity.test.log"
+  },
+  {
+    "test": "ui-polish.test.cjs",
+    "status": "pass",
+    "log": "regression-logs\\ui-polish.test.log"
+  },
+  {
+    "test": "v2-host-integration.test.cjs",
+    "status": "timeout",
+    "log": "regression-logs\\v2-host-integration.test.log"
+  }
+]

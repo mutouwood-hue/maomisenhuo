@@ -1,0 +1,10 @@
+{
+  "atUtc": "2026-10-17T00:44:44.026705+00:00",
+  "observed": "052 passive startup: main stack overflow once, automatic reboot, later boot returned app_main and advertised",
+  "actualStackBytes": 3584,
+  "staticRefreshStateFrameBytes": 1712,
+  "corruptedBacktraceUniqueCalleeProven": false,
+  "correction": "explicit8192 main startup stack and defer initial refresh to existing GUI tick",
+  "noWireOrPersistenceChange": true,
+  "technicalTestsRun": false
+}

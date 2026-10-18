@@ -1,0 +1,11 @@
+{
+  "name": "catforest-html-offline-candidate",
+  "private": true,
+  "scripts": {
+    "test": "node --test --test-concurrency=1 tests/*.test.cjs",
+    "assets": "python3 scripts/build_assets.py"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0"
+  }
+}

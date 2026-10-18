@@ -1,0 +1,11 @@
+/* Extract real original NPC modal text, not a weather/event substitute. */
+const fs=require('node:fs'),path=require('node:path'),{fixture}=require('../tests/encounter-ui-fixture.cjs');
+const h=fixture();try{
+ h.open();const d=h.d,originalHint=Object.keys(h.ui.copy)[0],originalHelp=Object.keys(h.ui.copy)[1];
+ const style=d.createElement('style');style.textContent=fs.readFileSync(path.resolve(__dirname,'../web/offline-ui-polish.css'),'utf8');d.head.append(style);
+ const slot=d.createElement('div');slot.id='offline-notifications';d.body.append(slot);const banner=d.getElementById('sc-banner');slot.append(banner);banner.hidden=false;banner.innerHTML='<button class="g-btn" data-bmeet="npc-pudding">去遇见</button>';const c=h.w.getComputedStyle(banner.firstElementChild);
+ const primaryColors={background:c.backgroundColor,text:c.color,opacity:c.opacity,source:'computed cascade: original index inline styles + current offline-ui-polish.css, jsdom; no device rendering claim'};
+ const data={kind:'software fixture using unchanged social-v7 openMeet/renderMeet/rUI and actual NPC card; no phone save or completed meet',npc:h.w.__pgSocial.NPCS.find(p=>p.fid==='npc-pudding'),title:d.getElementById('sc-mtitle').textContent,subtitle:d.getElementById('sc-msub').textContent,tabs:[...d.querySelectorAll('#sc-mtabs button')].map(x=>x.textContent),hint:d.getElementById('sc-hint').textContent,action:d.querySelector('#sc-mact > button').textContent,help:d.querySelector('#sc-mact > .sc-small').textContent,originalHint,originalHelp,source:'original/game.html social-v7: openMeet/renderMeet, lines6954–6982; no rain source',banner:{title:'附近来了一只英短蓝猫',copy:'游戏内约 2.9 米 · 主人匿名，先让小猫们打个招呼',mode:'本地试玩 · 官方 NPC',action:'去遇见'},limitations:['AppKit/Pillow software layout illustration, not WebView/Android screenshot','circle says original pet art placeholder; original coarse pixel art remains unchanged in runtime','scroll position/line wrapping schematic; actual CSS overflow, key hit target and close/action still require sole-device check']};
+ data.banner.primaryColors=primaryColors;
+ fs.writeFileSync(path.resolve(__dirname,'../../evidence/encounter/original-npc-copy.json'),JSON.stringify(data,null,2));
+}finally{h.close();}

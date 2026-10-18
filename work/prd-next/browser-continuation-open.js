@@ -1,0 +1,1 @@
+await page.goto('file:///D:/%E9%BB%91%E5%AE%A2%E6%9D%BE/%E6%96%B0%E5%BB%BA%E6%96%87%E4%BB%B6%E5%A4%B9/maomishenhuo/work/prd-next/phone/source/preview/index.html',{waitUntil:'domcontentloaded'}); return await tabbit.observe({frames:'none',maxChars:5000});

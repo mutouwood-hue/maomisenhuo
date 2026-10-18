@@ -1,0 +1,228 @@
+{
+  "originalBytes": 137976,
+  "originalSha256": "9a7fcadba1d79c27fdc3baba75c020fda79a43c3be5b125770bd43243977912f",
+  "changes": [
+    {
+      "name": "reuse-existing-room-renderer",
+      "before": "renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: 'high-performance' });",
+      "after": "renderer = hostRenderer;"
+    },
+    {
+      "name": "r185-output-color-property",
+      "before": "renderer.outputEncoding = THREE.sRGBEncoding;",
+      "after": "renderer.outputColorSpace = THREE.SRGBColorSpace;"
+    },
+    {
+      "name": "owned-single-active-loop",
+      "before": "            requestAnimationFrame(animate);",
+      "after": "            frameId=0;if(!active||disposed)return;frameId=requestAnimationFrame(animate);"
+    },
+    {
+      "name": "explicit-host-lifecycle-not-window-onload",
+      "before": "        window.onload = function() {\n            initApp();\n            animate();\n        };",
+      "after": ""
+    },
+    {
+      "name": "r185-custom-sky-output-colorspace",
+      "before": "gl_FragColor = vec4(col, 1.0);",
+      "after": "gl_FragColor = vec4(col, 1.0);\n                        #include <colorspace_fragment>"
+    },
+    {
+      "name": "portrait-fit-relative-original-fog",
+      "before": "new THREE.FogExp2(0xd98a82, 0.0068)",
+      "after": "new THREE.FogExp2(0xd98a82, 0.0068*68/overviewRadius())"
+    },
+    {
+      "name": "scoped-setLightingMood",
+      "before": "window.setLightingMood = function",
+      "after": "const setLightingMood = function"
+    },
+    {
+      "name": "scoped-toggleFollowMode",
+      "before": "window.toggleFollowMode = function",
+      "after": "const toggleFollowMode = function"
+    },
+    {
+      "name": "scoped-switchFollowedCat",
+      "before": "window.switchFollowedCat = function",
+      "after": "const switchFollowedCat = function"
+    },
+    {
+      "name": "scoped-cycleCameraShotOverride",
+      "before": "window.cycleCameraShotOverride = function",
+      "after": "const cycleCameraShotOverride = function"
+    },
+    {
+      "name": "scoped-resetOverviewCamera",
+      "before": "window.resetOverviewCamera = function",
+      "after": "const resetOverviewCamera = function"
+    },
+    {
+      "name": "scoped-replayTownAssembly",
+      "before": "window.replayTownAssembly = function",
+      "after": "const replayTownAssembly = function"
+    },
+    {
+      "name": "own-original-pointer-sequence",
+      "before": "            let pointerDownPos = { x: 0, y: 0 };",
+      "after": "            let pointerDownPos = { x: 0, y: 0 };let pointerOwner=null;"
+    },
+    {
+      "name": "capture-pointer",
+      "before": "            listen(dom,'pointerdown', (e) => {",
+      "after": "            listen(dom,'pointerdown', (e) => {\n                if(!active)return;pointerOwner=e.pointerId;dom.setPointerCapture?.(e.pointerId);"
+    },
+    {
+      "name": "ignore-unowned-pointerup",
+      "before": "            listen(window,'pointerup', (e) => {",
+      "after": "            listen(window,'pointerup', (e) => {\n                if(pointerOwner!==e.pointerId)return;pointerOwner=null;"
+    },
+    {
+      "name": "cancel-pointer",
+      "before": "            listen(dom,'wheel', (e) => {",
+      "after": "            listen(dom,'pointercancel',()=>{pointerOwner=null;orbitState.isDraggingLeft=false;orbitState.isDraggingRight=false;});\n            listen(dom,'wheel', (e) => {"
+    },
+    {
+      "name": "widen-bridge-deck-for-two-passing-cats",
+      "before": "createVoxel(0.95, 0.35, 4.4,",
+      "after": "createVoxel(0.95, 0.35, 5.2,"
+    },
+    {
+      "name": "pick-actual-arched-deck-without-changing-collision",
+      "before": "createVoxel(0.95, 0.35, 5.2, 0xb45309, bx, archY, 0, bridgeGroup);",
+      "after": "createVoxel(0.95, 0.35, 5.2, 0xb45309, bx, archY, 0, bridgeGroup).userData.townBridgeDeck=true;"
+    },
+    {
+      "name": "bridge-rail-clearance-archY + 0.7, -2.0",
+      "before": "archY + 0.7, -2.0",
+      "after": "archY + 0.7, -2.4"
+    },
+    {
+      "name": "bridge-rail-clearance-archY + 0.7, 2.0",
+      "before": "archY + 0.7, 2.0",
+      "after": "archY + 0.7, 2.4"
+    },
+    {
+      "name": "bridge-rail-clearance-archY + 1.4, -2.0",
+      "before": "archY + 1.4, -2.0",
+      "after": "archY + 1.4, -2.4"
+    },
+    {
+      "name": "bridge-rail-clearance-archY + 1.4, 2.0",
+      "before": "archY + 1.4, 2.0",
+      "after": "archY + 1.4, 2.4"
+    },
+    {
+      "name": "bridge-rail-clearance-archY + 1.05, -2.0",
+      "before": "archY + 1.05, -2.0",
+      "after": "archY + 1.05, -2.4"
+    },
+    {
+      "name": "bridge-rail-clearance-archY + 1.05, 2.0",
+      "before": "archY + 1.05, 2.0",
+      "after": "archY + 1.05, 2.4"
+    },
+    {
+      "name": "track-visible-window-lighting-clones",
+      "before": "                    child.material = matClone;",
+      "after": "                    if(windowMaterials.includes(child.material))windowMaterials.push(matClone);\n                    child.material = matClone;"
+    },
+    {
+      "name": "responsive-original-overview-fit",
+      "before": "            orbitState.radius = 68;",
+      "after": "            orbitState.radius = overviewRadius();"
+    },
+    {
+      "name": "responsive-original-zoom-limit",
+      "before": "Math.min(115, orbitState.radius)",
+      "after": "Math.min(overviewRadius()+40, orbitState.radius)"
+    },
+    {
+      "name": "skip-player-in-npc-rig-animation",
+      "before": "            cats.forEach((cat) => {\n                cat.stateTimer -= dt;",
+      "after": "            cats.forEach((cat) => {\n                if(cat.isPlayer)return;\n                cat.stateTimer -= dt;"
+    },
+    {
+      "name": "unified-npc-road-occupancy-before-animation",
+      "before": "                // 状态移动或原地动作逻辑\n                if (cat.state === 'WANDER' || cat.state === 'RUN') {\n                    const moveSpeed = cat.state === 'RUN' ? 5.6 : 2.5;\n                    const dist = cat.startPos.distanceTo(cat.targetPos);\n                    const step = (moveSpeed * dt) / Math.max(0.5, dist);\n                    cat.segmentProgress += step;\n\n                    if (cat.segmentProgress >= 1.0) {\n                        // 抵达路点，决定下一步是驻足欣赏/嗅地面小花/打盹/玩耍，还是继续前往下一站\n                        cat.segmentProgress = 0;\n                        cat.currentNode = cat.targetNode;\n                        cat.startPos.copy(cat.targetPos);\n\n                        // 判断是否在特殊景点触发特色动作\n                        const roll = Math.random();\n                        if ((cat.currentNode === 'bridgePeak' || cat.currentNode === 'waterfallW' || cat.currentNode === 'waterfallE') && roll < 0.55) {\n                            cat.state = 'ADMIRE';\n                            cat.stateTimer = 5.5 + Math.random() * 3.0;\n                            cat.thoughtIndex = (cat.thoughtIndex + 1) % cat.profile.thoughts.length;\n                        } else if (roll < 0.25) {\n                            cat.state = 'SNIFF_FLOWER';\n                            cat.stateTimer = 4.5 + Math.random() * 2.5;\n                        } else if (roll < 0.40) {\n                            cat.state = 'NAP';\n                            cat.stateTimer = 6.0 + Math.random() * 4.0;\n                        } else if (roll < 0.55) {\n                            cat.state = 'GROOM';\n                            cat.stateTimer = 4.5 + Math.random() * 2.5;\n                        } else if (roll < 0.68) {\n                            cat.state = 'PLAY';\n                            cat.stateTimer = 4.0 + Math.random() * 2.5;\n                        } else {\n                            pickNextDestination(cat);\n                        }\n                    } else {\n                        // 沿路径插值前进（如果在拱桥或踏脚石上，自动拟合拱形高度）\n                        cat.root.position.lerpVectors(cat.startPos, cat.targetPos, cat.segmentProgress);\n                        if ((cat.currentNode === 'bridgeWest' && cat.targetNode === 'bridgePeak') ||\n                            (cat.currentNode === 'bridgePeak' && cat.targetNode === 'bridgeEast') ||\n                            (cat.currentNode === 'bridgeEast' && cat.targetNode === 'bridgePeak') ||\n                            (cat.currentNode === 'bridgePeak' && cat.targetNode === 'bridgeWest')) {\n                            const bx = cat.root.position.x;\n                            cat.root.position.y = 1.25 + Math.cos((bx / 5.5) * (Math.PI / 2)) * 1.65;\n                        }\n\n                        // 平滑朝向目标方向\n                        const dir = new THREE.Vector3().subVectors(cat.targetPos, cat.startPos).normalize();\n                        if (dir.lengthSq() > 0.001) {\n                            const targetYaw = Math.atan2(dir.x, dir.z);\n                            let diff = targetYaw - cat.root.rotation.y;\n                            while (diff > Math.PI) diff -= Math.PI * 2;\n                            while (diff < -Math.PI) diff += Math.PI * 2;\n                            cat.root.rotation.y += diff * Math.min(1, dt * 10);\n                        }\n                    }\n                } else {\n                    // 原地动作计时结束，恢复移动\n                    if (cat.stateTimer <= 0) {\n                        pickNextDestination(cat);\n                    }\n                }\n\n",
+      "after": "                if(townPlayer)townPlayer.moveNPC(cat,dt);\n                else {\n                // 状态移动或原地动作逻辑\n                if (cat.state === 'WANDER' || cat.state === 'RUN') {\n                    const moveSpeed = cat.state === 'RUN' ? 5.6 : 2.5;\n                    const dist = cat.startPos.distanceTo(cat.targetPos);\n                    const step = (moveSpeed * dt) / Math.max(0.5, dist);\n                    cat.segmentProgress += step;\n\n                    if (cat.segmentProgress >= 1.0) {\n                        // 抵达路点，决定下一步是驻足欣赏/嗅地面小花/打盹/玩耍，还是继续前往下一站\n                        cat.segmentProgress = 0;\n                        cat.currentNode = cat.targetNode;\n                        cat.startPos.copy(cat.targetPos);\n\n                        // 判断是否在特殊景点触发特色动作\n                        const roll = Math.random();\n                        if ((cat.currentNode === 'bridgePeak' || cat.currentNode === 'waterfallW' || cat.currentNode === 'waterfallE') && roll < 0.55) {\n                            cat.state = 'ADMIRE';\n                            cat.stateTimer = 5.5 + Math.random() * 3.0;\n                            cat.thoughtIndex = (cat.thoughtIndex + 1) % cat.profile.thoughts.length;\n                        } else if (roll < 0.25) {\n                            cat.state = 'SNIFF_FLOWER';\n                            cat.stateTimer = 4.5 + Math.random() * 2.5;\n                        } else if (roll < 0.40) {\n                            cat.state = 'NAP';\n                            cat.stateTimer = 6.0 + Math.random() * 4.0;\n                        } else if (roll < 0.55) {\n                            cat.state = 'GROOM';\n                            cat.stateTimer = 4.5 + Math.random() * 2.5;\n                        } else if (roll < 0.68) {\n                            cat.state = 'PLAY';\n                            cat.stateTimer = 4.0 + Math.random() * 2.5;\n                        } else {\n                            pickNextDestination(cat);\n                        }\n                    } else {\n                        // 沿路径插值前进（如果在拱桥或踏脚石上，自动拟合拱形高度）\n                        cat.root.position.lerpVectors(cat.startPos, cat.targetPos, cat.segmentProgress);\n                        if ((cat.currentNode === 'bridgeWest' && cat.targetNode === 'bridgePeak') ||\n                            (cat.currentNode === 'bridgePeak' && cat.targetNode === 'bridgeEast') ||\n                            (cat.currentNode === 'bridgeEast' && cat.targetNode === 'bridgePeak') ||\n                            (cat.currentNode === 'bridgePeak' && cat.targetNode === 'bridgeWest')) {\n                            const bx = cat.root.position.x;\n                            cat.root.position.y = 1.25 + Math.cos((bx / 5.5) * (Math.PI / 2)) * 1.65;\n                        }\n\n                        // 平滑朝向目标方向\n                        const dir = new THREE.Vector3().subVectors(cat.targetPos, cat.startPos).normalize();\n                        if (dir.lengthSq() > 0.001) {\n                            const targetYaw = Math.atan2(dir.x, dir.z);\n                            let diff = targetYaw - cat.root.rotation.y;\n                            while (diff > Math.PI) diff -= Math.PI * 2;\n                            while (diff < -Math.PI) diff += Math.PI * 2;\n                            cat.root.rotation.y += diff * Math.min(1, dt * 10);\n                        }\n                    }\n                } else {\n                    // 原地动作计时结束，恢复移动\n                    if (cat.stateTimer <= 0) {\n                        pickNextDestination(cat);\n                    }\n                }\n\n\n                }\n"
+    },
+    {
+      "name": "player-navigation-and-original-animation-tick",
+      "before": "            updateCats(dt, elapsed);",
+      "after": "            townPlayer?.serviceBridge();\n            townPlayer?.serviceSocial();\n            updateCats(dt, elapsed);\n            townPlayer?.update(dt,elapsed);"
+    },
+    {
+      "name": "npc-click-walk-to-separated-interaction",
+      "before": "                            followState.catIndex = clickedCatIndex;\n                            followState.shotOverride = null;\n                            toggleFollowMode(true);",
+      "after": "                            if(townPlayer)townPlayer.clickNpc(clickedCatIndex);else{followState.catIndex = clickedCatIndex;followState.shotOverride = null;toggleFollowMode(true);}"
+    },
+    {
+      "name": "guide-click-only-walkable-road",
+      "before": "                    if (hits.length > 0) {",
+      "after": "                    if(!hits.length&&townPlayer)townPlayer.pick(e);\n                    if (hits.length > 0) {"
+    },
+    {
+      "name": "follow-current-save-cat-not-resident",
+      "before": "            const nextState = forceEnable !== null ? forceEnable : !followState.active;",
+      "after": "            if(townPlayer)followState.catIndex=townPlayer.own.index;\n            const nextState = forceEnable !== null ? forceEnable : !followState.active;"
+    },
+    {
+      "name": "own-cat-no-macro-or-closeup-switch",
+      "before": "function resolveActiveShotType(cat) {",
+      "after": "function resolveActiveShotType(cat) {\n            if(cat.isPlayer)return 'SIDE_TRACKING';"
+    },
+    {
+      "name": "courtyard-medium-wide-own-cat-distance",
+      "before": "function getShotSpec(shotKey, cat, elapsed) {",
+      "after": "function getShotSpec(shotKey, cat, elapsed) {\n            if(cat.isPlayer)return {relAz:.72,el:(camRig.userElevation||.48),dist:(camRig.userDistance||18)*Math.max(1,Math.min(1.18,.6/camera.aspect)),lead:.65,lookY:1,focusTime:.3};"
+    },
+    {
+      "name": "own-wide-view-uses-existing-xray-instead-of-face-push",
+      "before": "const safeDist = hitDist < Infinity ? Math.max(2.2, hitDist - 0.7) : 999;",
+      "after": "const safeDist = cat.isPlayer ? 999 : hitDist < Infinity ? Math.max(2.2, hitDist - 0.7) : 999;"
+    },
+    {
+      "name": "own-cat-courtyard-field-of-view",
+      "before": "shotCfg.fov + camRig.userFov",
+      "after": "(cat.isPlayer?46:shotCfg.fov) + camRig.userFov"
+    },
+    {
+      "name": "own-cat-foreground-roof-road-visibility",
+      "before": "            // 3) 平滑插值（淡出快 / 淡入慢 / 保持时间）",
+      "after": "            // Own-cat road corridor: fade large foreground roofs even if they miss the tiny center ray.\n            if(isFollow&&cats[followState.catIndex]?.isPlayer){\n                const probes=[];for(const ox of[-2.4,-1.2,0,1.2,2.4])for(const oy of[-1,0,1.6]){const direction=targetWorldPos.clone().addScaledVector(camRight,ox).addScaledVector(camUp,oy).sub(camPos);const distance=direction.length();probes.push({direction:direction.normalize(),distance});}\n                for(const item of occludableGroups){\n                    const box=item.box;if(item.catIndex>=0||!box||box.isEmpty()||box.max.y<targetWorldPos.y+.6)continue;\n                    // Use the whole cat-and-road corridor. A building's aggregate box may contain\n                    // the cat beside its eaves; that must never exempt its roof from fading.\n                    let blocks=false;\n                    for(const {direction,distance} of probes){\n                        _ray.set(camPos,direction);const hit=_ray.intersectBox(box,_tmpV2);\n                        if(hit&&hit.distanceTo(camPos)<distance-.25){blocks=true;break;}\n                    }\n                    if(blocks){item.wantOpacity=Math.min(item.wantOpacity,.015);if(item.currentOpacity>.45)sightBlocked=true;}\n                }\n            }\n            // 3) 平滑插值（淡出快 / 淡入慢 / 保持时间）"
+    },
+    {
+      "name": "manual-follow-elevation-and-orbit",
+      "before": "camRig.userYaw -= dx * 0.008;",
+      "after": "camRig.userYaw -= dx * 0.008;camRig.userElevation=Math.max(.22,Math.min(.95,(camRig.userElevation||.48)+dy*.003));"
+    },
+    {
+      "name": "own-player-tap-before-legacy-invisible-cat-boxes",
+      "before": "                    const hits = raycaster.intersectObjects(interactiveMeshes, false);",
+      "after": "                    if(townPlayer){townPlayer.handlePointer(e);return;}\n                    const hits = raycaster.intersectObjects(interactiveMeshes, false);"
+    },
+    {
+      "name": "touch-tap-css-pixel-slop",
+      "before": "if (moveDist < 6 && e.button === 0)",
+      "after": "if (moveDist < 14 && e.button === 0)"
+    },
+    {
+      "name": "canvas-prevent-browser-touch-default",
+      "before": "                pointerDownPos = { x: e.clientX, y: e.clientY };",
+      "after": "                e.preventDefault();pointerDownPos = { x: e.clientX, y: e.clientY };"
+    },
+    {
+      "name": "camera-drag-starts-after-tap-slop",
+      "before": "                const dx = e.clientX - orbitState.prevX;",
+      "after": "                if(pointerOwner===e.pointerId&&Math.hypot(e.clientX-pointerDownPos.x,e.clientY-pointerDownPos.y)<14)return;\n                const dx = e.clientX - orbitState.prevX;"
+    },
+    {
+      "name": "repair-two-missing-hud-closures",
+      "before": "                    <!-- 电影运镜实时说明与切换 -->",
+      "after": "                    </div></div>\n                    <!-- 电影运镜实时说明与切换 -->"
+    }
+  ],
+  "completeOriginalScriptWrapped": true,
+  "geometryAndProfilesRebuilt": false
+}

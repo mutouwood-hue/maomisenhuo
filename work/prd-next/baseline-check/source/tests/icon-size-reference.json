@@ -1,0 +1,91 @@
+{
+  "iconSourceSha256": "a0dadfd3d158730a5ed5dd0b4288490701bb1479442a2dfa570e25b707206db4",
+  "kind": "AppKit rasterized local SVG software; no browser/device",
+  "sizesPx": [
+    24,
+    26,
+    32,
+    48
+  ],
+  "labelsRetained": true,
+  "metrics": [
+    {
+      "key": "meet",
+      "actualSizePx": 26,
+      "solidBounds": [
+        2,
+        5,
+        24,
+        23
+      ],
+      "solidWidth": 22,
+      "solidHeight": 18
+    },
+    {
+      "key": "dex",
+      "actualSizePx": 26,
+      "solidBounds": [
+        3,
+        3,
+        23,
+        23
+      ],
+      "solidWidth": 20,
+      "solidHeight": 20
+    },
+    {
+      "key": "life",
+      "actualSizePx": 26,
+      "solidBounds": [
+        2,
+        2,
+        24,
+        24
+      ],
+      "solidWidth": 22,
+      "solidHeight": 22
+    },
+    {
+      "key": "world",
+      "actualSizePx": 26,
+      "solidBounds": [
+        3,
+        2,
+        23,
+        24
+      ],
+      "solidWidth": 20,
+      "solidHeight": 22
+    },
+    {
+      "key": "wardrobe",
+      "actualSizePx": 26,
+      "solidBounds": [
+        1,
+        1,
+        25,
+        24
+      ],
+      "solidWidth": 24,
+      "solidHeight": 23
+    },
+    {
+      "key": "family",
+      "actualSizePx": 26,
+      "solidBounds": [
+        2,
+        2,
+        24,
+        24
+      ],
+      "solidWidth": 22,
+      "solidHeight": 22
+    }
+  ],
+  "contrast": {
+    "normalLabel": 5.252944311890195,
+    "disabledLabel": 4.627746389274227,
+    "essentialOutline": 4.911585458646724
+  },
+  "note": "colored fills decorative; dark outlines carry shape. Disabled sample retains full-opacity text, desaturates only icon."
+}

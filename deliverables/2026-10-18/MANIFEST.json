@@ -1,0 +1,43 @@
+{
+  "batch": "2026-10-18 功能批次",
+  "branch": "feat/care-lock-0.3.9-0.5.4",
+  "phone": {
+    "versionName": "0.4.0-day-hearts",
+    "versionCode": 31,
+    "file": "catforest-0.4.0-day-hearts-unsigned.apk",
+    "bytes": 701056,
+    "sha256": "3bac55b120198ce2d9dad482da2674613fde522e82db5a23483fbb356d0bc305",
+    "signed": false,
+    "note": "必须用原证书 3408671b…51ad82 签名后才能覆盖安装；本次未新建证书"
+  },
+  "badge": {
+    "versionString": "0.5.5-day-hearts",
+    "file": "cat_forest_badge-0.5.5-day-hearts.bin",
+    "bytes": 6886224,
+    "sha256": "4d6b3fd6365820df309933503c93e506847347e3643276c7f761cbb68d3eadc7",
+    "note": "仅写应用分区（原 0x820000）；不要擦写 bootloader / 分区表 / NVS"
+  },
+  "build": {
+    "phone": "gradle :app:packageRelease -x lintVitalAnalyzeRelease -x lintVitalReportRelease（离线，AGP 8.7.3 / JDK21）",
+    "badge": "python work/integrated/build-badge-windows.py --source R:/firmware --build R:/work/integrated/badge/root-build2 --log-dir R:/work/integrated/badge-logs7（ESP-IDF 5.5.5 / 隔离 SDK 环境）",
+    "badgePartition": "0x691240 / 0x800000，余 18%"
+  },
+  "verification": {
+    "phoneFocusedSuite": "142/142（python work/integrated/test-phone.py）",
+    "badgeHostSuites": "3/3（python work/integrated/test-badge.py --skip-ui）",
+    "badgeUiGate": "27 屏渲染 PASS：字形完整、命中区与标签都在 safeR=212 内（python firmware/tools/ui_gate.py）",
+    "coverageRecheck": "PASS 已实现19 / 部分2 / 未实现1 / 已取消1（python firmware/tools/check_ui_coverage.py）"
+  },
+  "notVerified": [
+    "未安装、未刷写、未重绑，设备仍是 038 与 053",
+    "触摸手感、圆屏裁剪、TE 与局部刷新、帧率、功耗、OEM 省电、锁屏重连时序均未测",
+    "相遇暗号只在本机记录与展示，未写入 peer 协议，不参与加好友判定",
+    "lowbat 未实现：BSP 无 battery/ADC 接口；voice 仍为占位"
+  ],
+  "docs": [
+    "work/integrated/DELIVERY-2026-10-18.md",
+    "work/integrated/PHONE-SUITE-TRIAGE.md",
+    "firmware/UI-COVERAGE.md",
+    "firmware/tools/host_preview/HOST-PREVIEW-STATUS.md"
+  ]
+}

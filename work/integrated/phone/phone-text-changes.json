@@ -1,0 +1,86 @@
+[
+  {
+    "path": "android/app/src/main/AndroidManifest.xml",
+    "new": false,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "android/app/src/main/java/com/catforest/htmlcandidate/BleRetentionService.java",
+    "new": true,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "android/app/src/main/java/com/catforest/htmlcandidate/LocalV2BleBridge.java",
+    "new": false,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "android/app/src/main/java/com/catforest/htmlcandidate/MainActivity.java",
+    "new": false,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "android/app/src/main/java/com/catforest/htmlcandidate/StrictNdjson.java",
+    "new": true,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "android/gradle.properties",
+    "new": false,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "android/local.properties",
+    "new": true,
+    "prd_changed": true,
+    "overlap": true,
+    "same": false
+  },
+  {
+    "path": "NATIVE-RETENTION-HANDOFF.md",
+    "new": true,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "web/cflocal2-adapter.js",
+    "new": false,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "web/local-v2-transport.js",
+    "new": false,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "web/offline-device-events.js",
+    "new": false,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  },
+  {
+    "path": "web/offline-scene-sync.js",
+    "new": false,
+    "prd_changed": false,
+    "overlap": false,
+    "same": false
+  }
+]

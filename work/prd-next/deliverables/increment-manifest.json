@@ -1,0 +1,225 @@
+{
+  "schema": 1,
+  "automaticApply": false,
+  "bases": {
+    "phone": {
+      "archive": "catforest-little-moments-0.3.8-source.zip",
+      "sha256": "c093594be1f075e938bb174fb3455bc565eb8fd2d2eabcc2c1c8cadd790d8e87"
+    },
+    "badge": {
+      "archive": "cat-forest-badge-0.5.3-day-startup-source.zip",
+      "sha256": "5e679693cb22221a738e12c946a5f8d3c5a9253fbcc2209644199d679e419d5b"
+    }
+  },
+  "files": [
+    {
+      "path": "phone/scripts/build_assets.py",
+      "status": "modified",
+      "baseSha256": "187ec4bdabe7586d57bfc2894acfeae72072725319f7db51ae8b7abd5d84dbf8",
+      "baseLfSha256": "187ec4bdabe7586d57bfc2894acfeae72072725319f7db51ae8b7abd5d84dbf8",
+      "newSha256": "9c9020ac04b7fd0b87564694d880e768469294c3ee05f1445f7abec1cc443199",
+      "newLfSha256": "9c9020ac04b7fd0b87564694d880e768469294c3ee05f1445f7abec1cc443199"
+    },
+    {
+      "path": "phone/scripts/prd_experience_patches.py",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "a6c357ed30ac6b5ebc5f256a22b99d413a0574f524a0330c3855f7dfbb289e57",
+      "newLfSha256": "a6c357ed30ac6b5ebc5f256a22b99d413a0574f524a0330c3855f7dfbb289e57"
+    },
+    {
+      "path": "phone/web/life-navigation.js",
+      "status": "modified",
+      "baseSha256": "728e2825a93f00a8172e7e23dc866e603456908bab66687f793cbcb2154316fc",
+      "baseLfSha256": "728e2825a93f00a8172e7e23dc866e603456908bab66687f793cbcb2154316fc",
+      "newSha256": "4d7255b8f139f2aa52b2b64840a9187b7e4f9ccc8fdc3ea63ac745b31e4a9e3c",
+      "newLfSha256": "4d7255b8f139f2aa52b2b64840a9187b7e4f9ccc8fdc3ea63ac745b31e4a9e3c"
+    },
+    {
+      "path": "phone/web/life-companion.css",
+      "status": "modified",
+      "baseSha256": "19ff529e3a40a128eb753ae6d4bc29af00979257382ca03690ee2f3be537e99f",
+      "baseLfSha256": "19ff529e3a40a128eb753ae6d4bc29af00979257382ca03690ee2f3be537e99f",
+      "newSha256": "b34a14a452841b44e013108d86b351211b29dd69c5b2490b11ed56bbdd75e6c8",
+      "newLfSha256": "b34a14a452841b44e013108d86b351211b29dd69c5b2490b11ed56bbdd75e6c8"
+    },
+    {
+      "path": "phone/web/clinic-feedback.inc.js",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "f0fbce9303186b144e79868d2d6df59e014adb3cd2d110dfda24128188fc92ae",
+      "newLfSha256": "f0fbce9303186b144e79868d2d6df59e014adb3cd2d110dfda24128188fc92ae"
+    },
+    {
+      "path": "phone/web/life-summary.inc.js",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "d63b924869739b2342f451e768f147cefaa18dd7a70707c817a8c67708a946da",
+      "newLfSha256": "d63b924869739b2342f451e768f147cefaa18dd7a70707c817a8c67708a946da"
+    },
+    {
+      "path": "phone/web/offline-device-backup.js",
+      "status": "modified",
+      "baseSha256": "68fe5b9514309e5a622d9cb57a4f8bf333ee99d279d922722c5e86250120c2e7",
+      "baseLfSha256": "68fe5b9514309e5a622d9cb57a4f8bf333ee99d279d922722c5e86250120c2e7",
+      "newSha256": "732c43031c45dcd0bd303d342931d2f4aab2f89349aa25968079c9ff34adb716",
+      "newLfSha256": "732c43031c45dcd0bd303d342931d2f4aab2f89349aa25968079c9ff34adb716"
+    },
+    {
+      "path": "phone/web/offline-event-store.js",
+      "status": "modified",
+      "baseSha256": "0ad5072d0732dd8a78b82fc0e3fa1ce4f8d052879d447444027effd94d3812e7",
+      "baseLfSha256": "0ad5072d0732dd8a78b82fc0e3fa1ce4f8d052879d447444027effd94d3812e7",
+      "newSha256": "5c1c304885319d2c63641f7639ff5139cfe77a9f49f047bedd62f47ee504f2d8",
+      "newLfSha256": "5c1c304885319d2c63641f7639ff5139cfe77a9f49f047bedd62f47ee504f2d8"
+    },
+    {
+      "path": "phone/web/offline-durable-store.js",
+      "status": "modified",
+      "baseSha256": "6493ac2b307070a3c153fc6e62cb73945166a021f854a2e676336cfa684a23f9",
+      "baseLfSha256": "6493ac2b307070a3c153fc6e62cb73945166a021f854a2e676336cfa684a23f9",
+      "newSha256": "3427a401bb11fe27c752be0dd2c0ab6e916795e951488ba31f49b5f485b5d765",
+      "newLfSha256": "3427a401bb11fe27c752be0dd2c0ab6e916795e951488ba31f49b5f485b5d765"
+    },
+    {
+      "path": "phone/android/app/src/main/java/com/catforest/htmlcandidate/EventDurableBridge.java",
+      "status": "modified",
+      "baseSha256": "f1814a1971d8e209d2c5b0c4b5ff57cb8356af6ca2903b794c50dd3026addeb5",
+      "baseLfSha256": "f1814a1971d8e209d2c5b0c4b5ff57cb8356af6ca2903b794c50dd3026addeb5",
+      "newSha256": "54bef9ffd58edfe18e75846022295184affbedcda02899fd1363225624cb424f",
+      "newLfSha256": "54bef9ffd58edfe18e75846022295184affbedcda02899fd1363225624cb424f"
+    },
+    {
+      "path": "phone/tests/life-navigation-focused.test.cjs",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "a77f479789f190c62354f257c549309cd65c8a046783633172257c10b3946c0c",
+      "newLfSha256": "a77f479789f190c62354f257c549309cd65c8a046783633172257c10b3946c0c"
+    },
+    {
+      "path": "phone/tests/life-navigation-focused-notes.md",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "8f2d64b7d6c651299ef6938877a67f5c316f8e2d137c8948c83d13c715961ce6",
+      "newLfSha256": "8f2d64b7d6c651299ef6938877a67f5c316f8e2d137c8948c83d13c715961ce6"
+    },
+    {
+      "path": "phone/tests/prd-experience.test.cjs",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "9f8022540cd1f2c98d9e70daee4374683a79db616fd59ac443a32836419cc196",
+      "newLfSha256": "9f8022540cd1f2c98d9e70daee4374683a79db616fd59ac443a32836419cc196"
+    },
+    {
+      "path": "phone/tests/memorial-backup-focused.test.cjs",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "93d5dbf8ae01632fef07b1b279b525d354215e62cc4a29a39eb5a8afdad8d01f",
+      "newLfSha256": "93d5dbf8ae01632fef07b1b279b525d354215e62cc4a29a39eb5a8afdad8d01f"
+    },
+    {
+      "path": "phone/tests/native-canonical-focused.test.cjs",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "b0795217cd5b817c77336d27c04eca0a844a0f76f401292aa6608b45f33469f3",
+      "newLfSha256": "b0795217cd5b817c77336d27c04eca0a844a0f76f401292aa6608b45f33469f3"
+    },
+    {
+      "path": "phone/tests/life-summary-focused.test.cjs",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "76de25954a40362812216bba4c0ab75dfc3816cc362a13c08e954f4e45c39e9a",
+      "newLfSha256": "76de25954a40362812216bba4c0ab75dfc3816cc362a13c08e954f4e45c39e9a"
+    },
+    {
+      "path": "phone/tests/native-durable.test.cjs",
+      "status": "modified",
+      "baseSha256": "7f9309fea87bbeb3bbd3615522c0582d867abef5f01bd9dc3f91e74973ee3a41",
+      "baseLfSha256": "7f9309fea87bbeb3bbd3615522c0582d867abef5f01bd9dc3f91e74973ee3a41",
+      "newSha256": "8bf1a3868bf9d5cb1142ae81ae3f6475215db1b58bfdb94deb4ebbc85d8d242e",
+      "newLfSha256": "8bf1a3868bf9d5cb1142ae81ae3f6475215db1b58bfdb94deb4ebbc85d8d242e"
+    },
+    {
+      "path": "phone/tests/native-durable/DurableRpcHarness.java",
+      "status": "modified",
+      "baseSha256": "5ee9aa546f129e92812787df39fbe0506ff66aa16b687326b0dc535362e8007d",
+      "baseLfSha256": "5ee9aa546f129e92812787df39fbe0506ff66aa16b687326b0dc535362e8007d",
+      "newSha256": "9c3cf8339411dca9dcef9ea9343cb6931e3aa318ac729dacdc559a862261e268",
+      "newLfSha256": "9c3cf8339411dca9dcef9ea9343cb6931e3aa318ac729dacdc559a862261e268"
+    },
+    {
+      "path": "phone/docs/memorial-backup-implementation.md",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "64ea5abe3552888045012d7ec010f66a34d0b1fc26131bdf0fa48657980262bf",
+      "newLfSha256": "64ea5abe3552888045012d7ec010f66a34d0b1fc26131bdf0fa48657980262bf"
+    },
+    {
+      "path": "badge/main/badge_pages.c",
+      "status": "modified",
+      "baseSha256": "4e9e4be0c4b46655a880a08dabadba9dc2247e7f91169ef21da5e79db87df378",
+      "baseLfSha256": "4e9e4be0c4b46655a880a08dabadba9dc2247e7f91169ef21da5e79db87df378",
+      "newSha256": "abaf351ae857aca008785b6df6a111dc1e1d0da37876a16ee0c30297e6eb6b24",
+      "newLfSha256": "abaf351ae857aca008785b6df6a111dc1e1d0da37876a16ee0c30297e6eb6b24"
+    },
+    {
+      "path": "badge/main/badge_gesture.c",
+      "status": "modified",
+      "baseSha256": "7c1287c077dfd17fb29bacf0aa5ef1eecf37561c5d454caed0ac0a1755b0ae16",
+      "baseLfSha256": "7c1287c077dfd17fb29bacf0aa5ef1eecf37561c5d454caed0ac0a1755b0ae16",
+      "newSha256": "48e1562e0c6b18c4d3c8a2b2b02b6e920a9bc0797f5654a3b095b869637cfc93",
+      "newLfSha256": "48e1562e0c6b18c4d3c8a2b2b02b6e920a9bc0797f5654a3b095b869637cfc93"
+    },
+    {
+      "path": "badge/main/badge_gesture.h",
+      "status": "modified",
+      "baseSha256": "a5eaf6b238e043eb4d4b6dc286108437108744801e111d9ec731e7a9ef9dc2ba",
+      "baseLfSha256": "a5eaf6b238e043eb4d4b6dc286108437108744801e111d9ec731e7a9ef9dc2ba",
+      "newSha256": "c0e271a5af17c7fe80681c5181d7a400895334ba9e7e010f10ebd4e60d72f1b3",
+      "newLfSha256": "c0e271a5af17c7fe80681c5181d7a400895334ba9e7e010f10ebd4e60d72f1b3"
+    },
+    {
+      "path": "badge/tests/host_live_drag/run.py",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "93aa52cb7941014d00ab6a683cfca290d8710c4f5e7231164cd692b6e2ee04d6",
+      "newLfSha256": "93aa52cb7941014d00ab6a683cfca290d8710c4f5e7231164cd692b6e2ee04d6"
+    },
+    {
+      "path": "badge/tests/host_live_drag/test_live_drag.c",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "61f8842e4c6f2cf729c8909cbb49f9f630f1ec366af29017595fb82230003822",
+      "newLfSha256": "61f8842e4c6f2cf729c8909cbb49f9f630f1ec366af29017595fb82230003822"
+    },
+    {
+      "path": "badge/tests/host_live_drag/README.md",
+      "status": "added",
+      "baseSha256": null,
+      "baseLfSha256": null,
+      "newSha256": "c0a45c4fce865379696055b8d2f633bc9d802e23beba8fe15bd0a3177a09255c",
+      "newLfSha256": "c0a45c4fce865379696055b8d2f633bc9d802e23beba8fe15bd0a3177a09255c"
+    }
+  ],
+  "excluded": [
+    "generated assets",
+    "original HTML",
+    "APK/bin",
+    "local.properties",
+    "dependencies/node_modules",
+    "lock-clean-fix",
+    "BLE consumers/drivers"
+  ]
+}

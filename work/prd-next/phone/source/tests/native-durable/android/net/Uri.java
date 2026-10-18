@@ -1,0 +1,2 @@
+package android.net;
+public class Uri {private final java.net.URI value;private Uri(String s){value=java.net.URI.create(s);}public static Uri parse(String s){return new Uri(s);}public String getScheme(){return value.getScheme();}public String getHost(){return value.getHost();}public int getPort(){return value.getPort();}public String getUserInfo(){return value.getUserInfo();}public String getPath(){return value.getPath();}public String getFragment(){return value.getFragment();}public String getQuery(){return value.getQuery();}}

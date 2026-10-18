@@ -1,0 +1,95 @@
+{
+  "softwareNotDevice": true,
+  "records": [
+    {
+      "name": "local-device-local",
+      "deferredBeforeBoundary": true,
+      "noDeferSealOrLedgerOrACK": true,
+      "deviceAtExactBoundary": true,
+      "localBlockedAfterDevice": true,
+      "final": {
+        "feed": 0,
+        "drink": 3,
+        "pet": 0,
+        "xp": 12,
+        "coins": 30,
+        "food": 65,
+        "energy": 93
+      }
+    },
+    {
+      "name": "distinct-feed-backlog",
+      "timestampSource": "phone processing only",
+      "waitedMs": 4000,
+      "ackStatuses": [
+        "applied",
+        "applied"
+      ],
+      "final": {
+        "feed": 2,
+        "drink": 0,
+        "pet": 0,
+        "xp": 16,
+        "coins": 24,
+        "food": 100,
+        "energy": 75
+      }
+    },
+    {
+      "name": "duplicate-unknown-ack",
+      "runtimeExact": true,
+      "ackStatuses": [
+        "applied",
+        "duplicate",
+        "duplicate"
+      ],
+      "oneOriginalFeed": true
+    },
+    {
+      "name": "native-flight-public-gate",
+      "publicWriteMethods": [
+        "hostDeviceCare",
+        "socialGrant",
+        "beginRemoteFamily",
+        "lifeLog",
+        "callGraduation",
+        "postponeGraduation",
+        "graduate",
+        "act",
+        "tick",
+        "rename",
+        "importSave",
+        "reset",
+        "beginCare",
+        "finishCare",
+        "cancelCare",
+        "beginPlay",
+        "finishPlay",
+        "cancelPlay",
+        "claimGoal",
+        "flush",
+        "chooseBreed",
+        "buyItem",
+        "equipItem",
+        "sellItem",
+        "beginWorldActivity",
+        "collectWorldItem",
+        "applyWorldChoice",
+        "settleWorldActivity",
+        "cancelWorldActivity",
+        "beginVisit",
+        "finishVisit",
+        "cancelVisit",
+        "beginFamily",
+        "cancelFamily",
+        "advanceFamily",
+        "claimBaby",
+        "switchCat",
+        "adoptCat"
+      ],
+      "blockedCalls": 114,
+      "queuedReplay": false,
+      "clearAfterExplicitReset": true
+    }
+  ]
+}

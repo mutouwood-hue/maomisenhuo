@@ -1,0 +1,6 @@
+Static compilation output inventory, no runtime probe:
+refresh_state: entry a1,0x6b0 (1712 bytes)
+badge_ui_start: entry a1,0x130 (304 bytes)
+day_reference$constprop$0: entry a1,112
+day_project$part$0: entry a1,240
+Main stack0523584 bytes; corrupted overflow stack cannot uniquely locate one callee.

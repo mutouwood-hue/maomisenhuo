@@ -1,0 +1,12 @@
+
+### android/local.properties BASE→PRD
+--- base
++++ prd
+@@ -0,0 +1 @@
++sdk.dir=D:/黑客松/mobile-pet/.toolchain/android-sdk
+
+BASE→NEIGHBOR
+--- base
++++ neighbor
+@@ -0,0 +1 @@
++sdk.dir=D\:\\黑客松\\mobile-pet\\.toolchain\\android-sdk

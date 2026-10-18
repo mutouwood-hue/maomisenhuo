@@ -1,0 +1,9 @@
+{
+  "softwareNotDevice": true,
+  "realOriginalClosure": true,
+  "recallKeepsCfgSync": true,
+  "at30min": "home",
+  "after30minBeforeOriginalApply": "home",
+  "afterOriginalApply": "away",
+  "gameAndStorageExact": true
+}
