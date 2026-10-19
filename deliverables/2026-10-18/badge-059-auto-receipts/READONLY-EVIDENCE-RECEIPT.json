@@ -1,0 +1,57 @@
+[
+  {
+    "action": [
+      "get-state"
+    ],
+    "file": "private-evidence/phone-connection.log",
+    "exitCode": 0,
+    "bytes": 7
+  },
+  {
+    "action": [
+      "shell",
+      "dumpsys",
+      "package",
+      "com.catforest.htmlcandidate"
+    ],
+    "file": "private-evidence/phone-package-before.log",
+    "exitCode": 0,
+    "bytes": 9339
+  },
+  {
+    "action": [
+      "logcat",
+      "-d",
+      "--uid=10191",
+      "-v",
+      "threadtime"
+    ],
+    "file": "private-evidence/phone-existing-logcat.log",
+    "exitCode": 0,
+    "bytes": 636229
+  },
+  {
+    "action": [
+      "shell",
+      "run-as",
+      "com.catforest.htmlcandidate",
+      "ls",
+      "files"
+    ],
+    "file": "private-evidence/phone-existing-files.log",
+    "exitCode": 0,
+    "bytes": 29
+  },
+  {
+    "action": [
+      "shell",
+      "run-as",
+      "com.catforest.htmlcandidate",
+      "cat",
+      "files/cflocal2-authority-main.json"
+    ],
+    "file": "private-evidence/phone-authority-before.json",
+    "exitCode": 0,
+    "bytes": 89907
+  }
+]

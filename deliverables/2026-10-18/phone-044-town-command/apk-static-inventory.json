@@ -1,0 +1,48 @@
+{
+  "addedEntries": [],
+  "removedEntries": [],
+  "changedEntries": [
+    {
+      "name": "AndroidManifest.xml",
+      "beforeBytes": 5740,
+      "afterBytes": 5728
+    },
+    {
+      "name": "assets/build-manifest.json",
+      "beforeBytes": 6486,
+      "afterBytes": 6740
+    },
+    {
+      "name": "assets/game-03.js",
+      "beforeBytes": 765239,
+      "afterBytes": 765333
+    },
+    {
+      "name": "assets/original-town-runtime.js",
+      "beforeBytes": 200215,
+      "afterBytes": 203045
+    },
+    {
+      "name": "assets/town-contact-runtime.inc.js",
+      "beforeBytes": 6497,
+      "afterBytes": 8350
+    },
+    {
+      "name": "assets/town-player-runtime.inc.js",
+      "beforeBytes": 48586,
+      "afterBytes": 49563
+    },
+    {
+      "name": "classes2.dex",
+      "beforeBytes": 166336,
+      "afterBytes": 166328
+    }
+  ],
+  "addedBuildPatches": [
+    "pause-room-input-hu-with-room-renderer",
+    "pause-room-input-uu-with-room-renderer",
+    "pause-room-input-du-with-room-renderer",
+    "pause-room-input-fu-with-room-renderer",
+    "pause-room-orbit-controls-and-clear-pointer-with-room-renderer"
+  ]
+}

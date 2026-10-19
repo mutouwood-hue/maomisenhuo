@@ -1,0 +1,104 @@
+{
+  "startedAtUtc": "2026-10-18T02:51:19.238557+00:00",
+  "serial": "ZYPZ261A01M65K0002A",
+  "packageId": "com.catforest.htmlcandidate",
+  "method": "adb install --no-incremental -r",
+  "installed": true,
+  "appLaunched": false,
+  "dataCleared": false,
+  "uninstalled": false,
+  "commands": [
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "get-state"
+      ],
+      "exitCode": 0,
+      "log": "phone-connection.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "shell",
+        "getprop",
+        "ro.product.model"
+      ],
+      "exitCode": 0,
+      "log": "phone-model.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "shell",
+        "getprop",
+        "ro.product.manufacturer"
+      ],
+      "exitCode": 0,
+      "log": "phone-manufacturer.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "shell",
+        "dumpsys",
+        "package",
+        "com.catforest.htmlcandidate"
+      ],
+      "exitCode": 0,
+      "log": "phone-before.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "install",
+        "--no-incremental",
+        "-r",
+        "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/phone-043-town-depart-pocket/catforest-0.4.3-town-depart-pocket-debug.apk"
+      ],
+      "exitCode": 0,
+      "log": "phone-install.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "shell",
+        "dumpsys",
+        "package",
+        "com.catforest.htmlcandidate"
+      ],
+      "exitCode": 0,
+      "log": "phone-after.log"
+    }
+  ],
+  "before": {
+    "versionCode": 33,
+    "versionName": "0.4.2-touch-town",
+    "appId": 10191,
+    "firstInstallTime": "2026-10-15 23:14:25"
+  },
+  "installExitCode": 0,
+  "manufacturer": "StepX",
+  "model": "PZ261A",
+  "after": {
+    "versionCode": 34,
+    "versionName": "0.4.3-town-depart-pocket",
+    "appId": 10191,
+    "firstInstallTime": "2026-10-15 23:14:25"
+  },
+  "metadataMatchesBuiltVersion": true,
+  "sameAppId": true,
+  "sameFirstInstallTime": true,
+  "finishedAtUtc": "2026-10-18T02:51:19.742785+00:00"
+}

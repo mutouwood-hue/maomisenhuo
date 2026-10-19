@@ -1,0 +1,30 @@
+{
+  "versionName": "0.4.6-auto-receipts",
+  "versionCode": 37,
+  "packageId": "com.catforest.htmlcandidate",
+  "file": "catforest-0.4.6-auto-receipts-debug.apk",
+  "bytes": 933979,
+  "sha256": "419468a95ad65c972d3221934f35d6c3b88ee84bcf9bd2dcf0188070460e099b",
+  "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+  "buildExitCode": 0,
+  "assetDifferenceFromInstalled045": [
+    {
+      "path": "assets/cflocal2-adapter.js",
+      "before": "44f622a7c7d5ae58112ffee00b17b32903746ba8fae279d7bcd6a44cdb025278",
+      "after": "2dbaf1cff2d837f04d1e832320c8f8526ee95bbd879129196822062bd3320b62"
+    },
+    {
+      "path": "assets/offline-device-events.js",
+      "before": "ffed6b1793fe2d9c0219c293e3291a3894a985c3b14b65eaaad0229d47b682c2",
+      "after": "a1b18d61792675ccfa00e04a12fe4f0392a1fe57403773dd4db54adbba7282b9"
+    },
+    {
+      "path": "assets/offline-scene-sync.js",
+      "before": "08e6fb824b862f6ce8c46b1d95c6ba1b6fb468b403a23a47cefc3ac2c2a7a605",
+      "after": "1f9e4459c02fab93be835fff84325a316e34d1cb14730f7e36f3debab18e3cbd"
+    }
+  ],
+  "townDayAndGameAssetsUnchanged": true,
+  "testsExecuted": false,
+  "appLaunched": false
+}

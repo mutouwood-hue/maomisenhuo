@@ -1,0 +1,845 @@
+--- a/app/android/app/build.gradle.kts
++++ b/app/android/app/build.gradle.kts
+@@ -8,8 +8,8 @@
+         applicationId = "com.catforest.htmlcandidate"
+         minSdk = 26
+         targetSdk = 35
+-        versionCode = 36
+-        versionName = "0.4.5-sticky-guide"
++        versionCode = 37
++        versionName = "0.4.6-auto-receipts"
+     }
+     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
+     signingConfigs {
+--- a/app/android/app/src/main/assets/cflocal2-adapter.js
++++ b/app/android/app/src/main/assets/cflocal2-adapter.js
+@@ -139,22 +139,40 @@
+       const reply=await sendPending(id,{fresh:true});return {status:'device_persisted',revision,duplicate:reply.data.duplicate===true};
+     });},
+     retryPending(command){return exclusive(async()=>{if(command?.origin!=='explicit_user_action')throw fail('USER_ACTION_REQUIRED','请显式确认重试同步。');const {id}=ready();return sendPending(id);});},
++    resumePending(connection){return exclusive(async()=>{
++      const {s,id,d}=ready();
++      if(connection?.deviceId!==id||connection.generation!==s.evidence?.generation)throw fail('STALE_GENERATION','原设备连接已变化，保留原指令。','unknown');
++      if(!d.pending)throw fail('NO_PENDING','没有待恢复指令。');
++      // Recovery reuses the exact Native-checkpointed id/seq/data. It never
++      // creates a result, skips an event or turns a new connection into an ACK.
++      return sendPending(id);
++    });},
+     getPending(){const {id}=ready();return clone(journal.value.devices[id].pending);}
+   };
++  async function confirmCare(s,id,d){
++    if(!s.hello.capabilities.includes('care_bath_v1')||careConfirmed.get(id)===s.evidence?.generation)return;
++    if(d.pending)throw fail('PENDING_UNKNOWN','原指令恢复后再启用清洁照料。','unknown');
++    const support={careBathV1:true};
++    if(s.hello.capabilities.includes('mobile_context_v1'))support.mobileContextV1=true;
++    const confirmation=await control.request('care_capabilities',support,{clientId:journal.value.clientId});
++    const c=confirmation?.data,after=control.getState();
++    if(c?.careBathV1!==true||c.confirmed!==true||c.deviceId!==id||c.clientId!==journal.value.clientId||after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==s.evidence?.generation||(support.mobileContextV1===true&&c.mobileContextV1!==true))throw fail('CARE_CONFIRMATION_FAILED','清洁与手机信息支持暂未就绪，设备事件仍保留。');
++    careConfirmed.set(id,s.evidence.generation);
++  }
+   const events={
+     async readNext(){
+       const {s,id,d}=ready();
+-      if(s.hello.capabilities.includes('care_bath_v1')&&careConfirmed.get(id)!==s.evidence?.generation){
+-        if(d.pending)throw fail('PENDING_UNKNOWN','先确认上一条持久指令，再启用清洁照料。','unknown');
+-        const support={careBathV1:true};
+-        if(s.hello.capabilities.includes('mobile_context_v1'))support.mobileContextV1=true;
+-        const confirmation=await control.request('care_capabilities',support,{clientId:journal.value.clientId});
+-        const c=confirmation?.data,after=control.getState();
+-        if(c?.careBathV1!==true||c.confirmed!==true||c.deviceId!==id||c.clientId!==journal.value.clientId||after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==s.evidence?.generation||(support.mobileContextV1===true&&c.mobileContextV1!==true))throw fail('CARE_CONFIRMATION_FAILED','清洁与手机信息支持确认未通过，设备事件仍保留。');
+-        careConfirmed.set(id,s.evidence.generation);
++      await confirmCare(s,id,d);
++      let r=await control.request('events');
++      if(r?.data?.blocked?.reason==='care_bath_confirmation_required'&&s.hello.capabilities.includes('care_bath_v1')){
++        // Firmware's actual gate wins over a RAM capability cache. Re-negotiate
++        // this same verified owner once, then read the unchanged FIFO head.
++        console.info('[CFLOCAL2] care_gate_reconfirm');careConfirmed.delete(id);const current=ready();
++        if(current.id!==id||current.s.evidence?.generation!==s.evidence?.generation)throw fail('STALE_GENERATION','连接已变化，设备事件仍保留。');
++        await confirmCare(current.s,id,current.d);r=await control.request('events');
+       }
+-      const r=await control.request('events');const e=r?.data?.event;
+-      if(r?.data?.blocked)throw fail('CARE_CONFIRMATION_REQUIRED','清洁事件等待兼容手机确认，尚未结算或删除。');
++      if(r?.data?.blocked)throw fail('CARE_CONFIRMATION_REQUIRED','清洁支持暂未就绪，设备事件已保留。');
++      const e=r?.data?.event;
+       if(e===null)return null;
+       if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!safe(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||!ascii(e.petId,64)||!['care','gift'].includes(e.kind)||(e.occurredAtMs!==null&&!safe(e.occurredAtMs)))throw fail('MALFORMED_FRAME','设备事件不完整，未确认删除。');
+       if(e.kind==='care'&&!ACTIONS.includes(e.action))throw fail('MALFORMED_FRAME','未知照料事件。');
+--- a/app/android/app/src/main/assets/offline-device-events.js
++++ b/app/android/app/src/main/assets/offline-device-events.js
+@@ -64,16 +64,17 @@
+       },
+       async consume(valid){
+         if(busy)throw fail('上一条设备事件正在确认。');busy=true;
++        let phase='source',eventCounter=null;
+         try {
+           ledger.assertHealthy();if(!durable)throw fail('原生持久存档不可用，不能确认设备事件。');durable.assertHealthy();if(!valid())return {waiting:true};
+-          if(source.busy())return {waiting:true,message:'手机互动结束后再结算设备事件。'};
++          if(source.busy())return {waiting:true,phase:'source_busy',counter:eventCounter,message:'小猫互动结束后会自动同步。'};
+           source.assertHealthy();source.flush();source.assertHealthy();
+           const s=ports.control.getState(),lastAck=s.device?.lastAck??0,records=ledger.snapshot().records;
+           if(!Number.isSafeInteger(lastAck)||lastAck<0||lastAck>4096)throw fail('设备已确认历史超出当前备份，暂停结算与确认。','EVENT_HISTORY_MISSING');
+           for(let counter=1;counter<=lastAck;counter++)if(!records[s.hello.deviceId+':'+counter])throw fail('当前备份缺少设备已确认的事件结果，暂停新消费与确认。请恢复更新的完整备份。','EVENT_HISTORY_MISSING');
+-          const event=await ports.events.readNext();
++          phase='read_event';const event=await ports.events.readNext();eventCounter=event?.counter||null;
+           if(!valid()||event===null)return {processed:false};
+-          if(source.busy())return {waiting:true,message:'手机互动结束后再结算设备事件。'};
++          if(source.busy())return {waiting:true,phase:'source_busy',counter:eventCounter,message:'小猫互动结束后会自动同步。'};
+           source.assertHealthy();source.flush();source.assertHealthy();
+           validateEvent(event,s.hello.deviceId);
+           let identity,wire;
+@@ -87,33 +88,33 @@
+             source.flush(release);source.assertHealthy();
+             const game=storage.getItem(db.GAME),social=storage.getItem(db.SOCIAL);
+             const memoryBefore=source.capture();
+-            const planned=plan({event,game,social,createStore:source.createStore,now,runtime:source.readCareRuntime()});
+-            if(planned.deferred)return {waiting:true,message:'小猫正在缓一缓，冷却结束后按最新进度结算；设备收据仍保留。',remainingMs:planned.remainingMs};
++            phase='plan';const planned=plan({event,game,social,createStore:source.createStore,now,runtime:source.readCareRuntime()});
++            if(planned.deferred)return {waiting:true,phase:'cooldown',counter:eventCounter,message:'小猫正在缓一缓，稍后会自动同步。',remainingMs:planned.remainingMs};
+             const token=uuid();planned.game=JSON.stringify({...JSON.parse(planned.game),__cflocal2Commit:token});planned.social=JSON.stringify({...JSON.parse(planned.social),__cflocal2Commit:token});
+-            const saveDigest=await digest(db.canonical({event,identity,game:planned.game,social:planned.social,status:planned.status,reason:planned.reason}));
++            phase='digest';const saveDigest=await digest(db.canonical({event,identity,game:planned.game,social:planned.social,status:planned.status,reason:planned.reason}));
+             // Digest yields to the UI. Revalidate identity, activity, and exact
+             // before-images; no old plan may overwrite a newer phone action.
+             if(!valid())return {waiting:true};source.assertHealthy();
+             if(source.identity()!==identity||source.wire(ports.control.getState()).petId!==event.petId){ledger.isolate(event,'结算期间切换了猫或存档世代，未确认设备事件。');throw fail('手机身份已变化，设备事件已隔离。','SOURCE_IDENTITY_CHANGED');}
+-            if((release.busy?release.busy():source.busy())||source.capture()!==memoryBefore)return {waiting:true,message:'手机进度已变化，稍后以最新进度结算。'};
++            if((release.busy?release.busy():source.busy())||source.capture()!==memoryBefore)return {waiting:true,phase:'source_changed',counter:eventCounter,message:'正在跟上小猫的最新进度。'};
+             const input={event,identity,status:planned.status,reason:planned.reason,message:planned.message,saveDigest,token,images:[{key:db.GAME,before:game,after:planned.game},{key:db.SOCIAL,before:social,after:planned.social}]},decision=ledger.preview(input);
+             durable.eventLocked=true;
+-            try{await durable.seal({game:planned.game,social:planned.social,ledger:decision.next,token});fault('native-committed');}finally{durable.eventLocked=false;}
++            phase='native_commit';try{await durable.seal({game:planned.game,social:planned.social,ledger:decision.next,token});fault('native-committed');}finally{durable.eventLocked=false;}
+             // Native owns the complete decision before any original key changes.
+             // Finish its projection even after pause; only the subsequent ACK is
+             // conditional on this connection still being explicitly authorized.
+-            receipt=ledger.commit(input);
++            phase='project';receipt=ledger.commit(input);
+             fault('committed');source.hydrate(planned.game,planned.social,planned.runtime,release);fault('hydrated');
+             }finally{release();}
+           }
+-          source.assertHealthy();ledger.assertHealthy();durable.confirm(receipt);if(!valid())return {processed:true,acknowledged:false};
++          phase='confirm_receipt';source.assertHealthy();ledger.assertHealthy();durable.confirm(receipt);if(!valid())return {processed:true,acknowledged:false};
+           // Only a receipt whose original game AND social images completed can
+           // reach the adapter. Source/storage errors are never quarantined.
+           if(s.hello?.capabilities?.includes('care_receipt_v1')&&receipt.reason===undefined)throw fail('此历史收据未保存原终态原因，已保留设备事件，不能猜测或重新结算。','EVENT_HISTORY_MISSING');
+-          fault('before-ack');const reply=await ports.events.acknowledge({eventId:event.eventId,status:duplicate?'duplicate':receipt.status,originalStatus:receipt.status,reason:receipt.reason??(receipt.status==='applied'?'none':'ineligible'),persisted:true,saveDigest:receipt.saveDigest});
++          phase='ack';fault('before-ack');const reply=await ports.events.acknowledge({eventId:event.eventId,status:duplicate?'duplicate':receipt.status,originalStatus:receipt.status,reason:receipt.reason??(receipt.status==='applied'?'none':'ineligible'),persisted:true,saveDigest:receipt.saveDigest});
+           if(reply?.status!=='device_persisted'||reply.eventId!==event.eventId)throw fail('设备尚未持久确认事件移出队列。');
+           fault('acknowledged');onResult({stage:receipt.status,message:receipt.message,eventId:event.eventId,duplicate});return {processed:true,acknowledged:true};
+-        } finally {busy=false;}
++        } catch(error){if(error&&typeof error==='object'){error.syncPhase=phase;error.eventCounter=eventCounter;}throw error;} finally {busy=false;}
+       }
+     };
+   }
+--- a/app/android/app/src/main/assets/offline-scene-sync.js
++++ b/app/android/app/src/main/assets/offline-scene-sync.js
+@@ -29,7 +29,7 @@
+     const sample=()=>{const s=state();const value=read({deviceId:s.hello?.deviceId,hasSnapshot:s.device?.hasSnapshot===true,snapshotPetId:s.device?.snapshot?.petId,capabilities:s.hello?.capabilities});if(!value)return null;const zone=offset();return {value,zone,signature:JSON.stringify({value,zone})};};
+     const pending=()=>ports.scenes.getPending();
+     function signal(){if(valid()&&timer===null)timer=schedule(()=>{timer=null;void pump();});}
+-    function block(error){halt=error;publish('error',error.message||'场景同步尚未确认，请重试。',Boolean(error.pending));}
++    function block(error){halt=error;console.warn('[CFLOCAL2] sync_paused '+JSON.stringify({code:error.code||'SYNC_ERROR',phase:error.syncPhase||'coordinator',counter:error.eventCounter||null,pending:Boolean(error.pending)}));publish('error',error.message||'同步暂时中断，请重新连接。',Boolean(error.pending));}
+     async function pushDay(current){
+       if(!readDay||!ports.display||!valid()||flight||!ack||ack.key!==authorized||ack.signature!==current.signature)return;
+       if(!state().hello.capabilities.includes('day_view')){const message='此固件未提供一天圆环展示。';if(dayStatus.message!==message){dayStatus={stage:'unavailable',message};onChange({...status});}return;}
+@@ -50,21 +50,32 @@
+       if(halt)return;
+       let next;
+       try{
+-        if(pending()){block({message:'上一条同步结果待确认，请显式重试。',pending:true});return;}
++        const old=pending();
++        if(old){
++          const current=sample();if(!current){publish('waiting','小猫状态就绪后会自动同步。');return;}
++          validatePending(old);
++          if(old.op==='snapshot'&&old.data?.petId!==current.value.petId)throw Object.assign(Error('原指令属于另一只猫，已保留并暂停同步。'),{code:'SOURCE_IDENTITY_CHANGED'});
++          const recovery={key:authorized,kind:'recovery'},link=state();flight=recovery;
++          publish('sending','正在恢复同步…');
++          try{await ports.scenes.resumePending({deviceId:link.hello.deviceId,generation:link.evidence.generation});}
++          finally{if(flight===recovery)flight=null;}
++          if(!valid()||authorized!==recovery.key)return;
++          ack=null;
++        }
+         if(state().device.storageError){block({message:'吧唧报告存储错误，场景尚未同步。'});return;}
+         if(consumeEvent&&ack?.key===authorized&&now()-lastEventsAt>=1500){
+           const eventOperation={key:authorized};flight=eventOperation;
+-          publish('settling','正在核对真实设备事件…');
++          publish('settling','正在同步小猫互动…');
+           let eventResult;
+           try {eventResult=await consumeEvent(()=>valid()&&authorized===eventOperation.key);}
+           finally {if(flight===eventOperation)flight=null;lastEventsAt=now();}
+           if(!valid())return;
+-          if(eventResult?.waiting){publish('waiting',eventResult.message||'设备事件等待手机互动结束。');signal();return;}
++          if(eventResult?.waiting){const message=eventResult.message||'小猫互动结束后会自动同步。';if(status.stage!=='waiting'||status.message!==message)console.info('[CFLOCAL2] event_deferred '+JSON.stringify({phase:eventResult.phase||'connection',counter:eventResult.counter||null}));publish('waiting',message);signal();return;}
+           if(eventResult?.processed)ack=null;
+         }
+         next=sample();if(!next){publish('waiting','小猫状态尚未就绪，暂不发送。');return;}
+         if(ack?.key===authorized&&ack.signature===next.signature){publish('synced','当前场景已由吧唧持久保存。',false,ack.revision);await pushDay(next);return;}
+-      }catch(error){let unknown=false;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown});return;}
++      }catch(error){let unknown=false;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown,code:error.code,syncPhase:error.syncPhase,eventCounter:error.eventCounter});return;}
+       const operation={key:authorized,signature:next.signature};flight=operation;
+       publish('sending','正在同步小猫场景…');
+       try{
+@@ -101,13 +112,13 @@
+       async retry(){
+         if(!valid()||flight)throw Error('请先明确连接新本地固件，等待当前操作结束。');
+         halt=null;const operation={key:authorized};flight=operation;
+-        publish('sending','正在确认上一条同步…');
++        publish('sending','正在恢复同步…');
+         try{
+           if(!sample())throw Error('小猫状态尚未就绪，暂不重试。');
+           const old=pending();validatePending(old);
+           if(old)await ports.scenes.retryPending(USER);
+-          if(valid()&&authorized===operation.key){ack=null;publish('waiting','上一条结果已确认，接着同步当前场景。');}
+-        }catch(error){if(valid()){let unknown=true;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown});}throw error;}
++          if(valid()&&authorized===operation.key){ack=null;publish('waiting','继续同步小猫当前状态。');}
++        }catch(error){if(valid()){let unknown=true;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown,code:error.code,syncPhase:error.syncPhase,eventCounter:error.eventCounter});}throw error;}
+         finally{if(flight===operation)flight=null;signal();}
+       },
+       async readDeviceState(){
+@@ -162,7 +173,7 @@
+         if(epoch!==reconnectEpoch||!foreground||d.hidden){await ports.control.disconnect();return;}
+         if(ports.control.getState().hello?.deviceId!==saved.deviceId)throw Object.assign(Error('设备身份变化，停止自动恢复。'),{code:'OWNER_CONFLICT'});
+         const recovered=ports.control.getState();saveDevice({...saved,address:recovered.evidence.deviceAddress,restored:false});
+-        coordinator.authorize();if(ports.scenes.getPending())await coordinator.retry();
++        coordinator.authorize();
+       }
+       catch(error){connectionError=friendly(error);if(error.code==='OWNER_CONFLICT'){saveDevice({...saved,enabled:false});}}
+       finally{busy=false;render();if(foreground&&!verifiedLink(ports.control.getState()))scheduleReconnect(20000);}
+@@ -191,7 +202,7 @@
+       text('offline-v2-day',coordinator?.getDayStatus().message||'一天圆环等待连接。');
+       text('offline-v2-events',root.CatOfflineDeviceEvents?.lastResult?.message||'尚无新的真实设备事件；不会从 NPC 或页面动画产生奖励。');
+       const scan=$('offline-v2-scan');scan.disabled=busy||!ports||['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);scan.hidden=ready;
+-      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent=sync?.pending?'确认并重试上一条同步':'重新同步当前状态';
++      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent='重试同步';
+       $('offline-v2-disconnect').hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);
+       $('offline-v2-disconnect').disabled=busy;
+       const list=$('offline-v2-list');
+--- a/app/preview/cflocal2-adapter.js
++++ b/app/preview/cflocal2-adapter.js
+@@ -139,22 +139,40 @@
+       const reply=await sendPending(id,{fresh:true});return {status:'device_persisted',revision,duplicate:reply.data.duplicate===true};
+     });},
+     retryPending(command){return exclusive(async()=>{if(command?.origin!=='explicit_user_action')throw fail('USER_ACTION_REQUIRED','请显式确认重试同步。');const {id}=ready();return sendPending(id);});},
++    resumePending(connection){return exclusive(async()=>{
++      const {s,id,d}=ready();
++      if(connection?.deviceId!==id||connection.generation!==s.evidence?.generation)throw fail('STALE_GENERATION','原设备连接已变化，保留原指令。','unknown');
++      if(!d.pending)throw fail('NO_PENDING','没有待恢复指令。');
++      // Recovery reuses the exact Native-checkpointed id/seq/data. It never
++      // creates a result, skips an event or turns a new connection into an ACK.
++      return sendPending(id);
++    });},
+     getPending(){const {id}=ready();return clone(journal.value.devices[id].pending);}
+   };
++  async function confirmCare(s,id,d){
++    if(!s.hello.capabilities.includes('care_bath_v1')||careConfirmed.get(id)===s.evidence?.generation)return;
++    if(d.pending)throw fail('PENDING_UNKNOWN','原指令恢复后再启用清洁照料。','unknown');
++    const support={careBathV1:true};
++    if(s.hello.capabilities.includes('mobile_context_v1'))support.mobileContextV1=true;
++    const confirmation=await control.request('care_capabilities',support,{clientId:journal.value.clientId});
++    const c=confirmation?.data,after=control.getState();
++    if(c?.careBathV1!==true||c.confirmed!==true||c.deviceId!==id||c.clientId!==journal.value.clientId||after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==s.evidence?.generation||(support.mobileContextV1===true&&c.mobileContextV1!==true))throw fail('CARE_CONFIRMATION_FAILED','清洁与手机信息支持暂未就绪，设备事件仍保留。');
++    careConfirmed.set(id,s.evidence.generation);
++  }
+   const events={
+     async readNext(){
+       const {s,id,d}=ready();
+-      if(s.hello.capabilities.includes('care_bath_v1')&&careConfirmed.get(id)!==s.evidence?.generation){
+-        if(d.pending)throw fail('PENDING_UNKNOWN','先确认上一条持久指令，再启用清洁照料。','unknown');
+-        const support={careBathV1:true};
+-        if(s.hello.capabilities.includes('mobile_context_v1'))support.mobileContextV1=true;
+-        const confirmation=await control.request('care_capabilities',support,{clientId:journal.value.clientId});
+-        const c=confirmation?.data,after=control.getState();
+-        if(c?.careBathV1!==true||c.confirmed!==true||c.deviceId!==id||c.clientId!==journal.value.clientId||after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==s.evidence?.generation||(support.mobileContextV1===true&&c.mobileContextV1!==true))throw fail('CARE_CONFIRMATION_FAILED','清洁与手机信息支持确认未通过，设备事件仍保留。');
+-        careConfirmed.set(id,s.evidence.generation);
++      await confirmCare(s,id,d);
++      let r=await control.request('events');
++      if(r?.data?.blocked?.reason==='care_bath_confirmation_required'&&s.hello.capabilities.includes('care_bath_v1')){
++        // Firmware's actual gate wins over a RAM capability cache. Re-negotiate
++        // this same verified owner once, then read the unchanged FIFO head.
++        console.info('[CFLOCAL2] care_gate_reconfirm');careConfirmed.delete(id);const current=ready();
++        if(current.id!==id||current.s.evidence?.generation!==s.evidence?.generation)throw fail('STALE_GENERATION','连接已变化，设备事件仍保留。');
++        await confirmCare(current.s,id,current.d);r=await control.request('events');
+       }
+-      const r=await control.request('events');const e=r?.data?.event;
+-      if(r?.data?.blocked)throw fail('CARE_CONFIRMATION_REQUIRED','清洁事件等待兼容手机确认，尚未结算或删除。');
++      if(r?.data?.blocked)throw fail('CARE_CONFIRMATION_REQUIRED','清洁支持暂未就绪，设备事件已保留。');
++      const e=r?.data?.event;
+       if(e===null)return null;
+       if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!safe(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||!ascii(e.petId,64)||!['care','gift'].includes(e.kind)||(e.occurredAtMs!==null&&!safe(e.occurredAtMs)))throw fail('MALFORMED_FRAME','设备事件不完整，未确认删除。');
+       if(e.kind==='care'&&!ACTIONS.includes(e.action))throw fail('MALFORMED_FRAME','未知照料事件。');
+--- a/app/preview/offline-device-events.js
++++ b/app/preview/offline-device-events.js
+@@ -64,16 +64,17 @@
+       },
+       async consume(valid){
+         if(busy)throw fail('上一条设备事件正在确认。');busy=true;
++        let phase='source',eventCounter=null;
+         try {
+           ledger.assertHealthy();if(!durable)throw fail('原生持久存档不可用，不能确认设备事件。');durable.assertHealthy();if(!valid())return {waiting:true};
+-          if(source.busy())return {waiting:true,message:'手机互动结束后再结算设备事件。'};
++          if(source.busy())return {waiting:true,phase:'source_busy',counter:eventCounter,message:'小猫互动结束后会自动同步。'};
+           source.assertHealthy();source.flush();source.assertHealthy();
+           const s=ports.control.getState(),lastAck=s.device?.lastAck??0,records=ledger.snapshot().records;
+           if(!Number.isSafeInteger(lastAck)||lastAck<0||lastAck>4096)throw fail('设备已确认历史超出当前备份，暂停结算与确认。','EVENT_HISTORY_MISSING');
+           for(let counter=1;counter<=lastAck;counter++)if(!records[s.hello.deviceId+':'+counter])throw fail('当前备份缺少设备已确认的事件结果，暂停新消费与确认。请恢复更新的完整备份。','EVENT_HISTORY_MISSING');
+-          const event=await ports.events.readNext();
++          phase='read_event';const event=await ports.events.readNext();eventCounter=event?.counter||null;
+           if(!valid()||event===null)return {processed:false};
+-          if(source.busy())return {waiting:true,message:'手机互动结束后再结算设备事件。'};
++          if(source.busy())return {waiting:true,phase:'source_busy',counter:eventCounter,message:'小猫互动结束后会自动同步。'};
+           source.assertHealthy();source.flush();source.assertHealthy();
+           validateEvent(event,s.hello.deviceId);
+           let identity,wire;
+@@ -87,33 +88,33 @@
+             source.flush(release);source.assertHealthy();
+             const game=storage.getItem(db.GAME),social=storage.getItem(db.SOCIAL);
+             const memoryBefore=source.capture();
+-            const planned=plan({event,game,social,createStore:source.createStore,now,runtime:source.readCareRuntime()});
+-            if(planned.deferred)return {waiting:true,message:'小猫正在缓一缓，冷却结束后按最新进度结算；设备收据仍保留。',remainingMs:planned.remainingMs};
++            phase='plan';const planned=plan({event,game,social,createStore:source.createStore,now,runtime:source.readCareRuntime()});
++            if(planned.deferred)return {waiting:true,phase:'cooldown',counter:eventCounter,message:'小猫正在缓一缓，稍后会自动同步。',remainingMs:planned.remainingMs};
+             const token=uuid();planned.game=JSON.stringify({...JSON.parse(planned.game),__cflocal2Commit:token});planned.social=JSON.stringify({...JSON.parse(planned.social),__cflocal2Commit:token});
+-            const saveDigest=await digest(db.canonical({event,identity,game:planned.game,social:planned.social,status:planned.status,reason:planned.reason}));
++            phase='digest';const saveDigest=await digest(db.canonical({event,identity,game:planned.game,social:planned.social,status:planned.status,reason:planned.reason}));
+             // Digest yields to the UI. Revalidate identity, activity, and exact
+             // before-images; no old plan may overwrite a newer phone action.
+             if(!valid())return {waiting:true};source.assertHealthy();
+             if(source.identity()!==identity||source.wire(ports.control.getState()).petId!==event.petId){ledger.isolate(event,'结算期间切换了猫或存档世代，未确认设备事件。');throw fail('手机身份已变化，设备事件已隔离。','SOURCE_IDENTITY_CHANGED');}
+-            if((release.busy?release.busy():source.busy())||source.capture()!==memoryBefore)return {waiting:true,message:'手机进度已变化，稍后以最新进度结算。'};
++            if((release.busy?release.busy():source.busy())||source.capture()!==memoryBefore)return {waiting:true,phase:'source_changed',counter:eventCounter,message:'正在跟上小猫的最新进度。'};
+             const input={event,identity,status:planned.status,reason:planned.reason,message:planned.message,saveDigest,token,images:[{key:db.GAME,before:game,after:planned.game},{key:db.SOCIAL,before:social,after:planned.social}]},decision=ledger.preview(input);
+             durable.eventLocked=true;
+-            try{await durable.seal({game:planned.game,social:planned.social,ledger:decision.next,token});fault('native-committed');}finally{durable.eventLocked=false;}
++            phase='native_commit';try{await durable.seal({game:planned.game,social:planned.social,ledger:decision.next,token});fault('native-committed');}finally{durable.eventLocked=false;}
+             // Native owns the complete decision before any original key changes.
+             // Finish its projection even after pause; only the subsequent ACK is
+             // conditional on this connection still being explicitly authorized.
+-            receipt=ledger.commit(input);
++            phase='project';receipt=ledger.commit(input);
+             fault('committed');source.hydrate(planned.game,planned.social,planned.runtime,release);fault('hydrated');
+             }finally{release();}
+           }
+-          source.assertHealthy();ledger.assertHealthy();durable.confirm(receipt);if(!valid())return {processed:true,acknowledged:false};
++          phase='confirm_receipt';source.assertHealthy();ledger.assertHealthy();durable.confirm(receipt);if(!valid())return {processed:true,acknowledged:false};
+           // Only a receipt whose original game AND social images completed can
+           // reach the adapter. Source/storage errors are never quarantined.
+           if(s.hello?.capabilities?.includes('care_receipt_v1')&&receipt.reason===undefined)throw fail('此历史收据未保存原终态原因，已保留设备事件，不能猜测或重新结算。','EVENT_HISTORY_MISSING');
+-          fault('before-ack');const reply=await ports.events.acknowledge({eventId:event.eventId,status:duplicate?'duplicate':receipt.status,originalStatus:receipt.status,reason:receipt.reason??(receipt.status==='applied'?'none':'ineligible'),persisted:true,saveDigest:receipt.saveDigest});
++          phase='ack';fault('before-ack');const reply=await ports.events.acknowledge({eventId:event.eventId,status:duplicate?'duplicate':receipt.status,originalStatus:receipt.status,reason:receipt.reason??(receipt.status==='applied'?'none':'ineligible'),persisted:true,saveDigest:receipt.saveDigest});
+           if(reply?.status!=='device_persisted'||reply.eventId!==event.eventId)throw fail('设备尚未持久确认事件移出队列。');
+           fault('acknowledged');onResult({stage:receipt.status,message:receipt.message,eventId:event.eventId,duplicate});return {processed:true,acknowledged:true};
+-        } finally {busy=false;}
++        } catch(error){if(error&&typeof error==='object'){error.syncPhase=phase;error.eventCounter=eventCounter;}throw error;} finally {busy=false;}
+       }
+     };
+   }
+--- a/app/preview/offline-scene-sync.js
++++ b/app/preview/offline-scene-sync.js
+@@ -29,7 +29,7 @@
+     const sample=()=>{const s=state();const value=read({deviceId:s.hello?.deviceId,hasSnapshot:s.device?.hasSnapshot===true,snapshotPetId:s.device?.snapshot?.petId,capabilities:s.hello?.capabilities});if(!value)return null;const zone=offset();return {value,zone,signature:JSON.stringify({value,zone})};};
+     const pending=()=>ports.scenes.getPending();
+     function signal(){if(valid()&&timer===null)timer=schedule(()=>{timer=null;void pump();});}
+-    function block(error){halt=error;publish('error',error.message||'场景同步尚未确认，请重试。',Boolean(error.pending));}
++    function block(error){halt=error;console.warn('[CFLOCAL2] sync_paused '+JSON.stringify({code:error.code||'SYNC_ERROR',phase:error.syncPhase||'coordinator',counter:error.eventCounter||null,pending:Boolean(error.pending)}));publish('error',error.message||'同步暂时中断，请重新连接。',Boolean(error.pending));}
+     async function pushDay(current){
+       if(!readDay||!ports.display||!valid()||flight||!ack||ack.key!==authorized||ack.signature!==current.signature)return;
+       if(!state().hello.capabilities.includes('day_view')){const message='此固件未提供一天圆环展示。';if(dayStatus.message!==message){dayStatus={stage:'unavailable',message};onChange({...status});}return;}
+@@ -50,21 +50,32 @@
+       if(halt)return;
+       let next;
+       try{
+-        if(pending()){block({message:'上一条同步结果待确认，请显式重试。',pending:true});return;}
++        const old=pending();
++        if(old){
++          const current=sample();if(!current){publish('waiting','小猫状态就绪后会自动同步。');return;}
++          validatePending(old);
++          if(old.op==='snapshot'&&old.data?.petId!==current.value.petId)throw Object.assign(Error('原指令属于另一只猫，已保留并暂停同步。'),{code:'SOURCE_IDENTITY_CHANGED'});
++          const recovery={key:authorized,kind:'recovery'},link=state();flight=recovery;
++          publish('sending','正在恢复同步…');
++          try{await ports.scenes.resumePending({deviceId:link.hello.deviceId,generation:link.evidence.generation});}
++          finally{if(flight===recovery)flight=null;}
++          if(!valid()||authorized!==recovery.key)return;
++          ack=null;
++        }
+         if(state().device.storageError){block({message:'吧唧报告存储错误，场景尚未同步。'});return;}
+         if(consumeEvent&&ack?.key===authorized&&now()-lastEventsAt>=1500){
+           const eventOperation={key:authorized};flight=eventOperation;
+-          publish('settling','正在核对真实设备事件…');
++          publish('settling','正在同步小猫互动…');
+           let eventResult;
+           try {eventResult=await consumeEvent(()=>valid()&&authorized===eventOperation.key);}
+           finally {if(flight===eventOperation)flight=null;lastEventsAt=now();}
+           if(!valid())return;
+-          if(eventResult?.waiting){publish('waiting',eventResult.message||'设备事件等待手机互动结束。');signal();return;}
++          if(eventResult?.waiting){const message=eventResult.message||'小猫互动结束后会自动同步。';if(status.stage!=='waiting'||status.message!==message)console.info('[CFLOCAL2] event_deferred '+JSON.stringify({phase:eventResult.phase||'connection',counter:eventResult.counter||null}));publish('waiting',message);signal();return;}
+           if(eventResult?.processed)ack=null;
+         }
+         next=sample();if(!next){publish('waiting','小猫状态尚未就绪，暂不发送。');return;}
+         if(ack?.key===authorized&&ack.signature===next.signature){publish('synced','当前场景已由吧唧持久保存。',false,ack.revision);await pushDay(next);return;}
+-      }catch(error){let unknown=false;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown});return;}
++      }catch(error){let unknown=false;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown,code:error.code,syncPhase:error.syncPhase,eventCounter:error.eventCounter});return;}
+       const operation={key:authorized,signature:next.signature};flight=operation;
+       publish('sending','正在同步小猫场景…');
+       try{
+@@ -101,13 +112,13 @@
+       async retry(){
+         if(!valid()||flight)throw Error('请先明确连接新本地固件，等待当前操作结束。');
+         halt=null;const operation={key:authorized};flight=operation;
+-        publish('sending','正在确认上一条同步…');
++        publish('sending','正在恢复同步…');
+         try{
+           if(!sample())throw Error('小猫状态尚未就绪，暂不重试。');
+           const old=pending();validatePending(old);
+           if(old)await ports.scenes.retryPending(USER);
+-          if(valid()&&authorized===operation.key){ack=null;publish('waiting','上一条结果已确认，接着同步当前场景。');}
+-        }catch(error){if(valid()){let unknown=true;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown});}throw error;}
++          if(valid()&&authorized===operation.key){ack=null;publish('waiting','继续同步小猫当前状态。');}
++        }catch(error){if(valid()){let unknown=true;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown,code:error.code,syncPhase:error.syncPhase,eventCounter:error.eventCounter});}throw error;}
+         finally{if(flight===operation)flight=null;signal();}
+       },
+       async readDeviceState(){
+@@ -162,7 +173,7 @@
+         if(epoch!==reconnectEpoch||!foreground||d.hidden){await ports.control.disconnect();return;}
+         if(ports.control.getState().hello?.deviceId!==saved.deviceId)throw Object.assign(Error('设备身份变化，停止自动恢复。'),{code:'OWNER_CONFLICT'});
+         const recovered=ports.control.getState();saveDevice({...saved,address:recovered.evidence.deviceAddress,restored:false});
+-        coordinator.authorize();if(ports.scenes.getPending())await coordinator.retry();
++        coordinator.authorize();
+       }
+       catch(error){connectionError=friendly(error);if(error.code==='OWNER_CONFLICT'){saveDevice({...saved,enabled:false});}}
+       finally{busy=false;render();if(foreground&&!verifiedLink(ports.control.getState()))scheduleReconnect(20000);}
+@@ -191,7 +202,7 @@
+       text('offline-v2-day',coordinator?.getDayStatus().message||'一天圆环等待连接。');
+       text('offline-v2-events',root.CatOfflineDeviceEvents?.lastResult?.message||'尚无新的真实设备事件；不会从 NPC 或页面动画产生奖励。');
+       const scan=$('offline-v2-scan');scan.disabled=busy||!ports||['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);scan.hidden=ready;
+-      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent=sync?.pending?'确认并重试上一条同步':'重新同步当前状态';
++      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent='重试同步';
+       $('offline-v2-disconnect').hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);
+       $('offline-v2-disconnect').disabled=busy;
+       const list=$('offline-v2-list');
+--- a/app/web/cflocal2-adapter.js
++++ b/app/web/cflocal2-adapter.js
+@@ -139,22 +139,40 @@
+       const reply=await sendPending(id,{fresh:true});return {status:'device_persisted',revision,duplicate:reply.data.duplicate===true};
+     });},
+     retryPending(command){return exclusive(async()=>{if(command?.origin!=='explicit_user_action')throw fail('USER_ACTION_REQUIRED','请显式确认重试同步。');const {id}=ready();return sendPending(id);});},
++    resumePending(connection){return exclusive(async()=>{
++      const {s,id,d}=ready();
++      if(connection?.deviceId!==id||connection.generation!==s.evidence?.generation)throw fail('STALE_GENERATION','原设备连接已变化，保留原指令。','unknown');
++      if(!d.pending)throw fail('NO_PENDING','没有待恢复指令。');
++      // Recovery reuses the exact Native-checkpointed id/seq/data. It never
++      // creates a result, skips an event or turns a new connection into an ACK.
++      return sendPending(id);
++    });},
+     getPending(){const {id}=ready();return clone(journal.value.devices[id].pending);}
+   };
++  async function confirmCare(s,id,d){
++    if(!s.hello.capabilities.includes('care_bath_v1')||careConfirmed.get(id)===s.evidence?.generation)return;
++    if(d.pending)throw fail('PENDING_UNKNOWN','原指令恢复后再启用清洁照料。','unknown');
++    const support={careBathV1:true};
++    if(s.hello.capabilities.includes('mobile_context_v1'))support.mobileContextV1=true;
++    const confirmation=await control.request('care_capabilities',support,{clientId:journal.value.clientId});
++    const c=confirmation?.data,after=control.getState();
++    if(c?.careBathV1!==true||c.confirmed!==true||c.deviceId!==id||c.clientId!==journal.value.clientId||after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==s.evidence?.generation||(support.mobileContextV1===true&&c.mobileContextV1!==true))throw fail('CARE_CONFIRMATION_FAILED','清洁与手机信息支持暂未就绪，设备事件仍保留。');
++    careConfirmed.set(id,s.evidence.generation);
++  }
+   const events={
+     async readNext(){
+       const {s,id,d}=ready();
+-      if(s.hello.capabilities.includes('care_bath_v1')&&careConfirmed.get(id)!==s.evidence?.generation){
+-        if(d.pending)throw fail('PENDING_UNKNOWN','先确认上一条持久指令，再启用清洁照料。','unknown');
+-        const support={careBathV1:true};
+-        if(s.hello.capabilities.includes('mobile_context_v1'))support.mobileContextV1=true;
+-        const confirmation=await control.request('care_capabilities',support,{clientId:journal.value.clientId});
+-        const c=confirmation?.data,after=control.getState();
+-        if(c?.careBathV1!==true||c.confirmed!==true||c.deviceId!==id||c.clientId!==journal.value.clientId||after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==s.evidence?.generation||(support.mobileContextV1===true&&c.mobileContextV1!==true))throw fail('CARE_CONFIRMATION_FAILED','清洁与手机信息支持确认未通过，设备事件仍保留。');
+-        careConfirmed.set(id,s.evidence.generation);
++      await confirmCare(s,id,d);
++      let r=await control.request('events');
++      if(r?.data?.blocked?.reason==='care_bath_confirmation_required'&&s.hello.capabilities.includes('care_bath_v1')){
++        // Firmware's actual gate wins over a RAM capability cache. Re-negotiate
++        // this same verified owner once, then read the unchanged FIFO head.
++        console.info('[CFLOCAL2] care_gate_reconfirm');careConfirmed.delete(id);const current=ready();
++        if(current.id!==id||current.s.evidence?.generation!==s.evidence?.generation)throw fail('STALE_GENERATION','连接已变化，设备事件仍保留。');
++        await confirmCare(current.s,id,current.d);r=await control.request('events');
+       }
+-      const r=await control.request('events');const e=r?.data?.event;
+-      if(r?.data?.blocked)throw fail('CARE_CONFIRMATION_REQUIRED','清洁事件等待兼容手机确认，尚未结算或删除。');
++      if(r?.data?.blocked)throw fail('CARE_CONFIRMATION_REQUIRED','清洁支持暂未就绪，设备事件已保留。');
++      const e=r?.data?.event;
+       if(e===null)return null;
+       if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!safe(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||!ascii(e.petId,64)||!['care','gift'].includes(e.kind)||(e.occurredAtMs!==null&&!safe(e.occurredAtMs)))throw fail('MALFORMED_FRAME','设备事件不完整，未确认删除。');
+       if(e.kind==='care'&&!ACTIONS.includes(e.action))throw fail('MALFORMED_FRAME','未知照料事件。');
+--- a/app/web/offline-device-events.js
++++ b/app/web/offline-device-events.js
+@@ -64,16 +64,17 @@
+       },
+       async consume(valid){
+         if(busy)throw fail('上一条设备事件正在确认。');busy=true;
++        let phase='source',eventCounter=null;
+         try {
+           ledger.assertHealthy();if(!durable)throw fail('原生持久存档不可用，不能确认设备事件。');durable.assertHealthy();if(!valid())return {waiting:true};
+-          if(source.busy())return {waiting:true,message:'手机互动结束后再结算设备事件。'};
++          if(source.busy())return {waiting:true,phase:'source_busy',counter:eventCounter,message:'小猫互动结束后会自动同步。'};
+           source.assertHealthy();source.flush();source.assertHealthy();
+           const s=ports.control.getState(),lastAck=s.device?.lastAck??0,records=ledger.snapshot().records;
+           if(!Number.isSafeInteger(lastAck)||lastAck<0||lastAck>4096)throw fail('设备已确认历史超出当前备份，暂停结算与确认。','EVENT_HISTORY_MISSING');
+           for(let counter=1;counter<=lastAck;counter++)if(!records[s.hello.deviceId+':'+counter])throw fail('当前备份缺少设备已确认的事件结果，暂停新消费与确认。请恢复更新的完整备份。','EVENT_HISTORY_MISSING');
+-          const event=await ports.events.readNext();
++          phase='read_event';const event=await ports.events.readNext();eventCounter=event?.counter||null;
+           if(!valid()||event===null)return {processed:false};
+-          if(source.busy())return {waiting:true,message:'手机互动结束后再结算设备事件。'};
++          if(source.busy())return {waiting:true,phase:'source_busy',counter:eventCounter,message:'小猫互动结束后会自动同步。'};
+           source.assertHealthy();source.flush();source.assertHealthy();
+           validateEvent(event,s.hello.deviceId);
+           let identity,wire;
+@@ -87,33 +88,33 @@
+             source.flush(release);source.assertHealthy();
+             const game=storage.getItem(db.GAME),social=storage.getItem(db.SOCIAL);
+             const memoryBefore=source.capture();
+-            const planned=plan({event,game,social,createStore:source.createStore,now,runtime:source.readCareRuntime()});
+-            if(planned.deferred)return {waiting:true,message:'小猫正在缓一缓，冷却结束后按最新进度结算；设备收据仍保留。',remainingMs:planned.remainingMs};
++            phase='plan';const planned=plan({event,game,social,createStore:source.createStore,now,runtime:source.readCareRuntime()});
++            if(planned.deferred)return {waiting:true,phase:'cooldown',counter:eventCounter,message:'小猫正在缓一缓，稍后会自动同步。',remainingMs:planned.remainingMs};
+             const token=uuid();planned.game=JSON.stringify({...JSON.parse(planned.game),__cflocal2Commit:token});planned.social=JSON.stringify({...JSON.parse(planned.social),__cflocal2Commit:token});
+-            const saveDigest=await digest(db.canonical({event,identity,game:planned.game,social:planned.social,status:planned.status,reason:planned.reason}));
++            phase='digest';const saveDigest=await digest(db.canonical({event,identity,game:planned.game,social:planned.social,status:planned.status,reason:planned.reason}));
+             // Digest yields to the UI. Revalidate identity, activity, and exact
+             // before-images; no old plan may overwrite a newer phone action.
+             if(!valid())return {waiting:true};source.assertHealthy();
+             if(source.identity()!==identity||source.wire(ports.control.getState()).petId!==event.petId){ledger.isolate(event,'结算期间切换了猫或存档世代，未确认设备事件。');throw fail('手机身份已变化，设备事件已隔离。','SOURCE_IDENTITY_CHANGED');}
+-            if((release.busy?release.busy():source.busy())||source.capture()!==memoryBefore)return {waiting:true,message:'手机进度已变化，稍后以最新进度结算。'};
++            if((release.busy?release.busy():source.busy())||source.capture()!==memoryBefore)return {waiting:true,phase:'source_changed',counter:eventCounter,message:'正在跟上小猫的最新进度。'};
+             const input={event,identity,status:planned.status,reason:planned.reason,message:planned.message,saveDigest,token,images:[{key:db.GAME,before:game,after:planned.game},{key:db.SOCIAL,before:social,after:planned.social}]},decision=ledger.preview(input);
+             durable.eventLocked=true;
+-            try{await durable.seal({game:planned.game,social:planned.social,ledger:decision.next,token});fault('native-committed');}finally{durable.eventLocked=false;}
++            phase='native_commit';try{await durable.seal({game:planned.game,social:planned.social,ledger:decision.next,token});fault('native-committed');}finally{durable.eventLocked=false;}
+             // Native owns the complete decision before any original key changes.
+             // Finish its projection even after pause; only the subsequent ACK is
+             // conditional on this connection still being explicitly authorized.
+-            receipt=ledger.commit(input);
++            phase='project';receipt=ledger.commit(input);
+             fault('committed');source.hydrate(planned.game,planned.social,planned.runtime,release);fault('hydrated');
+             }finally{release();}
+           }
+-          source.assertHealthy();ledger.assertHealthy();durable.confirm(receipt);if(!valid())return {processed:true,acknowledged:false};
++          phase='confirm_receipt';source.assertHealthy();ledger.assertHealthy();durable.confirm(receipt);if(!valid())return {processed:true,acknowledged:false};
+           // Only a receipt whose original game AND social images completed can
+           // reach the adapter. Source/storage errors are never quarantined.
+           if(s.hello?.capabilities?.includes('care_receipt_v1')&&receipt.reason===undefined)throw fail('此历史收据未保存原终态原因，已保留设备事件，不能猜测或重新结算。','EVENT_HISTORY_MISSING');
+-          fault('before-ack');const reply=await ports.events.acknowledge({eventId:event.eventId,status:duplicate?'duplicate':receipt.status,originalStatus:receipt.status,reason:receipt.reason??(receipt.status==='applied'?'none':'ineligible'),persisted:true,saveDigest:receipt.saveDigest});
++          phase='ack';fault('before-ack');const reply=await ports.events.acknowledge({eventId:event.eventId,status:duplicate?'duplicate':receipt.status,originalStatus:receipt.status,reason:receipt.reason??(receipt.status==='applied'?'none':'ineligible'),persisted:true,saveDigest:receipt.saveDigest});
+           if(reply?.status!=='device_persisted'||reply.eventId!==event.eventId)throw fail('设备尚未持久确认事件移出队列。');
+           fault('acknowledged');onResult({stage:receipt.status,message:receipt.message,eventId:event.eventId,duplicate});return {processed:true,acknowledged:true};
+-        } finally {busy=false;}
++        } catch(error){if(error&&typeof error==='object'){error.syncPhase=phase;error.eventCounter=eventCounter;}throw error;} finally {busy=false;}
+       }
+     };
+   }
+--- a/app/web/offline-scene-sync.js
++++ b/app/web/offline-scene-sync.js
+@@ -29,7 +29,7 @@
+     const sample=()=>{const s=state();const value=read({deviceId:s.hello?.deviceId,hasSnapshot:s.device?.hasSnapshot===true,snapshotPetId:s.device?.snapshot?.petId,capabilities:s.hello?.capabilities});if(!value)return null;const zone=offset();return {value,zone,signature:JSON.stringify({value,zone})};};
+     const pending=()=>ports.scenes.getPending();
+     function signal(){if(valid()&&timer===null)timer=schedule(()=>{timer=null;void pump();});}
+-    function block(error){halt=error;publish('error',error.message||'场景同步尚未确认，请重试。',Boolean(error.pending));}
++    function block(error){halt=error;console.warn('[CFLOCAL2] sync_paused '+JSON.stringify({code:error.code||'SYNC_ERROR',phase:error.syncPhase||'coordinator',counter:error.eventCounter||null,pending:Boolean(error.pending)}));publish('error',error.message||'同步暂时中断，请重新连接。',Boolean(error.pending));}
+     async function pushDay(current){
+       if(!readDay||!ports.display||!valid()||flight||!ack||ack.key!==authorized||ack.signature!==current.signature)return;
+       if(!state().hello.capabilities.includes('day_view')){const message='此固件未提供一天圆环展示。';if(dayStatus.message!==message){dayStatus={stage:'unavailable',message};onChange({...status});}return;}
+@@ -50,21 +50,32 @@
+       if(halt)return;
+       let next;
+       try{
+-        if(pending()){block({message:'上一条同步结果待确认，请显式重试。',pending:true});return;}
++        const old=pending();
++        if(old){
++          const current=sample();if(!current){publish('waiting','小猫状态就绪后会自动同步。');return;}
++          validatePending(old);
++          if(old.op==='snapshot'&&old.data?.petId!==current.value.petId)throw Object.assign(Error('原指令属于另一只猫，已保留并暂停同步。'),{code:'SOURCE_IDENTITY_CHANGED'});
++          const recovery={key:authorized,kind:'recovery'},link=state();flight=recovery;
++          publish('sending','正在恢复同步…');
++          try{await ports.scenes.resumePending({deviceId:link.hello.deviceId,generation:link.evidence.generation});}
++          finally{if(flight===recovery)flight=null;}
++          if(!valid()||authorized!==recovery.key)return;
++          ack=null;
++        }
+         if(state().device.storageError){block({message:'吧唧报告存储错误，场景尚未同步。'});return;}
+         if(consumeEvent&&ack?.key===authorized&&now()-lastEventsAt>=1500){
+           const eventOperation={key:authorized};flight=eventOperation;
+-          publish('settling','正在核对真实设备事件…');
++          publish('settling','正在同步小猫互动…');
+           let eventResult;
+           try {eventResult=await consumeEvent(()=>valid()&&authorized===eventOperation.key);}
+           finally {if(flight===eventOperation)flight=null;lastEventsAt=now();}
+           if(!valid())return;
+-          if(eventResult?.waiting){publish('waiting',eventResult.message||'设备事件等待手机互动结束。');signal();return;}
++          if(eventResult?.waiting){const message=eventResult.message||'小猫互动结束后会自动同步。';if(status.stage!=='waiting'||status.message!==message)console.info('[CFLOCAL2] event_deferred '+JSON.stringify({phase:eventResult.phase||'connection',counter:eventResult.counter||null}));publish('waiting',message);signal();return;}
+           if(eventResult?.processed)ack=null;
+         }
+         next=sample();if(!next){publish('waiting','小猫状态尚未就绪，暂不发送。');return;}
+         if(ack?.key===authorized&&ack.signature===next.signature){publish('synced','当前场景已由吧唧持久保存。',false,ack.revision);await pushDay(next);return;}
+-      }catch(error){let unknown=false;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown});return;}
++      }catch(error){let unknown=false;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown,code:error.code,syncPhase:error.syncPhase,eventCounter:error.eventCounter});return;}
+       const operation={key:authorized,signature:next.signature};flight=operation;
+       publish('sending','正在同步小猫场景…');
+       try{
+@@ -101,13 +112,13 @@
+       async retry(){
+         if(!valid()||flight)throw Error('请先明确连接新本地固件，等待当前操作结束。');
+         halt=null;const operation={key:authorized};flight=operation;
+-        publish('sending','正在确认上一条同步…');
++        publish('sending','正在恢复同步…');
+         try{
+           if(!sample())throw Error('小猫状态尚未就绪，暂不重试。');
+           const old=pending();validatePending(old);
+           if(old)await ports.scenes.retryPending(USER);
+-          if(valid()&&authorized===operation.key){ack=null;publish('waiting','上一条结果已确认，接着同步当前场景。');}
+-        }catch(error){if(valid()){let unknown=true;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown});}throw error;}
++          if(valid()&&authorized===operation.key){ack=null;publish('waiting','继续同步小猫当前状态。');}
++        }catch(error){if(valid()){let unknown=true;try{unknown=Boolean(pending());}catch{}block({message:error.message,pending:unknown,code:error.code,syncPhase:error.syncPhase,eventCounter:error.eventCounter});}throw error;}
+         finally{if(flight===operation)flight=null;signal();}
+       },
+       async readDeviceState(){
+@@ -162,7 +173,7 @@
+         if(epoch!==reconnectEpoch||!foreground||d.hidden){await ports.control.disconnect();return;}
+         if(ports.control.getState().hello?.deviceId!==saved.deviceId)throw Object.assign(Error('设备身份变化，停止自动恢复。'),{code:'OWNER_CONFLICT'});
+         const recovered=ports.control.getState();saveDevice({...saved,address:recovered.evidence.deviceAddress,restored:false});
+-        coordinator.authorize();if(ports.scenes.getPending())await coordinator.retry();
++        coordinator.authorize();
+       }
+       catch(error){connectionError=friendly(error);if(error.code==='OWNER_CONFLICT'){saveDevice({...saved,enabled:false});}}
+       finally{busy=false;render();if(foreground&&!verifiedLink(ports.control.getState()))scheduleReconnect(20000);}
+@@ -191,7 +202,7 @@
+       text('offline-v2-day',coordinator?.getDayStatus().message||'一天圆环等待连接。');
+       text('offline-v2-events',root.CatOfflineDeviceEvents?.lastResult?.message||'尚无新的真实设备事件；不会从 NPC 或页面动画产生奖励。');
+       const scan=$('offline-v2-scan');scan.disabled=busy||!ports||['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);scan.hidden=ready;
+-      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent=sync?.pending?'确认并重试上一条同步':'重新同步当前状态';
++      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent='重试同步';
+       $('offline-v2-disconnect').hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);
+       $('offline-v2-disconnect').disabled=busy;
+       const list=$('offline-v2-list');
+--- a/firmware/CMakeLists.txt
++++ b/firmware/CMakeLists.txt
+@@ -282,8 +282,8 @@
+     endforeach()
+ 
+ endfunction()
+-set(PROJECT_VER "0.5.8-distance-ui")
+-project(cat_forest_badge VERSION 0.5.8)
++set(PROJECT_VER "0.5.9-auto-receipts")
++project(cat_forest_badge VERSION 0.5.9)
+ include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
+ foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
+         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION
+--- a/firmware/main/badge_pages.c
++++ b/firmware/main/badge_pages.c
+@@ -367,7 +367,7 @@
+ static LV_ATTRIBUTE_MEM_ALIGN uint8_t icon_pixels[ICON_COUNT][16*16*3];
+ static lv_image_dsc_t icon_images[ICON_COUNT];
+ static lv_obj_t *pages[PAGE_COUNT], *toast, *reset_layer;
+-static lv_obj_t *home_clock, *home_link, *home_bt, *home_hint, *home_arcs[5], *day_rings[2], *home_alert;
++static lv_obj_t *home_clock, *home_link, *home_bt, *home_hint, *home_arcs[5], *day_rings[2];
+ static lv_obj_t *guide_icon, *guide_title, *guide_sub, *guide_dots[5], *guide_hint;
+ static lv_obj_t *pair_page_code, *pair_page_hint, *care_coins;
+ static lv_obj_t *status_values[5], *status_bars[5], *status_heading, *status_coins, *status_sync;
+@@ -478,6 +478,7 @@
+ static void project_standby(void);
+ static void name_plate(const char *text,bool dimmed);
+ static void header_link(void);
++static void connection_draw(lv_event_t *e);
+ static l2_action_t display_action(void);
+ static void project_home(void);
+ static void project_care_menu(void);
+@@ -511,7 +512,7 @@
+ #define R(n,p,x,y,w,h) {n,p,x,y,w,h,UI_HIT_RECT,false}
+ #define C(n,p,x,y,r) {n,p,x,y,r,r,UI_HIT_CIRCLE,false}
+         C("guide-practice",PAGE_GUIDE,233,200,110),R("skip-guide",PAGE_GUIDE,233,411,140,32),R("connection-help",PAGE_PAIR,233,380,180,40),
+-        C("home-alert",PAGE_HOME,94,130,24),C("pet-cat",PAGE_HOME,233,262,110),C("home-hold",PAGE_HOME,233,233,212),
++        C("pet-cat",PAGE_HOME,233,262,110),C("home-hold",PAGE_HOME,233,233,212),
+         C("feed",PAGE_CARE,90,326,30),C("water",PAGE_CARE,160,366,30),C("play",PAGE_CARE,306,366,30),C("sleep",PAGE_CARE,376,326,30),C("bath",PAGE_CARE,233,386,30),C("care-action",PAGE_CARE_ACTION,233,323,52),C("status-settings",PAGE_STATUS,233,414,24),
+         R("brightness",PAGE_SETTINGS,233,126,310,48),R("voice-off",PAGE_SETTINGS,233,178,310,48),R("nearby-discovery",PAGE_SETTINGS,233,230,310,48),R("aod-setting",PAGE_SETTINGS,233,282,310,48),R("version-hold",PAGE_SETTINGS,233,346,270,48),R("device-sync",PAGE_SETTINGS,173,392,112,36),R("review-guide",PAGE_SETTINGS,293,392,112,36),
+         R("sync-help",PAGE_DEVICE,233,292,220,40),R("pending-events",PAGE_DEVICE,173,348,112,40),R("device-guide",PAGE_DEVICE,293,348,112,40),R("device-back",PAGE_DEVICE,233,405,130,36),
+@@ -530,7 +531,6 @@
+     else t.enabled=t.enabled&&!sleeping&&(!overlay||id==HIT_GIFT_CLOSE);
+     if(id==HIT_GIFT_CLOSE)t.enabled=t.enabled&&overlay;
+     if(id==HIT_GUIDE)t.enabled=t.enabled&&!guide_pass_until;
+-    if(id==HIT_HOME_ALERT)t.enabled=t.enabled&&face==0&&previous.bound&&(previous.snapshot.food<30||previous.snapshot.mood<30||previous.snapshot.clean<30||previous.snapshot.energy<30||previous.snapshot.health<30);
+     return t;
+ }
+ static bool target_hit(ui_hit_id_t id,int x,int y)
+@@ -680,7 +680,7 @@
+     hide(face_heading,false);
+     hide(heart_legend,true);hide(ring_missing,face!=1);set_label(ring_missing,"待手机同步",390);
+     hide(face_gift,true);hide(home_hint,true);hide(face_weather,false);hide(face_action,face!=0);
+-    lv_obj_set_pos(home_alert,79,115);hide(face_phase,face==0);
++    hide(face_phase,face==0);
+     set_label(face_phase,"等待手机状态",126);set_label(face_weather,"天气待同步",face?342:363);
+     place_hearts();
+     dirty=true;project_home();day_project();update_clock();
+@@ -733,7 +733,7 @@
+     if(!domain.ready || !domain.has_snapshot || domain.storage_error) {announce("存档未就绪未保存");return false;}
+     uint64_t epoch=0;(void)local2_clock_now(&epoch);
+     l2_status_t result=local2_emit_care(action,epoch);
+-    if(result!=L2_OK) {announce(result==L2_QUEUE_FULL ? "待同步已满连手机" : action==L2_ACTION_BATH&&result==L2_NOT_READY ? "清洁需兼容手机确认" : "保存失败未完成");return false;}
++    if(result!=L2_OK) {announce(result==L2_QUEUE_FULL ? "待同步已满连手机" : action==L2_ACTION_BATH&&result==L2_NOT_READY ? "连接手机后可清洁" : "保存失败未完成");return false;}
+     observed_local=true;observed_action=action;observed_action_started=lv_tick_get();
+     if(face==0){badge_scene_set_context(home_scene,true,domain.snapshot.scene,domain.snapshot.weather,display_action(),live_context);
+     badge_scene_play(home_scene,action==L2_ACTION_PLAY ? BADGE_SCENE_WALK : action==L2_ACTION_FEED||action==L2_ACTION_WATER ? BADGE_SCENE_ATTENTION : action==L2_ACTION_SLEEP ? BADGE_SCENE_IDLE : BADGE_SCENE_PET,lv_tick_get());}
+@@ -750,7 +750,7 @@
+ static void begin_care(l2_action_t action)
+ {
+     if(!domain.ready || !domain.has_snapshot || domain.storage_error) {announce("请先用手机同步");return;}
+-    if(action==L2_ACTION_BATH&&!domain.bath_allowed){announce("清洁需兼容手机确认");return;}
++    if(action==L2_ACTION_BATH&&!domain.bath_allowed){announce("连接手机后可清洁");return;}
+     care_action=action;care_steps=0;care_save_attempted=false;
+     care_started=lv_tick_get();care_last_step=care_started-700;
+     icon_t id=action==L2_ACTION_FEED ? ICON_BOWL : action==L2_ACTION_WATER ? ICON_WATER : action==L2_ACTION_BATH ? ICON_SOAP : action==L2_ACTION_PLAY ? ICON_FEATHER : ICON_MOON;
+@@ -793,9 +793,7 @@
+     case PAGE_PAIR: if(target_hit(HIT_CONNECT_HELP,x,y)) navigate(PAGE_DEVICE); break;
+     case PAGE_HOME:
+         if(face==1){day_return_now();break;}
+-        if(target_hit(HIT_HOME_ALERT,x,y) && previous.bound &&
+-          (previous.snapshot.food<30 || previous.snapshot.mood<30 || previous.snapshot.clean<30 || previous.snapshot.energy<30 || previous.snapshot.health<30)) navigate(PAGE_CARE);
+-        else if(face==0&&target_hit(HIT_CAT,x,y)) pet();
++        if(face==0&&target_hit(HIT_CAT,x,y)) pet();
+         break;
+     case PAGE_CARE:
+         if(target_hit(HIT_FEED,x,y))begin_care(L2_ACTION_FEED);
+@@ -1270,10 +1268,8 @@
+     home_clock=label(pages[PAGE_HOME],233,70,160,"--:--",false,ZIP_UI_COLOR_TEXT);
+     home_date=label(pages[PAGE_HOME],139,65,64,"",true,0x806b55);
+     lv_obj_set_style_transform_pivot_x(home_date,32,0);lv_obj_set_style_transform_pivot_y(home_date,8,0);lv_obj_set_style_transform_rotation(home_date,-280,0);
+-    home_bt=icon(pages[PAGE_HOME],ICON_BT_OFF,334,65,1);
++    home_bt=shape(pages[PAGE_HOME],322,53,24,24,0,0);lv_obj_set_style_bg_opa(home_bt,LV_OPA_TRANSP,0);lv_obj_add_event_cb(home_bt,connection_draw,LV_EVENT_DRAW_MAIN,NULL);
+     home_link=label(pages[PAGE_HOME],318,88,104,"",true,ZIP_UI_COLOR_SUB);
+-    home_alert=shape(pages[PAGE_HOME],79,115,30,30,0xe3c4a1,LV_RADIUS_CIRCLE);lv_obj_set_style_opa(home_alert,190,0);
+-    icon(home_alert,ICON_PAW,15,15,1); hide(home_alert,true);
+     home_hint=label(pages[PAGE_HOME],233,390,250,"",true,ZIP_UI_COLOR_SUB);
+     face_heading=label(pages[PAGE_HOME],233,392,190,"小猫",true,0x806b55);lv_label_set_long_mode(face_heading,LV_LABEL_LONG_MODE_DOTS);
+     face_phase=label(pages[PAGE_HOME],233,126,260,"等待手机状态",true,ZIP_UI_COLOR_ACCENT);
+@@ -1432,9 +1428,9 @@
+     label(s,233,286,300,"你们交换了野花\n它会把这份礼物带回家",true,ZIP_UI_COLOR_SUB);
+     label(s,233,398,220,"轻点回小屋",true,ZIP_UI_COLOR_DIM);
+     /* 睡觉请求已本地保存；结算与真实睡眠仍等待手机确认。 */
+-    s=pages[PAGE_SLEEPING];title(s,150,220,"睡觉已记录");
++    s=pages[PAGE_SLEEPING];title(s,150,220,"休息已记下");
+     icon(s,ICON_MOON,233,214,6);
+-    label(s,233,304,300,"等待手机确认\n尚未结算",true,ZIP_UI_COLOR_SUB);
++    label(s,233,304,300,"轻点回小屋\n继续陪伴小猫",true,ZIP_UI_COLOR_SUB);
+     label(s,233,398,220,"轻点返回",true,ZIP_UI_COLOR_DIM);
+ }
+ static void build_layers(void)
+@@ -1484,11 +1480,22 @@
+ {
+     switch(stage) {case L2_SCENE_HOME:return "在家陪伴";case L2_SCENE_DEPARTING:return "正在出发";case L2_SCENE_AWAY:return "正在外面游玩";case L2_SCENE_RETURNING:return "正在返程";case L2_SCENE_GARDEN:return "庭院玩耍";case L2_SCENE_TOWN:return "镇街散步";default:return "状态待同步";}
+ }
++/* One small native chain mark for the actual BLE link. No Wi-Fi claim. */
++static void connection_draw(lv_event_t *e)
++{
++    lv_layer_t *layer=lv_event_get_layer(e);lv_area_t a;lv_obj_get_coords(home_bt,&a);
++    bool connected=previous.connected&&previous.subscribed;
++    uint32_t ink=connected?0x638c7a:0x9b9083;
++    lv_draw_arc_dsc_t arc;lv_draw_arc_dsc_init(&arc);arc.radius=5;arc.width=2;arc.rounded=1;arc.color=lv_color_hex(ink);
++    arc.center=(lv_point_t){a.x1+(connected?7:5),a.y1+14};arc.start_angle=35;arc.end_angle=305;lv_draw_arc(layer,&arc);
++    arc.center=(lv_point_t){a.x1+(connected?15:17),a.y1+6};arc.start_angle=215;arc.end_angle=125;lv_draw_arc(layer,&arc);
++    if(connected){lv_draw_line_dsc_t line;lv_draw_line_dsc_init(&line);line.color=lv_color_hex(ink);line.width=2;line.round_start=1;line.round_end=1;line.p1=(lv_point_precise_t){a.x1+8,a.y1+13};line.p2=(lv_point_precise_t){a.x1+14,a.y1+7};lv_draw_line(layer,&line);}
++}
+ static void header_link(void)
+ {
+-    static int state=-1;int next=previous.connected?1:0;
+-    if(state!=next){state=next;lv_image_set_src(home_bt,&icon_images[next?ICON_BT:ICON_BT_OFF]);}
+-    lv_obj_set_pos(home_bt,326,57);hide(home_bt,mode==MODE_OFF);
++    static int state=-1;int next=(previous.connected?1:0)|(previous.subscribed?2:0);
++    if(state!=next){state=next;lv_obj_invalidate(home_bt);}
++    lv_obj_set_pos(home_bt,322,53);hide(home_bt,mode==MODE_OFF);
+ }
+ static void name_plate(const char *text,bool dimmed)
+ {
+@@ -1545,7 +1552,7 @@
+     bool available=domain.ready&&domain.has_snapshot&&!domain.storage_error;
+     if(layout_epoch!=standby_epoch){
+         layout_epoch=standby_epoch;
+-        lv_obj_t *quiet[]={home_alert,face_phase,face_weather,face_action,face_gift,home_action_prop,care_result_bubble,day_future_bubble,ring_missing,ring_marker,heart_legend,heart_count_label};
++        lv_obj_t *quiet[]={face_phase,face_weather,face_action,face_gift,home_action_prop,care_result_bubble,day_future_bubble,ring_missing,ring_marker,heart_legend,heart_count_label};
+         for(unsigned i=0;i<sizeof quiet/sizeof quiet[0];i++)hide(quiet[i],true);
+         for(unsigned i=0;i<5;i++){hide(home_arcs[i],true);hide(home_stat_icons[i],true);hide(face_c_icons[i],true);hide(face_c_values[i],true);}
+         for(unsigned i=0;i<2;i++)hide(day_rings[i],true);
+@@ -1556,7 +1563,7 @@
+         lv_obj_set_style_text_color(home_link,lv_color_hex(0xa7977e),0);lv_obj_set_x(home_link,181);
+     }
+     name_plate(available&&safe_pet_name(domain.snapshot.pet.name)?domain.snapshot.pet.name:"小猫",true);
+-    const char *mark=domain.storage_error?"存档异常":domain.pending_events?"待确认":link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000?"离线":"";
++    const char *mark=domain.storage_error?"存档异常":link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000?(domain.pending_events?"离线·已记下":"离线"):"";
+     set_label(home_link,mark,410);hide(home_link,mode==MODE_OFF||!mark[0]);
+     /* No scene/action replacement on lock. BLE persistence still progresses;
+      * fresh domain presentation is projected on wake by the existing path. */
+@@ -1595,7 +1602,7 @@
+         else if(domain.terminal.status==L2_TERMINAL_QUARANTINED)care_result("手机未结算\n请查看");
+         else { /* Routine acknowledgements only clear the durable pending mark. */ }
+     }
+-    if(domain_attached && domain.gift_change!=domain_previous.gift_change) announce("礼物已存待确认");
++    if(domain_attached && domain.gift_change!=domain_previous.gift_change) announce("礼物已记下");
+     if(current_page!=PAGE_BOOT && available && !previous.bound && has_previous) {guide_review=false;navigate(guide_done ? PAGE_HOME : PAGE_GUIDE);}
+     if(v.storage_error) {hide(gift_popup,true);if(current_page!=PAGE_DEVICE) navigate(PAGE_DEVICE);}
+     if(v.pairing && (!has_previous || !previous.pairing)) {ignore_contact=true;gesture.active=false;set_mode(MODE_PLAY);}
+@@ -1605,8 +1612,7 @@
+     previous=v;has_previous=true;domain_previous=domain;domain_attached=true;dirty=false;
+     if(mode==MODE_AOD||mode==MODE_OFF){project_standby();return;}
+     const char *link=v.storage_error ? "存档错误" : v.connected ? (v.subscribed ? "手机本地连接" : "手机已连接") : "离线保留";
+-    bool low=available && (v.snapshot.food<30 || v.snapshot.mood<30 || v.snapshot.clean<30 || v.snapshot.energy<30 || v.snapshot.health<30);
+-    hide(home_alert,!low || face!=0 || mode==MODE_AOD || mode==MODE_OFF);hide(face_phase,mode==MODE_AOD || mode==MODE_OFF || (low && face==0));
++    hide(face_phase,face==0);
+     uint8_t stats[]={v.snapshot.food,v.snapshot.mood,v.snapshot.clean,v.snapshot.energy,v.snapshot.health};
+     for(unsigned i=0;i<5;i++) {
+         lv_bar_set_value(status_bars[i],available ? stats[i] : 0,LV_ANIM_OFF);lv_arc_set_value(home_arcs[i],available ? stats[i] : 0);
+@@ -1616,14 +1622,14 @@
+     set_label(status_heading,available ? (live_context ? "手机确认的最新状态" : "上次手机确认的状态") : "请先同步猫咪",92);
+     char text[200];
+     if(available) snprintf(text,sizeof(text),"喵币 %llu",(unsigned long long)v.snapshot.coins);else strcpy(text,"喵币 --");set_label(status_coins,text,322);
+-    snprintf(text,sizeof(text),"%s · 待确认 %u\n上滑返回小屋",link,domain.pending_events);set_label(status_sync,text,363);
++    snprintf(text,sizeof(text),"%s · 待同步 %u\n上滑返回小屋",link,domain.pending_events);set_label(status_sync,text,363);
+     if(available) snprintf(text,sizeof(text),"喵币 %llu",(unsigned long long)v.snapshot.coins);else strcpy(text,"喵币 --");set_label(care_coins,text,88);
+     for(unsigned i=0;i<5;i++)lv_obj_set_style_opa(care_icons[i],available&&(i!=4||domain.bath_allowed) ? LV_OPA_COVER : LV_OPA_40,0);
+     hide(care_bath_hint,true);project_care_menu();
+     project_home();
+     set_label(device_link,link,92);snprintf(text,sizeof(text),"ID %s",v.device_id[0] ? v.device_id : "--");set_label(device_id,text,124);
+     snprintf(text,sizeof(text),"PET %s",available ? v.snapshot.pet_id : "--");set_label(device_pet,text,163);
+-    if(available)snprintf(text,sizeof(text),"同步版本 %llu\n待确认 %u / 200",(unsigned long long)v.snapshot.revision,domain.pending_events);else strcpy(text,"请用手机发送首次宠物状态");set_label(device_meta,text,210);
++    if(available)snprintf(text,sizeof(text),"同步版本 %llu\n待同步 %u / 200",(unsigned long long)v.snapshot.revision,domain.pending_events);else strcpy(text,"请用手机发送首次宠物状态");set_label(device_meta,text,210);
+     set_label(device_storage,v.storage_error ? "存档不可用，请保留设备" : domain.terminal.status==L2_TERMINAL_REJECTED ? (!strcmp(domain.terminal.reason,"insufficient_coins")?"上次互动：喵币不足未扣钱":"上次互动：手机拒绝") : domain.terminal.status==L2_TERMINAL_QUARANTINED ? "上次互动：手机未结算" : available ? "本地存档可用 · 无云服务" : "等待手机首次同步",254);
+     set_label(setting_brightness,brightness==45 ? "低" : brightness==75 ? "中" : "高",126);set_label(setting_aod,aod_enabled ? "开启" : "关闭",282);update_clock();update_peer();day_refresh();day_project();
+ }
+@@ -1652,11 +1658,9 @@
+     if(face==0)name_plate(available&&safe_pet_name(domain.snapshot.pet.name)?domain.snapshot.pet.name:"小猫",false);
+     for(unsigned i=0;i<5;i++){bool show=face==0&&available&&(i==0||i==1||i==3);hide(home_arcs[i],!show);hide(home_stat_icons[i],!show);}
+     hide(face_phase,face==0);hide(face_weather,true);hide(face_action,true);
+-    bool low=available&&(previous.snapshot.food<30||previous.snapshot.mood<30||previous.snapshot.clean<30||previous.snapshot.energy<30||previous.snapshot.health<30);
+-    hide(home_alert,!low||face!=0);
+     bool pending=domain.ready&&!domain.storage_error&&domain.pending_events;
+     bool disconnected=!previous.connected||!previous.subscribed;
+-    const char *small_mark=!domain.ready||domain.storage_error?"存档异常":pending?"待确认":link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000?"离线":"";
++    const char *small_mark=!domain.ready||domain.storage_error?"存档异常":link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000?(pending?"离线·已记下":"离线"):"";
+     lv_obj_set_x(home_link,face?181:266);set_label(home_link,small_mark,face?427:88);hide(home_link,!small_mark[0]);
+     (void)disconnected;header_link();
+     uint64_t epoch=0;bool calibrated=local2_clock_now(&epoch);int64_t m=(int64_t)(epoch/60000)+local2_clock_utc_offset_minutes();int minute=(int)((m%1440+1440)%1440);
+--- a/firmware/main/badge_ui_targets.h
++++ b/firmware/main/badge_ui_targets.h
+@@ -1,7 +1,7 @@
+ #pragma once
+ #include <stdbool.h>
+ /* Geometry shared by actual handlers and the host's read-only registry. */
+-typedef enum { HIT_GUIDE, HIT_SKIP, HIT_CONNECT_HELP, HIT_HOME_ALERT, HIT_CAT, HIT_HOME_HOLD,
++typedef enum { HIT_GUIDE, HIT_SKIP, HIT_CONNECT_HELP, HIT_CAT, HIT_HOME_HOLD,
+  HIT_FEED,HIT_WATER,HIT_PLAY,HIT_SLEEP,HIT_BATH,HIT_CARE_ACTION,HIT_STATUS_GEAR,
+  HIT_BRIGHTNESS,HIT_VOICE_SETTING,HIT_DISCOVERY,HIT_AOD_SETTING,HIT_VERSION,HIT_DEVICE,HIT_GUIDE_REVIEW,
+  HIT_SYNC_HELP,HIT_PENDING,HIT_DEVICE_GUIDE,HIT_DEVICE_BACK,
+--- a/firmware/main/local2_wire.c
++++ b/firmware/main/local2_wire.c
+@@ -223,7 +223,7 @@
+             session_unlock();
+             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
+             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
+-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.5.8-distance-ui");result=L2_OK;
++            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.5.9-auto-receipts");result=L2_OK;
+         }else if(valid&&!strcmp(op,"care_capabilities")){
+             static const char *const ck[]={"v","id","op","clientId","data"};
+             static const char *const dk[]={"careBathV1","mobileContextV1"};char client[37];cJSON *mobile=field(field(q,"data"),"mobileContextV1");

@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-19",
+  "batch": "猫咪森活共享场景扩展",
+  "phone": {
+    "command": "Gradle 8.9 :app:assembleDebug -x test -x lint --offline --no-daemon",
+    "java": "JDK 21",
+    "result": "BUILD SUCCESSFUL",
+    "testTasksRun": false,
+    "lintTasksRun": false,
+    "artifact": "catforest-0.5.3-scene-expansion-debug.apk",
+    "bytes": 2701711,
+    "sha256": "9f0b0429ea1303d7d7a2387beb5d67a8382a5a13326f76f14a9e10b67b43683e",
+    "appId": "com.catforest.htmlcandidate",
+    "versionCode": 44,
+    "versionName": "0.5.3-scene-expansion",
+    "signingCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82"
+  },
+  "badge": {
+    "command": "idf.py -C firmware -B /tmp/catforest-scene-expansion-badge-071 build",
+    "idf": "ESP-IDF 5.5",
+    "result": "Project build complete",
+    "technicalTestsRun": false,
+    "artifact": "cat_forest_badge-0.7.1-scene-expansion.bin",
+    "bytes": 6602336,
+    "sha256": "b4faf3e57e741288aa856010b891658e525ba956442b5b4a4a26f33d410d6084",
+    "appPartitionBytes": 8388608,
+    "freeBytes": 1786272
+  },
+  "assetGeneration": {
+    "command": "python3 app/scripts/build_assets.py",
+    "result": "success",
+    "scripts": 8,
+    "changedScripts": 5,
+    "unitTestsRun": false,
+    "lintRun": false
+  }
+}

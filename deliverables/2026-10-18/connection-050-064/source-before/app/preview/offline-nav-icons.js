@@ -1,0 +1,61 @@
+/* Local vector artwork and decoration only; preserves original buttons and handlers. */
+(function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else{root.CatOfflineIcons=api;api.install(root.document);}})(typeof globalThis!=='undefined'?globalThis:this,function(){
+ 'use strict';let serial=0;
+ const labels=Object.freeze({meet:'遇见',dex:'图鉴',life:'生活',world:'出门',wardrobe:'衣柜',family:'家庭'});
+ const drawings={
+  meet:`<path d="M5 25V11L13 16Q19 12 25 16L32 12V29Q29 38 19 38Q7 38 5 29Z" fill="url(#P-blue)"/><path d="M19 31V18L27 23Q34 19 40 23L44 18V34Q42 42 32 42Q21 42 19 34Z" fill="url(#P-peach)"/><path d="M9 14L13 19M28 16L25 20M23 21L27 26M41 22L39 27" stroke="#fff8ed" opacity=".8"/><path d="M10 26Q12 23 14 26M22 26Q24 23 26 26M24 32Q26 29 28 32M36 32Q38 29 40 32" fill="none"/><path d="M16 29L18 31L20 29M30 35L32 37L34 35" stroke="#aa786b" fill="none"/>`,
+  dex:`<path d="M9 8H35Q40 8 40 13V40H13Q8 40 8 35V13Q8 8 13 8Z" fill="url(#P-blue)"/><path d="M14 8H35V37H14Q10 37 10 40V12Q10 8 14 8Z" fill="#fff7e7"/><path d="M14 8V36M15 40H40" fill="none"/><path d="M19 9H34V34H17V12Q17 9 19 9Z" fill="url(#P-sage)" stroke="none"/><path d="M30 8V17L34 14L38 17V8" fill="#e6b779" stroke="none"/><g fill="#fff8ed" stroke="#637d71" stroke-width="1.5"><ellipse cx="22" cy="20" rx="2" ry="2.5"/><ellipse cx="28" cy="19" rx="2" ry="2.5"/><ellipse cx="32" cy="23" rx="2" ry="2.5"/><path d="M21 28Q21 25 25 23Q27 22 29 25L31 29Q30 32 27 30Q22 32 21 28Z"/></g>`,
+  life:`<g stroke="#ac7a3c" stroke-width="2"><path d="M34 3V5M34 20V22M24 12H26M42 12H44M27 5L28 6M40 18L41 19M41 5L40 6"/><circle cx="34" cy="12" r="6.5" fill="url(#P-gold)"/></g><circle cx="20" cy="28" r="16.5" fill="url(#P-sage)"/><circle cx="20" cy="28" r="12.6" fill="#fff8e9"/><path d="M20 20V28L26 31" fill="none" stroke-width="2.5"/><path d="M20 16V18M8 28H10M20 38V40M30 28H32" fill="none" stroke-width="1.6"/><circle cx="20" cy="28" r="1.5" fill="#61796c" stroke="none"/>`,
+  world:`<path d="M17 15V10Q17 5 24 5Q31 5 31 10V15" fill="none" stroke-width="3"/><path d="M10 19Q10 12 18 12H30Q38 12 38 20V39Q38 43 33 43H15Q10 43 10 39Z" fill="url(#P-sage)"/><path d="M14 20Q14 16 18 16H29" fill="none" stroke="#eff8e8"/><path d="M9 23H6V34H10M39 23H42V34H38" fill="#d6b78f"/><rect x="14" y="28" width="20" height="12" rx="4" fill="url(#P-peach)"/><path d="M15 31H33" fill="none"/><path d="M24 22V30" fill="none" stroke-width="3"/><rect x="21" y="27" width="6" height="5" rx="1.4" fill="#fff7e6"/>`,
+  wardrobe:`<path d="M21 8Q21 4 25 4Q30 4 29 9Q29 12 24 13V16L42 25Q44 28 40 28H8Q4 28 6 25L24 16" fill="none" stroke-width="2.3"/><path d="M17 18L10 21L4 30L11 34L15 28V42H33V28L37 34L44 30L38 21L31 18Q24 26 17 18Z" fill="url(#P-peach)"/><path d="M18 20Q24 28 30 20M18 37H30" fill="none" stroke="#fff4e1" stroke-width="2"/><path d="M24 27V32" stroke="#bd8c68" fill="none"/>`,
+  family:`<path d="M9 22V40Q9 43 13 43H35Q39 43 39 40V22L24 10Z" fill="url(#P-cream)"/><path d="M4 23L24 5L44 23L40 27L24 13L8 27Z" fill="url(#P-peach)"/><path d="M11 22L24 11L38 23" fill="none" stroke="#fff3df"/><path d="M19 43V34Q19 29 24 29Q29 29 29 34V43" fill="url(#P-sage)"/><g fill="#7a9d91" stroke="none"><ellipse cx="18" cy="24" rx="2" ry="2.5"/><ellipse cx="24" cy="22.5" rx="2" ry="2.5"/><ellipse cx="30" cy="24" rx="2" ry="2.5"/><path d="M20 28Q24 23 28 28Q30 32 26 31Q24 30 22 31Q18 32 20 28Z"/></g>`
+ };
+ const actionLabels=Object.freeze({home:'回家',trip:'行程与口袋',roam:'自由活动',recall:'召回小猫',camera:'换个视角',rest:'先休息',clinic:'诊所',health:'健康',link:'连接',search:'寻找',disconnect:'断开',start:'开始',qr:'遇见码',players:'双人试玩',friend:'好友',gift:'礼物',globe:'世界',settings:'设置',pickup:'捡起来',footprint:'足迹',walk:'散步',explore:'探索',fish:'钓鱼',coin:'卖出',check:'确认',shield:'保护',egg:'约一颗蛋',reset:'恢复',shuffle:'随机摆放'});
+ Object.assign(drawings,{
+  home:'<path d="M7 23L24 8L41 23V41H7Z" fill="url(#P-cream)"/><path d="M3 23L24 4L45 23L41 28L24 13L7 28Z" fill="url(#P-peach)"/><path d="M19 41V28H29V41" fill="url(#P-sage)"/><path d="M32 14V7H38V19" fill="url(#P-peach)"/>',
+  trip:'<rect x="8" y="7" width="32" height="35" rx="5" fill="url(#P-cream)"/><path d="M17 7V3M31 7V3M9 16H39" fill="none"/><path d="M16 24H25M16 30H23M16 36H20" fill="none"/><path d="M29 22Q22 27 30 36Q38 27 33 23Z" fill="url(#P-sage)"/><circle cx="31" cy="27" r="2" fill="#fff8ed"/>',
+  roam:'<path d="M9 39Q15 27 22 27Q32 26 40 15" fill="none" stroke-dasharray="3 4"/><path d="M15 24V10L21 14Q26 12 31 15L36 11V25Q34 33 25 33Q16 32 15 24Z" fill="url(#P-peach)"/><path d="M20 23Q22 20 24 23M28 23Q30 20 32 23M24 27L26 29L28 27" fill="none"/>',
+  recall:'<path d="M11 20Q9 7 25 6Q42 7 41 23Q40 38 27 40" fill="none" stroke-width="3"/><path d="M4 15L11 22L17 14" fill="url(#P-gold)"/><path d="M13 32Q13 28 17 26L22 22L28 26Q33 29 32 34Q30 40 24 37Q18 40 14 36Z" fill="url(#P-sage)"/><circle cx="15" cy="20" r="3" fill="url(#P-peach)"/><circle cx="24" cy="17" r="3" fill="url(#P-peach)"/><circle cx="33" cy="21" r="3" fill="url(#P-peach)"/>',
+  camera:'<path d="M7 15H15L19 9H30L34 15H41V39H7Z" fill="url(#P-blue)"/><circle cx="24" cy="26" r="9" fill="url(#P-cream)"/><circle cx="24" cy="26" r="5" fill="url(#P-sage)"/><path d="M35 20H38" stroke="#fff8ed"/>',
+  rest:'<circle cx="24" cy="24" r="19" fill="url(#P-cream)"/><rect x="15" y="13" width="6" height="22" rx="2" fill="url(#P-sage)"/><rect x="27" y="13" width="6" height="22" rx="2" fill="url(#P-sage)"/>',
+  clinic:'<rect x="7" y="14" width="34" height="28" rx="5" fill="url(#P-cream)"/><path d="M17 14V8Q17 5 21 5H27Q31 5 31 8V14" fill="none"/><path d="M20 20H28V25H33V33H28V38H20V33H15V25H20Z" fill="url(#P-sage)"/>',
+  health:'<path d="M24 41C4 28 2 19 8 12Q17 5 24 16Q31 5 40 12C46 20 41 30 24 41Z" fill="url(#P-peach)"/><path d="M9 25H17L21 19L26 31L30 25H39" fill="none" stroke="#40584d" stroke-width="2.8"/>',
+  link:'<path d="M17 18L27 8Q35 1 41 8Q48 15 40 23L31 32" fill="url(#P-blue)"/><path d="M31 30L21 40Q13 47 7 40Q0 33 8 25L17 16" fill="url(#P-sage)"/><path d="M17 31L31 17" fill="none" stroke="#40584d" stroke-width="4"/>',
+  search:'<circle cx="21" cy="21" r="14" fill="url(#P-blue)"/><circle cx="21" cy="21" r="9" fill="#fff8ed"/><path d="M31 31L42 42" fill="none" stroke-width="6"/><path d="M15 17Q18 13 23 14" fill="none" stroke="#a7c6c5"/>',
+  disconnect:'<path d="M18 18L27 9Q34 2 40 9Q46 15 39 22L34 27M30 30L21 39Q14 46 8 39Q2 33 9 26L14 21" fill="none" stroke-width="5"/><path d="M5 5L43 43" stroke="#b47764" stroke-width="4"/>',
+  start:'<circle cx="24" cy="24" r="19" fill="url(#P-sage)"/><path d="M19 13L35 24L19 35Z" fill="#40584d"/>',
+  qr:'<rect x="5" y="5" width="38" height="38" rx="5" fill="url(#P-cream)"/><g fill="url(#P-blue)"><path d="M11 11H21V21H11ZM27 11H37V21H27ZM11 27H21V37H11Z"/><path d="M28 27H33V32H38V38H27V34"/></g><path d="M15 15H17V17H15ZM31 15H33V17H31ZM15 31H17V33H15Z" fill="#40584d" stroke="none"/>',
+  players:'<circle cx="16" cy="15" r="8" fill="url(#P-peach)"/><path d="M3 39V34Q4 25 16 25Q28 25 29 34V39Z" fill="url(#P-sage)"/><circle cx="33" cy="16" r="7" fill="url(#P-blue)"/><path d="M31 27Q42 26 45 35V40H34" fill="url(#P-blue)"/>',
+  friend:'<path d="M5 27L15 17L23 23L32 16L43 27L29 41Q26 44 23 41Z" fill="url(#P-peach)"/><path d="M16 18L23 11Q27 8 31 11L38 18L28 28Q25 31 21 27L18 24" fill="url(#P-sage)"/><path d="M12 30L20 38M18 25L28 36" fill="none"/>',
+  gift:'<path d="M8 20H40V42H8Z" fill="url(#P-peach)"/><rect x="5" y="14" width="38" height="9" rx="2" fill="url(#P-cream)"/><path d="M21 15Q8 16 12 7Q17 0 24 15Q31 0 36 7Q40 16 27 15" fill="url(#P-sage)"/><path d="M21 15H27V42H21Z" fill="url(#P-sage)"/>',
+  globe:'<circle cx="24" cy="24" r="19" fill="url(#P-blue)"/><path d="M12 10L19 14L17 23L9 25M30 7L27 16L35 21L40 20M24 27L34 30L31 40L24 42L20 34Z" fill="url(#P-sage)"/>',
+  settings:'<path d="M19 5H29L31 12L38 13L43 22L38 28L40 35L32 42L25 38L18 42L10 36L12 29L5 24L9 15L16 14Z" fill="url(#P-blue)"/><circle cx="24" cy="24" r="8" fill="#fff8ed"/>',
+  pickup:'<path d="M5 28L12 24L21 29H32Q39 29 39 33L25 41H11Z" fill="url(#P-peach)"/><path d="M24 4V24M17 17L24 24L31 17" fill="none" stroke-width="3"/><path d="M38 7L39 11L43 12L39 13L38 17L37 13L33 12L37 11Z" fill="url(#P-gold)"/>',
+  footprint:'<path d="M13 34Q12 27 19 24Q24 19 29 25Q36 29 35 35Q34 41 27 38Q23 36 19 39Q13 40 13 34Z" fill="url(#P-sage)"/><ellipse cx="10" cy="21" rx="4" ry="5" fill="url(#P-peach)"/><ellipse cx="20" cy="12" rx="4" ry="5" fill="url(#P-peach)"/><ellipse cx="31" cy="13" rx="4" ry="5" fill="url(#P-peach)"/><ellipse cx="40" cy="23" rx="4" ry="5" fill="url(#P-peach)"/>',
+  walk:'<path d="M7 36Q15 43 22 29Q30 17 42 24" fill="none" stroke-dasharray="3 4" stroke-width="3"/><ellipse cx="15" cy="16" rx="6" ry="10" transform="rotate(-25 15 16)" fill="url(#P-peach)"/><ellipse cx="33" cy="32" rx="6" ry="10" transform="rotate(25 33 32)" fill="url(#P-sage)"/>',
+  explore:'<circle cx="24" cy="24" r="19" fill="url(#P-cream)"/><path d="M31 13L28 28L13 35L20 20Z" fill="url(#P-blue)"/><path d="M31 13L24 24L20 20Z" fill="url(#P-peach)"/><circle cx="24" cy="24" r="2" fill="#40584d"/>',
+  fish:'<path d="M6 25Q20 6 35 20L44 14V35L35 29Q20 43 6 25Z" fill="url(#P-blue)"/><path d="M18 17Q24 25 18 33" fill="none"/><circle cx="13" cy="23" r="2" fill="#40584d" stroke="none"/>',
+  coin:'<ellipse cx="23" cy="34" rx="17" ry="7" fill="url(#P-gold)"/><path d="M6 27V34Q23 46 40 34V27" fill="url(#P-gold)"/><ellipse cx="23" cy="27" rx="17" ry="7" fill="url(#P-gold)"/><ellipse cx="23" cy="16" rx="17" ry="10" fill="url(#P-gold)"/><path d="M23 10V22M19 12H27M19 20H27" fill="none"/>',
+  check:'<circle cx="24" cy="24" r="19" fill="url(#P-sage)"/><path d="M13 24L21 32L36 16" fill="none" stroke="#40584d" stroke-width="4"/>',
+  shield:'<path d="M24 5L41 12V24Q39 37 24 44Q9 37 7 24V12Z" fill="url(#P-blue)"/><path d="M15 24L22 31L34 17" fill="none" stroke="#40584d" stroke-width="3"/>',
+  egg:'<path d="M24 5Q9 14 8 29Q8 43 24 43Q40 43 40 29Q39 14 24 5Z" fill="url(#P-cream)"/><path d="M10 28L17 23L24 29L30 24L38 29" fill="none" stroke="#d5a882"/>',
+  reset:'<path d="M11 16Q17 4 31 9Q45 15 39 31Q33 45 18 39Q9 35 8 26" fill="none" stroke-width="4"/><path d="M4 8L11 18L22 12" fill="url(#P-gold)"/>',
+  shuffle:'<rect x="8" y="8" width="32" height="32" rx="7" fill="url(#P-peach)"/><g fill="#40584d" stroke="none"><circle cx="17" cy="17" r="3"/><circle cx="31" cy="17" r="3"/><circle cx="24" cy="24" r="3"/><circle cx="17" cy="31" r="3"/><circle cx="31" cy="31" r="3"/></g>'
+ });
+ function svg(name,size=26,prefix='offline-icon-'+(++serial)){
+  if(!Object.hasOwn(drawings,name))throw new Error('Unknown navigation icon');
+  const optical={dex:1.1,life:.96,wardrobe:1.07}[name]||1;
+  const weight={life:2.3,wardrobe:2.3}[name]||2;
+  const gradients=[['blue','#d4e7e8','#9db9c3'],['sage','#d6e4c6','#92b6a2'],['peach','#f7d8b2','#dda880'],['gold','#fff0bd','#e9bd70'],['cream','#fff9e8','#e7dbc0']].map(([n,a,b])=>`<linearGradient id="${prefix}-${n}" x1="0" y1="0" x2=".25" y2="1"><stop stop-color="${a}"/><stop offset="1" stop-color="${b}"/></linearGradient>`).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="${size}" height="${size}" class="offline-nav-icon" aria-hidden="true" focusable="false"><defs>${gradients}</defs><ellipse cx="24" cy="43" rx="17" ry="2" fill="#526f60" opacity=".12"/><g transform="translate(24 24) scale(${optical}) translate(-24 -24)" stroke="${Object.hasOwn(actionLabels,name)?'#40584d':'#5b756c'}" stroke-width="${weight}" stroke-linecap="round" stroke-linejoin="round">${drawings[name].replaceAll('P-',prefix+'-')}</g></svg>`;
+ }
+ const targets=[['meet','[data-social="near"]'],['dex','[data-social="dex"]'],['life','[data-life],.pg-navlife'],['world','[data-v="world"],[data-view="world"]'],['wardrobe','[data-v="shop"],[data-view="shop"]'],['family','[data-v="family"],[data-view="family"]']];
+ function install(document){if(!document)return;
+  for(const [key,selector]of targets)for(const button of document.querySelectorAll('#m-rail button,.town-nav button')){
+   if(!button.matches(selector)||button.dataset.offlineIcon===key)continue;
+   const slot=button.querySelector('span[aria-hidden="true"]');if(!slot)continue;
+   slot.innerHTML=svg(key);slot.classList.add('offline-icon-slot');button.dataset.offlineIcon=key;
+  }
+ }
+ return {labels,actionLabels,svg,install};
+});

@@ -1,0 +1,27 @@
+{
+  "profileSha256": "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae",
+  "id": "native-linear-aces-soft-v2-candidate",
+  "status": "candidate-pending-user-visual-selection",
+  "firmwareVersion": "0.6.8-soft-color",
+  "singleCandidateOnly": true,
+  "authorizationDeadlineUtc": "2026-10-18T16:00:00+00:00",
+  "feedback": "用户对067：应该再淡一点",
+  "referencePhotoLibraryId": "libfile_bd598b4f7a78819196cf34be6ca3f79b",
+  "exposureUnchanged": 1.22,
+  "saturation": 0.82,
+  "midtoneContrast": 0.96,
+  "contrastPivot": 0.18,
+  "luminanceWeights": [
+    0.2126,
+    0.7152,
+    0.0722
+  ],
+  "shadowFade": [
+    0.02,
+    0.1
+  ],
+  "highlightProtection": [
+    0.55,
+    0.8
+  ]
+}

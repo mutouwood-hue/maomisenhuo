@@ -1,0 +1,23 @@
+{
+  "staticOnly": true,
+  "comparedAgainst": "065 deployed instrumentation baseline; accepted movement/UI/model behavior retained",
+  "allListedProtectedUnchanged": true,
+  "files": {
+    "firmware/main/main.c": true,
+    "firmware/main/badge_pages.c": true,
+    "firmware/main/badge_scene.c": true,
+    "firmware/main/badge_gesture.c": true,
+    "firmware/main/local2_core.c": true,
+    "firmware/main/local2_peer.c": true,
+    "app/web/offline-scene-sync.js": true,
+    "app/web/offline-host.js": true,
+    "app/web/offline-scene-map.js": true,
+    "app/web/cflocal2-adapter.js": true
+  },
+  "memoryFixFiles": [
+    "firmware/main/local2_ble.c",
+    "firmware/main/local2_wire.c",
+    "firmware/main/badge_native_cat.c",
+    "firmware/CMakeLists.txt"
+  ]
+}

@@ -1,0 +1,101 @@
+{
+  "createdAtUtc": "2026-10-18T11:53:57.282313+00:00",
+  "phoneVersion": "0.5.0-badge-connect",
+  "phoneVersionCode": 41,
+  "phoneRebuiltOrReinstalledThisBatch": false,
+  "firmwareVersion": "0.6.7-linear-color",
+  "artifacts": [
+    {
+      "createdAtUtc": "2026-10-18T11:50:28.939518+00:00",
+      "file": "cat_forest_badge-0.6.7-linear-color.bin",
+      "bytes": 6179024,
+      "sha256": "4aa2929920c1cb4ec41c6c325f2bbd9edb1ae00378517c6833fde99d0c17c757",
+      "embeddedVersion": "0.6.7-linear-color",
+      "project": "cat_forest_badge",
+      "productionBuildExitCode": 0
+    },
+    {
+      "file": "catforest-0.5.0-badge-connect-debug.apk",
+      "bytes": 2694738,
+      "sha256": "e6bd13db0ef74f79b9b0ef8f33228c0b28240c758e10542c95c550edc7249a14",
+      "carriedForward": true,
+      "rebuiltOrReinstalledThisBatch": false
+    }
+  ],
+  "deployed": {
+    "badge": true,
+    "target": "ota_1",
+    "offset": "0x820000",
+    "bytes": 6179024,
+    "slotBytes": 8388608,
+    "freeBytes": 2209584,
+    "receipt": "FLASH-RECEIPT.json"
+  },
+  "colorCandidate": {
+    "id": "native-linear-aces-v1-candidate",
+    "status": "candidate-pending-user-visual-selection",
+    "profileSha256": "85cd904ac031a4edb21c899fde102643fb2f88787cba81c9d68eecbd07a01013",
+    "profileFile": "color-profile.json",
+    "runtimeLookup": "native_cat_color.h",
+    "reference": "phone050; fixed diffuse approximation, not full room PBR equivalence"
+  },
+  "productionResources": {
+    "baseFrames": 330,
+    "outfitLayers": 1320,
+    "packaging": {
+      "format": "zlib-wrapped-rle-v1",
+      "layers": 1650,
+      "uncompressedRleBytes": 4073508,
+      "uncompressedRleSha256": "c6c26f880078fd417288c03e3cbdba1cae3b8cfc0edd3366c52b56e98a0b20e4",
+      "bytes": 1531337,
+      "sha256": "5462913ac47c00ac4a3768647f2d350b5573f0d8e5b7ec024de45b261f057106",
+      "maxDecodedLayerBytes": 11112,
+      "losslessProductionPackagingOnly": true
+    },
+    "folder": "production-resources"
+  },
+  "normalStartup": {
+    "passiveNormalBootOnly": true,
+    "appVersion067Recorded": true,
+    "appOffsetRecorded": true,
+    "hostTaskEntered": true,
+    "hostSyncRecorded": true,
+    "advertisingStartRecorded": true,
+    "agentInitiatedScanConnectionDiagnostic": false,
+    "userVisualAcceptance": "pending"
+  },
+  "protectedSources": {
+    "staticFilesOnly": true,
+    "allPhoneSourcesUnchanged": true,
+    "allUnrelatedFirmwareSourcesUnchanged": true,
+    "changed": [
+      "firmware/main/badge_native_cat.c",
+      "firmware/main/assets/native-cat/native_cat_data.h",
+      "firmware/main/assets/native-cat/native_cat_data.c"
+    ],
+    "missing": [],
+    "local2_ble_cUnchanged": true,
+    "memoryScratchPlacement": "PSRAM allocation unchanged; badge_native_cat.c changes only color selection/include",
+    "testsOrExecutionRun": false
+  },
+  "acceptance": {
+    "previous050066Connection": "explicitly accepted by user before this color-only task",
+    "067Visual": "pending user selection",
+    "formalPrdRule": "not finalized; local candidate draft only",
+    "technicalTestsRun": false,
+    "simulationRun": false,
+    "agentActiveConnectionDiagnosticRun": false,
+    "selfAcceptance": false
+  },
+  "dataErased": false,
+  "bindingReset": false,
+  "phoneOrTownChanged": false,
+  "docs": [
+    "DELIVERY-AND-EVIDENCE.md",
+    "PRD-COLOR-RULES-CANDIDATE.md"
+  ],
+  "comparisonImages": [
+    "visuals/comparison-adult-poses.png",
+    "visuals/comparison-growth.png"
+  ]
+}

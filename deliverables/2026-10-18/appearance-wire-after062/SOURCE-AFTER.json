@@ -1,0 +1,10 @@
+{
+  "app/web/offline-scene-map.js": "5d34412837101a0c7b76dfb8d5a6f85c3203e8258b9a5fec4d8cc5d634f0c5ba",
+  "app/web/cflocal2-adapter.js": "14d67c4bab557d2de3e0dab85677906fb0adf96b007ff56f55e1ff7435b6f1d2",
+  "firmware/main/local2_core.h": "2840b9102dcff25eb28134e47295140140a5329ebb416e30e69797632bf59a32",
+  "firmware/main/local2_core.c": "a58aab117198ed98d03b66a5edceaa516df2cf4257e0ad3c6832acf37488cf21",
+  "firmware/main/local2_wire.c": "789fa860cc8ef5f6cc0699765111a5633eb9824a0495bb1f494ee7a5ddbd0cb9",
+  "firmware/main/badge_pages.c": "1ac605b51df200f8a3ad61a16e7891b81e5dc9696683d3e72c22efb9c306448a",
+  "protocol/local-v2/interface.d.ts": "df5f61076b63e9ee3e435b8ccfcafb66909503d6b48f290843040b106894ae98",
+  "protocol/2026-10-18-pet-appearance-wire.md": "c380213fc1c66a510452c109f8e204b2757f9ec5db1e2ec85a25702079287ff7"
+}

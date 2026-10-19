@@ -1,0 +1,155 @@
+{
+  "batch": "2026-10-18 hearts 重传修复（041 / 056）",
+  "recordedAtUtc": "2026-10-18T01:54:49.934171+00:00",
+  "branch": "feat/care-lock-0.3.9-0.5.4",
+  "sourceBaselineCommit": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "sourceState": "在隔离 worktree 中修复、升版；未提交、未推送。当前产物由本工作区修复后的源码构建。",
+  "change": "part 0 重传比较 hearts 数量和每个分钟值；冲突沿用 L2_INVALID，缺省与空数组仍表示无标记；未扩展协议。",
+  "phone": {
+    "file": "catforest-0.4.1-day-hearts-replay-debug.apk",
+    "versionName": "0.4.1-day-hearts-replay",
+    "versionCode": 32,
+    "bytes": 809591,
+    "sha256": "31dda5f0c0baa96dc5bcd019f0be335651a3859edce8d7f369151b9abe69036e",
+    "signed": true,
+    "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+    "certificateMatchesInstalled": true,
+    "packageId": "com.catforest.htmlcandidate",
+    "buildExitCode": 0,
+    "technicalTests": "not_run",
+    "installed": true,
+    "installExitCode": 0,
+    "device": {
+      "serial": "ZYPZ261A01M65K0002A",
+      "manufacturer": "StepX",
+      "model": "PZ261A",
+      "versionBefore": "0.3.8-little-moments",
+      "versionCodeBefore": 29,
+      "versionAfter": "0.4.1-day-hearts-replay",
+      "versionCodeAfter": 32,
+      "appIdBefore": 10191,
+      "appIdAfter": 10191,
+      "firstInstallTimeBefore": "2026-10-15 23:14:25",
+      "firstInstallTimeAfter": "2026-10-15 23:14:25",
+      "installMethod": "adb install --no-incremental -r"
+    }
+  },
+  "badge": {
+    "file": "cat_forest_badge-0.5.6-day-hearts-replay.bin",
+    "versionString": "0.5.6-day-hearts-replay",
+    "bytes": 6886272,
+    "imageHex": "0x691380",
+    "sha256": "b8d594224e83754c8d57e959af04c8c461932e43d0176143665c43a71d4fbce1",
+    "containsPart0HeartsReplayFix": true,
+    "buildExitCode": 0,
+    "built": {
+      "version": "0.5.6-day-hearts-replay",
+      "project": "cat_forest_badge",
+      "builtTime": "09:49:45",
+      "builtDate": "Oct 18 2026"
+    },
+    "target": {
+      "chip": "ESP32-S3",
+      "mac": "7c:0c:5f:42:36:84",
+      "port": "/dev/cu.usbmodem1101",
+      "applicationPartition": "ota_1",
+      "offset": 8519680,
+      "capacity": 8388608,
+      "otaRecords": [
+        {
+          "copy": 0,
+          "sequence": 1,
+          "state": 2,
+          "crcValid": true
+        },
+        {
+          "copy": 1,
+          "sequence": 2,
+          "state": 4294967295,
+          "crcValid": true
+        }
+      ]
+    },
+    "deviceVersionBefore": "0.5.3-day-startup",
+    "technicalTests": "not_run",
+    "flashed": true,
+    "flashExitCode": 0
+  },
+  "build": {
+    "phone": {
+      "exitCode": 0,
+      "command": "gradle --offline --no-daemon --console=plain :app:assembleDebug -x test -x lint",
+      "buildType": "debug",
+      "java": "Temurin 21.0.12.1+1",
+      "gradle": "8.9",
+      "agp": "8.7.3",
+      "sdk": "Android 35",
+      "signing": "复用现有 ui038 原签名文件和既有 Gradle 配置，公开证书与设备原安装包一致；未创建凭据。",
+      "log": "phone-build-original-signing.log",
+      "initialAttempt": "初次引用 .tools/signing 的签名与设备不符，未安装该包；改用已有 ui038 签名后重新打包。"
+    },
+    "badge": {
+      "exitCode": 0,
+      "command": "idf.py -C firmware -B firmware/build -D SDKCONFIG=<isolated-current-sdkconfig> build",
+      "espIdf": "5.5.5",
+      "esptool": "4.12.0",
+      "dependencyInstallPerformed": false,
+      "configuration": "复用同一 dependencies.lock 对应的已有组件；隔离 sdkconfig 以当前 firmware/sdkconfig.defaults 为准。",
+      "initialAttempt": "沿用的旧 sdkconfig 关闭 LV_USE_SNAPSHOT，导致 badge_display_capture.h 编译失败；应用当前源码默认值后构建成功。",
+      "log": "badge-build-current-defaults.log",
+      "imageUsedHex": "0x691380",
+      "applicationPartitionCapacityHex": "0x800000",
+      "remainingBytes": 1502336,
+      "finalVersionMetadataBuild": {
+        "exitCode": 0,
+        "log": "badge-build-final-version.log",
+        "numericProjectVersion": "0.5.6",
+        "applicationSha256Unchanged": true,
+        "note": "CMake 数字版本也已同步 0.5.6；最终增量构建应用镜像 SHA 与已烧录实物一致，因此不重复烧录。"
+      }
+    }
+  },
+  "technicalTests": {
+    "executed": false,
+    "lintExecuted": false,
+    "interactiveAcceptanceExecuted": false,
+    "scope": "只执行获授权的生产打包、设备识别、证书匹配和安装/烧录；未运行技术测试套件或交互验收。"
+  },
+  "deployment": {
+    "phone": {
+      "status": "installed",
+      "exitCode": 0,
+      "log": "phone-install.log",
+      "dataRetentionMethod": "同 packageId、原证书的 adb install -r；appId 与 firstInstallTime 均保持一致；未读取存档内容、未卸载或清数据。"
+    },
+    "badge": {
+      "status": "flashed",
+      "log": "badge-flash.log",
+      "command": "python -m esptool --chip esp32s3 --port /dev/cu.usbmodem1101 --baud 460800 --before default_reset --after hard_reset write_flash --flash_mode keep --flash_freq keep --flash_size keep 0x820000 cat_forest_badge-0.5.6-day-hearts-replay.bin",
+      "targetSelection": "现有分区表和有效 OTA 元数据选择 ota_1；同一 MAC，应用头原版本 0.5.3-day-startup。",
+      "writeScope": "仅应用镜像；不写 bootloader、分区表、NVS、OTA 元数据或资产分区。",
+      "exitCode": 0,
+      "writtenBytes": 6886272,
+      "addressHex": "0x820000",
+      "transportVerification": "esptool 内置写入校验输出 Hash of data verified；未另行运行验证/测试命令。",
+      "resetAfterWrite": "hard_reset",
+      "runtimeVersionReadAfterFlash": false
+    }
+  },
+  "legacyArtifacts": {
+    "manifest": "../MANIFEST.json",
+    "preserved": true,
+    "badgeVersion": "0.5.5-day-hearts",
+    "badgeBytes": 6886224,
+    "badgeSha256": "4d6b3fd6365820df309933503c93e506847347e3643276c7f761cbb68d3eadc7",
+    "badgeContainsFix": false
+  },
+  "notVerified": [
+    "应用内存档与绑定表现、BLE 重连、OEM 锁屏行为未交互验收。",
+    "触控、布局、帧率、功耗、相遇和照料行为未测试。",
+    "历史 79/94/111/142 等通过数属于旧记录，不是本次结果。"
+  ],
+  "docs": [
+    "../../../work/integrated/DELIVERY-2026-10-18-REPLAY-FIX.md"
+  ]
+}

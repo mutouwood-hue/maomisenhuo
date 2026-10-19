@@ -1,0 +1,17 @@
+{
+  "staticOnly": true,
+  "allUnchanged": true,
+  "files": {
+    "app/web/offline-scene-map.js": true,
+    "app/web/cflocal2-adapter.js": true,
+    "app/web/offline-scene-sync.js": true,
+    "app/web/native-cat-model.js": true,
+    "firmware/main/badge_pages.c": true,
+    "firmware/main/badge_scene.c": true,
+    "firmware/main/badge_appearance.c": true,
+    "firmware/main/badge_native_cat.c": true,
+    "firmware/main/local2_wire.c": true,
+    "firmware/main/local2_core.c": true,
+    "firmware/main/CMakeLists.txt": true
+  }
+}

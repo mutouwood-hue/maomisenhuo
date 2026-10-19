@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="466" height="466" viewBox="0 0 466 466">
+<title>底部状态元素候选：图标在各条右侧</title>
+<desc>仅设计资产。彩色填充为65%、80%、45%的示意，不是用户数据；实现必须绑定真实指标。</desc>
+<g id="satiety" data-semantic="饱腹">
+<path id="satiety-track" d="M 67.63 336.33 A 195 195 0 0 0 107.66 382.38" fill="none" stroke="#C5BAA7" stroke-width="14" stroke-linecap="round"/>
+<path id="satiety-example-fill" data-preview-only="true" d="M 67.63 336.33 A 195 195 0 0 0 92.02 367.72" fill="none" stroke="#E6A34D" stroke-width="14" stroke-linecap="round"/>
+<g id="satiety-icon" transform="translate(118.67 387.37)" fill="#E6A34D">
+<path d="M1 9 H21 L18 18 Q11 22 4 18 Z"/><path d="M3 6 Q6 1 9 6 Q12 0 15 6 Q18 2 20 6" fill="none" stroke="#E6A34D" stroke-width="2" stroke-linecap="round"/>
+</g></g>
+<g id="mood" data-semantic="心情">
+<path id="mood-track" d="M 159.95 413.80 A 195 195 0 0 0 226.19 427.88" fill="none" stroke="#C5BAA7" stroke-width="14" stroke-linecap="round"/>
+<path id="mood-example-fill" data-preview-only="true" d="M 159.95 413.80 A 195 195 0 0 0 212.62 426.93" fill="none" stroke="#F26D88" stroke-width="14" stroke-linecap="round"/>
+<g id="mood-icon" transform="translate(242.38 415.93)" fill="#F26D88">
+<path d="M11 20 C9 18 1 13 1 7 C1 1 8 0 11 5 C14 0 21 1 21 7 C21 13 13 18 11 20 Z"/>
+</g></g>
+<g id="energy" data-semantic="精力">
+<path id="energy-track" d="M 286.75 420.45 A 195 195 0 0 0 347.62 390.76" fill="none" stroke="#C5BAA7" stroke-width="14" stroke-linecap="round"/>
+<path id="energy-example-fill" data-preview-only="true" d="M 286.75 420.45 A 195 195 0 0 0 315.41 409.73" fill="none" stroke="#9674E8" stroke-width="14" stroke-linecap="round"/>
+<g id="energy-icon" transform="translate(357.46 362.27)" fill="#9674E8">
+<path d="M16 1 A10 10 0 1 0 21 16 A9 9 0 0 1 16 1 Z"/>
+</g></g>
+</svg>

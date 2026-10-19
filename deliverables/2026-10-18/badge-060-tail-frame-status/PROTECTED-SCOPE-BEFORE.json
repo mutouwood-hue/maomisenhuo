@@ -1,0 +1,730 @@
+[
+  {
+    "path": "app/web/offline-page-icons.js",
+    "sha256": "67dab0a064bb4e231de94e426739c438cfdab9085bf60a833669a5237fcd14dc"
+  },
+  {
+    "path": "app/web/original-town-runtime.js",
+    "sha256": "6e6e660daeb3abe2317d6ee5aca9896cd84fc5e8009dd43ce4fd0a2821c91a53"
+  },
+  {
+    "path": "app/web/offline-family-ui.js",
+    "sha256": "ec6f8442fb1e27dc4096b97813658405b3d54f5e4b6d28e22c63861ea0c01838"
+  },
+  {
+    "path": "app/web/town-integration.css",
+    "sha256": "a2e19e873a712d673be831db7d3ea8f78203adb6e59f4f288693fa2449e6ba6f"
+  },
+  {
+    "path": "app/web/life-companion.css",
+    "sha256": "94d2bbed53ae9038fd8ddf43c96b9741881b22681514defa3c350b2f19f72fbe"
+  },
+  {
+    "path": "app/web/life-panels.css",
+    "sha256": "57710578ddb321794fb0c77faa3fe10c3d94e5d9d39cd38a0b433ddf54e532a3"
+  },
+  {
+    "path": "app/web/town-integration.js",
+    "sha256": "ac36f2844ae85234bc78d3d5f4bbafc1c8c00b4267d43dfc97c255c5ac1d78b6"
+  },
+  {
+    "path": "app/web/offline-page-polish.css",
+    "sha256": "c12c112ea945e67d7c91103505b837aa746bdb990978df1e24a03ec9cddc181c"
+  },
+  {
+    "path": "app/web/town-r185-compat.js",
+    "sha256": "086363a2139dbae3831c6ed815f50b606ea274c2245def05618298924fc032a6"
+  },
+  {
+    "path": "app/web/local-v2-transport.js",
+    "sha256": "63379032c0f1e6700b582be92fec1e5aac571b46385a983ac875c1af47f73280"
+  },
+  {
+    "path": "app/web/legacy-bj20-adapter.js",
+    "sha256": "b344873229d99f0cd683ed60747eed777ad876d97decbe41437ad748f19cd3f4"
+  },
+  {
+    "path": "app/web/daily-ring-center.inc.js",
+    "sha256": "abd9f5caf63258a8469f1867d2ca6ce7fa4e80a44c52ae8a82266ef071e9ee24"
+  },
+  {
+    "path": "app/web/offline-room-bed.js",
+    "sha256": "4b03c806905272ca9fd19828100dc9218f84e365b91d0f9e0354de1e5f2b639f"
+  },
+  {
+    "path": "app/web/pet-growth.js",
+    "sha256": "216a6f185baf0f53143c028c258072a456af2fe819d4d7e2b059611ed5391538"
+  },
+  {
+    "path": "app/web/town-guide-layout.css",
+    "sha256": "89173cab3c5692aa37c8e03d957c0bd12161ab8bd25ef6b1894e77f7e4b88057"
+  },
+  {
+    "path": "app/web/life-summary.inc.js",
+    "sha256": "d63b924869739b2342f451e768f147cefaa18dd7a70707c817a8c67708a946da"
+  },
+  {
+    "path": "app/web/cat-dialogue.js",
+    "sha256": "c40eb7a202b18671b85997db68ee27b066cb607017cd42a5540b65c6f4627aa6"
+  },
+  {
+    "path": "app/web/offline-durable-store.js",
+    "sha256": "3427a401bb11fe27c752be0dd2c0ab6e916795e951488ba31f49b5f485b5d765"
+  },
+  {
+    "path": "app/web/town-courtyard-layout.css",
+    "sha256": "2c922c4fb4d162d65e4465f34263117b075a0a5990f3e973ea5ad92d7d23e203"
+  },
+  {
+    "path": "app/web/offline-device-diagnostics.js",
+    "sha256": "79a15213c680403ef714f55f44be0f2ae096c93814cf6697c76b6b0b3a15f809"
+  },
+  {
+    "path": "app/web/offline-meet-key.js",
+    "sha256": "2d6ec91e8dd154620719d1b518f493aa72c4d4589330b6d5366c1715f9a09798"
+  },
+  {
+    "path": "app/web/offline-nav-icons.js",
+    "sha256": "a0dadfd3d158730a5ed5dd0b4288490701bb1479442a2dfa570e25b707206db4"
+  },
+  {
+    "path": "app/web/offline-day-display.js",
+    "sha256": "f4dcf759e1972acecf20ef017e4cb12adfbed9e7f7578fc747c7adddec4e5345"
+  },
+  {
+    "path": "app/web/clinic-feedback.inc.js",
+    "sha256": "f0fbce9303186b144e79868d2d6df59e014adb3cd2d110dfda24128188fc92ae"
+  },
+  {
+    "path": "app/web/offline-encounter-ui.js",
+    "sha256": "adc0436724503192acf1c3a55043580ff2083cff02cba5c036045d13baadc73b"
+  },
+  {
+    "path": "app/web/approved-accessory-function.inc.js",
+    "sha256": "232d83e27c8289d5554881583b8b11826b7d543dd85ec365dbf9ae6bd59404fc"
+  },
+  {
+    "path": "app/web/offline-ui-polish.css",
+    "sha256": "d2c8dc4e68b051e80652725430187554504231139895dc28023ea927c0efaff1"
+  },
+  {
+    "path": "app/web/daily-selection.inc.js",
+    "sha256": "e25b33c1f5479458a8af884e9c5a6606718f430fe742b3ab3f3e6cdb9e22b13a"
+  },
+  {
+    "path": "app/web/cflocal2-adapter.js",
+    "sha256": "2dbaf1cff2d837f04d1e832320c8f8526ee95bbd879129196822062bd3320b62"
+  },
+  {
+    "path": "app/web/offline-layout.js",
+    "sha256": "7abe8dcc09ed46f134ee5211bcb9ac0cca051d4d8093bc2bbfa91a802e0c866e"
+  },
+  {
+    "path": "app/web/daily-ring-segments.inc.js",
+    "sha256": "5f1ef2270d01c555342e78f3c3adabc7a101667d7c8a95553b6f0c9c63d01abf"
+  },
+  {
+    "path": "app/web/town-garden-source.js",
+    "sha256": "fd8fee2d30d7623a6bf323b432ab7b42124e6ff57ac43399d129379662555ea7"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "sha256": "a8776e7e2ed0958b573a94410591097c4495219b427323071ea593c17cc79350"
+  },
+  {
+    "path": "app/web/offline-scene-sync.js",
+    "sha256": "1f9e4459c02fab93be835fff84325a316e34d1cb14730f7e36f3debab18e3cbd"
+  },
+  {
+    "path": "app/web/original-town.css",
+    "sha256": "6feff4a873e06002ae7fc6f319f75023c5586a30c3aaea7be3d0655043a096f4"
+  },
+  {
+    "path": "app/web/offline-device-backup.js",
+    "sha256": "732c43031c45dcd0bd303d342931d2f4aab2f89349aa25968079c9ff34adb716"
+  },
+  {
+    "path": "app/web/offline-host.css",
+    "sha256": "fe405014753a7c77ea303377fd7abab3b8346ca5c0fbc9c7f105b1d5945750a0"
+  },
+  {
+    "path": "app/web/town-event-fx.js",
+    "sha256": "7644a5987a07a0461320d57c7719de837aa48c29c7b4fc479395d93a450eb7d9"
+  },
+  {
+    "path": "app/web/offline-prelude.js",
+    "sha256": "7635115fd03e1ef2265c9d1205ec5a0dae6530e86ba6dab51c2ee9a36a2dc413"
+  },
+  {
+    "path": "app/web/cat-dialogue-port.js",
+    "sha256": "fb0ea9d4afc8d38b24ba2a482e0298845455bd940f8634804d08f66463817d54"
+  },
+  {
+    "path": "app/web/town-courtyard-components.css",
+    "sha256": "471c357c2c3111c32ae6167259c6e322521aecaf2624387642bcabe930716cc1"
+  },
+  {
+    "path": "app/web/offline-host.js",
+    "sha256": "124650c9ea5714a9753c0d894f80c5c7bf827e75265a5861955d7be85daf8d8e"
+  },
+  {
+    "path": "app/web/offline-scene-map.js",
+    "sha256": "27a3d5f7f0db3c89469ee1b374a039fd86170ecf98b18fedc25a29bdc3dd44e0"
+  },
+  {
+    "path": "app/web/life-navigation.js",
+    "sha256": "44c9d7055fb53c36dd2d503ec089171ca1685b11dd20adef18cc4198dbd1884a"
+  },
+  {
+    "path": "app/web/offline-family-ui.css",
+    "sha256": "c834fc84d0a6b05c7a9215df82a97def23d0c17e78496b55636e6caffafddbbe"
+  },
+  {
+    "path": "app/web/room-layout.js",
+    "sha256": "e44523126775168e64187b1996a641420c82438b5c3d78d166cd0683000eac09"
+  },
+  {
+    "path": "app/web/offline-event-store.js",
+    "sha256": "5c1c304885319d2c63641f7639ff5139cfe77a9f49f047bedd62f47ee504f2d8"
+  },
+  {
+    "path": "app/web/town-courtyard-sheet.css",
+    "sha256": "237e23762fa4bf76200337e64363261968792d25cdd05bd9be2b4cdb2241c237"
+  },
+  {
+    "path": "app/web/offline-device-events.js",
+    "sha256": "a1b18d61792675ccfa00e04a12fe4f0392a1fe57403773dd4db54adbba7282b9"
+  },
+  {
+    "path": "app/web/town-contact-runtime.inc.js",
+    "sha256": "fcf2a6a7b892a9d0f0ad4e3f5b03ab522f54cee9ecb691952dd9065e888861d0"
+  },
+  {
+    "path": "app/web/offline-world-renderer.js",
+    "sha256": "ab0aca08356374945eb392868563c72d2454ea286d93ecd1e7b1c75d111b1c11"
+  },
+  {
+    "path": "app/preview/offline-page-icons.js",
+    "sha256": "67dab0a064bb4e231de94e426739c438cfdab9085bf60a833669a5237fcd14dc"
+  },
+  {
+    "path": "app/preview/original-town-runtime.js",
+    "sha256": "6e6e660daeb3abe2317d6ee5aca9896cd84fc5e8009dd43ce4fd0a2821c91a53"
+  },
+  {
+    "path": "app/preview/game-04.js",
+    "sha256": "171823957161755210363d37db1484cf1db90c8fb197b0eaf45c5dbd1ca04033"
+  },
+  {
+    "path": "app/preview/offline-family-ui.js",
+    "sha256": "ec6f8442fb1e27dc4096b97813658405b3d54f5e4b6d28e22c63861ea0c01838"
+  },
+  {
+    "path": "app/preview/town-integration.css",
+    "sha256": "a2e19e873a712d673be831db7d3ea8f78203adb6e59f4f288693fa2449e6ba6f"
+  },
+  {
+    "path": "app/preview/life-companion.css",
+    "sha256": "94d2bbed53ae9038fd8ddf43c96b9741881b22681514defa3c350b2f19f72fbe"
+  },
+  {
+    "path": "app/preview/life-panels.css",
+    "sha256": "e6a2567feaad2f9a89bf0c2c71581321b606325c646889eac56634c7573e1639"
+  },
+  {
+    "path": "app/preview/town-integration.js",
+    "sha256": "ac36f2844ae85234bc78d3d5f4bbafc1c8c00b4267d43dfc97c255c5ac1d78b6"
+  },
+  {
+    "path": "app/preview/offline-page-polish.css",
+    "sha256": "c12c112ea945e67d7c91103505b837aa746bdb990978df1e24a03ec9cddc181c"
+  },
+  {
+    "path": "app/preview/game-05.js",
+    "sha256": "f7511bb6887b869e70bdfbfb106b2f24c19578a461d882eeff23bbdbb7fec5a9"
+  },
+  {
+    "path": "app/preview/index.html",
+    "sha256": "8eb269ab552b1e4d18cf846d928563e78ba082b1a5328b25e4c2ba24ac447461"
+  },
+  {
+    "path": "app/preview/town-r185-compat.js",
+    "sha256": "086363a2139dbae3831c6ed815f50b606ea274c2245def05618298924fc032a6"
+  },
+  {
+    "path": "app/preview/local-v2-transport.js",
+    "sha256": "63379032c0f1e6700b582be92fec1e5aac571b46385a983ac875c1af47f73280"
+  },
+  {
+    "path": "app/preview/legacy-bj20-adapter.js",
+    "sha256": "b344873229d99f0cd683ed60747eed777ad876d97decbe41437ad748f19cd3f4"
+  },
+  {
+    "path": "app/preview/game-01.js",
+    "sha256": "37dcec337c03208fc55e75e2a6a854e985d22adff7512048724f7e22e594b755"
+  },
+  {
+    "path": "app/preview/daily-ring-center.inc.js",
+    "sha256": "abd9f5caf63258a8469f1867d2ca6ce7fa4e80a44c52ae8a82266ef071e9ee24"
+  },
+  {
+    "path": "app/preview/offline-room-bed.js",
+    "sha256": "4b03c806905272ca9fd19828100dc9218f84e365b91d0f9e0354de1e5f2b639f"
+  },
+  {
+    "path": "app/preview/pet-growth.js",
+    "sha256": "216a6f185baf0f53143c028c258072a456af2fe819d4d7e2b059611ed5391538"
+  },
+  {
+    "path": "app/preview/town-guide-layout.css",
+    "sha256": "89173cab3c5692aa37c8e03d957c0bd12161ab8bd25ef6b1894e77f7e4b88057"
+  },
+  {
+    "path": "app/preview/life-summary.inc.js",
+    "sha256": "d63b924869739b2342f451e768f147cefaa18dd7a70707c817a8c67708a946da"
+  },
+  {
+    "path": "app/preview/cat-dialogue.js",
+    "sha256": "c40eb7a202b18671b85997db68ee27b066cb607017cd42a5540b65c6f4627aa6"
+  },
+  {
+    "path": "app/preview/offline-durable-store.js",
+    "sha256": "3427a401bb11fe27c752be0dd2c0ab6e916795e951488ba31f49b5f485b5d765"
+  },
+  {
+    "path": "app/preview/town-courtyard-layout.css",
+    "sha256": "2c922c4fb4d162d65e4465f34263117b075a0a5990f3e973ea5ad92d7d23e203"
+  },
+  {
+    "path": "app/preview/offline-device-diagnostics.js",
+    "sha256": "79a15213c680403ef714f55f44be0f2ae096c93814cf6697c76b6b0b3a15f809"
+  },
+  {
+    "path": "app/preview/offline-meet-key.js",
+    "sha256": "2d6ec91e8dd154620719d1b518f493aa72c4d4589330b6d5366c1715f9a09798"
+  },
+  {
+    "path": "app/preview/build-manifest.json",
+    "sha256": "e1f412f836d47bdf14c8449801f461ebf30880f54d4b55d4026d605d7d5aba6f"
+  },
+  {
+    "path": "app/preview/offline-nav-icons.js",
+    "sha256": "a0dadfd3d158730a5ed5dd0b4288490701bb1479442a2dfa570e25b707206db4"
+  },
+  {
+    "path": "app/preview/offline-day-display.js",
+    "sha256": "f4dcf759e1972acecf20ef017e4cb12adfbed9e7f7578fc747c7adddec4e5345"
+  },
+  {
+    "path": "app/preview/clinic-feedback.inc.js",
+    "sha256": "f0fbce9303186b144e79868d2d6df59e014adb3cd2d110dfda24128188fc92ae"
+  },
+  {
+    "path": "app/preview/offline-encounter-ui.js",
+    "sha256": "adc0436724503192acf1c3a55043580ff2083cff02cba5c036045d13baadc73b"
+  },
+  {
+    "path": "app/preview/approved-accessory-function.inc.js",
+    "sha256": "232d83e27c8289d5554881583b8b11826b7d543dd85ec365dbf9ae6bd59404fc"
+  },
+  {
+    "path": "app/preview/game-08.js",
+    "sha256": "a84c3665b138d8f9bed8bb38248203941545f66de405271b3b84384225a89398"
+  },
+  {
+    "path": "app/preview/offline-ui-polish.css",
+    "sha256": "d2c8dc4e68b051e80652725430187554504231139895dc28023ea927c0efaff1"
+  },
+  {
+    "path": "app/preview/daily-selection.inc.js",
+    "sha256": "e25b33c1f5479458a8af884e9c5a6606718f430fe742b3ab3f3e6cdb9e22b13a"
+  },
+  {
+    "path": "app/preview/cflocal2-adapter.js",
+    "sha256": "2dbaf1cff2d837f04d1e832320c8f8526ee95bbd879129196822062bd3320b62"
+  },
+  {
+    "path": "app/preview/offline-layout.js",
+    "sha256": "7abe8dcc09ed46f134ee5211bcb9ac0cca051d4d8093bc2bbfa91a802e0c866e"
+  },
+  {
+    "path": "app/preview/daily-ring-segments.inc.js",
+    "sha256": "5f1ef2270d01c555342e78f3c3adabc7a101667d7c8a95553b6f0c9c63d01abf"
+  },
+  {
+    "path": "app/preview/town-garden-source.js",
+    "sha256": "fd8fee2d30d7623a6bf323b432ab7b42124e6ff57ac43399d129379662555ea7"
+  },
+  {
+    "path": "app/preview/town-player-runtime.inc.js",
+    "sha256": "a8776e7e2ed0958b573a94410591097c4495219b427323071ea593c17cc79350"
+  },
+  {
+    "path": "app/preview/offline-scene-sync.js",
+    "sha256": "1f9e4459c02fab93be835fff84325a316e34d1cb14730f7e36f3debab18e3cbd"
+  },
+  {
+    "path": "app/preview/original-town.css",
+    "sha256": "6feff4a873e06002ae7fc6f319f75023c5586a30c3aaea7be3d0655043a096f4"
+  },
+  {
+    "path": "app/preview/offline-device-backup.js",
+    "sha256": "732c43031c45dcd0bd303d342931d2f4aab2f89349aa25968079c9ff34adb716"
+  },
+  {
+    "path": "app/preview/offline-host.css",
+    "sha256": "fe405014753a7c77ea303377fd7abab3b8346ca5c0fbc9c7f105b1d5945750a0"
+  },
+  {
+    "path": "app/preview/town-event-fx.js",
+    "sha256": "7644a5987a07a0461320d57c7719de837aa48c29c7b4fc479395d93a450eb7d9"
+  },
+  {
+    "path": "app/preview/game-06.js",
+    "sha256": "4d685388d5d7aa81f9071e704a9ebc9d548b94cf6fc3e73509a33cb87e83bb02"
+  },
+  {
+    "path": "app/preview/offline-prelude.js",
+    "sha256": "7635115fd03e1ef2265c9d1205ec5a0dae6530e86ba6dab51c2ee9a36a2dc413"
+  },
+  {
+    "path": "app/preview/cat-dialogue-port.js",
+    "sha256": "fb0ea9d4afc8d38b24ba2a482e0298845455bd940f8634804d08f66463817d54"
+  },
+  {
+    "path": "app/preview/town-courtyard-components.css",
+    "sha256": "471c357c2c3111c32ae6167259c6e322521aecaf2624387642bcabe930716cc1"
+  },
+  {
+    "path": "app/preview/game-02.js",
+    "sha256": "1a974e574b0a209b69f1daaffb7903eb96bd3fde36b4c1352a0167cafee6310c"
+  },
+  {
+    "path": "app/preview/offline-host.js",
+    "sha256": "124650c9ea5714a9753c0d894f80c5c7bf827e75265a5861955d7be85daf8d8e"
+  },
+  {
+    "path": "app/preview/game-03.js",
+    "sha256": "543987618cf9fa4b9f00967e1a3075513737e91e1db29128ab1ce65794b2aa90"
+  },
+  {
+    "path": "app/preview/offline-scene-map.js",
+    "sha256": "27a3d5f7f0db3c89469ee1b374a039fd86170ecf98b18fedc25a29bdc3dd44e0"
+  },
+  {
+    "path": "app/preview/life-navigation.js",
+    "sha256": "44c9d7055fb53c36dd2d503ec089171ca1685b11dd20adef18cc4198dbd1884a"
+  },
+  {
+    "path": "app/preview/offline-family-ui.css",
+    "sha256": "c834fc84d0a6b05c7a9215df82a97def23d0c17e78496b55636e6caffafddbbe"
+  },
+  {
+    "path": "app/preview/room-layout.js",
+    "sha256": "e44523126775168e64187b1996a641420c82438b5c3d78d166cd0683000eac09"
+  },
+  {
+    "path": "app/preview/offline-event-store.js",
+    "sha256": "5c1c304885319d2c63641f7639ff5139cfe77a9f49f047bedd62f47ee504f2d8"
+  },
+  {
+    "path": "app/preview/town-courtyard-sheet.css",
+    "sha256": "65ff0e98e9d5e82e36d01fac4641413eedb69fe0d43b3c27d6560984e6a19ecc"
+  },
+  {
+    "path": "app/preview/offline-device-events.js",
+    "sha256": "a1b18d61792675ccfa00e04a12fe4f0392a1fe57403773dd4db54adbba7282b9"
+  },
+  {
+    "path": "app/preview/town-contact-runtime.inc.js",
+    "sha256": "fcf2a6a7b892a9d0f0ad4e3f5b03ab522f54cee9ecb691952dd9065e888861d0"
+  },
+  {
+    "path": "app/preview/offline-world-renderer.js",
+    "sha256": "ab0aca08356374945eb392868563c72d2454ea286d93ecd1e7b1c75d111b1c11"
+  },
+  {
+    "path": "app/preview/game-07.js",
+    "sha256": "f8ef366480c6317076aeb99a1860ba01a7cf643d76a50c8ef2ce26dc683d91b3"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-page-icons.js",
+    "sha256": "67dab0a064bb4e231de94e426739c438cfdab9085bf60a833669a5237fcd14dc"
+  },
+  {
+    "path": "app/android/app/src/main/assets/original-town-runtime.js",
+    "sha256": "6e6e660daeb3abe2317d6ee5aca9896cd84fc5e8009dd43ce4fd0a2821c91a53"
+  },
+  {
+    "path": "app/android/app/src/main/assets/game-04.js",
+    "sha256": "171823957161755210363d37db1484cf1db90c8fb197b0eaf45c5dbd1ca04033"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-family-ui.js",
+    "sha256": "ec6f8442fb1e27dc4096b97813658405b3d54f5e4b6d28e22c63861ea0c01838"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-integration.css",
+    "sha256": "a2e19e873a712d673be831db7d3ea8f78203adb6e59f4f288693fa2449e6ba6f"
+  },
+  {
+    "path": "app/android/app/src/main/assets/life-companion.css",
+    "sha256": "94d2bbed53ae9038fd8ddf43c96b9741881b22681514defa3c350b2f19f72fbe"
+  },
+  {
+    "path": "app/android/app/src/main/assets/life-panels.css",
+    "sha256": "e6a2567feaad2f9a89bf0c2c71581321b606325c646889eac56634c7573e1639"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-integration.js",
+    "sha256": "ac36f2844ae85234bc78d3d5f4bbafc1c8c00b4267d43dfc97c255c5ac1d78b6"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-page-polish.css",
+    "sha256": "c12c112ea945e67d7c91103505b837aa746bdb990978df1e24a03ec9cddc181c"
+  },
+  {
+    "path": "app/android/app/src/main/assets/game-05.js",
+    "sha256": "f7511bb6887b869e70bdfbfb106b2f24c19578a461d882eeff23bbdbb7fec5a9"
+  },
+  {
+    "path": "app/android/app/src/main/assets/index.html",
+    "sha256": "8eb269ab552b1e4d18cf846d928563e78ba082b1a5328b25e4c2ba24ac447461"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-r185-compat.js",
+    "sha256": "086363a2139dbae3831c6ed815f50b606ea274c2245def05618298924fc032a6"
+  },
+  {
+    "path": "app/android/app/src/main/assets/local-v2-transport.js",
+    "sha256": "63379032c0f1e6700b582be92fec1e5aac571b46385a983ac875c1af47f73280"
+  },
+  {
+    "path": "app/android/app/src/main/assets/legacy-bj20-adapter.js",
+    "sha256": "b344873229d99f0cd683ed60747eed777ad876d97decbe41437ad748f19cd3f4"
+  },
+  {
+    "path": "app/android/app/src/main/assets/game-01.js",
+    "sha256": "37dcec337c03208fc55e75e2a6a854e985d22adff7512048724f7e22e594b755"
+  },
+  {
+    "path": "app/android/app/src/main/assets/daily-ring-center.inc.js",
+    "sha256": "abd9f5caf63258a8469f1867d2ca6ce7fa4e80a44c52ae8a82266ef071e9ee24"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-room-bed.js",
+    "sha256": "4b03c806905272ca9fd19828100dc9218f84e365b91d0f9e0354de1e5f2b639f"
+  },
+  {
+    "path": "app/android/app/src/main/assets/pet-growth.js",
+    "sha256": "216a6f185baf0f53143c028c258072a456af2fe819d4d7e2b059611ed5391538"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-guide-layout.css",
+    "sha256": "89173cab3c5692aa37c8e03d957c0bd12161ab8bd25ef6b1894e77f7e4b88057"
+  },
+  {
+    "path": "app/android/app/src/main/assets/life-summary.inc.js",
+    "sha256": "d63b924869739b2342f451e768f147cefaa18dd7a70707c817a8c67708a946da"
+  },
+  {
+    "path": "app/android/app/src/main/assets/cat-dialogue.js",
+    "sha256": "c40eb7a202b18671b85997db68ee27b066cb607017cd42a5540b65c6f4627aa6"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-durable-store.js",
+    "sha256": "3427a401bb11fe27c752be0dd2c0ab6e916795e951488ba31f49b5f485b5d765"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-courtyard-layout.css",
+    "sha256": "2c922c4fb4d162d65e4465f34263117b075a0a5990f3e973ea5ad92d7d23e203"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-device-diagnostics.js",
+    "sha256": "79a15213c680403ef714f55f44be0f2ae096c93814cf6697c76b6b0b3a15f809"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-meet-key.js",
+    "sha256": "2d6ec91e8dd154620719d1b518f493aa72c4d4589330b6d5366c1715f9a09798"
+  },
+  {
+    "path": "app/android/app/src/main/assets/build-manifest.json",
+    "sha256": "e1f412f836d47bdf14c8449801f461ebf30880f54d4b55d4026d605d7d5aba6f"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-nav-icons.js",
+    "sha256": "a0dadfd3d158730a5ed5dd0b4288490701bb1479442a2dfa570e25b707206db4"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-day-display.js",
+    "sha256": "f4dcf759e1972acecf20ef017e4cb12adfbed9e7f7578fc747c7adddec4e5345"
+  },
+  {
+    "path": "app/android/app/src/main/assets/clinic-feedback.inc.js",
+    "sha256": "f0fbce9303186b144e79868d2d6df59e014adb3cd2d110dfda24128188fc92ae"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-encounter-ui.js",
+    "sha256": "adc0436724503192acf1c3a55043580ff2083cff02cba5c036045d13baadc73b"
+  },
+  {
+    "path": "app/android/app/src/main/assets/approved-accessory-function.inc.js",
+    "sha256": "232d83e27c8289d5554881583b8b11826b7d543dd85ec365dbf9ae6bd59404fc"
+  },
+  {
+    "path": "app/android/app/src/main/assets/game-08.js",
+    "sha256": "a84c3665b138d8f9bed8bb38248203941545f66de405271b3b84384225a89398"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-ui-polish.css",
+    "sha256": "d2c8dc4e68b051e80652725430187554504231139895dc28023ea927c0efaff1"
+  },
+  {
+    "path": "app/android/app/src/main/assets/daily-selection.inc.js",
+    "sha256": "e25b33c1f5479458a8af884e9c5a6606718f430fe742b3ab3f3e6cdb9e22b13a"
+  },
+  {
+    "path": "app/android/app/src/main/assets/cflocal2-adapter.js",
+    "sha256": "2dbaf1cff2d837f04d1e832320c8f8526ee95bbd879129196822062bd3320b62"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-layout.js",
+    "sha256": "7abe8dcc09ed46f134ee5211bcb9ac0cca051d4d8093bc2bbfa91a802e0c866e"
+  },
+  {
+    "path": "app/android/app/src/main/assets/daily-ring-segments.inc.js",
+    "sha256": "5f1ef2270d01c555342e78f3c3adabc7a101667d7c8a95553b6f0c9c63d01abf"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-garden-source.js",
+    "sha256": "fd8fee2d30d7623a6bf323b432ab7b42124e6ff57ac43399d129379662555ea7"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-player-runtime.inc.js",
+    "sha256": "a8776e7e2ed0958b573a94410591097c4495219b427323071ea593c17cc79350"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-scene-sync.js",
+    "sha256": "1f9e4459c02fab93be835fff84325a316e34d1cb14730f7e36f3debab18e3cbd"
+  },
+  {
+    "path": "app/android/app/src/main/assets/original-town.css",
+    "sha256": "6feff4a873e06002ae7fc6f319f75023c5586a30c3aaea7be3d0655043a096f4"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-device-backup.js",
+    "sha256": "732c43031c45dcd0bd303d342931d2f4aab2f89349aa25968079c9ff34adb716"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-host.css",
+    "sha256": "fe405014753a7c77ea303377fd7abab3b8346ca5c0fbc9c7f105b1d5945750a0"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-event-fx.js",
+    "sha256": "7644a5987a07a0461320d57c7719de837aa48c29c7b4fc479395d93a450eb7d9"
+  },
+  {
+    "path": "app/android/app/src/main/assets/game-06.js",
+    "sha256": "4d685388d5d7aa81f9071e704a9ebc9d548b94cf6fc3e73509a33cb87e83bb02"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-prelude.js",
+    "sha256": "7635115fd03e1ef2265c9d1205ec5a0dae6530e86ba6dab51c2ee9a36a2dc413"
+  },
+  {
+    "path": "app/android/app/src/main/assets/cat-dialogue-port.js",
+    "sha256": "fb0ea9d4afc8d38b24ba2a482e0298845455bd940f8634804d08f66463817d54"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-courtyard-components.css",
+    "sha256": "471c357c2c3111c32ae6167259c6e322521aecaf2624387642bcabe930716cc1"
+  },
+  {
+    "path": "app/android/app/src/main/assets/game-02.js",
+    "sha256": "1a974e574b0a209b69f1daaffb7903eb96bd3fde36b4c1352a0167cafee6310c"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-host.js",
+    "sha256": "124650c9ea5714a9753c0d894f80c5c7bf827e75265a5861955d7be85daf8d8e"
+  },
+  {
+    "path": "app/android/app/src/main/assets/game-03.js",
+    "sha256": "543987618cf9fa4b9f00967e1a3075513737e91e1db29128ab1ce65794b2aa90"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-scene-map.js",
+    "sha256": "27a3d5f7f0db3c89469ee1b374a039fd86170ecf98b18fedc25a29bdc3dd44e0"
+  },
+  {
+    "path": "app/android/app/src/main/assets/life-navigation.js",
+    "sha256": "44c9d7055fb53c36dd2d503ec089171ca1685b11dd20adef18cc4198dbd1884a"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-family-ui.css",
+    "sha256": "c834fc84d0a6b05c7a9215df82a97def23d0c17e78496b55636e6caffafddbbe"
+  },
+  {
+    "path": "app/android/app/src/main/assets/room-layout.js",
+    "sha256": "e44523126775168e64187b1996a641420c82438b5c3d78d166cd0683000eac09"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-event-store.js",
+    "sha256": "5c1c304885319d2c63641f7639ff5139cfe77a9f49f047bedd62f47ee504f2d8"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-courtyard-sheet.css",
+    "sha256": "65ff0e98e9d5e82e36d01fac4641413eedb69fe0d43b3c27d6560984e6a19ecc"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-device-events.js",
+    "sha256": "a1b18d61792675ccfa00e04a12fe4f0392a1fe57403773dd4db54adbba7282b9"
+  },
+  {
+    "path": "app/android/app/src/main/assets/town-contact-runtime.inc.js",
+    "sha256": "fcf2a6a7b892a9d0f0ad4e3f5b03ab522f54cee9ecb691952dd9065e888861d0"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-world-renderer.js",
+    "sha256": "ab0aca08356374945eb392868563c72d2454ea286d93ecd1e7b1c75d111b1c11"
+  },
+  {
+    "path": "app/android/app/src/main/assets/game-07.js",
+    "sha256": "f8ef366480c6317076aeb99a1860ba01a7cf643d76a50c8ef2ce26dc683d91b3"
+  },
+  {
+    "path": "firmware/main/badge_gesture.c",
+    "sha256": "cb9cbd38c52f8b414d66c5eaf92da3f0bbbd79b344233ed4dfece348aa541b62"
+  },
+  {
+    "path": "firmware/main/badge_gesture.h",
+    "sha256": "8210515bb08db41b43e5ad41993576bd95658ddde7dbd86a0d6fa1f3957e79ab"
+  },
+  {
+    "path": "firmware/main/badge_scene.c",
+    "sha256": "efe6cf331e68258f3e2b527586cb6773f1a2601e841ae0914b769b16f5f217d5"
+  },
+  {
+    "path": "firmware/main/badge_scene.h",
+    "sha256": "966b4bb2a7937e3ea7c79eff92e02be2f07a47d6c3d08f4efddb32d0d17ebd6a"
+  },
+  {
+    "path": "firmware/main/badge_day_ui.inc",
+    "sha256": "474d816e792dbb09893e9d3f385fd3059a2c1a9d06fddb4aeeb3eb7b4eafd30e"
+  },
+  {
+    "path": "firmware/main/local2_day.c",
+    "sha256": "58bb70fe2bca0a51d45179e97b296f213620147f300e72c7e2a110aaf76f44bf"
+  },
+  {
+    "path": "firmware/main/local2_core.c",
+    "sha256": "cd13ea3fdfe56c301dc8e829a1e70fecd9d968753233af95632db73a267adcd2"
+  },
+  {
+    "path": "firmware/main/local2_ble.c",
+    "sha256": "02b0b5f4541269f5ce2676e962ee43c3ce2e96f5df9446c80ed0f73a0c17c1ee"
+  },
+  {
+    "path": "firmware/main/local2_store.c",
+    "sha256": "d0b3ffa1097888d26e27e4f8a2304735c4e84be14244c28af8d73e8911061610"
+  }
+]

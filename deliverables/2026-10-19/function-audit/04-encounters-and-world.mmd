@@ -1,0 +1,29 @@
+flowchart TD
+  KEY["双方吧唧：下键长按1秒"] --> DISCOVER["主动近场发现与连接"]
+  DISCOVER --> METHOD{"同一种确认方式"}
+  METHOD --> RHYTHM["按键 / 圆屏敲4至8拍"]
+  METHOD --> DOTS["连4至9个钟面点"]
+  RHYTHM --> MATCH["交换暗号并匹配"]
+  DOTS --> MATCH
+  MATCH --> BOTH["双方分别确认"]
+  BOTH --> DURABLE["NVS prepare / commit / settle"]
+  DURABLE --> EVENT["真实encounter事件，待手机补传"]
+  EVENT --> CONSUMER["手机offline-device-events"]
+  CONSUMER --x BREAK["P0：game-08未导出hostPlanDeviceEncounter"]
+  BREAK -.-> PENDING["无法完成结算与ACK；保留队首"]
+  PATCH["encounter_patches.py已有补丁"] --x RETURN["build_assets.py提前return，未应用到社交脚本"]
+  RETURN -.-> BREAK
+  LEGACY["当前手机附近：NPC / BroadcastChannel"] -.-> MEET["原型completeMeet"]
+  MEET -.-> FRIEND["本机原型好友 / 礼物 / 图鉴"]
+  MEET -.-> GROW["当前worldGrow未限制真实硬件来源"]
+  GROW -.-> WORLD["装饰与区域：演示/历史来源混合"]
+  BREAK -.-> REALFRIEND["真实好友 / 种子 / 世界成长：此处未闭环"]
+  REALFRIEND -.-> FIRST["首次固定扩房 + 窗景 + 独立引导：未开始"]
+  classDef partial fill:#fff0cd,stroke:#be8613,color:#493300;
+  classDef demo fill:#f0e5ff,stroke:#8b5fbf,color:#3f2457;
+  classDef broken fill:#ffe4e4,stroke:#cf3030,color:#761818;
+  classDef missing fill:#eee,stroke:#888,color:#555;
+  class KEY,DISCOVER,MATCH,BOTH,DURABLE,EVENT partial;
+  class BREAK,RETURN,PENDING broken;
+  class LEGACY,MEET,FRIEND,GROW,WORLD demo;
+  class REALFRIEND,FIRST missing;

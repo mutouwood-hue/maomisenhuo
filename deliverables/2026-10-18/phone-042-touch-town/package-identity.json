@@ -1,0 +1,27 @@
+{
+  "file": "catforest-0.4.2-touch-town-debug.apk",
+  "versionName": "0.4.2-touch-town",
+  "versionCode": 33,
+  "packageId": "com.catforest.htmlcandidate",
+  "applicationLabel": "猫咪森活",
+  "buildType": "debug",
+  "bytes": 992097,
+  "sha256": "437eb707e1ae59902d3a500d4a4b150df510cc5af3ebc121fc041c6b35a67ce6",
+  "signed": true,
+  "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+  "matchesInstalled041Certificate": true,
+  "packageMetadata": [
+    "package: name='com.catforest.htmlcandidate' versionCode='33' versionName='0.4.2-touch-town' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'",
+    "application-label:'猫咪森活'",
+    "application-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+    "application-icon-240:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+    "application-icon-320:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+    "application-icon-480:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+    "application-icon-640:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+    "application-icon-65534:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+    "application-icon-65535:'res/mipmap-anydpi-v26/ic_launcher.xml'"
+  ],
+  "buildExitCode": 0,
+  "installed": true,
+  "installExitCode": 0
+}

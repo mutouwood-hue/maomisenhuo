@@ -74,34 +74,42 @@ static void day_project(void)
 {
     if(current_page!=PAGE_HOME||face!=1||mode==MODE_AOD||mode==MODE_OFF||!day_pending)return;
     day_pending=false;
-    set_label(face_heading,"一天进程",94);hide(face_phase,false);hide(ring_missing,false);hide(face_action,true);hide(face_weather,true);hide(home_action_prop,true);hide(day_future_bubble,true);
+    hide(face_heading,false);hide(face_action,true);hide(face_weather,true);hide(home_action_prop,true);hide(day_future_bubble,true);hide(ring_missing,false);
     int now=0,limit=0;bool future=false;bool calibrated=day_reference(&now,&limit,&future);
     if(day_follow_now&&calibrated&&!day_scrubbing)day_minute=day_clamp(now);
-    char text[120];
-    if(day_follow_now&&calibrated)snprintf(text,sizeof text,"%s",day_now_date);
-    else if(day_view.valid)snprintf(text,sizeof text,"%s%s",day_view.old?"上次 ":"",day_view.date);else snprintf(text,sizeof text,"等待手机同步");
-    set_label(face_phase,text,126);
+    char text[120];snprintf(text,sizeof text,"%02d:%02d",day_minute/60,day_minute%60);
+    if(name_plate_role!=2){
+        name_plate_role=2;lv_obj_set_width(face_heading,190);lv_obj_set_style_max_width(face_heading,190,0);lv_obj_set_x(face_heading,138);
+        lv_obj_set_style_bg_opa(face_heading,LV_OPA_TRANSP,0);lv_obj_set_style_border_width(face_heading,0,0);lv_obj_set_style_pad_all(face_heading,0,0);
+        lv_obj_set_style_text_font(face_heading,&local2_font20,0);
+    }
+    lv_obj_set_style_text_color(face_heading,lv_color_hex(0x654d35),0);set_label(face_heading,text,113);
+    bool show_date=calibrated&&day_view.valid&&!day_follow_now&&(!day_records_today||day_view.old);
+    if(show_date){snprintf(text,sizeof text,"%s%s",day_view.old?"上次 ":"",day_view.date);set_label(face_phase,text,158);}
+    hide(face_phase,!show_date);
     if(!calibrated){
-        set_label(face_phase,"需手机校时",126);
-        snprintf(text,sizeof text,"%02d:%02d · 需手机校时",day_minute/60,day_minute%60);set_label(ring_missing,text,365);
-        badge_scene_day_expectation(home_scene);
+        set_label(ring_missing,"选中时间 · 需手机校时",390);badge_scene_day_expectation(home_scene);
     }else if(future){
-        /* Never consult the last historical segment in this branch. */
-        snprintf(text,sizeof text,"%02d:%02d · 尚未发生",day_minute/60,day_minute%60);set_label(ring_missing,text,365);
-        badge_scene_day_expectation(home_scene);set_label(face_phase,"轻点回到此刻",126);hide(day_future_bubble,false);
+        /* No historical segment can become a future event. */
+        set_label(ring_missing,"尚未发生 · 轻点回此刻",390);badge_scene_day_expectation(home_scene);
     }else{
         const l2_day_segment_t *selected=NULL;
         if(day_view.valid)for(unsigned i=0;i<day_view.count;i++)if(day_minute>=day_view.segments[i].start&&day_minute<day_view.segments[i].end){selected=day_view.segments+i;break;}
         const char *kinds[]={"休息","在家","通勤","工作","外出","走动","未知"};const char *sources[]={"观测","推测","示例"};
         if(day_follow_now){
-            snprintf(text,sizeof text,"%02d:%02d · 当前状态",day_minute/60,day_minute%60);set_label(ring_missing,text,365);
-            badge_scene_day_current(home_scene,domain.ready&&domain.has_snapshot&&!domain.storage_error,domain.snapshot.scene,domain.snapshot.weather,observed_action,live_context);
+            set_label(ring_missing,live_context?"此刻 · 当前状态":"此刻 · 上次状态",390);
+            badge_scene_day_current(home_scene,domain.ready&&domain.has_snapshot&&!domain.storage_error,domain.snapshot.scene,domain.snapshot.weather,display_action(),live_context);
         }else{
-            if(selected)snprintf(text,sizeof text,"%02d:%02d %s · %s",day_minute/60,day_minute%60,kinds[selected->kind],sources[selected->source]);
-            else snprintf(text,sizeof text,"%02d:%02d · %s",day_minute/60,day_minute%60,day_view.valid?"无记录":"待手机同步");
-            set_label(ring_missing,text,365);badge_scene_day_preview(home_scene,selected&&selected->kind!=6,selected?selected->kind:6,(unsigned)day_minute);
+            if(selected)snprintf(text,sizeof text,"%s · %s",kinds[selected->kind],sources[selected->source]);else snprintf(text,sizeof text,"%s",day_view.valid?"无记录":"暂无记录");
+            set_label(ring_missing,text,390);badge_scene_day_preview(home_scene,selected&&selected->kind!=6,selected?selected->kind:6,(unsigned)day_minute);
         }
     }
+    bool light=badge_scene_light_background(home_scene);
+    lv_obj_set_style_text_color(face_heading,lv_color_hex(light?0x654d35:ZIP_UI_COLOR_TEXT),0);
+    lv_obj_set_width(ring_missing,242);lv_obj_set_x(ring_missing,112);
+    lv_obj_set_style_bg_color(ring_missing,lv_color_hex(light?0xfff7e9:0x28242e),0);lv_obj_set_style_bg_opa(ring_missing,210,0);
+    lv_obj_set_style_radius(ring_missing,10,0);lv_obj_set_style_pad_ver(ring_missing,4,0);set_label(ring_missing,lv_label_get_text(ring_missing),390);
+    update_clock();
     static int old_x=233,old_y=14;
     double a=day_minute*6.283185307179586/1440-1.570796326794897;int x=233+(int)(219*cos(a)),y=233+(int)(219*sin(a));
     lv_area_t area;lv_obj_get_coords(pages[PAGE_HOME],&area);

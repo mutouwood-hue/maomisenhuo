@@ -1,0 +1,42 @@
+[
+  {
+    "name": "058-town",
+    "path": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/.reference/058-town.jpeg",
+    "bytes": 468677,
+    "sha256": "be145085375c2b3eb489d3352984a0157690fc14c3347daa5bdc6a9e5c4407da",
+    "dimensions": [
+      1320,
+      1760
+    ]
+  },
+  {
+    "name": "058-day-room",
+    "path": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/.reference/058-day-room.jpeg",
+    "bytes": 412559,
+    "sha256": "3ed0140c0b4ea723eb74264e252781dd93b6607681c402d754e86cbfa4146e24",
+    "dimensions": [
+      1320,
+      1760
+    ]
+  },
+  {
+    "name": "058-care-menu",
+    "path": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/.reference/058-care-menu.jpeg",
+    "bytes": 376953,
+    "sha256": "2875a0215937f94231ef5b63bba49c757d62aa880e9966af050ed80aef933daf",
+    "dimensions": [
+      1320,
+      1760
+    ]
+  },
+  {
+    "name": "058-status",
+    "path": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/.reference/058-status.jpeg",
+    "bytes": 390812,
+    "sha256": "363cec2ec6329cfa2fea451d20e5d8c8daa73e2340efee91c94c913ca713a3f7",
+    "dimensions": [
+      1320,
+      1760
+    ]
+  }
+]

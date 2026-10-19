@@ -1,0 +1,32 @@
+[
+  {
+    "asset": "assets/game-03.js",
+    "handler": "hu",
+    "before": "function hu(v){if(Fo.add(v.pointerId),Fo.size>1||v.button!==0||v.isPrimary===!1){xn=null;return}xn={x:v.clientX,y:v.clientY,id:v.pointerId,lastX:v.cli",
+    "after": "function hu(v){if(!vi||gn)return;if(Fo.add(v.pointerId),Fo.size>1||v.button!==0||v.isPrimary===!1){xn=null;return}xn={x:v.clientX,y:v.clientY,id:v.pointerId,lastX:v.clientX,lastY:v"
+  },
+  {
+    "asset": "assets/game-03.js",
+    "handler": "uu",
+    "before": "function uu(v){if(xn?.id===v.pointerId&&(xn.travel+=Math.hypot(v.clientX-xn.lastX,v.clientY-xn.lastY),xn.lastX=v.clientX,xn.lastY=v.clientY),cu(v),P?.",
+    "after": "function uu(v){if(!vi||gn)return;if(xn?.id===v.pointerId&&(xn.travel+=Math.hypot(v.clientX-xn.lastX,v.clientY-xn.lastY),xn.lastX=v.clientX,xn.lastY=v.clientY),cu(v),P?.name!==\"bath"
+  },
+  {
+    "asset": "assets/game-03.js",
+    "handler": "du",
+    "before": "function du(v){if(Fo.delete(v.pointerId),!xn||xn.id!==v.pointerId)return;let D=Math.hypot(v.clientX-xn.x,v.clientY-xn.y),k=xn.travel>10||D>10;if(xn=nu",
+    "after": "function du(v){if(!vi||gn)return;if(Fo.delete(v.pointerId),!xn||xn.id!==v.pointerId)return;let D=Math.hypot(v.clientX-xn.x,v.clientY-xn.y),k=xn.travel>10||D>10;if(xn=null,a.domElem"
+  },
+  {
+    "asset": "assets/game-03.js",
+    "handler": "fu",
+    "before": "function fu(v){v.key===\"Escape\"&&P?.interactive?(v.preventDefault(),nc()):(v.key===\"Enter\"||v.key===\" \")&&!P&&(v.preventDefault(),e())}function pu(){N",
+    "after": "function fu(v){if(!vi||gn)return;v.key===\"Escape\"&&P?.interactive?(v.preventDefault(),nc()):(v.key===\"Enter\"||v.key===\" \")&&!P&&(v.preventDefault(),e())}function pu(){Nn=0,oc()}a.d"
+  },
+  {
+    "asset": "assets/game-03.js",
+    "handler": "zf",
+    "before": "function zf(v){gn||(vi=!!v,vi?mn||(Uo(),Nn=0,mn=requestAnimationFrame(lc)):(cancelAnimationFrame(mn),mn=0,Nn=0))}function kf(){if(gn)return;nc(),gn=!0",
+    "after": "function zf(v){gn||(vi=!!v,d.enabled=vi,vi||oc(),vi?mn||(Uo(),Nn=0,mn=requestAnimationFrame(lc)):(cancelAnimationFrame(mn),mn=0,Nn=0))}function kf(){if(gn)return;nc(),gn=!0,cancelA"
+  }
+]

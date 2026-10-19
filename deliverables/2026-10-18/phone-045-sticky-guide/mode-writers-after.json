@@ -1,0 +1,12 @@
+[
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 6,
+    "context": "e=playerProfile,session=null,store=null,mode='free',elapsed=0,started=0,intro=0,interacting=null,chatUnti"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 210,
+    "context": "path=[];n.hold=n.wait=0;if(value!==null)mode=value;destination=null;goalMarker.visible=false;if(value==='"
+  }
+]

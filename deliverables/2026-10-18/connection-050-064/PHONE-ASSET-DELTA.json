@@ -1,0 +1,21 @@
+{
+  "staticOnly": true,
+  "changedAssets": [
+    "build-manifest.json",
+    "game-06.js",
+    "offline-host.css",
+    "offline-host.js",
+    "offline-scene-sync.js"
+  ],
+  "newHooks": [
+    "one-badge-page-owns-privacy-navigation",
+    "privacy-deep-links-still-open-existing-controls",
+    "badge-preview-only-after-current-session-handshake",
+    "mount-connection-in-existing-daily-badge-page",
+    "reuse-original-privacy-controls-inside-badge",
+    "reuse-live-device-panel-instead-of-second-dialog",
+    "badge-title-without-demo-connection-claim"
+  ],
+  "mirrorsIdentical": true,
+  "townOrAppearanceAssetChanges": []
+}

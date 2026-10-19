@@ -1,0 +1,40 @@
+/* Six local vectors; all original labels, targets, order and rail paging stay. */
+.offline-icon-slot { display:flex; align-items:center; justify-content:center; width:26px; height:26px; flex:none; line-height:1; }
+.offline-nav-icon { display:block; width:26px; height:26px; flex:none; pointer-events:none; overflow:visible; }
+#m-rail button[data-offline-icon] { color:#5a7063; }
+#m-rail button[data-offline-icon] .offline-icon-slot { font-size:0; }
+button[data-offline-icon]:disabled { color:#66786b!important; opacity:1; cursor:not-allowed; }
+button[data-offline-icon]:disabled .offline-nav-icon { filter:grayscale(1); opacity:.5; }
+/* Text can scroll above the original, always reachable banner action row. */
+#offline-notifications > #sc-banner[data-offline-selected] { grid-template-rows:minmax(0,1fr) auto; overflow:hidden; }
+#offline-notifications > #sc-banner > div { max-height:min(104px,calc(100dvh - var(--safe-area-inset-top,0px) - var(--safe-area-inset-bottom,0px) - 364px)); min-height:0; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; padding-right:3px; }
+#offline-notifications > #sc-banner b { line-height:1.45; overflow-wrap:anywhere; }
+#offline-notifications > #sc-banner small { font-size:12px; line-height:1.6; color:#71614f; overflow-wrap:anywhere; }
+#offline-notifications > #sc-banner .offline-test-mode { font-size:11px; }
+#offline-notifications > #sc-banner > button { position:relative; align-self:end; }
+/* Original NPC confirmation modal, never the outdoor/rain event surface. */
+#sc-meet .sc-mhead b { line-height:1.45; overflow-wrap:anywhere; }
+#sc-meet .sc-mhead small,#sc-meet .sc-small { color:#71614f; line-height:1.65; }
+#sc-meet .sc-small { font-size:13px; }
+#sc-meet .offline-meet-scroll { scrollbar-width:thin; scroll-padding-block:12px; padding-inline:2px; }
+#sc-meet .sc-hint { font-size:13px; line-height:1.65; }
+#sc-meet .sc-mtabs { flex-wrap:wrap; flex:none; }
+#sc-meet .sc-mact { text-align:left; gap:10px; padding-bottom:4px; }
+#sc-meet .sc-mact > .g-btn { width:100%; }
+#sc-meet .sc-mact > .lf-row { display:flex; flex-wrap:wrap; gap:8px; width:100%; }
+#sc-meet .sc-mact > .lf-row > button { flex:1 1 100px; min-height:48px; }
+#sc-meet .sc-res li { align-items:flex-start; line-height:1.65; }
+#sc-meet .sc-res li > span:first-child:not(.offline-result-copy) { flex:0 0 1.4em; }
+#sc-meet .offline-result-copy { flex:1 1 0; min-width:0; overflow-wrap:anywhere; }
+#sc-meet .sc-key { min-width:48px; right:-20px; }
+/* 018: only the hold key suppresses browser selection/callout. */
+#sc-meet #sc-key { user-select:none; -webkit-user-select:none; -webkit-touch-callout:none; touch-action:none; }
+/* 019: keep the hold target fixed through the global button active cascade. */
+#sc-meet #sc-key, #sc-meet #sc-key:active, #sc-meet #sc-key.down { transform:translateY(-50%); transition:background .16s,box-shadow .16s; }
+@media(prefers-reduced-motion:reduce) {
+ #sc-meet .sc-res li { animation:none; }
+}
+
+/* 017: opaque, explicit runtime colors for the existing encounter CTA. */
+#offline-notifications > #sc-banner > button[data-bmeet] { background:#9f4f26; color:#fffaf2; background-image:none; opacity:1; }
+#offline-notifications > #sc-banner > button[data-bmeet]:disabled { background:#eadfce; color:#665440; opacity:1; }

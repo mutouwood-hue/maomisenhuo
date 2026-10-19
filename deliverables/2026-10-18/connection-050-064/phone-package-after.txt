@@ -1,0 +1,177 @@
+Activity Resolver Table:
+  Non-Data Actions:
+      android.intent.action.MAIN:
+        6bcdde0 com.catforest.htmlcandidate/.MainActivity filter 544e899
+          Action: "android.intent.action.MAIN"
+          Category: "android.intent.category.LAUNCHER"
+
+Domain verification status:
+
+Key Set Manager:
+  [com.catforest.htmlcandidate]
+      Signing KeySets: 23
+
+Packages:
+  Package [com.catforest.htmlcandidate] (5f4fa0d):
+    appId=10191
+    pkg=Package{13bb1fd com.catforest.htmlcandidate}
+    codePath=/data/app/~~GwRKSZ2UI83LtH46TG1H6w==/com.catforest.htmlcandidate-lJXYUHRVhflTzD8UYUIwhg==
+    resourcePath=/data/app/~~GwRKSZ2UI83LtH46TG1H6w==/com.catforest.htmlcandidate-lJXYUHRVhflTzD8UYUIwhg==
+    legacyNativeLibraryDir=/data/app/~~GwRKSZ2UI83LtH46TG1H6w==/com.catforest.htmlcandidate-lJXYUHRVhflTzD8UYUIwhg==/lib
+    extractNativeLibs=false
+    primaryCpuAbi=null
+    secondaryCpuAbi=null
+    cpuAbiOverride=null
+    versionCode=41 minSdk=26 targetSdk=35
+    minExtensionVersions=[]
+    versionName=0.5.0-badge-connect
+    hiddenApiEnforcementPolicy=2
+    usesNonSdkApi=false
+    splits=[base]
+    apkSigningVersion=2
+    flags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privateFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    forceQueryable=false
+    pageSizeCompat=0
+    scannedAsStoppedSystemApp=false
+    supportsScreens=[small, medium, large, xlarge, resizeable, anyDensity]
+    timeStamp=2026-10-18 14:40:58
+    lastUpdateTime=2026-10-18 14:40:58
+    installerPackageName=null
+    installerPackageUid=-1
+    initiatingPackageName=com.android.shell
+    originatingPackageName=null
+    packageSource=1
+    appMetadataFilePath=null
+    appMetadataSource=0
+    signatures=PackageSignatures{7d5e0a9 version:2, signatures:[ee4440d3], past signatures:[]}
+    installPermissionsFixed=false
+    pkgFlags=[ DEBUGGABLE HAS_CODE ALLOW_CLEAR_USER_DATA ]
+    privatePkgFlags=[ PRIVATE_FLAG_ACTIVITIES_RESIZE_MODE_RESIZEABLE_VIA_SDK_VERSION ALLOW_AUDIO_PLAYBACK_CAPTURE PRIVATE_FLAG_ALLOW_NATIVE_HEAP_POINTER_TAGGING ]
+    supportsHiddenIcon=false
+    forceFull=true
+    apexModuleName=null
+    requested permissions:
+      android.permission.POST_NOTIFICATIONS
+      android.permission.ACCESS_FINE_LOCATION
+      stepos.permission.LOCAL_NETWORK
+      android.permission.FOREGROUND_SERVICE
+      android.permission.BLUETOOTH_CONNECT
+      android.permission.INTERNET
+      android.permission.ACCESS_COARSE_LOCATION
+      stepos.permission.ACTIVITY_ON_LOCKED_SCREEN
+      android.permission.CAMERA
+      stepos.permission.SENSOR_CONTROL
+      android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE
+      android.permission.RECORD_AUDIO
+      android.permission.BLUETOOTH_SCAN
+    install permissions:
+      stepos.permission.LOCAL_NETWORK: granted=true
+      android.permission.FOREGROUND_SERVICE: granted=true
+      android.permission.INTERNET: granted=true
+      stepos.permission.ACTIVITY_ON_LOCKED_SCREEN: granted=true
+      stepos.permission.SENSOR_CONTROL: granted=true
+      android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE: granted=true
+    User 0: ceDataInode=15189 deDataInode=30211 installed=true hidden=false suspended=false distractionFlags=0 stopped=false notLaunched=false enabled=0 instant=false virtual=false quarantined=false
+      installReason=0
+      hideIcon=false
+      dataDir=/data/user/0/com.catforest.htmlcandidate
+      firstInstallTime=2026-10-15 23:14:25
+      uninstallReason=0
+      overlay paths:
+        /product/overlay/NavigationBarModeGesturalMBack/NavigationBarModeGesturalOverlayMBack.apk
+        /data/resource-cache/com.android.systemui-neutral-PWb9.frro
+        /data/resource-cache/com.android.systemui-accent-4req.frro
+        /data/resource-cache/com.android.systemui-dynamic-nyT9.frro
+      legacy overlay paths:
+        /product/overlay/NavigationBarModeGesturalMBack/NavigationBarModeGesturalOverlayMBack.apk
+      gids=[3003]
+      runtime permissions:
+        android.permission.POST_NOTIFICATIONS: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACCESS_FINE_LOCATION: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED|524288]
+        android.permission.BLUETOOTH_CONNECT: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.ACCESS_COARSE_LOCATION: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.CAMERA: granted=false, flags=[ USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.RECORD_AUDIO: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+        android.permission.BLUETOOTH_SCAN: granted=true, flags=[ USER_SET|USER_SENSITIVE_WHEN_GRANTED|USER_SENSITIVE_WHEN_DENIED]
+
+Queries:
+  system apps queryable: false
+  queries via forceQueryable:
+  queries via package name:
+  queries via component:
+    [com.stepos.exserviceui,com.stepos.connectivitysettings,com.stepos.datacenter,com.android.location.fused,com.stepos.battery,com.stepos.agentbus,com.android.keychain,com.stepos.ems,com.stepos.fido.asm,com.qualcomm.qti.xrvd.service,com.android.settings,com.stepos.wlanmonitor,com.stepos.sdkstage,org.ifaa.aidl.manager,com.stepos.update,com.stepos.systemuieditor,com.stepos.logreport,com.stepos.appplatform,com.tencent.soter.soterserver,com.android.server.telecom,com.android.dynsystem,com.stepos.radio,com.stepos.powerelf,com.wapi.wapicertmanage,com.stepos.aiengine,com.stepos.stepclaw,com.android.localtransport,com.stepos.secureservice,com.android.providers.settings,com.stepos.pps,com.android.DeviceAsWebcam,com.val.hardware,com.stepos.ability,android,vendor.qti.frameworks.utils,com.android.inputdevices]:
+      com.catforest.htmlcandidate
+    com.stepos.media.gallery:
+      com.catforest.htmlcandidate
+    com.stepos.common.ability.proxy:
+      com.catforest.htmlcandidate
+    com.stepos.net.search:
+      com.catforest.htmlcandidate
+    com.android.dialer:
+      com.catforest.htmlcandidate
+    [com.android.systemui,com.stepos.systemuiex,com.stepos.systemuitools]:
+      com.catforest.htmlcandidate
+    com.android.mms:
+      com.catforest.htmlcandidate
+    com.stepos.agentsafetycenter:
+      com.catforest.htmlcandidate
+    com.stepos.appstore:
+      com.catforest.htmlcandidate
+    com.android.browser:
+      com.catforest.htmlcandidate
+    com.stepos.feedback:
+      com.catforest.htmlcandidate
+    com.stepos.safe:
+      com.catforest.htmlcandidate
+    com.stepos.safebox:
+      com.catforest.htmlcandidate
+    com.android.settings.intelligence:
+      com.catforest.htmlcandidate
+    com.stepos.xmscore:
+      com.catforest.htmlcandidate
+    com.sohu.inputmethod.sogou.oem:
+      com.catforest.htmlcandidate
+    com.android.launcher3:
+      com.catforest.htmlcandidate
+    com.stepos.ailauncher:
+      com.catforest.htmlcandidate
+    com.android.alarmclock:
+      com.catforest.htmlcandidate
+    com.android.soundrecorder:
+      com.catforest.htmlcandidate
+    com.android.calendar:
+      com.catforest.htmlcandidate
+    com.stepos.filemanager:
+      com.catforest.htmlcandidate
+    com.stepx.shop.jyzd:
+      com.catforest.htmlcandidate
+    com.stepos.calculator:
+      com.catforest.htmlcandidate
+    com.stepos.notepaper:
+      com.catforest.htmlcandidate
+    com.sankuai.meituan:
+      com.catforest.htmlcandidate
+    com.autonavi.minimap:
+      com.catforest.htmlcandidate
+    cmccwm.mobilemusic:
+      com.catforest.htmlcandidate
+    ctrip.android.view:
+      com.catforest.htmlcandidate
+    com.sina.weibo:
+      com.catforest.htmlcandidate
+  queryable via interaction:
+    User 0:
+      com.catforest.htmlcandidate:
+        [com.android.providers.downloads,com.android.mtp,com.android.soundpicker,com.android.providers.downloads.ui,com.android.providers.media]
+  queryable via uses-library:
+
+Dexopt state:
+  [com.catforest.htmlcandidate]
+    path: /data/app/~~GwRKSZ2UI83LtH46TG1H6w==/com.catforest.htmlcandidate-lJXYUHRVhflTzD8UYUIwhg==/base.apk
+      arm64: [status=run-from-apk] [reason=unknown] [primary-abi]
+        [location is error]
+
+Compiler stats:
+  [com.catforest.htmlcandidate]
+    (No recorded stats)

@@ -1,0 +1,71 @@
+{
+  "source": "normal production startup logs after application-only deployments; not a scan/connection test",
+  "before065": {
+    "metrics": {
+      "storage_begin": {
+        "internalFree": 278767,
+        "internalLargest": 180224,
+        "psramFree": 8386156
+      },
+      "ui_begin": {
+        "internalFree": 276103,
+        "internalLargest": 180224,
+        "psramFree": 8306280
+      },
+      "ui_ready_ble_begin": {
+        "internalFree": 80911,
+        "internalLargest": 31744,
+        "psramFree": 8079120
+      },
+      "ble_start_returned_usb_begin": {
+        "internalFree": 1435,
+        "internalLargest": 1216,
+        "psramFree": 8079120
+      },
+      "startup_returned": {
+        "internalFree": 1327,
+        "internalLargest": 608,
+        "psramFree": 8079120
+      }
+    },
+    "domainTaskFailed": true,
+    "hostTaskEntered": false,
+    "advertisingStarted": false,
+    "usbDiagnosticTaskFailed": true
+  },
+  "after066": {
+    "metrics": {
+      "storage_begin": {
+        "internalFree": 289695,
+        "internalLargest": 188416,
+        "psramFree": 8386156
+      },
+      "ui_begin": {
+        "internalFree": 287031,
+        "internalLargest": 188416,
+        "psramFree": 8306280
+      },
+      "ui_ready_ble_begin": {
+        "internalFree": 90419,
+        "internalLargest": 31744,
+        "psramFree": 8079120
+      },
+      "ble_start_returned_usb_begin": {
+        "internalFree": 15459,
+        "internalLargest": 7680,
+        "psramFree": 8062216
+      },
+      "startup_returned": {
+        "internalFree": 6143,
+        "internalLargest": 4352,
+        "psramFree": 8062216
+      }
+    },
+    "domainTaskFailed": false,
+    "hostTaskEntered": true,
+    "hostSyncOk": true,
+    "advertisingStarted": true,
+    "usbDiagnosticEnabled": true
+  },
+  "userEndToEndAcceptance": "pending; no explicit connection attempted by agent"
+}

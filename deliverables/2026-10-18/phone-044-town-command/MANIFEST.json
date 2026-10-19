@@ -1,0 +1,198 @@
+{
+  "batch": "2026-10-18 手机044：最小范围的小镇指令控制修正",
+  "recordedAtUtc": "2026-10-18T03:13:23.553841+00:00",
+  "sourceRoot": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4",
+  "sourceBaselineCommit": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "previousDelivery": "../phone-043-town-depart-pocket/MANIFEST.json",
+  "scope": "仅修小镇输入、手动接管/取消、堵路让行与绕过分支。无UI/CSS修改、无新事件或功能、无新的更新循环；今日生活/圆环源码保持不变。保留既有所有未提交修复，无git提交/push/reset/清理，无firmware/吧唧操作。",
+  "phone": {
+    "file": "catforest-0.4.4-town-command-debug.apk",
+    "bytes": 933003,
+    "sha256": "73954c685a1babcc49b4a4a9b2f2145b0c6fb468ac2b82552ad15307f29d200f",
+    "versionName": "0.4.4-town-command",
+    "versionCode": 35,
+    "packageId": "com.catforest.htmlcandidate",
+    "applicationLabel": "猫咪森活",
+    "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+    "buildType": "debug",
+    "buildExitCode": 0,
+    "installed": true,
+    "installExitCode": 0
+  },
+  "deployment": {
+    "startedAtUtc": "2026-10-18T03:11:06.270010+00:00",
+    "serial": "ZYPZ261A01M65K0002A",
+    "packageId": "com.catforest.htmlcandidate",
+    "method": "adb install --no-incremental -r",
+    "installed": true,
+    "appLaunched": false,
+    "dataCleared": false,
+    "uninstalled": false,
+    "commands": [
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "get-state"
+        ],
+        "exitCode": 0,
+        "log": "phone-connection.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "getprop",
+          "ro.product.model"
+        ],
+        "exitCode": 0,
+        "log": "phone-model.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "getprop",
+          "ro.product.manufacturer"
+        ],
+        "exitCode": 0,
+        "log": "phone-manufacturer.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "dumpsys",
+          "package",
+          "com.catforest.htmlcandidate"
+        ],
+        "exitCode": 0,
+        "log": "phone-before.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "install",
+          "--no-incremental",
+          "-r",
+          "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/phone-044-town-command/catforest-0.4.4-town-command-debug.apk"
+        ],
+        "exitCode": 0,
+        "log": "phone-install.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "dumpsys",
+          "package",
+          "com.catforest.htmlcandidate"
+        ],
+        "exitCode": 0,
+        "log": "phone-after.log"
+      }
+    ],
+    "before": {
+      "versionCode": 34,
+      "versionName": "0.4.3-town-depart-pocket",
+      "appId": 10191,
+      "firstInstallTime": "2026-10-15 23:14:25"
+    },
+    "installExitCode": 0,
+    "manufacturer": "StepX",
+    "model": "PZ261A",
+    "after": {
+      "versionCode": 35,
+      "versionName": "0.4.4-town-command",
+      "appId": 10191,
+      "firstInstallTime": "2026-10-15 23:14:25"
+    },
+    "metadataMatchesBuiltVersion": true,
+    "sameAppId": true,
+    "sameFirstInstallTime": true,
+    "finishedAtUtc": "2026-10-18T03:11:06.810093+00:00"
+  },
+  "build": {
+    "command": "gradle --offline --no-daemon --console=plain :app:assembleDebug -x test -x lint",
+    "assetsLog": "assets-build.log",
+    "androidLog": "phone-build.log",
+    "result": "build-result.json",
+    "orchestrator": "build-phone.py",
+    "source": "只取当前隔离目录；旧项目目录仅复用已授权工具缓存及原证书。"
+  },
+  "staticAuthorityTrace": [
+    "原房间和小镇共用renderer.domElement；setActive(false)只停RAF，未禁用原OrbitControls。hu/uu/du/fu没有检查vi，暂停房间仍可接收小镇触摸并触发onPet/onAction。现在暂停时隔离原输入并关闭控制器，回家时恢复。静态打包锚点在room-input-static.json，实际资源assets/game-03.js。",
+    "不是两套NPC AI同时移动同一只猫：原房间lc检查vi；小镇updateCats在townPlayer存在时只执行moveNPC。冲突来自共享输入和同一player.update内的多个行为写入点。",
+    "guide原来只阻止普通闲逛，不阻止9秒后的story或庭院环境活动；到庭院还强制mode=free。pick/handlePointer在事件/抽屉打开时return，并始终优先NPC命中。现在手动目标共用接管/取消入口，旧回调按命令代数失效，自动行为只在free且无手动目的地时启动。",
+    "旧move堵路超过1秒会beginNpcContact，令双方停住；桥外没有让行优先级。现堵路改用原socialDeparture明确让行者，玩家优先，NPC固定次序，并将同一让行权传到外围堵路者，防止相互等待链。不更换寻路算法、不改碰撞半径、不增加冷却。",
+    "旧safe选择也先applyWorldChoice再reacting播放4.6秒。现蝴蝶安静绕过和钱袋继续散步直接清理，不进入reacting、不登记该次故事选择。其他原动作完成后才登记，手动中断丢弃pendingEvent，已登记完成的合法事件不回滚。雨天safe避雨仍是原合法动作。特效没有自己的RAF或遗留定时器。"
+  ],
+  "sourceFiles": [
+    {
+      "path": "app/web/town-player-runtime.inc.js",
+      "sha256": "23ef9c1944809d4b01262fad4efa4aaec7183c23ee06e62a94715377e38b10d8"
+    },
+    {
+      "path": "app/web/town-contact-runtime.inc.js",
+      "sha256": "bd16c3e920fda4b7a9a7fabb1933f54c5bdaea4067b2226bb59247cc92d7c4ec"
+    },
+    {
+      "path": "app/scripts/build_assets.py",
+      "sha256": "edb3803fd4db656da71863ce344bd70728f7e15acd9788b9e6d98c71385e66ea"
+    },
+    {
+      "path": "app/android/app/build.gradle.kts",
+      "sha256": "4ea5d408622273850ebf21b3ec2068d2fd0972cf22c6ae42ae6532e3d8ddaf27"
+    }
+  ],
+  "packagedEvidence": {
+    "inventory": "apk-static-inventory.json",
+    "townPatch": "044-town-changes-vs-043.patch",
+    "roomInputAnchors": "room-input-static.json",
+    "lifeScope": "life-source-scope.json",
+    "lifeSourceUnchanged": true,
+    "note": "只读取生产APK文件及源码元数据，未执行应用或技术测试。"
+  },
+  "screenshotEvidence": {
+    "libraryFileId": "libfile_e658ed86af3c81918ce427343a273156",
+    "materialized": false,
+    "pixelsViewed": false,
+    "reason": "已知当前Library消费端缺少读取/物化入口，本轮未重复调工具或猜测URL。"
+  },
+  "acceptance": [
+    "开启我来引导，点空路A，再在抵达前点B；应持续去B，保持引导超过9秒自动故事不能抢目标。",
+    "互动或演出中点弹窗外可通行小路；应中止未完成动作去新脚印，堵路应让行，不能重新变成互动。",
+    "遇到蝴蝶弹窗选安静绕过去，应立即停止演出并可引导，不再播放完整4.6秒或登记该次故事选择。"
+  ],
+  "uncertainties": [
+    "仅凭反馈尚不能判定043那次点击具体在何处分流；代码条件已有静态依据，但没有宣称在手机重现。",
+    "实际触摸、取消和聚集表现交给用户验收；若仍失败，最短补充现象为点空路后有无脚印/已设下脚印提示，以及猫是否先动再停。"
+  ],
+  "technicalTests": {
+    "executed": false,
+    "lintExecuted": false,
+    "simulatedInteractionExecuted": false,
+    "browserQAExecuted": false,
+    "appLaunched": false,
+    "deviceBehaviorAcceptanceExecuted": false
+  },
+  "firmware": {
+    "sourceEdited": false,
+    "built": false,
+    "flashed": false
+  },
+  "docs": [
+    "DELIVERY.md"
+  ]
+}

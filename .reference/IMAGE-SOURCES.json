@@ -1,0 +1,22 @@
+[
+  {
+    "path": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/.reference/badge-ui-confirmed-three-states-2026-10-18.jpeg",
+    "bytes": 254634,
+    "sha256": "d31f4a497a4d53eee42a2c1157f2e0e4d9c8c45c08856ddea68d45bf885b3501",
+    "dimensions": [
+      1536,
+      768
+    ],
+    "format": "JPEG"
+  },
+  {
+    "path": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/.reference/badge-lockscreen-current-2026-10-18.jpeg",
+    "bytes": 682011,
+    "sha256": "bde6c05ed115285f2eb000ce86650a2b695836ba3b28a57f1f52c1c2d7b44ea7",
+    "dimensions": [
+      1320,
+      1760
+    ],
+    "format": "JPEG"
+  }
+]

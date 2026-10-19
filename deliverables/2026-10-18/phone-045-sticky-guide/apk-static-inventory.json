@@ -1,0 +1,31 @@
+{
+  "addedEntries": [],
+  "removedEntries": [],
+  "changedEntries": [
+    {
+      "name": "AndroidManifest.xml",
+      "beforeBytes": 5728,
+      "afterBytes": 5728
+    },
+    {
+      "name": "assets/original-town-runtime.js",
+      "beforeBytes": 203045,
+      "afterBytes": 203039
+    },
+    {
+      "name": "assets/town-contact-runtime.inc.js",
+      "beforeBytes": 8350,
+      "afterBytes": 8180
+    },
+    {
+      "name": "assets/town-player-runtime.inc.js",
+      "beforeBytes": 49563,
+      "afterBytes": 49727
+    },
+    {
+      "name": "classes2.dex",
+      "beforeBytes": 166328,
+      "afterBytes": 166328
+    }
+  ]
+}

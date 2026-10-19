@@ -1,0 +1,13 @@
+{
+  "startedAtUtc": "2026-10-18T04:25:21.618981+00:00",
+  "finishedAtUtc": "2026-10-18T04:26:28.783360+00:00",
+  "exitCode": 0,
+  "esptoolHashVerified": true,
+  "applicationOnly": true,
+  "file": "cat_forest_badge-0.6.1-ring-receipt-reasons.bin",
+  "bytes": 6914288,
+  "sha256": "d3ba4f53c1666ab1e745a7393bfff9c90c9566b73a25dde4af541172c6dfc411",
+  "target": "ota_1",
+  "offset": 8519680,
+  "hardwareAcceptance": "not performed; user acceptance pending"
+}

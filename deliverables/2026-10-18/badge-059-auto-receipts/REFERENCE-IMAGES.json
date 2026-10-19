@@ -1,0 +1,29 @@
+[
+  {
+    "path": ".reference/059-care-caption.jpeg",
+    "bytes": 383940,
+    "dimensions": [
+      1320,
+      1760
+    ],
+    "sha256": "e589c0be5fe5e57c1aea641c92b6d37cbfdbf1805b92566398b9486b9adec703"
+  },
+  {
+    "path": ".reference/059-pending-paw.jpeg",
+    "bytes": 548802,
+    "dimensions": [
+      1320,
+      1760
+    ],
+    "sha256": "fdca8ca3101f6b0ff706cb869c56bb82961a14a899dd3587aa01ca36294ed3a2"
+  },
+  {
+    "path": ".reference/059-home-close.jpeg",
+    "bytes": 632236,
+    "dimensions": [
+      1320,
+      1760
+    ],
+    "sha256": "f849943b168c705d686f14dee1e8ac871c0c23913c43506ebc49b99da9264f28"
+  }
+]

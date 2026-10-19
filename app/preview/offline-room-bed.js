@@ -1,7 +1,10 @@
 /* Room-only geometry and supported side-rest pose. No store, rewards or transport. */
 (function(root,factory){const api=factory();if(typeof module==='object'&&module.exports)module.exports=api;else root.CatOfflineBed=api;})(typeof globalThis!=='undefined'?globalThis:this,function(){
  'use strict';
- const config=Object.freeze({center:[-12.4,13.65],mattress:[20.8,.85,15.8],surface:2.19,pillowTop:2.45,landing:[-11.9,2.19,13.65],sleepCenter:[-12.1,13.65],yaw:Math.PI/2});
+ const layout=globalThis.CatSceneLayout?.room;
+ if(!layout)throw new Error('CAT_SCENE_LAYOUT_UNAVAILABLE');
+ const scale=layout.expansionXZ,bed=layout.bed,world=p=>[p[0]*scale,p[1],p[2]*scale];
+ const config=Object.freeze({center:bed.centerXZ,mattress:bed.size,surface:bed.surfaceY,pillowTop:bed.pillowTopY,approach:world(bed.approach),landing:world(bed.landing),sleepCenter:bed.sleepCenterXZ.map(v=>v*scale),yaw:bed.yaw,expansionXZ:scale});
  function build({group,box}){
   const [x,z]=config.center;group.name='offline-supported-bed';
   for(const dx of [-9.5,9.5])for(const dz of [-7.2,7.2])box(group,[.8,.8,.8],[x+dx,.48,z+dz],'#9a7460');
@@ -18,7 +21,7 @@
  }
  const whiskerBases=new WeakMap();
  function reset(model){
-  let list=whiskerBases.get(model.root);if(!list){list=[];model.root.traverse(mesh=>{if(mesh.isMesh&&/^whisker_/.test(mesh.name))list.push([mesh,mesh.position.clone()]);});whiskerBases.set(model.root,list);}
+  const key=model.root.userData.nativeAssetRevision||'legacy';let saved=whiskerBases.get(model.root),list=saved?.key===key?saved.list:null;if(!list){list=[];model.root.traverse(mesh=>{if(mesh.isMesh&&/^whisker_/.test(mesh.name))list.push([mesh,mesh.position.clone()]);});whiskerBases.set(model.root,{key,list});}
   for(const [mesh,position]of list)mesh.position.copy(position);
  }
  function pose({amount,bones,model,inner,root,scale,stage,Vector,Box}){
@@ -40,12 +43,12 @@
   }
   bones.get('tail_base').rotation.x-=.9*a;
   for(const name of ['eye_left','eye_right'])bones.get(name)?.scale.setY(1-.88*a);
-  if(stage==='kitten'||stage==='baby')head.scale.multiplyScalar(1.065);
+  if(!model.root.userData.nativeAssetKey&&(stage==='kitten'||stage==='baby'))head.scale.multiplyScalar(1.065);
   inner.rotation.z=Math.PI/2*a;
   const allBones=new Set(bones.values());
   function bounds(bone,own=false,solid=false){
    root.updateWorldMatrix(true,true);const box=new Box();
-   bone.traverse(mesh=>{if(!mesh.isMesh||!mesh.visible||solid&&/^whisker_/.test(mesh.name))return;let parent=mesh.parent;while(parent&&!allBones.has(parent))parent=parent.parent;if(own&&parent!==bone)return;box.union(new Box().setFromObject(mesh));});return box;
+   bone.traverse(mesh=>{if(!mesh.isMesh||!mesh.visible||mesh.userData.accessory||solid&&/^whisker_/.test(mesh.name))return;let parent=mesh.parent;while(parent&&!allBones.has(parent))parent=parent.parent;if(own&&parent!==bone)return;box.union(new Box().setFromObject(mesh));});return box;
   }
   // Plant the torso on the mattress as it rolls onto its side. The old paw
   // correction assumed an upright local Y and cannot be used for a rolled cat.
@@ -57,13 +60,13 @@
   // Settle downward as well as enforcing the lower contact plane. A lift-only
   // constraint can leave an adult's muzzle hanging above the pillow.
   support(head,config.pillowTop,true,a);
-  for(const [mesh]of whiskerBases.get(model.root))support(mesh,config.pillowTop+.015);
+  for(const [mesh]of whiskerBases.get(model.root).list)support(mesh,config.pillowTop+.015);
   for(const name of ['front_left','front_right','back_left','back_right'])support(bones.get(name),config.surface);
-  root.updateWorldMatrix(true,true);const box=new Box().setFromObject(root),center=box.getCenter(new Vector());
+  root.updateWorldMatrix(true,true);const box=bounds(root),center=box.getCenter(new Vector());
   const delta=new Vector(config.sleepCenter[0]-(1-scale)*3.5*a-center.x,0,config.sleepCenter[1]-center.z);
   const rotation=inner.parent.quaternion.clone().invert();delta.applyQuaternion(rotation);inner.position.x+=delta.x;inner.position.z+=delta.z;
   root.updateWorldMatrix(true,true);
-  return {amount:a,roll:inner.rotation.z,bounds:new Box().setFromObject(root),torso:bounds(body,true),head:bounds(head,false,true),headCore:bounds(head,true,true)};
+  return {amount:a,roll:inner.rotation.z,bounds:bounds(root),torso:bounds(body,true),head:bounds(head,false,true),headCore:bounds(head,true,true)};
  }
  return {config,build,pose,reset};
 });

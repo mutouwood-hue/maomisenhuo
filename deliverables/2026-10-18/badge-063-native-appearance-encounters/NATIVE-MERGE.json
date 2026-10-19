@@ -1,0 +1,28 @@
+{
+  "candidate": "native-appearance.patch only",
+  "fileHashesMatch": {
+    "app/scripts/build_assets.py": true,
+    "app/scripts/import_native_cat_assets.py": true,
+    "app/web/native-cat-breeds.js": true,
+    "app/web/native-cat-data.js": true,
+    "app/web/native-cat-legacy-outfits.js": true,
+    "app/web/native-cat-model.js": true,
+    "app/web/offline-room-bed.js": true,
+    "app/web/pet-appearance.js": true,
+    "app/web/pet-growth.js": true,
+    "firmware/main/CMakeLists.txt": true,
+    "firmware/main/assets/native-cat/legacy-provenance.json": true,
+    "firmware/main/assets/native-cat/legacy_cat_data.c": true,
+    "firmware/main/assets/native-cat/native_cat_data.c": true,
+    "firmware/main/assets/native-cat/native_cat_data.h": true,
+    "firmware/main/assets/native-cat/provenance.json": true,
+    "firmware/main/badge_appearance.c": true,
+    "firmware/main/badge_appearance.h": true,
+    "firmware/main/badge_native_cat.c": true,
+    "firmware/main/badge_native_cat.h": true,
+    "firmware/main/badge_scene.c": true,
+    "firmware/main/badge_scene.h": true,
+    "firmware/tools/pack_legacy_cat.py": true,
+    "firmware/tools/pack_native_cat.py": true
+  }
+}

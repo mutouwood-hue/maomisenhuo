@@ -1,0 +1,120 @@
+{
+  "version": "0.6.0-tail-frame-status",
+  "baseline": "b8ca479 plus existing uncommitted 056-059",
+  "build": {
+    "exitCode": 0,
+    "log": "badge-build.log",
+    "initialSessionTransportLost": true,
+    "recoveredProductionIncrementalBuildExitCode": 0
+  },
+  "image": {
+    "file": "cat_forest_badge-0.6.0-tail-frame-status.bin",
+    "version": "0.6.0-tail-frame-status",
+    "bytes": 6913648,
+    "sha256": "da58fcf5664196107be3e2d8f04ce267333e91e03a4f8cf982244ebbfb8b7863"
+  },
+  "flash": {
+    "startedAtUtc": "2026-10-18T04:08:31.735436+00:00",
+    "finishedAtUtc": "2026-10-18T04:09:38.913887+00:00",
+    "exitCode": 0,
+    "file": "cat_forest_badge-0.6.0-tail-frame-status.bin",
+    "bytes": 6913648,
+    "sha256": "da58fcf5664196107be3e2d8f04ce267333e91e03a4f8cf982244ebbfb8b7863",
+    "target": "ota_1",
+    "offset": 8519680,
+    "esptoolHashVerified": true,
+    "applicationOnly": true,
+    "uiAcceptance": "not executed; pending user",
+    "queueDrainAcceptance": "not executed; not claimed"
+  },
+  "device": {
+    "chip": "ESP32-S3 (QFN56 rev 0.2)",
+    "mac": "7c:0c:5f:42:36:84",
+    "port": "/dev/cu.usbmodem1101"
+  },
+  "changes": {
+    "finalSnapshotMustRenderAndFinishDMA": true,
+    "firstLiveFullFrameMustRenderAndFinishDMABeforeResume": true,
+    "displayDriverAndBufferModeUnchanged": true,
+    "acceptedGestureThresholdsAndTimingUnchanged": true,
+    "clockPositionUnchanged": true,
+    "mainFaceDateHidden": true,
+    "detailAndAODDateRetained": true,
+    "statusStrokePx": 14,
+    "statusCenterRadiusPx": 195,
+    "statusIconPx": 22,
+    "statusIconPlacement": "right of each supplied arc; given SVG positions rounded to pixels",
+    "statusBindings": [
+      "food",
+      "mood",
+      "energy"
+    ],
+    "zeroColoredCap": false,
+    "unknownProgress": "neutral track only",
+    "svgPreviewPercentagesUsedAsData": false,
+    "namePlateOrSceneMoved": false
+  },
+  "preserved": {
+    "phoneVersion": "0.4.6-auto-receipts",
+    "phoneBuiltOrInstalledThisBatch": false,
+    "acceptedGestureAndSceneSources": true,
+    "ringAndProtocolSources": true,
+    "nvsBootloaderPartitionsOtadataAndAssets": true,
+    "previousPawEntryRemovalAndConnectionIcon": true
+  },
+  "references": {
+    "index": "REFERENCE-SOURCES.json",
+    "pngPixelsViewed": true,
+    "specAndSVGRawFilesRead": true
+  },
+  "scope": {
+    "sourceFiles": [
+      {
+        "path": "firmware/CMakeLists.txt",
+        "bytes": 18170,
+        "sha256": "e7fdcd3ca7778a0b4a592a8973b8a5546d7baf9c1ddd7d9a7f24fc16f75b759c"
+      },
+      {
+        "path": "firmware/main/badge_pages.c",
+        "bytes": 111324,
+        "sha256": "d2ca11f6a4118b611a84e846c9fc1e274392009108ddd0913d03528b1b3650ee"
+      },
+      {
+        "path": "firmware/main/local2_wire.c",
+        "bytes": 25066,
+        "sha256": "43c0d0b124ae8d02024bdf0b3e3a50a30c6d4f4b29815c6cb22f010bd08e64fb"
+      },
+      {
+        "path": "firmware/main/assets/status_icons_060.inc",
+        "bytes": 23617,
+        "sha256": "c7750b9220919bdf2da9de1502a4d3b6b6d73b686d7f8472c31de17c3a716e2e"
+      }
+    ],
+    "protectedFileCount": 182,
+    "protectedChanged": []
+  },
+  "excluded": [
+    "ACK changes",
+    "town",
+    "power key",
+    "tap-to-add-friend",
+    "encounter",
+    "new model library"
+  ],
+  "notEstablished": [
+    "physical no-tearing / user final-frame acceptance",
+    "real-device status layout acceptance",
+    "exact runtime pause cause of prior event46",
+    "queue drained"
+  ],
+  "validation": {
+    "productionBuild": true,
+    "automaticEsptoolDataHash": true,
+    "technicalTests": false,
+    "simulatedInput": false,
+    "browserQA": false,
+    "appLaunch": false
+  },
+  "report": "DELIVERY.md",
+  "recordedAtUtc": "2026-10-18T04:10:48.766054+00:00"
+}

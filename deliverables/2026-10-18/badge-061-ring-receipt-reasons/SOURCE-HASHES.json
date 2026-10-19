@@ -1,0 +1,42 @@
+[
+  {
+    "path": "app/android/app/build.gradle.kts",
+    "bytes": 804,
+    "sha256": "f11118d1264bf4011ef797fd0183dbcf45a79c29957c526845493599ea451487"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-device-events.js",
+    "bytes": 18241,
+    "sha256": "84fc986d9ce63732fa5c61f6b1ec04584775ba12dea579c5377fe4683ef7cdd2"
+  },
+  {
+    "path": "app/preview/offline-device-events.js",
+    "bytes": 18241,
+    "sha256": "84fc986d9ce63732fa5c61f6b1ec04584775ba12dea579c5377fe4683ef7cdd2"
+  },
+  {
+    "path": "app/web/offline-device-events.js",
+    "bytes": 18241,
+    "sha256": "84fc986d9ce63732fa5c61f6b1ec04584775ba12dea579c5377fe4683ef7cdd2"
+  },
+  {
+    "path": "firmware/CMakeLists.txt",
+    "bytes": 18173,
+    "sha256": "1536468317bd6fe674f60ddac78e984d7f5fb626808a1a1eb76b4acf13f6549e"
+  },
+  {
+    "path": "firmware/main/badge_day_ui.inc",
+    "bytes": 10965,
+    "sha256": "9b76a4f5ece9509d49fce23bf3b4a4769aebc5e8850363e132c3e08e12edd585"
+  },
+  {
+    "path": "firmware/main/badge_pages.c",
+    "bytes": 112334,
+    "sha256": "a2d769ef85edbeb5f5876671e0ffee29ef96dc6ff53ad4ca2630395dacd2e6be"
+  },
+  {
+    "path": "firmware/main/local2_wire.c",
+    "bytes": 25069,
+    "sha256": "e8b8835269c2622ddd7871d99c1981eada6229ba826d5cca7f3d193825b96296"
+  }
+]

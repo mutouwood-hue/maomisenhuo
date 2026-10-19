@@ -1,0 +1,358 @@
+--- a/app/web/offline-scene-map.js
++++ b/app/web/offline-scene-map.js
+@@ -16,6 +16,12 @@
+     const number=value=>typeof value==='number'&&Number.isFinite(value)&&value>=0&&value<=100?Math.round(value):null;
+     const snapshot={petId:String(pet.id),scene,action,weather,pet:{name:pet.name,breed:pet.breed,
+       food:number(pet.stats.food),mood:number(pet.stats.mood),clean:number(pet.stats.clean),energy:number(pet.stats.energy),health:number(pet.health),coins:Number.isSafeInteger(pet.coins)&&pet.coins>=0?pet.coins:null}};
++    // Display only: consume the existing game stage/outfit, never derive age or
++    // body shape from care stats. Unknown appearance is omitted as one group.
++    const growthStage=pet.stage==='baby'?'kitten':pet.stage;
++    if(['kitten','young','adult'].includes(growthStage)&&typeof pet.outfit==='string'&&/^[A-Za-z0-9_-]{1,64}$/.test(pet.outfit)){
++      Object.assign(snapshot.pet,{growthStage,outfit:pet.outfit,bodyShape:['standard','slim','round'].includes(pet.bodyShape)?pet.bodyShape:'standard'});
++    }
+     if(Object.values(snapshot.pet).some(value=>value===null||value===undefined))return null;
+     return snapshot;
+   }
+@@ -70,6 +76,8 @@
+     snapshot.revision=window.CatTownExperience?.sceneRevision||0;
+     if(context?.capabilities?.includes('scene_places_v1')&&snapshot.scene==='away')snapshot.scene='garden';
+     if(inTown){snapshot.scene=context?.capabilities?.includes('scene_places_v1')?(town.region==='garden'?'garden':'town'):'away';snapshot.action=town.action==='walk'?'walk':'idle';snapshot.weather=town.weather==='rain'?'rain':'clear';}
++    // The appearance travels with THIS resolved wire identity, not pet.id or
++    // any separate display module's local cat-1 identifier.
+     snapshot.petId=identities.resolve(state.pet,context);return snapshot;
+   }
+   window.CatOfflineSceneMap=Object.freeze({project,read,createIdentityRegistry,IDENTITY_KEY});
+--- a/app/web/cflocal2-adapter.js
++++ b/app/web/cflocal2-adapter.js
+@@ -23,16 +23,25 @@
+ const safe=n=>Number.isSafeInteger(n)&&n>=0;
+ const ascii=(s,n)=>typeof s==='string'&&s.length>0&&s.length<=n&&/^[\x21-\x7e]+$/.test(s);
+ const utf8len=s=>new TextEncoder().encode(s).length;
++const GROWTH=['kitten','young','adult'],BODIES=['standard','slim','round'];
++const PET_FIELDS=['name','breed','food','mood','clean','energy','health','coins','growthStage','outfit','bodyShape'];
++const SCENE_FIELDS=['requestId','petId','revision','scene','action','weather','pet','epochMs','utcOffsetMinutes'];
++const hasAppearance=p=>['growthStage','outfit','bodyShape'].some(k=>Object.hasOwn(p,k));
+ function validateScene(s){
+-  if(!s||!ascii(s.requestId,64)||!ascii(s.petId,64)||!safe(s.revision)||!SCENES.includes(s.scene)||!ACTIONS.includes(s.action)||!WEATHER.includes(s.weather))throw fail('INVALID_SCENE','场景或宠物标识无效。');
++  if(!s||Object.keys(s).some(k=>!SCENE_FIELDS.includes(k))||!ascii(s.requestId,64)||!ascii(s.petId,64)||!safe(s.revision)||!SCENES.includes(s.scene)||!ACTIONS.includes(s.action)||!WEATHER.includes(s.weather))throw fail('INVALID_SCENE','场景或宠物标识无效。');
+   const p=s.pet;
+-  if(!p||typeof p.name!=='string'||!p.name||utf8len(p.name)>24||/[\u0000-\u001f\ud800-\udfff]/u.test(p.name)||!ascii(p.breed,16)||!safe(p.coins)||['food','mood','clean','energy','health'].some(k=>!Number.isInteger(p[k])||p[k]<0||p[k]>100))throw fail('INVALID_SCENE','宠物状态超出设备范围。');
++  if(!p||Object.keys(p).some(k=>!PET_FIELDS.includes(k))||typeof p.name!=='string'||!p.name||utf8len(p.name)>24||/[\u0000-\u001f\ud800-\udfff]/u.test(p.name)||!ascii(p.breed,16)||!safe(p.coins)||['food','mood','clean','energy','health'].some(k=>!Number.isInteger(p[k])||p[k]<0||p[k]>100))throw fail('INVALID_SCENE','宠物状态超出设备范围。');
++  if(hasAppearance(p)&&(!/^cat-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s.petId)||!GROWTH.includes(p.growthStage)||typeof p.outfit!=='string'||!/^[A-Za-z0-9_-]{1,64}$/.test(p.outfit)||!BODIES.includes(p.bodyShape===undefined?'standard':p.bodyShape)))throw fail('INVALID_SCENE','展示外观缺少匹配的持久宠物身份或有效阶段/装扮。');
+   if(s.utcOffsetMinutes!==undefined&&(!Number.isInteger(s.utcOffsetMinutes)||s.utcOffsetMinutes< -840||s.utcOffsetMinutes>840))throw fail('INVALID_SCENE','手机时区无效。');
+   if(s.epochMs!==undefined&&(!safe(s.epochMs)||s.epochMs<1577836800000||s.epochMs>4102444800000))throw fail('INVALID_SCENE','校时时间无效。');
+ }
+-function petView(p){return Object.fromEntries(['name','breed','food','mood','clean','energy','health','coins'].map(k=>[k,p[k]]));}
++function petView(p,appearance=true){
++  const view=Object.fromEntries(['name','breed','food','mood','clean','energy','health','coins'].map(k=>[k,p[k]]));
++  if(appearance&&hasAppearance(p))Object.assign(view,{growthStage:p.growthStage,outfit:p.outfit,bodyShape:p.bodyShape??'standard'});
++  return view;
++}
+ function offset(s){return s.utcOffsetMinutes??-new Date(s.epochMs??Date.now()).getTimezoneOffset();}
+-function semantic(s){return JSON.stringify({petId:s.petId,sourceRevision:s.revision,scene:s.scene,action:s.action,weather:s.weather,utcOffsetMinutes:offset(s),pet:petView(s.pet)});}
++function semantic(s,appearance=true){return JSON.stringify({petId:s.petId,sourceRevision:s.revision,scene:s.scene,action:s.action,weather:s.weather,utcOffsetMinutes:offset(s),pet:petView(s.pet,appearance)});}
+ let active=null;
+ class Journal{
+   constructor(storage,uuid){
+@@ -131,10 +140,11 @@
+     pushScene(input){return exclusive(async()=>{
+       validateScene(input);const {s,id,d}=ready();if(d.pending)throw fail('PENDING_UNKNOWN','上一条指令结果待确认，请显式重试。','unknown');
+       if(['garden','town'].includes(input.scene)&&!s.hello.capabilities.includes('scene_places_v1'))throw fail('SCENE_UNAVAILABLE','此吧唧未声明小镇/花园区分能力。');
+-      const content=semantic(input);
++      const appearance=s.hello.capabilities.includes('pet_appearance_v1');
++      const content=semantic(input,appearance);
+       if(d.lastSemantic===content&&confirmed.get(id)?.generation===s.evidence?.generation&&confirmed.get(id)?.semantic===content&&(input.epochMs===undefined||confirmed.get(id)?.clock))return {status:'device_persisted',revision:d.syncRevision,duplicate:true};
+       const revision=Math.max(d.syncRevision,s.device?.snapshot?.revision||0)+1;if(!safe(revision)||d.nextSeq>MAX)throw fail('SEQUENCE_EXHAUSTED','同步序号已用尽。');
+-      const data={petId:input.petId,revision,scene:input.scene,action:input.action,weather:input.weather,pet:petView(input.pet)};if(input.epochMs!==undefined){data.epochMs=input.epochMs;data.utcOffsetMinutes=offset(input);}
++      const data={petId:input.petId,revision,scene:input.scene,action:input.action,weather:input.weather,pet:petView(input.pet,appearance)};if(input.epochMs!==undefined){data.epochMs=input.epochMs;data.utcOffsetMinutes=offset(input);}
+       journal.edit(v=>{v.devices[id].pending={id:input.requestId,seq:d.nextSeq,op:'snapshot',data,semantic:content};});
+       const reply=await sendPending(id,{fresh:true});return {status:'device_persisted',revision,duplicate:reply.data.duplicate===true};
+     });},
+--- a/firmware/main/local2_core.h
++++ b/firmware/main/local2_core.h
+@@ -6,7 +6,9 @@
+ #define L2_JS_MAX UINT64_C(9007199254740991)
+ #define L2_EVENT_MAX 200u
+ #define L2_PEER_MAX 32u
+-#define L2_STORE_MAX 8192u
++/* Reserve the appended schema5 display metadata without shrinking the 062
++ * payload budget or preventing a full valid schema4 blob from migrating. */
++#define L2_STORE_MAX (8192u + 68u)
+ #define L2_DEVICE_MAX 32u
+ #define L2_ID_MAX 64u
+ 
+@@ -19,11 +21,21 @@
+     L2_ACTION_WATER, L2_ACTION_BATH, L2_ACTION_PLAY, L2_ACTION_SLEEP } l2_action_t;
+ typedef enum { L2_WEATHER_CLEAR, L2_WEATHER_RAIN, L2_WEATHER_SNOW } l2_weather_t;
+ typedef enum { L2_GIFT_NONE, L2_GIFT_PENDING, L2_GIFT_PLAYING, L2_GIFT_SHOWN } l2_gift_state_t;
++/* Phone-computed display state only; independent from l2_meet_t.stage. */
++typedef enum { L2_GROWTH_UNKNOWN, L2_GROWTH_KITTEN, L2_GROWTH_YOUNG, L2_GROWTH_ADULT } l2_growth_t;
++typedef enum { L2_BODY_STANDARD, L2_BODY_SLIM, L2_BODY_ROUND } l2_body_shape_t;
+ typedef struct {
+     char pet_id[65], name[25], breed[17];
++    bool appearance_known;
++    l2_growth_t growth_stage;
++    l2_body_shape_t body_shape; /* Reserved request; no local body algorithm. */
++    char outfit[65];
+     uint8_t food,mood,clean,energy,health;
+     uint64_t coins;
+ } l2_pet_t;
++bool l2_pet_appearance_valid(const l2_pet_t *);
++const char *l2_growth_name(l2_growth_t); /* NULL for unknown/invalid. */
++const char *l2_body_shape_name(l2_body_shape_t); /* NULL for invalid. */
+ typedef struct {
+     uint64_t revision;
+     bool has_epoch_ms;
+--- a/firmware/main/local2_core.c
++++ b/firmware/main/local2_core.c
+@@ -14,12 +14,24 @@
+ static bool hexid(const char *s){if(!s)return false;for(unsigned i=0;i<32;i++)if(!s[i] || hex(s[i])<0)return false;return !s[32];}
+ static bool uuid(const char *s){if(!s)return false;for(unsigned i=0;i<36;i++){char c=s[i];if(!c)return false;if(i==8 || i==13 || i==18 || i==23){if(c!='-')return false;}else if(!((c>='0' && c<='9') || (c>='a' && c<='f') || (c>='A' && c<='F')))return false;}return !s[36];}
+ static bool utf8_name(const char *s){size_t n=0;while(n<25 && s[n])n++;if(!n || n>24)return false;size_t i=0;while(i<n){uint8_t a=(uint8_t)s[i++];if(a<0x80){if(a<32 || a==127)return false;continue;}unsigned more;uint32_t cp,min;if(a>=0xc2 && a<=0xdf){more=1;cp=a&31u;min=0x80;}else if(a>=0xe0 && a<=0xef){more=2;cp=a&15u;min=0x800;}else if(a>=0xf0 && a<=0xf4){more=3;cp=a&7u;min=0x10000;}else return false;if(more>n-i)return false;while(more--){uint8_t b=(uint8_t)s[i++];if((b&0xc0)!=0x80)return false;cp=(cp<<6)|(b&63);}if(cp<min || cp>0x10ffff || (cp>=0xd800 && cp<=0xdfff))return false;}return true;}
+-static bool snapshot_valid(const l2_snapshot_t *s){return s && s->revision<=L2_JS_MAX && (!s->has_epoch_ms || s->epoch_ms<=L2_JS_MAX) && s->scene>=L2_SCENE_HOME && s->scene<=L2_SCENE_TOWN && s->action>=L2_ACTION_IDLE && s->action<=L2_ACTION_SLEEP && s->weather>=L2_WEATHER_CLEAR && s->weather<=L2_WEATHER_SNOW && s->gift_state>=L2_GIFT_NONE && s->gift_state<=L2_GIFT_SHOWN && ascii(s->pet.pet_id,sizeof(s->pet.pet_id),false) && utf8_name(s->pet.name) && ascii(s->pet.breed,sizeof(s->pet.breed),false) && s->pet.food<=100 && s->pet.mood<=100 && s->pet.clean<=100 && s->pet.energy<=100 && s->pet.health<=100 && s->pet.coins<=L2_JS_MAX;}
+-static void canonical_snapshot(l2_snapshot_t *d,const l2_snapshot_t *s){memset(d,0,sizeof(*d));d->revision=s->revision;d->has_epoch_ms=s->has_epoch_ms;d->epoch_ms=s->has_epoch_ms?s->epoch_ms:0;d->scene=s->scene;d->action=s->action;d->weather=s->weather;d->gift_state=s->gift_state;strcpy(d->pet.pet_id,s->pet.pet_id);strcpy(d->pet.name,s->pet.name);strcpy(d->pet.breed,s->pet.breed);d->pet.food=s->pet.food;d->pet.mood=s->pet.mood;d->pet.clean=s->pet.clean;d->pet.energy=s->pet.energy;d->pet.health=s->pet.health;d->pet.coins=s->pet.coins;}
++const char *l2_growth_name(l2_growth_t value){switch(value){case L2_GROWTH_KITTEN:return "kitten";case L2_GROWTH_YOUNG:return "young";case L2_GROWTH_ADULT:return "adult";default:return NULL;}}
++const char *l2_body_shape_name(l2_body_shape_t value){switch(value){case L2_BODY_STANDARD:return "standard";case L2_BODY_SLIM:return "slim";case L2_BODY_ROUND:return "round";default:return NULL;}}
++bool l2_pet_appearance_valid(const l2_pet_t *p){
++ if(!p)return false;
++ if(!p->appearance_known)return p->growth_stage==L2_GROWTH_UNKNOWN&&p->body_shape==L2_BODY_STANDARD&&!p->outfit[0];
++ if(!l2_growth_name(p->growth_stage)||!l2_body_shape_name(p->body_shape)||strncmp(p->pet_id,"cat-",4)||!uuid(p->pet_id+4))return false;
++ size_t n=0;for(;n<sizeof(p->outfit)&&p->outfit[n];n++){char c=p->outfit[n];if(!((c>='a'&&c<='z')||(c>='A'&&c<='Z')||(c>='0'&&c<='9')||c=='_'||c=='-'))return false;}
++ return n>0&&n<sizeof(p->outfit);
++}
++static void write_appearance(writer_t *w,const l2_pet_t *p){number(w,p->appearance_known,1);number(w,p->growth_stage,1);number(w,p->body_shape,1);bytes(w,p->outfit,65);}
++static void read_appearance(reader_t *r,l2_pet_t *p);
++static bool snapshot_valid(const l2_snapshot_t *s){return s && l2_pet_appearance_valid(&s->pet) && s->revision<=L2_JS_MAX && (!s->has_epoch_ms || s->epoch_ms<=L2_JS_MAX) && s->scene>=L2_SCENE_HOME && s->scene<=L2_SCENE_TOWN && s->action>=L2_ACTION_IDLE && s->action<=L2_ACTION_SLEEP && s->weather>=L2_WEATHER_CLEAR && s->weather<=L2_WEATHER_SNOW && s->gift_state>=L2_GIFT_NONE && s->gift_state<=L2_GIFT_SHOWN && ascii(s->pet.pet_id,sizeof(s->pet.pet_id),false) && utf8_name(s->pet.name) && ascii(s->pet.breed,sizeof(s->pet.breed),false) && s->pet.food<=100 && s->pet.mood<=100 && s->pet.clean<=100 && s->pet.energy<=100 && s->pet.health<=100 && s->pet.coins<=L2_JS_MAX;}
++static void canonical_snapshot(l2_snapshot_t *d,const l2_snapshot_t *s){memset(d,0,sizeof(*d));d->revision=s->revision;d->has_epoch_ms=s->has_epoch_ms;d->epoch_ms=s->has_epoch_ms?s->epoch_ms:0;d->scene=s->scene;d->action=s->action;d->weather=s->weather;d->gift_state=s->gift_state;strcpy(d->pet.pet_id,s->pet.pet_id);strcpy(d->pet.name,s->pet.name);strcpy(d->pet.breed,s->pet.breed);d->pet.appearance_known=s->pet.appearance_known;d->pet.growth_stage=s->pet.growth_stage;d->pet.body_shape=s->pet.body_shape;strcpy(d->pet.outfit,s->pet.outfit);d->pet.food=s->pet.food;d->pet.mood=s->pet.mood;d->pet.clean=s->pet.clean;d->pet.energy=s->pet.energy;d->pet.health=s->pet.health;d->pet.coins=s->pet.coins;}
+ static void write_snapshot(writer_t *w,const l2_snapshot_t *s){number(w,s->revision,8);number(w,s->has_epoch_ms,1);number(w,s->epoch_ms,8);number(w,s->scene,1);number(w,s->action,1);number(w,s->weather,1);number(w,s->gift_state,1);bytes(w,s->pet.pet_id,65);bytes(w,s->pet.name,25);bytes(w,s->pet.breed,17);number(w,s->pet.food,1);number(w,s->pet.mood,1);number(w,s->pet.clean,1);number(w,s->pet.energy,1);number(w,s->pet.health,1);number(w,s->pet.coins,8);}
+ static bool readbool(reader_t *r){uint64_t n=readnumber(r,1);if(n>1)r->ok=false;return n==1;}
++static void read_appearance(reader_t *r,l2_pet_t *p){p->appearance_known=readbool(r);p->growth_stage=(l2_growth_t)readnumber(r,1);p->body_shape=(l2_body_shape_t)readnumber(r,1);readbytes(r,p->outfit,65);}
+ static void read_snapshot(reader_t *r,l2_snapshot_t *s){s->revision=readnumber(r,8);s->has_epoch_ms=readbool(r);s->epoch_ms=readnumber(r,8);s->scene=(l2_scene_t)readnumber(r,1);s->action=(l2_action_t)readnumber(r,1);s->weather=(l2_weather_t)readnumber(r,1);s->gift_state=(l2_gift_state_t)readnumber(r,1);readbytes(r,s->pet.pet_id,65);readbytes(r,s->pet.name,25);readbytes(r,s->pet.breed,17);s->pet.food=(uint8_t)readnumber(r,1);s->pet.mood=(uint8_t)readnumber(r,1);s->pet.clean=(uint8_t)readnumber(r,1);s->pet.energy=(uint8_t)readnumber(r,1);s->pet.health=(uint8_t)readnumber(r,1);s->pet.coins=readnumber(r,8);}
+-static bool same_snapshot(const l2_snapshot_t *a,const l2_snapshot_t *b){uint8_t x[160],y[160];writer_t wx={x,sizeof(x),0,true},wy={y,sizeof(y),0,true};write_snapshot(&wx,a);write_snapshot(&wy,b);return wx.ok && wy.ok && wx.pos==wy.pos && !memcmp(x,y,wx.pos);}
++static bool same_snapshot(const l2_snapshot_t *a,const l2_snapshot_t *b){uint8_t x[160],y[160];writer_t wx={x,sizeof(x),0,true},wy={y,sizeof(y),0,true};write_snapshot(&wx,a);write_snapshot(&wy,b);return wx.ok && wy.ok && wx.pos==wy.pos && !memcmp(x,y,wx.pos) && a->pet.appearance_known==b->pet.appearance_known && a->pet.growth_stage==b->pet.growth_stage && a->pet.body_shape==b->pet.body_shape && !strcmp(a->pet.outfit,b->pet.outfit);}
+ static bool receipt_valid(const l2_receipt_t *r){return r && hexid(r->peer_id) && r->counter && r->counter<=L2_JS_MAX && r->epoch_ms<=L2_JS_MAX && r->gift_kind==L2_GIFT_FLOWER && r->quantity==1;}
+ static bool same_receipt(const l2_receipt_t *a,const l2_receipt_t *b){return !strcmp(a->peer_id,b->peer_id) && a->counter==b->counter && a->epoch_ms==b->epoch_ms && a->gift_kind==b->gift_kind && a->quantity==b->quantity;}
+ static void copy_receipt(l2_receipt_t *d,const l2_receipt_t *s){memset(d,0,sizeof(*d));strcpy(d->peer_id,s->peer_id);d->counter=s->counter;d->epoch_ms=s->epoch_ms;d->gift_kind=s->gift_kind;d->quantity=s->quantity;}
+@@ -35,12 +47,13 @@
+ }
+ static void write_meet(writer_t *w,const l2_meet_t *m){bytes(w,m->id,16);number(w,m->method,1);number(w,m->count,1);bytes(w,m->mark,16);number(w,m->stage,1);number(w,m->epoch_ms,8);bytes(w,m->name,25);bytes(w,m->breed,17);}
+ static void read_meet(reader_t *r,l2_meet_t *m){readbytes(r,m->id,16);m->method=(uint8_t)readnumber(r,1);m->count=(uint8_t)readnumber(r,1);readbytes(r,m->mark,16);m->stage=(uint8_t)readnumber(r,1);m->epoch_ms=readnumber(r,8);readbytes(r,m->name,25);readbytes(r,m->breed,17);}
+-static size_t encode_saved(const l2_saved_t *s,uint8_t *out,size_t cap){writer_t w={out,cap,0,true};bytes(&w,"CFL2",4);number(&w,4,2);bytes(&w,s->device_id,33);number(&w,s->has_snapshot,1);write_snapshot(&w,&s->snapshot);number(&w,s->has_owner,1);bytes(&w,s->last_request.client_id,37);number(&w,s->last_request.seq,8);bytes(&w,s->last_request.request_id,65);bytes(&w,s->last_request.hash,32);number(&w,s->last_result.status,1);number(&w,s->last_result.revision,8);number(&w,s->last_result.event_counter,8);number(&w,s->next_event,8);number(&w,s->last_ack,8);number(&w,s->event_count,2);number(&w,s->peer_count,2);number(&w,s->outgoing_count,2);number(&w,s->next_peer_counter,8);number(&w,s->last_peer_ack,8);bytes(&w,s->last_peer_ack_id,33);number(&w,s->has_gift,1);write_receipt(&w,&s->last_gift);number(&w,s->gift_state,1);
++static size_t encode_saved(const l2_saved_t *s,uint8_t *out,size_t cap){writer_t w={out,cap,0,true};bytes(&w,"CFL2",4);number(&w,5,2);bytes(&w,s->device_id,33);number(&w,s->has_snapshot,1);write_snapshot(&w,&s->snapshot);number(&w,s->has_owner,1);bytes(&w,s->last_request.client_id,37);number(&w,s->last_request.seq,8);bytes(&w,s->last_request.request_id,65);bytes(&w,s->last_request.hash,32);number(&w,s->last_result.status,1);number(&w,s->last_result.revision,8);number(&w,s->last_result.event_counter,8);number(&w,s->next_event,8);number(&w,s->last_ack,8);number(&w,s->event_count,2);number(&w,s->peer_count,2);number(&w,s->outgoing_count,2);number(&w,s->next_peer_counter,8);number(&w,s->last_peer_ack,8);bytes(&w,s->last_peer_ack_id,33);number(&w,s->has_gift,1);write_receipt(&w,&s->last_gift);number(&w,s->gift_state,1);
+  for(unsigned i=0;i<s->event_count;i++){const l2_event_t *e=&s->events[i];number(&w,e->counter,8);number(&w,e->epoch_ms,8);number(&w,e->kind==L2_EVENT_GIFT?(0x80u|e->peer_slot):e->kind==L2_EVENT_MEET?(0x40u|e->peer_slot):(unsigned)e->action,1);if(e->kind==L2_EVENT_GIFT)number(&w,e->peer_counter,8);if(e->kind==L2_EVENT_MEET)write_meet(&w,&e->meet);}
+  for(unsigned i=0;i<s->peer_count;i++){write_receipt(&w,&s->peers[i]);number(&w,s->peer_first_outgoing[i],8);number(&w,s->peer_outgoing_acked[i],1);}
+  for(unsigned i=0;i<s->outgoing_count;i++){unsigned slot=0;while(slot<s->peer_count && strcmp(s->peers[slot].peer_id,s->outgoing[i].peer_id))slot++;number(&w,slot,1);number(&w,s->outgoing[i].counter,8);}
+  number(&w,s->terminal.counter,8);number(&w,s->terminal.status,1);number(&w,s->terminal.action,1);bytes(&w,s->terminal.reason,41);bytes(&w,s->terminal.save_digest,65);
+  for(unsigned i=0;i<s->peer_count;i++)write_meet(&w,&s->encounters[i]);
++ write_appearance(&w,&s->snapshot.pet);
+  if(!w.ok || cap-w.pos<4)return 0;
+  uint32_t crc=crc32(out,w.pos);
+  number(&w,crc,4);
+@@ -69,6 +82,7 @@
+ static bool same_terminal(const l2_terminal_t *a,const l2_terminal_t *b){return a->counter==b->counter&&a->status==b->status&&!strcmp(a->reason,b->reason)&&!strcmp(a->save_digest,b->save_digest);}
+ static bool state_valid(const l2_saved_t *s){if(!hexid(s->device_id) || !s->next_event || s->next_event>L2_JS_MAX || s->last_ack>=s->next_event || !s->next_peer_counter || s->next_peer_counter>L2_JS_MAX || s->last_peer_ack>=s->next_peer_counter || s->event_count>L2_EVENT_MAX || s->peer_count>L2_PEER_MAX || s->outgoing_count>L2_PEER_MAX || s->gift_state>L2_GIFT_SHOWN)return false;
+  if(s->has_snapshot && !snapshot_valid(&s->snapshot))return false;
++ if(!l2_pet_appearance_valid(&s->snapshot.pet)||(!s->has_snapshot&&s->snapshot.pet.appearance_known))return false;
+  if(s->terminal.counter && (s->terminal.counter!=s->last_ack || !terminal_valid(&s->terminal)))return false;
+  if(!s->terminal.counter && (s->terminal.status || s->terminal.action || s->terminal.reason[0] || s->terminal.save_digest[0]))return false;
+  if(s->has_owner && (!uuid(s->last_request.client_id) || !s->last_request.seq || s->last_request.seq>L2_JS_MAX || !ascii(s->last_request.request_id,65,false) || s->last_result.status!=L2_OK))return false;
+@@ -78,10 +92,10 @@
+  unsigned reserved=0,pending=0;for(unsigned i=0;i<s->peer_count;i++){const l2_receipt_t *p=&s->peers[i];uint64_t out=s->peer_first_outgoing[i];if(!hexid(p->peer_id) || !strcmp(p->peer_id,s->device_id))return false;if(p->counter){if(!receipt_valid(p))return false;}else if((!out&&!s->encounters[i].stage) || p->epoch_ms || p->gift_kind || p->quantity)return false;if(s->encounters[i].stage&&!l2_meet_valid(&s->encounters[i]))return false;if(out){if(out>=s->next_peer_counter)return false;reserved++;if(!s->peer_outgoing_acked[i])pending++;}else if(s->peer_outgoing_acked[i])return false;for(unsigned j=0;j<i;j++)if(!strcmp(p->peer_id,s->peers[j].peer_id) || (out && out==s->peer_first_outgoing[j]))return false;}if(reserved!=s->next_peer_counter-1 || pending!=s->outgoing_count)return false;
+  bool gift_slots[L2_PEER_MAX]={0};uint64_t prev=s->last_ack;for(unsigned i=0;i<s->event_count;i++){const l2_event_t *e=&s->events[i];if(e->counter!=prev+1 || e->counter>=s->next_event || e->epoch_ms>L2_JS_MAX)return false;prev=e->counter;if(e->kind==L2_EVENT_CARE){if(e->action<L2_ACTION_PET || e->action>L2_ACTION_SLEEP || e->peer_slot!=255 || e->peer_counter || e->gift_kind || e->quantity)return false;}else if(e->kind==L2_EVENT_GIFT){if(e->peer_slot>=s->peer_count || !e->peer_counter || e->peer_counter>s->peers[e->peer_slot].counter || e->gift_kind!=L2_GIFT_FLOWER || e->quantity!=1 || e->action!=L2_ACTION_IDLE || gift_slots[e->peer_slot])return false;gift_slots[e->peer_slot]=true;}else if(e->kind==L2_EVENT_MEET){if(e->peer_slot>=s->peer_count||!l2_meet_valid(&e->meet)||e->meet.stage!=3||e->action!=L2_ACTION_IDLE||e->peer_counter||e->gift_kind||e->quantity)return false;}else return false;}if(prev!=s->next_event-1)return false;
+  prev=0;for(unsigned i=0;i<s->outgoing_count;i++){const l2_receipt_t *o=&s->outgoing[i];if(!receipt_valid(o) || o->counter<=prev || o->counter>=s->next_peer_counter)return false;unsigned slot=0;while(slot<s->peer_count && strcmp(s->peers[slot].peer_id,o->peer_id))slot++;if(slot==s->peer_count || s->peer_first_outgoing[slot]!=o->counter || s->peer_outgoing_acked[slot])return false;prev=o->counter;}unsigned frontier_slot;if(peer_ack_frontier(s,&frontier_slot)!=s->last_peer_ack)return false;if(frontier_slot<L2_PEER_MAX){if(strcmp(s->last_peer_ack_id,s->peers[frontier_slot].peer_id))return false;}else if(s->last_peer_ack_id[0])return false;return true;}
+-static bool decode_saved(l2_saved_t *s,const uint8_t *b,size_t n){if(!b || n<10 || n>L2_STORE_MAX || memcmp(b,"CFL2",4))return false;uint32_t crc=(uint32_t)b[n-4]|((uint32_t)b[n-3]<<8)|((uint32_t)b[n-2]<<16)|((uint32_t)b[n-1]<<24);if(crc32(b,n-4)!=crc)return false;reader_t r={b,n-4,4,true};uint64_t schema=readnumber(&r,2);if(schema!=2&&schema!=3&&schema!=4)return false;memset(s,0,sizeof(*s));readbytes(&r,s->device_id,33);s->has_snapshot=readbool(&r);read_snapshot(&r,&s->snapshot);s->has_owner=readbool(&r);readbytes(&r,s->last_request.client_id,37);s->last_request.seq=readnumber(&r,8);readbytes(&r,s->last_request.request_id,65);readbytes(&r,s->last_request.hash,32);s->last_result.status=(l2_status_t)readnumber(&r,1);s->last_result.revision=readnumber(&r,8);s->last_result.event_counter=readnumber(&r,8);s->next_event=readnumber(&r,8);s->last_ack=readnumber(&r,8);s->event_count=(uint16_t)readnumber(&r,2);s->peer_count=(uint16_t)readnumber(&r,2);s->outgoing_count=(uint16_t)readnumber(&r,2);s->next_peer_counter=readnumber(&r,8);s->last_peer_ack=readnumber(&r,8);readbytes(&r,s->last_peer_ack_id,33);s->has_gift=readbool(&r);read_receipt(&r,&s->last_gift);s->gift_state=(l2_gift_state_t)readnumber(&r,1);if(!r.ok || s->event_count>L2_EVENT_MAX || s->peer_count>L2_PEER_MAX || s->outgoing_count>L2_PEER_MAX)return false;
++static bool decode_saved(l2_saved_t *s,const uint8_t *b,size_t n){if(!b || n<10 || n>L2_STORE_MAX || memcmp(b,"CFL2",4))return false;uint32_t crc=(uint32_t)b[n-4]|((uint32_t)b[n-3]<<8)|((uint32_t)b[n-2]<<16)|((uint32_t)b[n-1]<<24);if(crc32(b,n-4)!=crc)return false;reader_t r={b,n-4,4,true};uint64_t schema=readnumber(&r,2);if(schema!=2&&schema!=3&&schema!=4&&schema!=5)return false;memset(s,0,sizeof(*s));readbytes(&r,s->device_id,33);s->has_snapshot=readbool(&r);read_snapshot(&r,&s->snapshot);s->has_owner=readbool(&r);readbytes(&r,s->last_request.client_id,37);s->last_request.seq=readnumber(&r,8);readbytes(&r,s->last_request.request_id,65);readbytes(&r,s->last_request.hash,32);s->last_result.status=(l2_status_t)readnumber(&r,1);s->last_result.revision=readnumber(&r,8);s->last_result.event_counter=readnumber(&r,8);s->next_event=readnumber(&r,8);s->last_ack=readnumber(&r,8);s->event_count=(uint16_t)readnumber(&r,2);s->peer_count=(uint16_t)readnumber(&r,2);s->outgoing_count=(uint16_t)readnumber(&r,2);s->next_peer_counter=readnumber(&r,8);s->last_peer_ack=readnumber(&r,8);readbytes(&r,s->last_peer_ack_id,33);s->has_gift=readbool(&r);read_receipt(&r,&s->last_gift);s->gift_state=(l2_gift_state_t)readnumber(&r,1);if(!r.ok || s->event_count>L2_EVENT_MAX || s->peer_count>L2_PEER_MAX || s->outgoing_count>L2_PEER_MAX)return false;
+  for(unsigned i=0;i<s->event_count;i++){l2_event_t *e=&s->events[i];e->counter=readnumber(&r,8);e->epoch_ms=readnumber(&r,8);uint8_t tag=(uint8_t)readnumber(&r,1);if(tag&0x80){if(tag&0x60)r.ok=false;e->kind=L2_EVENT_GIFT;e->peer_slot=tag&31;e->peer_counter=readnumber(&r,8);e->gift_kind=L2_GIFT_FLOWER;e->quantity=1;}else if((tag&0x40)&&schema>=4){if(tag&0x20)r.ok=false;e->kind=L2_EVENT_MEET;e->peer_slot=tag&31;read_meet(&r,&e->meet);}else{e->kind=L2_EVENT_CARE;e->action=(l2_action_t)tag;e->peer_slot=255;}}
+  for(unsigned i=0;i<s->peer_count;i++){read_receipt(&r,&s->peers[i]);s->peer_first_outgoing[i]=readnumber(&r,8);s->peer_outgoing_acked[i]=readbool(&r);}
+- for(unsigned i=0;i<s->outgoing_count;i++){unsigned slot=(unsigned)readnumber(&r,1);uint64_t count=readnumber(&r,8);if(slot>=s->peer_count){r.ok=false;break;}l2_receipt_t *o=&s->outgoing[i];strcpy(o->peer_id,s->peers[slot].peer_id);o->counter=count;o->gift_kind=L2_GIFT_FLOWER;o->quantity=1;}if(schema>=3){s->terminal.counter=readnumber(&r,8);s->terminal.status=(l2_terminal_status_t)readnumber(&r,1);s->terminal.action=(l2_action_t)readnumber(&r,1);readbytes(&r,s->terminal.reason,41);readbytes(&r,s->terminal.save_digest,65);}if(schema>=4)for(unsigned i=0;i<s->peer_count;i++)read_meet(&r,&s->encounters[i]);return r.ok && r.pos==r.n && state_valid(s);}
++ for(unsigned i=0;i<s->outgoing_count;i++){unsigned slot=(unsigned)readnumber(&r,1);uint64_t count=readnumber(&r,8);if(slot>=s->peer_count){r.ok=false;break;}l2_receipt_t *o=&s->outgoing[i];strcpy(o->peer_id,s->peers[slot].peer_id);o->counter=count;o->gift_kind=L2_GIFT_FLOWER;o->quantity=1;}if(schema>=3){s->terminal.counter=readnumber(&r,8);s->terminal.status=(l2_terminal_status_t)readnumber(&r,1);s->terminal.action=(l2_action_t)readnumber(&r,1);readbytes(&r,s->terminal.reason,41);readbytes(&r,s->terminal.save_digest,65);}if(schema>=4)for(unsigned i=0;i<s->peer_count;i++)read_meet(&r,&s->encounters[i]);if(schema>=5)read_appearance(&r,&s->snapshot.pet);return r.ok && r.pos==r.n && state_valid(s);}
+ static l2_status_t available(const l2_core_t *c){return !c?L2_NOT_READY:c->storage_error?L2_STORAGE_ERROR:!c->ready?L2_NOT_READY:L2_OK;}
+ static l2_status_t commit(l2_core_t *c){size_t n=encode_saved(&c->work,c->blob,sizeof(c->blob));if(!n)return L2_QUEUE_FULL;if(!state_valid(&c->work)){c->storage_error=true;return L2_CORRUPT;}if(!c->persist || !c->persist(c->persist_ctx,c->blob,n)){c->storage_error=true;return L2_STORAGE_ERROR;}c->saved=c->work;return L2_OK;}
+ l2_status_t l2_init_new(l2_core_t *c,const char *id,l2_persist_fn fn,void *ctx){if(!c || !hexid(id) || !fn)return L2_INVALID;if(c->ready || c->storage_error)return L2_NOT_READY;memset(&c->work,0,sizeof(c->work));strcpy(c->work.device_id,id);c->work.next_event=c->work.next_peer_counter=1;c->persist=fn;c->persist_ctx=ctx;l2_status_t r=commit(c);if(r==L2_OK)c->ready=true;return r;}
+--- a/firmware/main/local2_wire.c
++++ b/firmware/main/local2_wire.c
+@@ -111,13 +111,22 @@
+ static const char *const scenes[]={"home","departing","away","returning","garden","town"};
+ static const char *const actions[]={"idle","walk","pet","feed","water","bath","play","sleep"};
+ static const char *const weather[]={"clear","rain","snow"};
++static const char *const growth_stages[]={"kitten","young","adult"};
++static const char *const body_shapes[]={"standard","slim","round"};
+ static bool snapshot(const cJSON *d,l2_snapshot_t *s){
+     static const char *const keys[]={"petId","revision","scene","action","weather","pet","epochMs","utcOffsetMinutes"};
+-    static const char *const pk[]={"name","breed","food","mood","clean","energy","health","coins"};
++    static const char *const pk[]={"name","breed","food","mood","clean","energy","health","coins","growthStage","outfit","bodyShape"};
+     memset(s,0,sizeof(*s));if(!only(d,keys,8)||!string_field(d,"petId",s->pet.pet_id,sizeof(s->pet.pet_id),true)||!integer(field(d,"revision"),&s->revision))return false;
+     int a=enumeration(field(d,"scene"),scenes,6),b=enumeration(field(d,"action"),actions,8),c=enumeration(field(d,"weather"),weather,3);if(a<0||b<0||c<0)return false;
+     s->scene=(l2_scene_t)a;s->action=(l2_action_t)b;s->weather=(l2_weather_t)c;
+-    cJSON *p=field(d,"pet");if(!only(p,pk,8)||!string_field(p,"name",s->pet.name,sizeof(s->pet.name),false)||!string_field(p,"breed",s->pet.breed,sizeof(s->pet.breed),true)||!integer(field(p,"coins"),&s->pet.coins))return false;
++    cJSON *p=field(d,"pet");if(!only(p,pk,11)||!string_field(p,"name",s->pet.name,sizeof(s->pet.name),false)||!string_field(p,"breed",s->pet.breed,sizeof(s->pet.breed),true)||!integer(field(p,"coins"),&s->pet.coins))return false;
++    if(field(p,"growthStage")||field(p,"outfit")||field(p,"bodyShape")){
++        int growth=enumeration(field(p,"growthStage"),growth_stages,3);
++        int body=field(p,"bodyShape")?enumeration(field(p,"bodyShape"),body_shapes,3):0;
++        if(growth<0||body<0||!string_field(p,"outfit",s->pet.outfit,sizeof(s->pet.outfit),true))return false;
++        s->pet.appearance_known=true;s->pet.growth_stage=(l2_growth_t)(growth+1);s->pet.body_shape=(l2_body_shape_t)body;
++        if(!l2_pet_appearance_valid(&s->pet))return false;
++    }
+     const char *names[]={"food","mood","clean","energy","health"};uint8_t *values[]={&s->pet.food,&s->pet.mood,&s->pet.clean,&s->pet.energy,&s->pet.health};
+     for(unsigned i=0;i<5;i++){uint64_t n;if(!integer(field(p,names[i]),&n)||n>100)return false;*values[i]=(uint8_t)n;}
+     cJSON *offset=field(d,"utcOffsetMinutes");if(offset&&(!cJSON_IsNumber(offset)||!isfinite(offset->valuedouble)||floor(offset->valuedouble)!=offset->valuedouble||offset->valuedouble < -840||offset->valuedouble>840))return false;
+@@ -182,6 +191,7 @@
+         const l2_snapshot_t *s=&v.snapshot;cJSON *d=cJSON_AddObjectToObject(o,"snapshot");cJSON_AddStringToObject(d,"petId",s->pet.pet_id);num(d,"revision",s->revision);
+         cJSON_AddStringToObject(d,"scene",scenes[s->scene]);cJSON_AddStringToObject(d,"action",actions[s->action]);cJSON_AddStringToObject(d,"weather",weather[s->weather]);
+         cJSON *p=cJSON_AddObjectToObject(d,"pet");cJSON_AddStringToObject(p,"name",s->pet.name);cJSON_AddStringToObject(p,"breed",s->pet.breed);num(p,"coins",s->pet.coins);
++        if(s->pet.appearance_known){cJSON_AddStringToObject(p,"growthStage",l2_growth_name(s->pet.growth_stage));cJSON_AddStringToObject(p,"outfit",s->pet.outfit);cJSON_AddStringToObject(p,"bodyShape",l2_body_shape_name(s->pet.body_shape));}
+         num(p,"food",s->pet.food);num(p,"mood",s->pet.mood);num(p,"clean",s->pet.clean);num(p,"energy",s->pet.energy);num(p,"health",s->pet.health);
+     }
+ #ifdef ESP_PLATFORM
+@@ -230,7 +240,7 @@
+             session_unlock();
+             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
+             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
+-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("encounter_v1"));cJSON_AddStringToObject(d,"firmware","0.6.2-real-encounters");result=L2_OK;
++            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("encounter_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("pet_appearance_v1"));cJSON_AddStringToObject(d,"firmware","0.6.2-real-encounters");result=L2_OK;
+         }else if(valid&&!strcmp(op,"care_capabilities")){
+             static const char *const ck[]={"v","id","op","clientId","data"};
+             static const char *const dk[]={"careBathV1","mobileContextV1"};char client[37];cJSON *mobile=field(field(q,"data"),"mobileContextV1");
+--- a/firmware/main/badge_pages.c
++++ b/firmware/main/badge_pages.c
+@@ -4,6 +4,17 @@
+ #include "badge.h"
+ #include "badge_gesture.h"
+ #include "badge_scene.h"
++/* Protocol wiring can land before the appearance renderer/assets. Integrating
++ * that candidate's header + scene implementation activates this GUI-only seam. */
++#if defined(__has_include)
++#if __has_include("badge_appearance.h")
++#include "badge_appearance.h"
++#define BADGE_HAS_APPEARANCE_RENDERER 1
++#endif
++#endif
++#ifndef BADGE_HAS_APPEARANCE_RENDERER
++#define BADGE_HAS_APPEARANCE_RENDERER 0
++#endif
+ #include "badge_diagnostics.h"
+ #include "esp_timer.h"
+ #include "badge_ui_contract.h"
+@@ -1621,6 +1632,34 @@
+     if(!strcmp(t->reason,"health_issue"))return "小猫不舒服\n先留意健康";
+     return detail?"这次互动条件未满足\n未扣币·未加成长":"这次不适用\n未扣币未成长";
+ }
++static void project_snapshot_appearance(bool available)
++{
++    /* Never compose a new cat into an in-flight immutable swipe/contact frame.
++     * refresh_state runs again after the existing deferred projection resumes. */
++    if(presentation_contact||gesture.active||ui_drag.active||ui_drag.settling||slide_handoff||transitioning())return;
++#if BADGE_HAS_APPEARANCE_RENDERER
++    static bool initialized,last_known;
++    static char last_pet_id[65];
++    static uint64_t last_revision;
++    const l2_pet_t *pet=&domain.snapshot.pet;
++    const char *id=available?pet->pet_id:"";
++    bool known=available&&pet->appearance_known&&l2_pet_appearance_valid(pet);
++    bool same_id=strcmp(last_pet_id,id)==0;
++    if(initialized&&known==last_known&&same_id&&(!known||last_revision==domain.snapshot.revision))return;
++    badge_scene_t *scenes[]={home_scene,care_scene,care_action_scene,welcome_scene,guide_scene};
++    badge_appearance_t appearance;
++    bool mapped=known&&badge_appearance_from_names(&appearance,l2_growth_name(pet->growth_stage),pet->breed,pet->outfit,l2_body_shape_name(pet->body_shape));
++    for(unsigned i=0;i<sizeof(scenes)/sizeof(scenes[0]);i++)if(scenes[i]){
++        /* Clear the previous identity before applying any replacement. Unknown,
++         * cleared and unmappable snapshots always pass NULL to the renderer. */
++        if(!same_id&&mapped)badge_scene_set_appearance(scenes[i],NULL);
++        badge_scene_set_appearance(scenes[i],mapped?&appearance:NULL);
++    }
++    strlcpy(last_pet_id,id,sizeof(last_pet_id));last_known=known;last_revision=domain.snapshot.revision;initialized=true;
++#else
++    (void)available; /* Transport/storage ready; renderer intentionally absent. */
++#endif
++}
+ static void refresh_state(void)
+ {
+     badge_view_t v;badge_get_view(&v);l2_view_t next;local2_get_view(&next);
+@@ -1636,6 +1675,7 @@
+         v.snapshot.energy=domain.snapshot.pet.energy;v.snapshot.health=domain.snapshot.pet.health;
+     }
+     bool fresh=domain_attached && available && (!domain_previous.has_snapshot || domain_previous.snapshot.revision!=domain.snapshot.revision);
++    project_snapshot_appearance(available);
+     /* Visual trust is RAM-only: disconnect unsubscribes immediately. Reconnect
+      * alone never replays persisted context; require a new accepted revision. */
+     if(!v.connected || !v.subscribed){live_context=false;if(!observed_local&&observed_action!=L2_ACTION_SLEEP)observed_action=L2_ACTION_IDLE;}
+--- a/protocol/local-v2/interface.d.ts
++++ b/protocol/local-v2/interface.d.ts
+@@ -2,10 +2,20 @@
+ export type Scene = 'home' | 'departing' | 'away' | 'returning';
+ export type Action = 'idle' | 'walk' | 'pet' | 'feed' | 'water' | 'bath' | 'play' | 'sleep';
+ export type Weather = 'clear' | 'rain' | 'snow';
++/** Display only; already computed by the original phone game. Not meet.stage. */
++export type GrowthStage = 'kitten' | 'young' | 'adult';
++export type BodyShape = 'standard' | 'slim' | 'round';
++export interface PetAppearance {
++  growthStage: GrowthStage; // Phone normalizes the legacy baby alias to kitten.
++  outfit: string; // Existing outfit ID, [A-Za-z0-9_-], 1..64 chars.
++  bodyShape?: BodyShape; // Defaults to standard; no new body/weight algorithm.
++}
+ export interface SceneSnapshot {
++  /** petId comes from offline-scene-map.read()->identities.resolve(), never local cat-1. */
+   requestId: string; petId: string; revision: number;
+   scene: Scene; action: Action; weather: Weather;
+-  pet: { name: string; breed: string; food: number; mood: number; clean: number; energy: number; health: number; coins: number };
++  pet: { name: string; breed: string; food: number; mood: number; clean: number; energy: number; health: number; coins: number } &
++    (PetAppearance | {growthStage?: never; outfit?: never; bodyShape?: never});
+   epochMs?: number; utcOffsetMinutes?: number; // -Date.getTimezoneOffset(), -840..840
+ }
+ export interface DeviceEvent {
+--- /dev/null
++++ b/protocol/2026-10-18-pet-appearance-wire.md
+@@ -0,0 +1,53 @@
++# 外观展示字段接线（062相遇源码之后，尚未重新打包）
++
++本批仅完成资产无关的协议/存储/GUI预接线。按父任务明确安排，不合入尚未完成的外观候选，不运行技术测试、模拟或自行验收，不重新统一打包、不安装、不烧录。之前062/手机048生产包保持原始字节，**不包含本文件所述的新展示字段**；最终版本号、统一构建和部署由父任务协调。
++
++## 手机来源与身份
++
++`offline-scene-map.js::project()` 只读原游戏当前 `pet.stage`、`pet.outfit`、已有 `pet.bodyShape`；阶段只允许kitten/young/adult，旧baby归一kitten。bodyShape仅保留standard/slim/round请求，无字段或未知值使用standard，不读取照料值推算胖瘦。阶段/装扮未知时整组省略，不能借默认成年或上一个外观补齐。
++
++外观加在原snapshot.pet内，没有新建身份/账号/同步通道。`read(context)`仍经原 `identities.resolve(state.pet,context)` 得到持久wire petId，然后原coordinator发送；不使用候选 `CatPetAppearance.project()` 返回的本地cat-1。外观字段存在时适配器和固件都要求已使用该cat-UUID形式，仍受原owner、pet_id、revision、session核对；原身份registry函数与绑定/恢复逻辑未改。
++
++## JSON与能力协商
++
++继续使用现有CFLOCAL2 v2 snapshot命令，只扩展 `pet` 三项：
++
++|字段|值|处理|
++|---|---|---|
++|growthStage|kitten / young / adult|直接来自原游戏，baby已在手机投影归一|
++|outfit|既有ID，1..64个 `[A-Za-z0-9_-]` 字符|不改变物品解锁、售价或获得规则；未知渲染ID交由渲染器拒绝|
++|bodyShape|可选standard / slim / round|缺省standard；本批不制定或执行胖瘦算法|
++
++出现任一外观字段时，growthStage和outfit必须同时有效；不能只给bodyShape、null、任意stage或超长装扮，不能将 `meet.stage` 强转为growthStage。手机 `validateScene` 明确根字段/宠物字段白名单；固件 `snapshot()`的白名单、枚举、ID和长度也严格验证。
++
++新固件声明 `pet_appearance_v1`，表示可接受和持久保存这些展示字段，**不是“原生外观已接入/视觉已验收”**。手机 `petView()/semantic()/pushScene()` 按该能力统一选择字段：有能力时阶段、装扮、体型进入发送数据和语义去重签名；只有这些字段变化也会产生新的wire revision。没有能力的旧固件只收到原字段，其去重签名也不夹带未发送字段，保持基本场景兼容。
++
++原pending指令不补字段、不重编码、不改hash/seq；恢复仍原字节重发。完成原pending后才发送当前新快照，继续使用原native journal checkpoint、当前connection generation和既有revision递增逻辑。
++
++新固件state返回已保存的growthStage/outfit/bodyShape；旧/未知外观省略三项，不返回虚构成年。没有新增独立appearance命令或隐式写游戏存档。
++
++## 固件持久格式与旧数据
++
++`l2_pet_t` 内部使用独立的 appearance_known、growth_stage、body_shape、outfit。growth enum为unknown0/kitten1/young2/adult3；body enum为standard0/slim1/round2，只做显示请求。相遇结构 `l2_meet_t.stage` 与其序列、证明、消息均未改。
++
++CFL2 blob写入版本5，仍逐字段LE编码和原CRC，兼容读取2/3/4。旧快照主区及062相遇事件/证明的读写顺序保留；只在已有内容末尾、CRC之前追加68字节：known1、growth1、body1、outfit65。L2_STORE_MAX仅为这68字节展示元数据从8192增加到8260，避免完整有效schema4在迁移时因新增字段挤占原预算；FIFO仍200、peer仍32，NVS分区和持久事务方式不改。旧版本读取后这组保持未知/空；不推断年龄、不发奖励、不修改原事件或ACK水位。下次正常事务提交才写新格式，不擦NVS、不重建owner或身份。
++
++`canonical_snapshot`复制新字段，`snapshot_valid/state_valid`校验，`same_snapshot`在比较原字节区后显式比较外观语义。同revision换外观仍是revision_conflict，不能悄悄覆盖；相同原请求仍走原请求去重。不改变现有pet_mismatch阻止自动覆盖旧猫的规则。schema5写入后旧062/061无法读取5，不可直接降级。
++
++## GUI预接线与未合入边界
++
++`badge_pages.c::refresh_state()`调用 `project_snapshot_appearance()`，与原延迟状态投影同行。手指接触、手势、滑动/回弹、末帧交接、页面过渡期间直接延后，下次原refresh_state安全更新；BLE线程只更新原持久domain，不调用LVGL。
++
++主目录目前没有 `badge_appearance.h` 和候选renderer实现，因此通过 `__has_include` 让本预接线保持资产无关；当前原scene/模型/帧资源完全不动。父任务完整合入候选的header、scene API及实现后，预接线自动可用：
++
++`badge_appearance_from_names(growthStage, breed, outfit, bodyShape) → badge_scene_set_appearance(scene, &appearance)`。
++
++投影只读取当前domain快照和wire pet ID，以身份/revision缓存。新身份先向原场景传NULL清旧外观，再应用新外观；清空、存档不可用、外观未知或映射不支持时传NULL。应用对象为原home/care/care-action/welcome/guide五个scene，没有新建显示层或直接改背景布局。原66帧、动画/滑页接口、圆环和小镇不改。
++
++仅header单独复制不是完整集成；必须将候选scene接口和实现一起协调合入并统一生产构建。原生资产包、五体型/40配饰完成度、具体显示及资源表现仍归外观线，不能从协议接线推出已完成。
++
++## 交接
++
++增量源码和补丁在 `deliverables/2026-10-18/appearance-wire-after062/`，基于062相遇批次完成后的实际主目录快照生成。source-before/after和哈希记录用于合并时核对；受保护文件静态比较单列。preview/Android资产镜像没有更新，现有APK/BIN没有重打或替换。
++
++下一步由父任务决定资产/候选合入安排，再统一生成必要资产、分配新版本并生产构建；部署前重新确认实际分区及OTA选择，手机原签名原位安装、吧唧只写实际应用分区。没有第二台吧唧时，原相遇双机验收仍不能关闭。

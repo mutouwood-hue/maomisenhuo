@@ -1,0 +1,16 @@
+{
+  "versionName": "0.4.7-care-reasons",
+  "versionCode": 38,
+  "packageId": "com.catforest.htmlcandidate",
+  "file": "catforest-0.4.7-care-reasons-debug.apk",
+  "bytes": 934395,
+  "sha256": "7099f53d365f5ec0e441e3dad4480ca57295bef7ee5708f12805694434a173ce",
+  "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+  "buildExitCode": 0,
+  "assetChanges": [
+    "assets/offline-device-events.js"
+  ],
+  "townDayGameAssetsUnchanged": true,
+  "testsExecuted": false,
+  "appLaunched": false
+}

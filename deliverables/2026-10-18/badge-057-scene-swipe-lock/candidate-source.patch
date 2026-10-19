@@ -1,0 +1,391 @@
+diff --git a/firmware/CMakeLists.txt b/firmware/CMakeLists.txt
+index 7ac9f73..2a0aae5 100644
+--- a/firmware/CMakeLists.txt
++++ b/firmware/CMakeLists.txt
+@@ -282,8 +282,8 @@ function(__component_get_requirements)
+     endforeach()
+ 
+ endfunction()
+-set(PROJECT_VER "0.5.5-day-hearts")
+-project(cat_forest_badge VERSION 0.5.5)
++set(PROJECT_VER "0.5.7-scene-swipe-lock")
++project(cat_forest_badge VERSION 0.5.7)
+ include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
+ foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
+         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION
+diff --git a/firmware/main/badge_pages.c b/firmware/main/badge_pages.c
+index 4f1916c..e34baa4 100644
+--- a/firmware/main/badge_pages.c
++++ b/firmware/main/badge_pages.c
+@@ -19,8 +19,10 @@ extern int local2_clock_utc_offset_minutes(void);
+ #include "bsp/display.h"
+ #include "esp_log.h"
+ #include "esp_app_desc.h"
++#include "esp_heap_caps.h"
+ #include "nvs.h"
+ #include "lvgl.h"
++#include "src/misc/cache/instance/lv_image_cache.h"
+ #include <stdint.h>
+ #include <stdio.h>
+ #include <string.h>
+@@ -381,8 +383,13 @@ static lv_obj_t *heart_dots[L2_DAY_HEART_MAX],*heart_count_label;
+ /* 待机常显（AOD）用的大时钟与日期，只在 MODE_AOD 显示，时间来自手机校时。 */
+ static lv_obj_t *aod_clock;
+ static badge_scene_t *guide_scene;
+-static lv_obj_t *stage_root,*peek_root,*peek_rings[2],*peek_arcs[5],*peek_clock,*peek_phase,*peek_missing,*peek_heading,*peek_weather,*peek_action,*peek_marker,*peek_heart,*peek_hours[4];
+-static badge_scene_t *peek_scene;
++static lv_obj_t *stage_root,*peek_root,*slide_images[2];
++/* Two immutable RGB565 pages in PSRAM. Touch moves complete compositions;
++ * no per-stripe room/cat/text redraw while dragging or settling. */
++static lv_draw_buf_t slide_buffers[2];
++static lv_image_dsc_t slide_frames[2];
++static void *slide_pixels[2];
++static bool slide_ready,home_projection_stale,home_pose_saved;
+ typedef struct {bool active,settling,has_target,to_face,commit,bounded_face;int axis,offset;page_t from,target;unsigned face;badge_gesture_kind_t direction;} ui_drag_t;
+ static ui_drag_t ui_drag;
+ static bool drag_completing,contact_cancelled;
+@@ -448,6 +455,8 @@ static uint8_t brightness=75; /* Original BRIGHT[1]: medium. */
+ static unsigned face, guide_index, touch_mask;
+ static uint32_t boot_started, last_input, navigation_started, toast_started, touch_completed;
+ static uint32_t last_state_poll, last_scene_tick, last_pet_at;
++static uint32_t link_lost_since;
++static bool link_loss_tracking;
+ static bool pet_cooldown;
+ static const uint32_t stat_colors[]={ZIP_UI_COLOR_FOOD,ZIP_UI_COLOR_MOOD,ZIP_UI_COLOR_CLEAN,ZIP_UI_COLOR_ENERGY,ZIP_UI_COLOR_HEALTH};
+ static const char *stat_names[]={"饱腹","心情","清洁","精力","健康"};
+@@ -459,6 +468,8 @@ static const char *guide_subs[]={"试着轻点中间的小猫", "实际向上滑
+ static void navigate(page_t page);
+ static void refresh_state(void);
+ static void update_clock(void);
++static void project_home(void);
++static void warm_home_presentation(uint32_t now);
+ static void object_pressing(lv_event_t *event);
+ static const char *stage_name(l2_scene_t stage);
+ static const char *weather_name(l2_weather_t weather);
+@@ -835,6 +846,7 @@ static void tap(int x,int y)
+ }
+ static void swipe(badge_gesture_kind_t kind)
+ {
++    if(day_capture)return;
+     if(current_page==PAGE_GUIDE){guide_accept(kind);return;}
+     page_t before=current_page;unsigned old_face=face;
+     if(current_page==PAGE_HOME) {
+@@ -842,7 +854,6 @@ static void swipe(badge_gesture_kind_t kind)
+         else if(kind==BADGE_GESTURE_DOWN) navigate(PAGE_STATUS);
+         else if(kind==BADGE_GESTURE_LEFT || kind==BADGE_GESTURE_RIGHT) {
+             face=(face+1)%2; update_face();refresh_state();
+-            if(face==0)badge_scene_play(home_scene,BADGE_SCENE_WALK,lv_tick_get());
+             navigation_started=lv_tick_get();
+         }
+     } else if(current_page==PAGE_CARE && kind==BADGE_GESTURE_DOWN) navigate(PAGE_HOME);
+@@ -991,26 +1002,75 @@ static lv_obj_t *arc(lv_obj_t *parent,int diameter,int start,int end,int width,u
+ }
+ static void build_home_peek(void)
+ {
+-    peek_root=shape(stage_root,0,0,466,466,ZIP_UI_COLOR_BG,0);peek_scene=badge_scene_create(peek_root);
+-    for(unsigned i=0;i<5;i++){peek_arcs[i]=arc(peek_root,436,119-18*i,133-18*i,8,stat_colors[i]);lv_arc_set_mode(peek_arcs[i],LV_ARC_MODE_REVERSE);}
+-    peek_rings[0]=arc(peek_root,454,0,359,18,ZIP_UI_COLOR_RINGTRACK);peek_rings[1]=arc(peek_root,406,0,359,6,ZIP_UI_COLOR_RINGTRACK);
+-    for(unsigned i=0;i<2;i++)lv_obj_set_style_arc_color(peek_rings[i],lv_color_hex(ZIP_UI_COLOR_RINGTRACK),LV_PART_MAIN);
+-    peek_heading=label(peek_root,233,94,240,"",false,ZIP_UI_COLOR_TEXT);
+-    peek_weather=label(peek_root,233,342,250,"",true,ZIP_UI_COLOR_SUB);peek_action=label(peek_root,233,389,220,"",true,ZIP_UI_COLOR_TEXT);
+-    peek_marker=shape(peek_root,0,0,10,10,ZIP_UI_COLOR_TEXT,LV_RADIUS_CIRCLE);peek_heart=icon(peek_root,ICON_HEART,100,365,1);lv_obj_set_style_image_opa(peek_heart,LV_OPA_40,0);
+-    const int xs[]={233,409,233,57},ys[]={57,233,409,233};const char *hours[]={"0","6","12","18"};for(unsigned i=0;i<4;i++)peek_hours[i]=label(peek_root,xs[i],ys[i],28,hours[i],true,ZIP_UI_COLOR_DIM);
+-    peek_clock=label(peek_root,233,62,180,"需手机校时",false,ZIP_UI_COLOR_TEXT);
+-    peek_phase=label(peek_root,233,126,260,"",true,ZIP_UI_COLOR_ACCENT);
+-    peek_missing=label(peek_root,233,365,270,"",true,ZIP_UI_COLOR_SUB);hide(peek_root,true);
+-}
+-/* Different PAGE objects follow the contact; HOME faces retain 053 release-only. */
++    peek_root=shape(stage_root,0,0,466,466,ZIP_UI_COLOR_BG,0);
++    for(unsigned i=0;i<2;i++) {
++        slide_images[i]=lv_image_create(peek_root);
++        lv_obj_remove_flag(slide_images[i],LV_OBJ_FLAG_CLICKABLE|LV_OBJ_FLAG_SCROLLABLE);
++    }
++    hide(peek_root,true);
++}
++static bool capture_page(unsigned index,lv_obj_t *page)
++{
++    const uint32_t stride=lv_draw_buf_width_to_stride(466,LV_COLOR_FORMAT_RGB565);
++    const uint32_t bytes=stride*466+LV_DRAW_BUF_ALIGN;
++    if(!slide_pixels[index]) {
++        slide_pixels[index]=heap_caps_aligned_alloc(LV_DRAW_BUF_ALIGN,bytes,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
++        if(!slide_pixels[index])return false;
++        if(lv_draw_buf_init(slide_buffers+index,466,466,LV_COLOR_FORMAT_RGB565,stride,slide_pixels[index],bytes)!=LV_RESULT_OK)return false;
++    }
++    lv_image_cache_drop(slide_frames+index);
++    if(lv_snapshot_take_to_draw_buf(page,LV_COLOR_FORMAT_RGB565,slide_buffers+index)!=LV_RESULT_OK)return false;
++    lv_draw_buf_to_image(slide_buffers+index,slide_frames+index);
++    lv_image_set_src(slide_images[index],slide_frames+index);
++    return true;
++}
++static bool prepare_slide(void)
++{
++    if(!capture_page(0,pages[ui_drag.from]))return false;
++    if(ui_drag.to_face) {
++        if(!badge_scene_save_pose(home_scene))return false;
++        home_pose_saved=true;
++        /* Use only the already projected, durable domain/day view. This is a
++         * temporary GUI composition: no refresh_state, navigation or events. */
++        unsigned source=face;face=ui_drag.face;
++        update_face();project_home();day_project();warm_home_presentation(lv_tick_get());
++        bool captured=capture_page(1,pages[PAGE_HOME]);
++        face=source;home_projection_stale=true;
++        if(!captured)return false;
++    } else if(ui_drag.has_target) {
++        hide(pages[ui_drag.target],false);
++        bool captured=capture_page(1,pages[ui_drag.target]);
++        hide(pages[ui_drag.target],true);
++        if(!captured)return false;
++    }
++    slide_ready=true;
++    /* Keep the original input owner present and PRESS_LOCKed under the opaque
++     * snapshot layer, so moving off its old bounds cannot cancel a contact. */
++    lv_obj_set_style_opa(pages[ui_drag.from],LV_OPA_TRANSP,0);
++    hide(slide_images[1],!ui_drag.has_target);
++    hide(peek_root,false);lv_obj_move_foreground(peek_root);
++    return true;
++}
+ static void settle_apply(void *unused,int32_t offset)
+ {
+     (void)unused;ui_drag.offset=offset;
++    int x=ui_drag.axis==BADGE_GESTURE_AXIS_HORIZONTAL?offset:0;
++    int y=ui_drag.axis==BADGE_GESTURE_AXIS_VERTICAL?offset:0;
++    if(slide_ready) {
++        lv_obj_set_pos(slide_images[0],x,y);
++        if(ui_drag.has_target) {
++            int sign=ui_drag.direction==BADGE_GESTURE_RIGHT||ui_drag.direction==BADGE_GESTURE_DOWN?1:-1;
++            int target_offset=offset-sign*BADGE_DRAG_PAGE_EXTENT_PX;
++            lv_obj_set_pos(slide_images[1],ui_drag.axis==BADGE_GESTURE_AXIS_HORIZONTAL?target_offset:0,
++                ui_drag.axis==BADGE_GESTURE_AXIS_VERTICAL?target_offset:0);
++        }
++        return;
++    }
++    /* Allocation failure retains complete-object translation for other pages.
++     * A HOME-face transition requires both real snapshots and fails closed. */
+     lv_obj_t *source=pages[ui_drag.active?ui_drag.from:current_page];
+-    if(source)lv_obj_set_pos(source,ui_drag.axis==BADGE_GESTURE_AXIS_HORIZONTAL?offset:0,
+-        ui_drag.axis==BADGE_GESTURE_AXIS_VERTICAL?offset:0);
+-    if(ui_drag.active&&ui_drag.has_target&&pages[ui_drag.target]) {
++    if(source)lv_obj_set_pos(source,x,y);
++    if(ui_drag.active&&ui_drag.has_target&&!ui_drag.to_face) {
+         int sign=ui_drag.direction==BADGE_GESTURE_RIGHT||ui_drag.direction==BADGE_GESTURE_DOWN?1:-1;
+         int target_offset=offset-sign*BADGE_DRAG_PAGE_EXTENT_PX;
+         lv_obj_set_pos(pages[ui_drag.target],ui_drag.axis==BADGE_GESTURE_AXIS_HORIZONTAL?target_offset:0,
+@@ -1023,31 +1083,36 @@ static void drag_cancel(void)
+     lv_anim_delete(&ui_drag,settle_apply);
+     if(stage_root)for(unsigned i=0;i<PAGE_COUNT;i++)if(pages[i]) {
+         lv_obj_set_pos(pages[i],0,0);hide(pages[i],i!=(unsigned)current_page);
++        lv_obj_set_style_opa(pages[i],LV_OPA_COVER,0);
+         lv_obj_remove_flag(pages[i],LV_OBJ_FLAG_PRESS_LOCK);
+     }
+-    ui_drag=(ui_drag_t){0};if(peek_root)hide(peek_root,true);
++    ui_drag=(ui_drag_t){0};slide_ready=false;if(peek_root)hide(peek_root,true);
++    if(home_projection_stale){home_projection_stale=false;update_face();project_home();day_project();warm_home_presentation(lv_tick_get());}
++    if(home_pose_saved){home_pose_saved=false;badge_scene_restore_pose(home_scene);badge_scene_set_interacting(home_scene,presentation_contact);}
+ }
+ static void settle_done(lv_anim_t *animation)
+ {
+     (void)animation;
+-    bool commit=ui_drag.active&&ui_drag.commit;page_t target=ui_drag.target;
++    bool commit=ui_drag.active&&ui_drag.commit,to_face=ui_drag.to_face;
++    page_t target=ui_drag.target;unsigned target_face=ui_drag.face;
++    if(commit&&to_face){face=target_face;home_pose_saved=false;}
+     drag_cancel();
+-    /* Never navigate during preview: HOME/guide/action lifecycle runs once here. */
+-    if(commit){drag_completing=true;navigate(target);drag_completing=false;}
++    /* Commit the visible destination once, after contact release + settling. */
++    if(commit&&!to_face){drag_completing=true;navigate(target);drag_completing=false;}
+     navigation_started=lv_tick_get()-ZIP_UI_TRANSITIONMS;
+ }
+ static void drag_update(void)
+ {
++    if(day_capture||day_scrubbing)return;
+     if(!gesture.active||ignore_contact||held_action||transitioning()||previous.pairing)return;
+     if(gift_modal()||!lv_obj_has_flag(reset_layer,LV_OBJ_FLAG_HIDDEN)){drag_cancel();return;}
+     if(current_page==PAGE_GUIDE||current_page==PAGE_BOOT||current_page==PAGE_CARE_ACTION)return;
+     if(!gesture.axis)return;
+     if(!ui_drag.active) {
+         badge_gesture_kind_t direction=badge_gesture_direction(&gesture);
+-        /* No inaccurate day-ring peek and no change to the two-face release path. */
+-        if(current_page==PAGE_HOME&&gesture.axis==BADGE_GESTURE_AXIS_HORIZONTAL)return;
++        bool to_face=current_page==PAGE_HOME&&gesture.axis==BADGE_GESTURE_AXIS_HORIZONTAL;
+         page_t target=current_page;
+-        if(current_page==PAGE_HOME)target=direction==BADGE_GESTURE_UP?PAGE_CARE:PAGE_STATUS;
++        if(current_page==PAGE_HOME&&!to_face)target=direction==BADGE_GESTURE_UP?PAGE_CARE:PAGE_STATUS;
+         else if(current_page==PAGE_CARE&&direction==BADGE_GESTURE_DOWN)target=PAGE_HOME;
+         else if(current_page==PAGE_STATUS&&direction==BADGE_GESTURE_UP)target=PAGE_HOME;
+         else if(current_page==PAGE_SETTINGS&&direction==BADGE_GESTURE_RIGHT)target=PAGE_STATUS;
+@@ -1056,8 +1121,11 @@ static void drag_update(void)
+         else if(current_page==PAGE_VOICE&&(direction==BADGE_GESTURE_RIGHT||direction==BADGE_GESTURE_DOWN))target=PAGE_HOME;
+         else if(current_page==PAGE_MEET&&direction==BADGE_GESTURE_RIGHT)target=PAGE_SETTINGS;
+         ui_drag=(ui_drag_t){.active=true,.from=current_page,.target=target,
+-            .has_target=target!=current_page,.axis=gesture.axis,.direction=direction};
+-        if(ui_drag.has_target){hide(pages[target],false);lv_obj_move_foreground(pages[current_page]);}
++            .has_target=to_face||target!=current_page,.to_face=to_face,.face=(face+1)%2,.axis=gesture.axis,.direction=direction};
++        if(!prepare_slide()) {
++            if(to_face){drag_cancel();announce("页面暂不可用");return;}
++            if(ui_drag.has_target){hide(pages[target],false);lv_obj_move_foreground(pages[current_page]);}
++        }
+         /* The original page stays the LVGL contact owner as it moves away. */
+         lv_obj_add_flag(pages[ui_drag.from],LV_OBJ_FLAG_PRESS_LOCK);
+     }
+@@ -1066,6 +1134,7 @@ static void drag_update(void)
+ }
+ static bool drag_release(badge_gesture_kind_t kind)
+ {
++    if(day_capture)return true;
+     if(!ui_drag.active)return false;
+     int raw=ui_drag.axis==BADGE_GESTURE_AXIS_HORIZONTAL?gesture.last_x-gesture.x:gesture.last_y-gesture.y;
+     settle_apply(NULL,badge_gesture_drag_offset(raw,ui_drag.direction,ui_drag.has_target));
+@@ -1364,7 +1433,7 @@ static bool safe_pet_name(const char *text)
+ static void refresh_state(void)
+ {
+     badge_view_t v;badge_get_view(&v);l2_view_t next;local2_get_view(&next);
+-    if(next.busy){if(!domain_waiting)announce("存档忙正在等待");domain_waiting=true;return;}
++    if(next.busy){domain_waiting=true;return;}
+     domain_waiting=false;domain=next;
+     bool available=domain.ready && domain.has_snapshot && !domain.storage_error;
+     v.bound=available;v.storage_error=!domain.ready || domain.storage_error;v.pending=domain.pending_events;v.blocked=0;
+@@ -1386,7 +1455,6 @@ static void refresh_state(void)
+             observed_action_started=held_snapshot_seen&&held_snapshot_revision==domain.snapshot.revision?held_snapshot_seen_ms:lv_tick_get();
+             if(lv_tick_get()-observed_action_started>=3000)observed_action=L2_ACTION_IDLE;
+         }
+-        announce("手机状态已同步");
+     }
+     if(domain_attached && domain.last_ack!=domain_previous.last_ack) {
+         if(domain.terminal.status==L2_TERMINAL_REJECTED)
+@@ -1399,6 +1467,8 @@ static void refresh_state(void)
+     if(v.storage_error) {hide(gift_popup,true);if(current_page!=PAGE_DEVICE) navigate(PAGE_DEVICE);}
+     if(v.pairing && (!has_previous || !previous.pairing)) {ignore_contact=true;gesture.active=false;set_mode(MODE_PLAY);}
+     update_connection(&v);
++    if(v.connected&&v.subscribed){link_loss_tracking=false;link_lost_since=0;}
++    else if(!link_loss_tracking){link_loss_tracking=true;link_lost_since=lv_tick_get();}
+     previous=v;has_previous=true;domain_previous=domain;domain_attached=true;dirty=false;
+     const char *link=v.storage_error ? "存档错误" : v.connected ? (v.subscribed ? "手机本地连接" : "手机已连接") : "离线保留";
+     lv_image_set_src(home_bt,&icon_images[v.connected ? ICON_BT : ICON_BT_OFF]);
+@@ -1417,13 +1487,26 @@ static void refresh_state(void)
+     if(available) snprintf(text,sizeof(text),"喵币 %llu · 下滑返回",(unsigned long long)v.snapshot.coins);else strcpy(text,"喵币 -- · 下滑返回");set_label(care_coins,text,88);
+     for(unsigned i=0;i<5;i++)lv_obj_set_style_opa(care_icons[i],available&&(i!=4||domain.bath_allowed) ? LV_OPA_COVER : LV_OPA_40,0);
+     set_label(care_bath_hint,domain.bath_allowed ? "清洁可离线·重启再确认" : "清洁需兼容手机确认",410);
++    project_home();
++    set_label(device_link,link,92);snprintf(text,sizeof(text),"ID %s",v.device_id[0] ? v.device_id : "--");set_label(device_id,text,124);
++    snprintf(text,sizeof(text),"PET %s",available ? v.snapshot.pet_id : "--");set_label(device_pet,text,163);
++    if(available)snprintf(text,sizeof(text),"同步版本 %llu\n待确认 %u / 200",(unsigned long long)v.snapshot.revision,domain.pending_events);else strcpy(text,"请用手机发送首次宠物状态");set_label(device_meta,text,210);
++    set_label(device_storage,v.storage_error ? "存档不可用，请保留设备" : domain.terminal.status==L2_TERMINAL_REJECTED ? (!strcmp(domain.terminal.reason,"insufficient_coins")?"上次互动：喵币不足未扣钱":"上次互动：手机拒绝") : domain.terminal.status==L2_TERMINAL_QUARANTINED ? "上次互动：手机未结算" : available ? "本地存档可用 · 无云服务" : "等待手机首次同步",254);
++    set_label(setting_brightness,brightness==45 ? "低" : brightness==75 ? "中" : "高",126);set_label(setting_aod,aod_enabled ? "开启" : "关闭",282);update_clock();update_peer();day_refresh();day_project();
++}
++/* GUI projection from the last accepted domain view only. Also used to
++ * capture the other HOME face without polling core or replaying an ACK. */
++static void project_home(void)
++{
++    bool available=domain.ready&&domain.has_snapshot&&!domain.storage_error;
++    char text[200];
+     const char *short_state=!available ? "等你连手机" : !live_context ? "上次状态" : domain.snapshot.scene==L2_SCENE_HOME ? "在家陪你" : domain.snapshot.scene==L2_SCENE_TOWN ? "镇街散步" : domain.snapshot.scene==L2_SCENE_GARDEN ? "庭院玩耍" : domain.snapshot.scene==L2_SCENE_DEPARTING ? "准备出门" : domain.snapshot.scene==L2_SCENE_RETURNING ? "正在回家" : "在外面玩";
+     if(available && observed_action==L2_ACTION_SLEEP)short_state="窝里休息";
+     if(face==0)set_label(face_phase,short_state,126);
+     set_label(face_weather,live_context ? weather_name(domain.snapshot.weather) : "",face?354:363);
+     set_label(face_action,observed_action==L2_ACTION_IDLE ? "" : action_name(observed_action),389);
+     hide(face_heading,false);set_label(face_heading,face==1?"一天进程":available && safe_pet_name(domain.snapshot.pet.name) ? domain.snapshot.pet.name : "小猫",94);
+-    const char *small_mark=!domain.ready || domain.storage_error ? "存档异常" : domain.pending_events ? "待确认" : !v.connected || !v.subscribed ? "离线" : "";
++    const char *small_mark=!domain.ready || domain.storage_error ? "存档异常" : domain.pending_events ? "待确认" : link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000 ? "离线" : "";
+     set_label(home_link,small_mark,415);hide(home_link,mode==MODE_AOD || mode==MODE_OFF || !small_mark[0]);
+     hide(home_bt,mode==MODE_AOD || mode==MODE_OFF || !small_mark[0]);
+     if(domain.has_gift) snprintf(text,sizeof(text),"%s ×%lu · %s",domain.last_gift.gift_kind==1 ? "野花" : "礼物",(unsigned long)domain.last_gift.quantity,domain.gift_state==L2_GIFT_SHOWN ? "已展示" : "待确认");else strcpy(text,"礼物日记 · 附近遇见");
+@@ -1436,11 +1519,7 @@ static void refresh_state(void)
+         icon_t id=observed_action==L2_ACTION_FEED ? ICON_BOWL : observed_action==L2_ACTION_WATER ? ICON_WATER : observed_action==L2_ACTION_BATH ? ICON_SOAP : observed_action==L2_ACTION_PLAY ? ICON_FEATHER : observed_action==L2_ACTION_SLEEP ? ICON_MOON : ICON_HEART;
+         lv_image_set_src(home_action_prop,&icon_images[id]);lv_obj_set_pos(home_action_prop,300-8,(observed_action==L2_ACTION_PLAY || observed_action==L2_ACTION_SLEEP || observed_action==L2_ACTION_PET ? 215 : 312)-8);
+     }
+-    set_label(device_link,link,92);snprintf(text,sizeof(text),"ID %s",v.device_id[0] ? v.device_id : "--");set_label(device_id,text,124);
+-    snprintf(text,sizeof(text),"PET %s",available ? v.snapshot.pet_id : "--");set_label(device_pet,text,163);
+-    if(available)snprintf(text,sizeof(text),"同步版本 %llu\n待确认 %u / 200",(unsigned long long)v.snapshot.revision,domain.pending_events);else strcpy(text,"请用手机发送首次宠物状态");set_label(device_meta,text,210);
+-    set_label(device_storage,v.storage_error ? "存档不可用，请保留设备" : domain.terminal.status==L2_TERMINAL_REJECTED ? (!strcmp(domain.terminal.reason,"insufficient_coins")?"上次互动：喵币不足未扣钱":"上次互动：手机拒绝") : domain.terminal.status==L2_TERMINAL_QUARANTINED ? "上次互动：手机未结算" : available ? "本地存档可用 · 无云服务" : "等待手机首次同步",254);
+-    set_label(setting_brightness,brightness==45 ? "低" : brightness==75 ? "中" : "高",126);set_label(setting_aod,aod_enabled ? "开启" : "关闭",282);update_clock();update_peer();day_refresh();day_project();
++    update_clock();
+ }
+ /* Presentation only: reuse existing prop and original action success/3s gates. */
+ static void warm_home_presentation(uint32_t now)
+@@ -1549,7 +1628,6 @@ static void tick(lv_timer_t *timer)
+     uint32_t interval=mode==MODE_COMP ? 83 : 33;
+     if(now-last_scene_tick>=interval) {
+         last_scene_tick=now;
+-        if(ui_drag.active&&ui_drag.to_face)badge_scene_tick(peek_scene,now,true);
+         if(current_page==PAGE_HOME) badge_scene_tick(home_scene,now,mode==MODE_PLAY || mode==MODE_COMP);
+         else if(current_page==PAGE_CARE) badge_scene_tick(care_scene,now,true);
+         else if(current_page==PAGE_WELCOME) badge_scene_tick(welcome_scene,now,true);
+diff --git a/firmware/main/badge_scene.c b/firmware/main/badge_scene.c
+index f6b4045..6e52afe 100644
+--- a/firmware/main/badge_scene.c
++++ b/firmware/main/badge_scene.c
+@@ -32,6 +32,8 @@ struct badge_scene {
+     l2_action_t action;
+     lv_image_dsc_t small;
+     uint8_t *small_pixels;
++    struct badge_scene *checkpoint;
++    uint32_t checkpoint_ms;
+ };
+ bool badge_scene_is_warm(const badge_scene_t *s)
+ {
+@@ -118,6 +120,21 @@ void badge_scene_set_interacting(badge_scene_t *s,bool active)
+  if(!s)return;
+  s->interacting=active;s->prop_previous=0;
+ }
++bool badge_scene_save_pose(badge_scene_t *s)
++{
++ if(!s)return false;
++ if(!s->checkpoint)s->checkpoint=malloc(sizeof(*s));
++ if(!s->checkpoint)return false;
++ *s->checkpoint=*s;s->checkpoint_ms=lv_tick_get();return true;
++}
++void badge_scene_restore_pose(badge_scene_t *s)
++{
++ if(!s||!s->checkpoint)return;
++ badge_scene_t *saved=s->checkpoint;uint8_t *pixels=s->small_pixels;
++ uint32_t paused=lv_tick_get()-s->checkpoint_ms;
++ *s=*saved;s->checkpoint=saved;s->small_pixels=pixels;s->started+=paused;
++ s->prop_previous=0;set_frame(s,s->frame);lv_obj_invalidate(s->root);
++}
+ int badge_scene_prop_offset(const badge_scene_t *s){return s?s->prop_offset:0;}
+ void badge_scene_cancel_prop(badge_scene_t *s)
+ {
+diff --git a/firmware/main/badge_scene.h b/firmware/main/badge_scene.h
+index 0d72aa8..7230d15 100644
+--- a/firmware/main/badge_scene.h
++++ b/firmware/main/badge_scene.h
+@@ -48,6 +48,9 @@ bool badge_scene_thought_visible(const badge_scene_t *scene,uint32_t now);
+ bool badge_scene_light_background(const badge_scene_t *scene);
+ 
+ void badge_scene_set_interacting(badge_scene_t *scene,bool active);
++/* GUI-only checkpoint for composing the other HOME face. */
++bool badge_scene_save_pose(badge_scene_t *scene);
++void badge_scene_restore_pose(badge_scene_t *scene);
+ int badge_scene_prop_offset(const badge_scene_t *scene);
+ 
+ void badge_scene_cancel_prop(badge_scene_t *scene);
+diff --git a/firmware/main/local2_day.c b/firmware/main/local2_day.c
+index 6c7bd70..ea0b19d 100644
+--- a/firmware/main/local2_day.c
++++ b/firmware/main/local2_day.c
+@@ -132,6 +132,11 @@ end=(unsigned)v[1];
+ static bool metadata(const day_slot_t*s,const day_part_t*p){return !strcmp(s->transfer,p->transfer)&&!strcmp(s->owner,p->owner)&&!strcmp(s->pet,p->pet)&&!strcmp(s->view.date,p->date)&&s->view.zone==p->zone&&s->view.cutoff==p->cutoff&&s->view.demo==p->demo&&s->parts==p->parts;
+ }
+ static bool duplicate(const day_slot_t*s,const day_part_t*p){if(!metadata(s,p)||p->part>=s->next||s->counts[p->part]!=p->count)return false;
++/* Part 0 owns hearts; absent and empty both mean no markers. */
++if(p->part==0){
++if(s->view.heart_count!=p->heart_count)return false;
++for(unsigned i=0;i<p->heart_count;i++)if(s->view.hearts[i]!=p->hearts[i])return false;
++}
+ for(unsigned i=0;
+ i<p->count;
+ i++){const l2_day_segment_t*a=s->view.segments+p->part*16+i,*b=p->rows+i;
+diff --git a/firmware/main/local2_wire.c b/firmware/main/local2_wire.c
+index d9333ca..023f984 100644
+--- a/firmware/main/local2_wire.c
++++ b/firmware/main/local2_wire.c
+@@ -223,7 +223,7 @@ bool local2_wire_handle(const char *line,size_t length,char *out,size_t capacity
+             session_unlock();
+             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
+             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
+-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.5.5-day-hearts");result=L2_OK;
++            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.5.7-scene-swipe-lock");result=L2_OK;
+         }else if(valid&&!strcmp(op,"care_capabilities")){
+             static const char *const ck[]={"v","id","op","clientId","data"};
+             static const char *const dk[]={"careBathV1","mobileContextV1"};char client[37];cJSON *mobile=field(field(q,"data"),"mobileContextV1");

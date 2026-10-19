@@ -1,0 +1,50 @@
+[
+  {
+    "path": ".reference/058-annotated.png",
+    "bytes": 1964890,
+    "sha256": "a4a98253d5511ba1050ac9d2b89558ad61dda2e282b7946ca0affe66edf9daf3",
+    "pixelsViewed": true
+  },
+  {
+    "path": ".reference/058-care-menu.jpeg",
+    "bytes": 376953,
+    "sha256": "2875a0215937f94231ef5b63bba49c757d62aa880e9966af050ed80aef933daf",
+    "pixelsViewed": true
+  },
+  {
+    "path": ".reference/058-day-room.jpeg",
+    "bytes": 412559,
+    "sha256": "3ed0140c0b4ea723eb74264e252781dd93b6607681c402d754e86cbfa4146e24",
+    "pixelsViewed": true
+  },
+  {
+    "path": ".reference/058-lock-current.jpeg",
+    "bytes": 426383,
+    "sha256": "7e6bfdb1da7ad95bbae7a3ac152a7dbd753ff62e8cd92309576004adbcaf1cb8",
+    "pixelsViewed": true
+  },
+  {
+    "path": ".reference/058-status.jpeg",
+    "bytes": 390812,
+    "sha256": "363cec2ec6329cfa2fea451d20e5d8c8daa73e2340efee91c94c913ca713a3f7",
+    "pixelsViewed": true
+  },
+  {
+    "path": ".reference/058-town.jpeg",
+    "bytes": 468677,
+    "sha256": "be145085375c2b3eb489d3352984a0157690fc14c3347daa5bdc6a9e5c4407da",
+    "pixelsViewed": true
+  },
+  {
+    "path": ".reference/badge-lockscreen-current-2026-10-18.jpeg",
+    "bytes": 682011,
+    "sha256": "bde6c05ed115285f2eb000ce86650a2b695836ba3b28a57f1f52c1c2d7b44ea7",
+    "pixelsViewed": true
+  },
+  {
+    "path": ".reference/badge-ui-confirmed-three-states-2026-10-18.jpeg",
+    "bytes": 254634,
+    "sha256": "d31f4a497a4d53eee42a2c1157f2e0e4d9c8c45c08856ddea68d45bf885b3501",
+    "pixelsViewed": true
+  }
+]

@@ -1,0 +1,17 @@
+[
+  {
+    "file": "phone-connection.log",
+    "exitCode": 0,
+    "bytes": 7
+  },
+  {
+    "file": "phone-authority-before.json",
+    "exitCode": 0,
+    "bytes": 112411
+  },
+  {
+    "file": "phone-existing-logcat.log",
+    "exitCode": 0,
+    "bytes": 535930
+  }
+]

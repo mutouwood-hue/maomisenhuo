@@ -1,0 +1,22 @@
+[
+  {
+    "path": ".reference/060-status-elements.svg",
+    "bytes": 1912,
+    "sha256": "f566e78d34bfacec32f5b369f3735b1a7b9d1a786c957cc5b7f927127b2572cf"
+  },
+  {
+    "path": ".reference/060-status-preview.svg",
+    "bytes": 2100,
+    "sha256": "cee5fa929d875d6b5cfa51bc5a9c80378c3a5491ccfaed5cfd67769cbb60a891"
+  },
+  {
+    "path": ".reference/060-status-preview.png",
+    "bytes": 52972,
+    "sha256": "cd499e2cf4171b7979aea18c77ad40e987a09d2398b82d2a0e06266e959b3885"
+  },
+  {
+    "path": ".reference/060-status-spec.md",
+    "bytes": 2656,
+    "sha256": "de53903d58eb0cd5efa0bf1e4b6b5e7fd0113e23bd382ec6ba2fe513ccccaff9"
+  }
+]

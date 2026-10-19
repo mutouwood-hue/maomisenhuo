@@ -1,0 +1,26 @@
+flowchart TD
+  PHONE["手机：我的吧唧"] --> PERM["蓝牙权限 / 选择设备"]
+  PERM --> HELLO["GATT + 本会话hello能力核验"]
+  HELLO --> SNAP["场景 / 动作 / 外观快照"]
+  SNAP --> NVS["吧唧NVS保存最近快照"]
+  NVS --> SHOW["房间 / 庭院 / 镇街与猫动画"]
+  NVS --> TOUCH["本机完成照料动作"]
+  TOUCH --> CAP{"可记录：已初始化 / 队列未满 / 清洁能力"}
+  CAP --> QUEUE["NVS事件队列：最多200条"]
+  CAP -->|不满足| FAIL["明确未保存 / 等待手机"]
+  QUEUE --> RECONNECT["重新连接后读队首事件"]
+  RECONNECT --> WAIT["校验身份 / 等互动与冷却结束"]
+  WAIT --> RULE["原游戏规则计划：应用或拒绝及原因"]
+  RULE --> COMMIT["原生原子保存：game + social + ledger"]
+  COMMIT --> PROJECT["投影到页面并显示结果"]
+  PROJECT --> ACK["同事件ID与摘要 ACK"]
+  ACK --> REMOVE["吧唧持久保存ACK后移出队列"]
+  REMOVE --> RECONNECT
+  RETAIN["用户主动允许锁屏连接 / 常驻通知"] --> HELLO
+  RETAIN -.-> LIMIT["强制停止或系统终止仍需重开"]
+  QUEUE -.-> OFFLINE["离线只记动作证据，设备不独立结算数值"]
+  RECONNECT --x HEAD["若队首为真实相遇：当前结算函数缺失，见相遇图"]
+  classDef partial fill:#fff0cd,stroke:#be8613,color:#493300;
+  classDef broken fill:#ffe4e4,stroke:#cf3030,color:#761818;
+  class RETAIN,LIMIT,OFFLINE partial;
+  class HEAD broken;

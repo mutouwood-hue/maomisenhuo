@@ -1,0 +1,30 @@
+{
+  "startedAtUtc": "2026-10-18T06:03:36.805710+00:00",
+  "serial": "ZYPZ261A01M65K0002A",
+  "packageId": "com.catforest.htmlcandidate",
+  "method": "adb install --no-incremental -r",
+  "before": {
+    "versionCode": 38,
+    "versionName": "0.4.7-care-reasons",
+    "appId": 10191,
+    "firstInstallTime": "2026-10-15 23:14:25"
+  },
+  "file": "catforest-0.4.9-native-appearance-debug.apk",
+  "sha256": "3c22e905a4e4d1300d36565f0489fd75f507c5c47053407ef187e21b54e83906",
+  "appLaunched": false,
+  "dataCleared": false,
+  "uninstalled": false,
+  "acceptance": "not performed; user acceptance pending",
+  "installExitCode": 0,
+  "installed": true,
+  "after": {
+    "versionCode": 40,
+    "versionName": "0.4.9-native-appearance",
+    "appId": 10191,
+    "firstInstallTime": "2026-10-15 23:14:25"
+  },
+  "sameAppId": true,
+  "sameFirstInstallTime": true,
+  "metadataMatchesBuiltVersion": true,
+  "finishedAtUtc": "2026-10-18T06:03:37.061008+00:00"
+}

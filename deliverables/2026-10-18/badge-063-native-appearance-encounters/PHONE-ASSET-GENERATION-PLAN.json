@@ -1,0 +1,18 @@
+{
+  "currentMatchesPreviousBuilder": true,
+  "sizes": {
+    "current": 750034,
+    "old": 750034,
+    "new": 750592
+  },
+  "newHooks": [
+    "authored-native-cat-room-factory",
+    "clear-previous-legacy-outfit-for-room-only-wings",
+    "carry-explicit-body-shape-through-existing-appearance-refresh",
+    "room-only-growth-and-accessory-fit",
+    "fit-bib-after-final-room-pose-and-before-render",
+    "fit-initial-room-accessories",
+    "authored-native-proportions-skip-legacy-extra-head-scale",
+    "authorized-wings-item-reuses-existing-shop-purchase-and-equip"
+  ]
+}

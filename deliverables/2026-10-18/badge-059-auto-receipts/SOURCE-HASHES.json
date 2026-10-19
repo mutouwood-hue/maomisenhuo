@@ -1,0 +1,72 @@
+[
+  {
+    "path": "app/android/app/build.gradle.kts",
+    "bytes": 805,
+    "sha256": "41d08bb7f6f68755d1b1ec8bb9214a24b98a72f035ee8ac48a1db8e5306f1098"
+  },
+  {
+    "path": "app/android/app/src/main/assets/cflocal2-adapter.js",
+    "bytes": 20565,
+    "sha256": "2dbaf1cff2d837f04d1e832320c8f8526ee95bbd879129196822062bd3320b62"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-device-events.js",
+    "bytes": 17430,
+    "sha256": "a1b18d61792675ccfa00e04a12fe4f0392a1fe57403773dd4db54adbba7282b9"
+  },
+  {
+    "path": "app/android/app/src/main/assets/offline-scene-sync.js",
+    "bytes": 25203,
+    "sha256": "1f9e4459c02fab93be835fff84325a316e34d1cb14730f7e36f3debab18e3cbd"
+  },
+  {
+    "path": "app/preview/cflocal2-adapter.js",
+    "bytes": 20565,
+    "sha256": "2dbaf1cff2d837f04d1e832320c8f8526ee95bbd879129196822062bd3320b62"
+  },
+  {
+    "path": "app/preview/offline-device-events.js",
+    "bytes": 17430,
+    "sha256": "a1b18d61792675ccfa00e04a12fe4f0392a1fe57403773dd4db54adbba7282b9"
+  },
+  {
+    "path": "app/preview/offline-scene-sync.js",
+    "bytes": 25203,
+    "sha256": "1f9e4459c02fab93be835fff84325a316e34d1cb14730f7e36f3debab18e3cbd"
+  },
+  {
+    "path": "app/web/cflocal2-adapter.js",
+    "bytes": 20565,
+    "sha256": "2dbaf1cff2d837f04d1e832320c8f8526ee95bbd879129196822062bd3320b62"
+  },
+  {
+    "path": "app/web/offline-device-events.js",
+    "bytes": 17430,
+    "sha256": "a1b18d61792675ccfa00e04a12fe4f0392a1fe57403773dd4db54adbba7282b9"
+  },
+  {
+    "path": "app/web/offline-scene-sync.js",
+    "bytes": 25203,
+    "sha256": "1f9e4459c02fab93be835fff84325a316e34d1cb14730f7e36f3debab18e3cbd"
+  },
+  {
+    "path": "firmware/CMakeLists.txt",
+    "bytes": 18166,
+    "sha256": "6f3b8f3fec218b72bb871a4ffbdda4bd28ad93ff9fe6bca3950f97659f64c94e"
+  },
+  {
+    "path": "firmware/main/badge_pages.c",
+    "bytes": 108286,
+    "sha256": "41f666c455bd781f240ff499c09cf1d54ddfaeaf43533008a5ed107e209939aa"
+  },
+  {
+    "path": "firmware/main/badge_ui_targets.h",
+    "bytes": 848,
+    "sha256": "939a38e76136a909ae46d587e77b5fb175c0dfa236ec7a7e9f13b24ce4a6fedc"
+  },
+  {
+    "path": "firmware/main/local2_wire.c",
+    "bytes": 25062,
+    "sha256": "cd62ec63584c9ffb6cc7d55886c56b564f1b6f0cf98539cb63a74f07aec9dfa6"
+  }
+]

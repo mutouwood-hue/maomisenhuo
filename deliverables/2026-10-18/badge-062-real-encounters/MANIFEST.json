@@ -1,0 +1,34 @@
+{
+  "firmwareVersion": "0.6.2-real-encounters",
+  "phoneVersion": "0.4.8-real-encounters",
+  "phoneVersionCode": 39,
+  "baselineCommit": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "firmwareBuildExitCode": 0,
+  "phoneBuildExitCode": 0,
+  "testsRun": false,
+  "simulationsRun": false,
+  "selfAcceptanceRun": false,
+  "deviceDeployment": "pending parent coordination before install/flash",
+  "dualBadgeAcceptance": "pending second physical badge and user acceptance",
+  "fate": "independent disabled; real background capture not implemented pending decision",
+  "shake": "not complete; not retained",
+  "artifacts": {
+    "cat_forest_badge-0.6.2-real-encounters.bin": {
+      "bytes": 6926864,
+      "sha256": "3420e72e82bf3e5f27b115e477f06a81ea2593a1396d44b4c6ff29d177a5ad38"
+    },
+    "catforest-0.4.8-real-encounters-debug.apk": {
+      "bytes": 994762,
+      "sha256": "9d9da9e18b27c63e53456fa872f290f32f4229f6d5cae43097326449aabae5b7"
+    }
+  },
+  "firmwareDescriptor": {
+    "magic": "0xabcd5432",
+    "version": "0.6.2-real-encounters",
+    "project": "cat_forest_badge"
+  },
+  "phoneBuildLog": "phone-production-build-final2.log",
+  "firmwareBuildLog": "firmware-production-build-final5.log",
+  "applicationId": "com.catforest.htmlcandidate",
+  "signerCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82"
+}

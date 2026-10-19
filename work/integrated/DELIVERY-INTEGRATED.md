@@ -1,6 +1,6 @@
-# 成套集成交付（最终）
+# 历史归档：初次成套集成交付
 
-本目录是可交付的成套产物：全量源码归档 + 两端构建产物 + 验证日志。
+本文保留初次集成时的产物大小和验证声明，表中数据不是当前 041/056 修复交付物。当前交付以 [修复交付记录](DELIVERY-2026-10-18-REPLAY-FIX.md) 和 [当前 MANIFEST](../../deliverables/2026-10-18/hearts-replay-fix/MANIFEST.json) 为准；040/055 旧实物的纠正身份见 [原始功能批次记录](DELIVERY-2026-10-18.md)。不将历史的 700,204 B / 6,884,208 B 改写成新产物数据。
 生成脚本：[package-integrated.py](package-integrated.py)；两端合成过程见 [DELIVERY.md](DELIVERY.md)。
 
 ## 交付内容
@@ -16,7 +16,7 @@
 
 源码归档按用户要求不做哈希核对、不生成备份；`firmware/managed_components/`（约 230 MB 的 ESP-IDF 组件缓存）与各 `build*/`、`.gradle/`、`node_modules/` 不进入归档，组件版本由 `firmware/dependencies.lock` 钉定，可离线复原。
 
-## 本次实测结果
+## 原记录中的验证结果（历史声明）
 
 | 项目 | 命令 | 结果 |
 | --- | --- | --- |

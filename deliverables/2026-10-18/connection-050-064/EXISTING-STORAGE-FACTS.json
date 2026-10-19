@@ -1,0 +1,14 @@
+{
+  "nvsBytes": 32768,
+  "blobBytes": 737,
+  "schema": 5,
+  "crcValid": true,
+  "hasSnapshot": true,
+  "stateSha256": "9982a054301d2c7c3ff395557be085edd6515ca079b10dcb49149327f7b48630",
+  "appearanceTail": {
+    "known": 0,
+    "growth": 0,
+    "body": 0,
+    "outfit": ""
+  }
+}

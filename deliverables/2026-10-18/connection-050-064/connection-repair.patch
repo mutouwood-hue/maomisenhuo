@@ -1,0 +1,979 @@
+--- a/app/android/app/build.gradle.kts
++++ b/app/android/app/build.gradle.kts
+@@ -8,8 +8,8 @@
+         applicationId = "com.catforest.htmlcandidate"
+         minSdk = 26
+         targetSdk = 35
+-        versionCode = 40
+-        versionName = "0.4.9-native-appearance"
++        versionCode = 41
++        versionName = "0.5.0-badge-connect"
+     }
+     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
+     signingConfigs {
+--- a/app/android/app/src/main/assets/build-manifest.json
++++ b/app/android/app/src/main/assets/build-manifest.json
+@@ -40,7 +40,7 @@
+       "index": 6,
+       "file": "game-06.js",
+       "sourceSha256": "049f7cfca7aef9f50c2624e9658fbb0fe0b6dc1d3f2a726f37f69fe8f83dec65",
+-      "packagedSha256": "4d685388d5d7aa81f9071e704a9ebc9d548b94cf6fc3e73509a33cb87e83bb02",
++      "packagedSha256": "4d604baf712d3c5887909f915ddc57f77d7c7dd040b71360521d58c0922379bf",
+       "changed": true
+     },
+     {
+@@ -154,13 +154,20 @@
+     "fit-bib-after-final-room-pose-and-before-render",
+     "fit-initial-room-accessories",
+     "authored-native-proportions-skip-legacy-extra-head-scale",
+-    "authorized-wings-item-reuses-existing-shop-purchase-and-equip"
++    "authorized-wings-item-reuses-existing-shop-purchase-and-equip",
++    "one-badge-page-owns-privacy-navigation",
++    "privacy-deep-links-still-open-existing-controls",
++    "badge-preview-only-after-current-session-handshake",
++    "mount-connection-in-existing-daily-badge-page",
++    "reuse-original-privacy-controls-inside-badge",
++    "reuse-live-device-panel-instead-of-second-dialog",
++    "badge-title-without-demo-connection-claim"
+   ],
+   "release": {
+-    "firmware": "0.6.3-native-appearance",
+-    "phone": "0.4.9-native-appearance",
+-    "versionCode": 40,
+-    "scope": "Native room/GUI appearance + existing real encounter implementation + appearance wire; frozen town payload preserved",
+-    "validation": "static review and production build only; user acceptance pending"
++    "firmware": "0.6.4-connect-repair",
++    "phone": "0.5.0-badge-connect",
++    "versionCode": 41,
++    "scope": "minimal discovery repair, single existing daily badge page and privacy navigation",
++    "validation": "static records/source inspection and production build only; no tests, simulation or user acceptance"
+   }
+ }
+--- a/app/android/app/src/main/assets/game-06.js
++++ b/app/android/app/src/main/assets/game-06.js
+@@ -675,14 +675,14 @@
+ /* ---------- 浮层 ---------- */
+ const ov=document.createElement('div');ov.id='life-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','今日生活');
+ ov.innerHTML=`<div class="lf-box"><header class="lf-head"><div><b>今日生活</b><small id="lf-date"></small></div><span id="lf-mode" class="lf-mode"></span><button type="button" class="lf-x" aria-label="关闭">×</button></header>
+-<nav class="lf-tabs" role="tablist">${[['today','今天'],['heart','心动轨迹'],['places','常去地点'],['badge','吧唧'],['privacy','授权与隐私']].map(([k,n])=>`<button type="button" role="tab" data-tab="${k}">${n}</button>`).join('')}</nav>
++<nav class="lf-tabs" role="tablist">${[['today','今天'],['heart','心动轨迹'],['places','常去地点'],['badge','吧唧']].map(([k,n])=>`<button type="button" role="tab" data-tab="${k}">${n}</button>`).join('')}</nav>
+ <div class="lf-body" id="lf-body"></div></div>`;
+ document.body.appendChild(ov);
+ let tab='today';
+ ov.querySelector('.lf-x').addEventListener('click',close);
+ ov.addEventListener('click',e=>{if(e.target===ov)close();const t=e.target.closest('[data-tab]');if(t){tab=t.dataset.tab;render();track('life_tab',{tab})}});
+ addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('on'))close()});
+-function open(t='today'){tab=t;ov.classList.add('on');render();track('life_open',{tab:t,demo:L.cfg.demo,sync:L.cfg.sync})}
++function open(t='today'){const privacy=t==='privacy';tab=privacy?'badge':t;ov.classList.add('on');render();if(privacy){const node=$('lf-badge-privacy');if(node)node.open=true}track('life_open',{tab,demo:L.cfg.demo,sync:L.cfg.sync})}
+ function close(){ov.classList.remove('on');stopReplay();stopBadge()}
+ L.open=open;/* Embedded in the original daily-view closure. Presentation only; no life/store writes. */
+ function hostDayClock(){const date=new Date(),valid=Number.isFinite(date.getTime())&&date.getFullYear()>=2020&&date.getFullYear()<=2100;return{valid,day:valid?L.dayKey(date):null,minute:valid?date.getHours()*60+date.getMinutes()+date.getSeconds()/60:0};}
+@@ -800,6 +800,7 @@
+   const day=L.day(),body=$('lf-body');stopReplay();stopBadge();L.emit('places');
+   $('lf-date').textContent=new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'short'});
+   $('lf-mode').textContent=L.cfg.demo?'演示数据':L.cfg.geo?'定位采样中 · 自动生成':'自动生成';$('lf-mode').className='lf-mode'+(L.cfg.demo?' demo':'');
++  ov.querySelector('.lf-head b').textContent=tab==='badge'?'我的吧唧':'今日生活';$('lf-mode').hidden=tab==='badge';
+   ov.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
+   if(tab==='today')body.innerHTML=today(day);
+   if(tab==='heart')body.innerHTML=heart();
+@@ -807,7 +808,7 @@
+   if(tab==='badge')body.innerHTML=badge();
+   if(tab==='privacy')body.innerHTML=privacy();
+   if(tab==='places')body.querySelectorAll('[data-map]').forEach(el=>{const p=L.place(el.dataset.map);el.replaceChildren(L.map(p,300,170,c=>el.replaceChildren(c)))});
+-  if(tab==='badge')startBadge();
++  if(tab==='badge')window.CatOfflineSceneSync?.mountBadgePage();
+   if(tab==='today'){const st=body.querySelector('#lf-stage');if(st)drawStage(st,L.segAt(day,L.nowMin()));window.CatDayNavigation?.restore()}
+ }
+ function today(day){
+@@ -874,14 +875,15 @@
+ /* ---------- 吧唧：240×240 圆屏 ---------- */
+ let bf='ring',braf=0,said={t:0,txt:'',icon:''};
+ function stopBadge(){cancelAnimationFrame(braf);braf=0}
++L.hostBadgeState=connected=>{const preview=$('lf-body')?.querySelector('.lf-badge');if(preview)preview.hidden=!connected;if(connected){if(!braf)startBadge()}else stopBadge()};
+ function badge(){
+-  return `<section class="lf-sec lf-badge"><div class="lf-bz"><canvas id="lf-bcv" width="240" height="240" aria-label="吧唧圆屏预览"></canvas></div>
++  return `<section class="lf-sec" id="lf-badge-connection"></section><section class="lf-sec lf-badge" hidden><div class="lf-bz"><canvas id="lf-bcv" width="240" height="240" aria-label="吧唧圆屏预览"></canvas></div>
+   <div class="lf-seg" role="group">${[['ring','时间环'],['heart','心动'],['cat','小猫']].map(([k,n])=>`<button type="button" data-face="${k}" aria-pressed="${bf===k}">${n}</button>`).join('')}</div>
+   <p class="lf-note">吧唧端只显示今天：外圈是你的 24 小时，内圈是${esc(petName())}跟着你的行程；白点是现在，小红点是心动时刻。数据来自手机 App，通过蓝牙同步。</p></section>
+   <section class="lf-sec"><h4>和${esc(petName())}说说话 <small>按住说话，只在按住时听</small></h4>
+   <div class="lf-voice"><button type="button" id="lf-talk" class="lf-talk">🎙️ 按住说话</button><div id="lf-heard" class="lf-heard">试试说：“我回来了”“饿不饿”“今天好累”“晚安”</div></div>
+   <div class="lf-chips">${['我回来了','饿不饿呀','今天好累','你好可爱','我出门啦','晚安'].map(t=>`<button type="button" data-say="${t}">${t}</button>`).join('')}</div></section>
+-  ${L.env?.badgeHtml?.()||''}`;
++  ${L.env?.badgeHtml?.()||''}<details class="lf-badge-privacy" id="lf-badge-privacy"><summary>隐私与授权</summary>${privacy()}</details>`;
+ }
+ function startBadge(){
+   const cv=$('lf-bcv');if(!cv)return;const g=cv.getContext('2d');g.imageSmoothingEnabled=false;
+--- a/app/android/app/src/main/assets/offline-host.css
++++ b/app/android/app/src/main/assets/offline-host.css
+@@ -1,5 +1,25 @@
+ /* Keep the original palette, pixel art, HUD, six care actions and social layouts. */
+ [hidden] { display:none !important; }
++/* One live connection panel inside the original daily badge page. */
++#lf-badge-connection { padding:20px 16px; }
++#lf-badge-connection #offline-v2-panel { display:block; }
++.badge-connect-hero { text-align:center; }
++.badge-connect-hero h3 { margin:10px 0; font-size:19px; }
++.badge-connect-hero p { line-height:1.65; }
++.badge-radar { position:relative; isolation:isolate; width:min(210px,60vw); aspect-ratio:1; margin:4px auto 20px; border-radius:50%; background:#f0eadf; overflow:hidden; }
++.badge-radar i { position:absolute; border:1px solid #9daf9770; border-radius:50%; inset:8%; }
++.badge-radar i:nth-child(2) { inset:23%; }
++.badge-radar i:nth-child(3) { inset:38%; }
++.badge-radar span { position:absolute; inset:0; display:grid; place-items:center; color:#6c8d70; font-size:27px; }
++.badge-radar::after { content:''; position:absolute; inset:0; border-radius:inherit; background:conic-gradient(from 0deg,transparent 66%,#86a68540 98%,#73997970); opacity:0; }
++.badge-radar.is-searching::after { opacity:1; animation:badge-search 3s linear infinite; }
++.badge-device-list,.badge-connect-actions { display:flex; flex-direction:column; gap:10px; margin:14px 0; }
++.badge-connect-actions .g-btn,.badge-device-list .g-btn { width:100%; min-height:46px; }
++.lf-badge-privacy { margin-top:16px; border:1px solid #dacdbb; border-radius:16px; overflow:hidden; }
++.lf-badge-privacy summary { cursor:pointer; padding:16px; font-weight:700; min-height:46px; box-sizing:border-box; }
++.lf-badge-privacy>.lf-sec { margin:0; border:0; }
++@keyframes badge-search { to { transform:rotate(360deg); } }
++@media (prefers-reduced-motion:reduce) { .badge-radar.is-searching::after { animation:none; } }
+ #offline-device { padding:0; border:0; width:min(440px,94vw); max-height:calc(100dvh - var(--safe-area-inset-top,0px) - var(--safe-area-inset-bottom,0px) - 20px); border-radius:24px; background:#fffaf2; color:#5b4632; box-shadow:0 20px 60px #3b2f2533; }
+ #offline-device::backdrop { background:#2e2a2466; backdrop-filter:blur(4px); }
+ .offline-device-inner { display:flex; flex-direction:column; max-height:inherit; }
+--- a/app/android/app/src/main/assets/offline-host.js
++++ b/app/android/app/src/main/assets/offline-host.js
+@@ -17,14 +17,8 @@
+   let lastFocus = null;
+   function openDevice() {
+     lastFocus = document.activeElement;
+-    const pet = window.__petGame?.state()?.pet;
+-    const canvas = $('offline-device-cat');
+-    const ctx = canvas.getContext('2d');
+-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+-    window.__pgSocial?.drawPet(ctx, 0, 8, 8, pet?.breed || 'orange', { outfit: pet?.outfit });
+-    renderDevice();
+-    if (!dialog.open) dialog.showModal();
+-    reconcile();
++    if(window.__pgLife?.open){window.__pgLife.open('badge');reconcile();}
++    else notice('吧唧页面正在准备，请稍后再打开。');
+   }
+   dialog.addEventListener('close', () => { lastFocus?.focus?.(); reconcile(); });
+   const railButton = document.createElement('button');
+@@ -39,6 +33,8 @@
+   document.querySelector('.town-nav')?.append(desktopButton);
+ 
+   function validatedLink() {
++    const current=window.CatOfflineSceneSync?.state;
++    if(current)return current;
+     if (!ports) return null;
+     const state = ports.control.getState();
+     if (state?.stage === 'ready_local') {
+--- a/app/android/app/src/main/assets/offline-scene-sync.js
++++ b/app/android/app/src/main/assets/offline-scene-sync.js
+@@ -142,14 +142,15 @@
+     const row=d.createElement('label');row.className='offline-device-mode';row.textContent='连接方式';
+     const select=d.createElement('select');select.id='offline-device-mode';select.setAttribute('aria-label','连接方式');
+     select.innerHTML='<option value="cflocal2">新本地固件 · 场景同步</option><option value="legacy">旧固件兼容 · 基础控制</option>';
+-    row.append(select);const routeStatus=d.createElement('small');routeStatus.id='offline-route-status';row.append(routeStatus);body.querySelector('h3').after(row,legacy);
++    row.hidden=true;row.append(select);const routeStatus=d.createElement('small');routeStatus.id='offline-route-status';row.append(routeStatus);body.querySelector('h3').after(row,legacy);
+     const panel=d.createElement('section');panel.id='offline-v2-panel';panel.hidden=true;
+-    panel.innerHTML='<p id="offline-v2-status" role="status" aria-live="polite"></p><p id="offline-v2-note"></p><p id="offline-v2-events" role="status"></p><p id="offline-v2-day" role="status"></p><div id="offline-v2-list"></div><button type="button" class="g-btn" id="offline-v2-scan">寻找新本地吧唧</button><button type="button" class="g-btn ghost" id="offline-v2-retry" hidden>重试场景同步</button><button type="button" class="g-btn ghost" id="offline-v2-disconnect" hidden>断开连接</button><p class="lf-note">新固件的真实照料与野花收据在手机持久结算后才确认。旧固件仍为基础控制；双方好友确认尚无持久证明，不会自动建好友。</p>';
++    panel.innerHTML=`<div class="badge-connect-hero"><div class="badge-radar" id="offline-v2-radar" aria-hidden="true"><i></i><i></i><i></i><span>✦</span></div><h3 id="offline-v2-heading">寻找你的吧唧</h3><p id="offline-v2-status" role="status" aria-live="polite"></p><p class="lf-note" id="offline-v2-note"></p></div><div id="offline-v2-list" class="badge-device-list"></div><div class="badge-connect-actions"><button type="button" class="g-btn" id="offline-v2-scan">寻找吧唧</button><button type="button" class="g-btn ghost" id="offline-v2-retry" hidden>重试同步</button><button type="button" class="g-btn ghost" id="offline-v2-disconnect" hidden>断开连接</button></div>`;
++    const ui=id=>panel.querySelector('#'+id);
+     legacy.after(panel);
+     const backgroundButton=d.createElement('button');backgroundButton.type='button';backgroundButton.className='g-btn ghost';backgroundButton.id='offline-v2-background';backgroundButton.textContent='开启锁屏连接';
+     const backgroundNote=d.createElement('p');backgroundNote.className='lf-note';backgroundNote.setAttribute('role','status');backgroundNote.textContent='开启后显示常驻通知；后台只保持连接，不结算照料。强制停止或系统终止后请重开应用。';
+     panel.append(backgroundButton,backgroundNote);
+-    let ports=null,coordinator=null,busy=false,mode='cflocal2',foreground=!d.hidden,connectionError=null,unsubscribe=null,diagnostics=null;
++    let ports=null,coordinator=null,busy=false,mode='cflocal2',foreground=!d.hidden,connectionError=null,unsubscribe=null,diagnostics=null,pageWasOpen=false,pageChecking=false;
+     const reconnectKey='cat-saved-local-device-v1';let reconnectTimer=null,reconnectEpoch=0;
+     function savedDevice(){try{const value=JSON.parse(root.localStorage.getItem(reconnectKey)||'null');if(value?.schema===1)return value;
+       // Restore a single existing durable binding by verified device ID. A fresh scan
+@@ -178,58 +179,92 @@
+       catch(error){connectionError=friendly(error);if(error.code==='OWNER_CONFLICT'){saveDevice({...saved,enabled:false});}}
+       finally{busy=false;render();if(foreground&&!verifiedLink(ports.control.getState()))scheduleReconnect(20000);}
+     }
+-    const text=(id,value)=>{if($(id).textContent!==value)$(id).textContent=value;};
++    const text=(id,value)=>{const node=ui(id);if(node&&node.textContent!==value)node.textContent=value;};
+     backgroundButton.addEventListener('click',()=>void run(async()=>{
+       const enabled=ports.control.getBackgroundState()?.backgroundEnabled===true;
+       await ports.control.setBackgroundRetention(!enabled,USER);
+       if(enabled){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);}
+       render();
+     }));
+-    const friendly=error=>/App left foreground|activity.*foreground|app.*background/i.test(error?.message||error||'')?'应用已暂停连接，请重新明确连接。':error?.message||String(error||'');
+-    const names={disconnected:'新本地吧唧尚未连接',permission_required:'需要附近设备权限',bluetooth_off:'请先开启蓝牙',scanning:'正在寻找新本地吧唧…',selecting:'选择身边的新本地吧唧',connecting:'正在连接…',discovering:'正在确认新协议…',subscribing:'正在准备接收消息…',handshaking:'正在核对设备身份与状态…'};
++    const friendly=error=>{
++      const code=error?.code||'',message=String(error?.message||error||'');
++      if(code==='PERMISSION_REQUIRED'||/permission/i.test(message))return '请允许“附近设备”权限，再寻找吧唧。';
++      if(code==='BLUETOOTH_OFF'||/bluetooth.*(off|disabled)|蓝牙.*关闭/i.test(message))return '请开启手机蓝牙，再点重新寻找。';
++      if(code==='OWNER_CONFLICT')return '这只不是原来的吧唧，请选择你的设备。';
++      if(/foreground|background|应用已暂停/i.test(message))return '连接已暂停，回到应用后点重新连接。';
++      if(/未唤醒|不在附近/.test(message))return '还没找到原来的吧唧，请唤醒它并靠近手机。';
++      return '暂时没连上，请唤醒吧唧并靠近手机后重试。';
++    };
++    const names={disconnected:'让吧唧靠近手机，开始连接。',permission_required:'请允许“附近设备”权限，再寻找吧唧。',bluetooth_off:'请先开启手机蓝牙。',scanning:'正在寻找附近的吧唧…',selecting:'请选择你身边的吧唧。',connecting:'正在连接你的吧唧…',discovering:'正在连接你的吧唧…',subscribing:'正在连接你的吧唧…',handshaking:'正在确认你的吧唧…'};
+     function render(){
+-      legacy.hidden=mode!=='legacy';panel.hidden=mode!=='cflocal2';select.disabled=busy||host.deviceBusy;
+-      text('offline-route-status','切换连接方式会断开当前设备。');
+-      const s=ports?.control.getState(),ready=verifiedLink(s),sync=coordinator?.getStatus();
++      legacy.hidden=true;row.hidden=true;panel.hidden=false;select.disabled=true;
++      const s=ports?.control.getState(),ready=!pageChecking&&verifiedLink(s),sync=coordinator?.getStatus();
+       const background=ports?.control.getBackgroundState();
+       backgroundButton.disabled=busy||!ports||(!ready&&background?.backgroundEnabled!==true);
+-      backgroundButton.textContent=background?.backgroundEnabled===true?'关闭锁屏连接并断开':'开启锁屏连接';
++      backgroundButton.textContent=background?.backgroundEnabled===true?'关闭锁屏连接':'允许锁屏时保持连接';
+       backgroundButton.setAttribute('aria-pressed',String(background?.backgroundEnabled===true));
+-      backgroundNote.textContent=background?.backgroundEnabled===true?'锁屏连接已开启，常驻通知可停止；后台不结算照料，返回前台再补传。':'锁屏连接未开启。开启后显示常驻通知；强制停止或系统终止后请重开应用。';
+-      const message=connectionError||(ready?(sync?.stage==='disconnected'?'新本地协议就绪 · 等待明确连接授权':sync?.message||'新本地协议就绪'):s?.stage==='ready_local'?'设备确认资料不完整，不能同步。':names[s?.stage]||friendly(s?.error)||'场景同步适配器尚未准备好');
+-      text('offline-v2-status',friendly(message));
+-      text('offline-v2-note',!ports?'等待原生连接通道。不会模拟连接或同步。':ready?'已核对新本地协议。只有当前场景的设备持久确认才能显示同步成功。':'首次请明确选择吧唧；之后回到应用会自动寻找同一设备，握手身份变化会停止。');
+-      text('offline-v2-day',coordinator?.getDayStatus().message||'一天圆环等待连接。');
+-      text('offline-v2-events',root.CatOfflineDeviceEvents?.lastResult?.message||'尚无新的真实设备事件；不会从 NPC 或页面动画产生奖励。');
+-      const scan=$('offline-v2-scan');scan.disabled=busy||!ports||['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);scan.hidden=ready;
+-      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent='重试同步';
+-      $('offline-v2-disconnect').hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);
+-      $('offline-v2-disconnect').disabled=busy;
+-      const list=$('offline-v2-list');
+-      const devices=s?.stage==='selecting'?s.devices.filter(x=>x.source==='native_scan'):[];
+-      const signature=JSON.stringify(devices);
+-      if(list.dataset.devices!==signature){
+-        list.dataset.devices=signature;list.replaceChildren();
+-        for(const device of devices){const b=d.createElement('button');b.type='button';b.className='g-btn ghost';b.textContent=device.name||'附近的新本地吧唧';
+-          b.addEventListener('click',()=>void run(async()=>{reconnectEpoch++;await ports.control.connect(device,USER);rememberDevice(device);coordinator.authorize();}));list.append(b);}
++      backgroundNote.textContent=background?.backgroundEnabled===true?'锁屏连接已开启，可在通知中停止。':'开启后会显示常驻通知，你可以随时停止。';
++      const message=pageChecking?'正在确认连接…':connectionError||(ready?(sync?.stage==='error'?'已连接，暂未完成同步，请点重试同步。':'已连接，小猫在这里陪你。'):names[s?.stage]||(s?.error?friendly(s.error):'连接正在准备，请稍候。'));
++      text('offline-v2-heading',ready?'你的吧唧已连接':'寻找你的吧唧');text('offline-v2-status',message);
++      const devices=s?.stage==='selecting'?(s.devices||[]).filter(x=>x.source==='native_scan'):[];
++      text('offline-v2-note',ready?'小猫和今天的生活会跟着你。':s?.stage==='scanning'?'请让吧唧保持唤醒，放在手机附近。':s?.stage==='selecting'&&!devices.length?'这次没有找到吧唧，唤醒它后再找一次。':savedDevice()?'保留原来的绑定与小猫，只寻找你的吧唧。':'找到后请选择自己的吧唧，确认后再连接。');
++      const radar=ui('offline-v2-radar');radar.hidden=ready;radar.classList.toggle('is-searching',s?.stage==='scanning');
++      const waiting=['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);
++      const scan=ui('offline-v2-scan');scan.disabled=busy||!ports||waiting;scan.hidden=ready;
++      scan.textContent=s?.stage==='permission_required'||s?.error?.code==='PERMISSION_REQUIRED'?'允许附近设备':s?.stage==='bluetooth_off'?'蓝牙开启后重试':savedDevice()?'重新连接':'重新寻找';
++      const retry=ui('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;
++      const disconnect=ui('offline-v2-disconnect');disconnect.hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);disconnect.disabled=busy;
++      const list=ui('offline-v2-list'),signature=JSON.stringify(devices);
++      if(list.dataset.devices!==signature){list.dataset.devices=signature;list.replaceChildren();
++        for(const device of devices){const b=d.createElement('button');b.type='button';b.className='g-btn ghost';b.textContent=(!device.name||/^(CatForest-Local2|CF2|CF-Local2)$/.test(device.name)?'附近的吧唧':device.name)+' · '+device.address.slice(-5);
++          b.addEventListener('click',()=>void run(async()=>{
++            reconnectEpoch++;const saved=savedDevice();await ports.control.connect(device,USER);
++            if(saved&&ports.control.getState().hello?.deviceId!==saved.deviceId){await ports.control.disconnect();throw Object.assign(Error('设备身份变化'),{code:'OWNER_CONFLICT'});}
++            rememberDevice(device);coordinator.authorize();
++          }));list.append(b);}
+       }
+       for(const b of list.children)b.disabled=busy;
+-      diagnostics?.update();
++      if(d.querySelector('#life-ov.on #lf-badge-connection')?.contains(panel))root.__pgLife?.hostBadgeState?.(ready);
+     }
+     async function run(action){if(busy)return;busy=true;connectionError=null;render();try{await action();}catch(error){connectionError=friendly(error)||'连接尚未确认。';}finally{busy=false;render();if(foreground&&savedDevice()?.enabled&&!coordinator?.authorized)scheduleReconnect();}}
+-    select.addEventListener('change',()=>void run(async()=>{
+-      if(!ports){select.value=mode;throw Error('原生连接通道尚未准备好。');}
+-      reconnectEpoch++;root.clearTimeout(reconnectTimer);const target=select.value;coordinator.setEnabled(false);if(target==='legacy'){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});}
+-      try{await ports.control.selectTransport(target,USER);mode=target;coordinator.setEnabled(mode==='cflocal2');}
+-      finally{select.value=mode;}
+-    }));
+-    $('offline-v2-scan').addEventListener('click',()=>void run(async()=>{
+-      if(!ports)return;await ports.control.selectTransport('cflocal2',USER);
+-      const permission=await ports.control.requestPermissions(USER);
+-      if(permission.granted)await ports.control.scan({...USER,durationMs:8000});
+-    }));
+-    $('offline-v2-disconnect').addEventListener('click',()=>void run(async()=>{reconnectEpoch++;root.clearTimeout(reconnectTimer);const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});await ports.control.disconnect();}));
+-    $('offline-v2-retry').addEventListener('click',()=>void run(()=>coordinator.retry()));
++    async function findDevice(requestPermission=false){
++      if(!ports)return;
++      await ports.control.initialize();
++      if(verifiedLink(ports.control.getState())){coordinator.authorize();return;}
++      await ports.control.disconnect();
++      await ports.control.selectTransport('cflocal2',USER);
++      if(requestPermission){const permission=await ports.control.requestPermissions(USER);if(!permission.granted)return;}
++      const saved=savedDevice();
++      if(saved){
++        await ports.control.resumeSavedDevice({...saved,enabled:true});
++        const current=ports.control.getState();
++        saveDevice({...saved,enabled:true,address:current.evidence.deviceAddress,restored:false});coordinator.authorize();
++      }else await ports.control.scan({...USER,durationMs:8000});
++    }
++    ui('offline-v2-scan').addEventListener('click',()=>void run(()=>findDevice(true)));
++    function mountBadgePage(){
++      const target=$('lf-badge-connection');if(!target)return;
++      if(panel.parentElement!==target)target.append(panel);render();
++      if(pageWasOpen)return;pageWasOpen=true;
++      if(!ports||busy)return;
++      void run(async()=>{
++        pageChecking=true;render();
++        try{await ports.control.refreshConnectionState();}finally{pageChecking=false;render();}
++        if(ports.control.consumeBackgroundStop()){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);return;}
++        if(verifiedLink(ports.control.getState())){coordinator.authorize();return;}
++        if(savedDevice()?.enabled===false)return;
++        // Opening this page is navigation, never a permission grant or a bind.
++        const stage=ports.control.getState().stage;
++        if(['permission_required','bluetooth_off'].includes(stage))return;
++        await findDevice(false);
++      });
++    }
++    const lifeOverlay=$('life-ov');
++    const lifeObserver=lifeOverlay&&new root.MutationObserver(()=>{if(!lifeOverlay.classList.contains('on'))pageWasOpen=false;});
++    lifeObserver?.observe(lifeOverlay,{attributes:true,attributeFilter:['class']});
++    lifeOverlay?.addEventListener('click',event=>{if(event.target.closest('[data-tab]'))pageWasOpen=false;},true);
++    ui('offline-v2-disconnect').addEventListener('click',()=>void run(async()=>{reconnectEpoch++;root.clearTimeout(reconnectTimer);const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});await ports.control.disconnect();}));
++    ui('offline-v2-retry').addEventListener('click',()=>void run(()=>coordinator.retry()));
+     host.attachLocalV2Ports=value=>{
+       if(ports)throw Error('新本地协议已经接入，不能替换。');
+       if(value?.control?.protocolFamily!=='cflocal2'||!value.scenes)throw Error('新本地协议端口不完整。');
+@@ -237,19 +272,19 @@
+       const consumer=ports.events&&root.CatOfflineDeviceEvents?.createConsumer(ports);
+       coordinator=createCoordinator({ports,readDay:petId=>root.CatOfflineDayDisplay.read(petId),read:context=>root.CatOfflineSceneMap.read(context),consumeEvent:consumer?valid=>consumer.consume(valid):null,validatePending:p=>consumer?.assertPending(p),onChange:render,uuid:()=>root.crypto.randomUUID()});
+       coordinator.setEnabled(mode==='cflocal2');coordinator.setForeground(foreground);unsubscribe=ports.control.subscribe(()=>{if(ports.control.consumeBackgroundStop()){const saved=savedDevice();if(saved?.enabled)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);}render();if(foreground&&!busy&&savedDevice()?.enabled&&['disconnected','error'].includes(ports.control.getState().stage))scheduleReconnect(20000);});
+-      void ports.control.initialize().then(()=>scheduleReconnect()).catch(error=>{connectionError=error.message;render();});render();
+-    };
+-    diagnostics=root.CatOfflineDeviceDiagnostics?.mount({root,panel,getContext:()=>({mode,foreground,state:ports?.control.getState(),verified:verifiedLink(ports?.control.getState())&&coordinator?.authorized===true}),read:()=>{if(!coordinator)throw Error('原生连接通道尚未准备好。');return coordinator.readDeviceState();}})||null;
+-    root.addEventListener('cat-local-v2-error',event=>{connectionError=event.detail?.message||'本地同步存档无法打开。';render();});
++      void ports.control.initialize().then(()=>{if(d.querySelector('#life-ov.on #lf-badge-connection')){pageWasOpen=false;mountBadgePage();}else scheduleReconnect();}).catch(error=>{connectionError=friendly(error);render();});render();
++    };
++
++    root.addEventListener('cat-local-v2-error',()=>{connectionError='本机记录暂未准备好，请保留存档并重新打开应用。';render();});
+     let scheduled=false;
+     // Device-dialog rendering and Host body presentation classes are presentation only;
+     // neither is an input to SceneMap. Real game DOM/data-view and the 500ms poll remain.
+-    const observer=new root.MutationObserver(records=>{if(records.length&&records.every(r=>{const target=r.target.nodeType===1?r.target:r.target.parentElement;return target?.closest('#offline-device')||(target===d.body&&r.type==='attributes'&&r.attributeName==='class');}))return;if(scheduled)return;scheduled=true;root.requestAnimationFrame(()=>{scheduled=false;coordinator?.signal();});});
++    const observer=new root.MutationObserver(records=>{if(records.length&&records.every(r=>{const target=r.target.nodeType===1?r.target:r.target.parentElement;return target?.closest('#offline-device,#offline-v2-panel')||(target===d.body&&r.type==='attributes'&&r.attributeName==='class');}))return;if(scheduled)return;scheduled=true;root.requestAnimationFrame(()=>{scheduled=false;coordinator?.signal();});});
+     observer.observe(d.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['data-view','hidden','class']});
+     const townChanged=()=>coordinator?.signal();root.addEventListener('cat-town-scene-change',townChanged);
+     const poll=root.setInterval(()=>coordinator?.signal(),500);
+-    root.addEventListener('pagehide',()=>{observer.disconnect();root.clearInterval(poll);root.removeEventListener('cat-town-scene-change',townChanged);root.clearTimeout(reconnectTimer);reconnectEpoch++;coordinator?.dispose();diagnostics?.dispose();unsubscribe?.();void ports?.control.dispose();},{once:true});
+-    const api={render,async selectLegacy(){if(ports)await ports.control.selectTransport('legacy',USER);},setForeground(value){foreground=value;reconnectEpoch++;if(value){connectionError=null;scheduleReconnect();}else root.clearTimeout(reconnectTimer);coordinator?.setForeground(value);render();},get connected(){return Boolean(ports&&['ready_local','scanning','connecting','discovering','subscribing','handshaking'].includes(ports.control.getState().stage));},get status(){return coordinator?.getStatus()||null;}};
++    root.addEventListener('pagehide',()=>{observer.disconnect();lifeObserver?.disconnect();root.clearInterval(poll);root.removeEventListener('cat-town-scene-change',townChanged);root.clearTimeout(reconnectTimer);reconnectEpoch++;coordinator?.dispose();diagnostics?.dispose();unsubscribe?.();void ports?.control.dispose();},{once:true});
++    const api={render,mountBadgePage,get state(){return ports?.control.getState()||null;},async selectLegacy(){if(ports)await ports.control.selectTransport('legacy',USER);},setForeground(value){foreground=value;reconnectEpoch++;if(value){connectionError=null;scheduleReconnect();}else root.clearTimeout(reconnectTimer);coordinator?.setForeground(value);render();},get connected(){return verifiedLink(ports?.control.getState());},get status(){return coordinator?.getStatus()||null;}};
+     render();root.dispatchEvent(new root.Event('cat-local-v2-host-ready'));return api;
+   }
+   return {createCoordinator,verifiedLink,mount};
+--- a/app/preview/build-manifest.json
++++ b/app/preview/build-manifest.json
+@@ -40,7 +40,7 @@
+       "index": 6,
+       "file": "game-06.js",
+       "sourceSha256": "049f7cfca7aef9f50c2624e9658fbb0fe0b6dc1d3f2a726f37f69fe8f83dec65",
+-      "packagedSha256": "4d685388d5d7aa81f9071e704a9ebc9d548b94cf6fc3e73509a33cb87e83bb02",
++      "packagedSha256": "4d604baf712d3c5887909f915ddc57f77d7c7dd040b71360521d58c0922379bf",
+       "changed": true
+     },
+     {
+@@ -154,13 +154,20 @@
+     "fit-bib-after-final-room-pose-and-before-render",
+     "fit-initial-room-accessories",
+     "authored-native-proportions-skip-legacy-extra-head-scale",
+-    "authorized-wings-item-reuses-existing-shop-purchase-and-equip"
++    "authorized-wings-item-reuses-existing-shop-purchase-and-equip",
++    "one-badge-page-owns-privacy-navigation",
++    "privacy-deep-links-still-open-existing-controls",
++    "badge-preview-only-after-current-session-handshake",
++    "mount-connection-in-existing-daily-badge-page",
++    "reuse-original-privacy-controls-inside-badge",
++    "reuse-live-device-panel-instead-of-second-dialog",
++    "badge-title-without-demo-connection-claim"
+   ],
+   "release": {
+-    "firmware": "0.6.3-native-appearance",
+-    "phone": "0.4.9-native-appearance",
+-    "versionCode": 40,
+-    "scope": "Native room/GUI appearance + existing real encounter implementation + appearance wire; frozen town payload preserved",
+-    "validation": "static review and production build only; user acceptance pending"
++    "firmware": "0.6.4-connect-repair",
++    "phone": "0.5.0-badge-connect",
++    "versionCode": 41,
++    "scope": "minimal discovery repair, single existing daily badge page and privacy navigation",
++    "validation": "static records/source inspection and production build only; no tests, simulation or user acceptance"
+   }
+ }
+--- a/app/preview/game-06.js
++++ b/app/preview/game-06.js
+@@ -675,14 +675,14 @@
+ /* ---------- 浮层 ---------- */
+ const ov=document.createElement('div');ov.id='life-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','今日生活');
+ ov.innerHTML=`<div class="lf-box"><header class="lf-head"><div><b>今日生活</b><small id="lf-date"></small></div><span id="lf-mode" class="lf-mode"></span><button type="button" class="lf-x" aria-label="关闭">×</button></header>
+-<nav class="lf-tabs" role="tablist">${[['today','今天'],['heart','心动轨迹'],['places','常去地点'],['badge','吧唧'],['privacy','授权与隐私']].map(([k,n])=>`<button type="button" role="tab" data-tab="${k}">${n}</button>`).join('')}</nav>
++<nav class="lf-tabs" role="tablist">${[['today','今天'],['heart','心动轨迹'],['places','常去地点'],['badge','吧唧']].map(([k,n])=>`<button type="button" role="tab" data-tab="${k}">${n}</button>`).join('')}</nav>
+ <div class="lf-body" id="lf-body"></div></div>`;
+ document.body.appendChild(ov);
+ let tab='today';
+ ov.querySelector('.lf-x').addEventListener('click',close);
+ ov.addEventListener('click',e=>{if(e.target===ov)close();const t=e.target.closest('[data-tab]');if(t){tab=t.dataset.tab;render();track('life_tab',{tab})}});
+ addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('on'))close()});
+-function open(t='today'){tab=t;ov.classList.add('on');render();track('life_open',{tab:t,demo:L.cfg.demo,sync:L.cfg.sync})}
++function open(t='today'){const privacy=t==='privacy';tab=privacy?'badge':t;ov.classList.add('on');render();if(privacy){const node=$('lf-badge-privacy');if(node)node.open=true}track('life_open',{tab,demo:L.cfg.demo,sync:L.cfg.sync})}
+ function close(){ov.classList.remove('on');stopReplay();stopBadge()}
+ L.open=open;/* Embedded in the original daily-view closure. Presentation only; no life/store writes. */
+ function hostDayClock(){const date=new Date(),valid=Number.isFinite(date.getTime())&&date.getFullYear()>=2020&&date.getFullYear()<=2100;return{valid,day:valid?L.dayKey(date):null,minute:valid?date.getHours()*60+date.getMinutes()+date.getSeconds()/60:0};}
+@@ -800,6 +800,7 @@
+   const day=L.day(),body=$('lf-body');stopReplay();stopBadge();L.emit('places');
+   $('lf-date').textContent=new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'short'});
+   $('lf-mode').textContent=L.cfg.demo?'演示数据':L.cfg.geo?'定位采样中 · 自动生成':'自动生成';$('lf-mode').className='lf-mode'+(L.cfg.demo?' demo':'');
++  ov.querySelector('.lf-head b').textContent=tab==='badge'?'我的吧唧':'今日生活';$('lf-mode').hidden=tab==='badge';
+   ov.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
+   if(tab==='today')body.innerHTML=today(day);
+   if(tab==='heart')body.innerHTML=heart();
+@@ -807,7 +808,7 @@
+   if(tab==='badge')body.innerHTML=badge();
+   if(tab==='privacy')body.innerHTML=privacy();
+   if(tab==='places')body.querySelectorAll('[data-map]').forEach(el=>{const p=L.place(el.dataset.map);el.replaceChildren(L.map(p,300,170,c=>el.replaceChildren(c)))});
+-  if(tab==='badge')startBadge();
++  if(tab==='badge')window.CatOfflineSceneSync?.mountBadgePage();
+   if(tab==='today'){const st=body.querySelector('#lf-stage');if(st)drawStage(st,L.segAt(day,L.nowMin()));window.CatDayNavigation?.restore()}
+ }
+ function today(day){
+@@ -874,14 +875,15 @@
+ /* ---------- 吧唧：240×240 圆屏 ---------- */
+ let bf='ring',braf=0,said={t:0,txt:'',icon:''};
+ function stopBadge(){cancelAnimationFrame(braf);braf=0}
++L.hostBadgeState=connected=>{const preview=$('lf-body')?.querySelector('.lf-badge');if(preview)preview.hidden=!connected;if(connected){if(!braf)startBadge()}else stopBadge()};
+ function badge(){
+-  return `<section class="lf-sec lf-badge"><div class="lf-bz"><canvas id="lf-bcv" width="240" height="240" aria-label="吧唧圆屏预览"></canvas></div>
++  return `<section class="lf-sec" id="lf-badge-connection"></section><section class="lf-sec lf-badge" hidden><div class="lf-bz"><canvas id="lf-bcv" width="240" height="240" aria-label="吧唧圆屏预览"></canvas></div>
+   <div class="lf-seg" role="group">${[['ring','时间环'],['heart','心动'],['cat','小猫']].map(([k,n])=>`<button type="button" data-face="${k}" aria-pressed="${bf===k}">${n}</button>`).join('')}</div>
+   <p class="lf-note">吧唧端只显示今天：外圈是你的 24 小时，内圈是${esc(petName())}跟着你的行程；白点是现在，小红点是心动时刻。数据来自手机 App，通过蓝牙同步。</p></section>
+   <section class="lf-sec"><h4>和${esc(petName())}说说话 <small>按住说话，只在按住时听</small></h4>
+   <div class="lf-voice"><button type="button" id="lf-talk" class="lf-talk">🎙️ 按住说话</button><div id="lf-heard" class="lf-heard">试试说：“我回来了”“饿不饿”“今天好累”“晚安”</div></div>
+   <div class="lf-chips">${['我回来了','饿不饿呀','今天好累','你好可爱','我出门啦','晚安'].map(t=>`<button type="button" data-say="${t}">${t}</button>`).join('')}</div></section>
+-  ${L.env?.badgeHtml?.()||''}`;
++  ${L.env?.badgeHtml?.()||''}<details class="lf-badge-privacy" id="lf-badge-privacy"><summary>隐私与授权</summary>${privacy()}</details>`;
+ }
+ function startBadge(){
+   const cv=$('lf-bcv');if(!cv)return;const g=cv.getContext('2d');g.imageSmoothingEnabled=false;
+--- a/app/preview/offline-host.css
++++ b/app/preview/offline-host.css
+@@ -1,5 +1,25 @@
+ /* Keep the original palette, pixel art, HUD, six care actions and social layouts. */
+ [hidden] { display:none !important; }
++/* One live connection panel inside the original daily badge page. */
++#lf-badge-connection { padding:20px 16px; }
++#lf-badge-connection #offline-v2-panel { display:block; }
++.badge-connect-hero { text-align:center; }
++.badge-connect-hero h3 { margin:10px 0; font-size:19px; }
++.badge-connect-hero p { line-height:1.65; }
++.badge-radar { position:relative; isolation:isolate; width:min(210px,60vw); aspect-ratio:1; margin:4px auto 20px; border-radius:50%; background:#f0eadf; overflow:hidden; }
++.badge-radar i { position:absolute; border:1px solid #9daf9770; border-radius:50%; inset:8%; }
++.badge-radar i:nth-child(2) { inset:23%; }
++.badge-radar i:nth-child(3) { inset:38%; }
++.badge-radar span { position:absolute; inset:0; display:grid; place-items:center; color:#6c8d70; font-size:27px; }
++.badge-radar::after { content:''; position:absolute; inset:0; border-radius:inherit; background:conic-gradient(from 0deg,transparent 66%,#86a68540 98%,#73997970); opacity:0; }
++.badge-radar.is-searching::after { opacity:1; animation:badge-search 3s linear infinite; }
++.badge-device-list,.badge-connect-actions { display:flex; flex-direction:column; gap:10px; margin:14px 0; }
++.badge-connect-actions .g-btn,.badge-device-list .g-btn { width:100%; min-height:46px; }
++.lf-badge-privacy { margin-top:16px; border:1px solid #dacdbb; border-radius:16px; overflow:hidden; }
++.lf-badge-privacy summary { cursor:pointer; padding:16px; font-weight:700; min-height:46px; box-sizing:border-box; }
++.lf-badge-privacy>.lf-sec { margin:0; border:0; }
++@keyframes badge-search { to { transform:rotate(360deg); } }
++@media (prefers-reduced-motion:reduce) { .badge-radar.is-searching::after { animation:none; } }
+ #offline-device { padding:0; border:0; width:min(440px,94vw); max-height:calc(100dvh - var(--safe-area-inset-top,0px) - var(--safe-area-inset-bottom,0px) - 20px); border-radius:24px; background:#fffaf2; color:#5b4632; box-shadow:0 20px 60px #3b2f2533; }
+ #offline-device::backdrop { background:#2e2a2466; backdrop-filter:blur(4px); }
+ .offline-device-inner { display:flex; flex-direction:column; max-height:inherit; }
+--- a/app/preview/offline-host.js
++++ b/app/preview/offline-host.js
+@@ -17,14 +17,8 @@
+   let lastFocus = null;
+   function openDevice() {
+     lastFocus = document.activeElement;
+-    const pet = window.__petGame?.state()?.pet;
+-    const canvas = $('offline-device-cat');
+-    const ctx = canvas.getContext('2d');
+-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+-    window.__pgSocial?.drawPet(ctx, 0, 8, 8, pet?.breed || 'orange', { outfit: pet?.outfit });
+-    renderDevice();
+-    if (!dialog.open) dialog.showModal();
+-    reconcile();
++    if(window.__pgLife?.open){window.__pgLife.open('badge');reconcile();}
++    else notice('吧唧页面正在准备，请稍后再打开。');
+   }
+   dialog.addEventListener('close', () => { lastFocus?.focus?.(); reconcile(); });
+   const railButton = document.createElement('button');
+@@ -39,6 +33,8 @@
+   document.querySelector('.town-nav')?.append(desktopButton);
+ 
+   function validatedLink() {
++    const current=window.CatOfflineSceneSync?.state;
++    if(current)return current;
+     if (!ports) return null;
+     const state = ports.control.getState();
+     if (state?.stage === 'ready_local') {
+--- a/app/preview/offline-scene-sync.js
++++ b/app/preview/offline-scene-sync.js
+@@ -142,14 +142,15 @@
+     const row=d.createElement('label');row.className='offline-device-mode';row.textContent='连接方式';
+     const select=d.createElement('select');select.id='offline-device-mode';select.setAttribute('aria-label','连接方式');
+     select.innerHTML='<option value="cflocal2">新本地固件 · 场景同步</option><option value="legacy">旧固件兼容 · 基础控制</option>';
+-    row.append(select);const routeStatus=d.createElement('small');routeStatus.id='offline-route-status';row.append(routeStatus);body.querySelector('h3').after(row,legacy);
++    row.hidden=true;row.append(select);const routeStatus=d.createElement('small');routeStatus.id='offline-route-status';row.append(routeStatus);body.querySelector('h3').after(row,legacy);
+     const panel=d.createElement('section');panel.id='offline-v2-panel';panel.hidden=true;
+-    panel.innerHTML='<p id="offline-v2-status" role="status" aria-live="polite"></p><p id="offline-v2-note"></p><p id="offline-v2-events" role="status"></p><p id="offline-v2-day" role="status"></p><div id="offline-v2-list"></div><button type="button" class="g-btn" id="offline-v2-scan">寻找新本地吧唧</button><button type="button" class="g-btn ghost" id="offline-v2-retry" hidden>重试场景同步</button><button type="button" class="g-btn ghost" id="offline-v2-disconnect" hidden>断开连接</button><p class="lf-note">新固件的真实照料与野花收据在手机持久结算后才确认。旧固件仍为基础控制；双方好友确认尚无持久证明，不会自动建好友。</p>';
++    panel.innerHTML=`<div class="badge-connect-hero"><div class="badge-radar" id="offline-v2-radar" aria-hidden="true"><i></i><i></i><i></i><span>✦</span></div><h3 id="offline-v2-heading">寻找你的吧唧</h3><p id="offline-v2-status" role="status" aria-live="polite"></p><p class="lf-note" id="offline-v2-note"></p></div><div id="offline-v2-list" class="badge-device-list"></div><div class="badge-connect-actions"><button type="button" class="g-btn" id="offline-v2-scan">寻找吧唧</button><button type="button" class="g-btn ghost" id="offline-v2-retry" hidden>重试同步</button><button type="button" class="g-btn ghost" id="offline-v2-disconnect" hidden>断开连接</button></div>`;
++    const ui=id=>panel.querySelector('#'+id);
+     legacy.after(panel);
+     const backgroundButton=d.createElement('button');backgroundButton.type='button';backgroundButton.className='g-btn ghost';backgroundButton.id='offline-v2-background';backgroundButton.textContent='开启锁屏连接';
+     const backgroundNote=d.createElement('p');backgroundNote.className='lf-note';backgroundNote.setAttribute('role','status');backgroundNote.textContent='开启后显示常驻通知；后台只保持连接，不结算照料。强制停止或系统终止后请重开应用。';
+     panel.append(backgroundButton,backgroundNote);
+-    let ports=null,coordinator=null,busy=false,mode='cflocal2',foreground=!d.hidden,connectionError=null,unsubscribe=null,diagnostics=null;
++    let ports=null,coordinator=null,busy=false,mode='cflocal2',foreground=!d.hidden,connectionError=null,unsubscribe=null,diagnostics=null,pageWasOpen=false,pageChecking=false;
+     const reconnectKey='cat-saved-local-device-v1';let reconnectTimer=null,reconnectEpoch=0;
+     function savedDevice(){try{const value=JSON.parse(root.localStorage.getItem(reconnectKey)||'null');if(value?.schema===1)return value;
+       // Restore a single existing durable binding by verified device ID. A fresh scan
+@@ -178,58 +179,92 @@
+       catch(error){connectionError=friendly(error);if(error.code==='OWNER_CONFLICT'){saveDevice({...saved,enabled:false});}}
+       finally{busy=false;render();if(foreground&&!verifiedLink(ports.control.getState()))scheduleReconnect(20000);}
+     }
+-    const text=(id,value)=>{if($(id).textContent!==value)$(id).textContent=value;};
++    const text=(id,value)=>{const node=ui(id);if(node&&node.textContent!==value)node.textContent=value;};
+     backgroundButton.addEventListener('click',()=>void run(async()=>{
+       const enabled=ports.control.getBackgroundState()?.backgroundEnabled===true;
+       await ports.control.setBackgroundRetention(!enabled,USER);
+       if(enabled){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);}
+       render();
+     }));
+-    const friendly=error=>/App left foreground|activity.*foreground|app.*background/i.test(error?.message||error||'')?'应用已暂停连接，请重新明确连接。':error?.message||String(error||'');
+-    const names={disconnected:'新本地吧唧尚未连接',permission_required:'需要附近设备权限',bluetooth_off:'请先开启蓝牙',scanning:'正在寻找新本地吧唧…',selecting:'选择身边的新本地吧唧',connecting:'正在连接…',discovering:'正在确认新协议…',subscribing:'正在准备接收消息…',handshaking:'正在核对设备身份与状态…'};
++    const friendly=error=>{
++      const code=error?.code||'',message=String(error?.message||error||'');
++      if(code==='PERMISSION_REQUIRED'||/permission/i.test(message))return '请允许“附近设备”权限，再寻找吧唧。';
++      if(code==='BLUETOOTH_OFF'||/bluetooth.*(off|disabled)|蓝牙.*关闭/i.test(message))return '请开启手机蓝牙，再点重新寻找。';
++      if(code==='OWNER_CONFLICT')return '这只不是原来的吧唧，请选择你的设备。';
++      if(/foreground|background|应用已暂停/i.test(message))return '连接已暂停，回到应用后点重新连接。';
++      if(/未唤醒|不在附近/.test(message))return '还没找到原来的吧唧，请唤醒它并靠近手机。';
++      return '暂时没连上，请唤醒吧唧并靠近手机后重试。';
++    };
++    const names={disconnected:'让吧唧靠近手机，开始连接。',permission_required:'请允许“附近设备”权限，再寻找吧唧。',bluetooth_off:'请先开启手机蓝牙。',scanning:'正在寻找附近的吧唧…',selecting:'请选择你身边的吧唧。',connecting:'正在连接你的吧唧…',discovering:'正在连接你的吧唧…',subscribing:'正在连接你的吧唧…',handshaking:'正在确认你的吧唧…'};
+     function render(){
+-      legacy.hidden=mode!=='legacy';panel.hidden=mode!=='cflocal2';select.disabled=busy||host.deviceBusy;
+-      text('offline-route-status','切换连接方式会断开当前设备。');
+-      const s=ports?.control.getState(),ready=verifiedLink(s),sync=coordinator?.getStatus();
++      legacy.hidden=true;row.hidden=true;panel.hidden=false;select.disabled=true;
++      const s=ports?.control.getState(),ready=!pageChecking&&verifiedLink(s),sync=coordinator?.getStatus();
+       const background=ports?.control.getBackgroundState();
+       backgroundButton.disabled=busy||!ports||(!ready&&background?.backgroundEnabled!==true);
+-      backgroundButton.textContent=background?.backgroundEnabled===true?'关闭锁屏连接并断开':'开启锁屏连接';
++      backgroundButton.textContent=background?.backgroundEnabled===true?'关闭锁屏连接':'允许锁屏时保持连接';
+       backgroundButton.setAttribute('aria-pressed',String(background?.backgroundEnabled===true));
+-      backgroundNote.textContent=background?.backgroundEnabled===true?'锁屏连接已开启，常驻通知可停止；后台不结算照料，返回前台再补传。':'锁屏连接未开启。开启后显示常驻通知；强制停止或系统终止后请重开应用。';
+-      const message=connectionError||(ready?(sync?.stage==='disconnected'?'新本地协议就绪 · 等待明确连接授权':sync?.message||'新本地协议就绪'):s?.stage==='ready_local'?'设备确认资料不完整，不能同步。':names[s?.stage]||friendly(s?.error)||'场景同步适配器尚未准备好');
+-      text('offline-v2-status',friendly(message));
+-      text('offline-v2-note',!ports?'等待原生连接通道。不会模拟连接或同步。':ready?'已核对新本地协议。只有当前场景的设备持久确认才能显示同步成功。':'首次请明确选择吧唧；之后回到应用会自动寻找同一设备，握手身份变化会停止。');
+-      text('offline-v2-day',coordinator?.getDayStatus().message||'一天圆环等待连接。');
+-      text('offline-v2-events',root.CatOfflineDeviceEvents?.lastResult?.message||'尚无新的真实设备事件；不会从 NPC 或页面动画产生奖励。');
+-      const scan=$('offline-v2-scan');scan.disabled=busy||!ports||['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);scan.hidden=ready;
+-      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent='重试同步';
+-      $('offline-v2-disconnect').hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);
+-      $('offline-v2-disconnect').disabled=busy;
+-      const list=$('offline-v2-list');
+-      const devices=s?.stage==='selecting'?s.devices.filter(x=>x.source==='native_scan'):[];
+-      const signature=JSON.stringify(devices);
+-      if(list.dataset.devices!==signature){
+-        list.dataset.devices=signature;list.replaceChildren();
+-        for(const device of devices){const b=d.createElement('button');b.type='button';b.className='g-btn ghost';b.textContent=device.name||'附近的新本地吧唧';
+-          b.addEventListener('click',()=>void run(async()=>{reconnectEpoch++;await ports.control.connect(device,USER);rememberDevice(device);coordinator.authorize();}));list.append(b);}
++      backgroundNote.textContent=background?.backgroundEnabled===true?'锁屏连接已开启，可在通知中停止。':'开启后会显示常驻通知，你可以随时停止。';
++      const message=pageChecking?'正在确认连接…':connectionError||(ready?(sync?.stage==='error'?'已连接，暂未完成同步，请点重试同步。':'已连接，小猫在这里陪你。'):names[s?.stage]||(s?.error?friendly(s.error):'连接正在准备，请稍候。'));
++      text('offline-v2-heading',ready?'你的吧唧已连接':'寻找你的吧唧');text('offline-v2-status',message);
++      const devices=s?.stage==='selecting'?(s.devices||[]).filter(x=>x.source==='native_scan'):[];
++      text('offline-v2-note',ready?'小猫和今天的生活会跟着你。':s?.stage==='scanning'?'请让吧唧保持唤醒，放在手机附近。':s?.stage==='selecting'&&!devices.length?'这次没有找到吧唧，唤醒它后再找一次。':savedDevice()?'保留原来的绑定与小猫，只寻找你的吧唧。':'找到后请选择自己的吧唧，确认后再连接。');
++      const radar=ui('offline-v2-radar');radar.hidden=ready;radar.classList.toggle('is-searching',s?.stage==='scanning');
++      const waiting=['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);
++      const scan=ui('offline-v2-scan');scan.disabled=busy||!ports||waiting;scan.hidden=ready;
++      scan.textContent=s?.stage==='permission_required'||s?.error?.code==='PERMISSION_REQUIRED'?'允许附近设备':s?.stage==='bluetooth_off'?'蓝牙开启后重试':savedDevice()?'重新连接':'重新寻找';
++      const retry=ui('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;
++      const disconnect=ui('offline-v2-disconnect');disconnect.hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);disconnect.disabled=busy;
++      const list=ui('offline-v2-list'),signature=JSON.stringify(devices);
++      if(list.dataset.devices!==signature){list.dataset.devices=signature;list.replaceChildren();
++        for(const device of devices){const b=d.createElement('button');b.type='button';b.className='g-btn ghost';b.textContent=(!device.name||/^(CatForest-Local2|CF2|CF-Local2)$/.test(device.name)?'附近的吧唧':device.name)+' · '+device.address.slice(-5);
++          b.addEventListener('click',()=>void run(async()=>{
++            reconnectEpoch++;const saved=savedDevice();await ports.control.connect(device,USER);
++            if(saved&&ports.control.getState().hello?.deviceId!==saved.deviceId){await ports.control.disconnect();throw Object.assign(Error('设备身份变化'),{code:'OWNER_CONFLICT'});}
++            rememberDevice(device);coordinator.authorize();
++          }));list.append(b);}
+       }
+       for(const b of list.children)b.disabled=busy;
+-      diagnostics?.update();
++      if(d.querySelector('#life-ov.on #lf-badge-connection')?.contains(panel))root.__pgLife?.hostBadgeState?.(ready);
+     }
+     async function run(action){if(busy)return;busy=true;connectionError=null;render();try{await action();}catch(error){connectionError=friendly(error)||'连接尚未确认。';}finally{busy=false;render();if(foreground&&savedDevice()?.enabled&&!coordinator?.authorized)scheduleReconnect();}}
+-    select.addEventListener('change',()=>void run(async()=>{
+-      if(!ports){select.value=mode;throw Error('原生连接通道尚未准备好。');}
+-      reconnectEpoch++;root.clearTimeout(reconnectTimer);const target=select.value;coordinator.setEnabled(false);if(target==='legacy'){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});}
+-      try{await ports.control.selectTransport(target,USER);mode=target;coordinator.setEnabled(mode==='cflocal2');}
+-      finally{select.value=mode;}
+-    }));
+-    $('offline-v2-scan').addEventListener('click',()=>void run(async()=>{
+-      if(!ports)return;await ports.control.selectTransport('cflocal2',USER);
+-      const permission=await ports.control.requestPermissions(USER);
+-      if(permission.granted)await ports.control.scan({...USER,durationMs:8000});
+-    }));
+-    $('offline-v2-disconnect').addEventListener('click',()=>void run(async()=>{reconnectEpoch++;root.clearTimeout(reconnectTimer);const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});await ports.control.disconnect();}));
+-    $('offline-v2-retry').addEventListener('click',()=>void run(()=>coordinator.retry()));
++    async function findDevice(requestPermission=false){
++      if(!ports)return;
++      await ports.control.initialize();
++      if(verifiedLink(ports.control.getState())){coordinator.authorize();return;}
++      await ports.control.disconnect();
++      await ports.control.selectTransport('cflocal2',USER);
++      if(requestPermission){const permission=await ports.control.requestPermissions(USER);if(!permission.granted)return;}
++      const saved=savedDevice();
++      if(saved){
++        await ports.control.resumeSavedDevice({...saved,enabled:true});
++        const current=ports.control.getState();
++        saveDevice({...saved,enabled:true,address:current.evidence.deviceAddress,restored:false});coordinator.authorize();
++      }else await ports.control.scan({...USER,durationMs:8000});
++    }
++    ui('offline-v2-scan').addEventListener('click',()=>void run(()=>findDevice(true)));
++    function mountBadgePage(){
++      const target=$('lf-badge-connection');if(!target)return;
++      if(panel.parentElement!==target)target.append(panel);render();
++      if(pageWasOpen)return;pageWasOpen=true;
++      if(!ports||busy)return;
++      void run(async()=>{
++        pageChecking=true;render();
++        try{await ports.control.refreshConnectionState();}finally{pageChecking=false;render();}
++        if(ports.control.consumeBackgroundStop()){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);return;}
++        if(verifiedLink(ports.control.getState())){coordinator.authorize();return;}
++        if(savedDevice()?.enabled===false)return;
++        // Opening this page is navigation, never a permission grant or a bind.
++        const stage=ports.control.getState().stage;
++        if(['permission_required','bluetooth_off'].includes(stage))return;
++        await findDevice(false);
++      });
++    }
++    const lifeOverlay=$('life-ov');
++    const lifeObserver=lifeOverlay&&new root.MutationObserver(()=>{if(!lifeOverlay.classList.contains('on'))pageWasOpen=false;});
++    lifeObserver?.observe(lifeOverlay,{attributes:true,attributeFilter:['class']});
++    lifeOverlay?.addEventListener('click',event=>{if(event.target.closest('[data-tab]'))pageWasOpen=false;},true);
++    ui('offline-v2-disconnect').addEventListener('click',()=>void run(async()=>{reconnectEpoch++;root.clearTimeout(reconnectTimer);const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});await ports.control.disconnect();}));
++    ui('offline-v2-retry').addEventListener('click',()=>void run(()=>coordinator.retry()));
+     host.attachLocalV2Ports=value=>{
+       if(ports)throw Error('新本地协议已经接入，不能替换。');
+       if(value?.control?.protocolFamily!=='cflocal2'||!value.scenes)throw Error('新本地协议端口不完整。');
+@@ -237,19 +272,19 @@
+       const consumer=ports.events&&root.CatOfflineDeviceEvents?.createConsumer(ports);
+       coordinator=createCoordinator({ports,readDay:petId=>root.CatOfflineDayDisplay.read(petId),read:context=>root.CatOfflineSceneMap.read(context),consumeEvent:consumer?valid=>consumer.consume(valid):null,validatePending:p=>consumer?.assertPending(p),onChange:render,uuid:()=>root.crypto.randomUUID()});
+       coordinator.setEnabled(mode==='cflocal2');coordinator.setForeground(foreground);unsubscribe=ports.control.subscribe(()=>{if(ports.control.consumeBackgroundStop()){const saved=savedDevice();if(saved?.enabled)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);}render();if(foreground&&!busy&&savedDevice()?.enabled&&['disconnected','error'].includes(ports.control.getState().stage))scheduleReconnect(20000);});
+-      void ports.control.initialize().then(()=>scheduleReconnect()).catch(error=>{connectionError=error.message;render();});render();
+-    };
+-    diagnostics=root.CatOfflineDeviceDiagnostics?.mount({root,panel,getContext:()=>({mode,foreground,state:ports?.control.getState(),verified:verifiedLink(ports?.control.getState())&&coordinator?.authorized===true}),read:()=>{if(!coordinator)throw Error('原生连接通道尚未准备好。');return coordinator.readDeviceState();}})||null;
+-    root.addEventListener('cat-local-v2-error',event=>{connectionError=event.detail?.message||'本地同步存档无法打开。';render();});
++      void ports.control.initialize().then(()=>{if(d.querySelector('#life-ov.on #lf-badge-connection')){pageWasOpen=false;mountBadgePage();}else scheduleReconnect();}).catch(error=>{connectionError=friendly(error);render();});render();
++    };
++
++    root.addEventListener('cat-local-v2-error',()=>{connectionError='本机记录暂未准备好，请保留存档并重新打开应用。';render();});
+     let scheduled=false;
+     // Device-dialog rendering and Host body presentation classes are presentation only;
+     // neither is an input to SceneMap. Real game DOM/data-view and the 500ms poll remain.
+-    const observer=new root.MutationObserver(records=>{if(records.length&&records.every(r=>{const target=r.target.nodeType===1?r.target:r.target.parentElement;return target?.closest('#offline-device')||(target===d.body&&r.type==='attributes'&&r.attributeName==='class');}))return;if(scheduled)return;scheduled=true;root.requestAnimationFrame(()=>{scheduled=false;coordinator?.signal();});});
++    const observer=new root.MutationObserver(records=>{if(records.length&&records.every(r=>{const target=r.target.nodeType===1?r.target:r.target.parentElement;return target?.closest('#offline-device,#offline-v2-panel')||(target===d.body&&r.type==='attributes'&&r.attributeName==='class');}))return;if(scheduled)return;scheduled=true;root.requestAnimationFrame(()=>{scheduled=false;coordinator?.signal();});});
+     observer.observe(d.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['data-view','hidden','class']});
+     const townChanged=()=>coordinator?.signal();root.addEventListener('cat-town-scene-change',townChanged);
+     const poll=root.setInterval(()=>coordinator?.signal(),500);
+-    root.addEventListener('pagehide',()=>{observer.disconnect();root.clearInterval(poll);root.removeEventListener('cat-town-scene-change',townChanged);root.clearTimeout(reconnectTimer);reconnectEpoch++;coordinator?.dispose();diagnostics?.dispose();unsubscribe?.();void ports?.control.dispose();},{once:true});
+-    const api={render,async selectLegacy(){if(ports)await ports.control.selectTransport('legacy',USER);},setForeground(value){foreground=value;reconnectEpoch++;if(value){connectionError=null;scheduleReconnect();}else root.clearTimeout(reconnectTimer);coordinator?.setForeground(value);render();},get connected(){return Boolean(ports&&['ready_local','scanning','connecting','discovering','subscribing','handshaking'].includes(ports.control.getState().stage));},get status(){return coordinator?.getStatus()||null;}};
++    root.addEventListener('pagehide',()=>{observer.disconnect();lifeObserver?.disconnect();root.clearInterval(poll);root.removeEventListener('cat-town-scene-change',townChanged);root.clearTimeout(reconnectTimer);reconnectEpoch++;coordinator?.dispose();diagnostics?.dispose();unsubscribe?.();void ports?.control.dispose();},{once:true});
++    const api={render,mountBadgePage,get state(){return ports?.control.getState()||null;},async selectLegacy(){if(ports)await ports.control.selectTransport('legacy',USER);},setForeground(value){foreground=value;reconnectEpoch++;if(value){connectionError=null;scheduleReconnect();}else root.clearTimeout(reconnectTimer);coordinator?.setForeground(value);render();},get connected(){return verifiedLink(ports?.control.getState());},get status(){return coordinator?.getStatus()||null;}};
+     render();root.dispatchEvent(new root.Event('cat-local-v2-host-ready'));return api;
+   }
+   return {createCoordinator,verifiedLink,mount};
+--- a/app/scripts/build_assets.py
++++ b/app/scripts/build_assets.py
+@@ -9,6 +9,7 @@
+ import sys
+ from prd_experience_patches import instrument_experience
+ from encounter_patches import instrument_encounters
++from device_page_patches import instrument_device_page
+ 
+ ROOT = Path(__file__).resolve().parents[1]
+ subprocess.run([sys.executable,str(ROOT/'scripts/build_town.py')],check=True)
+@@ -164,6 +165,7 @@
+         js = once(js, '正式版由云端校验一机一密',
+             '本候选仅验证本地试玩；真实吧唧双向确认尚待设备接口联调',
+             'replace-obsolete-cloud-requirement-with-test-status')
++    js = instrument_device_page(js, once)
+     if 'window.__petGame={store:Nt' not in js:
+         return js
+     # The mobile script adds data-view to BODY before the async room finishes.
+--- /dev/null
++++ b/app/scripts/device_page_patches.py
+@@ -0,0 +1,12 @@
++"""Reuse the original daily badge page; presentation/navigation changes only."""
++def instrument_device_page(js, once):
++    if 'function badge(){' not in js or "let tab='today'" not in js:
++        return js
++    js=once(js,"['badge','吧唧'],['privacy','授权与隐私']","['badge','吧唧']",'one-badge-page-owns-privacy-navigation')
++    js=once(js,"function open(t='today'){tab=t;ov.classList.add('on');render();track('life_open',{tab:t,demo:L.cfg.demo,sync:L.cfg.sync})}","function open(t='today'){const privacy=t==='privacy';tab=privacy?'badge':t;ov.classList.add('on');render();if(privacy){const node=$('lf-badge-privacy');if(node)node.open=true}track('life_open',{tab,demo:L.cfg.demo,sync:L.cfg.sync})}",'privacy-deep-links-still-open-existing-controls')
++    js=once(js,"function stopBadge(){cancelAnimationFrame(braf);braf=0}","function stopBadge(){cancelAnimationFrame(braf);braf=0}\nL.hostBadgeState=connected=>{const preview=$('lf-body')?.querySelector('.lf-badge');if(preview)preview.hidden=!connected;if(connected){if(!braf)startBadge()}else stopBadge()};",'badge-preview-only-after-current-session-handshake')
++    js=once(js,'return `<section class="lf-sec lf-badge">','return `<section class="lf-sec" id="lf-badge-connection"></section><section class="lf-sec lf-badge" hidden>','mount-connection-in-existing-daily-badge-page')
++    js=once(js,"  ${L.env?.badgeHtml?.()||''}`;","  ${L.env?.badgeHtml?.()||''}<details class=\"lf-badge-privacy\" id=\"lf-badge-privacy\"><summary>隐私与授权</summary>${privacy()}</details>`;",'reuse-original-privacy-controls-inside-badge')
++    js=once(js,"if(tab==='badge')startBadge();","if(tab==='badge')window.CatOfflineSceneSync?.mountBadgePage();",'reuse-live-device-panel-instead-of-second-dialog')
++    js=once(js,"  ov.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));","  ov.querySelector('.lf-head b').textContent=tab==='badge'?'我的吧唧':'今日生活';$('lf-mode').hidden=tab==='badge';\n  ov.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));",'badge-title-without-demo-connection-claim')
++    return js
+--- a/app/web/offline-host.css
++++ b/app/web/offline-host.css
+@@ -1,5 +1,25 @@
+ /* Keep the original palette, pixel art, HUD, six care actions and social layouts. */
+ [hidden] { display:none !important; }
++/* One live connection panel inside the original daily badge page. */
++#lf-badge-connection { padding:20px 16px; }
++#lf-badge-connection #offline-v2-panel { display:block; }
++.badge-connect-hero { text-align:center; }
++.badge-connect-hero h3 { margin:10px 0; font-size:19px; }
++.badge-connect-hero p { line-height:1.65; }
++.badge-radar { position:relative; isolation:isolate; width:min(210px,60vw); aspect-ratio:1; margin:4px auto 20px; border-radius:50%; background:#f0eadf; overflow:hidden; }
++.badge-radar i { position:absolute; border:1px solid #9daf9770; border-radius:50%; inset:8%; }
++.badge-radar i:nth-child(2) { inset:23%; }
++.badge-radar i:nth-child(3) { inset:38%; }
++.badge-radar span { position:absolute; inset:0; display:grid; place-items:center; color:#6c8d70; font-size:27px; }
++.badge-radar::after { content:''; position:absolute; inset:0; border-radius:inherit; background:conic-gradient(from 0deg,transparent 66%,#86a68540 98%,#73997970); opacity:0; }
++.badge-radar.is-searching::after { opacity:1; animation:badge-search 3s linear infinite; }
++.badge-device-list,.badge-connect-actions { display:flex; flex-direction:column; gap:10px; margin:14px 0; }
++.badge-connect-actions .g-btn,.badge-device-list .g-btn { width:100%; min-height:46px; }
++.lf-badge-privacy { margin-top:16px; border:1px solid #dacdbb; border-radius:16px; overflow:hidden; }
++.lf-badge-privacy summary { cursor:pointer; padding:16px; font-weight:700; min-height:46px; box-sizing:border-box; }
++.lf-badge-privacy>.lf-sec { margin:0; border:0; }
++@keyframes badge-search { to { transform:rotate(360deg); } }
++@media (prefers-reduced-motion:reduce) { .badge-radar.is-searching::after { animation:none; } }
+ #offline-device { padding:0; border:0; width:min(440px,94vw); max-height:calc(100dvh - var(--safe-area-inset-top,0px) - var(--safe-area-inset-bottom,0px) - 20px); border-radius:24px; background:#fffaf2; color:#5b4632; box-shadow:0 20px 60px #3b2f2533; }
+ #offline-device::backdrop { background:#2e2a2466; backdrop-filter:blur(4px); }
+ .offline-device-inner { display:flex; flex-direction:column; max-height:inherit; }
+--- a/app/web/offline-host.js
++++ b/app/web/offline-host.js
+@@ -17,14 +17,8 @@
+   let lastFocus = null;
+   function openDevice() {
+     lastFocus = document.activeElement;
+-    const pet = window.__petGame?.state()?.pet;
+-    const canvas = $('offline-device-cat');
+-    const ctx = canvas.getContext('2d');
+-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+-    window.__pgSocial?.drawPet(ctx, 0, 8, 8, pet?.breed || 'orange', { outfit: pet?.outfit });
+-    renderDevice();
+-    if (!dialog.open) dialog.showModal();
+-    reconcile();
++    if(window.__pgLife?.open){window.__pgLife.open('badge');reconcile();}
++    else notice('吧唧页面正在准备，请稍后再打开。');
+   }
+   dialog.addEventListener('close', () => { lastFocus?.focus?.(); reconcile(); });
+   const railButton = document.createElement('button');
+@@ -39,6 +33,8 @@
+   document.querySelector('.town-nav')?.append(desktopButton);
+ 
+   function validatedLink() {
++    const current=window.CatOfflineSceneSync?.state;
++    if(current)return current;
+     if (!ports) return null;
+     const state = ports.control.getState();
+     if (state?.stage === 'ready_local') {
+--- a/app/web/offline-scene-sync.js
++++ b/app/web/offline-scene-sync.js
+@@ -142,14 +142,15 @@
+     const row=d.createElement('label');row.className='offline-device-mode';row.textContent='连接方式';
+     const select=d.createElement('select');select.id='offline-device-mode';select.setAttribute('aria-label','连接方式');
+     select.innerHTML='<option value="cflocal2">新本地固件 · 场景同步</option><option value="legacy">旧固件兼容 · 基础控制</option>';
+-    row.append(select);const routeStatus=d.createElement('small');routeStatus.id='offline-route-status';row.append(routeStatus);body.querySelector('h3').after(row,legacy);
++    row.hidden=true;row.append(select);const routeStatus=d.createElement('small');routeStatus.id='offline-route-status';row.append(routeStatus);body.querySelector('h3').after(row,legacy);
+     const panel=d.createElement('section');panel.id='offline-v2-panel';panel.hidden=true;
+-    panel.innerHTML='<p id="offline-v2-status" role="status" aria-live="polite"></p><p id="offline-v2-note"></p><p id="offline-v2-events" role="status"></p><p id="offline-v2-day" role="status"></p><div id="offline-v2-list"></div><button type="button" class="g-btn" id="offline-v2-scan">寻找新本地吧唧</button><button type="button" class="g-btn ghost" id="offline-v2-retry" hidden>重试场景同步</button><button type="button" class="g-btn ghost" id="offline-v2-disconnect" hidden>断开连接</button><p class="lf-note">新固件的真实照料与野花收据在手机持久结算后才确认。旧固件仍为基础控制；双方好友确认尚无持久证明，不会自动建好友。</p>';
++    panel.innerHTML=`<div class="badge-connect-hero"><div class="badge-radar" id="offline-v2-radar" aria-hidden="true"><i></i><i></i><i></i><span>✦</span></div><h3 id="offline-v2-heading">寻找你的吧唧</h3><p id="offline-v2-status" role="status" aria-live="polite"></p><p class="lf-note" id="offline-v2-note"></p></div><div id="offline-v2-list" class="badge-device-list"></div><div class="badge-connect-actions"><button type="button" class="g-btn" id="offline-v2-scan">寻找吧唧</button><button type="button" class="g-btn ghost" id="offline-v2-retry" hidden>重试同步</button><button type="button" class="g-btn ghost" id="offline-v2-disconnect" hidden>断开连接</button></div>`;
++    const ui=id=>panel.querySelector('#'+id);
+     legacy.after(panel);
+     const backgroundButton=d.createElement('button');backgroundButton.type='button';backgroundButton.className='g-btn ghost';backgroundButton.id='offline-v2-background';backgroundButton.textContent='开启锁屏连接';
+     const backgroundNote=d.createElement('p');backgroundNote.className='lf-note';backgroundNote.setAttribute('role','status');backgroundNote.textContent='开启后显示常驻通知；后台只保持连接，不结算照料。强制停止或系统终止后请重开应用。';
+     panel.append(backgroundButton,backgroundNote);
+-    let ports=null,coordinator=null,busy=false,mode='cflocal2',foreground=!d.hidden,connectionError=null,unsubscribe=null,diagnostics=null;
++    let ports=null,coordinator=null,busy=false,mode='cflocal2',foreground=!d.hidden,connectionError=null,unsubscribe=null,diagnostics=null,pageWasOpen=false,pageChecking=false;
+     const reconnectKey='cat-saved-local-device-v1';let reconnectTimer=null,reconnectEpoch=0;
+     function savedDevice(){try{const value=JSON.parse(root.localStorage.getItem(reconnectKey)||'null');if(value?.schema===1)return value;
+       // Restore a single existing durable binding by verified device ID. A fresh scan
+@@ -178,58 +179,92 @@
+       catch(error){connectionError=friendly(error);if(error.code==='OWNER_CONFLICT'){saveDevice({...saved,enabled:false});}}
+       finally{busy=false;render();if(foreground&&!verifiedLink(ports.control.getState()))scheduleReconnect(20000);}
+     }
+-    const text=(id,value)=>{if($(id).textContent!==value)$(id).textContent=value;};
++    const text=(id,value)=>{const node=ui(id);if(node&&node.textContent!==value)node.textContent=value;};
+     backgroundButton.addEventListener('click',()=>void run(async()=>{
+       const enabled=ports.control.getBackgroundState()?.backgroundEnabled===true;
+       await ports.control.setBackgroundRetention(!enabled,USER);
+       if(enabled){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);}
+       render();
+     }));
+-    const friendly=error=>/App left foreground|activity.*foreground|app.*background/i.test(error?.message||error||'')?'应用已暂停连接，请重新明确连接。':error?.message||String(error||'');
+-    const names={disconnected:'新本地吧唧尚未连接',permission_required:'需要附近设备权限',bluetooth_off:'请先开启蓝牙',scanning:'正在寻找新本地吧唧…',selecting:'选择身边的新本地吧唧',connecting:'正在连接…',discovering:'正在确认新协议…',subscribing:'正在准备接收消息…',handshaking:'正在核对设备身份与状态…'};
++    const friendly=error=>{
++      const code=error?.code||'',message=String(error?.message||error||'');
++      if(code==='PERMISSION_REQUIRED'||/permission/i.test(message))return '请允许“附近设备”权限，再寻找吧唧。';
++      if(code==='BLUETOOTH_OFF'||/bluetooth.*(off|disabled)|蓝牙.*关闭/i.test(message))return '请开启手机蓝牙，再点重新寻找。';
++      if(code==='OWNER_CONFLICT')return '这只不是原来的吧唧，请选择你的设备。';
++      if(/foreground|background|应用已暂停/i.test(message))return '连接已暂停，回到应用后点重新连接。';
++      if(/未唤醒|不在附近/.test(message))return '还没找到原来的吧唧，请唤醒它并靠近手机。';
++      return '暂时没连上，请唤醒吧唧并靠近手机后重试。';
++    };
++    const names={disconnected:'让吧唧靠近手机，开始连接。',permission_required:'请允许“附近设备”权限，再寻找吧唧。',bluetooth_off:'请先开启手机蓝牙。',scanning:'正在寻找附近的吧唧…',selecting:'请选择你身边的吧唧。',connecting:'正在连接你的吧唧…',discovering:'正在连接你的吧唧…',subscribing:'正在连接你的吧唧…',handshaking:'正在确认你的吧唧…'};
+     function render(){
+-      legacy.hidden=mode!=='legacy';panel.hidden=mode!=='cflocal2';select.disabled=busy||host.deviceBusy;
+-      text('offline-route-status','切换连接方式会断开当前设备。');
+-      const s=ports?.control.getState(),ready=verifiedLink(s),sync=coordinator?.getStatus();
++      legacy.hidden=true;row.hidden=true;panel.hidden=false;select.disabled=true;
++      const s=ports?.control.getState(),ready=!pageChecking&&verifiedLink(s),sync=coordinator?.getStatus();
+       const background=ports?.control.getBackgroundState();
+       backgroundButton.disabled=busy||!ports||(!ready&&background?.backgroundEnabled!==true);
+-      backgroundButton.textContent=background?.backgroundEnabled===true?'关闭锁屏连接并断开':'开启锁屏连接';
++      backgroundButton.textContent=background?.backgroundEnabled===true?'关闭锁屏连接':'允许锁屏时保持连接';
+       backgroundButton.setAttribute('aria-pressed',String(background?.backgroundEnabled===true));
+-      backgroundNote.textContent=background?.backgroundEnabled===true?'锁屏连接已开启，常驻通知可停止；后台不结算照料，返回前台再补传。':'锁屏连接未开启。开启后显示常驻通知；强制停止或系统终止后请重开应用。';
+-      const message=connectionError||(ready?(sync?.stage==='disconnected'?'新本地协议就绪 · 等待明确连接授权':sync?.message||'新本地协议就绪'):s?.stage==='ready_local'?'设备确认资料不完整，不能同步。':names[s?.stage]||friendly(s?.error)||'场景同步适配器尚未准备好');
+-      text('offline-v2-status',friendly(message));
+-      text('offline-v2-note',!ports?'等待原生连接通道。不会模拟连接或同步。':ready?'已核对新本地协议。只有当前场景的设备持久确认才能显示同步成功。':'首次请明确选择吧唧；之后回到应用会自动寻找同一设备，握手身份变化会停止。');
+-      text('offline-v2-day',coordinator?.getDayStatus().message||'一天圆环等待连接。');
+-      text('offline-v2-events',root.CatOfflineDeviceEvents?.lastResult?.message||'尚无新的真实设备事件；不会从 NPC 或页面动画产生奖励。');
+-      const scan=$('offline-v2-scan');scan.disabled=busy||!ports||['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);scan.hidden=ready;
+-      const retry=$('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;retry.textContent='重试同步';
+-      $('offline-v2-disconnect').hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);
+-      $('offline-v2-disconnect').disabled=busy;
+-      const list=$('offline-v2-list');
+-      const devices=s?.stage==='selecting'?s.devices.filter(x=>x.source==='native_scan'):[];
+-      const signature=JSON.stringify(devices);
+-      if(list.dataset.devices!==signature){
+-        list.dataset.devices=signature;list.replaceChildren();
+-        for(const device of devices){const b=d.createElement('button');b.type='button';b.className='g-btn ghost';b.textContent=device.name||'附近的新本地吧唧';
+-          b.addEventListener('click',()=>void run(async()=>{reconnectEpoch++;await ports.control.connect(device,USER);rememberDevice(device);coordinator.authorize();}));list.append(b);}
++      backgroundNote.textContent=background?.backgroundEnabled===true?'锁屏连接已开启，可在通知中停止。':'开启后会显示常驻通知，你可以随时停止。';
++      const message=pageChecking?'正在确认连接…':connectionError||(ready?(sync?.stage==='error'?'已连接，暂未完成同步，请点重试同步。':'已连接，小猫在这里陪你。'):names[s?.stage]||(s?.error?friendly(s.error):'连接正在准备，请稍候。'));
++      text('offline-v2-heading',ready?'你的吧唧已连接':'寻找你的吧唧');text('offline-v2-status',message);
++      const devices=s?.stage==='selecting'?(s.devices||[]).filter(x=>x.source==='native_scan'):[];
++      text('offline-v2-note',ready?'小猫和今天的生活会跟着你。':s?.stage==='scanning'?'请让吧唧保持唤醒，放在手机附近。':s?.stage==='selecting'&&!devices.length?'这次没有找到吧唧，唤醒它后再找一次。':savedDevice()?'保留原来的绑定与小猫，只寻找你的吧唧。':'找到后请选择自己的吧唧，确认后再连接。');
++      const radar=ui('offline-v2-radar');radar.hidden=ready;radar.classList.toggle('is-searching',s?.stage==='scanning');
++      const waiting=['scanning','connecting','discovering','subscribing','handshaking'].includes(s?.stage);
++      const scan=ui('offline-v2-scan');scan.disabled=busy||!ports||waiting;scan.hidden=ready;
++      scan.textContent=s?.stage==='permission_required'||s?.error?.code==='PERMISSION_REQUIRED'?'允许附近设备':s?.stage==='bluetooth_off'?'蓝牙开启后重试':savedDevice()?'重新连接':'重新寻找';
++      const retry=ui('offline-v2-retry');retry.hidden=!ready||sync?.stage!=='error';retry.disabled=busy;
++      const disconnect=ui('offline-v2-disconnect');disconnect.hidden=!ports||!['ready_local','connecting','discovering','subscribing','handshaking','scanning'].includes(s?.stage);disconnect.disabled=busy;
++      const list=ui('offline-v2-list'),signature=JSON.stringify(devices);
++      if(list.dataset.devices!==signature){list.dataset.devices=signature;list.replaceChildren();
++        for(const device of devices){const b=d.createElement('button');b.type='button';b.className='g-btn ghost';b.textContent=(!device.name||/^(CatForest-Local2|CF2|CF-Local2)$/.test(device.name)?'附近的吧唧':device.name)+' · '+device.address.slice(-5);
++          b.addEventListener('click',()=>void run(async()=>{
++            reconnectEpoch++;const saved=savedDevice();await ports.control.connect(device,USER);
++            if(saved&&ports.control.getState().hello?.deviceId!==saved.deviceId){await ports.control.disconnect();throw Object.assign(Error('设备身份变化'),{code:'OWNER_CONFLICT'});}
++            rememberDevice(device);coordinator.authorize();
++          }));list.append(b);}
+       }
+       for(const b of list.children)b.disabled=busy;
+-      diagnostics?.update();
++      if(d.querySelector('#life-ov.on #lf-badge-connection')?.contains(panel))root.__pgLife?.hostBadgeState?.(ready);
+     }
+     async function run(action){if(busy)return;busy=true;connectionError=null;render();try{await action();}catch(error){connectionError=friendly(error)||'连接尚未确认。';}finally{busy=false;render();if(foreground&&savedDevice()?.enabled&&!coordinator?.authorized)scheduleReconnect();}}
+-    select.addEventListener('change',()=>void run(async()=>{
+-      if(!ports){select.value=mode;throw Error('原生连接通道尚未准备好。');}
+-      reconnectEpoch++;root.clearTimeout(reconnectTimer);const target=select.value;coordinator.setEnabled(false);if(target==='legacy'){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});}
+-      try{await ports.control.selectTransport(target,USER);mode=target;coordinator.setEnabled(mode==='cflocal2');}
+-      finally{select.value=mode;}
+-    }));
+-    $('offline-v2-scan').addEventListener('click',()=>void run(async()=>{
+-      if(!ports)return;await ports.control.selectTransport('cflocal2',USER);
+-      const permission=await ports.control.requestPermissions(USER);
+-      if(permission.granted)await ports.control.scan({...USER,durationMs:8000});
+-    }));
+-    $('offline-v2-disconnect').addEventListener('click',()=>void run(async()=>{reconnectEpoch++;root.clearTimeout(reconnectTimer);const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});await ports.control.disconnect();}));
+-    $('offline-v2-retry').addEventListener('click',()=>void run(()=>coordinator.retry()));
++    async function findDevice(requestPermission=false){
++      if(!ports)return;
++      await ports.control.initialize();
++      if(verifiedLink(ports.control.getState())){coordinator.authorize();return;}
++      await ports.control.disconnect();
++      await ports.control.selectTransport('cflocal2',USER);
++      if(requestPermission){const permission=await ports.control.requestPermissions(USER);if(!permission.granted)return;}
++      const saved=savedDevice();
++      if(saved){
++        await ports.control.resumeSavedDevice({...saved,enabled:true});
++        const current=ports.control.getState();
++        saveDevice({...saved,enabled:true,address:current.evidence.deviceAddress,restored:false});coordinator.authorize();
++      }else await ports.control.scan({...USER,durationMs:8000});
++    }
++    ui('offline-v2-scan').addEventListener('click',()=>void run(()=>findDevice(true)));
++    function mountBadgePage(){
++      const target=$('lf-badge-connection');if(!target)return;
++      if(panel.parentElement!==target)target.append(panel);render();
++      if(pageWasOpen)return;pageWasOpen=true;
++      if(!ports||busy)return;
++      void run(async()=>{
++        pageChecking=true;render();
++        try{await ports.control.refreshConnectionState();}finally{pageChecking=false;render();}
++        if(ports.control.consumeBackgroundStop()){const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);return;}
++        if(verifiedLink(ports.control.getState())){coordinator.authorize();return;}
++        if(savedDevice()?.enabled===false)return;
++        // Opening this page is navigation, never a permission grant or a bind.
++        const stage=ports.control.getState().stage;
++        if(['permission_required','bluetooth_off'].includes(stage))return;
++        await findDevice(false);
++      });
++    }
++    const lifeOverlay=$('life-ov');
++    const lifeObserver=lifeOverlay&&new root.MutationObserver(()=>{if(!lifeOverlay.classList.contains('on'))pageWasOpen=false;});
++    lifeObserver?.observe(lifeOverlay,{attributes:true,attributeFilter:['class']});
++    lifeOverlay?.addEventListener('click',event=>{if(event.target.closest('[data-tab]'))pageWasOpen=false;},true);
++    ui('offline-v2-disconnect').addEventListener('click',()=>void run(async()=>{reconnectEpoch++;root.clearTimeout(reconnectTimer);const saved=savedDevice();if(saved)saveDevice({...saved,enabled:false});await ports.control.disconnect();}));
++    ui('offline-v2-retry').addEventListener('click',()=>void run(()=>coordinator.retry()));
+     host.attachLocalV2Ports=value=>{
+       if(ports)throw Error('新本地协议已经接入，不能替换。');
+       if(value?.control?.protocolFamily!=='cflocal2'||!value.scenes)throw Error('新本地协议端口不完整。');
+@@ -237,19 +272,19 @@
+       const consumer=ports.events&&root.CatOfflineDeviceEvents?.createConsumer(ports);
+       coordinator=createCoordinator({ports,readDay:petId=>root.CatOfflineDayDisplay.read(petId),read:context=>root.CatOfflineSceneMap.read(context),consumeEvent:consumer?valid=>consumer.consume(valid):null,validatePending:p=>consumer?.assertPending(p),onChange:render,uuid:()=>root.crypto.randomUUID()});
+       coordinator.setEnabled(mode==='cflocal2');coordinator.setForeground(foreground);unsubscribe=ports.control.subscribe(()=>{if(ports.control.consumeBackgroundStop()){const saved=savedDevice();if(saved?.enabled)saveDevice({...saved,enabled:false});root.clearTimeout(reconnectTimer);}render();if(foreground&&!busy&&savedDevice()?.enabled&&['disconnected','error'].includes(ports.control.getState().stage))scheduleReconnect(20000);});
+-      void ports.control.initialize().then(()=>scheduleReconnect()).catch(error=>{connectionError=error.message;render();});render();
+-    };
+-    diagnostics=root.CatOfflineDeviceDiagnostics?.mount({root,panel,getContext:()=>({mode,foreground,state:ports?.control.getState(),verified:verifiedLink(ports?.control.getState())&&coordinator?.authorized===true}),read:()=>{if(!coordinator)throw Error('原生连接通道尚未准备好。');return coordinator.readDeviceState();}})||null;
+-    root.addEventListener('cat-local-v2-error',event=>{connectionError=event.detail?.message||'本地同步存档无法打开。';render();});
++      void ports.control.initialize().then(()=>{if(d.querySelector('#life-ov.on #lf-badge-connection')){pageWasOpen=false;mountBadgePage();}else scheduleReconnect();}).catch(error=>{connectionError=friendly(error);render();});render();
++    };
++
++    root.addEventListener('cat-local-v2-error',()=>{connectionError='本机记录暂未准备好，请保留存档并重新打开应用。';render();});
+     let scheduled=false;
+     // Device-dialog rendering and Host body presentation classes are presentation only;
+     // neither is an input to SceneMap. Real game DOM/data-view and the 500ms poll remain.
+-    const observer=new root.MutationObserver(records=>{if(records.length&&records.every(r=>{const target=r.target.nodeType===1?r.target:r.target.parentElement;return target?.closest('#offline-device')||(target===d.body&&r.type==='attributes'&&r.attributeName==='class');}))return;if(scheduled)return;scheduled=true;root.requestAnimationFrame(()=>{scheduled=false;coordinator?.signal();});});
++    const observer=new root.MutationObserver(records=>{if(records.length&&records.every(r=>{const target=r.target.nodeType===1?r.target:r.target.parentElement;return target?.closest('#offline-device,#offline-v2-panel')||(target===d.body&&r.type==='attributes'&&r.attributeName==='class');}))return;if(scheduled)return;scheduled=true;root.requestAnimationFrame(()=>{scheduled=false;coordinator?.signal();});});
+     observer.observe(d.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['data-view','hidden','class']});
+     const townChanged=()=>coordinator?.signal();root.addEventListener('cat-town-scene-change',townChanged);
+     const poll=root.setInterval(()=>coordinator?.signal(),500);
+-    root.addEventListener('pagehide',()=>{observer.disconnect();root.clearInterval(poll);root.removeEventListener('cat-town-scene-change',townChanged);root.clearTimeout(reconnectTimer);reconnectEpoch++;coordinator?.dispose();diagnostics?.dispose();unsubscribe?.();void ports?.control.dispose();},{once:true});
+-    const api={render,async selectLegacy(){if(ports)await ports.control.selectTransport('legacy',USER);},setForeground(value){foreground=value;reconnectEpoch++;if(value){connectionError=null;scheduleReconnect();}else root.clearTimeout(reconnectTimer);coordinator?.setForeground(value);render();},get connected(){return Boolean(ports&&['ready_local','scanning','connecting','discovering','subscribing','handshaking'].includes(ports.control.getState().stage));},get status(){return coordinator?.getStatus()||null;}};
++    root.addEventListener('pagehide',()=>{observer.disconnect();lifeObserver?.disconnect();root.clearInterval(poll);root.removeEventListener('cat-town-scene-change',townChanged);root.clearTimeout(reconnectTimer);reconnectEpoch++;coordinator?.dispose();diagnostics?.dispose();unsubscribe?.();void ports?.control.dispose();},{once:true});
++    const api={render,mountBadgePage,get state(){return ports?.control.getState()||null;},async selectLegacy(){if(ports)await ports.control.selectTransport('legacy',USER);},setForeground(value){foreground=value;reconnectEpoch++;if(value){connectionError=null;scheduleReconnect();}else root.clearTimeout(reconnectTimer);coordinator?.setForeground(value);render();},get connected(){return verifiedLink(ports?.control.getState());},get status(){return coordinator?.getStatus()||null;}};
+     render();root.dispatchEvent(new root.Event('cat-local-v2-host-ready'));return api;
+   }
+   return {createCoordinator,verifiedLink,mount};
+--- a/firmware/CMakeLists.txt
++++ b/firmware/CMakeLists.txt
+@@ -282,8 +282,8 @@
+     endforeach()
+ 
+ endfunction()
+-set(PROJECT_VER "0.6.3-native-appearance")
+-project(cat_forest_badge VERSION 0.6.3)
++set(PROJECT_VER "0.6.4-connect-repair")
++project(cat_forest_badge VERSION 0.6.4)
+ include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
+ foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
+         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION
+--- a/firmware/main/local2_ble.c
++++ b/firmware/main/local2_ble.c
+@@ -86,11 +86,13 @@
+     if(ble_gap_adv_active()&&g!=advert_generation)(void)ble_gap_adv_stop();
+     if(ble_gap_adv_active()||(phone!=BLE_HS_CONN_HANDLE_NONE&&!n))return;
+     struct ble_hs_adv_fields fields={0},rsp={0};fields.flags=BLE_HS_ADV_F_DISC_GEN|BLE_HS_ADV_F_BREDR_UNSUP;
+-    if(n){fields.mfg_data=mfg;fields.mfg_data_len=(uint8_t)n;rsp.uuids128=(ble_uuid128_t *)&svc;rsp.num_uuids128=1;rsp.uuids128_is_complete=1;}
+-    else{fields.uuids128=(ble_uuid128_t *)&svc;fields.num_uuids128=1;fields.uuids128_is_complete=1;}
++    /* The phone's existing hardware service filter must keep seeing the UUID
++     * in the primary advertisement, including while peer discovery is armed.
++     * Active peer scans read the unchanged manufacturer proof in scan response. */
++    fields.uuids128=(ble_uuid128_t *)&svc;fields.num_uuids128=1;fields.uuids128_is_complete=1;
+     const char *name="CatForest-Local2";rsp.name=(const uint8_t *)name;rsp.name_len=(uint8_t)strlen(name);rsp.name_is_complete=1;
+-    /* UUID + full name cannot both fit a 31B scan response. Shorten explicitly. */
+-    if(n){rsp.name=(const uint8_t *)"CF-Local2";rsp.name_len=9;}
++    /* 23-byte peer proof + AD header + 3-byte short name + AD header = 30. */
++    if(n){rsp.mfg_data=mfg;rsp.mfg_data_len=(uint8_t)n;rsp.name=(const uint8_t *)"CF2";rsp.name_len=3;rsp.name_is_complete=0;}
+     int rc=ble_gap_adv_set_fields(&fields);if(rc==0)rc=ble_gap_adv_rsp_set_fields(&rsp);
+     struct ble_gap_adv_params p={.conn_mode=BLE_GAP_CONN_MODE_UND,.disc_mode=BLE_GAP_DISC_MODE_GEN};
+     if(rc==0)rc=ble_gap_adv_start(own_address,NULL,BLE_HS_FOREVER,&p,gap_event,NULL);
+--- a/firmware/main/local2_wire.c
++++ b/firmware/main/local2_wire.c
+@@ -240,7 +240,7 @@
+             session_unlock();
+             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
+             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
+-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("encounter_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("pet_appearance_v1"));cJSON_AddStringToObject(d,"firmware","0.6.3-native-appearance");result=L2_OK;
++            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("encounter_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("pet_appearance_v1"));cJSON_AddStringToObject(d,"firmware","0.6.4-connect-repair");result=L2_OK;
+         }else if(valid&&!strcmp(op,"care_capabilities")){
+             static const char *const ck[]={"v","id","op","clientId","data"};
+             static const char *const dk[]={"careBathV1","mobileContextV1"};char client[37];cJSON *mobile=field(field(q,"data"),"mobileContextV1");

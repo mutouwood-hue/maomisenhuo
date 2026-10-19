@@ -1,5 +1,6 @@
 #include "badge_scene.h"
 #include "badge_ui_contract.h"
+#include "scene_layout.generated.h"
 #include <stdlib.h>
 #include <string.h>
 #include "src/misc/cache/instance/lv_image_cache.h"
@@ -12,7 +13,7 @@ LV_IMAGE_DECLARE(cat_paw);
 LV_IMAGE_DECLARE(warm_room);
 
 struct badge_scene {
-    lv_obj_t *root, *cat,*weather[8],*ground[5];
+    lv_obj_t *root, *cat,*shade,*weather[8],*ground[5];
     const badge_scene_assets_t *assets;
     badge_scene_clip_id_t clip;
     badge_scene_clip_id_t pending;
@@ -24,30 +25,36 @@ struct badge_scene {
     bool day_preview,day_known;unsigned day_kind,day_token;
     uint32_t prop_ms,prop_previous;
     int prop_offset;
-    bool world,overlay; int slide_x;
+    bool world,overlay; int slide_x,foot_y;
     bool known,live;
     bool context_initialized;
     l2_scene_t stage;
     l2_weather_t weather_kind;
     l2_action_t action;
+    l2_interaction_t interaction;
+    badge_appearance_t appearance;
+    bool appearance_rendered;
+    const lv_image_dsc_t *source_frame;
     lv_image_dsc_t small;
     uint8_t *small_pixels;
+    struct badge_scene *checkpoint;
+    uint32_t checkpoint_ms;
 };
 bool badge_scene_is_warm(const badge_scene_t *s)
 {
- return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&!s->dimmed&&!(s->known&&s->action==L2_ACTION_SLEEP)&&!(s->known&&s->stage!=L2_SCENE_HOME);
+ return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&!(s->known&&s->stage!=L2_SCENE_HOME);
 }
 static bool garden_scene(const badge_scene_t *s)
 {
- return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&!s->dimmed&&s->known&&s->stage!=L2_SCENE_HOME&&s->stage!=L2_SCENE_TOWN&&s->action!=L2_ACTION_SLEEP;
+ return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&s->known&&s->stage!=L2_SCENE_HOME&&s->stage!=L2_SCENE_TOWN;
 }
 static bool town_scene(const badge_scene_t *s)
 {
- return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&!s->dimmed&&s->known&&s->stage==L2_SCENE_TOWN&&s->action!=L2_ACTION_SLEEP;
+ return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&s->known&&s->stage==L2_SCENE_TOWN;
 }
 bool badge_scene_light_background(const badge_scene_t *s)
 {
- if(s&&s->day_preview)return !s->day_known||s->day_kind!=0;
+ if(s&&s->day_preview)return true;
  return badge_scene_is_warm(s)||garden_scene(s)||town_scene(s)||(s&&s->world&&s->face==1&&!s->overlay&&!s->dimmed);
 }
 bool badge_scene_thought_visible(const badge_scene_t *s,uint32_t now)
@@ -56,8 +63,11 @@ bool badge_scene_thought_visible(const badge_scene_t *s,uint32_t now)
 }
 static badge_scene_clip_id_t base_clip(const badge_scene_t *s)
 {
-    if(!s->known || !s->live) return BADGE_SCENE_IDLE;
-    if(s->action==L2_ACTION_PET || s->action==L2_ACTION_FEED || s->action==L2_ACTION_WATER || s->action==L2_ACTION_BATH) return BADGE_SCENE_PET;
+    if(!s->known) return BADGE_SCENE_IDLE;
+    if(s->action==L2_ACTION_PLAY&&s->interaction==L2_INTERACTION_FLOWER_SNIFF)return BADGE_SCENE_SNIFF;
+    if(s->action==L2_ACTION_PLAY&&(s->interaction==L2_INTERACTION_BUTTERFLY_CHASE||s->interaction==L2_INTERACTION_BALL_POUNCE))return BADGE_SCENE_POUNCE;
+    if(s->action==L2_ACTION_PET || s->action==L2_ACTION_BATH) return BADGE_SCENE_PET;
+    if(s->action==L2_ACTION_FEED || s->action==L2_ACTION_WATER) return BADGE_SCENE_ATTENTION;
     if(s->action==L2_ACTION_WALK || s->action==L2_ACTION_PLAY || s->stage==L2_SCENE_DEPARTING || s->stage==L2_SCENE_RETURNING) return BADGE_SCENE_WALK;
     return BADGE_SCENE_IDLE;
 }
@@ -75,48 +85,91 @@ static const badge_scene_clip_t *clip_for(const badge_scene_t *s,badge_scene_cli
     const badge_scene_clip_t *c=&s->assets->clips[id];
     return c->frames && c->count && c->cycle_ms ? c : NULL;
 }
+static bool bed_sleep_anchor(const badge_scene_t *s)
+{
+    return s&&s->world&&s->known&&s->stage==L2_SCENE_HOME&&s->action==L2_ACTION_SLEEP&&s->interaction==L2_INTERACTION_BED_SLEEP;
+}
+static bool garden_action_anchor(const badge_scene_t *s)
+{
+    return s&&garden_scene(s)&&s->action==L2_ACTION_PLAY&&(s->interaction==L2_INTERACTION_FLOWER_SNIFF||s->interaction==L2_INTERACTION_BUTTERFLY_CHASE);
+}
+static int scene_anchor_x(const badge_scene_t *s)
+{
+    if(bed_sleep_anchor(s))return SCENE_LAYOUT_ROOM_BADGE_BED_FOOT_X;
+    if(s&&s->world&&s->stage==L2_SCENE_HOME&&s->action==L2_ACTION_PLAY&&s->interaction==L2_INTERACTION_BALL_POUNCE)return SCENE_LAYOUT_ROOM_BADGE_CLIMB_FOOT_X;
+    if(garden_action_anchor(s))return SCENE_LAYOUT_GARDEN_BADGE_FLOWER_RIGHT_X-52;
+    return SCENE_LAYOUT_ROOM_BADGE_HOME_X;
+}
+static int scene_anchor_y(const badge_scene_t *s)
+{
+    if(s&&s->foot_y)return s->foot_y;
+    if(s&&s->compact)return 260;
+    if(bed_sleep_anchor(s))return SCENE_LAYOUT_ROOM_BADGE_BED_FOOT_Y;
+    if(s&&s->world&&s->stage==L2_SCENE_HOME&&s->action==L2_ACTION_PLAY&&s->interaction==L2_INTERACTION_BALL_POUNCE)return SCENE_LAYOUT_ROOM_BADGE_CLIMB_FOOT_Y;
+    if(garden_scene(s)||town_scene(s))return SCENE_LAYOUT_GARDEN_BADGE_FOOT_Y;
+    if(badge_scene_light_background(s))return SCENE_LAYOUT_ROOM_BADGE_HOME_FOOT_Y;
+    return 340;
+}
 static void set_frame(badge_scene_t *s,uint16_t frame)
 {
     const badge_scene_clip_t *c=clip_for(s,s->clip);
     const lv_image_dsc_t *image=c ? c->frames[frame<c->count ? frame : 0] : s->clip==BADGE_SCENE_PET ? &cat_paw : &cat_idle;
     if(!image) image=&cat_idle;
-    bool reduced=s->compact || s->face;
-    if(reduced && image->header.cf==LV_COLOR_FORMAT_I8) {
-        /* LVGL's indexed transform path is not portable across draw units. Keep
-         * exact source palette/alpha, resample indices once per displayed frame,
-         * then draw an ordinary unscaled I8 descriptor. No new character artwork. */
-        unsigned w=image->header.w*3/4,h=image->header.h*3/4;
-        size_t bytes=1024u+(size_t)w*h;
+    s->source_frame=image;
+    s->appearance_rendered=false;
+    if(((s->compact||s->appearance.known)&&image->header.cf==LV_COLOR_FORMAT_I8)||image->header.cf==LV_COLOR_FORMAT_RAW) {
+        /* One fixed I8 workspace, also reused for compact scenes. Indexed
+         * transforms remain CPU composition; LVGL receives an unscaled frame. */
         if(!s->small_pixels) {
 #ifdef ESP_PLATFORM
-            s->small_pixels=heap_caps_malloc(bytes,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+            s->small_pixels=heap_caps_malloc(BADGE_APPEARANCE_BUFFER_BYTES,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
 #else
-            s->small_pixels=malloc(bytes);
+            s->small_pixels=malloc(BADGE_APPEARANCE_BUFFER_BYTES);
 #endif
         }
         if(s->small_pixels) {
             lv_image_cache_drop(&s->small);
-            memcpy(s->small_pixels,image->data,1024);
-            for(unsigned y=0;y<h;y++)for(unsigned x=0;x<w;x++)s->small_pixels[1024+y*w+x]=image->data[1024+(y*4/3)*image->header.stride+x*4/3];
-            s->small=(lv_image_dsc_t){.header={.magic=LV_IMAGE_HEADER_MAGIC,.cf=LV_COLOR_FORMAT_I8,.w=w,.h=h,.stride=w},.data_size=bytes,.data=s->small_pixels};
-            image=&s->small;
+            if(badge_appearance_render(image,&s->appearance,s->compact,(unsigned)s->clip,frame,&s->small,s->small_pixels,BADGE_APPEARANCE_BUFFER_BYTES)) {
+                image=&s->small;s->appearance_rendered=true;
+            }
         }
     }
+    if(image->header.cf==LV_COLOR_FORMAT_RAW)image=s->clip==BADGE_SCENE_PET?&cat_paw:&cat_idle;
     lv_image_set_scale(s->cat,256);lv_image_set_antialias(s->cat,false);
     lv_image_set_src(s->cat,image); s->frame=frame;
     /* Shared absolute foot placement. Fallback has its original 200x180 canvas. */
-    int x=233-(int)image->header.w/2;
-    int anchor=image->header.h==208 ? 196 : image->header.h==156 ? 147 : (int)image->header.h;
-    int foot=s->compact?260:(garden_scene(s)||town_scene(s))?(s->face?345:378):s->face?320:badge_scene_light_background(s)?350:340;
+    int x=scene_anchor_x(s)-(int)image->header.w/2;
+    int anchor=image->header.h==208 ? 196 : image->header.h==156 ? 147 : image->header.h==104 ? 98 : (int)image->header.h;
+    int foot=scene_anchor_y(s);
     int y=foot-anchor;
     if(garden_scene(s)){lv_area_t shadow={70,foot-7,395,foot+8};lv_obj_invalidate_area(s->root,&shadow);}
-    /* Rest is a static tuck-in composition using the original upright head. */
+    /* Rest has its own static curl; locking never selects that action. */
     lv_obj_set_pos(s->cat,x+s->slide_x+s->prop_offset,y);
+    bool resting=s->world&&s->known&&s->action==L2_ACTION_SLEEP;
+    bool absent=s->day_preview&&!s->day_known&&!s->dimmed;
+    if(resting||absent)lv_obj_add_flag(s->cat,LV_OBJ_FLAG_HIDDEN);else lv_obj_remove_flag(s->cat,LV_OBJ_FLAG_HIDDEN);
+    lv_obj_set_style_image_opa(s->cat,s->dimmed?220:LV_OPA_COVER,0);
+    if(s->shade){if(s->dimmed||resting)lv_obj_remove_flag(s->shade,LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->shade,LV_OBJ_FLAG_HIDDEN);}
 }
 void badge_scene_set_interacting(badge_scene_t *s,bool active)
 {
  if(!s)return;
  s->interacting=active;s->prop_previous=0;
+}
+bool badge_scene_save_pose(badge_scene_t *s)
+{
+ if(!s)return false;
+ if(!s->checkpoint)s->checkpoint=malloc(sizeof(*s));
+ if(!s->checkpoint)return false;
+ *s->checkpoint=*s;s->checkpoint_ms=lv_tick_get();return true;
+}
+void badge_scene_restore_pose(badge_scene_t *s)
+{
+ if(!s||!s->checkpoint)return;
+ badge_scene_t *saved=s->checkpoint;uint8_t *pixels=s->small_pixels;
+ uint32_t paused=lv_tick_get()-s->checkpoint_ms;
+ *s=*saved;s->checkpoint=saved;s->small_pixels=pixels;s->started+=paused;
+ s->prop_previous=0;set_frame(s,s->frame);lv_obj_invalidate(s->root);
 }
 int badge_scene_prop_offset(const badge_scene_t *s){return s?s->prop_offset:0;}
 void badge_scene_cancel_prop(badge_scene_t *s)
@@ -126,7 +179,7 @@ void badge_scene_cancel_prop(badge_scene_t *s)
 }
 static bool prop_interaction(badge_scene_t *s,uint32_t now)
 {
- bool eligible=!s->face&&badge_scene_light_background(s)&&s->known&&s->live&&s->action==L2_ACTION_IDLE&&(s->stage==L2_SCENE_HOME||s->stage==L2_SCENE_AWAY||s->stage==L2_SCENE_GARDEN||s->stage==L2_SCENE_TOWN)&&s->clip==BADGE_SCENE_IDLE;
+ bool eligible=!s->compact&&!s->face&&badge_scene_light_background(s)&&s->known&&s->live&&s->action==L2_ACTION_IDLE&&(s->stage==L2_SCENE_HOME||s->stage==L2_SCENE_AWAY||s->stage==L2_SCENE_GARDEN||s->stage==L2_SCENE_TOWN)&&s->clip==BADGE_SCENE_IDLE;
  if(!eligible){s->prop_ms=0;s->prop_previous=0;s->prop_look=false;if(s->prop_offset){s->prop_offset=0;set_frame(s,s->frame);}return false;}
  if(s->interacting){s->prop_previous=0;return true;}
  uint32_t dt=s->prop_previous?now-s->prop_previous:0;s->prop_previous=now;if(dt>100)dt=100;
@@ -138,7 +191,7 @@ static bool prop_interaction(badge_scene_t *s,uint32_t now)
  else if(t>=pause+walk+look&&t<pause+2*walk+look){visual=BADGE_SCENE_WALK;elapsed=t-pause-walk-look;s->prop_look=elapsed<500;offset=(int)((int64_t)target*(walk-elapsed)/walk);}
  const badge_scene_clip_t *c=clip_for(s,visual);if(!c)return false;
  uint16_t frame=(uint16_t)(((uint64_t)(elapsed%c->cycle_ms)*c->count)/c->cycle_ms);
- if(offset!=s->prop_offset||frame!=s->frame||lv_image_get_src(s->cat)!=c->frames[frame]){badge_scene_clip_id_t original=s->clip;s->prop_offset=offset;s->clip=visual;set_frame(s,frame);s->clip=original;}
+ if(offset!=s->prop_offset||frame!=s->frame||s->source_frame!=c->frames[frame]){badge_scene_clip_id_t original=s->clip;s->prop_offset=offset;s->clip=visual;set_frame(s,frame);s->clip=original;}
  return true;
 }
 /* Static native drawing: no image caches, new LVGL objects, timers or DMA. */
@@ -147,26 +200,149 @@ static void world_rect(lv_layer_t *layer,const lv_area_t *root,int x,int y,int w
     lv_draw_rect_dsc_t d;lv_draw_rect_dsc_init(&d);d.bg_color=lv_color_hex(color);d.bg_opa=LV_OPA_COVER;d.radius=radius;
     lv_area_t a={root->x1+x,root->y1+y,root->x1+x+w-1,root->y1+y+h-1};lv_draw_rect(layer,&d,&a);
 }
+static int room_screen_x(float x)
+{
+    float value=SCENE_LAYOUT_ROOM_BADGE_HOME_X+(x-SCENE_LAYOUT_ROOM_BADGE_HOME_WORLD_X)*SCENE_LAYOUT_ROOM_BADGE_PX_PER_WORLD_X;
+    return (int)(value+(value>=0?.5f:-.5f));
+}
+static int room_screen_y(float z,float height)
+{
+    float value=SCENE_LAYOUT_ROOM_BADGE_HOME_FOOT_Y-(z-SCENE_LAYOUT_ROOM_BADGE_HOME_WORLD_Z)*SCENE_LAYOUT_ROOM_BADGE_PX_PER_WORLD_Z-height*SCENE_LAYOUT_ROOM_BADGE_PX_PER_WORLD_Y;
+    return (int)(value+(value>=0?.5f:-.5f));
+}
+static void room_scene(lv_layer_t *layer,const lv_area_t *a)
+{
+    const float scale=SCENE_LAYOUT_ROOM_XZ_SCALE;
+    world_rect(layer,a,0,0,466,315,0xc4dfdb,0);
+    world_rect(layer,a,0,315,466,151,0xf0e4ca,0);
+    world_rect(layer,a,0,307,466,7,0xfff3d9,0);
+    for(unsigned i=0;i<6;i++)world_rect(layer,a,22+(int)i*82,322,2,144,0xddc69d,0);
+    for(unsigned i=0;i<3;i++)world_rect(layer,a,0,350+(int)i*42,466,2,0xe2cfaa,0);
+
+    int wx=room_screen_x(-10.5f*scale),wy=room_screen_y(22.48f*scale,14.5f);
+    int ww=(int)(13.5f*scale*6.0f+.5f),wh=56;
+    world_rect(layer,a,wx-ww/2-8,wy-wh/2-8,ww+16,wh+16,0xfff3d9,4);
+    world_rect(layer,a,wx-ww/2,wy-wh/2,ww,wh,0x72b9c3,2);
+    world_rect(layer,a,wx-2,wy-wh/2,4,wh,0xfff3d9,0);
+    world_rect(layer,a,wx-ww/2,wy-1,ww,3,0xfff3d9,0);
+    world_rect(layer,a,wx-ww/2+10,wy-wh/2+13,30,7,0xf9fff2,1);
+
+    int rug_x=room_screen_x(0),rug_y=room_screen_y(-2.0f*scale,.15f);
+    world_rect(layer,a,rug_x-93,rug_y-25,186,50,0xe8cfae,4);
+    world_rect(layer,a,rug_x-84,rug_y-17,168,34,0xf3e3c8,3);
+
+    int bed_x=SCENE_LAYOUT_ROOM_BADGE_BED_FOOT_X,bed_y=SCENE_LAYOUT_ROOM_BADGE_BED_FOOT_Y;
+    int bed_w=(int)(SCENE_LAYOUT_ROOM_BED_WIDTH*SCENE_LAYOUT_ROOM_BADGE_PX_PER_WORLD_X*-1+.5f);
+    int bed_d=(int)(SCENE_LAYOUT_ROOM_BED_DEPTH*SCENE_LAYOUT_ROOM_BADGE_PX_PER_WORLD_Z+.5f);
+    world_rect(layer,a,bed_x-bed_w/2,bed_y-bed_d/2+9,bed_w,bed_d,0x9a7460,3);
+    world_rect(layer,a,bed_x-bed_w/2+5,bed_y-bed_d/2,bed_w-10,bed_d,0x718f98,2);
+    world_rect(layer,a,bed_x-bed_w/2+8,bed_y-bed_d/2+4,bed_w-16,bed_d-8,0xefcda9,1);
+    int pillow_x=room_screen_x(SCENE_LAYOUT_ROOM_BED_X-5.85f*scale);
+    int pillow_y=room_screen_y(SCENE_LAYOUT_ROOM_BED_Z,2.45f);
+    world_rect(layer,a,pillow_x-28,pillow_y-14,56,28,0xf0efe0,5);
+    int blanket_x=room_screen_x(SCENE_LAYOUT_ROOM_BED_X+3.8f*scale);
+    world_rect(layer,a,blanket_x-52,bed_y-19,104,36,0xd5a8a1,2);
+    for(unsigned i=0;i<4;i++)world_rect(layer,a,blanket_x-42+(int)i*24,bed_y-18,2,34,0xefd3bb,0);
+
+    int scratch_x=room_screen_x(14.0f*scale),scratch_z=room_screen_y(13.5f*scale,.5f);
+    world_rect(layer,a,scratch_x-9,scratch_z-92,18,94,0xb99771,4);
+    world_rect(layer,a,scratch_x-47,scratch_z-96,94,14,0x9a7460,3);
+    int first_x=room_screen_x(8.8f*scale),first_y=room_screen_y(11.65f*scale,4.48f);
+    int second_x=room_screen_x(19.2f*scale),second_y=room_screen_y(11.65f*scale,9.48f);
+    int platform_w=(int)(10.5f*scale*6.0f+.5f);
+    world_rect(layer,a,first_x-platform_w/2,first_y-8,platform_w,16,0xb9947b,3);
+    world_rect(layer,a,second_x-platform_w/2,second_y-8,platform_w,16,0xbd9275,3);
+    world_rect(layer,a,second_x-6,second_y+7,12,first_y-second_y+2,0xa98262,2);
+    int rope_x=room_screen_x(23.4f*scale),rope_y=room_screen_y(3.0f*scale,16.4f);
+    int ball_x=room_screen_x(19.7f*scale),ball_y=room_screen_y(6.2f*scale,13.45f);
+    world_rect(layer,a,rope_x-2,rope_y,4,ball_y-rope_y,0xf3dcb5,1);
+    world_rect(layer,a,ball_x-13,ball_y-13,26,26,0xd59683,12);
+    world_rect(layer,a,ball_x-2,ball_y-22,4,12,0xf3dcb5,1);
+}
+static void garden_scene_layout(lv_layer_t *layer,const lv_area_t *a,const badge_scene_t *s)
+{
+    world_rect(layer,a,0,0,466,SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y+15,0xcbe0dc,0);
+    world_rect(layer,a,0,SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y+15,466,466-SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y-15,0x85a46c,0);
+    int path_x=SCENE_LAYOUT_GARDEN_BADGE_PATH_X,foot=SCENE_LAYOUT_GARDEN_BADGE_FOOT_Y;
+    world_rect(layer,a,path_x-66,SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y+14,132,466-SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y-14,0xb69b74,0);
+    world_rect(layer,a,path_x-55,SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y+14,110,466-SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y-14,0xd3bd8e,0);
+    world_rect(layer,a,0,SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y,466,9,0xdbd3b9,2);
+    for(unsigned i=0;i<9;i++)world_rect(layer,a,24+(int)i*52,SCENE_LAYOUT_GARDEN_BADGE_FENCE_Y-2,8,45,0xeee3c8,3);
+
+    const int tx[]={SCENE_LAYOUT_GARDEN_BADGE_TREE_LEFT_X,SCENE_LAYOUT_GARDEN_BADGE_TREE_RIGHT_X};
+    const uint32_t canopy[]={0x729981,0x81aa8d,0x93b699,0xa5c3a3};
+    for(unsigned i=0;i<2;i++){
+        world_rect(layer,a,tx[i]-11,foot-137,22,138,0xb0916b,3);
+        world_rect(layer,a,tx[i]-54,foot-206,108,83,canopy[i?2:1],30);
+        world_rect(layer,a,tx[i]-38,foot-224,76,52,canopy[i?3:0],25);
+    }
+
+    world_rect(layer,a,78,foot-61,106,17,0xbd9271,4);
+    world_rect(layer,a,84,foot-81,94,13,0xc49e78,3);
+    world_rect(layer,a,90,foot-47,10,47,0x8b6a52,2);
+    world_rect(layer,a,164,foot-47,10,47,0x8b6a52,2);
+
+    const int fx[]={SCENE_LAYOUT_GARDEN_BADGE_FLOWER_LEFT_X,SCENE_LAYOUT_GARDEN_BADGE_FLOWER_RIGHT_X};
+    for(unsigned i=0;i<2;i++){
+        world_rect(layer,a,fx[i]-4,foot-63,8,64,0x73987c,2);
+        world_rect(layer,a,fx[i]-18,foot-78,13,8,0x73987c,4);
+        world_rect(layer,a,fx[i]+5,foot-59,13,8,0x73987c,4);
+        world_rect(layer,a,fx[i]-15,foot-94,14,12,0xdeb598,6);
+        world_rect(layer,a,fx[i]+1,foot-101,14,12,0xdeb598,6);
+        world_rect(layer,a,fx[i]-7,foot-109,14,12,0xe8d59b,6);
+        world_rect(layer,a,fx[i]-3,foot-102,7,7,0xe7bd71,3);
+    }
+    if(s&&s->interaction==L2_INTERACTION_BUTTERFLY_CHASE&&s->action==L2_ACTION_PLAY){
+        int bx=SCENE_LAYOUT_GARDEN_BADGE_FLOWER_RIGHT_X+40,by=foot-136;
+        world_rect(layer,a,bx-3,by-9,6,19,0x775e69,3);
+        world_rect(layer,a,bx-20,by-12,17,17,0xebbd8a,8);
+        world_rect(layer,a,bx+3,by-12,17,17,0xebbd8a,8);
+    }
+}
+/* A compact native voxel curl, only for an actual accepted SLEEP context.
+ * Orange/cream blocks, tucked paws and closed eyes retain the existing cat's
+ * visual language. This is presentation geometry, never a game-state change. */
+static void sleeping_cat(lv_layer_t *layer,const lv_area_t *a,bool compact,int center_x,int foot,const badge_appearance_t *appearance)
+{
+    int unit=(compact?200:300)*(int)badge_appearance_size(appearance)/100;
+    int x=center_x-25*unit/100,y=foot-34*unit/100;
+    uint32_t orange=0xd97a2d,light=0xf3a446,stripe=0x98502b,cream=0xf8dfb6;
+    if(badge_appearance_valid(appearance)){orange=badge_appearance_color(appearance,0);light=badge_appearance_color(appearance,1);stripe=badge_appearance_color(appearance,2);cream=badge_appearance_color(appearance,3);}
+#define B(dx,dy,w,h,c) world_rect(layer,a,x+(dx)*unit/100,y+(dy)*unit/100,(w)*unit/100,(h)*unit/100,c,0)
+    B(2,12,30,18,orange);B(7,7,20,8,light);B(0,20,10,10,orange);
+    B(5,12,4,7,stripe);B(14,8,4,8,stripe);B(24,12,4,8,stripe);
+    B(25,15,24,18,light);B(26,10,6,8,orange);B(41,11,6,8,orange);
+    B(28,12,3,4,cream);B(42,13,3,4,cream);B(27,19,6,3,stripe);B(42,19,6,3,stripe);
+    B(29,23,6,2,stripe);B(40,24,6,2,stripe);B(34,26,8,5,cream);
+    B(37,25,2,2,0xd98d85);B(27,31,9,3,cream);B(40,31,7,3,cream);
+    B(0,27,14,6,light);B(9,29,13,4,light);B(17,25,5,6,light);B(18,23,4,4,stripe);
+    if(badge_appearance_valid(appearance)){
+        if(appearance->outfit==BADGE_OUTFIT_BOW){B(25,11,5,4,14768472);B(30,12,4,3,15360363);B(32,10,4,4,14768472);}
+        else if(appearance->outfit==BADGE_OUTFIT_BANDANA){B(28,29,16,2,8221549);B(32,31,6,2,15458777);}
+        else if(appearance->outfit==BADGE_OUTFIT_BACKPACK){B(7,4,15,7,7967098);B(6,4,17,2,10138005);B(8,10,2,4,11910816);}
+        else if(appearance->outfit==BADGE_OUTFIT_WINGS){B(-3,11,6,4,0xfdf9ee);B(-5,15,7,5,0xfdf9ee);B(-2,20,6,3,0xf1dec4);B(21,8,6,4,0xfdf9ee);}
+    }
+#undef B
+    lv_draw_label_dsc_t d;lv_draw_label_dsc_init(&d);d.font=&lv_font_montserrat_20;
+    d.color=lv_color_hex(0xbdb79e);d.text="Z";
+    lv_area_t z={a->x1+x+51*unit/100,a->y1+y,a->x1+x+51*unit/100+28,a->y1+y+30};
+    lv_draw_label(layer,&d,&z);
+}
 static void world_draw(lv_event_t *e)
 {
     badge_scene_t *s=lv_event_get_user_data(e);if(!s->world||s->overlay)return;
     lv_layer_t *layer=lv_event_get_layer(e);lv_area_t a;lv_obj_get_coords(s->root,&a);
-    bool rest=(!s->face||s->day_preview)&&s->known&&s->action==L2_ACTION_SLEEP;
-    if(s->day_preview&&!s->day_known){if(!s->dimmed&&lv_event_get_code(e)==LV_EVENT_DRAW_MAIN)world_rect(layer,&a,0,0,466,466,0xeadfca,0);return;}
+    bool rest=(s->dimmed||!s->face||s->day_preview)&&s->known&&s->action==L2_ACTION_SLEEP;
     if(lv_event_get_code(e)==LV_EVENT_DRAW_POST){
-        if(!rest)return;
-        /* Static tuck-in composition, not a new lying/closed-eye animation. */
-        int bottom=s->face?375:408;
-        world_rect(layer,&a,0,bottom,466,466-bottom,0x14121c,0);
-        world_rect(layer,&a,119,285,228,bottom-285,0x4d3b36,12);
-        world_rect(layer,&a,128,289,210,bottom-301,0x76666e,9);
-        world_rect(layer,&a,137,291,192,12,0xa29299,4);
-        world_rect(layer,&a,146,325,36,3,0x92808a,1);
-        world_rect(layer,&a,278,344,34,3,0x92808a,1);return;
+        /* Background shade is below the cat. Sleep stays a real action, while
+         * a locked awake cat keeps its original full-size pose and scene. */
+        if(rest)sleeping_cat(layer,&a,s->compact,scene_anchor_x(s),scene_anchor_y(s),&s->appearance);
+        return;
     }
+    if(s->day_preview&&!s->day_known){world_rect(layer,&a,0,0,466,466,0xeadfca,0);return;}
     if(s->face==1&&!s->day_preview&&!s->dimmed){world_rect(layer,&a,0,0,466,466,0xead4b0,0);return;}
     if(badge_scene_is_warm(s)){
-        lv_draw_image_dsc_t d;lv_draw_image_dsc_init(&d);d.src=&warm_room;lv_draw_image(layer,&d,&a);return;
+        room_scene(layer,&a);return;
     }
     if(town_scene(s)){
         /* Reuse the same native rectangle drawing and cat bank; no new assets
@@ -187,55 +363,13 @@ static void world_draw(lv_event_t *e)
         world_rect(layer,&a,182,407,102,59,0xb79874,3);
         world_rect(layer,&a,177,406,8,60,0x977858,3);world_rect(layer,&a,281,406,8,60,0x977858,3);
         world_rect(layer,&a,384,246,5,89,0x756b56,2);world_rect(layer,&a,373,235,27,24,0xf2da9d,5);
-        int foot=s->compact?260:s->face?345:378;
-        world_rect(layer,&a,184+s->prop_offset+s->slide_x,foot-3,98,10,0xb4a17e,5);return;
+        int foot=s->foot_y?s->foot_y:s->compact?260:378;
+        world_rect(layer,&a,197+s->prop_offset+s->slide_x,foot-2,72,6,0xb4a17e,3);return;
     }
     if(garden_scene(s)){
-        /* Static B garden silhouettes, original live scene gate; no new objects,
-         * timers, domain state or realtime renderer. Cat remains original I8. */
-        world_rect(layer,&a,0,0,466,466,0xcbe0dc,0);
-        world_rect(layer,&a,48,165,82,23,0xf5f1df,12);
-        world_rect(layer,&a,338,173,40,40,0xf4d49a,20);
-        world_rect(layer,&a,0,249,466,217,0x85a46c,0);
-        world_rect(layer,&a,0,227,114,84,0x66885b,38);
-        world_rect(layer,&a,349,222,117,92,0x648359,40);
-        world_rect(layer,&a,25,293,416,8,0xb69b74,2);
-        for(unsigned i=0;i<7;i++)world_rect(layer,&a,44+(int)i*59,272,9,62,0xc8ad84,4);
-        world_rect(layer,&a,94,326,280,101,0xc5b28b,42);
-        world_rect(layer,&a,118,343,234,58,0xdaccaa,28);
-        world_rect(layer,&a,65,208,7,114,0x8d7858,2);
-        world_rect(layer,&a,48,211,41,48,0x6f5b43,5);
-        world_rect(layer,&a,55,217,27,34,0xf3dca4,3);
-        world_rect(layer,&a,67,217,3,34,0x9b7545,0);
-        world_rect(layer,&a,47,205,43,7,0x756047,3);
-        const int fx[]={89,109,335,385};const int fy[]={319,341,270,309};
-        for(unsigned i=0;i<4;i++){
-            world_rect(layer,&a,fx[i]+5,fy[i]+7,3,354-fy[i]-7,0x4d754e,1);
-            world_rect(layer,&a,fx[i]-1,fy[i]+12,10,5,0x547f51,3);
-            world_rect(layer,&a,fx[i],fy[i],13,13,0xf9f2dd,6);
-            world_rect(layer,&a,fx[i]+4,fy[i]+4,5,5,0xe7bd71,2);
-        }
-        int foot=s->compact?260:s->face?345:378;
-        world_rect(layer,&a,184+s->prop_offset+s->slide_x,foot-3,98,10,0xb4a17e,5);
-        return;
-    }
-    if(rest){
-        if(!s->dimmed){
-            /* C rest backdrop is only the existing short SLEEP action, not a
-             * new night/unlock scene or a new lying-cat animation. */
-            world_rect(layer,&a,52,168,82,108,0x3a3347,14);
-            world_rect(layer,&a,59,175,68,92,0x202c44,10);
-            world_rect(layer,&a,90,176,4,91,0x695965,0);
-            world_rect(layer,&a,60,221,67,4,0x695965,0);
-            world_rect(layer,&a,0,343,466,123,0x28202b,0);
-            world_rect(layer,&a,78,199,3,3,0xcbbf9a,1);
-            world_rect(layer,&a,107,247,3,3,0xcbbf9a,1);
-            world_rect(layer,&a,301,198,3,3,0xcbbf9a,1);
-            world_rect(layer,&a,314,234,3,3,0xcbbf9a,1);
-        }
-        world_rect(layer,&a,335,167,25,25,0xb8ae8a,12);
-        world_rect(layer,&a,345,163,22,24,0x14121c,12);
-        world_rect(layer,&a,148,271,170,30,0xb0a090,10);return;
+        garden_scene_layout(layer,&a,s);
+        int foot=scene_anchor_y(s),center=scene_anchor_x(s);
+        world_rect(layer,&a,center-37+s->prop_offset+s->slide_x,foot-2,74,6,0xb4a17e,3);return;
     }
     if(!s->known||!s->live){world_rect(layer,&a,164,345,138,2,0x28272b,1);return;}
     bool away=s->stage!=L2_SCENE_HOME;
@@ -278,8 +412,7 @@ badge_scene_t *badge_scene_create(lv_obj_t *parent)
 {
     badge_scene_t *s=calloc(1,sizeof(*s)); if(!s) return NULL;
     s->assets=badge_game_assets();
-    /* Reference-first: pure black, cat only. A room descriptor may be exported
-     * for a separately reviewed enhancement but is deliberately not displayed. */
+    /* Static scene backdrop and original cat assets share one world root. */
     s->root=shape(parent,0,0,466,466,ZIP_UI_COLOR_BG,0);
     for(unsigned i=0;i<8;i++) {
         s->weather[i]=shape(s->root,75+(i*47)%315,120+(i*31)%180,3,10,0x8FC7E0,2);
@@ -289,6 +422,8 @@ badge_scene_t *badge_scene_create(lv_obj_t *parent)
         s->ground[i]=shape(s->root,122+i*46,345,25,2,0x443629,1);
         lv_obj_add_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);
     }
+    s->shade=shape(s->root,0,0,466,466,0x000000,0);
+    lv_obj_set_style_bg_opa(s->shade,120,0);lv_obj_add_flag(s->shade,LV_OBJ_FLAG_HIDDEN);
     s->cat=lv_image_create(s->root); lv_obj_remove_flag(s->cat,LV_OBJ_FLAG_CLICKABLE);
     set_frame(s,0); return s;
 }
@@ -299,6 +434,23 @@ void badge_scene_set_face(badge_scene_t *s,unsigned face)
     if(s->face!=face%2)badge_scene_cancel_prop(s);
     s->face=face%2;
     set_frame(s,s->frame);
+}
+void badge_scene_set_foot_y(badge_scene_t *s,int foot_y)
+{
+    if(!s||foot_y<0||foot_y>420)return;
+    s->foot_y=foot_y;set_frame(s,s->frame);
+}
+void badge_scene_set_appearance(badge_scene_t *s,const badge_appearance_t *appearance)
+{
+    if(!s)return;
+    badge_appearance_t next={0};
+    if(badge_appearance_valid(appearance))next=*appearance;
+    if(badge_appearance_equal(&s->appearance,&next))return;
+    s->appearance=next;set_frame(s,s->frame);lv_obj_invalidate(s->root);
+}
+bool badge_scene_appearance_ready(const badge_scene_t *s)
+{
+    return s&&s->appearance.known&&s->appearance_rendered&&badge_appearance_outfit_supported(s->appearance.outfit);
 }
 void badge_scene_set_compact(badge_scene_t *s,bool compact)
 {
@@ -354,8 +506,12 @@ void badge_scene_tick(badge_scene_t *s,uint32_t now,bool animate)
 }
 void badge_scene_set_dimmed(badge_scene_t *s,bool dimmed)
 {
-    /* BSP brightness is the single brightness transform (35% in AOD). */
-    if(s){bool changed=s->dimmed!=dimmed;s->dimmed=dimmed;if(dimmed){s->frozen=true;s->prop_ms=0;s->prop_previous=0;s->prop_offset=0;s->prop_look=false;}if(changed){set_frame(s,s->frame);lv_obj_invalidate(s->root);}}
+    /* Preserve scene, pose, position and scale. Background shade is a static
+     * child below the cat; the existing 35% BSP level still governs AOD. */
+    if(!s||s->dimmed==dimmed)return;
+    s->dimmed=dimmed;if(dimmed)s->frozen=true;
+    if(dimmed)lv_obj_remove_flag(s->shade,LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->shade,LV_OBJ_FLAG_HIDDEN);
+    set_frame(s,s->frame);lv_obj_invalidate(s->root);
 }
 bool badge_scene_has_animation(const badge_scene_t *s)
 {
@@ -378,17 +534,30 @@ void badge_scene_set_context(badge_scene_t *s,bool known,l2_scene_t stage,l2_wea
     if(s->world && known && action==L2_ACTION_SLEEP)bg=0x14121c;
     lv_obj_set_style_bg_color(s->root,lv_color_hex(bg),0);
     for(unsigned i=0;i<8;i++) {
-        bool show=known && live && !s->overlay && weather!=L2_WEATHER_CLEAR;
+        bool show=known && live && !s->overlay && !s->dimmed && weather!=L2_WEATHER_CLEAR;
         if(show) lv_obj_remove_flag(s->weather[i],LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->weather[i],LV_OBJ_FLAG_HIDDEN);
         lv_obj_set_size(s->weather[i],weather==L2_WEATHER_SNOW ? 4 : 2,weather==L2_WEATHER_SNOW ? 4 : 10);
         lv_obj_set_style_bg_color(s->weather[i],lv_color_hex(weather==L2_WEATHER_SNOW ? 0xd5e3ea : 0x629ab0),0);
     }
     for(unsigned i=0;i<5;i++) {
-        if(known && live && !s->overlay && (stage==L2_SCENE_DEPARTING || stage==L2_SCENE_RETURNING)) lv_obj_remove_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);
+        if(known && live && !s->overlay && !s->dimmed && (stage==L2_SCENE_DEPARTING || stage==L2_SCENE_RETURNING)) lv_obj_remove_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);
         else lv_obj_add_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);
     }
-    lv_obj_set_style_image_opa(s->cat,LV_OPA_COVER,0);
+    lv_obj_set_style_image_opa(s->cat,s->dimmed?220:LV_OPA_COVER,0);
     if(changed) {s->prop_ms=0;s->prop_previous=0;s->prop_offset=0;s->prop_look=false;s->pending=BADGE_SCENE_IDLE;s->clip=base_clip(s);s->started=lv_tick_get();set_frame(s,0);}
+}
+
+void badge_scene_set_interaction(badge_scene_t *s,l2_interaction_t interaction)
+{
+    if(!s)return;
+    if((unsigned)interaction>(unsigned)L2_INTERACTION_BED_SLEEP)interaction=L2_INTERACTION_NONE;
+    if(s->interaction==interaction)return;
+    s->interaction=interaction;
+    badge_scene_clip_id_t next=base_clip(s);
+    if(s->known){
+        if(next!=s->clip){s->clip=next;s->pending=BADGE_SCENE_IDLE;s->started=lv_tick_get();set_frame(s,0);}
+        else set_frame(s,s->frame);
+    }
 }
 
 /* Historical presentation only; never calls core/care/peer/wire. */
@@ -402,7 +571,8 @@ void badge_scene_day_preview(badge_scene_t *s,bool known,unsigned kind,unsigned 
  if(!known){badge_scene_set_context(s,false,L2_SCENE_HOME,L2_WEATHER_CLEAR,L2_ACTION_IDLE,false);lv_obj_add_flag(s->cat,LV_OBJ_FLAG_HIDDEN);lv_obj_invalidate(s->root);return;}
  lv_obj_remove_flag(s->cat,LV_OBJ_FLAG_HIDDEN);
  l2_scene_t stage=kind==3||kind==4||kind==5?L2_SCENE_AWAY:L2_SCENE_HOME;
- l2_action_t action=kind==0?L2_ACTION_SLEEP:kind==5?L2_ACTION_WALK:L2_ACTION_IDLE;
+ /* A human day segment labelled rest is not a pet SLEEP action. */
+ l2_action_t action=kind==5?L2_ACTION_WALK:L2_ACTION_IDLE;
  badge_scene_set_context(s,true,stage,L2_WEATHER_CLEAR,action,true);
  s->clip=kind==2?BADGE_SCENE_ATTENTION:kind==5?BADGE_SCENE_WALK:BADGE_SCENE_IDLE;s->pending=BADGE_SCENE_IDLE;
  const badge_scene_clip_t*c=clip_for(s,s->clip);unsigned frame=kind==2&&c?c->count/2:kind==5&&c?minute%c->count:0;set_frame(s,(uint16_t)frame);lv_obj_invalidate(s->root);
@@ -420,5 +590,5 @@ void badge_scene_day_current(badge_scene_t *s,bool known,l2_scene_t stage,l2_wea
  if(!s||s->face!=1)return;
  s->day_preview=true;s->day_known=known;s->day_kind=action==L2_ACTION_SLEEP?0:1;s->day_token=0;
  badge_scene_set_context(s,known,stage,weather,action,live);
- if(known)lv_obj_remove_flag(s->cat,LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->cat,LV_OBJ_FLAG_HIDDEN);
+ if(known&&action!=L2_ACTION_SLEEP)lv_obj_remove_flag(s->cat,LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->cat,LV_OBJ_FLAG_HIDDEN);
 }

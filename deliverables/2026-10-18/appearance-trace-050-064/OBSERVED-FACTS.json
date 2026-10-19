@@ -1,0 +1,28 @@
+{
+  "source": "existing stored records and source conditions, no product code executed",
+  "phone": {
+    "xp": 194,
+    "stageRule": "Vn: xp >= 160 -> adult; >=60 -> young; otherwise kitten",
+    "outfit": "bandana",
+    "breed": "orange",
+    "nextSeq": 569,
+    "syncRevision": 511,
+    "pending": false,
+    "lastSemanticHasGrowthStage": false
+  },
+  "badge": {
+    "blobBytes": 754,
+    "schema": 5,
+    "revision": 511,
+    "appearanceKnown": false,
+    "growthEnum": 0,
+    "bodyEnum": 0,
+    "outfit": ""
+  },
+  "compiledGuiReferences": [
+    "badge_appearance_from_names",
+    "badge_scene_set_appearance",
+    "l2_pet_appearance_valid"
+  ],
+  "noNewSourceChanges": true
+}

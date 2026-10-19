@@ -10,11 +10,27 @@
   const fingerprint=pet=>JSON.stringify([pet.createdAt,pet.id,pet.joinedAt]);
   const ACTION={pet:'pet',feed:'feed',water:'drink',bath:'bath',play:'tease',sleep:'sleep'};
   const LABEL={pet:'摸摸',feed:'喂食',water:'喝水',bath:'洗澡',play:'逗猫',sleep:'睡觉'};
+  // Label the original rule result; never infer its cause from newer stats.
+  // Existing ledger receipts and pending ACK bytes are immutable and bypass plan.
+  const RULE_REASONS=Object.freeze({
+    '小猫现在心情超好，可以陪它做点别的。':'mood_full',
+    '小猫精神满满，暂时还不困。':'energy_full',
+    '小猫已经吃饱啦，等肚子饿一点再喂。':'food_full',
+    '小猫已经很干净啦，暂时不用洗澡。':'already_clean',
+    '小猫有点累了，先让它睡个小觉吧。':'too_tired',
+    '小猫有点不舒服，先去诊所检查，再陪它剧烈运动吧。':'health_issue'
+  });
+  function terminalReason(result){
+    const original=result.reason||'ineligible';
+    return original==='ineligible'?(RULE_REASONS[result.message]||original):original;
+  }
   function validateEvent(e,id){
     if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!Number.isSafeInteger(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||typeof e.petId!=='string'||!e.petId||e.petId.length>64||(e.occurredAtMs!==null&&(!Number.isSafeInteger(e.occurredAtMs)||e.occurredAtMs<0)))throw fail('设备事件来源或编号无效，未确认删除。');
     if(e.kind==='care'){if(!Object.hasOwn(ACTION,e.action))throw fail('当前固件没有此照料入口，事件已保留等待核对。','EVENT_UNSUPPORTED');}
     else if(e.kind==='gift'){
       if(!/^[0-9a-f]{32}$/.test(e.peerId)||e.peerId===id||!Number.isSafeInteger(e.peerCounter)||e.peerCounter<1||e.giftId!=='flower'||e.quantity!==1||e.peerComplete!==false)throw fail('野花收据与当前协议不符；不能据此建立双方好友。','EVENT_UNSUPPORTED');
+    }else if(e.kind==='encounter'){
+      if(!/^[0-9a-f]{32}$/.test(e.peerId)||e.peerId===id||!/^[0-9a-f]{32}$/.test(e.encounterId)||e.peerComplete!==true||!['rhythm','dots'].includes(e.method)||typeof e.peerName!=='string'||!e.peerName||new TextEncoder().encode(e.peerName).length>24||/[\x00-\x1f]/.test(e.peerName)||!/^[-a-zA-Z0-9_]{1,16}$/.test(e.peerBreed)||!Array.isArray(e.mark)||e.mark.some(x=>!Number.isInteger(x))||(e.method==='rhythm'?(e.mark.length<3||e.mark.length>7||e.mark.some(x=>x<60||x>=1200)):(e.mark.length<4||e.mark.length>9||new Set(e.mark).size!==e.mark.length||e.mark.some(x=>x<0||x>8))))throw fail('双方暗号持久收据无效，设备事件已保留。','EVENT_UNSUPPORTED');
     }else throw fail('未支持的设备事件，已保留等待升级。','EVENT_UNSUPPORTED');
   }
   function parseSocial(raw){
@@ -22,27 +38,38 @@
     if(d?.v!==1||!d.dex||!d.friends||!d.gifts||!Array.isArray(d.gifts.inbox)||!Array.isArray(d.gifts.log)||!Array.isArray(d.log))throw fail('社交原存档格式不完整，事件未结算。','SOURCE_SAVE_UNSAFE');
     return d;
   }
-  function plan({event,game,social,createStore,now,runtime}){
+  function plan({event,game,social,createStore,now,runtime,planEncounter}){
     if(!runtime)throw fail('原照料会话上下文尚未就绪，设备事件保留。','CARE_RUNTIME_INVALID');
     const d=parseSocial(social);let staged=game;
     const store=createStore({storage:{getItem:k=>k===db.GAME?game:null,setItem:(k,v)=>{if(k!==db.GAME)throw Error('Unexpected rule key');staged=v;}},now,hostRuntime:runtime});
     if(store.getState().storageIssue)throw fail('原游戏存档无法读取，未结算设备事件。','SOURCE_SAVE_UNSAFE');
-    let result;
+    let result,encounter;
     if(event.kind==='care'){
       const remaining=store.hostCareDelay(ACTION[event.action]);
       if(remaining>0)return {deferred:true,remainingMs:remaining};
       result=store.hostDeviceCare(ACTION[event.action]);
+    }
+    else if(event.kind==='encounter'){
+      if(!planEncounter)throw fail('真实相遇结算接口尚未准备好，设备事件保留。');
+      encounter=planEncounter(d,event,now());
+      if(encounter.rejected)result={ok:false,reason:encounter.reason,message:encounter.message};
+      else if(encounter.duplicate)result={ok:true,duplicate:true};
+      else {
+        if(encounter.gift&&(store.getState().inventory.flower||0)>=100000)throw fail('野花背包已满，双方相遇收据保留等待整理。');
+        result=store.socialGrant({items:encounter.gift?{flower:1}:{},mood:encounter.isNew?6:3,journal:{kind:'social',msg:encounter.message},message:'真实吧唧相遇已保存'});
+        if(!result.ok)throw fail('原相遇奖励未保存，设备事件保留。');
+      }
     }
     else {
       if((store.getState().inventory.flower||0)>=100000)throw fail('背包里的野花已满，请先整理背包；设备收据保留。');
       result=store.socialGrant({items:{flower:1},journal:{kind:'gift',msg:'收到匿名吧唧 '+event.peerId+' 的野花 ×1。'},message:'收到真实吧唧野花 ×1'});
     }
     if(store.getState().storageIssue)throw fail('原规则结果未写入计划，未确认设备事件。','SOURCE_SAVE_UNSAFE');
-    const status=result.ok?'applied':'rejected',reason=result.ok?'none':result.reason||'ineligible';
-    const message=result.ok?(event.kind==='care'?'设备'+LABEL[event.action]+'已按原规则结算。':'真实吧唧野花 ×1 已放入背包；好友确认尚未完成。'):'设备'+LABEL[event.action]+'未获奖励：'+result.message;
+    const status=result.ok?'applied':'rejected',reason=result.ok?'none':terminalReason(result);
+    const message=event.kind==='encounter'?encounter.message:result.ok?(event.kind==='care'?'设备'+LABEL[event.action]+'已按原规则结算。':'真实吧唧野花 ×1 已放入背包；好友确认尚未完成。'):'设备'+LABEL[event.action]+'未获奖励：'+result.message;
     d.dex.deviceReceipts??=[];
-    d.dex.deviceReceipts.push({eventId:event.eventId,petId:event.petId,kind:event.kind,action:event.action||null,peerId:event.peerId||null,status,reason,message});
-    if(event.kind==='gift'&&result.ok){
+    d.dex.deviceReceipts.push({eventId:event.eventId,petId:event.petId,kind:event.kind,action:event.action||null,peerId:event.peerId||null,encounterId:event.encounterId||null,method:event.method||null,status,reason,message});
+    if((event.kind==='gift'||(event.kind==='encounter'&&encounter.gift))&&result.ok){
       // It is already opened by this atomic transaction. The original openGift
       // guard cannot award it a second time. No profile or mutual meet is made up.
       d.gifts.inbox.push({id:'device:'+event.eventId,from:'device:'+event.peerId,fname:'匿名吧唧 '+event.peerId,breed:null,g:{kind:'item',id:'flower',n:1,label:'野花 ×1'},at:now(),open:true,source:'native_device',eventId:event.eventId});
@@ -64,16 +91,17 @@
       },
       async consume(valid){
         if(busy)throw fail('上一条设备事件正在确认。');busy=true;
+        let phase='source',eventCounter=null;
         try {
           ledger.assertHealthy();if(!durable)throw fail('原生持久存档不可用，不能确认设备事件。');durable.assertHealthy();if(!valid())return {waiting:true};
-          if(source.busy())return {waiting:true,message:'手机互动结束后再结算设备事件。'};
+          if(source.busy())return {waiting:true,phase:'source_busy',counter:eventCounter,message:'小猫互动结束后会自动同步。'};
           source.assertHealthy();source.flush();source.assertHealthy();
           const s=ports.control.getState(),lastAck=s.device?.lastAck??0,records=ledger.snapshot().records;
           if(!Number.isSafeInteger(lastAck)||lastAck<0||lastAck>4096)throw fail('设备已确认历史超出当前备份，暂停结算与确认。','EVENT_HISTORY_MISSING');
           for(let counter=1;counter<=lastAck;counter++)if(!records[s.hello.deviceId+':'+counter])throw fail('当前备份缺少设备已确认的事件结果，暂停新消费与确认。请恢复更新的完整备份。','EVENT_HISTORY_MISSING');
-          const event=await ports.events.readNext();
+          phase='read_event';const event=await ports.events.readNext();eventCounter=event?.counter||null;
           if(!valid()||event===null)return {processed:false};
-          if(source.busy())return {waiting:true,message:'手机互动结束后再结算设备事件。'};
+          if(source.busy())return {waiting:true,phase:'source_busy',counter:eventCounter,message:'小猫互动结束后会自动同步。'};
           source.assertHealthy();source.flush();source.assertHealthy();
           validateEvent(event,s.hello.deviceId);
           let identity,wire;
@@ -87,33 +115,33 @@
             source.flush(release);source.assertHealthy();
             const game=storage.getItem(db.GAME),social=storage.getItem(db.SOCIAL);
             const memoryBefore=source.capture();
-            const planned=plan({event,game,social,createStore:source.createStore,now,runtime:source.readCareRuntime()});
-            if(planned.deferred)return {waiting:true,message:'小猫正在缓一缓，冷却结束后按最新进度结算；设备收据仍保留。',remainingMs:planned.remainingMs};
+            phase='plan';const planned=plan({event,game,social,createStore:source.createStore,now,runtime:source.readCareRuntime(),planEncounter:source.planEncounter});
+            if(planned.deferred)return {waiting:true,phase:'cooldown',counter:eventCounter,message:'小猫正在缓一缓，稍后会自动同步。',remainingMs:planned.remainingMs};
             const token=uuid();planned.game=JSON.stringify({...JSON.parse(planned.game),__cflocal2Commit:token});planned.social=JSON.stringify({...JSON.parse(planned.social),__cflocal2Commit:token});
-            const saveDigest=await digest(db.canonical({event,identity,game:planned.game,social:planned.social,status:planned.status,reason:planned.reason}));
+            phase='digest';const saveDigest=await digest(db.canonical({event,identity,game:planned.game,social:planned.social,status:planned.status,reason:planned.reason}));
             // Digest yields to the UI. Revalidate identity, activity, and exact
             // before-images; no old plan may overwrite a newer phone action.
             if(!valid())return {waiting:true};source.assertHealthy();
             if(source.identity()!==identity||source.wire(ports.control.getState()).petId!==event.petId){ledger.isolate(event,'结算期间切换了猫或存档世代，未确认设备事件。');throw fail('手机身份已变化，设备事件已隔离。','SOURCE_IDENTITY_CHANGED');}
-            if((release.busy?release.busy():source.busy())||source.capture()!==memoryBefore)return {waiting:true,message:'手机进度已变化，稍后以最新进度结算。'};
+            if((release.busy?release.busy():source.busy())||source.capture()!==memoryBefore)return {waiting:true,phase:'source_changed',counter:eventCounter,message:'正在跟上小猫的最新进度。'};
             const input={event,identity,status:planned.status,reason:planned.reason,message:planned.message,saveDigest,token,images:[{key:db.GAME,before:game,after:planned.game},{key:db.SOCIAL,before:social,after:planned.social}]},decision=ledger.preview(input);
             durable.eventLocked=true;
-            try{await durable.seal({game:planned.game,social:planned.social,ledger:decision.next,token});fault('native-committed');}finally{durable.eventLocked=false;}
+            phase='native_commit';try{await durable.seal({game:planned.game,social:planned.social,ledger:decision.next,token});fault('native-committed');}finally{durable.eventLocked=false;}
             // Native owns the complete decision before any original key changes.
             // Finish its projection even after pause; only the subsequent ACK is
             // conditional on this connection still being explicitly authorized.
-            receipt=ledger.commit(input);
-            fault('committed');source.hydrate(planned.game,planned.social,planned.runtime,release);fault('hydrated');
+            phase='project';receipt=ledger.commit(input);
+            fault('committed');source.hydrate(planned.game,planned.social,planned.runtime,release,event.kind);fault('hydrated');
             }finally{release();}
           }
-          source.assertHealthy();ledger.assertHealthy();durable.confirm(receipt);if(!valid())return {processed:true,acknowledged:false};
+          phase='confirm_receipt';source.assertHealthy();ledger.assertHealthy();durable.confirm(receipt);if(!valid())return {processed:true,acknowledged:false};
           // Only a receipt whose original game AND social images completed can
           // reach the adapter. Source/storage errors are never quarantined.
           if(s.hello?.capabilities?.includes('care_receipt_v1')&&receipt.reason===undefined)throw fail('此历史收据未保存原终态原因，已保留设备事件，不能猜测或重新结算。','EVENT_HISTORY_MISSING');
-          fault('before-ack');const reply=await ports.events.acknowledge({eventId:event.eventId,status:duplicate?'duplicate':receipt.status,originalStatus:receipt.status,reason:receipt.reason??(receipt.status==='applied'?'none':'ineligible'),persisted:true,saveDigest:receipt.saveDigest});
+          phase='ack';fault('before-ack');const reply=await ports.events.acknowledge({eventId:event.eventId,status:duplicate?'duplicate':receipt.status,originalStatus:receipt.status,reason:receipt.reason??(receipt.status==='applied'?'none':'ineligible'),persisted:true,saveDigest:receipt.saveDigest});
           if(reply?.status!=='device_persisted'||reply.eventId!==event.eventId)throw fail('设备尚未持久确认事件移出队列。');
           fault('acknowledged');onResult({stage:receipt.status,message:receipt.message,eventId:event.eventId,duplicate});return {processed:true,acknowledged:true};
-        } finally {busy=false;}
+        } catch(error){if(error&&typeof error==='object'){error.syncPhase=phase;error.eventCounter=eventCounter;}throw error;} finally {busy=false;}
       }
     };
   }
@@ -140,6 +168,7 @@
       capture(){const value=JSON.parse(rawExport());delete value.lastSavedAt;return db.canonical({game:value,runtime:g.store.hostReadCareRuntime()});},
       wire:s=>root.CatOfflineSceneMap.read({deviceId:s.hello.deviceId,hasSnapshot:s.device?.hasSnapshot===true,snapshotPetId:s.device?.snapshot?.petId}),
       createStore:options=>g.hostCreateStore(options),
+      planEncounter:(data,event,at)=>root.__pgSocial.hostPlanDeviceEncounter(data,event,at),
       validateSocial:parseSocial,
       freeze(){
         if(activeFreeze||g.store.hostCareRuntimeBusy())throw fail('设备结果正在保存，请稍后再操作。','CARE_RUNTIME_BUSY');
@@ -151,16 +180,16 @@
         const release=()=>{if(released)return;released=true;try{lease.release();}finally{for(const type of blockedInputs)root.document.removeEventListener(type,rejectInput,true);activeFreeze=null;if(durable)durable.transactionPaused=durable.available?paused:true;body.inert=wasInert;if(root.CatOfflineDurable?.available&&root.CatOfflineDurable.foreground&&!root.document.hidden){g.hostResume();g.setRoomActive(!body.classList.contains('offline-obscured'));}}};
         release.busy=()=>{owned(release);return originalBusy();};activeFreeze={release,lease};return release;
       },
-      hydrate(game,social,runtime,owner){
+      hydrate(game,social,runtime,owner,kind){
         const lease=owned(owner);
         try {const result=runtime===undefined?lease.importSave(game):lease.hydrateDevice(game,runtime);if(!result.ok||g.state().pet.storageIssue)throw Error(result.message||'原游戏未恢复');
-          const d=root.__pgSocial.D;for(const k of Object.keys(d))delete d[k];Object.assign(d,parseSocial(social));root.__pgSocial.hostRefresh();
+          const d=root.__pgSocial.D;for(const k of Object.keys(d))delete d[k];Object.assign(d,parseSocial(social));root.__pgSocial.hostRefresh();if(kind==='encounter')root.__pgSocial.buildWorld3D();
         }catch(e){hydrationError=fail('持久结算已提交，画面尚未恢复；请重新打开应用，事件不会再次领奖。'+e.message,'EVENT_RELOAD_REQUIRED');throw hydrationError;}
       }
     };
     const escape=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
     const api={createConsumer:ports=>createConsumer({ports,ledger,storage,source,durable:root.CatOfflineDurable,digest:db.sha256,uuid:()=>root.crypto.randomUUID(),onResult:r=>{api.lastResult=r;}}),lastResult:null,
-      dexHtml(d){const rows=d.dex?.deviceReceipts||[];return '<section class="lf-sec"><h4>真实吧唧收据 <small>已结算或明确未获奖；不等于双方好友确认</small></h4><div class="sc-ev">'+rows.slice(-30).reverse().map(x=>'<span>📟 <b>'+escape(x.message)+'</b><small>'+escape(x.eventId)+'</small></span>').join('')+(rows.length?'':'<p class="lf-empty">尚无真实设备事件</p>')+'</div></section>';},source,ledger};
+      dexHtml(d){const rows=d.dex?.deviceReceipts||[];return '<section class="lf-sec"><h4>真实吧唧收据 <small>照料、礼物与双方暗号相遇的持久结果</small></h4><div class="sc-ev">'+rows.slice(-30).reverse().map(x=>'<span>📟 <b>'+escape(x.message)+'</b><small>'+escape(x.eventId)+'</small></span>').join('')+(rows.length?'':'<p class="lf-empty">尚无真实设备事件</p>')+'</div></section>';},source,ledger};
     // Backup hooks are installed below after the original source exists. Their
     // metadata is outside the original game schema and never grants an event.
     api.rawExport=rawExport;api.rawImport=rawImport;

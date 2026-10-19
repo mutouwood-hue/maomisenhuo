@@ -1,0 +1,104 @@
+{
+  "startedAtUtc": "2026-10-18T03:57:51.514225+00:00",
+  "serial": "ZYPZ261A01M65K0002A",
+  "packageId": "com.catforest.htmlcandidate",
+  "method": "adb install --no-incremental -r",
+  "installed": true,
+  "appLaunched": false,
+  "dataCleared": false,
+  "uninstalled": false,
+  "commands": [
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "get-state"
+      ],
+      "exitCode": 0,
+      "log": "phone-connection.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "shell",
+        "getprop",
+        "ro.product.model"
+      ],
+      "exitCode": 0,
+      "log": "phone-model.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "shell",
+        "getprop",
+        "ro.product.manufacturer"
+      ],
+      "exitCode": 0,
+      "log": "phone-manufacturer.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "shell",
+        "dumpsys",
+        "package",
+        "com.catforest.htmlcandidate"
+      ],
+      "exitCode": 0,
+      "log": "phone-before.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "install",
+        "--no-incremental",
+        "-r",
+        "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/badge-059-auto-receipts/catforest-0.4.6-auto-receipts-debug.apk"
+      ],
+      "exitCode": 0,
+      "log": "phone-install.log"
+    },
+    {
+      "command": [
+        "adb",
+        "-s",
+        "ZYPZ261A01M65K0002A",
+        "shell",
+        "dumpsys",
+        "package",
+        "com.catforest.htmlcandidate"
+      ],
+      "exitCode": 0,
+      "log": "phone-after.log"
+    }
+  ],
+  "before": {
+    "versionCode": 36,
+    "versionName": "0.4.5-sticky-guide",
+    "appId": 10191,
+    "firstInstallTime": "2026-10-15 23:14:25"
+  },
+  "installExitCode": 0,
+  "model": "PZ261A",
+  "manufacturer": "StepX",
+  "after": {
+    "versionCode": 37,
+    "versionName": "0.4.6-auto-receipts",
+    "appId": 10191,
+    "firstInstallTime": "2026-10-15 23:14:25"
+  },
+  "sameAppId": true,
+  "sameFirstInstallTime": true,
+  "metadataMatchesBuiltVersion": true,
+  "finishedAtUtc": "2026-10-18T03:57:52.085059+00:00"
+}

@@ -1,11 +1,23 @@
 /** CFLOCAL2 candidate. A declared capability is not physical acceptance evidence. */
-export type Scene = 'home' | 'departing' | 'away' | 'returning';
+export type Scene = 'home' | 'departing' | 'away' | 'returning' | 'garden' | 'town';
 export type Action = 'idle' | 'walk' | 'pet' | 'feed' | 'water' | 'bath' | 'play' | 'sleep';
 export type Weather = 'clear' | 'rain' | 'snow';
+/** Optional under scene_interaction_v1; volatile display hint, never a care event or saved-state field. */
+export type Interaction = 'flower_sniff' | 'butterfly_chase' | 'ball_pounce' | 'bed_sleep';
+/** Display only; already computed by the original phone game. Not meet.stage. */
+export type GrowthStage = 'kitten' | 'young' | 'adult';
+export type BodyShape = 'standard' | 'slim' | 'round';
+export interface PetAppearance {
+  growthStage: GrowthStage; // Phone normalizes the legacy baby alias to kitten.
+  outfit: string; // Existing outfit ID, [A-Za-z0-9_-], 1..64 chars.
+  bodyShape?: BodyShape; // Defaults to standard; no new body/weight algorithm.
+}
 export interface SceneSnapshot {
+  /** petId comes from offline-scene-map.read()->identities.resolve(), never local cat-1. */
   requestId: string; petId: string; revision: number;
-  scene: Scene; action: Action; weather: Weather;
-  pet: { name: string; breed: string; food: number; mood: number; clean: number; energy: number; health: number; coins: number };
+  scene: Scene; action: Action; weather: Weather; interaction?: Interaction;
+  pet: { name: string; breed: string; food: number; mood: number; clean: number; energy: number; health: number; coins: number } &
+    (PetAppearance | {growthStage?: never; outfit?: never; bodyShape?: never});
   epochMs?: number; utcOffsetMinutes?: number; // -Date.getTimezoneOffset(), -840..840
 }
 export interface DeviceEvent {

@@ -1,0 +1,22 @@
+{
+  "productionAssetsOnly": true,
+  "resourceHashes": {
+    "provenance.json": {
+      "bytes": 4213,
+      "sha256": "3a08b1147651dba9ec8cf74cc0e00cf2abfe875ffd988dfb12d8c88e0b775c3c"
+    },
+    "native_cat.rle": {
+      "bytes": 4073508,
+      "sha256": "e9acd8e1c80f295fdcc8f108b80dd8caa45a396e782db01d72a4b71be1e1303c"
+    },
+    "color-profile.json": {
+      "bytes": 4473,
+      "sha256": "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae"
+    },
+    "native_cat_color.h": {
+      "bytes": 4511,
+      "sha256": "8aeeb5be0a14aef906e78b551d1e783c5703c17862826f3092fd2459c12b1633"
+    }
+  },
+  "visualAcceptance": "pending user; no tests or diagnostics"
+}

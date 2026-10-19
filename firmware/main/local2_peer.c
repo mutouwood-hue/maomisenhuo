@@ -1,131 +1,153 @@
 #include "local2_peer.h"
 #include <string.h>
+#include <math.h>
+#include "mbedtls/sha256.h"
 
-static bool nonzero(const uint8_t *p,size_t n) { uint8_t v=0;while(n--)v|=*p++;return v!=0; }
-static void hex_id(char out[33],const uint8_t in[16]) { static const char h[]="0123456789abcdef";for(unsigned i=0;i<16;i++){out[i*2]=h[in[i]>>4];out[i*2+1]=h[in[i]&15];}out[32]=0; }
-static uint64_t get64(const uint8_t *b) { uint64_t n=0;for(unsigned i=0;i<8;i++)n|=(uint64_t)b[i]<<(8*i);return n; }
-static void put64(uint8_t *b,uint64_t n) { for(unsigned i=0;i<8;i++)b[i]=(uint8_t)(n>>(8*i)); }
-static uint32_t get32(const uint8_t *b) { return (uint32_t)b[0]|(uint32_t)b[1]<<8|(uint32_t)b[2]<<16|(uint32_t)b[3]<<24; }
-static void put32(uint8_t *b,uint32_t n) { for(unsigned i=0;i<4;i++)b[i]=(uint8_t)(n>>(8*i)); }
-static bool pair_matches(const l2_peer_machine_t *m,const uint8_t *b) { return !memcmp(b,m->remote_nonce,16)&&!memcmp(b+16,m->nonce,16); }
-static void pair_bytes(const l2_peer_machine_t *m,uint8_t *b) { memcpy(b,m->nonce,16);memcpy(b+16,m->remote_nonce,16); }
-static bool accepted(l2_status_t s) { return s==L2_OK||s==L2_DUPLICATE; }
-static void blocked(l2_peer_machine_t *m,l2_status_t s) { m->view.storage_status=s;m->view.phase=L2P_BLOCKED;m->view.complete=false; }
-static void reset_link(l2_peer_machine_t *m) {
-    bool enabled=m->view.discoverable;uint64_t completed=m->view.complete_count;
-    memset(&m->view,0,sizeof(m->view));m->view.discoverable=enabled;m->view.complete_count=completed;
-    m->view.phase=enabled?L2P_DISCOVERING:L2P_DISABLED;
-    m->hello_seen=m->hello_sent=m->confirm_sent=m->has_outgoing=m->ack_pending=m->done_seen=m->done_sent=false;
-    memset(&m->outgoing,0,sizeof(m->outgoing));memset(&m->incoming,0,sizeof(m->incoming));
-    memset(m->remote_id,0,16);memset(m->remote_nonce,0,16);m->last_send_ms=0;
+static bool nonzero(const uint8_t *p,size_t n){uint8_t v=0;while(n--)v|=*p++;return v!=0;}
+static void hex_id(char out[33],const uint8_t in[16]){static const char h[]="0123456789abcdef";for(unsigned i=0;i<16;i++){out[i*2]=h[in[i]>>4];out[i*2+1]=h[in[i]&15];}out[32]=0;}
+static bool accepted(l2_status_t s){return s==L2_OK||s==L2_DUPLICATE;}
+static void blocked(l2_peer_machine_t *m,l2_status_t s){m->view.storage_status=s;m->view.phase=L2P_BLOCKED;m->view.complete=false;m->view.discoverable=false;}
+static bool pair_matches(const l2_peer_machine_t *m,const uint8_t *b){return !memcmp(b,m->remote_nonce,16)&&!memcmp(b+16,m->nonce,16);}
+static void pair_bytes(const l2_peer_machine_t *m,uint8_t *b){memcpy(b,m->nonce,16);memcpy(b+16,m->remote_nonce,16);}
+static void proof_bytes(const l2_meet_t *p,uint8_t *b){memcpy(b,p->id,16);b[16]=p->method;b[17]=p->count;memcpy(b+18,p->mark,16);}
+static void proof_read(l2_meet_t *p,const uint8_t *b){memset(p,0,sizeof(*p));memcpy(p->id,b,16);p->method=b[16];p->count=b[17];memcpy(p->mark,b+18,16);p->stage=1;}
+static bool same_proof(const l2_meet_t *a,const l2_meet_t *b){return !memcmp(a->id,b->id,16)&&a->method==b->method&&a->count==b->count&&!memcmp(a->mark,b->mark,16);}
+static unsigned gap(const l2_meet_t *p,unsigned i){return p->mark[i*2]|(unsigned)p->mark[i*2+1]<<8;}
+static bool match_inputs(const l2_peer_machine_t *m){
+ const l2_meet_t *a=m->view.leader?&m->mine:&m->theirs,*b=m->view.leader?&m->theirs:&m->mine;
+ if(!m->view.input_ready||!m->remote_input||a->method!=b->method||a->count!=b->count)return false;
+ if(a->method==2)return !memcmp(a->mark,b->mark,16);
+ unsigned ta=0,tb=0;for(unsigned i=0;i<a->count-1u;i++){ta+=gap(a,i);tb+=gap(b,i);}if(!ta||!tb||fabs((double)tb-ta)/(ta>tb?ta:tb)>.30)return false;
+ for(unsigned i=0;i<a->count-1u;i++)if(fabs((double)gap(b,i)/tb-(double)gap(a,i)/ta)>.15)return false;
+ return true;
 }
-bool l2_peer_machine_init(l2_peer_machine_t *m,l2_core_t *core,l2_peer_send_fn send,void *ctx) {
-    if(!m||!core||!send)return false;
-    memset(m,0,sizeof(*m));m->core=core;m->send=send;m->send_ctx=ctx;
-    return l2_get_device_id(core,m->own_id)&&nonzero(m->own_id,16);
+static void refresh_match(l2_peer_machine_t *m){
+ if(!m->remote_input||!m->view.input_ready)return;
+ if(!match_inputs(m)){blocked(m,L2_INVALID);return;}
+ const l2_meet_t *lead=m->view.leader?&m->mine:&m->theirs;
+ if(m->offered.stage&&!same_proof(lead,&m->offered)){blocked(m,L2_REQUEST_CONFLICT);return;}
+ uint8_t stage=m->agreed.stage;m->agreed=*lead;m->agreed.stage=stage;
+ m->view.matched=true;m->view.phase=L2P_CONFIRM;m->last_send_ms=0;
 }
-bool l2_peer_machine_enable(l2_peer_machine_t *m,bool enabled,const uint8_t nonce[16]) {
-    if(!m)return false;
-    if(enabled&&(!nonce||!nonzero(nonce,16)))return false;
-    reset_link(m);m->view.discoverable=enabled;m->view.phase=enabled?L2P_DISCOVERING:L2P_DISABLED;
-    if(enabled)memcpy(m->nonce,nonce,16);else memset(m->nonce,0,16);
-    return true;
+static void reset_link(l2_peer_machine_t *m){
+ bool enabled=m->view.discoverable;uint64_t count=m->view.complete_count;uint8_t method=m->view.method?m->view.method:1;
+ memset(&m->view,0,sizeof(m->view));m->view.discoverable=enabled;m->view.complete_count=count;m->view.method=method;m->view.phase=enabled?L2P_DISCOVERING:L2P_DISABLED;
+ m->hello_seen=m->hello_sent=m->confirm_sent=m->input_sent=m->remote_input=false;m->remote_stage=0;m->last_send_ms=m->last_tap_ms=m->follow_at=m->completed_at=0;
+ memset(&m->mine,0,sizeof(m->mine));memset(&m->theirs,0,sizeof(m->theirs));memset(&m->agreed,0,sizeof(m->agreed));memset(&m->offered,0,sizeof(m->offered));memset(m->remote_id,0,16);memset(m->remote_nonce,0,16);
 }
-void l2_peer_machine_link(l2_peer_machine_t *m,bool connected,const uint8_t id[16],const uint8_t token[4]) {
-    if(!m)return;
-    reset_link(m);
-    if(!connected||!m->view.discoverable||!id||!token||!nonzero(id,16)||!memcmp(id,m->own_id,16))return;
-    memcpy(m->expected_id,id,16);memcpy(m->expected_token,token,4);
-    m->view.connected=true;m->view.phase=L2P_HELLO;
+bool l2_peer_machine_init(l2_peer_machine_t *m,l2_core_t *core,l2_peer_send_fn send,void *ctx){if(!m||!core||!send)return false;memset(m,0,sizeof(*m));m->core=core;m->send=send;m->send_ctx=ctx;return l2_get_device_id(core,m->own_id)&&nonzero(m->own_id,16);}
+bool l2_peer_machine_enable(l2_peer_machine_t *m,bool enabled,const uint8_t nonce[16]){
+ if(!m|| (enabled&&(!nonce||!nonzero(nonce,16))))return false;
+ if(m->view.discoverable&&m->agreed.stage&&!m->view.complete)return false; /* committed consent must recover */
+ reset_link(m);m->view.discoverable=enabled;m->view.phase=enabled?L2P_DISCOVERING:L2P_DISABLED;m->started_ms=0;
+ if(enabled){memcpy(m->nonce,nonce,16);memcpy(m->arm,nonce,16);}else memset(m->nonce,0,16);return true;
 }
-size_t l2_peer_machine_advertisement(const l2_peer_machine_t *m,uint8_t *out,size_t cap) {
-    if(!m||!out||cap<L2_PEER_MFG_BYTES||!m->view.discoverable)return 0;
-    out[0]=0xff;out[1]=0xff;out[2]=2;memcpy(out+3,m->own_id,16);memcpy(out+19,m->nonce,4);return L2_PEER_MFG_BYTES;
+void l2_peer_machine_link(l2_peer_machine_t *m,bool connected,const uint8_t id[16],const uint8_t token[4]){
+ if(!m)return;
+ reset_link(m);if(!connected||!m->view.discoverable||!id||!token||!nonzero(id,16)||!memcmp(id,m->own_id,16))return;
+ memcpy(m->expected_id,id,16);memcpy(m->expected_token,token,4);m->view.connected=true;m->view.phase=L2P_HELLO;
 }
-bool l2_peer_machine_confirm(l2_peer_machine_t *m) {
-    if(!m||!m->view.connected||!m->hello_seen||m->view.phase==L2P_BLOCKED||m->view.complete)return false;
-    m->view.local_confirmed=true;m->view.phase=L2P_CONFIRM;m->last_send_ms=0;return true;
+size_t l2_peer_machine_advertisement(const l2_peer_machine_t *m,uint8_t *out,size_t cap){if(!m||!out||cap<L2_PEER_MFG_BYTES||!m->view.discoverable)return 0;out[0]=out[1]=0xff;out[2]=3;memcpy(out+3,m->own_id,16);memcpy(out+19,m->nonce,4);return L2_PEER_MFG_BYTES;}
+bool l2_peer_machine_confirm(l2_peer_machine_t *m){if(!m||!m->view.connected||!m->hello_seen||!m->view.matched||m->view.phase==L2P_BLOCKED||m->view.complete)return false;m->view.local_confirmed=true;m->last_send_ms=0;return true;}
+static void finalize_input(l2_peer_machine_t *m){
+ if(!m->hello_seen||m->view.input_ready||m->view.phase!=L2P_CONFIRM)return;
+ m->mine.method=m->view.method;memcpy(m->mine.id,m->agreed.id,16);m->mine.stage=1;
+ if(!l2_meet_valid(&m->mine)){blocked(m,L2_INVALID);return;}
+ m->view.input_ready=true;m->input_sent=false;m->last_send_ms=0;refresh_match(m);
 }
-static bool prepare_outgoing(l2_peer_machine_t *m) {
-    if(m->has_outgoing)return true;
-    /* Reserve resolves the permanent first receipt for THIS peer, even when
-     * another peer's independently durable receipt is still pending. */
-    l2_status_t s=l2_peer_reserve_gift(m->core,m->view.peer_id,L2_GIFT_FLOWER,1,&m->outgoing);
-    if(!accepted(s)){blocked(m,s);return false;}
-    m->has_outgoing=true;m->view.outgoing_counter=m->outgoing.counter;return true;
+void l2_peer_machine_tap(l2_peer_machine_t *m,uint32_t now){
+ if(!m||!m->hello_seen||m->view.method!=1||m->view.remote_method!=1||m->view.input_ready||m->view.phase!=L2P_CONFIRM)return;
+ if(!m->view.leader&&!m->remote_input)return;
+ if(m->mine.count>=8)return;
+ if(m->mine.count){uint32_t dt=now-m->last_tap_ms;if(dt<60)return;if(dt>=1200){finalize_input(m);return;}unsigned i=(m->mine.count-1u)*2;m->mine.mark[i]=(uint8_t)dt;m->mine.mark[i+1]=(uint8_t)(dt>>8);}
+ m->mine.count++;m->view.taps=m->mine.count;m->last_tap_ms=now;m->last_send_ms=0;
 }
-bool l2_peer_machine_receive(l2_peer_machine_t *m,uint8_t type,const uint8_t *b,size_t n) {
-    if(!m||!b||!m->view.discoverable||!m->view.connected||m->view.phase==L2P_BLOCKED)return false;
-    if(type==L2P_MSG_HELLO) {
-        if(n!=37||b[0]!=2||memcmp(b+1,m->expected_id,16)||memcmp(b+17,m->expected_token,4)||memcmp(b+33,m->nonce,4)||!nonzero(b+17,16)||!memcmp(b+17,m->nonce,16))return false;
-        if(m->hello_seen){bool same=!memcmp(m->remote_id,b+1,16)&&!memcmp(m->remote_nonce,b+17,16);if(same&&!m->view.remote_confirmed)m->hello_sent=false;return same;}
-        memcpy(m->remote_id,b+1,16);memcpy(m->remote_nonce,b+17,16);hex_id(m->view.peer_id,m->remote_id);
-        m->hello_seen=true;m->view.phase=L2P_CONFIRM;m->last_send_ms=0;return true;
-    }
-    if(!m->hello_seen)return false;
-    if(type==L2P_MSG_CONFIRM) {
-        if(n!=32||!pair_matches(m,b))return false;
-        m->view.remote_confirmed=true;m->last_send_ms=0;return true;
-    }
-    if(!m->view.local_confirmed||!m->view.remote_confirmed)return false;
-    if(type==L2P_MSG_GIFT) {
-        if(n!=45||!pair_matches(m,b+13)||b[8]!=L2_GIFT_FLOWER||get32(b+9)!=1)return false;
-        l2_receipt_t receipt={0};hex_id(receipt.peer_id,m->remote_id);receipt.counter=get64(b);receipt.gift_kind=b[8];receipt.quantity=get32(b+9);
-        if(!receipt.counter||receipt.counter>L2_JS_MAX)return false;
-        if(m->view.incoming_saved) {
-            if(receipt.counter!=m->incoming.counter||receipt.gift_kind!=m->incoming.gift_kind||receipt.quantity!=m->incoming.quantity)return false;
-        } else {
-            uint64_t gift_change=m->core->gift_change;
-            l2_status_t s=l2_receive_gift(m->core,&receipt);
-            if(!accepted(s)){blocked(m,s);return false;}
-            m->incoming=receipt;m->view.incoming_saved=true;m->view.incoming_new=m->core->gift_change!=gift_change;m->view.incoming_counter=receipt.counter;
-        }
-        m->ack_pending=true;m->last_send_ms=0;return true;
-    }
-    if(type==L2P_MSG_ACK) {
-        if(n!=40||!pair_matches(m,b+8)||!m->has_outgoing||get64(b)!=m->outgoing.counter)return false;
-        if(!m->view.outgoing_acked) {
-            l2_status_t s=l2_peer_ack_outgoing(m->core,m->view.peer_id,m->outgoing.counter);
-            if(!accepted(s)){blocked(m,s);return false;}
-            m->view.outgoing_acked=true;
-        }
-        m->last_send_ms=0;return true;
-    }
-    if(type==L2P_MSG_DONE) {
-        if(n!=48||!pair_matches(m,b+16)||!m->view.incoming_saved||!m->has_outgoing||get64(b)!=m->incoming.counter||get64(b+8)!=m->outgoing.counter)return false;
-        m->done_seen=true;m->last_send_ms=0;return true;
-    }
-    return false;
+void l2_peer_machine_dots(l2_peer_machine_t *m,const uint8_t *seq,uint8_t n){
+ if(!m||!seq||!m->hello_seen||m->view.method!=2||m->view.remote_method!=2||m->view.input_ready||m->view.phase!=L2P_CONFIRM||n>9)return;
+ memcpy(m->mine.mark,seq,n);m->mine.count=n;finalize_input(m);
 }
-void l2_peer_machine_poll(l2_peer_machine_t *m,uint32_t now) {
-    if(!m||!m->view.connected||!m->view.discoverable||m->view.phase==L2P_BLOCKED)return;
-    if(m->last_send_ms&&(uint32_t)(now-m->last_send_ms)<700)return;
-    uint8_t b[L2_PEER_MESSAGE_MAX]={0};uint8_t type;size_t n;
-    if(!m->hello_seen||!m->hello_sent) { type=L2P_MSG_HELLO;n=37;b[0]=2;memcpy(b+1,m->own_id,16);memcpy(b+17,m->nonce,16);memcpy(b+33,m->expected_token,4); }
-    else if(m->view.local_confirmed&&(!m->confirm_sent||!m->view.remote_confirmed)) { type=L2P_MSG_CONFIRM;n=32;pair_bytes(m,b); }
-    else if(!m->view.local_confirmed||!m->view.remote_confirmed)return;
-    else if(m->ack_pending) {type=L2P_MSG_ACK;n=40;put64(b,m->incoming.counter);pair_bytes(m,b+8);}
-    else if(!m->view.outgoing_acked) {
-        if(!prepare_outgoing(m))return;
-        type=L2P_MSG_GIFT;n=45;put64(b,m->outgoing.counter);b[8]=m->outgoing.gift_kind;put32(b+9,m->outgoing.quantity);pair_bytes(m,b+13);m->view.phase=L2P_EXCHANGING;
-    } else if(m->view.incoming_saved) { type=L2P_MSG_DONE;n=48;put64(b,m->outgoing.counter);put64(b+8,m->incoming.counter);pair_bytes(m,b+16);if(!m->view.complete)m->view.phase=L2P_WAIT_DONE; }
-    else return;
-    if(m->send(m->send_ctx,type,b,n)) {
-        m->last_send_ms=now?now:1;
-        if(type==L2P_MSG_HELLO)m->hello_sent=true;
-        if(type==L2P_MSG_CONFIRM)m->confirm_sent=true;
-        if(type==L2P_MSG_ACK)m->ack_pending=false;
-        if(type==L2P_MSG_GIFT)m->confirm_sent=false; /* Re-send confirmation if its first copy was lost. */
-        if(type==L2P_MSG_DONE)m->done_sent=true;
-    }
-    if(m->done_sent&&m->done_seen&&m->view.incoming_saved&&m->view.outgoing_acked&&!m->view.complete) {
-        m->view.complete=true;m->view.phase=L2P_COMPLETE;m->view.complete_count++;
-    }
+bool l2_peer_machine_receive(l2_peer_machine_t *m,uint8_t type,const uint8_t *b,size_t n){
+ if(!m||!b||!m->view.discoverable||!m->view.connected||m->view.phase==L2P_BLOCKED)return false;
+ if(type==L2P_MSG_HELLO){
+  if(n!=131||!memchr(b+89,0,25)||!memchr(b+114,0,17)||!b[89]||!b[114]||b[0]!=3||memcmp(b+1,m->expected_id,16)||memcmp(b+17,m->expected_token,4)||memcmp(b+33,m->nonce,4)||!nonzero(b+17,16)||!memcmp(b+17,m->nonce,16)||!nonzero(b+37,16)||(b[53]!=1&&b[53]!=2)||b[88]>3)return false;
+  if(m->hello_seen)return !memcmp(m->remote_nonce,b+17,16);
+  memcpy(m->remote_id,b+1,16);memcpy(m->remote_nonce,b+17,16);memcpy(m->remote_arm,b+37,16);hex_id(m->view.peer_id,m->remote_id);memcpy(m->remote_name,b+89,25);memcpy(m->remote_breed,b+114,17);m->view.remote_method=b[53];m->hello_seen=true;m->view.phase=L2P_CONFIRM;m->view.leader=memcmp(m->own_id,m->remote_id,16)<0;
+  l2_meet_t local={0},remote={0};(void)l2_get_encounter(m->core,m->view.peer_id,&local);proof_read(&remote,b+54);remote.stage=b[88];
+  if(remote.stage&&!l2_meet_valid(&remote)){blocked(m,L2_INVALID);return false;}
+  bool lp=local.stage&&local.stage<3,rp=remote.stage&&remote.stage<3;
+  if(lp&&rp&&!same_proof(&local,&remote)){blocked(m,L2_REQUEST_CONFLICT);return false;}
+  if(lp||rp){
+   m->offered=lp?local:remote;m->view.method=m->view.remote_method=m->offered.method;m->agreed=m->offered;m->agreed.stage=0;
+   bool have=local.stage&&same_proof(&local,&m->offered),both=have&&remote.stage&&same_proof(&remote,&m->offered);
+   if(have){m->agreed=local;m->mine=local;m->view.method=local.method;m->view.input_ready=true;m->view.local_confirmed=true;m->view.leader=true;}
+   else m->view.leader=false;
+   if(both){m->confirm_sent=true;m->view.matched=m->view.remote_confirmed=true;m->remote_stage=remote.stage;m->view.phase=L2P_EXCHANGING;}
+  }else{
+   uint8_t seeds[64],digest[32];bool first=memcmp(m->own_id,m->remote_id,16)<0;
+   memcpy(seeds,first?m->own_id:m->remote_id,16);memcpy(seeds+16,first?m->arm:m->remote_arm,16);memcpy(seeds+32,first?m->remote_id:m->own_id,16);memcpy(seeds+48,first?m->remote_arm:m->arm,16);
+   if(mbedtls_sha256(seeds,sizeof(seeds),digest,0)){blocked(m,L2_INVALID);return false;}memcpy(m->agreed.id,digest,16);
+  }
+  m->last_send_ms=0;return true;
+ }
+ if(!m->hello_seen||n<32||!pair_matches(m,b))return false;
+ if(type==L2P_MSG_TAPS){if(n!=33||b[32]>8)return false;m->view.remote_taps=b[32];return true;}
+ if(type==L2P_MSG_INPUT){
+  if(n!=66||m->view.remote_method!=m->view.method)return false;
+  l2_meet_t p;proof_read(&p,b+32);
+  if(!l2_meet_valid(&p)||memcmp(p.id,m->agreed.id,16)||p.method!=m->view.method)return false;
+  if(m->remote_input)return same_proof(&m->theirs,&p);
+  m->theirs=p;m->remote_input=true;if(!m->view.leader){m->follow_at=m->now_ms;m->view.follow_ready=true;}refresh_match(m);return true;
+ }
+ if(type==L2P_MSG_CONFIRM){if(n!=66||!m->view.matched)return false;l2_meet_t p;proof_read(&p,b+32);if(!same_proof(&p,&m->agreed))return false;m->view.remote_confirmed=true;m->last_send_ms=0;return true;}
+ if(type==L2P_MSG_DONE){
+  if(n!=67||!m->view.local_confirmed||!m->view.remote_confirmed)return false;
+  l2_meet_t p;proof_read(&p,b+32);if(!same_proof(&p,&m->agreed)||b[66]<1||b[66]>3)return false;
+  if(b[66]>m->remote_stage)m->remote_stage=b[66];
+  m->last_send_ms=0;return true;
+ }
+ return false;
+}
+void l2_peer_machine_poll(l2_peer_machine_t *m,uint32_t now){
+ if(!m)return;
+ m->now_ms=now;if(m->view.discoverable&&!m->started_ms)m->started_ms=now?now:1;
+ if(!m->view.discoverable||m->view.phase==L2P_BLOCKED)return;
+ if(!m->agreed.stage&&(uint32_t)(now-m->started_ms)>=15000){blocked(m,L2_STALE);m->view.discoverable=false;return;}
+ if(!m->view.connected)return;
+ if(m->last_tap_ms&&!m->view.input_ready&&now-m->last_tap_ms>=1200)finalize_input(m);
+ if(m->follow_at&&!m->view.leader&&!m->view.input_ready&&now-m->follow_at>=5000){blocked(m,L2_STALE);return;}
+ if(m->view.phase==L2P_BLOCKED)return;
+ if(m->view.matched&&m->view.local_confirmed&&m->view.remote_confirmed&&m->confirm_sent){
+  l2_status_t s=L2_OK;
+  if(!m->agreed.stage){m->agreed.stage=1;memcpy(m->agreed.name,m->remote_name,25);memcpy(m->agreed.breed,m->remote_breed,17);
+#ifdef ESP_PLATFORM
+   extern bool local2_clock_now(uint64_t *);(void)local2_clock_now(&m->agreed.epoch_ms);
+#endif
+   s=l2_prepare_encounter(m->core,m->view.peer_id,&m->agreed);if(!accepted(s))m->agreed.stage=0;
+  }
+  if(accepted(s)&&m->agreed.stage==1&&m->remote_stage>=1){s=l2_commit_encounter(m->core,m->view.peer_id,m->agreed.id);if(accepted(s))m->agreed.stage=2;}
+  if(accepted(s)&&m->agreed.stage==2&&m->remote_stage>=2){s=l2_settle_encounter(m->core,m->view.peer_id,m->agreed.id);if(accepted(s))m->agreed.stage=3;}
+  if(!accepted(s)){if(s!=L2_QUEUE_FULL)blocked(m,s);else m->view.storage_status=s;return;}
+  m->view.phase=m->agreed.stage>=3?(m->remote_stage>=3?L2P_COMPLETE:L2P_WAIT_DONE):L2P_EXCHANGING;
+  if(m->agreed.stage>=3&&m->remote_stage>=3&&!m->view.complete){m->view.complete=true;m->view.complete_count++;m->completed_at=now;}
+ }
+ if(m->view.complete&&now-m->completed_at>=3000){m->view.discoverable=false;return;}
+ if(m->last_send_ms&&now-m->last_send_ms<300)return;
+ uint8_t b[L2_PEER_MESSAGE_MAX]={0},type;size_t n;
+ if(!m->hello_seen||!m->hello_sent){
+  type=L2P_MSG_HELLO;n=131;b[0]=3;memcpy(b+1,m->own_id,16);memcpy(b+17,m->nonce,16);memcpy(b+33,m->expected_token,4);memcpy(b+37,m->arm,16);b[53]=m->view.method;if(m->core->saved.has_snapshot){memcpy(b+89,m->core->saved.snapshot.pet.name,25);memcpy(b+114,m->core->saved.snapshot.pet.breed,17);}
+  char id[33];hex_id(id,m->expected_id);l2_meet_t p={0};if(l2_get_encounter(m->core,id,&p)){proof_bytes(&p,b+54);b[88]=p.stage;}
+ }else if(m->agreed.stage&&m->view.matched&&m->view.local_confirmed&&m->view.remote_confirmed&&m->confirm_sent){type=L2P_MSG_DONE;n=67;pair_bytes(m,b);proof_bytes(&m->agreed,b+32);b[66]=m->agreed.stage;}
+ else if(m->view.input_ready&&!m->input_sent){type=L2P_MSG_INPUT;n=66;pair_bytes(m,b);proof_bytes(&m->mine,b+32);}
+ else if(m->view.local_confirmed&&m->view.matched){type=L2P_MSG_CONFIRM;n=66;pair_bytes(m,b);proof_bytes(&m->agreed,b+32);}
+ else if(m->view.input_ready){type=L2P_MSG_INPUT;n=66;pair_bytes(m,b);proof_bytes(&m->mine,b+32);}
+ else {type=L2P_MSG_TAPS;n=33;pair_bytes(m,b);b[32]=m->mine.count;}
+ if(m->send(m->send_ctx,type,b,n)){m->last_send_ms=now?now:1;if(type==L2P_MSG_HELLO)m->hello_sent=true;if(type==L2P_MSG_INPUT)m->input_sent=true;if(type==L2P_MSG_CONFIRM)m->confirm_sent=true;}
 }
 
 #ifdef ESP_PLATFORM
 #include "local2_store.h"
 #include "esp_random.h"
+#include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "host/ble_hs.h"
@@ -141,7 +163,7 @@ static portMUX_TYPE peer_guard=portMUX_INITIALIZER_UNLOCKED;
 static l2_peer_machine_t machine;
 static l2_peer_view_t public_view;
 static QueueHandle_t commands;
-typedef struct {bool enable,confirm;uint8_t nonce[16];} peer_command_t;
+typedef struct {bool enable,confirm,tap,dots;uint8_t method,count,seq[9],nonce[16];uint32_t at;} peer_command_t;
 static uint8_t advert[23],advert_size;static uint32_t advert_generation;
 static bool enabled,central,connecting,read_pending,write_pending,ack_pending,ack_write_pending,scan_owned;
 static uint16_t conn=BLE_HS_CONN_HANDLE_NONE,remote_rx,remote_tx;
@@ -219,7 +241,7 @@ static int found_svc(uint16_t h,const struct ble_gatt_error *e,const struct ble_
 bool local2_peer_gap_event(struct ble_gap_event *e) {
     if(e->type==BLE_GAP_EVENT_DISC){
         struct ble_hs_adv_fields f;if(e->disc.rssi < -65||ble_hs_adv_parse_fields(&f,e->disc.data,e->disc.length_data)||f.mfg_data_len!=23)return false;
-        const uint8_t *b=f.mfg_data;if(b[0]!=0xff||b[1]!=0xff||b[2]!=2||!nonzero(b+3,16)||!memcmp(b+3,own_id,16))return false;
+        const uint8_t *b=f.mfg_data;if(b[0]!=0xff||b[1]!=0xff||b[2]!=3||!nonzero(b+3,16)||!memcmp(b+3,own_id,16))return false;
         portENTER_CRITICAL(&peer_guard);
         if(enabled&&conn==BLE_HS_CONN_HANDLE_NONE&&!connecting&&(!selected||!memcmp(selected_id,b+3,16)||memcmp(b+3,selected_id,16)<0)) {
             if(!selected||memcmp(selected_id,b+3,16)||memcmp(selected_token,b+19,4)){selected_at=now_ms;memcpy(selected_id,b+3,16);memcpy(selected_token,b+19,4);}
@@ -280,6 +302,9 @@ esp_err_t local2_peer_register(l2_core_t *core) {
     return ble_gatts_count_cfg(peer_services)||ble_gatts_add_svcs(peer_services)?ESP_FAIL:ESP_OK;
 }
 void local2_peer_set_discoverable(bool on) {if(commands){peer_command_t cmd={.enable=on};if(on)esp_fill_random(cmd.nonce,16);(void)xQueueSend(commands,&cmd,0);}}
+void local2_peer_start(uint8_t method){if(commands&&(method==1||method==2)){peer_command_t cmd={.enable=true,.method=method};esp_fill_random(cmd.nonce,16);(void)xQueueSend(commands,&cmd,0);}}
+void local2_peer_tap(uint32_t now){if(commands){(void)now;peer_command_t cmd={.tap=true,.at=(uint32_t)(esp_timer_get_time()/1000)};(void)xQueueSend(commands,&cmd,0);}}
+void local2_peer_dots(const uint8_t *seq,uint8_t count){if(commands&&seq&&count>=4&&count<=9){peer_command_t cmd={.dots=true,.count=count};memcpy(cmd.seq,seq,count);(void)xQueueSend(commands,&cmd,0);}}
 void local2_peer_confirm(void) {if(commands){peer_command_t cmd={.confirm=true};(void)xQueueSend(commands,&cmd,0);}}
 void local2_peer_get_view(l2_peer_view_t *view) {if(view){portENTER_CRITICAL(&peer_guard);*view=public_view;portEXIT_CRITICAL(&peer_guard);}}
 size_t local2_peer_advertisement(uint8_t out[23]) {portENTER_CRITICAL(&peer_guard);size_t n=advert_size;if(out&&n)memcpy(out,advert,n);portEXIT_CRITICAL(&peer_guard);return n;}
@@ -291,12 +316,15 @@ void local2_peer_poll(uint32_t now) {
     peer_command_t cmd;uint16_t close_handle=BLE_HS_CONN_HANDLE_NONE;bool stop_scan=false;
     while(xQueueReceive(commands,&cmd,0)==pdTRUE){
         if(cmd.confirm){(void)l2_peer_machine_confirm(&machine);continue;}
-        (void)l2_peer_machine_enable(&machine,cmd.enable,cmd.nonce);
+        if(cmd.tap){l2_peer_machine_tap(&machine,cmd.at);continue;}
+        if(cmd.dots){l2_peer_machine_dots(&machine,cmd.seq,cmd.count);continue;}
+        if(!l2_peer_machine_enable(&machine,cmd.enable,cmd.nonce))continue;
+        machine.view.method=cmd.method?cmd.method:1;machine.started_ms=now?now:1;
         portENTER_CRITICAL(&peer_guard);uint16_t old=conn;enabled=cmd.enable;connecting=false;selected=false;conn=BLE_HS_CONN_HANDLE_NONE;transport_reset();
         advert_size=(uint8_t)l2_peer_machine_advertisement(&machine,advert,sizeof(advert));advert_generation++;link_gen++;handled_link_gen=link_gen;portEXIT_CRITICAL(&peer_guard);
         stop_scan=true;if(old!=BLE_HS_CONN_HANDLE_NONE)close_handle=old;
     }
-    uint8_t id[16],token[4],message[64],type=0;size_t size=0;bool link_change,link_up;
+    uint8_t id[16],token[4],message[L2_PEER_MESSAGE_MAX],type=0;size_t size=0;bool link_change,link_up;
     portENTER_CRITICAL(&peer_guard);link_change=link_gen!=handled_link_gen;handled_link_gen=link_gen;link_up=enabled&&conn!=BLE_HS_CONN_HANDLE_NONE;
     memcpy(id,selected_id,16);memcpy(token,selected_token,4);
     if(rx_ready){type=rx_type;size=rx_size;memcpy(message,rx,size);rx_ready=false;rx_size=rx_received=0;}
@@ -310,6 +338,7 @@ void local2_peer_poll(uint32_t now) {
     }
     if(size)(void)l2_peer_machine_receive(&machine,type,message,size);
     l2_peer_machine_poll(&machine,now);
+    if(!machine.view.discoverable&&enabled){machine.view.connected=false;portENTER_CRITICAL(&peer_guard);enabled=false;advert_size=0;advert_generation++;close_handle=conn;conn=BLE_HS_CONN_HANDLE_NONE;selected=false;link_gen++;handled_link_gen=link_gen;transport_reset();portEXIT_CRITICAL(&peer_guard);stop_scan=true;}
     portENTER_CRITICAL(&peer_guard);public_view=machine.view;portEXIT_CRITICAL(&peer_guard);
     l2_runtime_release();
     if(stop_scan&&scan_owned){(void)ble_gap_disc_cancel();scan_owned=false;}

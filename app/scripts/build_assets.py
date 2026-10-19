@@ -8,8 +8,11 @@ import shutil
 import subprocess
 import sys
 from prd_experience_patches import instrument_experience
+from encounter_patches import instrument_encounters
+from device_page_patches import instrument_device_page
 
 ROOT = Path(__file__).resolve().parents[1]
+subprocess.run([sys.executable,str(ROOT/'scripts/generate_scene_layout.py')],check=True)
 subprocess.run([sys.executable,str(ROOT/'scripts/build_town.py')],check=True)
 subprocess.run([sys.executable,str(ROOT/'scripts/build_town_components.py')],check=True)
 source = (ROOT / 'original/game.html').read_text()
@@ -26,9 +29,11 @@ def once(text, old, new, name):
 def instrument(js):
     js = instrument_experience(js, once, ROOT)
     if 'function Ss(' in js:
-        js=once(js,'async function Ss({breed:i="orange",outfit:e="none"}={})','async function Ss({breed:i="orange",outfit:e="none",stage:hostStage="adult"}={})','stage-aware-original-model-factory')
+        js=once(js,'async function Ss({breed:i="orange",outfit:e="none"}={})','async function Ss({breed:i="orange",outfit:e="none",stage:hostStage="adult",roomAppearance:hostRoomAppearance=false,bodyShape:hostBodyShape="standard"}={})','stage-aware-original-model-factory')
+        js=once(js,'bodyShape:hostBodyShape="standard"}={}){','bodyShape:hostBodyShape="standard"}={}){if(hostRoomAppearance)return window.CatNativeModel.create({THREE:{Group:ut,Mesh:kt,BufferGeometry:Tn,Attribute:Wn,Material:Ln,BoxGeometry:bn,Vector:L,CanvasTexture:Fs,SRGB:Zt,Nearest:Jt},breed:i,outfit:e,stage:hostStage,bodyShape:hostBodyShape});','authored-native-cat-room-factory')
+        js=once(js,'u=["none","bandana","bow","cap","raincoat","backpack","scarf","sakura","bell","crown","cape"]','u=["none","bandana","bow","cap","raincoat","backpack","scarf","sakura","bell","crown","cape","wings"]','clear-previous-legacy-outfit-for-room-only-wings')
         js=once(js,'function ae(j={}){let Te=', 'function ae(j={}){if(j.stage)hostStage=j.stage;let Te=','appearance-carries-growth-stage')
-        js=once(js,'))}}let Ye=["white_chin"', '))}window.CatPetGrowth?.apply(a,hostStage)}let Ye=["white_chin"','growth-after-original-pose-no-accumulation')
+        js=once(js,'))}}let Ye=["white_chin"', '))}window.CatPetGrowth?.applyLegacy(a,hostStage)}let Ye=["white_chin"','growth-after-original-pose-no-accumulation')
         js=once(js,'applyAnimation:Fe,setMouth:me,','applyAnimation:Fe,setStage:value=>{hostStage=value},setMouth:me,','expose-model-growth-without-rebuilding-accessories')
         start=js.index('function ee(j){',js.index('function Ss('));end=js.index('function ae(',start)
         js=once(js,js[start:end],(ROOT/'web/approved-accessory-function.inc.js').read_text(),'approved-bow-bandana-retain-other-eight-outfits')
@@ -38,27 +43,53 @@ def instrument(js):
         catalogue=js[start:end]
         js=once(js,'async function Mf(', 'window.CatTownEventCatalogue=(n={})=>('+catalogue+');async function Mf(', 'reuse-authored-outdoor-event-catalogue-for-town')
     if 'async function bf(' in js:
+        js=once(js,'let o=matchMedia("(prefers-reduced-motion: reduce)"),a;','let roomScale=window.CatSceneLayout.room.expansionXZ,o=matchMedia("(prefers-reduced-motion: reduce)"),a;','read-shared-room-expansion-rule')
+        js=once(js,'Ql=i=>({breed:i.breed,outfit:i.outfit,stage:i.stage})','Ql=i=>({breed:i.breed,outfit:i.outfit,stage:i.stage,bodyShape:i.bodyShape})','carry-explicit-body-shape-through-existing-appearance-refresh')
+        js=once(js,'let z=await Ss(),{root:ne,bones:_e','let z=await Ss({roomAppearance:true,...(()=>{const p=window.__petGame?.state()?.pet;return p?{breed:p.breed,outfit:p.outfit,stage:p.stage,bodyShape:p.bodyShape}:{stage:"kitten"}})()}),{root:ne,bones:_e','room-only-growth-and-accessory-fit')
+        js=once(js,'ou(D),d.update(D),a.render(c,l)','ou(D),z.fitAccessories(),d.update(D),a.render(c,l)','fit-bib-after-final-room-pose-and-before-render')
+        js=once(js,'Uo(),ou(0),a.render(c,l)','Uo(),ou(0),z.fitAccessories(),a.render(c,l)','fit-initial-room-accessories')
+        # Room and town share one canvas. Suspending only RAF leaves these
+        # original room inputs live and can dispatch care from a town tap.
+        for handler in ['hu','uu','du','fu']:
+            js=once(js,'function '+handler+'(v){','function '+handler+'(v){if(!vi||gn)return;','pause-room-input-'+handler+'-with-room-renderer')
+        js=once(js,'function zf(v){gn||(vi=!!v,','function zf(v){gn||(vi=!!v,d.enabled=vi,vi||oc(),','pause-room-orbit-controls-and-clear-pointer-with-room-renderer')
         js=once(js,'return De=v,N=Pr[v],ac()','return De=v,z.setStage(v),N=Pr[v],ac()','original-room-stage-updates-bone-proportions')
+        js=once(js,'let E=new ut;y.add(E);','let E=new ut;y.scale.set(roomScale,1,roomScale);y.add(E);','expand-room-geometry-xz-without-scaling-cat-or-camera')
+        js=once(js,'V.position.copy(wt);','V.position.set(wt.x*roomScale,wt.y,wt.z*roomScale);','keep-cat-home-anchor-on-expanded-room-floor')
+        js=once(js,'function At(v=B,D=.72){let te=-2.4+(De==="kitten"||De==="baby"?1.065:1)*(.9-1.2*Math.sin(D)-6.75*Math.cos(D));return new L(v.position.x,.22,v.position.z-te*G)}','function At(v=B,D=.72){let te=-2.4+(De==="kitten"||De==="baby"?1.065:1)*(.9-1.2*Math.sin(D)-6.75*Math.cos(D));return new L(v.position.x*roomScale,.22,v.position.z*roomScale-te*G)}','scale-all-existing-room-interaction-walk-targets')
         start=js.index('let b=u(E,[14,1.1,12]')
         end=js.index('let F=E.children.flatMap',start)
         js=once(js,js[start:end],'let __bed=window.CatOfflineBed.build({group:E,box:u}),b=__bed.frame,I=__bed.mattress,A=__bed.blanket;', 'replace-small-bed-with-supported-full-size-bed')
         js=once(js,'m=new L(-14.5,3.22,11)','m=new L(...window.CatOfflineBed.config.landing)','move-bed-landing-inside-room')
+        js=once(js,'{id:"home-bed",action:"sleep",object:E,point:ws()}','{id:"home-bed",action:"sleep",object:I,point:m.clone()}','sleep-hotspot-hits-mattress-not-whole-room')
+        js=once(js,'P=null,pt=0,en=0,Nn=0,mn=0,gn=!1','P=null,directClimbRequested=!1,pt=0,en=0,Nn=0,mn=0,gn=!1','remember-explicit-hanging-ball-target-for-existing-climb-chain')
+        js=once(js,'{id:"home-climb",action:"climb",object:we,point:j[0].position.clone()}','{id:"home-dangling-ball",action:"climb",object:q,point:q.getWorldPosition(new L)},{id:"home-climb",action:"climb",object:we,point:new L(j[0].position.x*roomScale,j[0].position.y,j[0].position.z*roomScale)}','make-hanging-ball-directly-selectable')
+        js=once(js,'function ru(v){return["feed","drink","bath","climb","tease"].includes(v)?','function ru(v){let direct=v==="climb"&&directClimbRequested;directClimbRequested=!1;return["feed","drink","bath","climb","tease"].includes(v)?','route-direct-ball-tap-through-existing-interaction-settlement')
+        js=once(js,'P={name:v,interactive:!0,resolve:D,elapsed:0,phaseTime:0,phase:v==="tease"?"陪玩":"接近",hits:0','P={name:v,interactive:!0,resolve:D,elapsed:0,phaseTime:0,phase:v==="tease"?"陪玩":"接近",directClimb:direct,hits:0','mark-only-explicit-ball-tap-for-auto-climb-sequence')
+        js=once(js,'let ie=de.filter(Ce=>Ce.hit).sort((Ce,et)=>Ce.hit.distance-et.hit.distance)[0];ie?.entry.action==="pet"?e():ie&&t(ie.entry.action);return}','let ie=de.filter(Ce=>Ce.hit).sort((Ce,et)=>Ce.hit.distance-et.hit.distance)[0];ie?.entry.id==="home-dangling-ball"&&(directClimbRequested=!0),ie?.entry.action==="pet"?e():ie&&t(ie.entry.action);return}','recognize-ball-hit-without-changing-care-owner')
+        js=once(js,'function ic(){if(!P?.interactive)return[];','function ic(){if(!P?.interactive)return[];if(P.directClimb&&P.name==="climb")return[];','direct-climb-does-not-expose-conflicting-manual-stage-targets')
+        js=once(js,'point:v.position.clone().add(new L(0,.15,0)),object:v.mesh','point:new L(v.position.x*roomScale,v.position.y+.15,v.position.z*roomScale),object:v.mesh','scale-climb-platform-interaction-anchor')
+        js=once(js,'target:new L(-2.5,.22,-8.5)','target:new L(-2.5*roomScale,.22,-8.5*roomScale)','scale-existing-feather-play-target')
+        js=once(js,'point:new L(-1.5,.5,-8)','point:new L(-1.5*roomScale,.5,-8*roomScale)','scale-existing-feather-interaction-anchor')
+        js=once(js,'第一层:"点亮着的小平台，带小猫跳上去",第二层:"点上层平台，继续往上爬",吊球:"点粉色吊球，让小猫伸爪抓住它"','第一层:P?.directClimb?"小猫踏上第一层平台…":"点亮着的小平台，带小猫跳上去",第二层:P?.directClimb?"小猫继续向吊球跳去…":"点上层平台，继续往上爬",吊球:P?.directClimb?"小猫扑向粉色吊球！":"点粉色吊球，让小猫伸爪抓住它"','direct-climb-short-bubble-matches-automatic-targeted-action')
+        js=once(js,'else if(D==="climb")if(P.phase==="接近")Ke(Te,v)&&dt("第一层");else if(P.phase==="第一层"||P.phase==="第二层")_e.get("head").rotation.x+=.08;else if(P.phase==="吊球")tt(.75),V.position.z=j[1].landing.z,P.phaseTime>.3&&(_e.get("head").rotation.x+=.18,_e.get("tail_base").rotation.z+=Math.sin(pt*3)*.15);','else if(D==="climb")if(P.phase==="接近")Ke(Te,v)&&dt("第一层");else if(P.phase==="第一层"||P.phase==="第二层"){_e.get("head").rotation.x+=.08;if(P.directClimb&&P.phaseTime>.45){P.hits++;P.progress=P.phase==="第一层"?1/3:2/3;const p=P.phase==="第一层"?j[0].landing:j[1].landing;No(new L(p.x*roomScale,p.y,p.z*roomScale),P.phase==="第一层"?"第二层":"吊球",P.phase==="第一层"?4.5:5.2)}}else if(P.phase==="吊球")tt(.75),V.position.x=j[1].landing.x*roomScale,V.position.z=j[1].landing.z*roomScale,P.phaseTime>.3&&(_e.get("head").rotation.x+=.18,_e.get("tail_base").rotation.z+=Math.sin(pt*3)*.15,P.directClimb&&P.phaseTime>.75&&(P.hits++,P.progress=1,dt("庆祝")));','direct-ball-tap-runs-existing-platform-and-pounce-animation-sequence')
         start=js.index('function st(v){');end=js.index('function at(){',start)
         js=once(js,js[start:end],'function st(v){window.CatOfflineBed.pose({amount:v,bones:_e,model:z,inner:ge,root:ne,scale:G,stage:De,Vector:L,Box:Xt});si=v;sn="sleep"}', 'supported-side-rest-pose-with-head-on-pillow')
         start=js.index('P.phase==="走向床边"?',js.index('function jt(v)'))
         end=js.index('P.phase==="床上入睡"?',start)
-        js=once(js,js[start:end],'P.phase==="走向床边"?Ke(new L(0,wt.y,-5),v,5.5)&&lt(m.clone(),Math.PI/2,"床上入睡"):', 'approach-new-bed-without-floor-circles-through-frame')
-        js=once(js,'P.phaseTime>.85&&(xt(Math.atan2(-12,12.3),2.5),dt("转向下床"))','P.phaseTime>.85&&lt(wt.clone(),0,"回家")','jump-down-before-turning-to-avoid-bed-edge')
+        js=once(js,js[start:end],'P.phase==="走向床边"?Ke(new L(...window.CatOfflineBed.config.approach),v,5.5)&&lt(m.clone(),Math.PI/2,"床上入睡"):', 'approach-bed-edge-before-short-supported-hop')
+        js=once(js,'P.phaseTime>.85&&(xt(Math.atan2(-12,12.3),2.5),dt("转向下床"))','P.phaseTime>.85&&lt(new L(...window.CatOfflineBed.config.approach),0,"回家")','step-down-at-bed-edge-before-walking-home')
         js=once(js,'P.phase==="转向下床"?Mt(v)&&(P.sleepTurn=null,lt(new L(0,wt.y,-1.3),0,"回家")):','','remove-obsolete-on-bed-turn')
         js=once(js,'else if(window.__pgQuirk?.on)', 'else if(window.CatDialogue?.poseActive){V.position.copy(wt);Fe(\"idle\",pt);window.CatDialogue.pose(_e,z,pt);sn=\"idle\";ri=window.CatDialogue.bubble}else if(window.__pgQuirk?.on)', 'dialogue-whitelist-presentation-without-store-actions')
         js=once(js,'function ou(v){if(yt=!1,','function ou(v){window.CatOfflineBed.reset(z);if(yt=!1,','restore-resting-whiskers-before-every-animation-frame')
         js=once(js,'function at(){ne.updateWorldMatrix','function at(){if(Math.abs(ge.rotation.z)>.001)return;ne.updateWorldMatrix','do-not-apply-upright-paw-offset-to-side-rest')
-        js=once(js,'if((De==="kitten"||De==="baby")&&_e.get("head").scale.multiplyScalar(1.065),', 'if((De==="kitten"||De==="baby")&&sn!=="sleep"&&_e.get("head").scale.multiplyScalar(1.065),','apply-kitten-head-scale-once-in-sleep-pose')
+        js=once(js,'if((De==="kitten"||De==="baby")&&_e.get("head").scale.multiplyScalar(1.065),', 'if(','authored-native-proportions-skip-legacy-extra-head-scale')
     if 'dock.hidden=busy||' in js:
         js=once(js,"if(v==='home'){ if(mode==='panel'||mode==='world') closeSheet(true); }","if(v==='home'){ if(mode==='panel'||mode==='world') closeSheet(true); }",'retain-original-home-sheet-transition')
         js=once(js,"else openSheet('panel');\n  }", "else openSheet('panel');\n    sync();\n  }", 'refresh-care-dock-on-route-transition')
         js=once(js,"applyLayout();setInterval(sync,400);sync();", "applyLayout();new MutationObserver(sync).observe($('interaction-panel'),{attributes:true,attributeFilter:['hidden']});new MutationObserver(sync).observe($('care-shortcuts'),{attributes:true,attributeFilter:['hidden']});setInterval(sync,400);sync();",'refresh-care-dock-on-actual-interaction-and-shortcut-state')
     if 'function vu(' in js:
+        js=once(js,'{id:"backpack",name:"探险小背包",description:"带上好奇心，到庭院和河岸走一走。",price:32,slot:"outfit"},','{id:"backpack",name:"探险小背包",description:"带上好奇心，到庭院和河岸走一走。",price:32,slot:"outfit"},{id:"wings",name:"奶油小翅膀",description:"一对柔软的奶油色小翅膀，轻轻陪着小猫。",price:32,slot:"outfit"},','authorized-wings-item-reuses-existing-shop-purchase-and-equip')
         js=once(js,'function vu({storage:i,now:e=()=>Date.now(),onChange:t=()=>{}}={})',
             'function vu({storage:i,now:e=()=>Date.now(),onChange:t=()=>{},hostRuntime}={})','accept-isolated-original-care-runtime')
         js=once(js,'function T(C,Y){return{ok:!1,message:Y,','function T(C,Y,reason="ineligible"){return{ok:!1,reason,message:Y,','original-care-errors-explicit-reason')
@@ -111,7 +142,7 @@ mov.addEventListener('pointerdown',e=>{if(!M)return;if(M.tab==='rhythm'&&e.targe
         js=once(js,"${L.cfg.demo?'演示地点':'来自生活同步'}", "${L.cfg.demo?'虚构地点 · 未采集真实位置':pl.length?'来自本机定位记录':'暂无可展示的真实地点'}",'world-places-heading-matches-actual-source')
         js=once(js,"${p.icon} ${esc(p.name)}</b></button>`).join('')}</div>`;", "${p.icon} ${esc(p.name)}</b></button>`).join('')||`<p class=\"lf-empty\" role=\"status\">${L.geoCount()?'已有本机定位记录，尚未识别出家以外的常去地点。':'还没有真实定位记录；不会用虚构地点填充。是否开启位置由你决定。'}</p>`}</div>`;",'world-places-render-explicit-empty-state')
         # 关闭演示/清空记录后，同一次渲染刷新出门面板，避免旧虚构按钮残留。
-        js=once(js,"function render(){\n  const day=L.day(),body=$('lf-body');stopReplay();stopBadge();", "function render(){\n  const day=L.day(),body=$('lf-body');stopReplay();stopBadge();L.emit('places');",'places-refresh-on-life-render')
+        js=once(js,"function render(){\n  const day=L.day(),body=$('lf-body');stopReplay();stopBadge();", "function render(){\n  if(window.CatDayNavigation?.deferRender(render))return;\n  const day=L.day(),body=$('lf-body');stopReplay();stopBadge();L.emit('places');",'places-refresh-without-removing-owned-ring-pointer')
         js=once(js,"fill();L.on('geo',fill);", "fill();L.on('geo',fill);L.on('places',fill);",'world-places-refresh-on-mode-change')
         js=once(js,"const p=L.place(sg.place)||L.place('work');const m=L.map(p,w,h);", "const p=L.place(sg.place);const m=L.map(p,w,h);",'daily-stage-does-not-borrow-work-location')
         js=once(js,"L.map(p||L.place('work'),220,120)", "L.map(p,220,120)",'companion-postcard-does-not-borrow-work-location')
@@ -151,6 +182,7 @@ mov.addEventListener('pointerdown',e=>{if(!M)return;if(M.tab==='rhythm'&&e.targe
         js = once(js, '正式版由云端校验一机一密',
             '本候选仅验证本地试玩；真实吧唧双向确认尚待设备接口联调',
             'replace-obsolete-cloud-requirement-with-test-status')
+    js = instrument_device_page(js, once)
     if 'window.__petGame={store:Nt' not in js:
         return js
     # The mobile script adds data-view to BODY before the async room finishes.
@@ -171,7 +203,7 @@ mov.addEventListener('pointerdown',e=>{if(!M)return;if(M.tab==='rhythm'&&e.targe
         assert 'function __hostInstallCareRuntime(' in runtime
         js=once(js,'return{hostDeviceCare:','const __hostApi={hostDeviceCare:','gate-original-public-writers-during-device-result-lease')
         js=once(js,'adoptCat:$e}}/**','adoptCat:$e};'+runtime+'return __hostInstallCareRuntime(__hostApi,{identity:()=>JSON.stringify([o.createdAt,o.activeCatId,o.cats.map(C=>[C.id,C.joinedAt])]),read:()=>p,replace:value=>{p=value},clock:e,cooldowns:Hf,activeCatId:()=>o.activeCatId,keys:()=>o.cats.flatMap(C=>[...Bo,"clinic"].map(Y=>C.id+":"+Y)),hydrate:Ue,seed:hostRuntime});}/**','expose-original-care-runtime-and-owned-device-hydration')
-    return js
+    return instrument_encounters(js,ROOT)
 
 scripts = list(re.finditer(r'<script\b([^>]*)>([\s\S]*?)</script>', source, re.I))
 assert len(scripts) == 8 and 'social-v7-js' in source
@@ -196,7 +228,7 @@ def safe_area(match):
         r'var(--safe-area-inset-\1, env(safe-area-inset-\1))', match[2])
     return match[1] + css + match[3]
 html = re.sub(r'(<style\b[^>]*>)([\s\S]*?)(</style>)', safe_area, html, flags=re.I)
-html = html.replace('</head>', '<script src="offline-event-store.js"></script><script src="offline-durable-store.js"></script><script src="offline-prelude.js"></script><script src="offline-room-bed.js"></script><script src="pet-growth.js"></script><script src="cat-dialogue-port.js"></script><script src="offline-meet-key.js"></script></head>', 1)
+html = html.replace('</head>', '<script src="scene-layout.js"></script><script src="offline-event-store.js"></script><script src="offline-durable-store.js"></script><script src="offline-prelude.js"></script><script src="offline-room-bed.js"></script><script src="pet-growth.js"></script><script src="pet-appearance.js"></script><script src="native-cat-data.js"></script><script src="native-cat-breeds.js"></script><script src="native-cat-legacy-outfits.js"></script><script src="native-cat-model.js"></script><script src="cat-dialogue-port.js"></script><script src="offline-meet-key.js"></script></head>', 1)
 host_scripts=['offline-host.js','offline-nav-icons.js','offline-layout.js','offline-encounter-ui.js','offline-page-icons.js','offline-family-ui.js','offline-scene-map.js','offline-device-events.js','offline-device-backup.js','offline-device-diagnostics.js','offline-day-display.js','offline-scene-sync.js','legacy-bj20-adapter.js','local-v2-transport.js','cflocal2-adapter.js','offline-world-renderer.js','town-r185-compat.js','town-garden-source.js','town-event-fx.js','original-town-runtime.js','town-integration.js','life-navigation.js','cat-dialogue.js','room-layout.js']
 boot_status='<div id="offline-boot-status" role="status" style="position:fixed;inset:0;z-index:99999;background:#fffaf2;padding:32px;box-sizing:border-box">正在恢复本地存档…</div>'
 extras='<link rel="stylesheet" href="original-town.css"><link rel="stylesheet" href="town-integration.css"><link rel="stylesheet" href="town-courtyard-components.css"><link rel="stylesheet" href="town-courtyard-layout.css"><link rel="stylesheet" href="town-courtyard-sheet.css"><link rel="stylesheet" href="town-guide-layout.css"><link rel="stylesheet" href="life-panels.css"><link rel="stylesheet" href="offline-host.css"><link rel="stylesheet" href="offline-ui-polish.css"><link rel="stylesheet" href="offline-page-polish.css"><link rel="stylesheet" href="offline-family-ui.css"><link rel="stylesheet" href="life-companion.css">'+''.join(f'<script type="application/x-catforest-script" data-offline-src="{name}"></script>' for name in host_scripts)+boot_status+'<script>window.CatOfflineDurable.boot()</script>'

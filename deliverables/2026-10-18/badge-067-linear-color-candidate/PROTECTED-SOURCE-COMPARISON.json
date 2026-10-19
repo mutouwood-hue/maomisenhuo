@@ -1,0 +1,14 @@
+{
+  "staticFilesOnly": true,
+  "allPhoneSourcesUnchanged": true,
+  "allUnrelatedFirmwareSourcesUnchanged": true,
+  "changed": [
+    "firmware/main/badge_native_cat.c",
+    "firmware/main/assets/native-cat/native_cat_data.h",
+    "firmware/main/assets/native-cat/native_cat_data.c"
+  ],
+  "missing": [],
+  "local2_ble_cUnchanged": true,
+  "memoryScratchPlacement": "PSRAM allocation unchanged; badge_native_cat.c changes only color selection/include",
+  "testsOrExecutionRun": false
+}

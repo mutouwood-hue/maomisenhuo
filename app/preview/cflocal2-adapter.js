@@ -18,21 +18,36 @@
 'use strict';
 const KEY='cat-cflocal2-journal-v1',MAX=Number.MAX_SAFE_INTEGER;
 const SCENES=['home','departing','away','returning','garden','town'],ACTIONS=['idle','walk','pet','feed','water','bath','play','sleep'],WEATHER=['clear','rain','snow'];
+const INTERACTIONS=['flower_sniff','butterfly_chase','ball_pounce','bed_sleep'];
 const clone=x=>JSON.parse(JSON.stringify(x));
 function fail(code,message,outcome='no_change'){return Object.assign(new Error(message),{code,outcome});}
 const safe=n=>Number.isSafeInteger(n)&&n>=0;
 const ascii=(s,n)=>typeof s==='string'&&s.length>0&&s.length<=n&&/^[\x21-\x7e]+$/.test(s);
 const utf8len=s=>new TextEncoder().encode(s).length;
+const GROWTH=['kitten','young','adult'],BODIES=['standard','slim','round'];
+const PET_FIELDS=['name','breed','food','mood','clean','energy','health','coins','growthStage','outfit','bodyShape'];
+const SCENE_FIELDS=['requestId','petId','revision','scene','action','weather','interaction','pet','epochMs','utcOffsetMinutes'];
+const hasAppearance=p=>['growthStage','outfit','bodyShape'].some(k=>Object.hasOwn(p,k));
 function validateScene(s){
-  if(!s||!ascii(s.requestId,64)||!ascii(s.petId,64)||!safe(s.revision)||!SCENES.includes(s.scene)||!ACTIONS.includes(s.action)||!WEATHER.includes(s.weather))throw fail('INVALID_SCENE','场景或宠物标识无效。');
+  if(!s||Object.keys(s).some(k=>!SCENE_FIELDS.includes(k))||!ascii(s.requestId,64)||!ascii(s.petId,64)||!safe(s.revision)||!SCENES.includes(s.scene)||!ACTIONS.includes(s.action)||!WEATHER.includes(s.weather))throw fail('INVALID_SCENE','场景或宠物标识无效。');
   const p=s.pet;
-  if(!p||typeof p.name!=='string'||!p.name||utf8len(p.name)>24||/[\u0000-\u001f\ud800-\udfff]/u.test(p.name)||!ascii(p.breed,16)||!safe(p.coins)||['food','mood','clean','energy','health'].some(k=>!Number.isInteger(p[k])||p[k]<0||p[k]>100))throw fail('INVALID_SCENE','宠物状态超出设备范围。');
+  if(!p||Object.keys(p).some(k=>!PET_FIELDS.includes(k))||typeof p.name!=='string'||!p.name||utf8len(p.name)>24||/[\u0000-\u001f\ud800-\udfff]/u.test(p.name)||!ascii(p.breed,16)||!safe(p.coins)||['food','mood','clean','energy','health'].some(k=>!Number.isInteger(p[k])||p[k]<0||p[k]>100))throw fail('INVALID_SCENE','宠物状态超出设备范围。');
+  if(hasAppearance(p)&&(!/^cat-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(s.petId)||!GROWTH.includes(p.growthStage)||typeof p.outfit!=='string'||!/^[A-Za-z0-9_-]{1,64}$/.test(p.outfit)||!BODIES.includes(p.bodyShape===undefined?'standard':p.bodyShape)))throw fail('INVALID_SCENE','展示外观缺少匹配的持久宠物身份或有效阶段/装扮。');
   if(s.utcOffsetMinutes!==undefined&&(!Number.isInteger(s.utcOffsetMinutes)||s.utcOffsetMinutes< -840||s.utcOffsetMinutes>840))throw fail('INVALID_SCENE','手机时区无效。');
   if(s.epochMs!==undefined&&(!safe(s.epochMs)||s.epochMs<1577836800000||s.epochMs>4102444800000))throw fail('INVALID_SCENE','校时时间无效。');
+  if(s.interaction!==undefined&&(!INTERACTIONS.includes(s.interaction)||
+    (s.interaction==='flower_sniff'&&!(s.scene==='garden'&&s.action==='play'))||
+    (s.interaction==='butterfly_chase'&&!(s.scene==='garden'&&s.action==='play'))||
+    (s.interaction==='ball_pounce'&&!(s.scene==='home'&&s.action==='play'))||
+    (s.interaction==='bed_sleep'&&!(s.scene==='home'&&s.action==='sleep'))))throw fail('INVALID_SCENE','互动展示与当前场景不匹配。');
 }
-function petView(p){return Object.fromEntries(['name','breed','food','mood','clean','energy','health','coins'].map(k=>[k,p[k]]));}
+function petView(p,appearance=true){
+  const view=Object.fromEntries(['name','breed','food','mood','clean','energy','health','coins'].map(k=>[k,p[k]]));
+  if(appearance&&hasAppearance(p))Object.assign(view,{growthStage:p.growthStage,outfit:p.outfit,bodyShape:p.bodyShape??'standard'});
+  return view;
+}
 function offset(s){return s.utcOffsetMinutes??-new Date(s.epochMs??Date.now()).getTimezoneOffset();}
-function semantic(s){return JSON.stringify({petId:s.petId,sourceRevision:s.revision,scene:s.scene,action:s.action,weather:s.weather,utcOffsetMinutes:offset(s),pet:petView(s.pet)});}
+function semantic(s,appearance=true){return JSON.stringify({petId:s.petId,sourceRevision:s.revision,scene:s.scene,action:s.action,weather:s.weather,interaction:s.interaction??null,utcOffsetMinutes:offset(s),pet:petView(s.pet,appearance)});}
 let active=null;
 class Journal{
   constructor(storage,uuid){
@@ -131,34 +146,57 @@ function createPorts({bridge,storage=globalThis.localStorage,uuid=()=>globalThis
     pushScene(input){return exclusive(async()=>{
       validateScene(input);const {s,id,d}=ready();if(d.pending)throw fail('PENDING_UNKNOWN','上一条指令结果待确认，请显式重试。','unknown');
       if(['garden','town'].includes(input.scene)&&!s.hello.capabilities.includes('scene_places_v1'))throw fail('SCENE_UNAVAILABLE','此吧唧未声明小镇/花园区分能力。');
-      const content=semantic(input);
+      const appearance=s.hello.capabilities.includes('pet_appearance_v1');
+      const content=semantic(input,appearance);
       if(d.lastSemantic===content&&confirmed.get(id)?.generation===s.evidence?.generation&&confirmed.get(id)?.semantic===content&&(input.epochMs===undefined||confirmed.get(id)?.clock))return {status:'device_persisted',revision:d.syncRevision,duplicate:true};
       const revision=Math.max(d.syncRevision,s.device?.snapshot?.revision||0)+1;if(!safe(revision)||d.nextSeq>MAX)throw fail('SEQUENCE_EXHAUSTED','同步序号已用尽。');
-      const data={petId:input.petId,revision,scene:input.scene,action:input.action,weather:input.weather,pet:petView(input.pet)};if(input.epochMs!==undefined){data.epochMs=input.epochMs;data.utcOffsetMinutes=offset(input);}
+      const data={petId:input.petId,revision,scene:input.scene,action:input.action,weather:input.weather,pet:petView(input.pet,appearance)};if(input.interaction!==undefined)data.interaction=input.interaction;if(input.epochMs!==undefined){data.epochMs=input.epochMs;data.utcOffsetMinutes=offset(input);}
       journal.edit(v=>{v.devices[id].pending={id:input.requestId,seq:d.nextSeq,op:'snapshot',data,semantic:content};});
       const reply=await sendPending(id,{fresh:true});return {status:'device_persisted',revision,duplicate:reply.data.duplicate===true};
     });},
     retryPending(command){return exclusive(async()=>{if(command?.origin!=='explicit_user_action')throw fail('USER_ACTION_REQUIRED','请显式确认重试同步。');const {id}=ready();return sendPending(id);});},
+    resumePending(connection){return exclusive(async()=>{
+      const {s,id,d}=ready();
+      if(connection?.deviceId!==id||connection.generation!==s.evidence?.generation)throw fail('STALE_GENERATION','原设备连接已变化，保留原指令。','unknown');
+      if(!d.pending)throw fail('NO_PENDING','没有待恢复指令。');
+      // Recovery reuses the exact Native-checkpointed id/seq/data. It never
+      // creates a result, skips an event or turns a new connection into an ACK.
+      return sendPending(id);
+    });},
     getPending(){const {id}=ready();return clone(journal.value.devices[id].pending);}
   };
+  async function confirmCare(s,id,d){
+    if(!s.hello.capabilities.includes('care_bath_v1')||careConfirmed.get(id)===s.evidence?.generation)return;
+    if(d.pending)throw fail('PENDING_UNKNOWN','原指令恢复后再启用清洁照料。','unknown');
+    const support={careBathV1:true};
+    if(s.hello.capabilities.includes('mobile_context_v1'))support.mobileContextV1=true;
+    const confirmation=await control.request('care_capabilities',support,{clientId:journal.value.clientId});
+    const c=confirmation?.data,after=control.getState();
+    if(c?.careBathV1!==true||c.confirmed!==true||c.deviceId!==id||c.clientId!==journal.value.clientId||after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==s.evidence?.generation||(support.mobileContextV1===true&&c.mobileContextV1!==true))throw fail('CARE_CONFIRMATION_FAILED','清洁与手机信息支持暂未就绪，设备事件仍保留。');
+    careConfirmed.set(id,s.evidence.generation);
+  }
+  function rootValidateEncounter(e,id){
+    if(!/^[0-9a-f]{32}$/.test(e.peerId)||e.peerId===id||!/^[0-9a-f]{32}$/.test(e.encounterId)||e.peerComplete!==true||!['rhythm','dots'].includes(e.method)||typeof e.peerName!=='string'||!e.peerName||new TextEncoder().encode(e.peerName).length>24||/[\x00-\x1f]/.test(e.peerName)||!/^[-a-zA-Z0-9_]{1,16}$/.test(e.peerBreed)||!Array.isArray(e.mark)||e.mark.some(x=>!Number.isInteger(x))||(e.method==='rhythm'?(e.mark.length<3||e.mark.length>7||e.mark.some(x=>x<60||x>=1200)):(e.mark.length<4||e.mark.length>9||new Set(e.mark).size!==e.mark.length||e.mark.some(x=>x<0||x>8))))throw fail('MALFORMED_FRAME','真实暗号收据不完整，未确认删除。');
+  }
   const events={
     async readNext(){
       const {s,id,d}=ready();
-      if(s.hello.capabilities.includes('care_bath_v1')&&careConfirmed.get(id)!==s.evidence?.generation){
-        if(d.pending)throw fail('PENDING_UNKNOWN','先确认上一条持久指令，再启用清洁照料。','unknown');
-        const support={careBathV1:true};
-        if(s.hello.capabilities.includes('mobile_context_v1'))support.mobileContextV1=true;
-        const confirmation=await control.request('care_capabilities',support,{clientId:journal.value.clientId});
-        const c=confirmation?.data,after=control.getState();
-        if(c?.careBathV1!==true||c.confirmed!==true||c.deviceId!==id||c.clientId!==journal.value.clientId||after.stage!=='ready_local'||after.hello?.deviceId!==id||after.evidence?.generation!==s.evidence?.generation||(support.mobileContextV1===true&&c.mobileContextV1!==true))throw fail('CARE_CONFIRMATION_FAILED','清洁与手机信息支持确认未通过，设备事件仍保留。');
-        careConfirmed.set(id,s.evidence.generation);
+      await confirmCare(s,id,d);
+      let r=await control.request('events');
+      if(r?.data?.blocked?.reason==='care_bath_confirmation_required'&&s.hello.capabilities.includes('care_bath_v1')){
+        // Firmware's actual gate wins over a RAM capability cache. Re-negotiate
+        // this same verified owner once, then read the unchanged FIFO head.
+        console.info('[CFLOCAL2] care_gate_reconfirm');careConfirmed.delete(id);const current=ready();
+        if(current.id!==id||current.s.evidence?.generation!==s.evidence?.generation)throw fail('STALE_GENERATION','连接已变化，设备事件仍保留。');
+        await confirmCare(current.s,id,current.d);r=await control.request('events');
       }
-      const r=await control.request('events');const e=r?.data?.event;
-      if(r?.data?.blocked)throw fail('CARE_CONFIRMATION_REQUIRED','清洁事件等待兼容手机确认，尚未结算或删除。');
+      if(r?.data?.blocked)throw fail('CARE_CONFIRMATION_REQUIRED','清洁支持暂未就绪，设备事件已保留。');
+      const e=r?.data?.event;
       if(e===null)return null;
-      if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!safe(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||!ascii(e.petId,64)||!['care','gift'].includes(e.kind)||(e.occurredAtMs!==null&&!safe(e.occurredAtMs)))throw fail('MALFORMED_FRAME','设备事件不完整，未确认删除。');
+      if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!safe(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||!ascii(e.petId,64)||!['care','gift','encounter'].includes(e.kind)||(e.occurredAtMs!==null&&!safe(e.occurredAtMs)))throw fail('MALFORMED_FRAME','设备事件不完整，未确认删除。');
       if(e.kind==='care'&&!ACTIONS.includes(e.action))throw fail('MALFORMED_FRAME','未知照料事件。');
       if(e.kind==='gift'&&(!/^[0-9a-f]{32}$/.test(e.peerId)||!safe(e.peerCounter)||e.peerCounter<1||e.giftId!=='flower'||e.quantity!==1||typeof e.peerComplete!=='boolean'))throw fail('MALFORMED_FRAME','礼物收据不完整。');
+      if(e.kind==='encounter'){if(!s.hello.capabilities.includes('encounter_v1'))throw fail('MALFORMED_FRAME','固件未协商真实暗号相遇能力。');rootValidateEncounter(e,id);}
       readEvents.set(e.eventId,{id,counter:e.counter,petId:e.petId,action:e.kind==='care'?e.action:'idle'});return clone(e);
     },
     acknowledge(receipt){return exclusive(async()=>{

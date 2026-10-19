@@ -1,0 +1,14 @@
+{
+  "userApproved": true,
+  "firstInvocation": "approved; process exited0; returned boot logs only",
+  "firstReplyBytes": 4882,
+  "deliveryRetry": "explicitly reviewed and allowed; no line-control changes; sent same two read-only commands once; no reply",
+  "deliveryRetryBytes": 0,
+  "stateReplies": 0,
+  "perfReplies": 0,
+  "furtherQueriesStopped": true,
+  "noScanOrConnectOrScreenshot": true,
+  "noResetCountersOrStorageMutation": true,
+  "bootRecordContainsUsbUartReset": true,
+  "resetOrigin": "boot record alone does not distinguish previous reset from port-open side effect; no reset API was called by diagnostic scripts"
+}

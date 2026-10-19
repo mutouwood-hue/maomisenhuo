@@ -1,0 +1,39 @@
+{
+  "source": "Existing persistent bytes only, not a live interaction or post-change test",
+  "crcValid": true,
+  "deviceId": "74dd63fc48702670941da7982a24a571",
+  "clientId": "fcfb27c0-e710-41af-ac79-0c8232b660c8",
+  "lastSeq": 562,
+  "lastAck": 57,
+  "nextEvent": 58,
+  "pending": 0,
+  "queue": [],
+  "snapshot": {
+    "revision": 505,
+    "hasEpochMs": 1,
+    "epochMs": 1792297162650,
+    "scene": 0,
+    "action": 0,
+    "weather": 0,
+    "giftState": 0,
+    "petId": "cat-c98ec497-cffe-4187-b3aa-479f9132fbf8",
+    "name": "小橘",
+    "breed": "orange",
+    "food": 0,
+    "mood": 99,
+    "clean": 0,
+    "energy": 72,
+    "health": 100,
+    "coins": 0
+  },
+  "terminal": {
+    "counter": 57,
+    "status": 2,
+    "action": "feed",
+    "reason": "insufficient_coins",
+    "saveDigest": "15dac1b48f246c038b52d1349cbd2fe6e135e12eb4534039b7957f1812a69f32"
+  },
+  "phoneTerminalMatched": true,
+  "phoneRecordCount": 57,
+  "nvsSha256": "fe695e0b0fdcbd2200ba62f3c6b94b9e56676871403b8794b012e1f723998f86"
+}

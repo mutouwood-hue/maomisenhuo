@@ -110,14 +110,30 @@ static bool string_field(const cJSON *o,const char *key,char *dest,size_t capaci
 }
 static const char *const scenes[]={"home","departing","away","returning","garden","town"};
 static const char *const actions[]={"idle","walk","pet","feed","water","bath","play","sleep"};
+static const char *const interactions[]={"none","flower_sniff","butterfly_chase","ball_pounce","bed_sleep"};
 static const char *const weather[]={"clear","rain","snow"};
-static bool snapshot(const cJSON *d,l2_snapshot_t *s){
-    static const char *const keys[]={"petId","revision","scene","action","weather","pet","epochMs","utcOffsetMinutes"};
-    static const char *const pk[]={"name","breed","food","mood","clean","energy","health","coins"};
-    memset(s,0,sizeof(*s));if(!only(d,keys,8)||!string_field(d,"petId",s->pet.pet_id,sizeof(s->pet.pet_id),true)||!integer(field(d,"revision"),&s->revision))return false;
+static const char *const growth_stages[]={"kitten","young","adult"};
+static const char *const body_shapes[]={"standard","slim","round"};
+static bool snapshot(const cJSON *d,l2_snapshot_t *s,l2_interaction_t *interaction){
+    static const char *const keys[]={"petId","revision","scene","action","weather","pet","epochMs","utcOffsetMinutes","interaction"};
+    static const char *const pk[]={"name","breed","food","mood","clean","energy","health","coins","growthStage","outfit","bodyShape"};
+    memset(s,0,sizeof(*s));if(!only(d,keys,9)||!string_field(d,"petId",s->pet.pet_id,sizeof(s->pet.pet_id),true)||!integer(field(d,"revision"),&s->revision))return false;
     int a=enumeration(field(d,"scene"),scenes,6),b=enumeration(field(d,"action"),actions,8),c=enumeration(field(d,"weather"),weather,3);if(a<0||b<0||c<0)return false;
     s->scene=(l2_scene_t)a;s->action=(l2_action_t)b;s->weather=(l2_weather_t)c;
-    cJSON *p=field(d,"pet");if(!only(p,pk,8)||!string_field(p,"name",s->pet.name,sizeof(s->pet.name),false)||!string_field(p,"breed",s->pet.breed,sizeof(s->pet.breed),true)||!integer(field(p,"coins"),&s->pet.coins))return false;
+    int hint=field(d,"interaction")?enumeration(field(d,"interaction"),interactions,5):L2_INTERACTION_NONE;
+    if(hint<0)return false;
+    if((hint==L2_INTERACTION_FLOWER_SNIFF||hint==L2_INTERACTION_BUTTERFLY_CHASE)&&!(s->scene==L2_SCENE_GARDEN&&s->action==L2_ACTION_PLAY))return false;
+    if(hint==L2_INTERACTION_BALL_POUNCE&&!(s->scene==L2_SCENE_HOME&&s->action==L2_ACTION_PLAY))return false;
+    if(hint==L2_INTERACTION_BED_SLEEP&&!(s->scene==L2_SCENE_HOME&&s->action==L2_ACTION_SLEEP))return false;
+    if(interaction)*interaction=(l2_interaction_t)hint;
+    cJSON *p=field(d,"pet");if(!only(p,pk,11)||!string_field(p,"name",s->pet.name,sizeof(s->pet.name),false)||!string_field(p,"breed",s->pet.breed,sizeof(s->pet.breed),true)||!integer(field(p,"coins"),&s->pet.coins))return false;
+    if(field(p,"growthStage")||field(p,"outfit")||field(p,"bodyShape")){
+        int growth=enumeration(field(p,"growthStage"),growth_stages,3);
+        int body=field(p,"bodyShape")?enumeration(field(p,"bodyShape"),body_shapes,3):0;
+        if(growth<0||body<0||!string_field(p,"outfit",s->pet.outfit,sizeof(s->pet.outfit),true))return false;
+        s->pet.appearance_known=true;s->pet.growth_stage=(l2_growth_t)(growth+1);s->pet.body_shape=(l2_body_shape_t)body;
+        if(!l2_pet_appearance_valid(&s->pet))return false;
+    }
     const char *names[]={"food","mood","clean","energy","health"};uint8_t *values[]={&s->pet.food,&s->pet.mood,&s->pet.clean,&s->pet.energy,&s->pet.health};
     for(unsigned i=0;i<5;i++){uint64_t n;if(!integer(field(p,names[i]),&n)||n>100)return false;*values[i]=(uint8_t)n;}
     cJSON *offset=field(d,"utcOffsetMinutes");if(offset&&(!cJSON_IsNumber(offset)||!isfinite(offset->valuedouble)||floor(offset->valuedouble)!=offset->valuedouble||offset->valuedouble < -840||offset->valuedouble>840))return false;
@@ -182,6 +198,8 @@ static cJSON *state_json(const l2_core_t *core){
         const l2_snapshot_t *s=&v.snapshot;cJSON *d=cJSON_AddObjectToObject(o,"snapshot");cJSON_AddStringToObject(d,"petId",s->pet.pet_id);num(d,"revision",s->revision);
         cJSON_AddStringToObject(d,"scene",scenes[s->scene]);cJSON_AddStringToObject(d,"action",actions[s->action]);cJSON_AddStringToObject(d,"weather",weather[s->weather]);
         cJSON *p=cJSON_AddObjectToObject(d,"pet");cJSON_AddStringToObject(p,"name",s->pet.name);cJSON_AddStringToObject(p,"breed",s->pet.breed);num(p,"coins",s->pet.coins);
+        if(s->pet.appearance_known){cJSON_AddStringToObject(p,"growthStage",l2_growth_name(s->pet.growth_stage));cJSON_AddStringToObject(p,"outfit",s->pet.outfit);cJSON_AddStringToObject(p,"bodyShape",l2_body_shape_name(s->pet.body_shape));}
+        if(core->visual_interaction>L2_INTERACTION_NONE&&core->visual_interaction<=L2_INTERACTION_BED_SLEEP)cJSON_AddStringToObject(d,"interaction",interactions[core->visual_interaction]);
         num(p,"food",s->pet.food);num(p,"mood",s->pet.mood);num(p,"clean",s->pet.clean);num(p,"energy",s->pet.energy);num(p,"health",s->pet.health);
     }
 #ifdef ESP_PLATFORM
@@ -192,7 +210,7 @@ static cJSON *state_json(const l2_core_t *core){
     cJSON_AddBoolToObject(peer,"localConfirmed",pv.local_confirmed);cJSON_AddBoolToObject(peer,"remoteConfirmed",pv.remote_confirmed);
     cJSON_AddBoolToObject(peer,"incomingSaved",pv.incoming_saved);cJSON_AddBoolToObject(peer,"outgoingAcked",pv.outgoing_acked);
     cJSON_AddBoolToObject(peer,"complete",pv.complete);cJSON_AddBoolToObject(peer,"incomingNew",pv.incoming_new);
-    cJSON_AddStringToObject(peer,"peerId",pv.peer_id);num(peer,"completeCount",pv.complete_count);
+    cJSON_AddBoolToObject(peer,"matched",pv.matched);cJSON_AddBoolToObject(peer,"inputReady",pv.input_ready);num(peer,"method",pv.method);num(peer,"remoteMethod",pv.remote_method);cJSON_AddStringToObject(peer,"peerId",pv.peer_id);num(peer,"completeCount",pv.complete_count);
 #endif
     return o;
 }
@@ -202,6 +220,13 @@ static cJSON *next_event(const l2_core_t *core){
     cJSON_AddStringToObject(o,"source","native_device");cJSON_AddStringToObject(o,"protocol","CFLOCAL2");
     if(e.epoch_ms)num(o,"occurredAtMs",e.epoch_ms);else cJSON_AddNullToObject(o,"occurredAtMs");
     if(e.kind==L2_EVENT_CARE){cJSON_AddStringToObject(o,"kind","care");cJSON_AddStringToObject(o,"action",actions[e.action]);}
+    else if(e.kind==L2_EVENT_MEET){
+        l2_receipt_t r;if(!l2_get_peer(core,e.peer_slot,&r)){cJSON_Delete(o);return NULL;}
+        cJSON_AddStringToObject(o,"kind","encounter");cJSON_AddStringToObject(o,"peerId",r.peer_id);cJSON_AddBoolToObject(o,"peerComplete",true);
+        char mark[33];static const char hx[]="0123456789abcdef";for(unsigned i=0;i<16;i++){mark[i*2]=hx[e.meet.id[i]>>4];mark[i*2+1]=hx[e.meet.id[i]&15];}mark[32]=0;
+        cJSON_AddStringToObject(o,"encounterId",mark);cJSON_AddStringToObject(o,"method",e.meet.method==1?"rhythm":"dots");cJSON_AddStringToObject(o,"peerName",e.meet.name);cJSON_AddStringToObject(o,"peerBreed",e.meet.breed);
+        cJSON *a=cJSON_AddArrayToObject(o,"mark");for(unsigned i=0;i<(e.meet.method==1?e.meet.count-1u:e.meet.count);i++)cJSON_AddItemToArray(a,cJSON_CreateNumber(e.meet.method==1?(e.meet.mark[i*2]|(unsigned)e.meet.mark[i*2+1]<<8):e.meet.mark[i]));
+    }
     else {l2_receipt_t r;if(!l2_get_peer(core,e.peer_slot,&r)){cJSON_Delete(o);return NULL;}cJSON_AddStringToObject(o,"kind","gift");cJSON_AddStringToObject(o,"peerId",r.peer_id);num(o,"peerCounter",e.peer_counter);cJSON_AddStringToObject(o,"giftId","flower");num(o,"quantity",1);cJSON_AddBoolToObject(o,"peerComplete",false);}
     return o;
 }
@@ -223,7 +248,7 @@ bool local2_wire_handle(const char *line,size_t length,char *out,size_t capacity
             session_unlock();
             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.5.5-day-hearts");result=L2_OK;
+            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("encounter_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("pet_appearance_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_interaction_v1"));cJSON_AddStringToObject(d,"firmware","0.7.0-cat-actions");result=L2_OK;
         }else if(valid&&!strcmp(op,"care_capabilities")){
             static const char *const ck[]={"v","id","op","clientId","data"};
             static const char *const dk[]={"careBathV1","mobileContextV1"};char client[37];cJSON *mobile=field(field(q,"data"),"mobileContextV1");
@@ -251,7 +276,7 @@ bool local2_wire_handle(const char *line,size_t length,char *out,size_t capacity
         }else if(valid&&(!strcmp(op,"snapshot")||!strcmp(op,"ack"))){
             l2_request_t req={0};valid=string_field(q,"clientId",req.client_id,sizeof(req.client_id),true)&&integer(field(q,"seq"),&req.seq);snprintf(req.request_id,sizeof(req.request_id),"%s",id);
             if(valid&&mbedtls_sha256((const unsigned char *)line,length,req.hash,0)==0){
-                if(!strcmp(op,"snapshot")){l2_snapshot_t s;if(snapshot(field(q,"data"),&s)){result=l2_set_snapshot(core,&req,&s);if(result==L2_OK&&s.has_epoch_ms)local2_clock_calibrate(s.epoch_ms,field(field(q,"data"),"utcOffsetMinutes")?field(field(q,"data"),"utcOffsetMinutes")->valueint:0);}}
+                if(!strcmp(op,"snapshot")){l2_snapshot_t s;l2_interaction_t interaction;if(snapshot(field(q,"data"),&s,&interaction)){result=l2_set_snapshot(core,&req,&s);if(result==L2_OK||result==L2_DUPLICATE)core->visual_interaction=interaction;if(result==L2_OK&&s.has_epoch_ms)local2_clock_calibrate(s.epoch_ms,field(field(q,"data"),"utcOffsetMinutes")?field(field(q,"data"),"utcOffsetMinutes")->valueint:0);}}
                 else {
                     cJSON *d=field(q,"data"),*receipt=field(d,"receipt");l2_terminal_t terminal={0};char expected[64];
                     static const char *const ak[]={"counter","eventId","receipt"};static const char *const rk[]={"status","originalStatus","reason","persisted","saveDigest"};

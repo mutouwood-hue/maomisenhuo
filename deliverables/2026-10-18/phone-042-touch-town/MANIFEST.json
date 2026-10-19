@@ -1,0 +1,145 @@
+{
+  "batch": "2026-10-18 手机042：圆环手势、小镇社交退出、名称图标",
+  "recordedAtUtc": "2026-10-18T02:36:39.948418+00:00",
+  "branch": "feat/care-lock-0.3.9-0.5.4",
+  "sourceBaselineCommit": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "sourceState": "沿用隔离worktree，保留上轮未提交修复；本次修改未提交、未推送。",
+  "previousDelivery": "../hearts-replay-fix/MANIFEST.json",
+  "phone": {
+    "file": "catforest-0.4.2-touch-town-debug.apk",
+    "versionName": "0.4.2-touch-town",
+    "versionCode": 33,
+    "packageId": "com.catforest.htmlcandidate",
+    "applicationLabel": "猫咪森活",
+    "buildType": "debug",
+    "bytes": 992097,
+    "sha256": "437eb707e1ae59902d3a500d4a4b150df510cc5af3ebc121fc041c6b35a67ce6",
+    "signed": true,
+    "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+    "matchesInstalled041Certificate": true,
+    "packageMetadata": [
+      "package: name='com.catforest.htmlcandidate' versionCode='33' versionName='0.4.2-touch-town' platformBuildVersionName='15' platformBuildVersionCode='35' compileSdkVersion='35' compileSdkVersionCodename='15'",
+      "application-label:'猫咪森活'",
+      "application-icon-160:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+      "application-icon-240:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+      "application-icon-320:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+      "application-icon-480:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+      "application-icon-640:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+      "application-icon-65534:'res/mipmap-anydpi-v26/ic_launcher.xml'",
+      "application-icon-65535:'res/mipmap-anydpi-v26/ic_launcher.xml'"
+    ],
+    "buildExitCode": 0,
+    "installed": true,
+    "installExitCode": 0
+  },
+  "icon": {
+    "source": "assets/rendering/cat-idle.png",
+    "process": "复用已有透明小猫，按alpha边界裁切并确定性缩放；未调用生成服务、未下载素材。",
+    "foreground": "app/android/app/src/main/res/drawable-nodpi/ic_launcher_foreground.png",
+    "adaptiveIcons": "app/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher*.xml",
+    "legacyIcons": "app/android/app/src/main/res/mipmap-{mdpi,hdpi,xhdpi,xxhdpi,xxxhdpi}/ic_launcher*.png",
+    "background": "#B8D3B3",
+    "labelResource": "app/android/app/src/main/res/values/strings.xml:app_name"
+  },
+  "sourceFindings": [
+    "圆环旧pointerdown只登记候选，首段移动方向不满足切向阈值即清除；晚捕获与重建子节点并存，lostpointercapture按pointerId清理而不检查捕获元素，可能把子节点捕获变化当成整次拖动结束。",
+    "完整生活页render会替换lf-body和SVG；restore能恢复显示选择，不能保留被删节点的指针捕获。本次在持有手势时延后此类重建。",
+    "原社交已有有界计时和猫对冷却；离开只尝试直线，失败后丢路径并在短暂socialDepartUntil到期后回到自动分支，未要求真正离开，拥挤中可换伙伴重复触发。",
+    "居民互动卡片走showCard的强制core模式，CSS会隐藏world-top里的既有引导按钮。"
+  ],
+  "changes": [
+    "圆环pointerdown立即捕获稳定SVG；只响应实际捕获者的lostpointercapture；移除起手方向淘汰；SVG区域touch-action:none。",
+    "指针移动按动画帧合并，圆点、填色、事件卡片仍调用同一个hostSelectDayTime；释放时提交最后坐标。未来期待态规则保留。",
+    "社交增加离开状态与每只猫的10秒冷却，猫对必须实际分开后才可再次触发；直线失败时使用同岸既有道路图离开，整段路径取样避开桥及出入口。",
+    "居民卡片保留引导按钮；点引导或小路能结束互动并取消自己的离开任务，接管移动。没有改社交存档、奖励或设备协议。",
+    "同一042包更新应用名称和图标；applicationId和原签名保持。"
+  ],
+  "sourceFiles": [
+    "app/web/life-navigation.js",
+    "app/web/life-companion.css",
+    "app/scripts/build_assets.py",
+    "app/web/town-contact-runtime.inc.js",
+    "app/web/town-player-runtime.inc.js",
+    "app/android/app/build.gradle.kts",
+    "app/android/app/src/main/AndroidManifest.xml",
+    "app/android/app/src/main/res/values/strings.xml",
+    "app/android/app/src/main/res/values/colors.xml",
+    "app/android/app/src/main/res/drawable-nodpi/ic_launcher_foreground.png",
+    "app/android/app/src/main/res/mipmap-*/ic_launcher*"
+  ],
+  "generatedFiles": "生产资源生成同步了app/web/original-town-runtime.js、Android assets与app/preview；没有打开预览。",
+  "build": {
+    "assets": {
+      "command": "python3 app/scripts/build_assets.py",
+      "exitCode": 0,
+      "log": "assets-build.log"
+    },
+    "android": {
+      "command": "gradle --offline --no-daemon --console=plain :app:assembleDebug -x test -x lint",
+      "exitCode": 0,
+      "log": "phone-build.log",
+      "java": "21.0.12.1+1",
+      "gradle": "8.9",
+      "agp": "8.7.3",
+      "sdk": "Android35",
+      "signing": "复用既有ui038原签名与Gradle配置；公开证书与已安装041交付记录一致；未创建凭据。",
+      "finalization": "静态复查补齐桥口整段路线保护后，在同一042版本重新生成资源并构建、覆盖安装；初次日志保留为phone-build-initial.log和phone-install-initial.log，当前文件及SHA为最终包。"
+    }
+  },
+  "deployment": {
+    "phone": {
+      "status": "installed",
+      "exitCode": 0,
+      "manufacturer": "StepX",
+      "model": "PZ261A",
+      "serial": "ZYPZ261A01M65K0002A",
+      "method": "adb install --no-incremental -r",
+      "before": {
+        "versionName": "0.4.1-day-hearts-replay",
+        "versionCode": 32,
+        "appId": 10191,
+        "firstInstallTime": "2026-10-15 23:14:25"
+      },
+      "after": {
+        "versionName": "0.4.2-touch-town",
+        "versionCode": 33,
+        "appId": 10191,
+        "firstInstallTime": "2026-10-15 23:14:25"
+      },
+      "logs": [
+        "phone-before.log",
+        "phone-install.log",
+        "phone-after.log"
+      ],
+      "dataBoundary": "未卸载、未清数据、未重绑；未读取或运行游戏来验证存档表现。"
+    },
+    "badge": {
+      "actionThisBatch": "none",
+      "versionFromPreviousDelivery": "0.5.6-day-hearts-replay",
+      "manifest": "../hearts-replay-fix/MANIFEST.json",
+      "builtThisBatch": false,
+      "flashedThisBatch": false
+    }
+  },
+  "technicalTests": {
+    "executed": false,
+    "lintExecuted": false,
+    "simulatedInteractionExecuted": false,
+    "browserQAExecuted": false,
+    "interactiveAcceptanceExecuted": false
+  },
+  "screenshotEvidence": {
+    "available": false,
+    "pixelsViewed": false,
+    "note": "当前环境缺少把所给Library引用读取到本地的可用入口；未猜测URL或声称看过截图，排查依据用户文字、源码及041 APK静态内容。"
+  },
+  "notVerified": [
+    "圆环触摸和实际滚动表现待用户验收。",
+    "NPC实际离开、冷却、手动打断及桥口行为待用户验收。",
+    "launcher实际显示和存档/绑定表现待用户验收。",
+    "吧唧滑页与UI调整留待后续合批；相遇双端设备流程未在本批实现。"
+  ],
+  "docs": [
+    "../../../work/integrated/DELIVERY-2026-10-18-PHONE042.md"
+  ]
+}

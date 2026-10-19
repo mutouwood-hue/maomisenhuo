@@ -1,0 +1,47 @@
+[
+  {
+    "path": "firmware/CMakeLists.txt",
+    "bytes": 18164,
+    "sha256": "2879b51e3197ca22c2987ce8b5f5baaa3aeb887d6c3c53d522b7a2aedafa09aa"
+  },
+  {
+    "path": "firmware/main/badge_day_ui.inc",
+    "bytes": 10968,
+    "sha256": "474d816e792dbb09893e9d3f385fd3059a2c1a9d06fddb4aeeb3eb7b4eafd30e"
+  },
+  {
+    "path": "firmware/main/badge_gesture.c",
+    "bytes": 2942,
+    "sha256": "cb9cbd38c52f8b414d66c5eaf92da3f0bbbd79b344233ed4dfece348aa541b62"
+  },
+  {
+    "path": "firmware/main/badge_gesture.h",
+    "bytes": 1428,
+    "sha256": "8210515bb08db41b43e5ad41993576bd95658ddde7dbd86a0d6fa1f3957e79ab"
+  },
+  {
+    "path": "firmware/main/badge_pages.c",
+    "bytes": 108375,
+    "sha256": "734511916cd3e9c0e2db749bf682686d27dcb302b8aa5865f1e2f63d25932ee9"
+  },
+  {
+    "path": "firmware/main/badge_scene.c",
+    "bytes": 24478,
+    "sha256": "efe6cf331e68258f3e2b527586cb6773f1a2601e841ae0914b769b16f5f217d5"
+  },
+  {
+    "path": "firmware/main/badge_scene.h",
+    "bytes": 2972,
+    "sha256": "966b4bb2a7937e3ea7c79eff92e02be2f07a47d6c3d08f4efddb32d0d17ebd6a"
+  },
+  {
+    "path": "firmware/main/local2_day.c",
+    "bytes": 8211,
+    "sha256": "58bb70fe2bca0a51d45179e97b296f213620147f300e72c7e2a110aaf76f44bf"
+  },
+  {
+    "path": "firmware/main/local2_wire.c",
+    "bytes": 25060,
+    "sha256": "4bc69e57549c1a746cad4f73552c2a5fde104fafef2e58f9ab184f84bf1c78bc"
+  }
+]

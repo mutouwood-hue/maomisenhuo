@@ -5,7 +5,7 @@ const Wd=()=>view;
 const L=window.__pgLife=window.__pgLife||{};
 const track=(n,p)=>{try{window.__petAnalytics?.track(n,p)}catch(e){}};
 const ease=t=>{t=t<0?0:t>1?1:t;return t*t*(3-2*t)};
-const ev={type:null,t0:0,choice:null,tc:0,props:[],saved:null,bfFrom:null};
+const ev={type:null,t0:0,choice:null,tc:0,props:[],saved:null,bfFrom:null};let captionText="";
 const scene=parent;
 /* 2D 叠加层：雨丝 / 闪光 / 头顶图标 */
 const cv=document.createElement('canvas');cv.className='town-world-fx';scene.appendChild(cv);
@@ -27,7 +27,7 @@ function pouch(){return vox([[1.5,1.1,1.1,0,.55,0,'#b9824f'],[1.1,.35,.85,0,1.25
 function cleanup(){
   ev.props.forEach(p=>{p.parent?.remove(p);p.traverse(o=>{o.geometry?.dispose();o.material?.dispose?.()})});ev.props=[];
   const w=Wd();if(ev.saved&&w){w.hemi.intensity=ev.saved.h;w.sun.intensity=ev.saved.s;(w.scene.background||w.scene.fog.color).copy(ev.saved.bg);w.scene.fog?.color.copy(ev.saved.fog)}
-  ev.saved=null;ev.type=null;ev.choice=null;emo.hidden=true;drops.length=0;g.clearRect(0,0,cv.width,cv.height);
+  ev.saved=null;ev.type=null;ev.choice=null;captionText="";emo.hidden=true;drops.length=0;g.clearRect(0,0,cv.width,cv.height);
 }
 /* 事件开始：由游戏偶遇逻辑调用 */
 const start=type=>{
@@ -81,9 +81,10 @@ const pose=(model,cat,t,walking)=>{
 const drops=[];
 function frame(dt){
   clock+=Math.min(.05,Math.max(0,dt));
-  const w=Wd();if(!w||!ev.type)return;
+  const w=Wd();if(!w)return;
   if(w.canvas.hidden){cleanup();return}
   const r=w.canvas.getBoundingClientRect(),dpr=Math.min(2,devicePixelRatio||1);
+  if(!ev.type){if(!captionText){emo.hidden=true;return}const head=w.cat.position.clone();head.y+=2.4;const hp=w.proj(head);emo.textContent=captionText;emo.style.left=(hp.x*r.width)+'px';emo.style.top=(hp.y*r.height)+'px';emo.hidden=false;return}
   if(cv.width!==Math.round(r.width*dpr)||cv.height!==Math.round(r.height*dpr)){cv.width=Math.round(r.width*dpr);cv.height=Math.round(r.height*dpr)}
   g.setTransform(dpr,0,0,dpr,0,0);g.clearRect(0,0,r.width,r.height);
   const T=now()-ev.t0,C=ev.choice?now()-ev.tc:0,P=v=>{const s=w.proj(v);return{x:s.x*r.width,y:s.y*r.height}};
@@ -117,6 +118,6 @@ function frame(dt){
   }
 }
 function star(x,y,r){g.beginPath();for(let i=0;i<8;i++){const a=i*Math.PI/4,R=i%2?r*.4:r;g.lineTo(x+Math.cos(a)*R,y+Math.sin(a)*R)}g.closePath();g.fill()}
-return{start,choose,pose,moveButterfly,frame,cleanup,dispose(){cleanup();cv.remove();emo.remove()},get active(){return !!ev.type},get type(){return ev.type}};
+return{start,choose,pose,moveButterfly,frame,cleanup,caption(text){captionText=typeof text==='string'?text:'';if(!ev.type){emo.textContent=captionText;emo.hidden=!captionText;}},dispose(){cleanup();cv.remove();emo.remove()},get active(){return !!ev.type},get type(){return ev.type}};
 
 }};

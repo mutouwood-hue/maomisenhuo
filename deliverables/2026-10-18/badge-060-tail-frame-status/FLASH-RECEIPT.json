@@ -1,0 +1,14 @@
+{
+  "startedAtUtc": "2026-10-18T04:08:31.735436+00:00",
+  "finishedAtUtc": "2026-10-18T04:09:38.913887+00:00",
+  "exitCode": 0,
+  "file": "cat_forest_badge-0.6.0-tail-frame-status.bin",
+  "bytes": 6913648,
+  "sha256": "da58fcf5664196107be3e2d8f04ce267333e91e03a4f8cf982244ebbfb8b7863",
+  "target": "ota_1",
+  "offset": 8519680,
+  "esptoolHashVerified": true,
+  "applicationOnly": true,
+  "uiAcceptance": "not executed; pending user",
+  "queueDrainAcceptance": "not executed; not claimed"
+}

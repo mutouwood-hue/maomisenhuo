@@ -1,0 +1,13 @@
+{
+  "startedAtUtc": "2026-10-18T03:43:28.715685+00:00",
+  "finishedAtUtc": "2026-10-18T03:44:35.996753+00:00",
+  "exitCode": 0,
+  "target": "ota_1",
+  "offset": 8519680,
+  "file": "cat_forest_badge-0.5.8-distance-ui.bin",
+  "bytes": 6908608,
+  "sha256": "8c90fe3be7d66e65d81bddd74733de8881c9b001b244323374e5ea2a44ea6dfd",
+  "esptoolHashVerified": true,
+  "applicationOnly": true,
+  "interactionAcceptance": "not performed; user hardware acceptance pending"
+}

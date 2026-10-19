@@ -1,0 +1,26 @@
+[
+  {
+    "path": "firmware/main/badge_day_ui.inc",
+    "unchangedFrom058": true
+  },
+  {
+    "path": "firmware/main/badge_gesture.c",
+    "unchangedFrom058": true
+  },
+  {
+    "path": "firmware/main/badge_gesture.h",
+    "unchangedFrom058": true
+  },
+  {
+    "path": "firmware/main/badge_scene.c",
+    "unchangedFrom058": true
+  },
+  {
+    "path": "firmware/main/badge_scene.h",
+    "unchangedFrom058": true
+  },
+  {
+    "path": "firmware/main/local2_day.c",
+    "unchangedFrom058": true
+  }
+]

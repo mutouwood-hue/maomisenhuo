@@ -1,0 +1,144 @@
+--- a/firmware/main/main.c
++++ b/firmware/main/main.c
+@@ -3,11 +3,21 @@
+ #include "local2_ble.h"
+ #include "esp_log.h"
+ #include "badge_diagnostics.h"
++#include "esp_heap_caps.h"
++
++static void startup_record(const char *stage)
++{
++    ESP_LOGI("startup", "%s internal_free=%u internal_largest=%u psram_free=%u",stage,
++        (unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT),
++        (unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT),
++        (unsigned)heap_caps_get_free_size(MALLOC_CAP_SPIRAM));
++}
+ 
+ void app_main(void)
+ {
+     /* local2_init owns nvs_flash_init and only its independent namespace.
+      * A failed read/version/capacity check must never trigger automatic erase. */
++    startup_record("storage_begin");
+     esp_err_t storage = local2_init();
+     if (storage != ESP_OK) {
+         ESP_LOGE("local2", "Storage unavailable (%s); BLE remains off", esp_err_to_name(storage));
+@@ -15,10 +25,14 @@
+         (void)badge_ui_start();
+         return;
+     }
++    startup_record("ui_begin");
+     if (!badge_ui_start()) {
+         ESP_LOGE("local2", "Display/touch initialization failed; BLE remains off");
+         return;
+     }
++    startup_record("ui_ready_ble_begin");
+     local2_ble_start();
++    startup_record("ble_start_returned_usb_begin");
+     badge_diagnostics_start_usb();
++    startup_record("startup_returned");
+ }
+--- a/firmware/main/local2_ble.c
++++ b/firmware/main/local2_ble.c
+@@ -4,6 +4,7 @@
+ #include "local2_peer.h"
+ #include "esp_log.h"
+ #include "esp_timer.h"
++#include "esp_heap_caps.h"
+ #include "freertos/FreeRTOS.h"
+ #include "freertos/queue.h"
+ #include "freertos/task.h"
+@@ -96,7 +97,7 @@
+     int rc=ble_gap_adv_set_fields(&fields);if(rc==0)rc=ble_gap_adv_rsp_set_fields(&rsp);
+     struct ble_gap_adv_params p={.conn_mode=BLE_GAP_CONN_MODE_UND,.disc_mode=BLE_GAP_DISC_MODE_GEN};
+     if(rc==0)rc=ble_gap_adv_start(own_address,NULL,BLE_HS_FOREVER,&p,gap_event,NULL);
+-    if(rc==0)advert_generation=g;else ESP_LOGW("local2_ble","advertise rc=%d",rc);
++    if(rc==0){advert_generation=g;ESP_LOGI("local2_ble","advertising_started peer=%u",n?1u:0u);}else ESP_LOGW("local2_ble","advertise rc=%d",rc);
+ }
+ static void service_tick(struct ble_npl_event *e){
+     (void)e;
+@@ -111,9 +112,9 @@
+     }
+     ble_npl_callout_reset(&timer,ble_npl_time_ms_to_ticks32(10));
+ }
+-static void on_sync(void){if(ble_hs_util_ensure_addr(0)==0&&ble_hs_id_infer_auto(0,&own_address)==0){synced=true;advertise();}}
++static void on_sync(void){int rc=ble_hs_util_ensure_addr(0);if(!rc)rc=ble_hs_id_infer_auto(0,&own_address);ESP_LOGI("local2_ble","host_sync rc=%d",rc);if(!rc){synced=true;advertise();}}
+ static void on_reset(int reason){ESP_LOGW("local2_ble","host reset %d",reason);synced=false;local2_peer_set_discoverable(false);portENTER_CRITICAL(&guard);invalidate();portEXIT_CRITICAL(&guard);local2_ble_link_state(false,false);}
+-static void host_task(void *arg){(void)arg;nimble_port_run();nimble_port_freertos_deinit();}
++static void host_task(void *arg){(void)arg;ESP_LOGI("local2_ble","host_task_entered");nimble_port_run();ESP_LOGW("local2_ble","host_task_exited");nimble_port_freertos_deinit();}
+ static void domain_task(void *arg){
+     (void)arg;line_t reply;
+     for(;;){
+@@ -143,12 +144,17 @@
+     if(started)return;
+     incoming=xQueueCreate(QMAX,sizeof(line_t));outgoing=xQueueCreate(QMAX,sizeof(line_t));
+     if(!incoming||!outgoing){ESP_LOGE("local2_ble","queue allocation failed");return;}
+-    if(nimble_port_init()!=ESP_OK)return;
++    ESP_LOGI("local2_ble","nimble_init_begin internal_free=%u internal_largest=%u",(unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT),(unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
++    esp_err_t init_rc=nimble_port_init();
++    if(init_rc!=ESP_OK){ESP_LOGE("local2_ble","nimble_init_failed rc=%d",(int)init_rc);return;}
++    ESP_LOGI("local2_ble","nimble_init_ready");
+     ble_svc_gap_init();ble_svc_gatt_init();ble_svc_gap_device_name_set("CatForest-Local2");
+     ble_hs_cfg.sync_cb=on_sync;ble_hs_cfg.reset_cb=on_reset;
+-    if(ble_gatts_count_cfg(services)!=0||ble_gatts_add_svcs(services)!=0)return;
+-    l2_core_t *core=l2_runtime_core(1000);if(!core)return;esp_err_t rc=local2_peer_register(core);l2_runtime_release();if(rc!=ESP_OK)return;
++    int svc_rc=ble_gatts_count_cfg(services);if(!svc_rc)svc_rc=ble_gatts_add_svcs(services);
++    if(svc_rc){ESP_LOGE("local2_ble","phone_service_failed rc=%d",svc_rc);return;}
++    l2_core_t *core=l2_runtime_core(1000);if(!core){ESP_LOGE("local2_ble","peer_core_unavailable");return;}esp_err_t rc=local2_peer_register(core);l2_runtime_release();if(rc!=ESP_OK){ESP_LOGE("local2_ble","peer_register_failed rc=%d",(int)rc);return;}
+     ble_npl_callout_init(&timer,nimble_port_get_dflt_eventq(),service_tick,NULL);ble_npl_callout_reset(&timer,ble_npl_time_ms_to_ticks32(10));
+-    if(xTaskCreate(domain_task,"local2_domain",8192,NULL,5,NULL)!=pdPASS)return;
++    if(xTaskCreate(domain_task,"local2_domain",8192,NULL,5,NULL)!=pdPASS){ESP_LOGE("local2_ble","domain_task_failed");return;}
++    ESP_LOGI("local2_ble","host_task_requested");
+     started=true;nimble_port_freertos_init(host_task);
+ }
+--- a/firmware/main/local2_wire.c
++++ b/firmware/main/local2_wire.c
+@@ -240,7 +240,7 @@
+             session_unlock();
+             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
+             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
+-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("encounter_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("pet_appearance_v1"));cJSON_AddStringToObject(d,"firmware","0.6.4-connect-repair");result=L2_OK;
++            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("encounter_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("pet_appearance_v1"));cJSON_AddStringToObject(d,"firmware","0.6.5-ble-start-log");result=L2_OK;
+         }else if(valid&&!strcmp(op,"care_capabilities")){
+             static const char *const ck[]={"v","id","op","clientId","data"};
+             static const char *const dk[]={"careBathV1","mobileContextV1"};char client[37];cJSON *mobile=field(field(q,"data"),"mobileContextV1");
+--- a/firmware/CMakeLists.txt
++++ b/firmware/CMakeLists.txt
+@@ -282,8 +282,8 @@
+     endforeach()
+ 
+ endfunction()
+-set(PROJECT_VER "0.6.4-connect-repair")
+-project(cat_forest_badge VERSION 0.6.4)
++set(PROJECT_VER "0.6.5-ble-start-log")
++project(cat_forest_badge VERSION 0.6.5)
+ include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
+ foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
+         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION
+--- a/firmware/main/badge_pages.c
++++ b/firmware/main/badge_pages.c
+@@ -1912,17 +1912,24 @@
+ {
+     lv_display_t *display=bsp_display_start();
+     if(!display) { ESP_LOGE("badge_ui","Official BSP display start failed"); return false; }
++    ESP_LOGI("badge_ui","display_ready");
+     if(bsp_display_lock(10000)!=ESP_OK) { ESP_LOGE("badge_ui","LVGL lock timed out"); return false; }
++    ESP_LOGI("badge_ui","gui_lock_ready");
+     badge_keys_init();
++    ESP_LOGI("badge_ui","keys_ready");
+     touch_indev=bsp_display_get_input_dev();
+     if(!touch_indev) { bsp_display_unlock(); ESP_LOGE("badge_ui","Official BSP touch unavailable"); return false; }
+     ui_display=display;lv_display_add_event_cb(display,slide_handoff_display,LV_EVENT_RENDER_READY,NULL);
+     badge_diagnostics_attach(display,touch_indev);
+     local2_fonts_init(); init_icons(); load_preferences();
++    ESP_LOGI("badge_ui","fonts_icons_ready");
+     stage_root=lv_obj_create(NULL);lv_obj_remove_style_all(stage_root);lv_obj_set_size(stage_root,466,466);
+     lv_obj_set_style_bg_color(stage_root,lv_color_hex(0),0);lv_obj_set_style_bg_opa(stage_root,LV_OPA_COVER,0);lv_obj_remove_flag(stage_root,LV_OBJ_FLAG_SCROLLABLE);
+     for(unsigned i=0;i<PAGE_COUNT;i++) pages[i]=new_screen();
+-    build_boot_pair_guide(); build_home_care(); build_status(); build_settings_device(); build_touch_voice(); build_layers();build_home_peek();
++    build_boot_pair_guide();ESP_LOGI("badge_ui","guide_ready");
++    build_home_care();ESP_LOGI("badge_ui","home_care_ready");
++    build_status(); build_settings_device(); build_touch_voice(); build_layers();build_home_peek();
++    ESP_LOGI("badge_ui","pages_ready");
+     if(!home_scene || !care_scene || !welcome_scene || !care_action_scene) { bsp_display_unlock(); ESP_LOGE("badge_ui","Scene allocation failed"); return false; }
+     current_page=PAGE_BOOT; boot_started=last_input=navigation_started=lv_tick_get();
+     lv_timer_set_period(lv_indev_get_read_timer(touch_indev),12);lv_indev_set_long_press_time(touch_indev,ZIP_UI_LONGPRESSMS); lv_indev_add_event_cb(touch_indev,input_event,LV_EVENT_ALL,NULL);

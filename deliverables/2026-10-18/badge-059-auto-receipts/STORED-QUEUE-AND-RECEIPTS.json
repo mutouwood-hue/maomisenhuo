@@ -1,0 +1,110 @@
+{
+  "source": "Read-only existing stored bytes; no live BLE query, input or test",
+  "deviceId": "74dd63fc48702670941da7982a24a571",
+  "deviceState": {
+    "schema": 3,
+    "blobBytes": 703,
+    "crcValid": true,
+    "hasOwner": true,
+    "clientId": "fcfb27c0-e710-41af-ac79-0c8232b660c8",
+    "lastSeq": 541,
+    "snapshot": {
+      "revision": 496,
+      "hasEpochMs": 1,
+      "epochMs": 1792295099956,
+      "scene": 0,
+      "action": 1,
+      "weather": 0,
+      "giftState": 0,
+      "petId": "cat-c98ec497-cffe-4187-b3aa-479f9132fbf8",
+      "name": "小橘",
+      "breed": "orange",
+      "food": 0,
+      "mood": 100,
+      "clean": 0,
+      "energy": 78,
+      "health": 100,
+      "coins": 0
+    },
+    "lastAck": 45,
+    "nextEvent": 54,
+    "pending": 8,
+    "queue": [
+      {
+        "counter": 46,
+        "occurredAtMs": 1792294592744,
+        "action": "bath",
+        "kind": "care"
+      },
+      {
+        "counter": 47,
+        "occurredAtMs": 1792294602485,
+        "action": "pet",
+        "kind": "care"
+      },
+      {
+        "counter": 48,
+        "occurredAtMs": 1792294604489,
+        "action": "pet",
+        "kind": "care"
+      },
+      {
+        "counter": 49,
+        "occurredAtMs": 1792294607231,
+        "action": "pet",
+        "kind": "care"
+      },
+      {
+        "counter": 50,
+        "occurredAtMs": 1792294678197,
+        "action": "pet",
+        "kind": "care"
+      },
+      {
+        "counter": 51,
+        "occurredAtMs": 1792295141791,
+        "action": "play",
+        "kind": "care"
+      },
+      {
+        "counter": 52,
+        "occurredAtMs": 1792295142345,
+        "action": "pet",
+        "kind": "care"
+      },
+      {
+        "counter": 53,
+        "occurredAtMs": 1792295148435,
+        "action": "feed",
+        "kind": "care"
+      }
+    ],
+    "terminal": {
+      "counter": 45,
+      "status": 2,
+      "action": "pet",
+      "reason": "ineligible",
+      "saveDigest": "c7237e4e1dafc2de18b6ea39de94455a483e60db40cac808931550236d8f5c8f"
+    }
+  },
+  "phoneState": {
+    "authorityRevision": 1127,
+    "authorityChecksumValid": true,
+    "clientId": "fcfb27c0-e710-41af-ac79-0c8232b660c8",
+    "journalDevice": {
+      "nextSeq": 542,
+      "syncRevision": 496,
+      "lastSemantic": "{\"petId\":\"cat-c98ec497-cffe-4187-b3aa-479f9132fbf8\",\"sourceRevision\":0,\"scene\":\"home\",\"action\":\"walk\",\"weather\":\"clear\",\"utcOffsetMinutes\":480,\"pet\":{\"name\":\"小橘\",\"breed\":\"orange\",\"food\":0,\"mood\":100,\"clean\":0,\"energy\":78,\"health\":100,\"coins\":0}}",
+      "pending": null
+    },
+    "ledgerRecordCount": 45,
+    "ledgerMaxCounter": 45,
+    "headAlreadySettled": false,
+    "missingConfirmedHistory": []
+  },
+  "rawHashes": {
+    "nvsSha256": "ab34c26696516e37cb7a2ba97b4c0b2c17d2b7939e30fa0473dae71a95cbf3b0",
+    "coreSha256": "a654cc81c80f84b14ec09f2b794bb8b35ccf0e53660ae62e97b1c2d54f303f6a",
+    "phoneAuthoritySha256": "9e3a4ddff931cf7633d3d867bb854222099a4a1ddbfd8d0a16c59ae49aa07ad8"
+  }
+}

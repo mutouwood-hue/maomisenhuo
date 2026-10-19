@@ -1,0 +1,31 @@
+flowchart TD
+  OPEN["生活页 / 隐私与授权"] --> GEO{"用户打开位置"}
+  GEO -->|同意且有采样| SAMPLES["前台Web定位 / 本机7天"]
+  GEO -->|未授权或无点| EMPTY["真实地点空态：正常状态"]
+  SAMPLES --> PLACES["停留聚类：家 / 公司 / 常去地点"]
+  PLACES --> DAY["生活分段：观测归类 + 插值 + 显式推测"]
+  STEPS["前台DeviceMotion计步"] --> DAY
+  ACTIVE["本机活跃记录 / 原游戏日志"] --> DAY
+  EMPTY --> GUESS["缺口按作息推测，虚线标识"]
+  GUESS --> DAY
+  DEMO["显式演示开关：虚构日程与地点"] -.-> DAY
+  DAY --> RING["今日环：拖动 / 回放 / 回到此刻"]
+  DAY --> ARCHIVE["有实际数据才静默归档最近7天"]
+  DAY --> SUMMARY["主动查看今日记录摘要"]
+  DAY --> SCENE["猫的生活陪伴场景 / 召回"]
+  RING --> BADGE["吧唧 day_view 展示：RAM，重启需重发"]
+  PLACES --> WORKSHOP["积木工坊：示例 / 粘贴 / 用户Key生成"]
+  WORKSHOP --> OUT["独立可玩小场景"]
+  ENV["吧唧环境感知开关"] --x NOENV["固件无能力：禁用；手机不环境录音"]
+  WIPE["清除全部生活数据"] --> PARTIAL["只清部分键；demo设为true"]
+  PARTIAL -.-> REMAIN["hist / act / steps / walk / env等仍可能保留"]
+  ARCHIVE -.-> REVIEW["每周 / 远行回顾：未开始"]
+  OUT -.-> STITCH["自动拼到街道世界：未开始"]
+  classDef partial fill:#fff0cd,stroke:#be8613,color:#493300;
+  classDef demo fill:#f0e5ff,stroke:#8b5fbf,color:#3f2457;
+  classDef broken fill:#ffe4e4,stroke:#cf3030,color:#761818;
+  classDef missing fill:#eee,stroke:#888,color:#555;
+  class PLACES,DAY,STEPS,WORKSHOP,BADGE partial;
+  class DEMO demo;
+  class NOENV,PARTIAL,REMAIN broken;
+  class REVIEW,STITCH missing;

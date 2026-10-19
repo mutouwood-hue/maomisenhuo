@@ -1,0 +1,294 @@
+{
+  "066-to067-source.patch": {
+    "bytes": 35695,
+    "sha256": "8590aa59006cfc5d5b41cff74fd563a1a469e633ea5e336d6d4c121f608217be"
+  },
+  "ASSET-PROVENANCE-COMPARISON.json": {
+    "bytes": 438,
+    "sha256": "2fdfe4e739b8ec840fb1e13c6aefca4d80dfaf7319fb91cde469f8dcef893c92"
+  },
+  "DELIVERY-AND-EVIDENCE.md": {
+    "bytes": 5356,
+    "sha256": "b3f40836b94caf651be8c30ea1d9861727f404fd18c5f1874f1edb7cda247ae9"
+  },
+  "DEVICE-APP-BEFORE.json": {
+    "bytes": 69,
+    "sha256": "3b358dfc506cb1cd2b277dfc9d03503e95730ada9d52e01a244a36e527deb23a"
+  },
+  "FIRMWARE-ARTIFACT.json": {
+    "bytes": 318,
+    "sha256": "1b4c585d920d3772c3363d4e97c5f0b7c79c961095d344b38a66c5301691daaa"
+  },
+  "FLASH-PLAN.json": {
+    "bytes": 1751,
+    "sha256": "edd54f1ea8dbf3795f8484fd9254c2e16d90fa4e97fbac4a3faf82084379e3ce"
+  },
+  "FLASH-RECEIPT.json": {
+    "bytes": 1241,
+    "sha256": "f94a75c2f2b1a76e27e2bfc6c54471f194f8198ccf95a8512535006fbcb0de97"
+  },
+  "MANIFEST.json": {
+    "bytes": 3444,
+    "sha256": "45658dd1c3d2ac9b6758452fe276032026fab33c35a103db3977defddc461c6d"
+  },
+  "NORMAL-STARTUP-SUMMARY.json": {
+    "bytes": 277,
+    "sha256": "651c55869e6dc224086ad10c6f7ece728f30efc2f06e5cb7dca87f739cf33cc0"
+  },
+  "PHONE-050-INSTALL-CARRIED-FORWARD.json": {
+    "bytes": 1147,
+    "sha256": "2b7e76d6e43df2d94143c9d247d88ce82fbe5ca0a2a8f4d13d63fbbf3b147b08"
+  },
+  "PRD-COLOR-RULES-CANDIDATE.md": {
+    "bytes": 3361,
+    "sha256": "41d8a11711664d5a489ca584a8b119f01121fdbe3325698724761b12b24398b8"
+  },
+  "PRODUCTION-RESOURCES.json": {
+    "bytes": 676,
+    "sha256": "0c5e85455acf71ad6ade8b975932cf2069073c2891025a6c46b3eb2d29f929f0"
+  },
+  "PROTECTED-SOURCE-COMPARISON.json": {
+    "bytes": 484,
+    "sha256": "7f4cee5fef51910af47dadc6469698afaab9a9893c3c428f03931752aa1355e9"
+  },
+  "SOURCE-AFTER.json": {
+    "bytes": 29076,
+    "sha256": "caa1bcd2fe9ea0f268fbf31ba986ef691de0f8ee02c670ccedeaac10a2a0dd70"
+  },
+  "SOURCE-BEFORE.json": {
+    "bytes": 29701,
+    "sha256": "ec69172e1f1edd58e52be376ef8d551260105d622739fe6aee7d689d1ae29f59"
+  },
+  "SOURCE-FILES.json": {
+    "bytes": 1387,
+    "sha256": "abe033fc9b53b9dfe50ed2b19a242fe357d798f53725799d51e98e374370b27d"
+  },
+  "app-header-before.bin": {
+    "bytes": 4096,
+    "sha256": "d82742cb8b8d8431ad9b8e8257d80d9eaf9e6d182bd0add377ca7a9861548d60"
+  },
+  "cat_forest_badge-0.6.7-linear-color.bin": {
+    "bytes": 6179024,
+    "sha256": "4aa2929920c1cb4ec41c6c325f2bbd9edb1ae00378517c6833fde99d0c17c757"
+  },
+  "catforest-0.5.0-badge-connect-debug.apk": {
+    "bytes": 2694738,
+    "sha256": "e6bd13db0ef74f79b9b0ef8f33228c0b28240c758e10542c95c550edc7249a14"
+  },
+  "color-profile.json": {
+    "bytes": 2714,
+    "sha256": "85cd904ac031a4edb21c899fde102643fb2f88787cba81c9d68eecbd07a01013"
+  },
+  "deployment-app-only.py": {
+    "bytes": 2813,
+    "sha256": "b8057930e9bc88ce9be9ac70a8fc9842e98f0ae9d0cee281e0adc9f87cd3e5db"
+  },
+  "deployment-preflight.py": {
+    "bytes": 2913,
+    "sha256": "daeb9154eed60a6c76f84e5128e51e211130573c1ede267d92707e4a4507b789"
+  },
+  "firmware-build-description.json": {
+    "bytes": 390024,
+    "sha256": "623eeafec2e1a220464f64b6b03f1c12341d32b25bd180427c7039d27a06588b"
+  },
+  "firmware-production-build.log": {
+    "bytes": 19523,
+    "sha256": "4b4fd3a1cbde1153221b45ca95de679dd993e892939c991eced86aa9455fe0db"
+  },
+  "flash-app-only.log": {
+    "bytes": 7677,
+    "sha256": "f381607d07ad9b8fcad4b5595640099f799804493bad5ba38128f7d90fb93366"
+  },
+  "otadata-before.bin": {
+    "bytes": 8192,
+    "sha256": "a1ed149677f974e7b1fd3b926c817a1db72ce01ca26b31929937d4ab01f5be22"
+  },
+  "partition-table-before.bin": {
+    "bytes": 4096,
+    "sha256": "e284d888225fa52e83260cb1a5e9dd3d3f154996add8902cdab3d39aea2bac32"
+  },
+  "production-assets.log": {
+    "bytes": 937,
+    "sha256": "4d9dbf3a6f3eba7901146a0e7e559d259484e9abc3186f67b57d0bc00023e72d"
+  },
+  "production-resources/color-profile.json": {
+    "bytes": 2714,
+    "sha256": "85cd904ac031a4edb21c899fde102643fb2f88787cba81c9d68eecbd07a01013"
+  },
+  "production-resources/native_cat.rle": {
+    "bytes": 4073508,
+    "sha256": "c6c26f880078fd417288c03e3cbdba1cae3b8cfc0edd3366c52b56e98a0b20e4"
+  },
+  "production-resources/native_cat_color.h": {
+    "bytes": 4506,
+    "sha256": "e24b1236de1f88ca09209991dadd86add870cbcd7f76564bf3096d7448aeac5f"
+  },
+  "production-resources/provenance.json": {
+    "bytes": 4208,
+    "sha256": "4aab5482472b3c8627750b9755f7eb2443badfe665f7dee5c8aacf00248795c7"
+  },
+  "production-startup.log": {
+    "bytes": 15412,
+    "sha256": "0a4f002ea7ab920a3e9e8c4c3c7eb795214ea64f1ac2b1ed23e0ff7b23e646b5"
+  },
+  "provenance.json": {
+    "bytes": 4208,
+    "sha256": "4aab5482472b3c8627750b9755f7eb2443badfe665f7dee5c8aacf00248795c7"
+  },
+  "read-app-header-before.log": {
+    "bytes": 455,
+    "sha256": "3ed22d36b1d94ca6bda4b37f8d9729096059df10b17850a4f976940e72a5c509"
+  },
+  "read-otadata-before.log": {
+    "bytes": 477,
+    "sha256": "509a84e83c9e53807a8089fc35aec1635b0073959d46272c48b3cb3594f72cf3"
+  },
+  "read-partition-table-before.log": {
+    "bytes": 456,
+    "sha256": "484b5de5bab01f74ac9a8d8e7f616e2b706711012c5feb2077f86904a8a6d18d"
+  },
+  "read-partition-table-sandbox-blocked.log": {
+    "bytes": 2115,
+    "sha256": "fe6d0f6b2cb1f4e30a2921281eeab08fa3fbb7110e73728de65dc65827a73d17"
+  },
+  "source-after/firmware/CMakeLists.txt": {
+    "bytes": 18165,
+    "sha256": "c8d30fdafa6067c92e5869759d315fa8e8e1c3b8167aafad38869175db076bd7"
+  },
+  "source-after/firmware/main/assets/native-cat/color-profile.json": {
+    "bytes": 2714,
+    "sha256": "85cd904ac031a4edb21c899fde102643fb2f88787cba81c9d68eecbd07a01013"
+  },
+  "source-after/firmware/main/assets/native-cat/native_cat_color.h": {
+    "bytes": 4506,
+    "sha256": "e24b1236de1f88ca09209991dadd86add870cbcd7f76564bf3096d7448aeac5f"
+  },
+  "source-after/firmware/main/assets/native-cat/native_cat_data.c": {
+    "bytes": 5517647,
+    "sha256": "70128405f1c5f512162b5d6252ca5709a48c4f4642d27bbcd445b656cbc9e260"
+  },
+  "source-after/firmware/main/assets/native-cat/native_cat_data.h": {
+    "bytes": 228,
+    "sha256": "f191fc18f160e9494b438e1d64de02518a0cdfbc37fa84be71db29f67f28c27c"
+  },
+  "source-after/firmware/main/assets/native-cat/provenance.json": {
+    "bytes": 4208,
+    "sha256": "4aab5482472b3c8627750b9755f7eb2443badfe665f7dee5c8aacf00248795c7"
+  },
+  "source-after/firmware/main/badge_native_cat.c": {
+    "bytes": 4078,
+    "sha256": "338adbfe79e3e34658c0f05062fac225e074415c2e75230027dae575d29a5dc3"
+  },
+  "source-after/firmware/tools/native_cat_color.py": {
+    "bytes": 3736,
+    "sha256": "9b5b0ce3df97c004352139ee6a3b92eed0eb7c26585dda0109e9ed58cfd3bbb4"
+  },
+  "source-after/firmware/tools/native_cat_color_profile.json": {
+    "bytes": 2714,
+    "sha256": "85cd904ac031a4edb21c899fde102643fb2f88787cba81c9d68eecbd07a01013"
+  },
+  "source-after/firmware/tools/pack_native_cat.py": {
+    "bytes": 14430,
+    "sha256": "232c794fa9d5933ddd023d33ff8460a0d216689f4be754c76ffb08aa2f639188"
+  },
+  "source-after/firmware/tools/show_native_cat_assets.py": {
+    "bytes": 4436,
+    "sha256": "af3426ce693902d9aa3029bb1b59d7298087ad29e39002424a354f5e0006c6b9"
+  },
+  "source-after/protocol/2026-10-18-native-color-candidate.md": {
+    "bytes": 3361,
+    "sha256": "41d8a11711664d5a489ca584a8b119f01121fdbe3325698724761b12b24398b8"
+  },
+  "source-before/firmware/CMakeLists.txt": {
+    "bytes": 18163,
+    "sha256": "bef513856d8cd85815577a85254073cc9627f40046f30f8ee7dde7db43429283"
+  },
+  "source-before/firmware/main/assets/native-cat/native_cat_data.c": {
+    "bytes": 5519016,
+    "sha256": "7f9bc78c04593913eb7316ce687ab5860226d7f69f3a7cd3e52c9e789191ae57"
+  },
+  "source-before/firmware/main/assets/native-cat/native_cat_data.h": {
+    "bytes": 228,
+    "sha256": "9ab3a82f55b685ca8296a469ea213bec8706a11ce1dfe5f0100051e4bc4f072d"
+  },
+  "source-before/firmware/main/assets/native-cat/provenance.json": {
+    "bytes": 3812,
+    "sha256": "31597cd70d78f5c62c62af1e710f470b590f409925c16d8a34990e67d58d34ad"
+  },
+  "source-before/firmware/main/badge_native_cat.c": {
+    "bytes": 4037,
+    "sha256": "94df71d158acdb058b7c47446c38c9fc980e08f7fc297e165081e08b85cef718"
+  },
+  "source-before/firmware/tools/pack_native_cat.py": {
+    "bytes": 13275,
+    "sha256": "bc09a07854804883e824f44e837904472d55256abc39f4eeb5324ad8aa4fb2b8"
+  },
+  "visuals/README.md": {
+    "bytes": 413,
+    "sha256": "03353c94d54f90722aaab1ada062eecfecffd1c323fe04bf719dd49c50e8c85a"
+  },
+  "visuals/before066-shape0-frame0-bandana.png": {
+    "bytes": 4111,
+    "sha256": "329ab62fc391f711313bc66852ff8f83b48b6bb90c0d7baa211394965ac39c76"
+  },
+  "visuals/before066-shape1-frame0-bandana.png": {
+    "bytes": 5535,
+    "sha256": "5adfa4171cbfff10d74dbab05e3edad81706f21dab8e369a61b93d940645a0d8"
+  },
+  "visuals/before066-shape2-frame0-bandana.png": {
+    "bytes": 6071,
+    "sha256": "bd697b6c01a453f9fc50e666b5e6310a4ca86654dcb82219b192d9a2bfdc877d"
+  },
+  "visuals/before066-shape3-frame0-bandana.png": {
+    "bytes": 6023,
+    "sha256": "e8aeb78079baa3df8e6d81ed86bf7bb3774a9f5264b8a667c241ef61358d11b6"
+  },
+  "visuals/before066-shape3-frame26-bandana.png": {
+    "bytes": 6255,
+    "sha256": "a07ba67594436fef50118f6c9dc4d15f281513e0ac3742df535bec63a997fe8f"
+  },
+  "visuals/before066-shape3-frame48-bandana.png": {
+    "bytes": 6508,
+    "sha256": "8575ae25978f08b65cc79f83b34dbeea0c48e40979c1765a07739219ee7215dc"
+  },
+  "visuals/before066-shape4-frame0-bandana.png": {
+    "bytes": 6136,
+    "sha256": "74cb5adbf7773e02e224620869d46a6ed6716fc85af8f083928498d41c27b421"
+  },
+  "visuals/candidate067-shape0-frame0-bandana.png": {
+    "bytes": 4111,
+    "sha256": "bf8b2453c63be30f3e0682a90db04a6433cacea1ea1bbbe1eeeb26c395335e64"
+  },
+  "visuals/candidate067-shape1-frame0-bandana.png": {
+    "bytes": 5553,
+    "sha256": "d28646f91c69319f6cdbc4dd559bedb4b573e0921c9a8381df0cc12bcd6a3032"
+  },
+  "visuals/candidate067-shape2-frame0-bandana.png": {
+    "bytes": 6026,
+    "sha256": "940667c70ce9a6afbfa4bdda65545f04c232d285cd6999e8ef5040ce8bf96277"
+  },
+  "visuals/candidate067-shape3-frame0-bandana.png": {
+    "bytes": 5980,
+    "sha256": "7ea3b54cd6383da21e501dd5b84b2ee5bd40187e5dccd31c49128688b09072e1"
+  },
+  "visuals/candidate067-shape3-frame26-bandana.png": {
+    "bytes": 6194,
+    "sha256": "8393269f4fe616f9249bcc388731c29ea5e97579919af438ab7384a3b63f47ef"
+  },
+  "visuals/candidate067-shape3-frame48-bandana.png": {
+    "bytes": 6507,
+    "sha256": "189a8f1e78cd78c9ac2b35a460f5978b648369dee05d40b9084259629a68c85d"
+  },
+  "visuals/candidate067-shape4-frame0-bandana.png": {
+    "bytes": 6157,
+    "sha256": "2718b9b79e4bfc202d752703711e15d1d889aeb845852ddcc727e51281220013"
+  },
+  "visuals/comparison-adult-poses.png": {
+    "bytes": 81226,
+    "sha256": "51cff07792de2f86e220f3b4d0b15ffa1b5c29883bbcbea44d17874009c12336"
+  },
+  "visuals/comparison-growth.png": {
+    "bytes": 108810,
+    "sha256": "583ba37db6c294de78b2b35750f5e912fe29dc99f4ea2830ec34993422d5f63b"
+  }
+}

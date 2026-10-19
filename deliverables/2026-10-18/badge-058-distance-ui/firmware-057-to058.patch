@@ -1,0 +1,961 @@
+--- a/firmware/CMakeLists.txt
++++ b/firmware/CMakeLists.txt
+@@ -282,8 +282,8 @@
+     endforeach()
+ 
+ endfunction()
+-set(PROJECT_VER "0.5.7-scene-swipe-lock")
+-project(cat_forest_badge VERSION 0.5.7)
++set(PROJECT_VER "0.5.8-distance-ui")
++project(cat_forest_badge VERSION 0.5.8)
+ include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
+ foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
+         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION
+--- a/firmware/main/badge_day_ui.inc
++++ b/firmware/main/badge_day_ui.inc
+@@ -74,34 +74,42 @@
+ {
+     if(current_page!=PAGE_HOME||face!=1||mode==MODE_AOD||mode==MODE_OFF||!day_pending)return;
+     day_pending=false;
+-    set_label(face_heading,"一天进程",94);hide(face_phase,false);hide(ring_missing,false);hide(face_action,true);hide(face_weather,true);hide(home_action_prop,true);hide(day_future_bubble,true);
++    hide(face_heading,false);hide(face_action,true);hide(face_weather,true);hide(home_action_prop,true);hide(day_future_bubble,true);hide(ring_missing,false);
+     int now=0,limit=0;bool future=false;bool calibrated=day_reference(&now,&limit,&future);
+     if(day_follow_now&&calibrated&&!day_scrubbing)day_minute=day_clamp(now);
+-    char text[120];
+-    if(day_follow_now&&calibrated)snprintf(text,sizeof text,"%s",day_now_date);
+-    else if(day_view.valid)snprintf(text,sizeof text,"%s%s",day_view.old?"上次 ":"",day_view.date);else snprintf(text,sizeof text,"等待手机同步");
+-    set_label(face_phase,text,126);
++    char text[120];snprintf(text,sizeof text,"%02d:%02d",day_minute/60,day_minute%60);
++    if(name_plate_role!=2){
++        name_plate_role=2;lv_obj_set_width(face_heading,190);lv_obj_set_style_max_width(face_heading,190,0);lv_obj_set_x(face_heading,138);
++        lv_obj_set_style_bg_opa(face_heading,LV_OPA_TRANSP,0);lv_obj_set_style_border_width(face_heading,0,0);lv_obj_set_style_pad_all(face_heading,0,0);
++        lv_obj_set_style_text_font(face_heading,&local2_font20,0);
++    }
++    lv_obj_set_style_text_color(face_heading,lv_color_hex(0x654d35),0);set_label(face_heading,text,113);
++    bool show_date=calibrated&&day_view.valid&&!day_follow_now&&(!day_records_today||day_view.old);
++    if(show_date){snprintf(text,sizeof text,"%s%s",day_view.old?"上次 ":"",day_view.date);set_label(face_phase,text,158);}
++    hide(face_phase,!show_date);
+     if(!calibrated){
+-        set_label(face_phase,"需手机校时",126);
+-        snprintf(text,sizeof text,"%02d:%02d · 需手机校时",day_minute/60,day_minute%60);set_label(ring_missing,text,365);
+-        badge_scene_day_expectation(home_scene);
++        set_label(ring_missing,"选中时间 · 需手机校时",390);badge_scene_day_expectation(home_scene);
+     }else if(future){
+-        /* Never consult the last historical segment in this branch. */
+-        snprintf(text,sizeof text,"%02d:%02d · 尚未发生",day_minute/60,day_minute%60);set_label(ring_missing,text,365);
+-        badge_scene_day_expectation(home_scene);set_label(face_phase,"轻点回到此刻",126);hide(day_future_bubble,false);
++        /* No historical segment can become a future event. */
++        set_label(ring_missing,"尚未发生 · 轻点回此刻",390);badge_scene_day_expectation(home_scene);
+     }else{
+         const l2_day_segment_t *selected=NULL;
+         if(day_view.valid)for(unsigned i=0;i<day_view.count;i++)if(day_minute>=day_view.segments[i].start&&day_minute<day_view.segments[i].end){selected=day_view.segments+i;break;}
+         const char *kinds[]={"休息","在家","通勤","工作","外出","走动","未知"};const char *sources[]={"观测","推测","示例"};
+         if(day_follow_now){
+-            snprintf(text,sizeof text,"%02d:%02d · 当前状态",day_minute/60,day_minute%60);set_label(ring_missing,text,365);
++            set_label(ring_missing,live_context?"此刻 · 当前状态":"此刻 · 上次状态",390);
+             badge_scene_day_current(home_scene,domain.ready&&domain.has_snapshot&&!domain.storage_error,domain.snapshot.scene,domain.snapshot.weather,display_action(),live_context);
+         }else{
+-            if(selected)snprintf(text,sizeof text,"%02d:%02d %s · %s",day_minute/60,day_minute%60,kinds[selected->kind],sources[selected->source]);
+-            else snprintf(text,sizeof text,"%02d:%02d · %s",day_minute/60,day_minute%60,day_view.valid?"无记录":"待手机同步");
+-            set_label(ring_missing,text,365);badge_scene_day_preview(home_scene,selected&&selected->kind!=6,selected?selected->kind:6,(unsigned)day_minute);
++            if(selected)snprintf(text,sizeof text,"%s · %s",kinds[selected->kind],sources[selected->source]);else snprintf(text,sizeof text,"%s",day_view.valid?"无记录":"待手机同步");
++            set_label(ring_missing,text,390);badge_scene_day_preview(home_scene,selected&&selected->kind!=6,selected?selected->kind:6,(unsigned)day_minute);
+         }
+     }
++    bool light=badge_scene_light_background(home_scene);
++    lv_obj_set_style_text_color(face_heading,lv_color_hex(light?0x654d35:ZIP_UI_COLOR_TEXT),0);
++    lv_obj_set_width(ring_missing,242);lv_obj_set_x(ring_missing,112);
++    lv_obj_set_style_bg_color(ring_missing,lv_color_hex(light?0xfff7e9:0x28242e),0);lv_obj_set_style_bg_opa(ring_missing,210,0);
++    lv_obj_set_style_radius(ring_missing,10,0);lv_obj_set_style_pad_ver(ring_missing,4,0);set_label(ring_missing,lv_label_get_text(ring_missing),390);
++    update_clock();
+     static int old_x=233,old_y=14;
+     double a=day_minute*6.283185307179586/1440-1.570796326794897;int x=233+(int)(219*cos(a)),y=233+(int)(219*sin(a));
+     lv_area_t area;lv_obj_get_coords(pages[PAGE_HOME],&area);
+--- a/firmware/main/badge_gesture.c
++++ b/firmware/main/badge_gesture.c
+@@ -15,8 +15,14 @@
+     int dx=g->last_x-g->x, dy=g->last_y-g->y;
+     uint32_t distance=(uint32_t)(dx*dx+dy*dy);
+     if(distance>g->maximum_distance_sq) g->maximum_distance_sq=distance;
+-    if(!g->axis && distance>=BADGE_GESTURE_AXIS_LOCK_PX*BADGE_GESTURE_AXIS_LOCK_PX)
+-        g->axis=abs(dx)>abs(dy)?BADGE_GESTURE_AXIS_HORIZONTAL:BADGE_GESTURE_AXIS_VERTICAL;
++    if(!g->axis && distance>=BADGE_GESTURE_AXIS_LOCK_PX*BADGE_GESTURE_AXIS_LOCK_PX) {
++        int ax=abs(dx),ay=abs(dy);
++        /* A few diagonal pixels at touchdown must not permanently turn a
++         * horizontal page drag into a vertical one. No time/hold requirement. */
++        if(ax*2>=ay*3)g->axis=BADGE_GESTURE_AXIS_HORIZONTAL;
++        else if(ay*2>=ax*3)g->axis=BADGE_GESTURE_AXIS_VERTICAL;
++        else if(distance>=32*32)g->axis=ax>=ay?BADGE_GESTURE_AXIS_HORIZONTAL:BADGE_GESTURE_AXIS_VERTICAL;
++    }
+ }
+ badge_gesture_kind_t badge_gesture_direction(const badge_gesture_t *g)
+ {
+@@ -39,7 +45,8 @@
+     else {
+         int dx=g->last_x-g->x, dy=g->last_y-g->y;
+         unsigned dominant=(unsigned)(g->axis==1 ? abs(dx) : abs(dy));
+-        if((elapsed<=ZIP_UI_SWIPEMAXMS && dominant>=ZIP_UI_SWIPEMINPX) || dominant>=BADGE_DRAG_SLOW_COMMIT_PX)
++        /* Distance alone controls navigation: no fling shortcut or slow-drag timeout. */
++        if(dominant>=BADGE_DRAG_COMMIT_DISTANCE_PX)
+             result=badge_gesture_direction(g);
+     }
+     g->active=false; return result;
+--- a/firmware/main/badge_gesture.h
++++ b/firmware/main/badge_gesture.h
+@@ -7,7 +7,7 @@
+ typedef struct {
+     int16_t x, y, last_x, last_y;
+     uint32_t started_ms, maximum_distance_sq;
+-    uint8_t axis; /* Locks after 12 px: 1 horizontal, 2 vertical. */
++    uint8_t axis; /* Directional intent after 12 px; ambiguous diagonal waits up to 32 px. */
+     bool active;
+ } badge_gesture_t;
+ void badge_gesture_begin(badge_gesture_t *g, int16_t x, int16_t y, uint32_t now);
+@@ -20,9 +20,10 @@
+ #define BADGE_GESTURE_AXIS_LOCK_PX 12
+ #define BADGE_DRAG_PAGE_EXTENT_PX 466
+ #define BADGE_DRAG_LEGACY_RELEASE_MS 120
+-#define BADGE_DRAG_SLOW_COMMIT_PX 140
+-#define BADGE_DRAG_REBOUND_MS 180
+-#define BADGE_DRAG_COMMIT_MS 200
+-#define BADGE_DRAG_NO_TARGET_PX 28
++#define BADGE_DRAG_COMMIT_DISTANCE_PX 160
++#define BADGE_DRAG_SLOW_COMMIT_PX BADGE_DRAG_COMMIT_DISTANCE_PX
++#define BADGE_DRAG_REBOUND_MS 90
++#define BADGE_DRAG_COMMIT_MS 150
++#define BADGE_DRAG_NO_TARGET_PX 12
+ /* A locked target never changes on reversal; opposite travel rebounds at zero. */
+ int badge_gesture_drag_offset(int raw, badge_gesture_kind_t locked_direction, bool has_target);
+--- a/firmware/main/badge_pages.c
++++ b/firmware/main/badge_pages.c
+@@ -375,13 +375,14 @@
+ static lv_obj_t *touch_targets[5], *touch_xy, *touch_result;
+ static badge_scene_t *home_scene, *care_scene, *welcome_scene,*care_action_scene;
+ static lv_obj_t *face_heading,*face_phase,*face_weather,*face_action,*face_gift,*face_c_values[5],*face_c_icons[5];
+-static lv_obj_t *care_icons[5],*care_bath_hint;
++static lv_obj_t *care_icons[5],*care_bath_hint,*care_heading,*care_buttons[5],*care_names[5];
+ static lv_obj_t *home_action_prop,*gift_popup,*gift_popup_title,*gift_popup_icon,*gift_popup_sub;
+ static lv_obj_t *setting_discover,*meet_state,*meet_id,*meet_confirm_label;
+ static lv_obj_t *ring_missing,*ring_marker,*ring_hours[4],*guide_progress,*feedback_ring,*heart_legend;
+ static lv_obj_t *heart_dots[L2_DAY_HEART_MAX],*heart_count_label;
+ /* 待机常显（AOD）用的大时钟与日期，只在 MODE_AOD 显示，时间来自手机校时。 */
+-static lv_obj_t *aod_clock,*home_weather;
++static lv_obj_t *home_date,*home_weather,*home_stat_icons[5];
++static int name_plate_role=-1;
+ static uint32_t weather_seen_ms;
+ static bool weather_seen,offline_note_shown;
+ static badge_scene_t *guide_scene;
+@@ -391,7 +392,10 @@
+ static lv_draw_buf_t slide_buffers[2];
+ static lv_image_dsc_t slide_frames[2];
+ static void *slide_pixels[2];
+-static bool slide_ready,home_projection_stale,home_pose_saved;
++static bool slide_ready,home_projection_stale,home_pose_saved,home_source_ready;
++typedef struct {uint64_t revision,clock_minute;uint32_t day_generation,result_stamp;uint16_t minute,pending;uint8_t face,action,flags;} home_peek_key_t;
++static home_peek_key_t home_peek_key;
++static bool home_peek_valid;
+ typedef struct {bool active,settling,has_target,to_face,commit,bounded_face;int axis,offset;page_t from,target;unsigned face;badge_gesture_kind_t direction;} ui_drag_t;
+ static ui_drag_t ui_drag;
+ static bool drag_completing,contact_cancelled;
+@@ -408,6 +412,7 @@
+ static bool peer_attached;
+ static uint32_t welcome_started;
+ static lv_indev_t *touch_indev;
++static lv_obj_t *contact_owner;
+ static page_t current_page=PAGE_BOOT;
+ static ui_mode_t mode=MODE_PLAY;
+ static badge_view_t previous;
+@@ -471,15 +476,20 @@
+ static void refresh_state(void);
+ static void update_clock(void);
+ static void project_standby(void);
++static void name_plate(const char *text,bool dimmed);
++static void header_link(void);
+ static l2_action_t display_action(void);
+ static void project_home(void);
++static void project_care_menu(void);
+ static void warm_home_presentation(uint32_t now);
+ static void object_pressing(lv_event_t *event);
+ static const char *stage_name(l2_scene_t stage);
+ static void drag_cancel(void);
+ static void drag_update(void);
+ static bool drag_release(badge_gesture_kind_t kind);
+-static void release_transition(badge_gesture_kind_t direction);
++static void drag_abort(void);
++static bool capture_page(unsigned index,lv_obj_t *page);
++static void prepare_idle_home_peek(void);
+ static void gift_bob(void *object,int32_t value) {lv_obj_set_style_translate_y(object,value,0);}
+ static void set_decoration_hold(bool held)
+ {
+@@ -501,8 +511,8 @@
+ #define R(n,p,x,y,w,h) {n,p,x,y,w,h,UI_HIT_RECT,false}
+ #define C(n,p,x,y,r) {n,p,x,y,r,r,UI_HIT_CIRCLE,false}
+         C("guide-practice",PAGE_GUIDE,233,200,110),R("skip-guide",PAGE_GUIDE,233,411,140,32),R("connection-help",PAGE_PAIR,233,380,180,40),
+-        C("home-alert",PAGE_HOME,118,106,24),C("pet-cat",PAGE_HOME,233,262,110),C("home-hold",PAGE_HOME,233,233,212),
+-        C("feed",PAGE_CARE,90,306,30),C("water",PAGE_CARE,160,340,30),C("play",PAGE_CARE,306,340,30),C("sleep",PAGE_CARE,376,306,30),C("bath",PAGE_CARE,233,352,30),C("care-action",PAGE_CARE_ACTION,233,323,52),C("status-settings",PAGE_STATUS,233,414,24),
++        C("home-alert",PAGE_HOME,94,130,24),C("pet-cat",PAGE_HOME,233,262,110),C("home-hold",PAGE_HOME,233,233,212),
++        C("feed",PAGE_CARE,90,326,30),C("water",PAGE_CARE,160,366,30),C("play",PAGE_CARE,306,366,30),C("sleep",PAGE_CARE,376,326,30),C("bath",PAGE_CARE,233,386,30),C("care-action",PAGE_CARE_ACTION,233,323,52),C("status-settings",PAGE_STATUS,233,414,24),
+         R("brightness",PAGE_SETTINGS,233,126,310,48),R("voice-off",PAGE_SETTINGS,233,178,310,48),R("nearby-discovery",PAGE_SETTINGS,233,230,310,48),R("aod-setting",PAGE_SETTINGS,233,282,310,48),R("version-hold",PAGE_SETTINGS,233,346,270,48),R("device-sync",PAGE_SETTINGS,173,392,112,36),R("review-guide",PAGE_SETTINGS,293,392,112,36),
+         R("sync-help",PAGE_DEVICE,233,292,220,40),R("pending-events",PAGE_DEVICE,173,348,112,40),R("device-guide",PAGE_DEVICE,293,348,112,40),R("device-back",PAGE_DEVICE,233,405,130,36),
+         R("touch-0",PAGE_TOUCH,113,113,52,52),R("touch-1",PAGE_TOUCH,353,113,52,52),R("touch-2",PAGE_TOUCH,353,353,52,52),R("touch-3",PAGE_TOUCH,113,353,52,52),R("touch-4",PAGE_TOUCH,233,233,52,52),
+@@ -662,20 +672,18 @@
+     day_pending=true;
+     hide(day_future_bubble,true);
+     badge_scene_set_face(home_scene,face);
+-    lv_obj_set_style_text_font(home_clock,&local2_font20,0);
+-    set_label(home_clock,face?"  :  ":"需手机校时",face?398:62);
+-    set_label(home_link,"",88);lv_obj_set_pos(home_bt,310,54);
+-    for(unsigned i=0;i<5;i++)hide(home_arcs[i],face!=0);
++    set_label(home_link,"",88);lv_obj_set_style_text_color(home_link,lv_color_hex(0x806b55),0);
++    for(unsigned i=0;i<5;i++)hide(home_arcs[i],true);
+     for(unsigned i=0;i<2;i++){hide(day_rings[i],face!=1||i!=0);lv_obj_set_style_arc_color(day_rings[i],lv_color_hex(0xd4bc94),LV_PART_MAIN);lv_obj_set_style_arc_color(day_rings[i],lv_color_hex(0xab8055),LV_PART_INDICATOR);}
+     for(unsigned i=0;i<4;i++)hide(ring_hours[i],!face);
+     for(unsigned i=0;i<5;i++){hide(face_c_values[i],true);hide(face_c_icons[i],true);}
+-    hide(face_heading,false);set_label(face_heading,face==1?"一天进程":"小猫",face?94:392);
+-    hide(heart_legend,true);hide(ring_missing,face!=1);set_label(ring_missing,"一天进程待手机同步",365);
++    hide(face_heading,false);
++    hide(heart_legend,true);hide(ring_missing,face!=1);set_label(ring_missing,"待手机同步",390);
+     hide(face_gift,true);hide(home_hint,true);hide(face_weather,false);hide(face_action,face!=0);
+-    lv_obj_set_pos(home_alert,94,82);hide(face_phase,face==0);
++    lv_obj_set_pos(home_alert,79,115);hide(face_phase,face==0);
+     set_label(face_phase,"等待手机状态",126);set_label(face_weather,"天气待同步",face?342:363);
+     place_hearts();
+-    dirty=true;update_clock();
++    dirty=true;project_home();day_project();update_clock();
+ }
+ 
+ static void navigate(page_t page)
+@@ -854,7 +862,6 @@
+ {
+     if(day_capture)return;
+     if(current_page==PAGE_GUIDE){guide_accept(kind);return;}
+-    page_t before=current_page;unsigned old_face=face;
+     if(current_page==PAGE_HOME) {
+         if(kind==BADGE_GESTURE_UP) navigate(PAGE_CARE);
+         else if(kind==BADGE_GESTURE_DOWN) navigate(PAGE_STATUS);
+@@ -870,7 +877,6 @@
+     else if(current_page==PAGE_TOUCH && kind==BADGE_GESTURE_RIGHT) navigate(PAGE_SETTINGS);
+     else if(current_page==PAGE_VOICE && (kind==BADGE_GESTURE_DOWN || kind==BADGE_GESTURE_RIGHT)) navigate(PAGE_HOME);
+     else if(current_page==PAGE_MEET && kind==BADGE_GESTURE_RIGHT)navigate(PAGE_SETTINGS);
+-    if(current_page!=before||face!=old_face)release_transition(kind);
+ }
+ static void set_mode(ui_mode_t next)
+ {
+@@ -878,7 +884,9 @@
+     bool was_standby=mode==MODE_AOD||mode==MODE_OFF;
+     uint8_t target=next==MODE_OFF ? 0 : next==MODE_AOD ? 35 : brightness;
+     if(bsp_display_brightness_set(target)!=ESP_OK) { announce("省电设置失败"); return; }
+-    mode=next;standby_epoch++; badge_scene_set_dimmed(home_scene,mode==MODE_AOD || mode==MODE_OFF);
++    mode=next;standby_epoch++;
++    if(touch_indev)lv_timer_set_period(lv_indev_get_read_timer(touch_indev),next==MODE_AOD||next==MODE_OFF?33:12);
++    badge_scene_set_dimmed(home_scene,mode==MODE_AOD || mode==MODE_OFF);
+     bool standby=mode==MODE_AOD || mode==MODE_OFF;
+     hide(home_link,standby);
+     hide(home_bt,standby);
+@@ -890,10 +898,22 @@
+     }
+     dirty=true;
+ }
++static void contact_unlock(void)
++{
++    if(contact_owner&&lv_obj_is_valid(contact_owner))lv_obj_remove_flag(contact_owner,LV_OBJ_FLAG_PRESS_LOCK);
++    contact_owner=NULL;
++}
+ static void input_event(lv_event_t *event)
+ {
+     lv_event_code_t code=lv_event_get_code(event); lv_point_t point; lv_indev_get_point(touch_indev,&point);
+-    if(code==LV_EVENT_PRESSED)set_decoration_hold(true);
++    if(code==LV_EVENT_PRESSED){
++        home_source_ready=false;
++        set_decoration_hold(true);
++        contact_unlock();contact_owner=lv_event_get_param(event);
++        if(contact_owner&&lv_obj_is_valid(contact_owner))lv_obj_add_flag(contact_owner,LV_OBJ_FLAG_PRESS_LOCK);
++        lv_timer_set_period(lv_indev_get_read_timer(touch_indev),12);
++    }
++    if(code==LV_EVENT_RELEASED||code==LV_EVENT_INDEV_RESET||code==LV_EVENT_PRESS_LOST||code==LV_EVENT_CANCEL)contact_unlock();
+     if(code==LV_EVENT_PRESSED&&day_capture&&day_release_seen){
+         day_capture=false;day_scrubbing=false;day_release_seen=false;
+         lv_obj_remove_flag(pages[PAGE_HOME],LV_OBJ_FLAG_PRESS_LOCK);
+@@ -931,6 +951,9 @@
+         ignore_contact=waking || transitioning() || current_page==PAGE_BOOT || previous.pairing;
+         held_action=false; last_input=lv_tick_get(); set_mode(MODE_PLAY);
+         badge_gesture_begin(&gesture,point.x,point.y,last_input);
++        /* Freeze only the source on DOWN. The other HOME face is composed
++         * during idle, outside the drag's coordinate-processing callback. */
++        if(current_page==PAGE_HOME&&!ignore_contact&&!gift_modal())home_source_ready=capture_page(0,pages[PAGE_HOME]);
+         if(current_page==PAGE_CARE_ACTION) {care_sample=point;care_sample_ms=last_input;care_save_attempted=false;}
+         if(current_page==PAGE_TOUCH) show_point(point);
+         if(current_page==PAGE_MEET&&meet_draw_mode) meet_draw_point(point.x,point.y);
+@@ -940,10 +963,14 @@
+         object_pressing(event);
+     } else if(code==LV_EVENT_RELEASED) {
+         presentation_contact=false;badge_scene_set_interacting(home_scene,false);
+-        if(contact_cancelled){contact_cancelled=false;gesture.active=false;ignore_contact=false;drag_cancel();return;}
+-        last_input=lv_tick_get(); badge_gesture_kind_t kind=badge_gesture_end(&gesture,point.x,point.y,last_input);
++        if(contact_cancelled){contact_cancelled=false;gesture.active=false;ignore_contact=false;drag_abort();return;}
++        last_input=lv_tick_get();
++        /* A release packet has no new touch coordinate. Use the last pressed
++         * sample and finish a drag even when object MOVE dispatch was skipped. */
++        if(gesture.active&&!ignore_contact&&!held_action){badge_gesture_move(&gesture,point.x,point.y);drag_update();}
++        badge_gesture_kind_t kind=badge_gesture_end(&gesture,gesture.last_x,gesture.last_y,last_input);
+         if(gift_modal()){drag_cancel();if(!ignore_contact&&!held_action&&kind==BADGE_GESTURE_TAP)tap(point.x,point.y);ignore_contact=false;return;}
+-        if(ignore_contact || held_action || previous.pairing || transitioning()) { if(!ui_drag.settling)drag_cancel();ignore_contact=false; return; }
++        if(ignore_contact || held_action || previous.pairing || transitioning()) { if(!ui_drag.settling)drag_abort();ignore_contact=false; return; }
+         if(current_page==PAGE_CARE_ACTION && care_action==L2_ACTION_SLEEP) {
+             if(last_input-gesture.started_ms>=1500 && gesture.maximum_distance_sq<144 && target_hit(HIT_CARE_ACTION,gesture.x,gesture.y))finish_care();
+             else announce("已取消未保存");
+@@ -953,7 +980,7 @@
+         if(drag_release(kind))return;
+         if(kind==BADGE_GESTURE_TAP) tap(zip_ui_clamp(point.x),zip_ui_clamp(point.y));
+         else if(lv_obj_has_flag(reset_layer,LV_OBJ_FLAG_HIDDEN)) swipe(kind);
+-    } else if(code==LV_EVENT_INDEV_RESET || code==LV_EVENT_PRESS_LOST || code==LV_EVENT_CANCEL) {presentation_contact=false;badge_scene_set_interacting(home_scene,false);contact_cancelled=contact_cancelled||lv_indev_get_state(touch_indev)==LV_INDEV_STATE_PRESSED;gesture.active=false;ignore_contact=true;held_action=false;drag_cancel();}
++    } else if(code==LV_EVENT_INDEV_RESET || code==LV_EVENT_PRESS_LOST || code==LV_EVENT_CANCEL) {presentation_contact=false;badge_scene_set_interacting(home_scene,false);contact_cancelled=contact_cancelled||lv_indev_get_state(touch_indev)==LV_INDEV_STATE_PRESSED;gesture.active=false;ignore_contact=true;held_action=false;drag_abort();}
+ }
+ static void object_pressing(lv_event_t *event)
+ {
+@@ -1017,6 +1044,7 @@
+ }
+ static bool capture_page(unsigned index,lv_obj_t *page)
+ {
++    if(index==1)home_peek_valid=false;
+     const uint32_t stride=lv_draw_buf_width_to_stride(466,LV_COLOR_FORMAT_RGB565);
+     const uint32_t bytes=stride*466+LV_DRAW_BUF_ALIGN;
+     if(!slide_pixels[index]) {
+@@ -1030,10 +1058,34 @@
+     lv_image_set_src(slide_images[index],slide_frames+index);
+     return true;
+ }
++static home_peek_key_t home_peek_current_key(void)
++{
++    uint64_t epoch=0;bool calibrated=local2_clock_now(&epoch);
++    home_peek_key_t key;memset(&key,0,sizeof key);key.revision=domain.snapshot.revision;key.clock_minute=calibrated?epoch/60000:0;
++    key.day_generation=day_view.generation;key.minute=(uint16_t)day_minute;key.pending=domain.pending_events;
++    key.face=(uint8_t)face;key.action=(uint8_t)display_action();
++    key.result_stamp=care_result_text&&lv_tick_elaps(care_result_started)<4000?care_result_started:0;
++    key.flags=(day_follow_now?1:0)|(live_context?2:0)|(previous.connected?4:0)|(previous.subscribed?8:0)|(day_view.valid?16:0)|(weather_seen&&lv_tick_elaps(weather_seen_ms)<1800000?32:0)|(link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000?64:0)|(calibrated?128:0);
++    return key;
++}
++static bool home_peek_is_current(void)
++{
++    home_peek_key_t key=home_peek_current_key();return home_peek_valid&&memcmp(&key,&home_peek_key,sizeof key)==0;
++}
++static void prepare_idle_home_peek(void)
++{
++    if(current_page!=PAGE_HOME||mode==MODE_AOD||mode==MODE_OFF||presentation_contact||gesture.active||ui_drag.active||ui_drag.settling||transitioning()||gift_modal()||lv_tick_elaps(last_input)<180||home_peek_is_current())return;
++    if(!badge_scene_save_pose(home_scene))return;
++    unsigned source=face;bool was_dirty=dirty;
++    face=(face+1)%2;update_face();project_home();day_project();warm_home_presentation(lv_tick_get());
++    bool captured=capture_page(1,pages[PAGE_HOME]);
++    face=source;update_face();project_home();day_project();badge_scene_restore_pose(home_scene);warm_home_presentation(lv_tick_get());dirty=was_dirty;
++    home_peek_valid=captured;if(captured)home_peek_key=home_peek_current_key();
++}
+ static bool prepare_slide(void)
+ {
+-    if(!capture_page(0,pages[ui_drag.from]))return false;
+-    if(ui_drag.to_face) {
++    if(!(ui_drag.from==PAGE_HOME&&home_source_ready)&&!capture_page(0,pages[ui_drag.from]))return false;
++    if(ui_drag.to_face&&!home_peek_is_current()) {
+         if(!badge_scene_save_pose(home_scene))return false;
+         home_pose_saved=true;
+         /* Use only the already projected, durable domain/day view. This is a
+@@ -1043,7 +1095,7 @@
+         bool captured=capture_page(1,pages[PAGE_HOME]);
+         face=source;home_projection_stale=true;
+         if(!captured)return false;
+-    } else if(ui_drag.has_target) {
++    } else if(ui_drag.has_target&&!ui_drag.to_face) {
+         hide(pages[ui_drag.target],false);
+         bool captured=capture_page(1,pages[ui_drag.target]);
+         hide(pages[ui_drag.target],true);
+@@ -1092,7 +1144,7 @@
+         lv_obj_set_style_opa(pages[i],LV_OPA_COVER,0);
+         lv_obj_remove_flag(pages[i],LV_OBJ_FLAG_PRESS_LOCK);
+     }
+-    ui_drag=(ui_drag_t){0};slide_ready=false;if(peek_root)hide(peek_root,true);
++    ui_drag=(ui_drag_t){0};slide_ready=false;home_source_ready=false;if(peek_root)hide(peek_root,true);
+     if(home_projection_stale){home_projection_stale=false;update_face();project_home();day_project();warm_home_presentation(lv_tick_get());}
+     if(home_pose_saved){home_pose_saved=false;badge_scene_restore_pose(home_scene);badge_scene_set_interacting(home_scene,presentation_contact);}
+ }
+@@ -1101,7 +1153,7 @@
+     (void)animation;
+     bool commit=ui_drag.active&&ui_drag.commit,to_face=ui_drag.to_face;
+     page_t target=ui_drag.target;unsigned target_face=ui_drag.face;
+-    if(commit&&to_face){face=target_face;home_pose_saved=false;}
++    if(commit&&to_face){face=target_face;home_pose_saved=false;home_projection_stale=true;home_peek_valid=false;}
+     drag_cancel();
+     /* Commit the visible destination once, after contact release + settling. */
+     if(commit&&!to_face){drag_completing=true;navigate(target);drag_completing=false;}
+@@ -1138,30 +1190,33 @@
+     int raw=ui_drag.axis==BADGE_GESTURE_AXIS_HORIZONTAL?gesture.last_x-gesture.x:gesture.last_y-gesture.y;
+     settle_apply(NULL,badge_gesture_drag_offset(raw,ui_drag.direction,ui_drag.has_target));
+ }
++static void drag_settle(bool commit)
++{
++    ui_drag.commit=commit;ui_drag.settling=true;navigation_started=lv_tick_get();
++    int sign=ui_drag.direction==BADGE_GESTURE_RIGHT||ui_drag.direction==BADGE_GESTURE_DOWN?1:-1;
++    lv_anim_t a;lv_anim_init(&a);lv_anim_set_var(&a,&ui_drag);lv_anim_set_exec_cb(&a,settle_apply);
++    lv_anim_set_values(&a,ui_drag.offset,commit?sign*BADGE_DRAG_PAGE_EXTENT_PX:0);
++    lv_anim_set_duration(&a,commit?BADGE_DRAG_COMMIT_MS:BADGE_DRAG_REBOUND_MS);
++    lv_anim_set_path_cb(&a,lv_anim_path_linear);lv_anim_set_completed_cb(&a,settle_done);
++    if(!lv_anim_start(&a))drag_cancel();
++}
++static void drag_abort(void)
++{
++    if(ui_drag.settling)return;
++    if(ui_drag.active)drag_settle(false);else drag_cancel();
++}
+ static bool drag_release(badge_gesture_kind_t kind)
+ {
++    (void)kind;
+     if(day_capture)return true;
+     if(!ui_drag.active)return false;
+     int raw=ui_drag.axis==BADGE_GESTURE_AXIS_HORIZONTAL?gesture.last_x-gesture.x:gesture.last_y-gesture.y;
+     settle_apply(NULL,badge_gesture_drag_offset(raw,ui_drag.direction,ui_drag.has_target));
+-    ui_drag.commit=ui_drag.has_target&&kind==ui_drag.direction;
+-    ui_drag.settling=true;navigation_started=lv_tick_get();
+     int sign=ui_drag.direction==BADGE_GESTURE_RIGHT||ui_drag.direction==BADGE_GESTURE_DOWN?1:-1;
+-    lv_anim_t a;lv_anim_init(&a);lv_anim_set_var(&a,&ui_drag);lv_anim_set_exec_cb(&a,settle_apply);
+-    lv_anim_set_values(&a,ui_drag.offset,ui_drag.commit?sign*BADGE_DRAG_PAGE_EXTENT_PX:0);
+-    lv_anim_set_duration(&a,ui_drag.commit?BADGE_DRAG_COMMIT_MS:BADGE_DRAG_REBOUND_MS);
+-    lv_anim_set_path_cb(&a,lv_anim_path_ease_out);lv_anim_set_completed_cb(&a,settle_done);
+-    if(!lv_anim_start(&a))drag_cancel();
++    /* Compare the displacement already shown to the user, independently of
++     * gesture duration, release-event classification or peak distance. */
++    drag_settle(ui_drag.has_target&&ui_drag.offset*sign>=BADGE_DRAG_COMMIT_DISTANCE_PX);
+     return true;
+-}
+-static void release_transition(badge_gesture_kind_t direction)
+-{
+-    drag_cancel();ui_drag.settling=true;ui_drag.axis=direction==BADGE_GESTURE_LEFT||direction==BADGE_GESTURE_RIGHT?BADGE_GESTURE_AXIS_HORIZONTAL:BADGE_GESTURE_AXIS_VERTICAL;
+-    int start=direction==BADGE_GESTURE_LEFT||direction==BADGE_GESTURE_UP?BADGE_DRAG_PAGE_EXTENT_PX:-BADGE_DRAG_PAGE_EXTENT_PX;
+-    settle_apply(NULL,start);navigation_started=lv_tick_get();
+-    lv_anim_t a;lv_anim_init(&a);lv_anim_set_var(&a,&ui_drag);lv_anim_set_exec_cb(&a,settle_apply);
+-    lv_anim_set_values(&a,start,0);lv_anim_set_duration(&a,BADGE_DRAG_LEGACY_RELEASE_MS);lv_anim_set_path_cb(&a,lv_anim_path_ease_out);lv_anim_set_completed_cb(&a,settle_done);
+-    if(!lv_anim_start(&a))drag_cancel();
+ }
+ static void hud_rect(lv_layer_t *layer,const lv_area_t *a,int x,int y,int w,int h,uint32_t color,int radius)
+ {
+@@ -1190,7 +1245,16 @@
+ {
+     lv_obj_add_event_cb(pages[PAGE_HOME],day_draw,LV_EVENT_DRAW_POST,NULL);
+     home_scene=badge_scene_create(pages[PAGE_HOME]);badge_scene_enable_world(home_scene);
+-    for(unsigned i=0;i<5;i++) { home_arcs[i]=arc(pages[PAGE_HOME],436,119-18*i,133-18*i,8,stat_colors[i]); lv_arc_set_mode(home_arcs[i],LV_ARC_MODE_REVERSE);lv_obj_set_style_opa(home_arcs[i],LV_OPA_30,0);lv_obj_set_style_arc_width(home_arcs[i],4,LV_PART_MAIN);lv_obj_set_style_arc_width(home_arcs[i],4,LV_PART_INDICATOR); }
++    const int centers[]={132,90,0,48,0};
++    const icon_t signals[]={ICON_BOWL,ICON_HEART,ICON_SOAP,ICON_MOON,ICON_HEALTH};
++    for(unsigned i=0;i<5;i++) {
++        int c=centers[i];home_arcs[i]=arc(pages[PAGE_HOME],428,c-12,c+12,5,stat_colors[i]);
++        lv_arc_set_mode(home_arcs[i],LV_ARC_MODE_REVERSE);lv_obj_set_style_arc_color(home_arcs[i],lv_color_hex(0xa99578),LV_PART_MAIN);
++        lv_obj_set_style_arc_opa(home_arcs[i],120,LV_PART_MAIN);lv_obj_set_style_arc_opa(home_arcs[i],210,LV_PART_INDICATOR);
++        double angle=(double)c*3.141592653589793/180.0;
++        home_stat_icons[i]=icon(pages[PAGE_HOME],signals[i],233+(int)(190*cos(angle)),233+(int)(190*sin(angle)),1);
++        hide(home_stat_icons[i],true);
++    }
+     /* RAM day segments are drawn on the outer daily track; never infer from clock. */
+     day_rings[0]=arc(pages[PAGE_HOME],454,0,359,18,ZIP_UI_COLOR_RINGTRACK);
+     day_rings[1]=arc(pages[PAGE_HOME],406,0,359,6,ZIP_UI_COLOR_RINGTRACK);
+@@ -1201,14 +1265,15 @@
+     /* 心动标记：主表盘 C 上按分钟位置点亮的小点，数据来自手机一天资料的可选 hearts。 */
+     for(unsigned i=0;i<L2_DAY_HEART_MAX;i++){heart_dots[i]=shape(pages[PAGE_HOME],0,0,9,9,ZIP_UI_COLOR_ACCENT,LV_RADIUS_CIRCLE);hide(heart_dots[i],true);}
+     heart_count_label=label(pages[PAGE_HOME],286,365,150,"",true,ZIP_UI_COLOR_COIN);hide(heart_count_label,true);
+-    const int hx[]={233,409,233,57},hy[]={57,233,409,233};const char *hours[]={"0","6","12","18"};
++    const int hx[]={233,409,233,57},hy[]={26,233,409,233};const char *hours[]={"0","6","12","18"};
+     for(unsigned i=0;i<4;i++)ring_hours[i]=label(pages[PAGE_HOME],hx[i],hy[i],28,hours[i],true,ZIP_UI_COLOR_DIM);
+     home_clock=label(pages[PAGE_HOME],233,70,160,"--:--",false,ZIP_UI_COLOR_TEXT);
+-    aod_clock=label(pages[PAGE_HOME],233,150,220,"--:--",false,ZIP_UI_COLOR_TEXT);lv_obj_set_style_text_font(aod_clock,&badge_n40,0);lv_obj_set_style_text_color(aod_clock,lv_color_hex(0xc9c4b9),0);lv_obj_set_style_transform_scale(aod_clock,384,0);lv_obj_set_style_transform_pivot_x(aod_clock,110,0);lv_obj_set_style_transform_pivot_y(aod_clock,20,0);hide(aod_clock,true);
+-    home_bt=icon(pages[PAGE_HOME],ICON_BT_OFF,318,62,1);
++    home_date=label(pages[PAGE_HOME],139,65,64,"",true,0x806b55);
++    lv_obj_set_style_transform_pivot_x(home_date,32,0);lv_obj_set_style_transform_pivot_y(home_date,8,0);lv_obj_set_style_transform_rotation(home_date,-280,0);
++    home_bt=icon(pages[PAGE_HOME],ICON_BT_OFF,334,65,1);
+     home_link=label(pages[PAGE_HOME],318,88,104,"",true,ZIP_UI_COLOR_SUB);
+-    home_alert=shape(pages[PAGE_HOME],209,116,48,48,ZIP_UI_COLOR_WARN,LV_RADIUS_CIRCLE);
+-    icon(home_alert,ICON_PAW,24,24,2); hide(home_alert,true);
++    home_alert=shape(pages[PAGE_HOME],79,115,30,30,0xe3c4a1,LV_RADIUS_CIRCLE);lv_obj_set_style_opa(home_alert,190,0);
++    icon(home_alert,ICON_PAW,15,15,1); hide(home_alert,true);
+     home_hint=label(pages[PAGE_HOME],233,390,250,"",true,ZIP_UI_COLOR_SUB);
+     face_heading=label(pages[PAGE_HOME],233,392,190,"小猫",true,0x806b55);lv_label_set_long_mode(face_heading,LV_LABEL_LONG_MODE_DOTS);
+     face_phase=label(pages[PAGE_HOME],233,126,260,"等待手机状态",true,ZIP_UI_COLOR_ACCENT);
+@@ -1220,7 +1285,7 @@
+     lv_obj_set_style_bg_opa(care_result_bubble,LV_OPA_COVER,0);
+     lv_obj_set_style_radius(care_result_bubble,12,0);
+     lv_obj_set_style_pad_all(care_result_bubble,7,0);lv_label_set_long_mode(care_result_bubble,LV_LABEL_LONG_MODE_WRAP);hide(care_result_bubble,true);
+-    home_weather=shape(pages[PAGE_HOME],268,50,24,24,0,0);lv_obj_set_style_bg_opa(home_weather,LV_OPA_TRANSP,0);lv_obj_add_event_cb(home_weather,weather_draw,LV_EVENT_DRAW_MAIN,NULL);hide(home_weather,true);
++    home_weather=shape(pages[PAGE_HOME],282,36,24,24,0,0);lv_obj_set_style_bg_opa(home_weather,LV_OPA_TRANSP,0);lv_obj_add_event_cb(home_weather,weather_draw,LV_EVENT_DRAW_MAIN,NULL);hide(home_weather,true);
+     day_future_bubble=label(pages[PAGE_HOME],233,174,270,"接下来，会有什么呢？",true,0x5a6658);
+     lv_obj_set_style_bg_color(day_future_bubble,lv_color_hex(0xfffbef),0);
+     lv_obj_set_style_bg_opa(day_future_bubble,LV_OPA_COVER,0);
+@@ -1232,18 +1297,17 @@
+         face_c_icons[i]=icon(pages[PAGE_HOME],stat_icons[i],307,166+31*i,1);
+         face_c_values[i]=label(pages[PAGE_HOME],345,166+31*i,48,"--",true,stat_colors[i]);
+     }
+-    care_scene=badge_scene_create(pages[PAGE_CARE]); badge_scene_set_compact(care_scene,true);
+-    title(pages[PAGE_CARE],56,170,"照料");
++    care_scene=badge_scene_create(pages[PAGE_CARE]); badge_scene_set_compact(care_scene,true);badge_scene_enable_world(care_scene);badge_scene_set_foot_y(care_scene,350);
++    care_heading=label(pages[PAGE_CARE],233,62,170,"照料",false,0x513a28);
+     care_coins=label(pages[PAGE_CARE],233,88,260,"",true,ZIP_UI_COLOR_SUB);
+-    label(pages[PAGE_CARE],233,260,280,"完成动作后保存，等手机确认",true,ZIP_UI_COLOR_SUB);
+-    const int xs[]={90,160,306,376,233},ys[]={306,340,340,306,352};
++    const int xs[]={90,160,306,376,233},ys[]={326,366,366,326,386};
+     const icon_t icons[]={ICON_BOWL,ICON_WATER,ICON_FEATHER,ICON_MOON,ICON_SOAP};
+     const char *names[]={"喂食","喝水","逗猫","睡觉","清洁"};
+     for(unsigned i=0;i<5;i++) {
+-        lv_obj_t *b=shape(pages[PAGE_CARE],xs[i]-30,ys[i]-30,60,60,ZIP_UI_COLOR_CARD,LV_RADIUS_CIRCLE);
++        lv_obj_t *b=shape(pages[PAGE_CARE],xs[i]-30,ys[i]-30,60,60,0xfff5e5,LV_RADIUS_CIRCLE);care_buttons[i]=b;lv_obj_set_style_bg_opa(b,230,0);
+         lv_obj_add_flag(b,LV_OBJ_FLAG_USER_1);lv_obj_t *im=icon(b,icons[i],30,30,3); care_icons[i]=im;
+         /* Keep labels inside the circular safe region, separate from hit disks. */
+-        label(pages[PAGE_CARE],xs[i],ys[i]+42,44,names[i],true,ZIP_UI_COLOR_TEXT);
++        care_names[i]=label(pages[PAGE_CARE],xs[i],ys[i]+42,44,names[i],true,0x654d35);
+     }
+     care_bath_hint=label(pages[PAGE_CARE],233,410,180,"",true,ZIP_UI_COLOR_SUB);
+     welcome_scene=badge_scene_create(pages[PAGE_WELCOME]);
+@@ -1420,21 +1484,42 @@
+ {
+     switch(stage) {case L2_SCENE_HOME:return "在家陪伴";case L2_SCENE_DEPARTING:return "正在出发";case L2_SCENE_AWAY:return "正在外面游玩";case L2_SCENE_RETURNING:return "正在返程";case L2_SCENE_GARDEN:return "庭院玩耍";case L2_SCENE_TOWN:return "镇街散步";default:return "状态待同步";}
+ }
++static void header_link(void)
++{
++    static int state=-1;int next=previous.connected?1:0;
++    if(state!=next){state=next;lv_image_set_src(home_bt,&icon_images[next?ICON_BT:ICON_BT_OFF]);}
++    lv_obj_set_pos(home_bt,326,57);hide(home_bt,mode==MODE_OFF);
++}
++static void name_plate(const char *text,bool dimmed)
++{
++    int role=dimmed?1:0;
++    if(name_plate_role!=role){
++        name_plate_role=role;
++        lv_obj_set_style_text_font(face_heading,&local2_font16,0);lv_obj_set_style_text_color(face_heading,lv_color_hex(0x654d35),0);
++        lv_obj_set_width(face_heading,LV_SIZE_CONTENT);lv_obj_set_style_max_width(face_heading,184,0);
++        lv_obj_set_style_bg_color(face_heading,lv_color_hex(0xfff1d8),0);lv_obj_set_style_bg_opa(face_heading,dimmed?195:235,0);
++        lv_obj_set_style_radius(face_heading,16,0);lv_obj_set_style_border_width(face_heading,1,0);lv_obj_set_style_border_color(face_heading,lv_color_hex(0xcdb18c),0);
++        lv_obj_set_style_pad_hor(face_heading,12,0);lv_obj_set_style_pad_ver(face_heading,4,0);
++    }
++    set_label(face_heading,text,388);lv_obj_set_x(face_heading,233-lv_obj_get_width(face_heading)/2);hide(face_heading,mode==MODE_OFF);
++}
+ static void update_clock(void)
+ {
+-    uint64_t epoch=0;bool valid=local2_clock_now(&epoch);char text[24];
+-    if(valid){int64_t m=(int64_t)(epoch/60000)+local2_clock_utc_offset_minutes();unsigned minute=(unsigned)((m%1440+1440)%1440);snprintf(text,sizeof(text),"%02u:%02u",minute/60,minute%60);}
+-    else strcpy(text,"--:--");
++    uint64_t epoch=0;bool valid=local2_clock_now(&epoch);char text[24],date[12]="";
++    if(valid){
++        int64_t wall=(int64_t)(epoch/1000)+(int64_t)local2_clock_utc_offset_minutes()*60;time_t raw=(time_t)wall;struct tm local;
++        if(gmtime_r(&raw,&local)){snprintf(text,sizeof text,"%02d:%02d",local.tm_hour,local.tm_min);strftime(date,sizeof date,"%m/%d",&local);}
++        else{valid=false;strcpy(text,"--:--");}
++    }else strcpy(text,"--:--");
+     bool standby=mode==MODE_AOD||mode==MODE_OFF;
+-    hide(home_clock,standby);hide(aod_clock,!standby||mode==MODE_OFF);
+-    if(standby){
+-        set_label(aod_clock,text,145);
+-        set_label(face_phase,valid?"":"需手机校时",199);hide(face_phase,valid||mode==MODE_OFF);
+-        return;
+-    }
+-    lv_obj_set_style_text_font(home_clock,valid?&local2_font20:&local2_font16,0);
+-    lv_obj_set_width(home_clock,face?160:144);lv_obj_set_x(home_clock,face?153:131);
+-    set_label(home_clock,valid?text:"需手机校时",face?398:62);
++    static int old_style=-1;int style=(standby?2:0)+(badge_scene_light_background(home_scene)?1:0);
++    if(style!=old_style){
++        old_style=style;uint32_t ink=standby?0xe2d3bb:badge_scene_light_background(home_scene)?0x513a28:0xe2d3bb;
++        lv_obj_set_style_text_font(home_clock,&local2_font20,0);lv_obj_set_style_text_color(home_clock,lv_color_hex(ink),0);lv_obj_set_style_text_color(home_date,lv_color_hex(ink),0);
++        lv_obj_set_width(home_clock,100);lv_obj_set_x(home_clock,175);
++    }
++    set_label(home_clock,text,32);hide(home_clock,mode==MODE_OFF);set_label(home_date,date,65);hide(home_date,!valid||mode==MODE_OFF);
++    header_link();
+     hide(ring_hours[2],true);hide(ring_marker,true);
+ }
+ 
+@@ -1444,7 +1529,7 @@
+     const unsigned char *p=(const unsigned char*)text;unsigned chars=0;
+     while(*p){uint32_t cp;unsigned n;if(*p<128){cp=*p;n=1;}else if((*p&0xe0)==0xc0){cp=*p&31;n=2;}else if((*p&0xf0)==0xe0){cp=*p&15;n=3;}else if((*p&0xf8)==0xf0){cp=*p&7;n=4;}else return false;
+         for(unsigned i=1;i<n;i++){if(!p[i]||(p[i]&0xc0)!=0x80)return false;cp=(cp<<6)|(p[i]&63);}if(cp<32||cp==127)return false;
+-        lv_font_glyph_dsc_t d;if(!lv_font_get_glyph_dsc(&local2_font16,&d,cp,0)||d.is_placeholder)return false;p+=n;if(++chars>16)return false;
++        lv_font_glyph_dsc_t d;if(!lv_font_get_glyph_dsc(&local2_font16,&d,cp,0)||d.is_placeholder)return false;p+=n;if(++chars>24)return false;
+     }return true;
+ }
+ static l2_action_t display_action(void)
+@@ -1460,22 +1545,21 @@
+     bool available=domain.ready&&domain.has_snapshot&&!domain.storage_error;
+     if(layout_epoch!=standby_epoch){
+         layout_epoch=standby_epoch;
+-        lv_obj_t *quiet[]={home_clock,home_bt,home_alert,face_weather,face_action,face_gift,home_action_prop,care_result_bubble,day_future_bubble,ring_missing,ring_marker,heart_legend,heart_count_label};
++        lv_obj_t *quiet[]={home_alert,face_phase,face_weather,face_action,face_gift,home_action_prop,care_result_bubble,day_future_bubble,ring_missing,ring_marker,heart_legend,heart_count_label};
+         for(unsigned i=0;i<sizeof quiet/sizeof quiet[0];i++)hide(quiet[i],true);
+-        for(unsigned i=0;i<5;i++){hide(home_arcs[i],true);hide(face_c_icons[i],true);hide(face_c_values[i],true);}
++        for(unsigned i=0;i<5;i++){hide(home_arcs[i],true);hide(home_stat_icons[i],true);hide(face_c_icons[i],true);hide(face_c_values[i],true);}
+         for(unsigned i=0;i<2;i++)hide(day_rings[i],true);
+         for(unsigned i=0;i<4;i++)hide(ring_hours[i],true);
+         for(unsigned i=0;i<L2_DAY_HEART_MAX;i++)hide(heart_dots[i],true);
+         hide(home_weather,true);
+-        lv_obj_set_style_text_font(face_heading,&local2_font16,0);lv_obj_set_style_text_color(face_heading,lv_color_hex(0x776758),0);
+-        lv_obj_set_style_text_font(face_phase,&local2_font16,0);lv_obj_set_style_text_color(face_phase,lv_color_hex(0x776758),0);
+-        lv_obj_set_style_text_color(home_hint,lv_color_hex(0x8b7b68),0);set_label(home_hint,"轻点唤醒",392);hide(home_hint,mode==MODE_OFF);
+-        lv_obj_set_style_text_color(home_link,lv_color_hex(0x685e54),0);lv_obj_set_x(home_link,181);
+-    }
+-    set_label(face_heading,available&&safe_pet_name(domain.snapshot.pet.name)?domain.snapshot.pet.name:"小猫",354);hide(face_heading,mode==MODE_OFF);
++        lv_obj_set_style_text_color(home_hint,lv_color_hex(0xc4b699),0);set_label(home_hint,"轻点唤醒",432);hide(home_hint,mode==MODE_OFF);
++        lv_obj_set_style_text_color(home_link,lv_color_hex(0xa7977e),0);lv_obj_set_x(home_link,181);
++    }
++    name_plate(available&&safe_pet_name(domain.snapshot.pet.name)?domain.snapshot.pet.name:"小猫",true);
+     const char *mark=domain.storage_error?"存档异常":domain.pending_events?"待确认":link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000?"离线":"";
+-    set_label(home_link,mark,422);hide(home_link,mode==MODE_OFF||!mark[0]);
+-    badge_scene_set_context(home_scene,available,domain.snapshot.scene,L2_WEATHER_CLEAR,display_action(),live_context);
++    set_label(home_link,mark,410);hide(home_link,mode==MODE_OFF||!mark[0]);
++    /* No scene/action replacement on lock. BLE persistence still progresses;
++     * fresh domain presentation is projected on wake by the existing path. */
+     update_clock();
+ }
+ static void refresh_state(void)
+@@ -1521,7 +1605,6 @@
+     previous=v;has_previous=true;domain_previous=domain;domain_attached=true;dirty=false;
+     if(mode==MODE_AOD||mode==MODE_OFF){project_standby();return;}
+     const char *link=v.storage_error ? "存档错误" : v.connected ? (v.subscribed ? "手机本地连接" : "手机已连接") : "离线保留";
+-    lv_image_set_src(home_bt,&icon_images[v.connected ? ICON_BT : ICON_BT_OFF]);
+     bool low=available && (v.snapshot.food<30 || v.snapshot.mood<30 || v.snapshot.clean<30 || v.snapshot.energy<30 || v.snapshot.health<30);
+     hide(home_alert,!low || face!=0 || mode==MODE_AOD || mode==MODE_OFF);hide(face_phase,mode==MODE_AOD || mode==MODE_OFF || (low && face==0));
+     uint8_t stats[]={v.snapshot.food,v.snapshot.mood,v.snapshot.clean,v.snapshot.energy,v.snapshot.health};
+@@ -1534,9 +1617,9 @@
+     char text[200];
+     if(available) snprintf(text,sizeof(text),"喵币 %llu",(unsigned long long)v.snapshot.coins);else strcpy(text,"喵币 --");set_label(status_coins,text,322);
+     snprintf(text,sizeof(text),"%s · 待确认 %u\n上滑返回小屋",link,domain.pending_events);set_label(status_sync,text,363);
+-    if(available) snprintf(text,sizeof(text),"喵币 %llu · 下滑返回",(unsigned long long)v.snapshot.coins);else strcpy(text,"喵币 -- · 下滑返回");set_label(care_coins,text,88);
++    if(available) snprintf(text,sizeof(text),"喵币 %llu",(unsigned long long)v.snapshot.coins);else strcpy(text,"喵币 --");set_label(care_coins,text,88);
+     for(unsigned i=0;i<5;i++)lv_obj_set_style_opa(care_icons[i],available&&(i!=4||domain.bath_allowed) ? LV_OPA_COVER : LV_OPA_40,0);
+-    set_label(care_bath_hint,domain.bath_allowed ? "清洁可离线·重启再确认" : "清洁需兼容手机确认",410);
++    hide(care_bath_hint,true);project_care_menu();
+     project_home();
+     set_label(device_link,link,92);snprintf(text,sizeof(text),"ID %s",v.device_id[0] ? v.device_id : "--");set_label(device_id,text,124);
+     snprintf(text,sizeof(text),"PET %s",available ? v.snapshot.pet_id : "--");set_label(device_pet,text,163);
+@@ -1544,6 +1627,21 @@
+     set_label(device_storage,v.storage_error ? "存档不可用，请保留设备" : domain.terminal.status==L2_TERMINAL_REJECTED ? (!strcmp(domain.terminal.reason,"insufficient_coins")?"上次互动：喵币不足未扣钱":"上次互动：手机拒绝") : domain.terminal.status==L2_TERMINAL_QUARANTINED ? "上次互动：手机未结算" : available ? "本地存档可用 · 无云服务" : "等待手机首次同步",254);
+     set_label(setting_brightness,brightness==45 ? "低" : brightness==75 ? "中" : "高",126);set_label(setting_aod,aod_enabled ? "开启" : "关闭",282);update_clock();update_peer();day_refresh();day_project();
+ }
++static void project_care_menu(void)
++{
++    bool available=domain.ready&&domain.has_snapshot&&!domain.storage_error;
++    badge_scene_set_context(care_scene,available,domain.snapshot.scene,L2_WEATHER_CLEAR,display_action()==L2_ACTION_SLEEP?L2_ACTION_SLEEP:L2_ACTION_IDLE,live_context);
++    bool light=badge_scene_light_background(care_scene);
++    static int old_theme=-1;
++    if(old_theme!=(int)light){
++        old_theme=(int)light;uint32_t ink=light?0x513a28:ZIP_UI_COLOR_TEXT;
++        lv_obj_set_style_text_color(care_heading,lv_color_hex(ink),0);lv_obj_set_style_text_color(care_coins,lv_color_hex(light?0x806b55:ZIP_UI_COLOR_SUB),0);
++        for(unsigned i=0;i<5;i++){
++            lv_obj_set_style_bg_color(care_buttons[i],lv_color_hex(light?0xfff5e5:ZIP_UI_COLOR_CARD),0);
++            lv_obj_set_style_text_color(care_names[i],lv_color_hex(ink),0);
++        }
++    }
++}
+ /* GUI projection from the last accepted domain view only. Also used to
+  * capture the other HOME face without polling core or replaying an ACK. */
+ static void project_home(void)
+@@ -1551,18 +1649,16 @@
+     bool available=domain.ready&&domain.has_snapshot&&!domain.storage_error;
+     char text[200];
+     if(mode==MODE_AOD||mode==MODE_OFF){project_standby();return;}
+-    lv_obj_set_style_text_font(face_heading,face?&local2_font20:&local2_font16,0);
+-    lv_obj_set_style_text_color(face_heading,lv_color_hex(face?0x654d35:0x806b55),0);
+-    set_label(face_heading,face?"一天进程":available&&safe_pet_name(domain.snapshot.pet.name)?domain.snapshot.pet.name:"小猫",face?94:392);hide(face_heading,false);
++    if(face==0)name_plate(available&&safe_pet_name(domain.snapshot.pet.name)?domain.snapshot.pet.name:"小猫",false);
++    for(unsigned i=0;i<5;i++){bool show=face==0&&available&&(i==0||i==1||i==3);hide(home_arcs[i],!show);hide(home_stat_icons[i],!show);}
+     hide(face_phase,face==0);hide(face_weather,true);hide(face_action,true);
+     bool low=available&&(previous.snapshot.food<30||previous.snapshot.mood<30||previous.snapshot.clean<30||previous.snapshot.energy<30||previous.snapshot.health<30);
+     hide(home_alert,!low||face!=0);
+     bool pending=domain.ready&&!domain.storage_error&&domain.pending_events;
+     bool disconnected=!previous.connected||!previous.subscribed;
+     const char *small_mark=!domain.ready||domain.storage_error?"存档异常":pending?"待确认":link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000?"离线":"";
+-    lv_obj_set_x(home_link,face?206:266);set_label(home_link,small_mark,face?415:88);hide(home_link,!small_mark[0]);
+-    lv_obj_set_pos(home_bt,face?188:310,face?407:54);
+-    lv_image_set_src(home_bt,&icon_images[disconnected?ICON_BT_OFF:ICON_BT]);hide(home_bt,face!=0&&!small_mark[0]);
++    lv_obj_set_x(home_link,face?181:266);set_label(home_link,small_mark,face?427:88);hide(home_link,!small_mark[0]);
++    (void)disconnected;header_link();
+     uint64_t epoch=0;bool calibrated=local2_clock_now(&epoch);int64_t m=(int64_t)(epoch/60000)+local2_clock_utc_offset_minutes();int minute=(int)((m%1440+1440)%1440);
+     bool weather_ok=face==0&&live_context&&weather_seen&&calibrated&&domain.snapshot.has_epoch_ms&&lv_tick_elaps(weather_seen_ms)<1800000;
+     hide(home_weather,!weather_ok);
+@@ -1590,8 +1686,7 @@
+     int theme=light?1:0;
+     if(last_theme!=theme){
+         last_theme=theme;
+-        lv_obj_set_style_text_color(home_clock,lv_color_hex(light?0x513a28:0xd6c8b2),0);
+-        lv_obj_set_style_text_color(home_link,lv_color_hex(light?0x806b55:0x8f8274),0);
++        if(mode!=MODE_AOD&&mode!=MODE_OFF)lv_obj_set_style_text_color(home_link,lv_color_hex(light?0x806b55:0x8f8274),0);
+         lv_obj_set_style_text_color(ring_missing,lv_color_hex(light?0x806b55:ZIP_UI_COLOR_SUB),0);
+         for(unsigned i=0;i<4;i++)lv_obj_set_style_text_color(ring_hours[i],lv_color_hex(light?0x806b55:ZIP_UI_COLOR_DIM),0);
+     }
+@@ -1611,7 +1706,8 @@
+ #include "badge_day_ui.inc"
+ static void tick(lv_timer_t *timer)
+ {
+-    (void)timer; uint64_t diag_tick_started=esp_timer_get_time(); uint32_t now=lv_tick_get();
++    uint64_t diag_tick_started=esp_timer_get_time(); uint32_t now=lv_tick_get();
++    lv_timer_set_period(timer,(presentation_contact||gesture.active||ui_drag.active||ui_drag.settling)?16:(mode==MODE_AOD||mode==MODE_OFF)?250:mode==MODE_COMP?83:33);
+     if(day_capture&&!day_release_seen){
+         if(lv_indev_get_state(touch_indev)==LV_INDEV_STATE_RELEASED){
+             day_release_seen=true;day_scrubbing=false;day_pending=true;presentation_contact=false;
+@@ -1623,7 +1719,12 @@
+     if(gesture.active) {
+         lv_point_t point; lv_indev_get_point(touch_indev,&point); badge_gesture_move(&gesture,point.x,point.y);
+         if(lv_indev_get_state(touch_indev)==LV_INDEV_STATE_PRESSED)drag_update();
+-        if(lv_indev_get_state(touch_indev)==LV_INDEV_STATE_RELEASED) { presentation_contact=false;badge_scene_set_interacting(home_scene,false);gesture.active=false;ignore_contact=true;if(!ui_drag.settling)drag_cancel(); }
++        if(lv_indev_get_state(touch_indev)==LV_INDEV_STATE_RELEASED) {
++            presentation_contact=false;badge_scene_set_interacting(home_scene,false);contact_unlock();
++            gesture.active=false;
++            if(!ui_drag.settling&&ui_drag.active)drag_release(BADGE_GESTURE_NONE);
++            ignore_contact=true;
++        }
+         else if(current_page==PAGE_CARE_ACTION && care_action==L2_ACTION_PLAY) {
+             /* Pointer devices need not deliver object PRESSING on an otherwise
+              * passive scene. Sample the actual read point on the UI clock too. */
+@@ -1693,7 +1794,7 @@
+     }
+     if(now-last_state_poll>=250 || dirty) { last_state_poll=now; refresh_state(); }
+     day_project();
+-    warm_home_presentation(now);
++    warm_home_presentation(now);prepare_idle_home_peek();
+     badge_diagnostics_ui_tick(diag_tick_started);
+ }
+ bool badge_ui_diagnostic_select_face(unsigned target)
+@@ -1720,7 +1821,7 @@
+     build_boot_pair_guide(); build_home_care(); build_status(); build_settings_device(); build_touch_voice(); build_layers();build_home_peek();
+     if(!home_scene || !care_scene || !welcome_scene || !care_action_scene) { bsp_display_unlock(); ESP_LOGE("badge_ui","Scene allocation failed"); return false; }
+     current_page=PAGE_BOOT; boot_started=last_input=navigation_started=lv_tick_get();
+-    lv_indev_set_long_press_time(touch_indev,ZIP_UI_LONGPRESSMS); lv_indev_add_event_cb(touch_indev,input_event,LV_EVENT_ALL,NULL);
++    lv_timer_set_period(lv_indev_get_read_timer(touch_indev),12);lv_indev_set_long_press_time(touch_indev,ZIP_UI_LONGPRESSMS); lv_indev_add_event_cb(touch_indev,input_event,LV_EVENT_ALL,NULL);
+     for(unsigned i=0;i<PAGE_COUNT;i++)hide(pages[i],i!=PAGE_BOOT);
+     hide(peek_root,true);lv_screen_load(stage_root); bsp_display_brightness_set(brightness);
+     /* The existing GUI timer owns the first domain/time projection. Do not nest
+--- a/firmware/main/badge_scene.c
++++ b/firmware/main/badge_scene.c
+@@ -12,7 +12,7 @@
+ LV_IMAGE_DECLARE(warm_room);
+ 
+ struct badge_scene {
+-    lv_obj_t *root, *cat,*weather[8],*ground[5];
++    lv_obj_t *root, *cat,*shade,*weather[8],*ground[5];
+     const badge_scene_assets_t *assets;
+     badge_scene_clip_id_t clip;
+     badge_scene_clip_id_t pending;
+@@ -24,7 +24,7 @@
+     bool day_preview,day_known;unsigned day_kind,day_token;
+     uint32_t prop_ms,prop_previous;
+     int prop_offset;
+-    bool world,overlay; int slide_x;
++    bool world,overlay; int slide_x,foot_y;
+     bool known,live;
+     bool context_initialized;
+     l2_scene_t stage;
+@@ -37,19 +37,19 @@
+ };
+ bool badge_scene_is_warm(const badge_scene_t *s)
+ {
+- return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&!s->dimmed&&!(s->known&&s->action==L2_ACTION_SLEEP)&&!(s->known&&s->stage!=L2_SCENE_HOME);
++ return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&!(s->known&&s->stage!=L2_SCENE_HOME);
+ }
+ static bool garden_scene(const badge_scene_t *s)
+ {
+- return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&!s->dimmed&&s->known&&s->stage!=L2_SCENE_HOME&&s->stage!=L2_SCENE_TOWN&&s->action!=L2_ACTION_SLEEP;
++ return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&s->known&&s->stage!=L2_SCENE_HOME&&s->stage!=L2_SCENE_TOWN;
+ }
+ static bool town_scene(const badge_scene_t *s)
+ {
+- return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&!s->dimmed&&s->known&&s->stage==L2_SCENE_TOWN&&s->action!=L2_ACTION_SLEEP;
++ return s&&s->world&&(!s->face||s->day_preview)&&!s->overlay&&s->known&&s->stage==L2_SCENE_TOWN;
+ }
+ bool badge_scene_light_background(const badge_scene_t *s)
+ {
+- if(s&&s->day_preview)return !s->dimmed&&s->action!=L2_ACTION_SLEEP;
++ if(s&&s->day_preview)return true;
+  return badge_scene_is_warm(s)||garden_scene(s)||town_scene(s)||(s&&s->world&&s->face==1&&!s->overlay&&!s->dimmed);
+ }
+ bool badge_scene_thought_visible(const badge_scene_t *s,uint32_t now)
+@@ -83,8 +83,8 @@
+     const badge_scene_clip_t *c=clip_for(s,s->clip);
+     const lv_image_dsc_t *image=c ? c->frames[frame<c->count ? frame : 0] : s->clip==BADGE_SCENE_PET ? &cat_paw : &cat_idle;
+     if(!image) image=&cat_idle;
+-    bool reduced=s->compact || s->face || s->dimmed;
+-    unsigned num=s->dimmed?1:3,den=s->dimmed?2:4;
++    bool reduced=s->compact;
++    unsigned num=3,den=4;
+     if(reduced && image->header.cf==LV_COLOR_FORMAT_I8) {
+         /* LVGL's indexed transform path is not portable across draw units. Keep
+          * exact source palette/alpha, resample indices once per displayed frame,
+@@ -111,15 +111,16 @@
+     /* Shared absolute foot placement. Fallback has its original 200x180 canvas. */
+     int x=233-(int)image->header.w/2;
+     int anchor=image->header.h==208 ? 196 : image->header.h==156 ? 147 : image->header.h==104 ? 98 : (int)image->header.h;
+-    int foot=s->dimmed?318:s->compact?260:(garden_scene(s)||town_scene(s))?(s->face?345:378):s->face?320:badge_scene_light_background(s)?350:340;
++    int foot=s->foot_y?s->foot_y:s->compact?260:(garden_scene(s)||town_scene(s))?378:badge_scene_light_background(s)?350:340;
+     int y=foot-anchor;
+     if(garden_scene(s)){lv_area_t shadow={70,foot-7,395,foot+8};lv_obj_invalidate_area(s->root,&shadow);}
+-    /* Rest is a static tuck-in composition using the original upright head. */
++    /* Rest has its own static curl; locking never selects that action. */
+     lv_obj_set_pos(s->cat,x+s->slide_x+s->prop_offset,y);
+     bool resting=s->world&&s->known&&s->action==L2_ACTION_SLEEP;
+     bool absent=s->day_preview&&!s->day_known&&!s->dimmed;
+     if(resting||absent)lv_obj_add_flag(s->cat,LV_OBJ_FLAG_HIDDEN);else lv_obj_remove_flag(s->cat,LV_OBJ_FLAG_HIDDEN);
+-    lv_obj_set_style_image_opa(s->cat,s->dimmed?110:LV_OPA_COVER,0);
++    lv_obj_set_style_image_opa(s->cat,s->dimmed?220:LV_OPA_COVER,0);
++    if(s->shade){if(s->dimmed||resting)lv_obj_remove_flag(s->shade,LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->shade,LV_OBJ_FLAG_HIDDEN);}
+ }
+ void badge_scene_set_interacting(badge_scene_t *s,bool active)
+ {
+@@ -149,7 +150,7 @@
+ }
+ static bool prop_interaction(badge_scene_t *s,uint32_t now)
+ {
+- bool eligible=!s->face&&badge_scene_light_background(s)&&s->known&&s->live&&s->action==L2_ACTION_IDLE&&(s->stage==L2_SCENE_HOME||s->stage==L2_SCENE_AWAY||s->stage==L2_SCENE_GARDEN||s->stage==L2_SCENE_TOWN)&&s->clip==BADGE_SCENE_IDLE;
++ bool eligible=!s->compact&&!s->face&&badge_scene_light_background(s)&&s->known&&s->live&&s->action==L2_ACTION_IDLE&&(s->stage==L2_SCENE_HOME||s->stage==L2_SCENE_AWAY||s->stage==L2_SCENE_GARDEN||s->stage==L2_SCENE_TOWN)&&s->clip==BADGE_SCENE_IDLE;
+  if(!eligible){s->prop_ms=0;s->prop_previous=0;s->prop_look=false;if(s->prop_offset){s->prop_offset=0;set_frame(s,s->frame);}return false;}
+  if(s->interacting){s->prop_previous=0;return true;}
+  uint32_t dt=s->prop_previous?now-s->prop_previous:0;s->prop_previous=now;if(dt>100)dt=100;
+@@ -173,23 +174,22 @@
+ /* A compact native voxel curl, only for an actual accepted SLEEP context.
+  * Orange/cream blocks, tucked paws and closed eyes retain the existing cat's
+  * visual language. This is presentation geometry, never a game-state change. */
+-static void sleeping_cat(lv_layer_t *layer,const lv_area_t *a,bool dimmed)
+-{
+-    int x=dimmed?183:155,y=dimmed?250:247,k=dimmed?2:3;
+-    uint32_t orange=dimmed?0x57321c:0xd97a2d,light=dimmed?0x6c4226:0xf3a446;
+-    uint32_t stripe=dimmed?0x35251b:0x98502b,cream=dimmed?0x716453:0xf8dfb6;
++static void sleeping_cat(lv_layer_t *layer,const lv_area_t *a,bool compact,int foot)
++{
++    int k=compact?2:3,x=233-25*k,y=foot-34*k;
++    uint32_t orange=0xd97a2d,light=0xf3a446,stripe=0x98502b,cream=0xf8dfb6;
+ #define B(dx,dy,w,h,c) world_rect(layer,a,x+(dx)*k,y+(dy)*k,(w)*k,(h)*k,c,0)
+     B(2,12,30,18,orange);B(7,7,20,8,light);B(0,20,10,10,orange);
+     B(5,12,4,7,stripe);B(14,8,4,8,stripe);B(24,12,4,8,stripe);
+     B(25,15,24,18,light);B(26,10,6,8,orange);B(41,11,6,8,orange);
+     B(28,12,3,4,cream);B(42,13,3,4,cream);B(27,19,6,3,stripe);B(42,19,6,3,stripe);
+     B(29,23,6,2,stripe);B(40,24,6,2,stripe);B(34,26,8,5,cream);
+-    B(37,25,2,2,dimmed?0x71504a:0xd98d85);B(27,31,9,3,cream);B(40,31,7,3,cream);
++    B(37,25,2,2,0xd98d85);B(27,31,9,3,cream);B(40,31,7,3,cream);
+     B(0,27,14,6,light);B(9,29,13,4,light);B(17,25,5,6,light);B(18,23,4,4,stripe);
+ #undef B
+     lv_draw_label_dsc_t d;lv_draw_label_dsc_init(&d);d.font=&lv_font_montserrat_20;
+-    d.color=lv_color_hex(dimmed?0x655d50:0xbdb79e);d.text="Z";
+-    lv_area_t z={a->x1+(dimmed?281:309),a->y1+(dimmed?257:248),a->x1+340,a->y1+280};
++    d.color=lv_color_hex(0xbdb79e);d.text="Z";
++    lv_area_t z={a->x1+x+51*k,a->y1+y,a->x1+x+51*k+28,a->y1+y+30};
+     lv_draw_label(layer,&d,&z);
+ }
+ static void world_draw(lv_event_t *e)
+@@ -197,16 +197,13 @@
+     badge_scene_t *s=lv_event_get_user_data(e);if(!s->world||s->overlay)return;
+     lv_layer_t *layer=lv_event_get_layer(e);lv_area_t a;lv_obj_get_coords(s->root,&a);
+     bool rest=(s->dimmed||!s->face||s->day_preview)&&s->known&&s->action==L2_ACTION_SLEEP;
+-    if(s->day_preview&&!s->day_known&&!s->dimmed){if(lv_event_get_code(e)==LV_EVENT_DRAW_MAIN)world_rect(layer,&a,0,0,466,466,0xeadfca,0);return;}
+-    if(lv_event_get_code(e)==LV_EVENT_DRAW_POST)return;
+-    if(s->dimmed){
+-        /* Device standby is independent of cat sleep. No leftover window,
+-         * timeline title, floor stripe, weather animation or fake night sky. */
+-        world_rect(layer,&a,0,0,466,466,0x000000,0);
+-        if(rest)sleeping_cat(layer,&a,true);
+-        else world_rect(layer,&a,197,316,72,5,0x15110e,3);
++    if(lv_event_get_code(e)==LV_EVENT_DRAW_POST){
++        /* Background shade is below the cat. Sleep stays a real action, while
++         * a locked awake cat keeps its original full-size pose and scene. */
++        if(rest){int foot=s->foot_y?s->foot_y:s->compact?260:(garden_scene(s)||town_scene(s))?378:badge_scene_light_background(s)?350:340;sleeping_cat(layer,&a,s->compact,foot);}
+         return;
+     }
++    if(s->day_preview&&!s->day_known){world_rect(layer,&a,0,0,466,466,0xeadfca,0);return;}
+     if(s->face==1&&!s->day_preview&&!s->dimmed){world_rect(layer,&a,0,0,466,466,0xead4b0,0);return;}
+     if(badge_scene_is_warm(s)){
+         lv_draw_image_dsc_t d;lv_draw_image_dsc_init(&d);d.src=&warm_room;lv_draw_image(layer,&d,&a);return;
+@@ -230,8 +227,8 @@
+         world_rect(layer,&a,182,407,102,59,0xb79874,3);
+         world_rect(layer,&a,177,406,8,60,0x977858,3);world_rect(layer,&a,281,406,8,60,0x977858,3);
+         world_rect(layer,&a,384,246,5,89,0x756b56,2);world_rect(layer,&a,373,235,27,24,0xf2da9d,5);
+-        int foot=s->compact?260:s->face?345:378;
+-        world_rect(layer,&a,184+s->prop_offset+s->slide_x,foot-3,98,10,0xb4a17e,5);return;
++        int foot=s->foot_y?s->foot_y:s->compact?260:378;
++        world_rect(layer,&a,197+s->prop_offset+s->slide_x,foot-2,72,6,0xb4a17e,3);return;
+     }
+     if(garden_scene(s)){
+         /* Static B garden silhouettes, original live scene gate; no new objects,
+@@ -258,20 +255,9 @@
+             world_rect(layer,&a,fx[i],fy[i],13,13,0xf9f2dd,6);
+             world_rect(layer,&a,fx[i]+4,fy[i]+4,5,5,0xe7bd71,2);
+         }
+-        int foot=s->compact?260:s->face?345:378;
+-        world_rect(layer,&a,184+s->prop_offset+s->slide_x,foot-3,98,10,0xb4a17e,5);
++        int foot=s->foot_y?s->foot_y:s->compact?260:378;
++        world_rect(layer,&a,197+s->prop_offset+s->slide_x,foot-2,72,6,0xb4a17e,3);
+         return;
+-    }
+-    if(rest){
+-        world_rect(layer,&a,0,0,466,466,0x1b202c,0);
+-        world_rect(layer,&a,0,324,466,142,0x222531,0);
+-        world_rect(layer,&a,73,142,86,117,0x343947,14);
+-        world_rect(layer,&a,80,150,72,101,0x252c3c,10);
+-        world_rect(layer,&a,113,151,5,99,0x464450,0);
+-        world_rect(layer,&a,81,197,69,5,0x464450,0);
+-        world_rect(layer,&a,138,344,200,26,0x35313c,13);
+-        world_rect(layer,&a,149,347,178,16,0x46404b,8);
+-        sleeping_cat(layer,&a,false);return;
+     }
+     if(!s->known||!s->live){world_rect(layer,&a,164,345,138,2,0x28272b,1);return;}
+     bool away=s->stage!=L2_SCENE_HOME;
+@@ -314,8 +300,7 @@
+ {
+     badge_scene_t *s=calloc(1,sizeof(*s)); if(!s) return NULL;
+     s->assets=badge_game_assets();
+-    /* Reference-first: pure black, cat only. A room descriptor may be exported
+-     * for a separately reviewed enhancement but is deliberately not displayed. */
++    /* Static scene backdrop and original cat assets share one world root. */
+     s->root=shape(parent,0,0,466,466,ZIP_UI_COLOR_BG,0);
+     for(unsigned i=0;i<8;i++) {
+         s->weather[i]=shape(s->root,75+(i*47)%315,120+(i*31)%180,3,10,0x8FC7E0,2);
+@@ -325,6 +310,8 @@
+         s->ground[i]=shape(s->root,122+i*46,345,25,2,0x443629,1);
+         lv_obj_add_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);
+     }
++    s->shade=shape(s->root,0,0,466,466,0x000000,0);
++    lv_obj_set_style_bg_opa(s->shade,120,0);lv_obj_add_flag(s->shade,LV_OBJ_FLAG_HIDDEN);
+     s->cat=lv_image_create(s->root); lv_obj_remove_flag(s->cat,LV_OBJ_FLAG_CLICKABLE);
+     set_frame(s,0); return s;
+ }
+@@ -335,6 +322,11 @@
+     if(s->face!=face%2)badge_scene_cancel_prop(s);
+     s->face=face%2;
+     set_frame(s,s->frame);
++}
++void badge_scene_set_foot_y(badge_scene_t *s,int foot_y)
++{
++    if(!s||foot_y<0||foot_y>420)return;
++    s->foot_y=foot_y;set_frame(s,s->frame);
+ }
+ void badge_scene_set_compact(badge_scene_t *s,bool compact)
+ {
+@@ -390,12 +382,11 @@
+ }
+ void badge_scene_set_dimmed(badge_scene_t *s,bool dimmed)
+ {
+-    /* BSP brightness is the single brightness transform (35% in AOD). */
++    /* Preserve scene, pose, position and scale. Background shade is a static
++     * child below the cat; the existing 35% BSP level still governs AOD. */
+     if(!s||s->dimmed==dimmed)return;
+-    s->dimmed=dimmed;
+-    if(dimmed){s->frozen=true;s->prop_ms=0;s->prop_previous=0;s->prop_offset=0;s->prop_look=false;}
+-    for(unsigned i=0;i<8;i++){bool show=!dimmed&&s->known&&s->live&&!s->overlay&&s->weather_kind!=L2_WEATHER_CLEAR;if(show)lv_obj_remove_flag(s->weather[i],LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->weather[i],LV_OBJ_FLAG_HIDDEN);}
+-    for(unsigned i=0;i<5;i++){bool show=!dimmed&&s->known&&s->live&&!s->overlay&&(s->stage==L2_SCENE_DEPARTING||s->stage==L2_SCENE_RETURNING);if(show)lv_obj_remove_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);}
++    s->dimmed=dimmed;if(dimmed)s->frozen=true;
++    if(dimmed)lv_obj_remove_flag(s->shade,LV_OBJ_FLAG_HIDDEN);else lv_obj_add_flag(s->shade,LV_OBJ_FLAG_HIDDEN);
+     set_frame(s,s->frame);lv_obj_invalidate(s->root);
+ }
+ bool badge_scene_has_animation(const badge_scene_t *s)
+@@ -428,7 +419,7 @@
+         if(known && live && !s->overlay && !s->dimmed && (stage==L2_SCENE_DEPARTING || stage==L2_SCENE_RETURNING)) lv_obj_remove_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);
+         else lv_obj_add_flag(s->ground[i],LV_OBJ_FLAG_HIDDEN);
+     }
+-    lv_obj_set_style_image_opa(s->cat,s->dimmed?110:LV_OPA_COVER,0);
++    lv_obj_set_style_image_opa(s->cat,s->dimmed?220:LV_OPA_COVER,0);
+     if(changed) {s->prop_ms=0;s->prop_previous=0;s->prop_offset=0;s->prop_look=false;s->pending=BADGE_SCENE_IDLE;s->clip=base_clip(s);s->started=lv_tick_get();set_frame(s,0);}
+ }
+ 
+--- a/firmware/main/local2_wire.c
++++ b/firmware/main/local2_wire.c
+@@ -223,7 +223,7 @@
+             session_unlock();
+             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
+             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
+-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.5.7-scene-swipe-lock");result=L2_OK;
++            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.5.8-distance-ui");result=L2_OK;
+         }else if(valid&&!strcmp(op,"care_capabilities")){
+             static const char *const ck[]={"v","id","op","clientId","data"};
+             static const char *const dk[]={"careBathV1","mobileContextV1"};char client[37];cJSON *mobile=field(field(q,"data"),"mobileContextV1");

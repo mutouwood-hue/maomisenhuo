@@ -675,14 +675,14 @@ if(nav){const b=document.createElement('button');b.type='button';b.className='pg
 /* ---------- 浮层 ---------- */
 const ov=document.createElement('div');ov.id='life-ov';ov.setAttribute('role','dialog');ov.setAttribute('aria-modal','true');ov.setAttribute('aria-label','今日生活');
 ov.innerHTML=`<div class="lf-box"><header class="lf-head"><div><b>今日生活</b><small id="lf-date"></small></div><span id="lf-mode" class="lf-mode"></span><button type="button" class="lf-x" aria-label="关闭">×</button></header>
-<nav class="lf-tabs" role="tablist">${[['today','今天'],['heart','心动轨迹'],['places','常去地点'],['badge','吧唧'],['privacy','授权与隐私']].map(([k,n])=>`<button type="button" role="tab" data-tab="${k}">${n}</button>`).join('')}</nav>
+<nav class="lf-tabs" role="tablist">${[['today','今天'],['heart','心动轨迹'],['places','常去地点'],['badge','吧唧']].map(([k,n])=>`<button type="button" role="tab" data-tab="${k}">${n}</button>`).join('')}</nav>
 <div class="lf-body" id="lf-body"></div></div>`;
 document.body.appendChild(ov);
 let tab='today';
 ov.querySelector('.lf-x').addEventListener('click',close);
 ov.addEventListener('click',e=>{if(e.target===ov)close();const t=e.target.closest('[data-tab]');if(t){tab=t.dataset.tab;render();track('life_tab',{tab})}});
 addEventListener('keydown',e=>{if(e.key==='Escape'&&ov.classList.contains('on'))close()});
-function open(t='today'){tab=t;ov.classList.add('on');render();track('life_open',{tab:t,demo:L.cfg.demo,sync:L.cfg.sync})}
+function open(t='today'){const privacy=t==='privacy';tab=privacy?'badge':t;ov.classList.add('on');render();if(privacy){const node=$('lf-badge-privacy');if(node)node.open=true}track('life_open',{tab,demo:L.cfg.demo,sync:L.cfg.sync})}
 function close(){ov.classList.remove('on');stopReplay();stopBadge()}
 L.open=open;/* Embedded in the original daily-view closure. Presentation only; no life/store writes. */
 function hostDayClock(){const date=new Date(),valid=Number.isFinite(date.getTime())&&date.getFullYear()>=2020&&date.getFullYear()<=2100;return{valid,day:valid?L.dayKey(date):null,minute:valid?date.getHours()*60+date.getMinutes()+date.getSeconds()/60:0};}
@@ -796,9 +796,11 @@ function heartChart(ms,w=340,h=150){
 }
 /* ---------- 渲染各页 ---------- */
 function render(){
+  if(window.CatDayNavigation?.deferRender(render))return;
   const day=L.day(),body=$('lf-body');stopReplay();stopBadge();L.emit('places');
   $('lf-date').textContent=new Date().toLocaleDateString('zh-CN',{month:'long',day:'numeric',weekday:'short'});
   $('lf-mode').textContent=L.cfg.demo?'演示数据':L.cfg.geo?'定位采样中 · 自动生成':'自动生成';$('lf-mode').className='lf-mode'+(L.cfg.demo?' demo':'');
+  ov.querySelector('.lf-head b').textContent=tab==='badge'?'我的吧唧':'今日生活';$('lf-mode').hidden=tab==='badge';
   ov.querySelectorAll('[data-tab]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===tab)));
   if(tab==='today')body.innerHTML=today(day);
   if(tab==='heart')body.innerHTML=heart();
@@ -806,7 +808,7 @@ function render(){
   if(tab==='badge')body.innerHTML=badge();
   if(tab==='privacy')body.innerHTML=privacy();
   if(tab==='places')body.querySelectorAll('[data-map]').forEach(el=>{const p=L.place(el.dataset.map);el.replaceChildren(L.map(p,300,170,c=>el.replaceChildren(c)))});
-  if(tab==='badge')startBadge();
+  if(tab==='badge')window.CatOfflineSceneSync?.mountBadgePage();
   if(tab==='today'){const st=body.querySelector('#lf-stage');if(st)drawStage(st,L.segAt(day,L.nowMin()));window.CatDayNavigation?.restore()}
 }
 function today(day){
@@ -873,14 +875,15 @@ function replay(){
 /* ---------- 吧唧：240×240 圆屏 ---------- */
 let bf='ring',braf=0,said={t:0,txt:'',icon:''};
 function stopBadge(){cancelAnimationFrame(braf);braf=0}
+L.hostBadgeState=connected=>{const preview=$('lf-body')?.querySelector('.lf-badge');if(preview)preview.hidden=!connected;if(connected){if(!braf)startBadge()}else stopBadge()};
 function badge(){
-  return `<section class="lf-sec lf-badge"><div class="lf-bz"><canvas id="lf-bcv" width="240" height="240" aria-label="吧唧圆屏预览"></canvas></div>
+  return `<section class="lf-sec" id="lf-badge-connection"></section><section class="lf-sec lf-badge" hidden><div class="lf-bz"><canvas id="lf-bcv" width="240" height="240" aria-label="吧唧圆屏预览"></canvas></div>
   <div class="lf-seg" role="group">${[['ring','时间环'],['heart','心动'],['cat','小猫']].map(([k,n])=>`<button type="button" data-face="${k}" aria-pressed="${bf===k}">${n}</button>`).join('')}</div>
   <p class="lf-note">吧唧端只显示今天：外圈是你的 24 小时，内圈是${esc(petName())}跟着你的行程；白点是现在，小红点是心动时刻。数据来自手机 App，通过蓝牙同步。</p></section>
   <section class="lf-sec"><h4>和${esc(petName())}说说话 <small>按住说话，只在按住时听</small></h4>
   <div class="lf-voice"><button type="button" id="lf-talk" class="lf-talk">🎙️ 按住说话</button><div id="lf-heard" class="lf-heard">试试说：“我回来了”“饿不饿”“今天好累”“晚安”</div></div>
   <div class="lf-chips">${['我回来了','饿不饿呀','今天好累','你好可爱','我出门啦','晚安'].map(t=>`<button type="button" data-say="${t}">${t}</button>`).join('')}</div></section>
-  ${L.env?.badgeHtml?.()||''}`;
+  ${L.env?.badgeHtml?.()||''}<details class="lf-badge-privacy" id="lf-badge-privacy"><summary>隐私与授权</summary>${privacy()}</details>`;
 }
 function startBadge(){
   const cv=$('lf-bcv');if(!cv)return;const g=cv.getContext('2d');g.imageSmoothingEnabled=false;

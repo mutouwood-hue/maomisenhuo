@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Wrap the user's complete town source; every adaptation is pinned and recorded."""
 from pathlib import Path
-import re,json,hashlib
+import re,json,hashlib,os
 root=Path(__file__).resolve().parents[1];raw=(root/'original/town.html').read_text();assert len((root/'original/town.html').read_bytes())==137976
 sha=lambda s:hashlib.sha256(s.encode()).hexdigest();changes=[]
 def change(s,old,new,name):
@@ -117,5 +117,6 @@ Object.assign(T,{SphereGeometry,AmbientLight,PointLightShadow,PointLight,FogExp2
 })(window);
 """
 (root/'web/town-r185-compat.js').write_text(compat)
-(root.parent/'evidence').mkdir(parents=True,exist_ok=True)
-(root.parent/'evidence/town-source-adaptations.json').write_text(json.dumps({'originalBytes':137976,'originalSha256':sha(raw),'changes':changes,'completeOriginalScriptWrapped':True,'geometryAndProfilesRebuilt':False},ensure_ascii=False,indent=2)+'\n')
+evidence=Path(os.environ.get('CATFOREST_TOWN_EVIDENCE_DIR',str(root.parent/'evidence')))
+evidence.mkdir(parents=True,exist_ok=True)
+(evidence/'town-source-adaptations.json').write_text(json.dumps({'originalBytes':137976,'originalSha256':sha(raw),'changes':changes,'completeOriginalScriptWrapped':True,'geometryAndProfilesRebuilt':False},ensure_ascii=False,indent=2)+'\n')

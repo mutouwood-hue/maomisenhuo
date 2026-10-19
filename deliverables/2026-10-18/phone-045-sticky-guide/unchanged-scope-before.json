@@ -1,0 +1,10 @@
+{
+  "app/web/life-navigation.js": "44c9d7055fb53c36dd2d503ec089171ca1685b11dd20adef18cc4198dbd1884a",
+  "app/web/life-companion.css": "94d2bbed53ae9038fd8ddf43c96b9741881b22681514defa3c350b2f19f72fbe",
+  "app/web/daily-ring-segments.inc.js": "5f1ef2270d01c555342e78f3c3adabc7a101667d7c8a95553b6f0c9c63d01abf",
+  "app/web/daily-ring-center.inc.js": "abd9f5caf63258a8469f1867d2ca6ce7fa4e80a44c52ae8a82266ef071e9ee24",
+  "app/web/daily-selection.inc.js": "e25b33c1f5479458a8af884e9c5a6606718f430fe742b3ab3f3e6cdb9e22b13a",
+  "app/web/town-guide-layout.css": "89173cab3c5692aa37c8e03d957c0bd12161ab8bd25ef6b1894e77f7e4b88057",
+  "app/scripts/build_assets.py": "edb3803fd4db656da71863ce344bd70728f7e15acd9788b9e6d98c71385e66ea",
+  "app/scripts/build_town.py": "cd187e94c52103aebac93518eb54b659d0d802b81e5e082e85f524a658a7c496"
+}

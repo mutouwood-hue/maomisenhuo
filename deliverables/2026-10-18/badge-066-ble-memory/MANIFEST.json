@@ -1,0 +1,81 @@
+{
+  "createdAtUtc": "2026-10-18T08:11:22.693171+00:00",
+  "phoneVersion": "0.5.0-badge-connect",
+  "phoneVersionCode": 41,
+  "phoneRebuiltOrReinstalledThisBatch": false,
+  "firmwareVersion": "0.6.6-ble-memory",
+  "artifacts": [
+    {
+      "file": "cat_forest_badge-0.6.6-ble-memory.bin",
+      "bytes": 6178080,
+      "sha256": "74870ac922cb17d027f296a14ea09dbeb63a01091e5b8453adaaf638057309b4",
+      "embeddedVersion": "0.6.6-ble-memory"
+    },
+    {
+      "file": "catforest-0.5.0-badge-connect-debug.apk",
+      "bytes": 2694738,
+      "sha256": "e6bd13db0ef74f79b9b0ef8f33228c0b28240c758e10542c95c550edc7249a14",
+      "carriedForward": true,
+      "rebuiltOrReinstalledThisBatch": false
+    }
+  ],
+  "deployed": {
+    "badge": true,
+    "target": "ota_1",
+    "offset": "0x820000",
+    "bytes": 6178080,
+    "slotBytes": 8388608,
+    "freeBytes": 2210528,
+    "receipt": "FLASH-RECEIPT.json"
+  },
+  "confirmedRootCause": "internal RAM exhaustion after NimBLE init caused the 8192-byte domain task creation to fail, returning before host-task startup and advertising; USB diagnostic task also failed",
+  "normalStartupEvidence": {
+    "metrics": {
+      "storage_begin": {
+        "internalFree": 289695,
+        "internalLargest": 188416,
+        "psramFree": 8386156
+      },
+      "ui_begin": {
+        "internalFree": 287031,
+        "internalLargest": 188416,
+        "psramFree": 8306280
+      },
+      "ui_ready_ble_begin": {
+        "internalFree": 90419,
+        "internalLargest": 31744,
+        "psramFree": 8079120
+      },
+      "ble_start_returned_usb_begin": {
+        "internalFree": 15459,
+        "internalLargest": 7680,
+        "psramFree": 8062216
+      },
+      "startup_returned": {
+        "internalFree": 6143,
+        "internalLargest": 4352,
+        "psramFree": 8062216
+      }
+    },
+    "domainTaskFailed": false,
+    "hostTaskEntered": true,
+    "hostSyncOk": true,
+    "advertisingStarted": true,
+    "usbDiagnosticEnabled": true
+  },
+  "acceptance": {
+    "userRealConnection": "pending after066",
+    "appearanceSyncAndVisual": "pending after real connection",
+    "agentScanOrConnectionTestRun": false,
+    "simulationRun": false,
+    "selfAcceptance": false
+  },
+  "dataErased": false,
+  "bindingReset": false,
+  "nextStageStarted": false,
+  "docs": [
+    "DELIVERY-AND-EVIDENCE.md",
+    "STARTUP-BEFORE-AFTER.json",
+    "PRE-FIX-SYNC-FACTS.json"
+  ]
+}

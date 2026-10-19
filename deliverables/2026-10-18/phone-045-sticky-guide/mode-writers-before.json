@@ -1,0 +1,97 @@
+[
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 6,
+    "source": " let profile=playerProfile,session=null,store=null,mode='free',elapsed=0,started=0,intro=0,interacting=null,chatUntil=0,eventShown=false,ended=false,journey=[],collected=0,freeAt=0,lastMoving=false,eventPhase='idle',eventChoice=null,eventResumeAt=0,currentPlace='street',destination=null,ambient=null,ambientNext=0,ambientCount=0,socialReturn=null,eventSavedPath=[],coreActive=false,drawerBeforeCore=false;"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 156,
+    "source": " const ui=document.createElement('section');ui.className='town-player-ui pet-world-ui';ui.innerHTML='<div class=\"world-top\"><div class=\"world-card\"><strong data-player-name></strong><span data-player-status></span></div></div><div class=\"town-player-controls\"><button data-player-mode=\"free\">自由活动</button><button data-player-mode=\"guide\">我来引导</button><button data-player-focus>跟着我的猫</button><button data-player-garden>去小花园</button><button data-player-next>下个路标</button><button data-player-settle>完成散步</button></div><section class=\"town-player-card world-event\" hidden role=\"dialog\" aria-label=\"小镇偶遇\"><strong class=\"world-event-title\"></strong><p class=\"world-event-copy\"></p><div class=\"world-event-actions\"></div></section>';panel.append(ui);"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 157,
+    "source": " const townActions=[['[data-player-mode=free]','roam','自由','自由活动'],['[data-player-mode=guide]','trip','引导','点击小路引导'],['[data-player-focus]','camera','跟随','跟随自己的小猫'],['[data-player-garden]','globe','庭院','走到外围小花园或回小镇'],['[data-player-next]','walk','路标','前往下个散步路标'],['[data-player-settle]','check','完成','按原规则完成散步']];"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 164,
+    "source": " const tripDetails=document.createElement('section');tripDetails.id='town-trip-sheet';tripDetails.dataset.mode='world';tripDetails.hidden=true;tripDetails.setAttribute('role','dialog');tripDetails.setAttribute('aria-modal','false');tripDetails.setAttribute('aria-label','行程与口袋');"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 194,
+    "source": "  if(ambient.phase==='action'&&elapsed>=ambient.until){clearAmbient(true);say('小猫抖抖耳朵，继续在庭院自由走动。');mode='free';freeAt=elapsed+2;ui.querySelector('[data-player-toggle]').textContent='我来引导';}"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 197,
+    "source": " function takePlayerControl(value='guide'){"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 204,
+    "source": "  if(!bridgeCommitted(own))n.path=[];n.hold=n.wait=0;mode=value;destination=null;goalMarker.visible=false;if(value==='guide')intro=3.8;"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 208,
+    "source": " function setMode(value){takePlayerControl(value);say(mode==='free'?'小猫沿路自由活动；点地面也可以带路。':navigationGuide);focus();}"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 239,
+    "source": "  const saved=previous||{mode,path:nav.get(own).path.map(p=>p.clone())};finishOwnContact(false);clearAmbient();setMode('guide');"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 251,
+    "source": "  takePlayerControl('guide');"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 267,
+    "source": " function handlePointer(e){if(mode==='guide'||eventPhase!=='idle'||ownContact){pick(e);return;}const rect=renderer.domElement.getBoundingClientRect();mouse.set((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);camera.updateMatrixWorld(true);scene.updateMatrixWorld(true);raycaster.setFromCamera(mouse,camera);"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 282,
+    "source": "  if(restore&&valid&&mode==='free'&&path.length)go(own,path[path.length-1]);"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 309,
+    "source": " function begin(value,trip,engine){commandRevision++;pendingEvent=null;clearContacts();clearAmbient();ambientNext=10;ambientCount=0;socialReturn=null;setCore(false);setDrawer(false);destination=null;eventSavedPath=[];currentPlace='street';goalMarker.visible=false;own.profile.thoughts=['闻闻花香，再去看看小镇。'];eventFx.cleanup();eventPhase='idle';eventChoice=null;eventResumeAt=0;profile=value;session=trip;store=engine;elapsed=0;started=performance.now();intro=0;ended=false;eventShown=false;collected=0;mode='free';interacting=null;card.hidden=true;eventType=null;eventUntil=0;butterfly.visible=false;pouch.visible=false;own.profile.name=value.name;own.profile.role='你的猫 · '+(value.stageLabel||value.stage||'');prepareProfile(value);const start=point('plazaWest');own.root.position.copy(!occupied(start,own)&&validSolid(start)?start:(candidates.find(p=>!occupied(p,own)&&validSolid(p))||start));nav.get(own).path=[];resetBridgeTraffic();journey=(trip?.nodes||[]).map((n,i)=>({...n,key:['fishShop','bakery','southWest','gardenCenter','plazaEast','catCafe'][i%6]}));ui.querySelector('[data-player-name]').textContent=value.name+' · 小镇散步';setMode('free');resetOverviewCamera();orbitState.target.set(8,4,4);orbitState.radius=Math.min(overviewRadius()+40,overviewRadius()*1.18);renderProgress();say('先看看完整小镇，稍后跟随'+value.name+'。');}"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 310,
+    "source": " function update(dt,time){lastMoving=false;elapsed+=dt;if(navigationErrorUntil&&elapsed>=navigationErrorUntil)say(nav.get(own).bridgeTrip?'在桥外等候，轮到你会连续走到对岸。':navigationGuide);ui.querySelector('[data-player-return]').hidden=followState.active;const gate=v(22,4,20).project(camera);gateButton.hidden=true;gateButton.textContent=own.root.position.x>21?'← 回小镇':'小花园 →';gateButton.style.left=(gate.x*.5+.5)*100+'%';gateButton.style.top=(-gate.y*.5+.5)*100+'%';const gardenButton=ui.querySelector('[data-player-garden]'),gardenLabel=currentPlace==='garden'?'回小镇':'去自己的小花园';const gardenCopy=gardenButton.querySelector('.town-button-copy');if(gardenCopy.textContent!==gardenLabel)gardenCopy.textContent=gardenLabel;if(intro<3.8){intro+=dt;if(intro>=3.8)focus();return;}if(root.CatOfflineDurable?.transactionPaused)return;if(destination&&own.root.position.distanceTo(destination.point)<.4){const reached=destination;destination=null;goalMarker.visible=false;if(reached.place){currentPlace=reached.place;if(currentPlace==='garden'){ambientNext=elapsed+.6;freeAt=elapsed+1;}root.CatTownExperience?.sceneChanged('arrived_'+currentPlace);ui.querySelector('[data-player-name]').textContent=profile.name+' · '+(currentPlace==='garden'?'暖阳庭院':'小镇散步');say(currentPlace==='garden'?'到自己的小花园了；可自由走动，行程与口袋里可回小镇。':'已沿原路回到小镇。');renderProgress();}}if(mode==='free'&&currentPlace==='garden'&&!ambient&&!destination&&!interacting&&!nav.get(own).socialDeparture&&eventPhase==='idle'&&card.hidden&&!coreActive&&elapsed>ambientNext)startAmbient();updateAmbient();if(nav.get(own).hold>0)nav.get(own).hold-=dt;let moving=false;if(eventPhase==='idle'&&card.hidden&&(nav.get(own).hold<=0||bridgeCommitted(own))){if(interacting){nav.get(interacting).hold=Math.max(nav.get(interacting).hold,1);const distance=own.root.position.distanceTo(interacting.root.position);if(distance<=DIAM+.65){const c=interacting;interacting=null;resident(c);}else if(elapsed>freeAt){freeAt=elapsed+1;const delta=own.root.position.clone().sub(interacting.root.position);delta.y=0;if(delta.length()<.1)delta.set(1,0,0);const q=nearest(interacting.root.position.clone().addScaledVector(delta.normalize(),DIAM+.35));go(own,q.q);}}if(mode==='free'&&!ambient&&!nav.get(own).socialDeparture&&!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery&&!nav.get(own).path.length&&elapsed>freeAt){freeAt=elapsed+3;if(currentPlace==='garden'){go(own,point(['gardenCenter','gardenNorth','gardenSouthPath'][Math.floor(elapsed/5)%3]));}else if(journey[collected])next();else{const k=Object.keys(townWaypoints)[Math.floor(elapsed/5)%Object.keys(townWaypoints).length];go(own,point(k));}}moving=move(own,dt,2.6);}lastMoving=moving;own.state=moving?'WANDER':elapsed<chatUntil?own.state:'GROOM';own.animPhase+=dt*(moving||own.state==='PLAY'?7:1);playerModel.applyAnimation(moving||own.state==='PLAY'?'walk':'idle',own.animPhase);const head=playerModel.bones.get('head');if(head&&!moving&&own.state==='SNIFF_FLOWER')head.rotation.x-=.22;"
+  },
+  {
+    "path": "app/web/town-player-runtime.inc.js",
+    "line": 317,
+    "source": " listen(ui,'click',e=>{const b=e.target.closest('button');if(!b)return;if(eventPhase!=='idle'&&!b.closest('.world-event-actions')&&!b.hasAttribute('data-player-toggle'))return;if(b.dataset.playerMode)setMode(b.dataset.playerMode);if(b.hasAttribute('data-player-toggle'))setMode(ownContact?'guide':mode==='free'?'guide':'free');if(b.hasAttribute('data-player-overview'))resetOverviewCamera();if(b.hasAttribute('data-player-return'))focus();if(b.hasAttribute('data-scene-garden')){setMode('guide');const back=own.root.position.x>21;go(own,point(back?'gardenSouth':'gardenCenter'));say(back?'沿入口步道走回小镇。':'沿入口步道走进小花园；点小镇道路可以原路回去。');}if(b.hasAttribute('data-player-focus'))focus();if(b.hasAttribute('data-player-garden'))targetPoint(point(currentPlace==='garden'?'gardenSouth':'gardenCenter'),currentPlace==='garden'?'street':'garden');if(b.hasAttribute('data-player-next')&&journey[collected])targetPoint(goalPoint(journey[collected].key));if(b.hasAttribute('data-player-settle')&&session&&!ended){const result=store.settleWorldActivity(session.token);say(result.message||'本次散步尚未完成。');if(result.ok){ended=true;session=null;renderProgress();}}});"
+  },
+  {
+    "path": "app/web/town-contact-runtime.inc.js",
+    "line": 64,
+    "source": "  if(resume&&saved){mode=saved.mode;nav.get(own).path=[];if(scatter&&other){if(!roadSeparation(own,other,saved.path))nav.get(own).path=nav.get(own).socialDeparture?[]:saved.path;}else nav.get(own).path=saved.path;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';}"
+  },
+  {
+    "path": "app/web/town-contact-runtime.inc.js",
+    "line": 66,
+    "source": "  ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';"
+  },
+  {
+    "path": "app/web/town-integration.js",
+    "line": 41,
+    "source": "   active=true;d.body.dataset.townExperience='open';view.show({profile:current.pet,session:trip,store:root.__petGame.store});"
+  },
+  {
+    "path": "app/scripts/build_town.py",
+    "line": 96,
+    "source": "function show(options={}){if(disposed)throw Error('ORIGINAL_TOWN_DISPOSED');panel.hidden=false;initialize();panel.querySelector('#canvas-container').append(hostRenderer.domElement);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.08;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.setSize(innerWidth,innerHeight,false);clock.oldTime=performance.now();clock.running=true;if(!shown){replayTownAssembly();shown=true;}townPlayer?.begin(options.profile||playerProfile,options.session||null,options.store||null);active=true;if(!frameId)frameId=requestAnimationFrame(animate);}"
+  }
+]

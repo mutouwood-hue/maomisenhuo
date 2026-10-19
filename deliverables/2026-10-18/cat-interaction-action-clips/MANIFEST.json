@@ -1,0 +1,106 @@
+{
+  "batch": "猫咪森活小猫互动首批补充：动作联动",
+  "date": "2026-10-18",
+  "parentBatch": "cat-interaction-first-batch",
+  "phone": {
+    "device": "StepX PZ261A",
+    "serial": "ZYPZ261A01M65K0002A",
+    "appId": "com.catforest.htmlcandidate",
+    "versionBefore": "0.5.1-cat-interaction",
+    "versionCodeBefore": 42,
+    "versionAfter": "0.5.2-cat-actions",
+    "versionCodeAfter": 43,
+    "artifact": {
+      "file": "catforest-0.5.2-cat-actions-debug.apk",
+      "bytes": 2699863,
+      "sha256": "ab796b0d4d7bf5edf159ed499f334f02342030ed5ad3af57439f3aac6df82fee"
+    },
+    "signingCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+    "installed": true,
+    "installMode": "adb install --no-incremental -r",
+    "firstInstallTimeBefore": "2026-10-15 23:14:25",
+    "firstInstallTimeAfter": "2026-10-15 23:14:25",
+    "uninstalled": false,
+    "dataCleared": false,
+    "appLaunchedForAcceptance": false,
+    "installationLog": "phone-install.log"
+  },
+  "badge": {
+    "device": "ESP32-S3",
+    "mac": "7c:0c:5f:42:36:84",
+    "versionBefore": "0.6.9-cat-interaction",
+    "versionAfter": "0.7.0-cat-actions",
+    "artifact": {
+      "file": "cat_forest_badge-0.7.0-cat-actions.bin",
+      "bytes": 7033920,
+      "sha256": "266b8c9c84d684b5c9eb1b47d2c2e298fbfe50182690dc1ebd0219c357dc8b6a"
+    },
+    "build": "ESP-IDF 5.5; /tmp/catforest-cat-actions-badge-070",
+    "deployed": true,
+    "partition": "ota_1",
+    "offset": "0x820000",
+    "partitionCapacityBytes": 8388608,
+    "freeBytes": 1354688,
+    "macConfirmedDuringWrite": true,
+    "esptoolHashVerified": true,
+    "writesNvs": false,
+    "writesOtadata": false,
+    "writesPartitionTable": false,
+    "writesBootloader": false,
+    "writesAssetsPartitions": false,
+    "eraseAll": false,
+    "runtimeAcceptance": "pending user"
+  },
+  "nativeActionAssets": {
+    "clips": [
+      {"name": "idle", "frames": 20, "durationSeconds": 3.2},
+      {"name": "paw", "frames": 24, "durationSeconds": 2.4},
+      {"name": "walk", "frames": 10, "durationSeconds": 1.0},
+      {"name": "attention", "frames": 12, "durationSeconds": 3.2},
+      {"name": "sniff", "frames": 12, "durationSeconds": 2.4},
+      {"name": "pounce", "frames": 24, "durationSeconds": 2.4}
+    ],
+    "growthShapes": 5,
+    "outfitLayers": 4,
+    "canvas": [192, 208],
+    "footAnchor": [96, 196],
+    "rlePayloadBytes": 6281919,
+    "compressedFirmwareDataBytes": 2382020,
+    "rleSha256": "e58a0db656e85ea0cc3774976f83766aa7cd13d93d4bbdc58d17174a13fb1978",
+    "compressedSha256": "ac634d06954020be79c75bef07e8e252dd554f9bbf42c7931b1a6e4f63e2ef9a"
+  },
+  "colorProfile": {
+    "id": "native-linear-aces-soft-v2-candidate",
+    "status": "user accepted as final at badge 068",
+    "sha256": "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae",
+    "changed": false
+  },
+  "scope": {
+    "roomBall": true,
+    "roomBed": true,
+    "gardenFlower": true,
+    "gardenButterfly": true,
+    "badgeDistinctSniffPounce": true,
+    "badgeBedSleepCurlRetained": true,
+    "encountersChanged": false,
+    "townChanged": false,
+    "newSettlementOrNvsField": false,
+    "newAutomaticRandomChain": false
+  },
+  "verification": {
+    "productionPhoneBuildSucceeded": true,
+    "productionBadgeBuildSucceeded": true,
+    "phoneInstallSucceeded": true,
+    "badgeAppPartitionFlashVerified": true,
+    "unitTestsRun": false,
+    "lintRun": false,
+    "browserAutomationRun": false,
+    "touchSimulationRun": false,
+    "bluetoothDiagnosticsRun": false,
+    "userAcceptance": "pending"
+  },
+  "notionSummary": "NOTION-REGISTRATION-SUMMARY.md",
+  "deliveryRecord": "DELIVERY-AND-ACCEPTANCE.md",
+  "flashPlan": "FLASH-PLAN.json",
+  "flashReceipt": "FLASH-RECEIPT.json"
+}

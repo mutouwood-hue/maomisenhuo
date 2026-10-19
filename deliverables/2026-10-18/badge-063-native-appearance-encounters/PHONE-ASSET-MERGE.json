@@ -1,0 +1,18 @@
+{
+  "changedAssets": [
+    "build-manifest.json",
+    "cflocal2-adapter.js",
+    "game-03.js",
+    "index.html",
+    "native-cat-breeds.js",
+    "native-cat-data.js",
+    "native-cat-legacy-outfits.js",
+    "native-cat-model.js",
+    "offline-room-bed.js",
+    "offline-scene-map.js",
+    "pet-appearance.js",
+    "pet-growth.js"
+  ],
+  "allAssetMirrorsIdentical": true,
+  "townAndOtherGameScriptsChanged": []
+}

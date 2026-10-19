@@ -1,0 +1,25 @@
+{
+  "recordedAtUtc": "2026-10-18T07:37:08.339983+00:00",
+  "currentPhone": "0.5.0-badge-connect",
+  "currentBadge": "0.6.4-connect-repair",
+  "newBuildOrDeployment": false,
+  "productSourceChanged": false,
+  "userConnectionAcceptance": "failed, including supplied photographs",
+  "appearanceFinding": "current device snapshot has no known appearance; new appearance not delivered, legacy fallback remains",
+  "connectionRootCause": "not established from existing logs",
+  "blockedAction": "one-time active read-only CFDIAG STATE and CFDIAG PERF request; automatic review rejected; not executed",
+  "needsExplicitApproval": false,
+  "evidence": [
+    "FINDINGS-AND-BLOCKER.md",
+    "OBSERVED-FACTS.json",
+    "SOURCE-COMPARISON.json"
+  ],
+  "proposedAction": "PROPOSED-READ-ONLY-STATUS.py",
+  "recordScope": "historical050/064 investigation; see resolution for subsequent actual root cause and066 deployment",
+  "resolution": {
+    "delivery": "../badge-066-ble-memory/MANIFEST.json",
+    "approvedDiagnostic": "returned no STATE/PERF replies; further requests stopped",
+    "rootCause": "captured normal065startup logs: internal memory exhausted and domain task creation failed",
+    "fixedBy": "066PSRAM message payload/scratch allocation; host/advertising startup now recorded"
+  }
+}

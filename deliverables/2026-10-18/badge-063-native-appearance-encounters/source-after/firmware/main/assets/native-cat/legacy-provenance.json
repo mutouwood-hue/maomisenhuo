@@ -1,0 +1,404 @@
+{
+  "conversion": "Lossless palette/index RLE; original frame symbols, count and timing retained.",
+  "bytes": 390852,
+  "sha256": "d6fa3d5844e6a78f5ff015b07e67d8b5a0a99b5ac573972ef70ee9b096c3716d",
+  "frames": [
+    {
+      "name": "game_idle_00",
+      "offset": 0,
+      "bytes": 5955,
+      "sourceSha256": "94c5ebfe0aed6b12254f9ca42a2902c5e8f4e29a89b04c2e615e09ba32b75473"
+    },
+    {
+      "name": "game_idle_01",
+      "offset": 5955,
+      "bytes": 5964,
+      "sourceSha256": "b5d71eb3473163df32e06c986954c3d14e3fbea6d3b089fa4ba04cdb04855101"
+    },
+    {
+      "name": "game_idle_02",
+      "offset": 11919,
+      "bytes": 6027,
+      "sourceSha256": "18a5a6f64d95b1b2eb97fc4cf7f107162d7d1ab4ca80394251d2a41eec3cb799"
+    },
+    {
+      "name": "game_idle_03",
+      "offset": 17946,
+      "bytes": 6123,
+      "sourceSha256": "19e7d5f939dfb9cf9a239eb676d7d24528bae860f35d28ad6c6c84445263c2a7"
+    },
+    {
+      "name": "game_idle_04",
+      "offset": 24069,
+      "bytes": 6138,
+      "sourceSha256": "7304b99812f7322f1fff592ce22fa2d16ba0e9caa58845de1a0a44230afa1801"
+    },
+    {
+      "name": "game_idle_05",
+      "offset": 30207,
+      "bytes": 6156,
+      "sourceSha256": "aacd2e569e0766ed82aa92c4d23044d933968fdfc7266d7e4281e4be1e0e5f14"
+    },
+    {
+      "name": "game_idle_06",
+      "offset": 36363,
+      "bytes": 6213,
+      "sourceSha256": "be31b31922a9f664e2ece05eca1ab7e373f19c90998d5ad7a03c6e2a8a07b3c1"
+    },
+    {
+      "name": "game_idle_07",
+      "offset": 42576,
+      "bytes": 6132,
+      "sourceSha256": "3e25bd3a4a6708fb026714244d03e76a967441fcd75338f5dc3e3fe05e7d5389"
+    },
+    {
+      "name": "game_idle_08",
+      "offset": 48708,
+      "bytes": 6066,
+      "sourceSha256": "e120eb5d32d91c66720e94d77e93ccf69250292159a942cf00258c92925f1783"
+    },
+    {
+      "name": "game_idle_09",
+      "offset": 54774,
+      "bytes": 6003,
+      "sourceSha256": "5a2fba8d430b2d6883349f28b27d866523f32531c2b953dd52561ff6a62f98cd"
+    },
+    {
+      "name": "game_idle_10",
+      "offset": 60777,
+      "bytes": 5955,
+      "sourceSha256": "3ddb661171d18ef668ba34eab340ff83803c7c43fa34a5510f99cf6906ed36e5"
+    },
+    {
+      "name": "game_idle_11",
+      "offset": 66732,
+      "bytes": 5805,
+      "sourceSha256": "224d18925b190591434b20489caca65f705d1d24e6c3bc2fb9588bf213ec1d6d"
+    },
+    {
+      "name": "game_idle_12",
+      "offset": 72537,
+      "bytes": 5772,
+      "sourceSha256": "a2f91ba59c03e86e53046991f9d0105a88156bee3667f063484f8f21d4ffe8e3"
+    },
+    {
+      "name": "game_idle_13",
+      "offset": 78309,
+      "bytes": 5859,
+      "sourceSha256": "c44e996a4ff21805a93e72de0ecdf48722db7eab29aba74d6446555f9feef786"
+    },
+    {
+      "name": "game_idle_14",
+      "offset": 84168,
+      "bytes": 5607,
+      "sourceSha256": "e9f844e7046c852fbd6f42dae4309334d25165b85fda9ef906b33f9ca38e699d"
+    },
+    {
+      "name": "game_idle_15",
+      "offset": 89775,
+      "bytes": 5799,
+      "sourceSha256": "391af5c6ae4a821b1ee8a17c93c1cdcf989b04c5c8575c95a7a46b117b2d796e"
+    },
+    {
+      "name": "game_idle_16",
+      "offset": 95574,
+      "bytes": 5892,
+      "sourceSha256": "92b710aaf361fe5e16ea0b29d68a3d74a7ae31c76c9a4775cd50f58a2329fba4"
+    },
+    {
+      "name": "game_idle_17",
+      "offset": 101466,
+      "bytes": 5829,
+      "sourceSha256": "c9e5633ffbe3a8ca0bc6bbb3401fa8e8ac558400f1239d6145007e163a418531"
+    },
+    {
+      "name": "game_idle_18",
+      "offset": 107295,
+      "bytes": 5871,
+      "sourceSha256": "c7b60d269d7b37ab733cb1c1a91ee8d19936dd3d79e60df755f159e2944e5db3"
+    },
+    {
+      "name": "game_idle_19",
+      "offset": 113166,
+      "bytes": 5931,
+      "sourceSha256": "930b1900ff9cd8bf4142841fb19bc9d9c6915a93fe3136ac1af528c592acf8a8"
+    },
+    {
+      "name": "game_pet_00",
+      "offset": 119097,
+      "bytes": 5985,
+      "sourceSha256": "6b129ddcd4c0dcbde1631ff1b3f7186f3107dbf5a771e7e5c93ba1ee0806d0d2"
+    },
+    {
+      "name": "game_pet_01",
+      "offset": 125082,
+      "bytes": 5790,
+      "sourceSha256": "56dd593b3a142ae80cb283eabefc63b9ddca5970a892718abd5b8d8a7016d6eb"
+    },
+    {
+      "name": "game_pet_02",
+      "offset": 130872,
+      "bytes": 5955,
+      "sourceSha256": "6c6867ddcd82b853c6d4ef7261bcbd4f8a4ef6039dc27d3f77a6835347f6dfa2"
+    },
+    {
+      "name": "game_pet_03",
+      "offset": 136827,
+      "bytes": 5784,
+      "sourceSha256": "ae60c3acb3ffd799c64f8610260729a4590551baae7cbc443ca07dc692eaacb8"
+    },
+    {
+      "name": "game_pet_04",
+      "offset": 142611,
+      "bytes": 5706,
+      "sourceSha256": "ef80df3827faa82c735a10045656974a6536fda40a23712d35eadecb1734735b"
+    },
+    {
+      "name": "game_pet_05",
+      "offset": 148317,
+      "bytes": 5715,
+      "sourceSha256": "56ecad168fcaa54a744ec10284dce23b1ff8c6b83d7368ec8abcee520427ebc7"
+    },
+    {
+      "name": "game_pet_06",
+      "offset": 154032,
+      "bytes": 5682,
+      "sourceSha256": "68a532d8f60d6da1fe5e70bf415df4bb28057446b7d07fb2887e0c154e36aa9a"
+    },
+    {
+      "name": "game_pet_07",
+      "offset": 159714,
+      "bytes": 5640,
+      "sourceSha256": "2d26d0a7e17b0c0cc1d603e2bc7e2b67a14e14dd855d958b808b4a1c0b69e171"
+    },
+    {
+      "name": "game_pet_08",
+      "offset": 165354,
+      "bytes": 5619,
+      "sourceSha256": "408a1d77515000426e96b051d27ca69a2a443b38791b29f45ad5dddbf66a2f77"
+    },
+    {
+      "name": "game_pet_09",
+      "offset": 170973,
+      "bytes": 5649,
+      "sourceSha256": "fe16f014516860b7e1ee1bd6f28b5f5bf78d20beada74b09a6d79ac46ba10dbb"
+    },
+    {
+      "name": "game_pet_10",
+      "offset": 176622,
+      "bytes": 5703,
+      "sourceSha256": "4f51703e402a67fc749007c5f0299e879b5b71bd57ee193a7f1c8b3fe5da554b"
+    },
+    {
+      "name": "game_pet_11",
+      "offset": 182325,
+      "bytes": 5598,
+      "sourceSha256": "5c6d752d5892e29053a2f85348e0a56b2a88e381568d85caaa202c9ba3b9427b"
+    },
+    {
+      "name": "game_pet_12",
+      "offset": 187923,
+      "bytes": 5550,
+      "sourceSha256": "4b970d6c4455da8938b11d5c22e1d2dc4d010148a1225e99124672f7c94741b7"
+    },
+    {
+      "name": "game_pet_13",
+      "offset": 193473,
+      "bytes": 5511,
+      "sourceSha256": "53109f0005bcd4df622ab3c1ec756ae98eef88baed6c924d2b384c300bad36bf"
+    },
+    {
+      "name": "game_pet_14",
+      "offset": 198984,
+      "bytes": 5514,
+      "sourceSha256": "de6e9737d26c5e285063b0ded424984fb39fd5f9a4c63f1b208507bbf59a17db"
+    },
+    {
+      "name": "game_pet_15",
+      "offset": 204498,
+      "bytes": 5514,
+      "sourceSha256": "fb4a3bb6abfb3b116f39fb4a2b8abf824edc8fe22a78f7ab8086e8eeb90ae387"
+    },
+    {
+      "name": "game_pet_16",
+      "offset": 210012,
+      "bytes": 5595,
+      "sourceSha256": "daf00f2d59e519506bfe2bf9452b4a9c9eab6b10c598526cd982676a02a570a8"
+    },
+    {
+      "name": "game_pet_17",
+      "offset": 215607,
+      "bytes": 5577,
+      "sourceSha256": "c63c32c99de898a031f1adf2aa02de5feca168324b8ce48f0a12c78b8fb0713e"
+    },
+    {
+      "name": "game_pet_18",
+      "offset": 221184,
+      "bytes": 5553,
+      "sourceSha256": "a54cf41948a85d64b472a6b2433998591d989825fe8f8e5980ebd1cb5b04134a"
+    },
+    {
+      "name": "game_pet_19",
+      "offset": 226737,
+      "bytes": 5604,
+      "sourceSha256": "5b5d84035be18fb75705b17e0ebcd25e7819ec88a13aff343ee971f103eee047"
+    },
+    {
+      "name": "game_pet_20",
+      "offset": 232341,
+      "bytes": 5760,
+      "sourceSha256": "3f4b7043d80dfba6bfb8b061201c1f22691dc3a5d1d31be2d80905871a9bcfb2"
+    },
+    {
+      "name": "game_pet_21",
+      "offset": 238101,
+      "bytes": 5889,
+      "sourceSha256": "8fb2a5ce0d4fb6898e4d3a37af5b518bd95bc408093ea70e63409fa531c8b348"
+    },
+    {
+      "name": "game_pet_22",
+      "offset": 243990,
+      "bytes": 5883,
+      "sourceSha256": "5c427844d07666249eb57c4cabbd023f8cfc1726e7c5e8dad754c3fbfdce5737"
+    },
+    {
+      "name": "game_pet_23",
+      "offset": 249873,
+      "bytes": 5799,
+      "sourceSha256": "72f05a299c13af1dfbcc87346359bd217782339887a89fc9306454ff8e141132"
+    },
+    {
+      "name": "game_walk_00",
+      "offset": 255672,
+      "bytes": 5952,
+      "sourceSha256": "0aa879120ef6635d0dfcab198c8c2425b4c4d1b0f54e75496102bada944968f4"
+    },
+    {
+      "name": "game_walk_01",
+      "offset": 261624,
+      "bytes": 5751,
+      "sourceSha256": "175e5109ba7a64dece78ddf0938037ae40434d3148d5ad6f9448ca42f6c89c65"
+    },
+    {
+      "name": "game_walk_02",
+      "offset": 267375,
+      "bytes": 5727,
+      "sourceSha256": "d5f6bac9e48b785b478a63da8aae51eb560d313666b9bd530ef53062cb1b352c"
+    },
+    {
+      "name": "game_walk_03",
+      "offset": 273102,
+      "bytes": 5727,
+      "sourceSha256": "324e29a85490449e067336acdad035412d680033b68cf67deefa8761f4ca5f62"
+    },
+    {
+      "name": "game_walk_04",
+      "offset": 278829,
+      "bytes": 5841,
+      "sourceSha256": "1dfe9cf89ac251ed83802108ec0b5f5406d4bac6a26d119c2fe9c2c0724b26e0"
+    },
+    {
+      "name": "game_walk_05",
+      "offset": 284670,
+      "bytes": 5997,
+      "sourceSha256": "ecd260df339e5df3edb1c485873442363b307333a0aa4927348ebae42ffd6800"
+    },
+    {
+      "name": "game_walk_06",
+      "offset": 290667,
+      "bytes": 5292,
+      "sourceSha256": "118a33ce5381ecea73c3f24f9dbd973c32f867e5972beddc9a3868cd13c8bbe5"
+    },
+    {
+      "name": "game_walk_07",
+      "offset": 295959,
+      "bytes": 5262,
+      "sourceSha256": "ef6f2052d9d7f0e5fb1e43e611aade47b46d28779d571f61456f6f8ee3fc7a46"
+    },
+    {
+      "name": "game_walk_08",
+      "offset": 301221,
+      "bytes": 5286,
+      "sourceSha256": "2fca1d07a337426833951eede9fb5660666d74cc11444b30a9b9772370ea72bc"
+    },
+    {
+      "name": "game_walk_09",
+      "offset": 306507,
+      "bytes": 5364,
+      "sourceSha256": "418f3226b059e2aa13516cc9c3363d728a86e13eb7aabc04d1e26067179951a2"
+    },
+    {
+      "name": "game_attention_00",
+      "offset": 311871,
+      "bytes": 6642,
+      "sourceSha256": "cec2a49ad993398a124ae56573f3974e8f3d07213afc109102db22f457e3b463"
+    },
+    {
+      "name": "game_attention_01",
+      "offset": 318513,
+      "bytes": 6753,
+      "sourceSha256": "70fb8622b921558f4c03f52507bbfd1328eaab346e773c3e49ca051bf3a566a7"
+    },
+    {
+      "name": "game_attention_02",
+      "offset": 325266,
+      "bytes": 6822,
+      "sourceSha256": "0c51b4ca3dde50f282a08f6e447785fecd48b1081cd70031e183c6ea76b41206"
+    },
+    {
+      "name": "game_attention_03",
+      "offset": 332088,
+      "bytes": 6822,
+      "sourceSha256": "e59b7e8a52f91725c23e1cfdb0541b91db1c74d13b5d7a3abadf089dc38af82a"
+    },
+    {
+      "name": "game_attention_04",
+      "offset": 338910,
+      "bytes": 6843,
+      "sourceSha256": "2891ba98a6fba78143da7ffc57a5d4e081f898f053c1a24f4acf0d3ac61b693b"
+    },
+    {
+      "name": "game_attention_05",
+      "offset": 345753,
+      "bytes": 6810,
+      "sourceSha256": "8d52f7af8657ad1e69b8ef8556c5b568649616a3378270d64c6f557f2e3716a2"
+    },
+    {
+      "name": "game_attention_06",
+      "offset": 352563,
+      "bytes": 6714,
+      "sourceSha256": "03de40102e51f04ce2373720510ad2aa192d5b2af394c5ad6e689bf827d5f612"
+    },
+    {
+      "name": "game_attention_07",
+      "offset": 359277,
+      "bytes": 6345,
+      "sourceSha256": "5364ab182fb0ec46a3a033cd6c20b47a5229377ea021d91af02b62f4d0d77f0e"
+    },
+    {
+      "name": "game_attention_08",
+      "offset": 365622,
+      "bytes": 6207,
+      "sourceSha256": "bdf59ce8413b11b80facd17502cb69a460ed11767cb64e9025e8ebab26902d40"
+    },
+    {
+      "name": "game_attention_09",
+      "offset": 371829,
+      "bytes": 6246,
+      "sourceSha256": "a607c216d8b150f48512cd48306575a574069b763b5ce8b03640fab0c1a36908"
+    },
+    {
+      "name": "game_attention_10",
+      "offset": 378075,
+      "bytes": 6348,
+      "sourceSha256": "04bb71f71e69bc80e43bd1089b1a800e418623f4baf5ca421f6c4903e088c650"
+    },
+    {
+      "name": "game_attention_11",
+      "offset": 384423,
+      "bytes": 6429,
+      "sourceSha256": "b18ee9d4abf71236ce65fb615cfb6fab421209f6b391f2b0f3351423599a5ba0"
+    }
+  ],
+  "acceptance": "Not executed or visually accepted."
+}

@@ -1,0 +1,65 @@
+{
+  "startedAtUtc": "2026-10-18T03:19:33.820990+00:00",
+  "sourceRoot": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4",
+  "sourceBaseline": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "versionName": "0.4.5-sticky-guide",
+  "versionCode": 36,
+  "technicalTestsExecuted": false,
+  "lintExecuted": false,
+  "browserQAExecuted": false,
+  "simulatedInteractionExecuted": false,
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.13/bin/python3.13",
+        "app/scripts/build_assets.py"
+      ],
+      "log": "assets-build.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/zoumutou/coding/猫咪森活/.tools/gradle-8.9/bin/gradle",
+        "--offline",
+        "--no-daemon",
+        "--console=plain",
+        ":app:assembleDebug",
+        "-x",
+        "test",
+        "-x",
+        "lint"
+      ],
+      "log": "phone-build.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/zoumutou/coding/猫咪森活/.tools/android-sdk/build-tools/35.0.0/apksigner",
+        "verify",
+        "--print-certs",
+        "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/phone-045-sticky-guide/catforest-0.4.5-sticky-guide-debug.apk"
+      ],
+      "log": "phone-signature.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/zoumutou/coding/猫咪森活/.tools/android-sdk/build-tools/35.0.0/aapt",
+        "dump",
+        "badging",
+        "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/phone-045-sticky-guide/catforest-0.4.5-sticky-guide-debug.apk"
+      ],
+      "log": "phone-package.log",
+      "exitCode": 0
+    }
+  ],
+  "file": "catforest-0.4.5-sticky-guide-debug.apk",
+  "bytes": 933051,
+  "sha256": "24df810674b69dc30de97f24e149107b9c892f272029a58b4cc8a2fd0a911d04",
+  "packageId": "com.catforest.htmlcandidate",
+  "applicationLabel": "猫咪森活",
+  "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+  "buildType": "debug",
+  "buildExitCode": 0,
+  "finishedAtUtc": "2026-10-18T03:19:45.148667+00:00"
+}

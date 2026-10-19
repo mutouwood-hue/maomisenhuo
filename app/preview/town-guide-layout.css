@@ -5,3 +5,9 @@
 #town-trip-sheet{position:absolute;z-index:25;pointer-events:auto;max-height:min(48dvh,370px);border:1px solid #e2ece5}#town-trip-sheet[hidden]{display:none!important}#town-trip-sheet .m-head button{min-height:48px!important;min-width:48px!important}#town-trip-sheet-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow:auto;padding:0 14px 20px}#town-trip-sheet-body>.world-hint{grid-column:1/-1;max-width:none;margin:0;font-size:12px}#original-town #town-trip-sheet-body button{font-size:12px;min-height:48px;display:flex;align-items:center;justify-content:center;gap:5px}#town-trip-sheet-body .town-button-icon{display:none}#town-trip-sheet-body [data-player-garden]{grid-column:1/-1}
 #original-town[data-town-core=true]>.masthead,#original-town[data-town-core=true]>#m-stats,#original-town[data-town-core=true] .world-top,#original-town[data-town-core=true] .town-host-actions,#original-town[data-town-core=true] #town-trip-sheet{display:none!important}
 #original-town .pet-world-ui{pointer-events:none}#original-town .world-top,#original-town .world-card{pointer-events:none}#original-town .world-event,#original-town .world-event button{pointer-events:auto}
+/* This sheet owns its content; original home-sheet mode filters do not apply. */
+#original-town #town-trip-sheet-body{display:grid;flex:1 1 auto;min-height:96px;color:#415b50;align-content:start}
+#town-trip-sheet-body>.town-trip-content{display:block;grid-column:1/-1;min-width:0;padding:0 2px}
+#town-trip-sheet-body .town-trip-content h3{font-size:14px;margin:10px 0 6px}
+#town-trip-sheet-body .town-trip-content ol{margin:0;padding-left:22px;line-height:1.7;font-size:12px}
+#town-trip-sheet-body .town-trip-content p{margin:0;font-size:12px;line-height:1.7;overflow-wrap:anywhere}

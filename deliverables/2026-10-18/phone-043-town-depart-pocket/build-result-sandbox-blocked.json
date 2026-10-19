@@ -1,0 +1,36 @@
+{
+  "startedAtUtc": "2026-10-18T02:49:52.743951+00:00",
+  "sourceRoot": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4",
+  "sourceBaseline": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "versionName": "0.4.3-town-depart-pocket",
+  "versionCode": 34,
+  "technicalTestsExecuted": false,
+  "lintExecuted": false,
+  "browserQAExecuted": false,
+  "simulatedInteractionExecuted": false,
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.13/bin/python3.13",
+        "app/scripts/build_assets.py"
+      ],
+      "log": "assets-build.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/zoumutou/coding/猫咪森活/.tools/gradle-8.9/bin/gradle",
+        "--offline",
+        "--no-daemon",
+        "--console=plain",
+        ":app:assembleDebug",
+        "-x",
+        "test",
+        "-x",
+        "lint"
+      ],
+      "log": "phone-build.log",
+      "exitCode": 1
+    }
+  ]
+}

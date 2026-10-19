@@ -8,8 +8,8 @@ android {
         applicationId = "com.catforest.htmlcandidate"
         minSdk = 26
         targetSdk = 35
-        versionCode = 31
-        versionName = "0.4.0-day-hearts"
+        versionCode = 44
+        versionName = "0.5.3-scene-expansion"
     }
     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
     signingConfigs {

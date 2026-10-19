@@ -1,5 +1,25 @@
 /* Keep the original palette, pixel art, HUD, six care actions and social layouts. */
 [hidden] { display:none !important; }
+/* One live connection panel inside the original daily badge page. */
+#lf-badge-connection { padding:20px 16px; }
+#lf-badge-connection #offline-v2-panel { display:block; }
+.badge-connect-hero { text-align:center; }
+.badge-connect-hero h3 { margin:10px 0; font-size:19px; }
+.badge-connect-hero p { line-height:1.65; }
+.badge-radar { position:relative; isolation:isolate; width:min(210px,60vw); aspect-ratio:1; margin:4px auto 20px; border-radius:50%; background:#f0eadf; overflow:hidden; }
+.badge-radar i { position:absolute; border:1px solid #9daf9770; border-radius:50%; inset:8%; }
+.badge-radar i:nth-child(2) { inset:23%; }
+.badge-radar i:nth-child(3) { inset:38%; }
+.badge-radar span { position:absolute; inset:0; display:grid; place-items:center; color:#6c8d70; font-size:27px; }
+.badge-radar::after { content:''; position:absolute; inset:0; border-radius:inherit; background:conic-gradient(from 0deg,transparent 66%,#86a68540 98%,#73997970); opacity:0; }
+.badge-radar.is-searching::after { opacity:1; animation:badge-search 3s linear infinite; }
+.badge-device-list,.badge-connect-actions { display:flex; flex-direction:column; gap:10px; margin:14px 0; }
+.badge-connect-actions .g-btn,.badge-device-list .g-btn { width:100%; min-height:46px; }
+.lf-badge-privacy { margin-top:16px; border:1px solid #dacdbb; border-radius:16px; overflow:hidden; }
+.lf-badge-privacy summary { cursor:pointer; padding:16px; font-weight:700; min-height:46px; box-sizing:border-box; }
+.lf-badge-privacy>.lf-sec { margin:0; border:0; }
+@keyframes badge-search { to { transform:rotate(360deg); } }
+@media (prefers-reduced-motion:reduce) { .badge-radar.is-searching::after { animation:none; } }
 #offline-device { padding:0; border:0; width:min(440px,94vw); max-height:calc(100dvh - var(--safe-area-inset-top,0px) - var(--safe-area-inset-bottom,0px) - 20px); border-radius:24px; background:#fffaf2; color:#5b4632; box-shadow:0 20px 60px #3b2f2533; }
 #offline-device::backdrop { background:#2e2a2466; backdrop-filter:blur(4px); }
 .offline-device-inner { display:flex; flex-direction:column; max-height:inherit; }
@@ -99,3 +119,11 @@ body.offline-obscured #room-view canvas { pointer-events:none; }
 .offline-diag-content dl{display:grid;grid-template-columns:minmax(0,1fr);gap:3px;margin:0}
 .offline-diag-content dt{font-weight:700;color:#3a493e}
 .offline-diag-content dd{margin:0 0 10px;overflow-wrap:anywhere;word-break:break-word;color:#3a493e}
+/* Keep the room's action hint short and let taps pass through to scene objects. */
+#pg-think .pg-bub{max-width:min(184px,calc(100vw - 24px));gap:5px;padding:6px 9px;border-radius:15px}
+#pg-think .pg-ring{display:none}
+#pg-think .pg-txt{max-width:132px}
+#pg-think .pg-txt b{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#pg-think .pg-txt span{font-size:12px;line-height:1.3}
+#pg-think .pg-tools{flex-direction:row;align-items:center;gap:4px}
+#pg-think .pg-tools button{min-height:32px;padding:3px 7px}

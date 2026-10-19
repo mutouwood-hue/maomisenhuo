@@ -1,0 +1,236 @@
+{
+  "status": "production deployed; user visual/interaction acceptance pending",
+  "firmware": {
+    "version": "0.6.1-ring-receipt-reasons",
+    "productionBuildExitCode": 0,
+    "flash": {
+      "startedAtUtc": "2026-10-18T04:25:21.618981+00:00",
+      "finishedAtUtc": "2026-10-18T04:26:28.783360+00:00",
+      "exitCode": 0,
+      "esptoolHashVerified": true,
+      "applicationOnly": true,
+      "file": "cat_forest_badge-0.6.1-ring-receipt-reasons.bin",
+      "bytes": 6914288,
+      "sha256": "d3ba4f53c1666ab1e745a7393bfff9c90c9566b73a25dde4af541172c6dfc411",
+      "target": "ota_1",
+      "offset": 8519680,
+      "hardwareAcceptance": "not performed; user acceptance pending"
+    }
+  },
+  "phone": {
+    "build": {
+      "versionName": "0.4.7-care-reasons",
+      "versionCode": 38,
+      "packageId": "com.catforest.htmlcandidate",
+      "file": "catforest-0.4.7-care-reasons-debug.apk",
+      "bytes": 934395,
+      "sha256": "7099f53d365f5ec0e441e3dad4480ca57295bef7ee5708f12805694434a173ce",
+      "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+      "buildExitCode": 0,
+      "assetChanges": [
+        "assets/offline-device-events.js"
+      ],
+      "townDayGameAssetsUnchanged": true,
+      "testsExecuted": false,
+      "appLaunched": false
+    },
+    "install": {
+      "startedAtUtc": "2026-10-18T04:27:02.380349+00:00",
+      "serial": "ZYPZ261A01M65K0002A",
+      "packageId": "com.catforest.htmlcandidate",
+      "installed": true,
+      "appLaunched": false,
+      "dataCleared": false,
+      "uninstalled": false,
+      "method": "adb install --no-incremental -r",
+      "commands": [
+        {
+          "command": [
+            "adb",
+            "-s",
+            "ZYPZ261A01M65K0002A",
+            "get-state"
+          ],
+          "exitCode": 0,
+          "log": "phone-connection.log"
+        },
+        {
+          "command": [
+            "adb",
+            "-s",
+            "ZYPZ261A01M65K0002A",
+            "shell",
+            "getprop",
+            "ro.product.model"
+          ],
+          "exitCode": 0,
+          "log": "phone-model.log"
+        },
+        {
+          "command": [
+            "adb",
+            "-s",
+            "ZYPZ261A01M65K0002A",
+            "shell",
+            "getprop",
+            "ro.product.manufacturer"
+          ],
+          "exitCode": 0,
+          "log": "phone-manufacturer.log"
+        },
+        {
+          "command": [
+            "adb",
+            "-s",
+            "ZYPZ261A01M65K0002A",
+            "shell",
+            "dumpsys",
+            "package",
+            "com.catforest.htmlcandidate"
+          ],
+          "exitCode": 0,
+          "log": "phone-before.log"
+        },
+        {
+          "command": [
+            "adb",
+            "-s",
+            "ZYPZ261A01M65K0002A",
+            "install",
+            "--no-incremental",
+            "-r",
+            "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/badge-061-ring-receipt-reasons/catforest-0.4.7-care-reasons-debug.apk"
+          ],
+          "exitCode": 0,
+          "log": "phone-install.log"
+        },
+        {
+          "command": [
+            "adb",
+            "-s",
+            "ZYPZ261A01M65K0002A",
+            "shell",
+            "dumpsys",
+            "package",
+            "com.catforest.htmlcandidate"
+          ],
+          "exitCode": 0,
+          "log": "phone-after.log"
+        }
+      ],
+      "before": {
+        "versionCode": 37,
+        "versionName": "0.4.6-auto-receipts",
+        "appId": 10191,
+        "firstInstallTime": "2026-10-15 23:14:25"
+      },
+      "installExitCode": 0,
+      "after": {
+        "versionCode": 38,
+        "versionName": "0.4.7-care-reasons",
+        "appId": 10191,
+        "firstInstallTime": "2026-10-15 23:14:25"
+      },
+      "sameAppId": true,
+      "sameFirstInstallTime": true,
+      "metadataMatchesBuiltVersion": true,
+      "finishedAtUtc": "2026-10-18T04:27:02.899556+00:00"
+    }
+  },
+  "observedBeforeChanges": {
+    "source": "existing persisted records only",
+    "lastAck": 57,
+    "pending": 0,
+    "lastTerminalMatched": true,
+    "phoneRecords": 57,
+    "originalEight46Through53HaveDurableOutcomes": true,
+    "businessReasonsEstablished": true,
+    "reason46": "insufficient_coins",
+    "reason53And57": "insufficient_coins",
+    "petReasonFromOriginalMessages": "mood already high; old code ineligible",
+    "event51": "applied",
+    "notAllEventsApplied": true
+  },
+  "changes": {
+    "ringDuplicateCurrentClockHidden": true,
+    "ringCurrentDateHidden": true,
+    "oldWaitingPlaceholderRemoved": true,
+    "genericProjectionNoLongerUnhidesRingPhase": true,
+    "selectedTimeHistoryProvenanceAndFuturePreserved": true,
+    "businessRejectionCopyCorrected": true,
+    "phoneNewDecisionsGetOriginalMessageReasonCodes": true,
+    "oldLedgerAndPendingACKRewritten": false,
+    "careRulesCoinsOrGrowthChanged": false
+  },
+  "preservation": {
+    "accepted060SlideAndTail": {
+      "unchanged": true,
+      "sha256": "d3fce0097a749e26efb1fdb357ad49d8d3ebe25306c89f92d2e5491d18ccfb57"
+    },
+    "accepted060StatusElements": {
+      "unchanged": true,
+      "sha256": "eecef4d751a8c1868a76517773baf32f69d488e343fae561012c8a63543d970d"
+    },
+    "phoneSigningCertificateAndPackageId": true,
+    "nvsBootloaderPartitionTableOtadataAndAssetsNotWritten": true,
+    "townPaused": true,
+    "coreAndDedupeUnchanged": true
+  },
+  "sourceFiles": [
+    {
+      "path": "app/android/app/build.gradle.kts",
+      "bytes": 804,
+      "sha256": "f11118d1264bf4011ef797fd0183dbcf45a79c29957c526845493599ea451487"
+    },
+    {
+      "path": "app/android/app/src/main/assets/offline-device-events.js",
+      "bytes": 18241,
+      "sha256": "84fc986d9ce63732fa5c61f6b1ec04584775ba12dea579c5377fe4683ef7cdd2"
+    },
+    {
+      "path": "app/preview/offline-device-events.js",
+      "bytes": 18241,
+      "sha256": "84fc986d9ce63732fa5c61f6b1ec04584775ba12dea579c5377fe4683ef7cdd2"
+    },
+    {
+      "path": "app/web/offline-device-events.js",
+      "bytes": 18241,
+      "sha256": "84fc986d9ce63732fa5c61f6b1ec04584775ba12dea579c5377fe4683ef7cdd2"
+    },
+    {
+      "path": "firmware/CMakeLists.txt",
+      "bytes": 18173,
+      "sha256": "1536468317bd6fe674f60ddac78e984d7f5fb626808a1a1eb76b4acf13f6549e"
+    },
+    {
+      "path": "firmware/main/badge_day_ui.inc",
+      "bytes": 10965,
+      "sha256": "9b76a4f5ece9509d49fce23bf3b4a4769aebc5e8850363e132c3e08e12edd585"
+    },
+    {
+      "path": "firmware/main/badge_pages.c",
+      "bytes": 112334,
+      "sha256": "a2d769ef85edbeb5f5876671e0ffee29ef96dc6ff53ad4ca2630395dacd2e6be"
+    },
+    {
+      "path": "firmware/main/local2_wire.c",
+      "bytes": 25069,
+      "sha256": "e8b8835269c2622ddd7871d99c1981eada6229ba826d5cca7f3d193825b96296"
+    }
+  ],
+  "protectedFileCount": 178,
+  "tests": {
+    "technicalTests": false,
+    "simulatedInteraction": false,
+    "browserQA": false,
+    "appLaunched": false,
+    "userAcceptancePending": true
+  },
+  "remainingEvidenceLimits": [
+    "precise event number of the user-observed transient bubble not recorded",
+    "earliest historical pre-event46 pause branch not reconstructable from existing logs",
+    "new-version presentation not self-accepted"
+  ],
+  "report": "DELIVERY-AND-EVIDENCE.md",
+  "recordedAtUtc": "2026-10-18T04:27:52.561347+00:00"
+}

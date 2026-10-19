@@ -1,0 +1,65 @@
+{
+  "kind": "static source comparison only; not execution or user acceptance",
+  "files": {
+    "firmware/main/badge_gesture.c": {
+      "before": "cb9cbd38c52f8b414d66c5eaf92da3f0bbbd79b344233ed4dfece348aa541b62",
+      "after": "cb9cbd38c52f8b414d66c5eaf92da3f0bbbd79b344233ed4dfece348aa541b62",
+      "unchanged": true
+    },
+    "firmware/main/badge_gesture.h": {
+      "before": "8210515bb08db41b43e5ad41993576bd95658ddde7dbd86a0d6fa1f3957e79ab",
+      "after": "8210515bb08db41b43e5ad41993576bd95658ddde7dbd86a0d6fa1f3957e79ab",
+      "unchanged": true
+    },
+    "firmware/main/badge_scene.c": {
+      "before": "efe6cf331e68258f3e2b527586cb6773f1a2601e841ae0914b769b16f5f217d5",
+      "after": "efe6cf331e68258f3e2b527586cb6773f1a2601e841ae0914b769b16f5f217d5",
+      "unchanged": true
+    },
+    "firmware/main/badge_scene.h": {
+      "before": "966b4bb2a7937e3ea7c79eff92e02be2f07a47d6c3d08f4efddb32d0d17ebd6a",
+      "after": "966b4bb2a7937e3ea7c79eff92e02be2f07a47d6c3d08f4efddb32d0d17ebd6a",
+      "unchanged": true
+    },
+    "firmware/main/badge_ui_targets.h": {
+      "before": "939a38e76136a909ae46d587e77b5fb175c0dfa236ec7a7e9f13b24ce4a6fedc",
+      "after": "939a38e76136a909ae46d587e77b5fb175c0dfa236ec7a7e9f13b24ce4a6fedc",
+      "unchanged": true
+    },
+    "app/web/original-town-runtime.js": {
+      "before": "6e6e660daeb3abe2317d6ee5aca9896cd84fc5e8009dd43ce4fd0a2821c91a53",
+      "after": "6e6e660daeb3abe2317d6ee5aca9896cd84fc5e8009dd43ce4fd0a2821c91a53",
+      "unchanged": true
+    },
+    "app/web/town-integration.js": {
+      "before": "ac36f2844ae85234bc78d3d5f4bbafc1c8c00b4267d43dfc97c255c5ac1d78b6",
+      "after": "ac36f2844ae85234bc78d3d5f4bbafc1c8c00b4267d43dfc97c255c5ac1d78b6",
+      "unchanged": true
+    },
+    "app/web/town-r185-compat.js": {
+      "before": "086363a2139dbae3831c6ed815f50b606ea274c2245def05618298924fc032a6",
+      "after": "086363a2139dbae3831c6ed815f50b606ea274c2245def05618298924fc032a6",
+      "unchanged": true
+    },
+    "app/web/town-garden-source.js": {
+      "before": "fd8fee2d30d7623a6bf323b432ab7b42124e6ff57ac43399d129379662555ea7",
+      "after": "fd8fee2d30d7623a6bf323b432ab7b42124e6ff57ac43399d129379662555ea7",
+      "unchanged": true
+    },
+    "app/web/town-player-runtime.inc.js": {
+      "before": "a8776e7e2ed0958b573a94410591097c4495219b427323071ea593c17cc79350",
+      "after": "a8776e7e2ed0958b573a94410591097c4495219b427323071ea593c17cc79350",
+      "unchanged": true
+    },
+    "app/web/town-event-fx.js": {
+      "before": "7644a5987a07a0461320d57c7719de837aa48c29c7b4fc479395d93a450eb7d9",
+      "after": "7644a5987a07a0461320d57c7719de837aa48c29c7b4fc479395d93a450eb7d9",
+      "unchanged": true
+    },
+    "app/web/town-contact-runtime.inc.js": {
+      "before": "fcf2a6a7b892a9d0f0ad4e3f5b03ab522f54cee9ecb691952dd9065e888861d0",
+      "after": "fcf2a6a7b892a9d0f0ad4e3f5b03ab522f54cee9ecb691952dd9065e888861d0",
+      "unchanged": true
+    }
+  }
+}

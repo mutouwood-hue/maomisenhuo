@@ -1,0 +1,20 @@
+{
+  "file": "catforest-badge-057-scene-swipe-lock-production.zip",
+  "bytes": 2281818,
+  "sha256": "9e27caa885cb50ae8db1a876ebdbc8161589e2b19cd5a0a39b6d3e141e36cb2a",
+  "contents": [
+    "cat_forest_badge-0.5.7-scene-swipe-lock.bin",
+    "DELIVERY.md",
+    "MANIFEST.json",
+    "FLASH-RECEIPT.json",
+    "DEPLOY-TARGET.json",
+    "DEVICE-APP-BEFORE.json",
+    "REFERENCE-IMAGES.json",
+    "firmware-b8ca479-plus056-and057.patch",
+    "badge-build-ui-final.log",
+    "badge-flash.log",
+    "device-read-partition-table-authorized.log",
+    "device-read-otadata-authorized.log",
+    "device-read-app-header.log"
+  ]
+}

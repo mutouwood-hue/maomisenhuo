@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "id": "native-linear-aces-soft-v2-candidate",
+  "status": "candidate-pending-user-visual-selection",
+  "reference": "phone 050 room: Three r185 ACESFilmicToneMapping, exposure 1.22, sRGB output",
+  "input": {
+    "baseColorTexture": "sRGB IEC 61966-2-1; decode once",
+    "baseColorFactor": "glTF linear RGB; multiply after texture decode",
+    "alpha": "linear coverage; unchanged"
+  },
+  "lighting": {
+    "model": "existing fixed three-level diffuse approximation; not a reproduction of the phone room PBR lights",
+    "direction": [
+      -0.35,
+      0.8,
+      -0.6
+    ],
+    "classifierAmbient": 0.62,
+    "classifierDiffuse": 0.45,
+    "classifierOrigin": 0.64,
+    "classifierStep": 0.18,
+    "linearLevels": [
+      0.64,
+      0.82,
+      1.0
+    ]
+  },
+  "toneMapping": {
+    "name": "Three-r185-ACESFilmic",
+    "exposure": 1.22,
+    "exposureNormalization": 0.6,
+    "inputMatrixRows": [
+      [
+        0.59719,
+        0.35458,
+        0.04823
+      ],
+      [
+        0.076,
+        0.90834,
+        0.01566
+      ],
+      [
+        0.0284,
+        0.13383,
+        0.83777
+      ]
+    ],
+    "rrtOdtNumerator": [
+      0.0245786,
+      -9.0537e-05
+    ],
+    "rrtOdtDenominator": [
+      0.983729,
+      0.432951,
+      0.238081
+    ],
+    "outputMatrixRows": [
+      [
+        1.60475,
+        -0.53108,
+        -0.07367
+      ],
+      [
+        -0.10208,
+        1.10813,
+        -0.00605
+      ],
+      [
+        -0.00327,
+        -0.07276,
+        1.07602
+      ]
+    ]
+  },
+  "transfer": {
+    "decodeThreshold": 0.04045,
+    "encodeThreshold": 0.0031308,
+    "linearScale": 12.92,
+    "offset": 0.055,
+    "scale": 1.055,
+    "gamma": 2.4
+  },
+  "alternateBreedPalette": {
+    "note": "Existing badge role and age tint semantics retained before the shared linear lighting transform; rows are fur, shade, stripe, cream",
+    "breeds": [
+      "orange",
+      "silver",
+      "tuxedo",
+      "siamese",
+      "ragdoll",
+      "blue",
+      "calico",
+      "golden",
+      "starry"
+    ],
+    "colors": [
+      [
+        14649913,
+        15442770,
+        11294507,
+        16312531
+      ],
+      [
+        12041922,
+        12041922,
+        5858669,
+        16052969
+      ],
+      [
+        3160389,
+        3160389,
+        2568252,
+        16315624
+      ],
+      [
+        15062197,
+        15062197,
+        6639690,
+        15062197
+      ],
+      [
+        15919840,
+        15919840,
+        9078158,
+        16775404
+      ],
+      [
+        8163751,
+        8163751,
+        7374235,
+        9084337
+      ],
+      [
+        15106891,
+        16248287,
+        3487029,
+        16774883
+      ],
+      [
+        14987362,
+        14987362,
+        12091451,
+        16247244
+      ],
+      [
+        3095397,
+        3095397,
+        2831189,
+        4344717
+      ]
+    ],
+    "growthOrder": [
+      "adult",
+      "kitten",
+      "young"
+    ],
+    "growthTintPercent": [
+      -6,
+      24,
+      9
+    ],
+    "creamTintScale": 0.3,
+    "blueEye": "67aedd"
+  },
+  "output": {
+    "order": [
+      "decode sRGB texture",
+      "multiply linear material factor",
+      "linear diffuse level",
+      "exposure",
+      "ACES input matrix / RRT ODT fit / output matrix",
+      "clamp linear display RGB",
+      "luminance-weighted chroma reduction and midtone softening with shadow/highlight protection",
+      "clamp adjusted linear display RGB",
+      "encode sRGB once",
+      "round uint8",
+      "indexed ARGB8888 RLE",
+      "lossless zlib",
+      "LVGL RGB565 at composition"
+    ],
+    "runtime": "Orange and accessories use baked sRGB without gamma or exposure; alternate breeds use generated final RGB lookup; no runtime RGB shade multiplication",
+    "rgb565": "existing LVGL conversion only; no additional gamma"
+  },
+  "feedback": "User on067: 应该再淡一点. One conservative candidate; not a user-selected final rule.",
+  "displayLinearAdjustment": {
+    "domain": "linear display RGB after ACES and clamp, before the single sRGB output encode",
+    "luminanceWeights": [
+      0.2126,
+      0.7152,
+      0.0722
+    ],
+    "saturation": 0.82,
+    "midtoneContrast": 0.96,
+    "contrastPivot": 0.18,
+    "shadowFade": [
+      0.02,
+      0.1
+    ],
+    "highlightProtection": [
+      0.55,
+      0.8
+    ],
+    "formula": "w=smoothstep(shadowFade,Y)*(1-smoothstep(highlightProtection,Y)); Y2=Y+(pivot-Y)*(1-contrast)*w; RGB2=Y2+(RGB-Y)*(1-(1-saturation)*w); Y>=0.80 or Y<=0.02 unchanged"
+  }
+}

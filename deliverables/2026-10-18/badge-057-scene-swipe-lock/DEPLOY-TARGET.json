@@ -1,0 +1,98 @@
+{
+  "chip": "ESP32-S3 (QFN56 rev 0.2)",
+  "mac": "7c:0c:5f:42:36:84",
+  "port": "/dev/cu.usbmodem1101",
+  "partitions": [
+    {
+      "name": "nvs",
+      "type": 1,
+      "subtype": 2,
+      "offset": 36864,
+      "size": 32768,
+      "flags": 0
+    },
+    {
+      "name": "phy_init",
+      "type": 1,
+      "subtype": 1,
+      "offset": 69632,
+      "size": 4096,
+      "flags": 0
+    },
+    {
+      "name": "otadata",
+      "type": 1,
+      "subtype": 0,
+      "offset": 73728,
+      "size": 8192,
+      "flags": 0
+    },
+    {
+      "name": "ota_0",
+      "type": 0,
+      "subtype": 16,
+      "offset": 131072,
+      "size": 8388608,
+      "flags": 0
+    },
+    {
+      "name": "ota_1",
+      "type": 0,
+      "subtype": 17,
+      "offset": 8519680,
+      "size": 8388608,
+      "flags": 0
+    },
+    {
+      "name": "assets_a",
+      "type": 1,
+      "subtype": 130,
+      "offset": 16908288,
+      "size": 7340032,
+      "flags": 0
+    },
+    {
+      "name": "assets_b",
+      "type": 1,
+      "subtype": 130,
+      "offset": 24248320,
+      "size": 7340032,
+      "flags": 0
+    }
+  ],
+  "partitionTableMd5Valid": true,
+  "partitionTableSha256": "e284d888225fa52e83260cb1a5e9dd3d3f154996add8902cdab3d39aea2bac32",
+  "otadataSha256": "a1ed149677f974e7b1fd3b926c817a1db72ce01ca26b31929937d4ab01f5be22",
+  "otaRecords": [
+    {
+      "copy": 0,
+      "sequence": 1,
+      "state": 2,
+      "crc": 1195612314,
+      "crcValid": true,
+      "selectable": true
+    },
+    {
+      "copy": 1,
+      "sequence": 2,
+      "state": 4294967295,
+      "crc": 1442199412,
+      "crcValid": true,
+      "selectable": true
+    }
+  ],
+  "selectedRecord": 1,
+  "target": {
+    "name": "ota_1",
+    "type": 0,
+    "subtype": 17,
+    "offset": 8519680,
+    "size": 8388608,
+    "flags": 0
+  },
+  "image": {
+    "file": "cat_forest_badge-0.5.7-scene-swipe-lock.bin",
+    "bytes": 6911664,
+    "sha256": "1b3b0009bc60fea20cf455e8053454af886a674214a6a5048edf54a62345583a"
+  }
+}

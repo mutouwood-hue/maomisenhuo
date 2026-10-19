@@ -1,0 +1,7 @@
+{
+  "file": "catforest-050-064-connection-delivery.zip",
+  "bytes": 6498446,
+  "sha256": "febdbcdcc0291c979b9b308ce73188d29bede5cd19a6091a25d84690b45f42ae",
+  "contains": "production APK/BIN, minimum source patch/source-after, build/deploy receipts and static evidence; excludes raw user logs and saves",
+  "acceptance": "not performed; user real reconnect pending"
+}

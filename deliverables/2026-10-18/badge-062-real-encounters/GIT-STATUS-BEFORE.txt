@@ -1,0 +1,76 @@
+ M app/android/app/build.gradle.kts
+ M app/android/app/src/main/AndroidManifest.xml
+ M app/android/app/src/main/assets/build-manifest.json
+ M app/android/app/src/main/assets/cflocal2-adapter.js
+ M app/android/app/src/main/assets/game-03.js
+ M app/android/app/src/main/assets/game-06.js
+ M app/android/app/src/main/assets/life-companion.css
+ M app/android/app/src/main/assets/life-navigation.js
+ M app/android/app/src/main/assets/offline-device-events.js
+ M app/android/app/src/main/assets/offline-scene-sync.js
+ M app/android/app/src/main/assets/original-town-runtime.js
+ M app/android/app/src/main/assets/town-contact-runtime.inc.js
+ M app/android/app/src/main/assets/town-guide-layout.css
+ M app/android/app/src/main/assets/town-player-runtime.inc.js
+ M app/preview/build-manifest.json
+ M app/preview/cflocal2-adapter.js
+ M app/preview/game-03.js
+ M app/preview/game-06.js
+ M app/preview/life-companion.css
+ M app/preview/life-navigation.js
+ M app/preview/offline-device-events.js
+ M app/preview/offline-scene-sync.js
+ M app/preview/original-town-runtime.js
+ M app/preview/town-contact-runtime.inc.js
+ M app/preview/town-guide-layout.css
+ M app/preview/town-player-runtime.inc.js
+ M app/scripts/build_assets.py
+ M app/scripts/build_town.py
+ M app/web/cflocal2-adapter.js
+ M app/web/life-companion.css
+ M app/web/life-navigation.js
+ M app/web/offline-device-events.js
+ M app/web/offline-scene-sync.js
+ M app/web/original-town-runtime.js
+ M app/web/town-contact-runtime.inc.js
+ M app/web/town-guide-layout.css
+ M app/web/town-player-runtime.inc.js
+ M deliverables/2026-10-18/MANIFEST.json
+ M firmware/CMakeLists.txt
+ M firmware/main/badge_day_ui.inc
+ M firmware/main/badge_gesture.c
+ M firmware/main/badge_gesture.h
+ M firmware/main/badge_pages.c
+ M firmware/main/badge_scene.c
+ M firmware/main/badge_scene.h
+ M firmware/main/badge_ui_targets.h
+ M firmware/main/local2_day.c
+ M firmware/main/local2_wire.c
+ M work/integrated/DELIVERY-2026-10-18.md
+ M work/integrated/DELIVERY-INTEGRATED.md
+ M work/integrated/DELIVERY.md
+ M work/integrated/PHONE-SUITE-TRIAGE.md
+?? .reference/
+?? app/android/app/src/main/res/drawable-nodpi/
+?? app/android/app/src/main/res/mipmap-anydpi-v26/
+?? app/android/app/src/main/res/mipmap-hdpi/
+?? app/android/app/src/main/res/mipmap-mdpi/
+?? app/android/app/src/main/res/mipmap-xhdpi/
+?? app/android/app/src/main/res/mipmap-xxhdpi/
+?? app/android/app/src/main/res/mipmap-xxxhdpi/
+?? app/android/app/src/main/res/values/colors.xml
+?? app/android/app/src/main/res/values/strings.xml
+?? deliverables/2026-10-18/badge-057-scene-swipe-lock/
+?? deliverables/2026-10-18/badge-058-distance-ui/
+?? deliverables/2026-10-18/badge-059-auto-receipts/
+?? deliverables/2026-10-18/badge-060-tail-frame-status/
+?? deliverables/2026-10-18/badge-061-ring-receipt-reasons/
+?? deliverables/2026-10-18/badge-062-real-encounters/
+?? deliverables/2026-10-18/hearts-replay-fix/
+?? deliverables/2026-10-18/phone-042-touch-town/
+?? deliverables/2026-10-18/phone-043-town-depart-pocket/
+?? deliverables/2026-10-18/phone-044-town-command/
+?? deliverables/2026-10-18/phone-045-sticky-guide/
+?? firmware/main/assets/status_icons_060.inc
+?? work/integrated/DELIVERY-2026-10-18-PHONE042.md
+?? work/integrated/DELIVERY-2026-10-18-REPLAY-FIX.md

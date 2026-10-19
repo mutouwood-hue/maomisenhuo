@@ -1,0 +1,11 @@
+{
+  "staticArchiveComparisonOnly": true,
+  "sourceAssetCount": 66,
+  "apkAssetCount": 66,
+  "missing": [],
+  "different": [],
+  "nativeRoomFactoryEntryPackaged": true,
+  "appearanceWireCapabilityPackaged": true,
+  "townDeltaThisBatch": [],
+  "acceptance": "not run"
+}

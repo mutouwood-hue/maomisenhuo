@@ -4,6 +4,7 @@
 #include "local2_peer.h"
 #include "esp_log.h"
 #include "esp_timer.h"
+#include "esp_heap_caps.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/queue.h"
 #include "freertos/task.h"
@@ -25,6 +26,11 @@ static const ble_uuid128_t tx_uuid=BLE_UUID128_INIT(0x32,0x43,0x4f,0x4c,0x46,0x4
 typedef struct {uint32_t generation;uint16_t length;char line[L2_LINE_MAX];} line_t;
 static portMUX_TYPE guard=portMUX_INITIALIZER_UNLOCKED;
 static QueueHandle_t incoming,outgoing;
+/* Payload copies are used by tasks, never an ISR or a DMA peripheral. Keep
+ * queue control blocks internal; reserve scarce internal RAM for task stacks
+ * and the radio controller rather than sixteen KiB of NDJSON storage. */
+static StaticQueue_t incoming_control,outgoing_control;
+static uint8_t *incoming_payload,*outgoing_payload;
 static uint16_t phone=BLE_HS_CONN_HANDLE_NONE,tx_handle;
 static uint32_t generation,advert_generation;
 static uint8_t own_address;
@@ -86,15 +92,17 @@ static void advertise(void){
     if(ble_gap_adv_active()&&g!=advert_generation)(void)ble_gap_adv_stop();
     if(ble_gap_adv_active()||(phone!=BLE_HS_CONN_HANDLE_NONE&&!n))return;
     struct ble_hs_adv_fields fields={0},rsp={0};fields.flags=BLE_HS_ADV_F_DISC_GEN|BLE_HS_ADV_F_BREDR_UNSUP;
-    if(n){fields.mfg_data=mfg;fields.mfg_data_len=(uint8_t)n;rsp.uuids128=(ble_uuid128_t *)&svc;rsp.num_uuids128=1;rsp.uuids128_is_complete=1;}
-    else{fields.uuids128=(ble_uuid128_t *)&svc;fields.num_uuids128=1;fields.uuids128_is_complete=1;}
+    /* The phone's existing hardware service filter must keep seeing the UUID
+     * in the primary advertisement, including while peer discovery is armed.
+     * Active peer scans read the unchanged manufacturer proof in scan response. */
+    fields.uuids128=(ble_uuid128_t *)&svc;fields.num_uuids128=1;fields.uuids128_is_complete=1;
     const char *name="CatForest-Local2";rsp.name=(const uint8_t *)name;rsp.name_len=(uint8_t)strlen(name);rsp.name_is_complete=1;
-    /* UUID + full name cannot both fit a 31B scan response. Shorten explicitly. */
-    if(n){rsp.name=(const uint8_t *)"CF-Local2";rsp.name_len=9;}
+    /* 23-byte peer proof + AD header + 3-byte short name + AD header = 30. */
+    if(n){rsp.mfg_data=mfg;rsp.mfg_data_len=(uint8_t)n;rsp.name=(const uint8_t *)"CF2";rsp.name_len=3;rsp.name_is_complete=0;}
     int rc=ble_gap_adv_set_fields(&fields);if(rc==0)rc=ble_gap_adv_rsp_set_fields(&rsp);
     struct ble_gap_adv_params p={.conn_mode=BLE_GAP_CONN_MODE_UND,.disc_mode=BLE_GAP_DISC_MODE_GEN};
     if(rc==0)rc=ble_gap_adv_start(own_address,NULL,BLE_HS_FOREVER,&p,gap_event,NULL);
-    if(rc==0)advert_generation=g;else ESP_LOGW("local2_ble","advertise rc=%d",rc);
+    if(rc==0){advert_generation=g;ESP_LOGI("local2_ble","advertising_started peer=%u",n?1u:0u);}else ESP_LOGW("local2_ble","advertise rc=%d",rc);
 }
 static void service_tick(struct ble_npl_event *e){
     (void)e;
@@ -109,9 +117,9 @@ static void service_tick(struct ble_npl_event *e){
     }
     ble_npl_callout_reset(&timer,ble_npl_time_ms_to_ticks32(10));
 }
-static void on_sync(void){if(ble_hs_util_ensure_addr(0)==0&&ble_hs_id_infer_auto(0,&own_address)==0){synced=true;advertise();}}
+static void on_sync(void){int rc=ble_hs_util_ensure_addr(0);if(!rc)rc=ble_hs_id_infer_auto(0,&own_address);ESP_LOGI("local2_ble","host_sync rc=%d",rc);if(!rc){synced=true;advertise();}}
 static void on_reset(int reason){ESP_LOGW("local2_ble","host reset %d",reason);synced=false;local2_peer_set_discoverable(false);portENTER_CRITICAL(&guard);invalidate();portEXIT_CRITICAL(&guard);local2_ble_link_state(false,false);}
-static void host_task(void *arg){(void)arg;nimble_port_run();nimble_port_freertos_deinit();}
+static void host_task(void *arg){(void)arg;ESP_LOGI("local2_ble","host_task_entered");nimble_port_run();ESP_LOGW("local2_ble","host_task_exited");nimble_port_freertos_deinit();}
 static void domain_task(void *arg){
     (void)arg;line_t reply;
     for(;;){
@@ -139,14 +147,30 @@ static void domain_task(void *arg){
 }
 void local2_ble_start(void){
     if(started)return;
-    incoming=xQueueCreate(QMAX,sizeof(line_t));outgoing=xQueueCreate(QMAX,sizeof(line_t));
-    if(!incoming||!outgoing){ESP_LOGE("local2_ble","queue allocation failed");return;}
-    if(nimble_port_init()!=ESP_OK)return;
+    incoming_payload=heap_caps_malloc(QMAX*sizeof(line_t),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+    outgoing_payload=heap_caps_malloc(QMAX*sizeof(line_t),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+    if(incoming_payload&&outgoing_payload){
+        incoming=xQueueCreateStatic(QMAX,sizeof(line_t),incoming_payload,&incoming_control);
+        outgoing=xQueueCreateStatic(QMAX,sizeof(line_t),outgoing_payload,&outgoing_control);
+    }
+    if(!incoming||!outgoing){
+        if(incoming)vQueueDelete(incoming);
+        if(outgoing)vQueueDelete(outgoing);
+        heap_caps_free(incoming_payload);heap_caps_free(outgoing_payload);
+        incoming=outgoing=NULL;incoming_payload=outgoing_payload=NULL;
+        ESP_LOGE("local2_ble","PSRAM queue allocation failed");return;
+    }
+    ESP_LOGI("local2_ble","nimble_init_begin internal_free=%u internal_largest=%u",(unsigned)heap_caps_get_free_size(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT),(unsigned)heap_caps_get_largest_free_block(MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT));
+    esp_err_t init_rc=nimble_port_init();
+    if(init_rc!=ESP_OK){ESP_LOGE("local2_ble","nimble_init_failed rc=%d",(int)init_rc);return;}
+    ESP_LOGI("local2_ble","nimble_init_ready");
     ble_svc_gap_init();ble_svc_gatt_init();ble_svc_gap_device_name_set("CatForest-Local2");
     ble_hs_cfg.sync_cb=on_sync;ble_hs_cfg.reset_cb=on_reset;
-    if(ble_gatts_count_cfg(services)!=0||ble_gatts_add_svcs(services)!=0)return;
-    l2_core_t *core=l2_runtime_core(1000);if(!core)return;esp_err_t rc=local2_peer_register(core);l2_runtime_release();if(rc!=ESP_OK)return;
+    int svc_rc=ble_gatts_count_cfg(services);if(!svc_rc)svc_rc=ble_gatts_add_svcs(services);
+    if(svc_rc){ESP_LOGE("local2_ble","phone_service_failed rc=%d",svc_rc);return;}
+    l2_core_t *core=l2_runtime_core(1000);if(!core){ESP_LOGE("local2_ble","peer_core_unavailable");return;}esp_err_t rc=local2_peer_register(core);l2_runtime_release();if(rc!=ESP_OK){ESP_LOGE("local2_ble","peer_register_failed rc=%d",(int)rc);return;}
     ble_npl_callout_init(&timer,nimble_port_get_dflt_eventq(),service_tick,NULL);ble_npl_callout_reset(&timer,ble_npl_time_ms_to_ticks32(10));
-    if(xTaskCreate(domain_task,"local2_domain",8192,NULL,5,NULL)!=pdPASS)return;
+    if(xTaskCreate(domain_task,"local2_domain",8192,NULL,5,NULL)!=pdPASS){ESP_LOGE("local2_ble","domain_task_failed");return;}
+    ESP_LOGI("local2_ble","host_task_requested");
     started=true;nimble_port_freertos_init(host_task);
 }

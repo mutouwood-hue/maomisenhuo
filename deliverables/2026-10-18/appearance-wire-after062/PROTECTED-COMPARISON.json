@@ -1,0 +1,45 @@
+{
+  "scope": "static text/byte comparison only, no execution or test",
+  "files": {
+    "firmware/main/badge_scene.h": {
+      "before": "966b4bb2a7937e3ea7c79eff92e02be2f07a47d6c3d08f4efddb32d0d17ebd6a",
+      "after": "966b4bb2a7937e3ea7c79eff92e02be2f07a47d6c3d08f4efddb32d0d17ebd6a",
+      "unchanged": true
+    },
+    "firmware/main/badge_scene.c": {
+      "before": "efe6cf331e68258f3e2b527586cb6773f1a2601e841ae0914b769b16f5f217d5",
+      "after": "efe6cf331e68258f3e2b527586cb6773f1a2601e841ae0914b769b16f5f217d5",
+      "unchanged": true
+    },
+    "firmware/main/badge_gesture.c": {
+      "before": "cb9cbd38c52f8b414d66c5eaf92da3f0bbbd79b344233ed4dfece348aa541b62",
+      "after": "cb9cbd38c52f8b414d66c5eaf92da3f0bbbd79b344233ed4dfece348aa541b62",
+      "unchanged": true
+    },
+    "firmware/main/badge_gesture.h": {
+      "before": "8210515bb08db41b43e5ad41993576bd95658ddde7dbd86a0d6fa1f3957e79ab",
+      "after": "8210515bb08db41b43e5ad41993576bd95658ddde7dbd86a0d6fa1f3957e79ab",
+      "unchanged": true
+    },
+    "firmware/main/badge_ui_targets.h": {
+      "before": "939a38e76136a909ae46d587e77b5fb175c0dfa236ec7a7e9f13b24ce4a6fedc",
+      "after": "939a38e76136a909ae46d587e77b5fb175c0dfa236ec7a7e9f13b24ce4a6fedc",
+      "unchanged": true
+    },
+    "firmware/main/local2_peer.h": {
+      "before": "516637dbfac3cf53cb330e9bf2c7de6cd518a779bab6daa261a34c28def2bb27",
+      "after": "516637dbfac3cf53cb330e9bf2c7de6cd518a779bab6daa261a34c28def2bb27",
+      "unchanged": true
+    },
+    "firmware/main/local2_peer.c": {
+      "before": "42df56d2fef8a29eae2ded314769c0b4019360c536ea50901e06a1384876ca3b",
+      "after": "42df56d2fef8a29eae2ded314769c0b4019360c536ea50901e06a1384876ca3b",
+      "unchanged": true
+    },
+    "phoneIdentityRegistry": {
+      "before": "304c8c0c0f50c5cc009f8dfeffe7418cc137f6e8abfb94cebc5e7be8a11fba55",
+      "after": "304c8c0c0f50c5cc009f8dfeffe7418cc137f6e8abfb94cebc5e7be8a11fba55",
+      "unchanged": true
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-18",
+  "phone": {
+    "command": "Gradle 8.9 :app:assembleDebug -x test -x lint --offline --no-daemon",
+    "java": "JDK 21",
+    "result": "BUILD SUCCESSFUL",
+    "testTasksRun": false,
+    "lintTasksRun": false,
+    "artifact": "catforest-0.5.2-cat-actions-debug.apk",
+    "bytes": 2699863,
+    "sha256": "ab796b0d4d7bf5edf159ed499f334f02342030ed5ad3af57439f3aac6df82fee",
+    "appId": "com.catforest.htmlcandidate",
+    "versionCode": 43,
+    "versionName": "0.5.2-cat-actions",
+    "signingCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82"
+  },
+  "badge": {
+    "command": "idf.py -B /tmp/catforest-cat-actions-badge-070 build",
+    "idf": "ESP-IDF 5.5",
+    "result": "Project build complete",
+    "technicalTestsRun": false,
+    "artifact": "cat_forest_badge-0.7.0-cat-actions.bin",
+    "bytes": 7033920,
+    "sha256": "266b8c9c84d684b5c9eb1b47d2c2e298fbfe50182690dc1ebd0219c357dc8b6a",
+    "smallestAppPartitionBytes": 8388608,
+    "freeBytes": 1354688
+  }
+}

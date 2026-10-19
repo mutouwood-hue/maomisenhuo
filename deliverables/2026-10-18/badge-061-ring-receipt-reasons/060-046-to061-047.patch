@@ -1,0 +1,236 @@
+--- a/app/android/app/build.gradle.kts
++++ b/app/android/app/build.gradle.kts
+@@ -8,8 +8,8 @@
+         applicationId = "com.catforest.htmlcandidate"
+         minSdk = 26
+         targetSdk = 35
+-        versionCode = 37
+-        versionName = "0.4.6-auto-receipts"
++        versionCode = 38
++        versionName = "0.4.7-care-reasons"
+     }
+     compileOptions { sourceCompatibility = JavaVersion.VERSION_17; targetCompatibility = JavaVersion.VERSION_17 }
+     signingConfigs {
+--- a/app/android/app/src/main/assets/offline-device-events.js
++++ b/app/android/app/src/main/assets/offline-device-events.js
+@@ -10,6 +10,20 @@
+   const fingerprint=pet=>JSON.stringify([pet.createdAt,pet.id,pet.joinedAt]);
+   const ACTION={pet:'pet',feed:'feed',water:'drink',bath:'bath',play:'tease',sleep:'sleep'};
+   const LABEL={pet:'摸摸',feed:'喂食',water:'喝水',bath:'洗澡',play:'逗猫',sleep:'睡觉'};
++  // Label the original rule result; never infer its cause from newer stats.
++  // Existing ledger receipts and pending ACK bytes are immutable and bypass plan.
++  const RULE_REASONS=Object.freeze({
++    '小猫现在心情超好，可以陪它做点别的。':'mood_full',
++    '小猫精神满满，暂时还不困。':'energy_full',
++    '小猫已经吃饱啦，等肚子饿一点再喂。':'food_full',
++    '小猫已经很干净啦，暂时不用洗澡。':'already_clean',
++    '小猫有点累了，先让它睡个小觉吧。':'too_tired',
++    '小猫有点不舒服，先去诊所检查，再陪它剧烈运动吧。':'health_issue'
++  });
++  function terminalReason(result){
++    const original=result.reason||'ineligible';
++    return original==='ineligible'?(RULE_REASONS[result.message]||original):original;
++  }
+   function validateEvent(e,id){
+     if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!Number.isSafeInteger(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||typeof e.petId!=='string'||!e.petId||e.petId.length>64||(e.occurredAtMs!==null&&(!Number.isSafeInteger(e.occurredAtMs)||e.occurredAtMs<0)))throw fail('设备事件来源或编号无效，未确认删除。');
+     if(e.kind==='care'){if(!Object.hasOwn(ACTION,e.action))throw fail('当前固件没有此照料入口，事件已保留等待核对。','EVENT_UNSUPPORTED');}
+@@ -38,7 +52,7 @@
+       result=store.socialGrant({items:{flower:1},journal:{kind:'gift',msg:'收到匿名吧唧 '+event.peerId+' 的野花 ×1。'},message:'收到真实吧唧野花 ×1'});
+     }
+     if(store.getState().storageIssue)throw fail('原规则结果未写入计划，未确认设备事件。','SOURCE_SAVE_UNSAFE');
+-    const status=result.ok?'applied':'rejected',reason=result.ok?'none':result.reason||'ineligible';
++    const status=result.ok?'applied':'rejected',reason=result.ok?'none':terminalReason(result);
+     const message=result.ok?(event.kind==='care'?'设备'+LABEL[event.action]+'已按原规则结算。':'真实吧唧野花 ×1 已放入背包；好友确认尚未完成。'):'设备'+LABEL[event.action]+'未获奖励：'+result.message;
+     d.dex.deviceReceipts??=[];
+     d.dex.deviceReceipts.push({eventId:event.eventId,petId:event.petId,kind:event.kind,action:event.action||null,peerId:event.peerId||null,status,reason,message});
+--- a/app/preview/offline-device-events.js
++++ b/app/preview/offline-device-events.js
+@@ -10,6 +10,20 @@
+   const fingerprint=pet=>JSON.stringify([pet.createdAt,pet.id,pet.joinedAt]);
+   const ACTION={pet:'pet',feed:'feed',water:'drink',bath:'bath',play:'tease',sleep:'sleep'};
+   const LABEL={pet:'摸摸',feed:'喂食',water:'喝水',bath:'洗澡',play:'逗猫',sleep:'睡觉'};
++  // Label the original rule result; never infer its cause from newer stats.
++  // Existing ledger receipts and pending ACK bytes are immutable and bypass plan.
++  const RULE_REASONS=Object.freeze({
++    '小猫现在心情超好，可以陪它做点别的。':'mood_full',
++    '小猫精神满满，暂时还不困。':'energy_full',
++    '小猫已经吃饱啦，等肚子饿一点再喂。':'food_full',
++    '小猫已经很干净啦，暂时不用洗澡。':'already_clean',
++    '小猫有点累了，先让它睡个小觉吧。':'too_tired',
++    '小猫有点不舒服，先去诊所检查，再陪它剧烈运动吧。':'health_issue'
++  });
++  function terminalReason(result){
++    const original=result.reason||'ineligible';
++    return original==='ineligible'?(RULE_REASONS[result.message]||original):original;
++  }
+   function validateEvent(e,id){
+     if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!Number.isSafeInteger(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||typeof e.petId!=='string'||!e.petId||e.petId.length>64||(e.occurredAtMs!==null&&(!Number.isSafeInteger(e.occurredAtMs)||e.occurredAtMs<0)))throw fail('设备事件来源或编号无效，未确认删除。');
+     if(e.kind==='care'){if(!Object.hasOwn(ACTION,e.action))throw fail('当前固件没有此照料入口，事件已保留等待核对。','EVENT_UNSUPPORTED');}
+@@ -38,7 +52,7 @@
+       result=store.socialGrant({items:{flower:1},journal:{kind:'gift',msg:'收到匿名吧唧 '+event.peerId+' 的野花 ×1。'},message:'收到真实吧唧野花 ×1'});
+     }
+     if(store.getState().storageIssue)throw fail('原规则结果未写入计划，未确认设备事件。','SOURCE_SAVE_UNSAFE');
+-    const status=result.ok?'applied':'rejected',reason=result.ok?'none':result.reason||'ineligible';
++    const status=result.ok?'applied':'rejected',reason=result.ok?'none':terminalReason(result);
+     const message=result.ok?(event.kind==='care'?'设备'+LABEL[event.action]+'已按原规则结算。':'真实吧唧野花 ×1 已放入背包；好友确认尚未完成。'):'设备'+LABEL[event.action]+'未获奖励：'+result.message;
+     d.dex.deviceReceipts??=[];
+     d.dex.deviceReceipts.push({eventId:event.eventId,petId:event.petId,kind:event.kind,action:event.action||null,peerId:event.peerId||null,status,reason,message});
+--- a/app/web/offline-device-events.js
++++ b/app/web/offline-device-events.js
+@@ -10,6 +10,20 @@
+   const fingerprint=pet=>JSON.stringify([pet.createdAt,pet.id,pet.joinedAt]);
+   const ACTION={pet:'pet',feed:'feed',water:'drink',bath:'bath',play:'tease',sleep:'sleep'};
+   const LABEL={pet:'摸摸',feed:'喂食',water:'喝水',bath:'洗澡',play:'逗猫',sleep:'睡觉'};
++  // Label the original rule result; never infer its cause from newer stats.
++  // Existing ledger receipts and pending ACK bytes are immutable and bypass plan.
++  const RULE_REASONS=Object.freeze({
++    '小猫现在心情超好，可以陪它做点别的。':'mood_full',
++    '小猫精神满满，暂时还不困。':'energy_full',
++    '小猫已经吃饱啦，等肚子饿一点再喂。':'food_full',
++    '小猫已经很干净啦，暂时不用洗澡。':'already_clean',
++    '小猫有点累了，先让它睡个小觉吧。':'too_tired',
++    '小猫有点不舒服，先去诊所检查，再陪它剧烈运动吧。':'health_issue'
++  });
++  function terminalReason(result){
++    const original=result.reason||'ineligible';
++    return original==='ineligible'?(RULE_REASONS[result.message]||original):original;
++  }
+   function validateEvent(e,id){
+     if(!e||e.source!=='native_device'||e.protocol!=='CFLOCAL2'||e.deviceId!==id||!Number.isSafeInteger(e.counter)||e.counter<1||e.eventId!==id+':'+e.counter||typeof e.petId!=='string'||!e.petId||e.petId.length>64||(e.occurredAtMs!==null&&(!Number.isSafeInteger(e.occurredAtMs)||e.occurredAtMs<0)))throw fail('设备事件来源或编号无效，未确认删除。');
+     if(e.kind==='care'){if(!Object.hasOwn(ACTION,e.action))throw fail('当前固件没有此照料入口，事件已保留等待核对。','EVENT_UNSUPPORTED');}
+@@ -38,7 +52,7 @@
+       result=store.socialGrant({items:{flower:1},journal:{kind:'gift',msg:'收到匿名吧唧 '+event.peerId+' 的野花 ×1。'},message:'收到真实吧唧野花 ×1'});
+     }
+     if(store.getState().storageIssue)throw fail('原规则结果未写入计划，未确认设备事件。','SOURCE_SAVE_UNSAFE');
+-    const status=result.ok?'applied':'rejected',reason=result.ok?'none':result.reason||'ineligible';
++    const status=result.ok?'applied':'rejected',reason=result.ok?'none':terminalReason(result);
+     const message=result.ok?(event.kind==='care'?'设备'+LABEL[event.action]+'已按原规则结算。':'真实吧唧野花 ×1 已放入背包；好友确认尚未完成。'):'设备'+LABEL[event.action]+'未获奖励：'+result.message;
+     d.dex.deviceReceipts??=[];
+     d.dex.deviceReceipts.push({eventId:event.eventId,petId:event.petId,kind:event.kind,action:event.action||null,peerId:event.peerId||null,status,reason,message});
+--- a/firmware/CMakeLists.txt
++++ b/firmware/CMakeLists.txt
+@@ -282,8 +282,8 @@
+     endforeach()
+ 
+ endfunction()
+-set(PROJECT_VER "0.6.0-tail-frame-status")
+-project(cat_forest_badge VERSION 0.6.0)
++set(PROJECT_VER "0.6.1-ring-receipt-reasons")
++project(cat_forest_badge VERSION 0.6.1)
+ include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
+ foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
+         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION
+--- a/firmware/main/badge_day_ui.inc
++++ b/firmware/main/badge_day_ui.inc
+@@ -100,7 +100,7 @@
+             set_label(ring_missing,live_context?"此刻 · 当前状态":"此刻 · 上次状态",390);
+             badge_scene_day_current(home_scene,domain.ready&&domain.has_snapshot&&!domain.storage_error,domain.snapshot.scene,domain.snapshot.weather,display_action(),live_context);
+         }else{
+-            if(selected)snprintf(text,sizeof text,"%s · %s",kinds[selected->kind],sources[selected->source]);else snprintf(text,sizeof text,"%s",day_view.valid?"无记录":"待手机同步");
++            if(selected)snprintf(text,sizeof text,"%s · %s",kinds[selected->kind],sources[selected->source]);else snprintf(text,sizeof text,"%s",day_view.valid?"无记录":"暂无记录");
+             set_label(ring_missing,text,390);badge_scene_day_preview(home_scene,selected&&selected->kind!=6,selected?selected->kind:6,(unsigned)day_minute);
+         }
+     }
+--- a/firmware/main/badge_pages.c
++++ b/firmware/main/badge_pages.c
+@@ -684,10 +684,10 @@
+     for(unsigned i=0;i<4;i++)hide(ring_hours[i],!face);
+     for(unsigned i=0;i<5;i++){hide(face_c_values[i],true);hide(face_c_icons[i],true);}
+     hide(face_heading,false);
+-    hide(heart_legend,true);hide(ring_missing,face!=1);set_label(ring_missing,"待手机同步",390);
++    hide(heart_legend,true);hide(ring_missing,face!=1);set_label(ring_missing,"暂无记录",390);
+     hide(face_gift,true);hide(home_hint,true);hide(face_weather,false);hide(face_action,face!=0);
+-    hide(face_phase,face==0);
+-    set_label(face_phase,"等待手机状态",126);set_label(face_weather,"天气待同步",face?342:363);
++    hide(face_phase,true);
++    set_label(face_phase,"",126);set_label(face_weather,"天气待同步",face?342:363);
+     place_hearts();
+     dirty=true;project_home();day_project();update_clock();
+ }
+@@ -1322,7 +1322,7 @@
+     home_link=label(pages[PAGE_HOME],318,88,104,"",true,ZIP_UI_COLOR_SUB);
+     home_hint=label(pages[PAGE_HOME],233,390,250,"",true,ZIP_UI_COLOR_SUB);
+     face_heading=label(pages[PAGE_HOME],233,392,190,"小猫",true,0x806b55);lv_label_set_long_mode(face_heading,LV_LABEL_LONG_MODE_DOTS);
+-    face_phase=label(pages[PAGE_HOME],233,126,260,"等待手机状态",true,ZIP_UI_COLOR_ACCENT);
++    face_phase=label(pages[PAGE_HOME],233,126,260,"",true,ZIP_UI_COLOR_ACCENT);
+     face_weather=label(pages[PAGE_HOME],233,363,250,"天气待同步",true,ZIP_UI_COLOR_SUB);
+     face_action=label(pages[PAGE_HOME],233,389,220,"",true,ZIP_UI_COLOR_TEXT);
+     home_action_prop=icon(pages[PAGE_HOME],ICON_PAW,300,282,3);hide(home_action_prop,true);
+@@ -1575,7 +1575,7 @@
+         lv_obj_set_style_text_font(home_clock,&local2_font20,0);lv_obj_set_style_text_color(home_clock,lv_color_hex(ink),0);lv_obj_set_style_text_color(home_date,lv_color_hex(ink),0);
+         lv_obj_set_width(home_clock,100);lv_obj_set_x(home_clock,175);
+     }
+-    set_label(home_clock,text,32);hide(home_clock,mode==MODE_OFF);set_label(home_date,date,65);hide(home_date,!valid||mode==MODE_OFF||(face==0&&!standby));
++    set_label(home_clock,text,32);hide(home_clock,mode==MODE_OFF||(face==1&&!standby));set_label(home_date,date,65);hide(home_date,!valid||mode==MODE_OFF||!standby);
+     header_link();
+     hide(ring_hours[2],true);hide(ring_marker,true);
+ }
+@@ -1619,6 +1619,20 @@
+      * fresh domain presentation is projected on wake by the existing path. */
+     update_clock();
+ }
++/* A persisted rejected terminal is a completed business decision, not a
++ * transport failure. Historical generic reasons remain generic; never rewrite
++ * an immutable receipt or guess its cause from current snapshot values. */
++static const char *terminal_reason_text(const l2_terminal_t *t,bool detail)
++{
++    if(!strcmp(t->reason,"insufficient_coins"))return detail?(t->action==L2_ACTION_BATH?"清洁需2枚喵币\n余额不足·未扣币未成长":"喂食需3枚喵币\n余额不足·未扣币未成长"):"喵币不足\n未扣币未成长";
++    if(!strcmp(t->reason,"mood_full"))return "心情已经很好\n本次不加成长";
++    if(!strcmp(t->reason,"energy_full"))return "小猫还不困\n本次不加成长";
++    if(!strcmp(t->reason,"food_full"))return "小猫已经吃饱\n这次不用喂食";
++    if(!strcmp(t->reason,"already_clean"))return "小猫很干净\n这次不用清洁";
++    if(!strcmp(t->reason,"too_tired"))return "小猫有点累\n先休息一下";
++    if(!strcmp(t->reason,"health_issue"))return "小猫不舒服\n先留意健康";
++    return detail?"这次互动条件未满足\n未扣币·未加成长":"这次不适用\n未扣币未成长";
++}
+ static void refresh_state(void)
+ {
+     badge_view_t v;badge_get_view(&v);l2_view_t next;local2_get_view(&next);
+@@ -1648,7 +1662,7 @@
+     }
+     if(domain_attached && domain.last_ack!=domain_previous.last_ack) {
+         if(domain.terminal.status==L2_TERMINAL_REJECTED)
+-            care_result(!strcmp(domain.terminal.reason,"insufficient_coins")?"喵币不足\n未扣钱未成长":"手机拒绝\n未结算");
++            care_result(terminal_reason_text(&domain.terminal,false));
+         else if(domain.terminal.status==L2_TERMINAL_QUARANTINED)care_result("手机未结算\n请查看");
+         else { /* Routine acknowledgements only clear the durable pending mark. */ }
+     }
+@@ -1662,7 +1676,7 @@
+     previous=v;has_previous=true;domain_previous=domain;domain_attached=true;dirty=false;
+     if(mode==MODE_AOD||mode==MODE_OFF){project_standby();return;}
+     const char *link=v.storage_error ? "存档错误" : v.connected ? (v.subscribed ? "手机本地连接" : "手机已连接") : "离线保留";
+-    hide(face_phase,face==0);
++    if(face==0)hide(face_phase,true);
+     uint8_t stats[]={v.snapshot.food,v.snapshot.mood,v.snapshot.clean,v.snapshot.energy,v.snapshot.health};
+     for(unsigned i=0;i<5;i++) {
+         lv_bar_set_value(status_bars[i],available ? stats[i] : 0,LV_ANIM_OFF);lv_arc_set_value(home_arcs[i],available ? stats[i] : 0);
+@@ -1683,7 +1697,7 @@
+     set_label(device_link,link,92);snprintf(text,sizeof(text),"ID %s",v.device_id[0] ? v.device_id : "--");set_label(device_id,text,124);
+     snprintf(text,sizeof(text),"PET %s",available ? v.snapshot.pet_id : "--");set_label(device_pet,text,163);
+     if(available)snprintf(text,sizeof(text),"同步版本 %llu\n待同步 %u / 200",(unsigned long long)v.snapshot.revision,domain.pending_events);else strcpy(text,"请用手机发送首次宠物状态");set_label(device_meta,text,210);
+-    set_label(device_storage,v.storage_error ? "存档不可用，请保留设备" : domain.terminal.status==L2_TERMINAL_REJECTED ? (!strcmp(domain.terminal.reason,"insufficient_coins")?"上次互动：喵币不足未扣钱":"上次互动：手机拒绝") : domain.terminal.status==L2_TERMINAL_QUARANTINED ? "上次互动：手机未结算" : available ? "本地存档可用 · 无云服务" : "等待手机首次同步",254);
++    set_label(device_storage,v.storage_error ? "存档不可用，请保留设备" : domain.terminal.status==L2_TERMINAL_REJECTED ? terminal_reason_text(&domain.terminal,true) : domain.terminal.status==L2_TERMINAL_QUARANTINED ? "上次互动：手机未结算" : available ? "本地存档可用 · 无云服务" : "等待手机首次同步",254);
+     set_label(setting_brightness,brightness==45 ? "低" : brightness==75 ? "中" : "高",126);set_label(setting_aod,aod_enabled ? "开启" : "关闭",282);update_clock();update_peer();day_refresh();day_project();
+ }
+ static void project_care_menu(void)
+@@ -1710,7 +1724,8 @@
+     if(mode==MODE_AOD||mode==MODE_OFF){project_standby();return;}
+     if(face==0)name_plate(available&&safe_pet_name(domain.snapshot.pet.name)?domain.snapshot.pet.name:"小猫",false);
+     for(unsigned i=0;i<5;i++){bool show=face==0&&(i==0||i==1||i==3);hide(home_arcs[i],!show);hide(home_stat_icons[i],!show);}
+-    hide(face_phase,face==0);hide(face_weather,true);hide(face_action,true);
++    if(face==0)hide(face_phase,true);
++    hide(face_weather,true);hide(face_action,true);
+     bool pending=domain.ready&&!domain.storage_error&&domain.pending_events;
+     bool disconnected=!previous.connected||!previous.subscribed;
+     const char *small_mark=!domain.ready||domain.storage_error?"存档异常":link_loss_tracking&&lv_tick_elaps(link_lost_since)>=15000?(pending?"离线·已记下":"离线"):"";
+--- a/firmware/main/local2_wire.c
++++ b/firmware/main/local2_wire.c
+@@ -223,7 +223,7 @@
+             session_unlock();
+             cJSON *d=cJSON_AddObjectToObject(r,"data");cJSON_AddStringToObject(d,"protocol","CFLOCAL2");cJSON_AddStringToObject(d,"deviceId",core->saved.device_id);num(d,"maxLine",2048);num(d,"lastSeq",core->saved.has_owner?core->saved.last_request.seq:0);
+             if(core->saved.has_owner)cJSON_AddStringToObject(d,"clientId",core->saved.last_request.client_id);else cJSON_AddNullToObject(d,"clientId");
+-            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.6.0-tail-frame-status");result=L2_OK;
++            cJSON *a=cJSON_AddArrayToObject(d,"capabilities");cJSON_AddItemToArray(a,cJSON_CreateString("scene"));cJSON_AddItemToArray(a,cJSON_CreateString("snapshot"));cJSON_AddItemToArray(a,cJSON_CreateString("events"));cJSON_AddItemToArray(a,cJSON_CreateString("peer"));cJSON_AddItemToArray(a,cJSON_CreateString("day_view"));cJSON_AddItemToArray(a,cJSON_CreateString("care_receipt_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("scene_places_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("resume_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("care_bath_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("mobile_context_v1"));cJSON_AddItemToArray(a,cJSON_CreateString("day_hearts_v1"));cJSON_AddStringToObject(d,"firmware","0.6.1-ring-receipt-reasons");result=L2_OK;
+         }else if(valid&&!strcmp(op,"care_capabilities")){
+             static const char *const ck[]={"v","id","op","clientId","data"};
+             static const char *const dk[]={"careBathV1","mobileContextV1"};char client[37];cJSON *mobile=field(field(q,"data"),"mobileContextV1");

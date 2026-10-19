@@ -1,0 +1,10 @@
+{
+  "installed": false,
+  "flashed": false,
+  "applicationLaunched": false,
+  "deviceRuntimeAcceptancePerformed": false,
+  "reason": "Latest delegated instruction requires parent coordination about the independent appearance/accessory patch before either installation or flashing.",
+  "parentMessageAttempt": {"tool": "Codex send_message_to_thread", "result": "thread not found", "sent": false},
+  "handoff": "Current final response will be returned automatically to the parent by the delegation platform.",
+  "requiredNextAction": "Parent confirms whether to merge appearance patch and authorizes the unified deployment to proceed. Refresh packages if merged; re-read actual partition/OTA selection immediately before application-only flash."
+}

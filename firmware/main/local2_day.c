@@ -132,6 +132,11 @@ end=(unsigned)v[1];
 static bool metadata(const day_slot_t*s,const day_part_t*p){return !strcmp(s->transfer,p->transfer)&&!strcmp(s->owner,p->owner)&&!strcmp(s->pet,p->pet)&&!strcmp(s->view.date,p->date)&&s->view.zone==p->zone&&s->view.cutoff==p->cutoff&&s->view.demo==p->demo&&s->parts==p->parts;
 }
 static bool duplicate(const day_slot_t*s,const day_part_t*p){if(!metadata(s,p)||p->part>=s->next||s->counts[p->part]!=p->count)return false;
+/* Part 0 owns hearts; absent and empty both mean no markers. */
+if(p->part==0){
+if(s->view.heart_count!=p->heart_count)return false;
+for(unsigned i=0;i<p->heart_count;i++)if(s->view.hearts[i]!=p->hearts[i])return false;
+}
 for(unsigned i=0;
 i<p->count;
 i++){const l2_day_segment_t*a=s->view.segments+p->part*16+i,*b=p->rows+i;

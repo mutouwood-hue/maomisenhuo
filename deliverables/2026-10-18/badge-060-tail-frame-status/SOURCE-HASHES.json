@@ -1,0 +1,22 @@
+[
+  {
+    "path": "firmware/CMakeLists.txt",
+    "bytes": 18170,
+    "sha256": "e7fdcd3ca7778a0b4a592a8973b8a5546d7baf9c1ddd7d9a7f24fc16f75b759c"
+  },
+  {
+    "path": "firmware/main/badge_pages.c",
+    "bytes": 111324,
+    "sha256": "d2ca11f6a4118b611a84e846c9fc1e274392009108ddd0913d03528b1b3650ee"
+  },
+  {
+    "path": "firmware/main/local2_wire.c",
+    "bytes": 25066,
+    "sha256": "43c0d0b124ae8d02024bdf0b3e3a50a30c6d4f4b29815c6cb22f010bd08e64fb"
+  },
+  {
+    "path": "firmware/main/assets/status_icons_060.inc",
+    "bytes": 23617,
+    "sha256": "c7750b9220919bdf2da9de1502a4d3b6b6d73b686d7f8472c31de17c3a716e2e"
+  }
+]

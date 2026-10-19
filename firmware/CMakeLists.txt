@@ -282,8 +282,8 @@ function(__component_get_requirements)
     endforeach()
 
 endfunction()
-set(PROJECT_VER "0.5.5-day-hearts")
-project(cat_forest_badge VERSION 0.5.5)
+set(PROJECT_VER "0.7.1-scene-expansion")
+project(cat_forest_badge VERSION 0.6.8)
 include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
 foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION

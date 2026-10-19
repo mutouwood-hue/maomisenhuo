@@ -1,0 +1,10 @@
+{
+  "passiveNormalBootOnly": true,
+  "appVersion067Recorded": true,
+  "appOffsetRecorded": true,
+  "hostTaskEntered": true,
+  "hostSyncRecorded": true,
+  "advertisingStartRecorded": true,
+  "agentInitiatedScanConnectionDiagnostic": false,
+  "userVisualAcceptance": "pending"
+}

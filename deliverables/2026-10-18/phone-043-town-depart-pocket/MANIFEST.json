@@ -1,0 +1,220 @@
+{
+  "batch": "2026-10-18 手机043：互动后离开、行程与口袋、触摸圆环焦点",
+  "recordedAtUtc": "2026-10-18T02:52:42.530872+00:00",
+  "sourceRoot": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4",
+  "sourceBaselineCommit": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "sourceState": "保留进入任务时所有未提交修改；本批只修改app和本独立交付目录，无git提交/push/reset/清理，无固件操作。",
+  "previousDelivery": "../phone-042-touch-town/MANIFEST.json",
+  "phone": {
+    "file": "catforest-0.4.3-town-depart-pocket-debug.apk",
+    "bytes": 930659,
+    "sha256": "1c5c2ecb2a8944194c0fc0d4767a811525303c8562dacb35af9d22e2b1f962d6",
+    "versionName": "0.4.3-town-depart-pocket",
+    "versionCode": 34,
+    "packageId": "com.catforest.htmlcandidate",
+    "applicationLabel": "猫咪森活",
+    "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+    "buildType": "debug",
+    "buildExitCode": 0,
+    "installed": true,
+    "installExitCode": 0
+  },
+  "build": {
+    "assetsLog": "assets-build.log",
+    "androidLog": "phone-build.log",
+    "result": "build-result.json",
+    "initialSandboxFailure": "phone-build-sandbox-blocked.log",
+    "initialSandboxFailureReason": "Gradle本地daemon端口被沙箱拒绝；同一离线命令经所需执行权限重试后成功。",
+    "command": "gradle --offline --no-daemon --console=plain :app:assembleDebug -x test -x lint",
+    "orchestrator": "build-phone.py",
+    "toolchain": "复用上轮原JDK21/Gradle8.9/SDK35缓存与原签名；源码仅取当前隔离目录，未使用旧main源码。"
+  },
+  "deployment": {
+    "startedAtUtc": "2026-10-18T02:51:19.238557+00:00",
+    "serial": "ZYPZ261A01M65K0002A",
+    "packageId": "com.catforest.htmlcandidate",
+    "method": "adb install --no-incremental -r",
+    "installed": true,
+    "appLaunched": false,
+    "dataCleared": false,
+    "uninstalled": false,
+    "commands": [
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "get-state"
+        ],
+        "exitCode": 0,
+        "log": "phone-connection.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "getprop",
+          "ro.product.model"
+        ],
+        "exitCode": 0,
+        "log": "phone-model.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "getprop",
+          "ro.product.manufacturer"
+        ],
+        "exitCode": 0,
+        "log": "phone-manufacturer.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "dumpsys",
+          "package",
+          "com.catforest.htmlcandidate"
+        ],
+        "exitCode": 0,
+        "log": "phone-before.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "install",
+          "--no-incremental",
+          "-r",
+          "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/phone-043-town-depart-pocket/catforest-0.4.3-town-depart-pocket-debug.apk"
+        ],
+        "exitCode": 0,
+        "log": "phone-install.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "dumpsys",
+          "package",
+          "com.catforest.htmlcandidate"
+        ],
+        "exitCode": 0,
+        "log": "phone-after.log"
+      }
+    ],
+    "before": {
+      "versionCode": 33,
+      "versionName": "0.4.2-touch-town",
+      "appId": 10191,
+      "firstInstallTime": "2026-10-15 23:14:25"
+    },
+    "installExitCode": 0,
+    "manufacturer": "StepX",
+    "model": "PZ261A",
+    "after": {
+      "versionCode": 34,
+      "versionName": "0.4.3-town-depart-pocket",
+      "appId": 10191,
+      "firstInstallTime": "2026-10-15 23:14:25"
+    },
+    "metadataMatchesBuiltVersion": true,
+    "sameAppId": true,
+    "sameFirstInstallTime": true,
+    "finishedAtUtc": "2026-10-18T02:51:19.742785+00:00"
+  },
+  "staticFindings": [
+    "主循环顺序为serviceBridge -> serviceSocial -> updateCats(moveNPC) -> player.update。互动计时结束已能执行；失败发生在离开路线和后续路径优先级。",
+    "042 roadSeparation以occupied(goal,c)把当前位置到终点的整条直线作为碰撞扫掠；此筛选同样用于本应转角绕行的图路线，且首步必须增加与伙伴的距离。转角合法绕行可被这些前置条件否决。",
+    "042离开规划失败仍设socialDeparture且清空path；moveNPC进入该状态便直接move并return，不能进入普通寻路；serviceSocial重复受相同筛选限制，形成静止重试。主人互动结束还会直接恢复saved.path，优先于分开。",
+    "抽屉原DOM仅创建进度文字与按钮，没有行程节点清单和getState口袋数据投影，CSS另复用了原home sheet按mode隐藏内容的规则。未运行UI来宣称具体空白像素已重现。",
+    "原store.beginWorldActivity(walk,garden)返回顶层nodes/activity/token；原getState提供pendingWorld.items、inventory和catalog.items。walk路标itemId本来就是null，不能把无采集当作物品丢失，更不能制造奖励。",
+    "圆环pointerdown主动focus到tabindex=0的SVG，旧样式未区分指针与键盘焦点，也未关闭WebView触摸高亮。"
+  ],
+  "changes": [
+    "提取occupiedFrom供移动和离开规划共享；以0.5单位局部道路网逐段检查碰撞与道路宽度，允许合法转角和先沿侧面绕行。每次搜索最多900节点、8单位范围；无完整出口则走可达的分离进展并重选。",
+    "离开状态保持对路径的控制，移动不再随意偏离规划边；保留被阻挡时长供重选。真正分开前延后恢复主人旧行程，并阻止环境活动/剧情覆盖离开路径；手动引导仍可接管。既有冷却值不变。",
+    "抽屉显式渲染实际行程节点与状态、待带回物品和家中口袋；打开时和进度变化时刷新。零库存、无行程、读取不到时各有说明，walk明确不采集物品。保留原结算规则，无新增奖励。",
+    "抽屉使用自己拥有的可滚动内容块与明确栅格样式，标题缺失时创建可收起标题栏。",
+    "指针焦点标记抑制触摸方框并关闭tap highlight；键盘事件清除标记并显示可见焦点，保留slider语义、tabindex和方向键。",
+    "build_town新增可选证据输出目录，本次仅写本交付目录，避免改动共享evidence交付记录。"
+  ],
+  "sourceFiles": [
+    {
+      "path": "app/web/town-player-runtime.inc.js",
+      "sha256": "1f33aeb2f97b06dc7ae9183b215af1827aef98dca69f52a77188c5c02ba5fc00"
+    },
+    {
+      "path": "app/web/town-contact-runtime.inc.js",
+      "sha256": "b704a1786256622c6ce20666ac62c8bf60aafaa3b9a05aa2950059dfb5ca3d1d"
+    },
+    {
+      "path": "app/web/town-guide-layout.css",
+      "sha256": "89173cab3c5692aa37c8e03d957c0bd12161ab8bd25ef6b1894e77f7e4b88057"
+    },
+    {
+      "path": "app/web/life-navigation.js",
+      "sha256": "44c9d7055fb53c36dd2d503ec089171ca1685b11dd20adef18cc4198dbd1884a"
+    },
+    {
+      "path": "app/web/life-companion.css",
+      "sha256": "94d2bbed53ae9038fd8ddf43c96b9741881b22681514defa3c350b2f19f72fbe"
+    },
+    {
+      "path": "app/scripts/build_town.py",
+      "sha256": "cd187e94c52103aebac93518eb54b659d0d802b81e5e082e85f524a658a7c496"
+    },
+    {
+      "path": "app/android/app/build.gradle.kts",
+      "sha256": "b30bd3e3429bc0124fa3671c34154f5336f533bc49d09c7dee086d1fa06df2e0"
+    }
+  ],
+  "generatedFiles": "app/web/original-town-runtime.js、Android assets及app/preview，生产构建生成但未打开预览。",
+  "apkStaticEvidence": {
+    "inventory": "apk-static-inventory.json",
+    "patchAgainstInstalled042": "043-changes-vs-042.patch",
+    "note": "只读取APK目录/文件字节/公共元数据；未执行应用或交互。APK文件项无增删，业务资源变化仅为本批六个JS/CSS，另有版本manifest与BuildConfig dex。"
+  },
+  "screenshotEvidence": {
+    "libraryFileIds": [
+      "libfile_f046e45fa04c81919541aafbc3c3de5a",
+      "libfile_d32b2efc0978819180fe5d55b9b5523b"
+    ],
+    "materialized": false,
+    "pixelsViewed": false,
+    "reason": "已读取当前Library消费技能；本环境仅暴露创建/替换/上传工具，没有read/search/list/prepare_materialize或工具搜索入口，无法走受支持读取流程。未猜URL或绕过拒绝。"
+  },
+  "technicalTests": {
+    "executed": false,
+    "lintExecuted": false,
+    "automatedInteractionExecuted": false,
+    "browserQAExecuted": false,
+    "appLaunched": false,
+    "deviceBehaviorAcceptanceExecuted": false
+  },
+  "firmware": {
+    "built": false,
+    "flashed": false,
+    "sourceEdited": false
+  },
+  "acceptance": [
+    "打开原存档，进入小镇与居民互动；结束或计时结束后观察实际离开，转角处不应继续站在一起。点小路或我来引导应可接管。",
+    "打开行程与口袋，应看到实际路标及已走到/下一站/待前往；家中物品按真实数量显示，零库存显示明确空态。牵绳散步不采集物品，走完点完成结算。",
+    "今日环手指按住拖动并松开，外围不应出现方形光标；圆点、填色、时间和卡片仍同步，键盘Tab及方向键仍能操作。"
+  ],
+  "notVerified": [
+    "用户反馈三项的实际触摸、渲染与拥挤场景表现仍待实机验收；未运行任何用户禁止的技术测试。",
+    "局部离开规划保持真实碰撞；物理完全堵塞时等待可行空间，不通过瞬移或穿猫保证离开。",
+    "数据保留证据为覆盖安装成功、appId与firstInstallTime相同；未启动应用读取存档表现。"
+  ]
+}

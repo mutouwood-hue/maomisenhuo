@@ -1,0 +1,100 @@
+{
+  "deviceMac": "7c:0c:5f:42:36:84",
+  "partitionTableMd5Valid": true,
+  "matchesProductionBuild": true,
+  "partitions": [
+    {
+      "name": "nvs",
+      "type": 1,
+      "subtype": 2,
+      "offset": 36864,
+      "size": 32768,
+      "flags": 0
+    },
+    {
+      "name": "phy_init",
+      "type": 1,
+      "subtype": 1,
+      "offset": 69632,
+      "size": 4096,
+      "flags": 0
+    },
+    {
+      "name": "otadata",
+      "type": 1,
+      "subtype": 0,
+      "offset": 73728,
+      "size": 8192,
+      "flags": 0
+    },
+    {
+      "name": "ota_0",
+      "type": 0,
+      "subtype": 16,
+      "offset": 131072,
+      "size": 8388608,
+      "flags": 0
+    },
+    {
+      "name": "ota_1",
+      "type": 0,
+      "subtype": 17,
+      "offset": 8519680,
+      "size": 8388608,
+      "flags": 0
+    },
+    {
+      "name": "assets_a",
+      "type": 1,
+      "subtype": 130,
+      "offset": 16908288,
+      "size": 7340032,
+      "flags": 0
+    },
+    {
+      "name": "assets_b",
+      "type": 1,
+      "subtype": 130,
+      "offset": 24248320,
+      "size": 7340032,
+      "flags": 0
+    }
+  ],
+  "otaCopies": [
+    {
+      "sequence": 1,
+      "state": 2,
+      "crc": 1195612314,
+      "expectedCrc": 1195612314,
+      "valid": true
+    },
+    {
+      "sequence": 2,
+      "state": 4294967295,
+      "crc": 1442199412,
+      "expectedCrc": 1442199412,
+      "valid": true
+    }
+  ],
+  "currentApp": {
+    "project": "cat_forest_badge",
+    "version": "0.6.9-cat-interaction"
+  },
+  "selected": {
+    "name": "ota_1",
+    "type": 0,
+    "subtype": 17,
+    "offset": 8519680,
+    "size": 8388608,
+    "flags": 0
+  },
+  "image": "cat_forest_badge-0.7.0-cat-actions.bin",
+  "imageDescription": {
+    "project": "cat_forest_badge",
+    "version": "0.7.0-cat-actions"
+  },
+  "bytes": 7033920,
+  "freeBytes": 1354688,
+  "sha256": "266b8c9c84d684b5c9eb1b47d2c2e298fbfe50182690dc1ebd0219c357dc8b6a",
+  "writeScope": "single selected ota_1 application partition only; no NVS, otadata, bootloader, partition table, assets, or erase-all"
+}

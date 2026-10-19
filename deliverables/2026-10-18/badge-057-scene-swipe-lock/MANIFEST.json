@@ -1,0 +1,79 @@
+{
+  "status": "production_built_app_flashed_user_acceptance_pending",
+  "baseCommit": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "version": "0.5.7-scene-swipe-lock",
+  "file": "cat_forest_badge-0.5.7-scene-swipe-lock.bin",
+  "bytes": 6911664,
+  "sizeHex": "0x6976b0",
+  "sha256": "1b3b0009bc60fea20cf455e8053454af886a674214a6a5048edf54a62345583a",
+  "descriptor": {
+    "version": "0.5.7-scene-swipe-lock",
+    "project": "cat_forest_badge",
+    "time": "10:49:09",
+    "date": "Oct 18 2026"
+  },
+  "buildExitCode": 0,
+  "buildLog": "badge-build-ui-final.log",
+  "target": {
+    "name": "ota_1",
+    "type": 0,
+    "subtype": 17,
+    "offset": 8519680,
+    "size": 8388608,
+    "flags": 0
+  },
+  "chip": "ESP32-S3 (QFN56 rev 0.2)",
+  "mac": "7c:0c:5f:42:36:84",
+  "port": "/dev/cu.usbmodem1101",
+  "flashed": true,
+  "technicalTests": "not_run",
+  "simulatedInteractions": "not_run",
+  "browserQA": "not_run",
+  "hardwareAcceptance": "pending_user",
+  "pixelReferencesViewed": true,
+  "referenceIdentityFile": "REFERENCE-IMAGES.json",
+  "sourceSha256": {
+    "firmware/CMakeLists.txt": "0fde0de2f7db664b5d011a50376582f180e02c7ce9eea1c30eccead2b88ae53e",
+    "firmware/main/local2_wire.c": "9e57590c2ca1fb87a778a8c44972f6d2d2ab80a3fb8d41da74e0f970fce1aa2f",
+    "firmware/main/local2_day.c": "58bb70fe2bca0a51d45179e97b296f213620147f300e72c7e2a110aaf76f44bf",
+    "firmware/main/badge_pages.c": "23d40e05f0d2c0d385194b8e0965e62e0c80515e346107784892edbce8d5da03",
+    "firmware/main/badge_scene.c": "74d79a3f7bd8d9124fcd67be0bd4e9818e2e53763f1efe5164c51e1d5301aace",
+    "firmware/main/badge_scene.h": "fbe99d253f9e44259fef268ea355f575f3cc44d913c5592c3ac959b8deed89c3",
+    "firmware/main/badge_day_ui.inc": "d9cb5ac36c8c7cb3e17b9ae3ec50f74b6b397fd352e1577e051049d01c6773f8"
+  },
+  "preserved056ReplayFix": true,
+  "appSourceEditedByThisTask": false,
+  "productionWriteScope": "selected app partition only; no NVS/bootloader/partition-table/otadata/assets write; no standalone erase command",
+  "candidateParameters": {
+    "disconnectLabelDelayMs": 15000,
+    "weatherFreshnessMaxMs": 1800000,
+    "careActionBubbleMs": 3000,
+    "resultBubbleMs": 4000,
+    "dragSlowCommitPx": 140,
+    "dragReboundMs": 180,
+    "dragCommitMs": 200,
+    "existingCompAfterMs": 10000,
+    "existingAodOffAfterMs": 40000,
+    "existingAodBrightnessPercent": 35
+  },
+  "visualImplementationNotes": [
+    "Existing warm room and original PCAT bank retained",
+    "Native geometry curl is only gated by accepted SLEEP; human day rest never synthesizes pet sleep",
+    "AOD and OFF remain display/power modes; no sleep/care event emitted on lock or wake",
+    "Two PSRAM RGB565 snapshots compose the real source and target pages; no core/nav/ACK during target capture",
+    "BSP remains 48-row PARTIAL with original DMA flush completion; hardware smoothness/tearing not measured"
+  ],
+  "flashExitCode": 0,
+  "flashLog": "badge-flash.log",
+  "flashReceipt": "FLASH-RECEIPT.json",
+  "deviceVersionBefore": {
+    "version": "0.5.6-day-hearts-replay",
+    "project": "cat_forest_badge",
+    "time": "09:49:45",
+    "date": "Oct 18 2026"
+  },
+  "transferHashVerifiedByEsptool": true,
+  "resetReportedByEsptool": "Hard resetting via RTS pin",
+  "deviceRuntimeInspected": false,
+  "blocker": null
+}

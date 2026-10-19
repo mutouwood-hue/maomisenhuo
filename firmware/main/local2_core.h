@@ -6,7 +6,9 @@
 #define L2_JS_MAX UINT64_C(9007199254740991)
 #define L2_EVENT_MAX 200u
 #define L2_PEER_MAX 32u
-#define L2_STORE_MAX 8192u
+/* Reserve the appended schema5 display metadata without shrinking the 062
+ * payload budget or preventing a full valid schema4 blob from migrating. */
+#define L2_STORE_MAX (8192u + 68u)
 #define L2_DEVICE_MAX 32u
 #define L2_ID_MAX 64u
 
@@ -17,13 +19,26 @@ typedef enum { L2_OK=0, L2_DUPLICATE, L2_INVALID, L2_NOT_READY, L2_STORAGE_ERROR
 typedef enum { L2_SCENE_HOME, L2_SCENE_DEPARTING, L2_SCENE_AWAY, L2_SCENE_RETURNING, L2_SCENE_GARDEN, L2_SCENE_TOWN } l2_scene_t;
 typedef enum { L2_ACTION_IDLE, L2_ACTION_WALK, L2_ACTION_PET, L2_ACTION_FEED,
     L2_ACTION_WATER, L2_ACTION_BATH, L2_ACTION_PLAY, L2_ACTION_SLEEP } l2_action_t;
+/* Optional volatile visual hint from an existing phone action; never persisted or settled. */
+typedef enum { L2_INTERACTION_NONE, L2_INTERACTION_FLOWER_SNIFF, L2_INTERACTION_BUTTERFLY_CHASE,
+    L2_INTERACTION_BALL_POUNCE, L2_INTERACTION_BED_SLEEP } l2_interaction_t;
 typedef enum { L2_WEATHER_CLEAR, L2_WEATHER_RAIN, L2_WEATHER_SNOW } l2_weather_t;
 typedef enum { L2_GIFT_NONE, L2_GIFT_PENDING, L2_GIFT_PLAYING, L2_GIFT_SHOWN } l2_gift_state_t;
+/* Phone-computed display state only; independent from l2_meet_t.stage. */
+typedef enum { L2_GROWTH_UNKNOWN, L2_GROWTH_KITTEN, L2_GROWTH_YOUNG, L2_GROWTH_ADULT } l2_growth_t;
+typedef enum { L2_BODY_STANDARD, L2_BODY_SLIM, L2_BODY_ROUND } l2_body_shape_t;
 typedef struct {
     char pet_id[65], name[25], breed[17];
+    bool appearance_known;
+    l2_growth_t growth_stage;
+    l2_body_shape_t body_shape; /* Reserved request; no local body algorithm. */
+    char outfit[65];
     uint8_t food,mood,clean,energy,health;
     uint64_t coins;
 } l2_pet_t;
+bool l2_pet_appearance_valid(const l2_pet_t *);
+const char *l2_growth_name(l2_growth_t); /* NULL for unknown/invalid. */
+const char *l2_body_shape_name(l2_body_shape_t); /* NULL for invalid. */
 typedef struct {
     uint64_t revision;
     bool has_epoch_ms;
@@ -47,8 +62,13 @@ typedef struct {
     uint8_t gift_kind;
     uint32_t quantity;
 } l2_receipt_t;
-typedef enum { L2_EVENT_CARE=1, L2_EVENT_GIFT=2 } l2_event_kind_t;
+typedef enum { L2_EVENT_CARE=1, L2_EVENT_GIFT=2, L2_EVENT_MEET=3 } l2_event_kind_t;
+/* method 1=rhythm (LE16 gaps), 2=clock dots (0..8); stage 1=prepared,
+ * 2=committed, 3=remote durable commit seen + queued atomically. No inferred friend. */
+typedef struct {uint8_t id[16],method,count,mark[16],stage;uint64_t epoch_ms;char name[25],breed[17];} l2_meet_t;
+bool l2_meet_valid(const l2_meet_t *);
 typedef struct {
+    l2_meet_t meet;
     uint64_t counter, epoch_ms, peer_counter;
     l2_event_kind_t kind;
     l2_action_t action;
@@ -84,6 +104,7 @@ typedef struct {
     l2_receipt_t peers[L2_PEER_MAX];
     uint64_t peer_first_outgoing[L2_PEER_MAX];
     bool peer_outgoing_acked[L2_PEER_MAX];
+    l2_meet_t encounters[L2_PEER_MAX];
     bool has_gift;
     l2_receipt_t last_gift;
     l2_gift_state_t gift_state;
@@ -96,12 +117,14 @@ typedef struct {
     void *persist_ctx;
     bool ready,storage_error;
     uint64_t care_change,gift_change; /* Runtime counters; initialize UI baseline at attach. */
+    l2_interaction_t visual_interaction; /* RAM only; cleared by the next snapshot or reboot. */
     /* RAM-only capability evidence, never serialized or a game-state grant. */
     char bath_allowed_owner[37];
     uint32_t bath_confirmed_session;
 } l2_core_t;
 typedef struct {
     bool ready,storage_error,has_snapshot,busy,bath_allowed;
+    l2_interaction_t visual_interaction;
     char device_id[33];
     l2_snapshot_t snapshot;
     l2_terminal_t terminal;
@@ -140,3 +163,9 @@ bool l2_peek_event(const l2_core_t *,l2_event_t *);
 bool l2_get_peer(const l2_core_t *,uint8_t slot,l2_receipt_t *);
 void l2_get_last_result(const l2_core_t *,l2_result_t *);
 const char *l2_status_name(l2_status_t);
+
+/* Two-sided durable encounter protocol only; never callable from phone opcodes. */
+bool l2_get_encounter(const l2_core_t *,const char *peer,l2_meet_t *);
+l2_status_t l2_prepare_encounter(l2_core_t *,const char *peer,const l2_meet_t *);
+l2_status_t l2_commit_encounter(l2_core_t *,const char *peer,const uint8_t id[16]);
+l2_status_t l2_settle_encounter(l2_core_t *,const char *peer,const uint8_t id[16]);

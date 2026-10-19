@@ -1,0 +1,50 @@
+{
+  "status": "source wiring ready for parent integration; no unified production build/deployment performed",
+  "base": "actual main workspace after badge062/phone048 encounter implementation",
+  "changedSourceFiles": [
+    "app/web/offline-scene-map.js",
+    "app/web/cflocal2-adapter.js",
+    "firmware/main/local2_core.h",
+    "firmware/main/local2_core.c",
+    "firmware/main/local2_wire.c",
+    "firmware/main/badge_pages.c",
+    "protocol/local-v2/interface.d.ts",
+    "protocol/2026-10-18-pet-appearance-wire.md"
+  ],
+  "wireCapability": "pet_appearance_v1",
+  "storageSchema": 5,
+  "readsStorageSchemas": [
+    2,
+    3,
+    4,
+    5
+  ],
+  "growthStage": [
+    "kitten",
+    "young",
+    "adult"
+  ],
+  "legacyAlias": {
+    "baby": "kitten"
+  },
+  "outfit": "existing ID, 1..64 ASCII identifier chars",
+  "bodyShape": [
+    "standard",
+    "slim",
+    "round"
+  ],
+  "defaultBodyShape": "standard",
+  "bodyAlgorithmAdded": false,
+  "identitySource": "offline-scene-map.read -> identities.resolve",
+  "rendererIntegrated": false,
+  "guiSeam": "conditional on complete badge_appearance.h + badge_scene API integration; deferred during touch/swipe/handoff",
+  "previousEncounterProtocolChanged": false,
+  "productionAssetsMirrored": false,
+  "built": false,
+  "testsRun": false,
+  "simulated": false,
+  "installed": false,
+  "flashed": false,
+  "acceptedByUser": false,
+  "previousPackages": "062/048 remain byte-for-byte unchanged and do not contain these new display fields"
+}

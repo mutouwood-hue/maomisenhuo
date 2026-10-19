@@ -1,0 +1,13 @@
+{
+  "staticArchiveComparisonOnly": true,
+  "assetCount": 66,
+  "mismatches": [],
+  "changedVs049": [
+    "build-manifest.json",
+    "game-06.js",
+    "offline-host.css",
+    "offline-host.js",
+    "offline-scene-sync.js"
+  ],
+  "acceptance": "not performed"
+}

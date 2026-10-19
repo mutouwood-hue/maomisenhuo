@@ -1,0 +1,115 @@
+{
+  "productionAssetConversionOnly": true,
+  "sources": [
+    {
+      "shape": "01_kitten",
+      "modelSha256": "39ac663c3ba4458ba75551c9df85b2449ec19a08d08d501d3b7a08730f6c9cb4",
+      "accessorySha256": {
+        "01_thick_bib": "0e7681363688c3c0e6137c08424b7235e5e1a6e4881f5cc7f366d2393b88eb8e",
+        "02_bow": "5502cf71f256f0304ac0da9061f6f1d0403cb2d4af2bad44e9a5289df688e2ce",
+        "03_mint_backpack": "06c0b652cfb1f64d6e4bd2d33d4316080e31a540c99ab7271eafc4041481a20c",
+        "04_cream_wings": "b5de843daab766fcb121b7a2bfe711543a6f2ab5feb2c3446779e12782fa2e71"
+      }
+    },
+    {
+      "shape": "02_young",
+      "modelSha256": "b0a5812240254290a0c198e20de467729f3fbe2a24d3785beef3a6ea1e957309",
+      "accessorySha256": {
+        "01_thick_bib": "ca2d4d3e5c4607094c12b2122cd6de392b94b78e4ebc3de1bbb0aa6b7659ab32",
+        "02_bow": "f3a4d43753491050769ef90dbc436c82e9ad59e2a115431f01bd266d28c13643",
+        "03_mint_backpack": "d089bf6714a17f8ef6f003e3690ff56757b1e270d01abe2b78fb313a22abda21",
+        "04_cream_wings": "592fbc699b362e534d90e0575706846547d7de4698b1975ad458861faf929899"
+      }
+    },
+    {
+      "shape": "03_adult_slim",
+      "modelSha256": "54ef97ccae30f35755bbba46550c31d30817ddd559d83f728fdbc5564d531ec4",
+      "accessorySha256": {
+        "01_thick_bib": "4fa6e5bbbd398065aa75b6b5f707c6d3ba66caef54f1127099b840c62c372165",
+        "02_bow": "b66ce9a79480db42d796fd40b0b6176fadc07131d8507c1827f642ba365402ee",
+        "03_mint_backpack": "cff37fec4311371dd7f6e6c12b54d13b8ea29b539d368b5b549e9f45775e0021",
+        "04_cream_wings": "be661414db5aea5d7b2c22c5f49b02063f981bd0d84b75b4e05d0b8e0bf54e2a"
+      }
+    },
+    {
+      "shape": "04_adult_standard",
+      "modelSha256": "67c0c03b60cf5518e552006c5a44a7dde06b97c04b72ed28b702b492d3b8e80a",
+      "accessorySha256": {
+        "01_thick_bib": "cb9b762a307994ef6733af25d12f64dd5c905b341164fd0d39a83133c35354c5",
+        "02_bow": "bf600ed11e34eab0780ff085ec87e47ddc33362022320b2aa57834fe8940c61d",
+        "03_mint_backpack": "fae3a76f893a20937a6aaccfdd713c2430818ec1f3793cf03d80941b41ed207b",
+        "04_cream_wings": "c371c7b224aeebb18465db1b0b6bbe9733b38217c842e731b6d2a1583a757392"
+      }
+    },
+    {
+      "shape": "05_adult_round",
+      "modelSha256": "688b87140d06d0b1aa5e7fa06e2c76073587606e7dea2143f81e3d8cd792cd6f",
+      "accessorySha256": {
+        "01_thick_bib": "aaa684cb5c97b0e78eaa080ecf7aed69de97704ba8fd92566faf1d24b85d173b",
+        "02_bow": "1d1da6fee05975fbf5097227fc4c64f721cee07224cff6c50ef37d03bbc56ae6",
+        "03_mint_backpack": "83702e2ee0a39253e4426a3f9ccaa41ea547b44430d7d8d8ac2112d3e1f5c0ae",
+        "04_cream_wings": "7b737535b56d06602e08ed99b3f70de2bdbf5fd089e71be8978e337951f9f95c"
+      }
+    }
+  ],
+  "canvas": [
+    192,
+    208
+  ],
+  "footAnchor": [
+    96,
+    196
+  ],
+  "clips": [
+    [
+      "idle",
+      20,
+      3.2
+    ],
+    [
+      "paw",
+      24,
+      2.4
+    ],
+    [
+      "walk",
+      10,
+      1.0
+    ],
+    [
+      "attention",
+      12,
+      3.2
+    ]
+  ],
+  "baseFrames": 330,
+  "priorityOutfitLayers": 1320,
+  "layerPaletteLimit": 128,
+  "bytes": 4073508,
+  "sha256": "c6c26f880078fd417288c03e3cbdba1cae3b8cfc0edd3366c52b56e98a0b20e4",
+  "packaging": {
+    "format": "zlib-wrapped-rle-v1",
+    "layers": 1650,
+    "uncompressedRleBytes": 4073508,
+    "uncompressedRleSha256": "c6c26f880078fd417288c03e3cbdba1cae3b8cfc0edd3366c52b56e98a0b20e4",
+    "bytes": 1531337,
+    "sha256": "5462913ac47c00ac4a3768647f2d350b5573f0d8e5b7ec024de45b261f057106",
+    "maxDecodedLayerBytes": 11112,
+    "losslessProductionPackagingOnly": true
+  },
+  "camera": {
+    "yaw": -28,
+    "pitch": 14,
+    "distance": 90,
+    "focal": 970.5148464310672
+  },
+  "colorPipeline": {
+    "id": "native-linear-aces-v1-candidate",
+    "status": "candidate-pending-user-visual-selection",
+    "profileSha256": "85cd904ac031a4edb21c899fde102643fb2f88787cba81c9d68eecbd07a01013",
+    "profileFile": "color-profile.json",
+    "runtimeLookup": "native_cat_color.h",
+    "reference": "phone050; fixed diffuse approximation, not full room PBR equivalence"
+  },
+  "acceptance": "Pending user visual selection. No firmware execution, interaction simulation or self acceptance."
+}

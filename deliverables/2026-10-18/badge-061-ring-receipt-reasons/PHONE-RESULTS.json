@@ -1,0 +1,130 @@
+{
+  "authorityRevision": 1181,
+  "checksumValid": true,
+  "journal": {
+    "schema": 1,
+    "clientId": "fcfb27c0-e710-41af-ac79-0c8232b660c8",
+    "devices": {
+      "74dd63fc48702670941da7982a24a571": {
+        "nextSeq": 563,
+        "syncRevision": 505,
+        "lastSemantic": "{\"petId\":\"cat-c98ec497-cffe-4187-b3aa-479f9132fbf8\",\"sourceRevision\":0,\"scene\":\"home\",\"action\":\"idle\",\"weather\":\"clear\",\"utcOffsetMinutes\":480,\"pet\":{\"name\":\"小橘\",\"breed\":\"orange\",\"food\":0,\"mood\":99,\"clean\":0,\"energy\":72,\"health\":100,\"coins\":0}}",
+        "pending": null
+      }
+    }
+  },
+  "recordCount": 57,
+  "recentResults": [
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:46",
+      "counter": 46,
+      "action": "bath",
+      "status": "rejected",
+      "reason": "insufficient_coins",
+      "message": "设备洗澡未获奖励：洗澡需要 2 枚喵币，接鱼、户外探险和出售收获都能赚钱。",
+      "saveDigest": "48e5552e6327d404814cb1acd62973b64788a6ae21968092f558279da38a7de8"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:47",
+      "counter": 47,
+      "action": "pet",
+      "status": "rejected",
+      "reason": "ineligible",
+      "message": "设备摸摸未获奖励：小猫现在心情超好，可以陪它做点别的。",
+      "saveDigest": "d807c1d7ece22f711792fe9ec3fd1158a5f438b974f849895d30e71f5703520c"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:48",
+      "counter": 48,
+      "action": "pet",
+      "status": "rejected",
+      "reason": "ineligible",
+      "message": "设备摸摸未获奖励：小猫现在心情超好，可以陪它做点别的。",
+      "saveDigest": "185e8c84862aa944082d6b7582457cc1dfc3fbcd46ee7116216a1708e888281b"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:49",
+      "counter": 49,
+      "action": "pet",
+      "status": "rejected",
+      "reason": "ineligible",
+      "message": "设备摸摸未获奖励：小猫现在心情超好，可以陪它做点别的。",
+      "saveDigest": "ec7b85b510fb9405ea9f92d2a344dd43c338ec3af894824b2c7beda4777845d5"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:50",
+      "counter": 50,
+      "action": "pet",
+      "status": "rejected",
+      "reason": "ineligible",
+      "message": "设备摸摸未获奖励：小猫现在心情超好，可以陪它做点别的。",
+      "saveDigest": "77e16b7b1496623a7a4b98e32afbf7ff3887e2b8a9f8f5fe4c8e6add6df43b19"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:51",
+      "counter": 51,
+      "action": "play",
+      "status": "applied",
+      "reason": "none",
+      "message": "设备逗猫已按原规则结算。",
+      "saveDigest": "09002178f318887f0ba8b9189c0406e68f1b421c7efd3b5b55096f155df03220"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:52",
+      "counter": 52,
+      "action": "pet",
+      "status": "rejected",
+      "reason": "ineligible",
+      "message": "设备摸摸未获奖励：小猫现在心情超好，可以陪它做点别的。",
+      "saveDigest": "0551ecef268c7ec6b3a7fc2d111b0a065ee547113754fc7f02f235fc07d961e8"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:53",
+      "counter": 53,
+      "action": "feed",
+      "status": "rejected",
+      "reason": "insufficient_coins",
+      "message": "设备喂食未获奖励：小鱼干需要 3 枚喵币，接鱼、户外探险和出售收获都能赚钱。",
+      "saveDigest": "cb99044ef8398791418a1ea638eebbdd064554948d372c46c3c13c9a6591bd01"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:54",
+      "counter": 54,
+      "action": "pet",
+      "status": "rejected",
+      "reason": "ineligible",
+      "message": "设备摸摸未获奖励：小猫现在心情超好，可以陪它做点别的。",
+      "saveDigest": "2eb7eb0f4d1e14b46af025a234fc9bd6f6c8eb63646042d0ee0db215f72fcef8"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:55",
+      "counter": 55,
+      "action": "pet",
+      "status": "rejected",
+      "reason": "ineligible",
+      "message": "设备摸摸未获奖励：小猫现在心情超好，可以陪它做点别的。",
+      "saveDigest": "91d104f9b5ea2b918d9d53bc87c61729c77410993db8d3f1df42eccf0f8359af"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:56",
+      "counter": 56,
+      "action": "pet",
+      "status": "rejected",
+      "reason": "ineligible",
+      "message": "设备摸摸未获奖励：小猫现在心情超好，可以陪它做点别的。",
+      "saveDigest": "61ce4d3ff5f10cbfed5b59d98dab6465bdef9020227be7452bc93c29dad011eb"
+    },
+    {
+      "eventId": "74dd63fc48702670941da7982a24a571:57",
+      "counter": 57,
+      "action": "feed",
+      "status": "rejected",
+      "reason": "insufficient_coins",
+      "message": "设备喂食未获奖励：小鱼干需要 3 枚喵币，接鱼、户外探险和出售收获都能赚钱。",
+      "saveDigest": "15dac1b48f246c038b52d1349cbd2fe6e135e12eb4534039b7957f1812a69f32"
+    }
+  ],
+  "pending": null,
+  "isolated": [],
+  "rawSha256": "d6cf0dc48556350d2341d2fd509e60f6ae8296157c71dc397225ad5da36e2214"
+}

@@ -1,0 +1,91 @@
+{
+  "partitionTableMd5Valid": true,
+  "matchesBuildLayout": true,
+  "partitions": [
+    {
+      "name": "nvs",
+      "type": 1,
+      "subtype": 2,
+      "offset": 36864,
+      "size": 32768,
+      "flags": 0
+    },
+    {
+      "name": "phy_init",
+      "type": 1,
+      "subtype": 1,
+      "offset": 69632,
+      "size": 4096,
+      "flags": 0
+    },
+    {
+      "name": "otadata",
+      "type": 1,
+      "subtype": 0,
+      "offset": 73728,
+      "size": 8192,
+      "flags": 0
+    },
+    {
+      "name": "ota_0",
+      "type": 0,
+      "subtype": 16,
+      "offset": 131072,
+      "size": 8388608,
+      "flags": 0
+    },
+    {
+      "name": "ota_1",
+      "type": 0,
+      "subtype": 17,
+      "offset": 8519680,
+      "size": 8388608,
+      "flags": 0
+    },
+    {
+      "name": "assets_a",
+      "type": 1,
+      "subtype": 130,
+      "offset": 16908288,
+      "size": 7340032,
+      "flags": 0
+    },
+    {
+      "name": "assets_b",
+      "type": 1,
+      "subtype": 130,
+      "offset": 24248320,
+      "size": 7340032,
+      "flags": 0
+    }
+  ],
+  "otaCopies": [
+    {
+      "seq": 1,
+      "state": 2,
+      "crc": 1195612314,
+      "expectedCrc": 1195612314,
+      "valid": true
+    },
+    {
+      "seq": 2,
+      "state": 4294967295,
+      "crc": 1442199412,
+      "expectedCrc": 1442199412,
+      "valid": true
+    }
+  ],
+  "selected": {
+    "name": "ota_1",
+    "type": 0,
+    "subtype": 17,
+    "offset": 8519680,
+    "size": 8388608,
+    "flags": 0
+  },
+  "artifact": "cat_forest_badge-0.6.6-ble-memory.bin",
+  "bytes": 6178080,
+  "freeBytes": 2210528,
+  "sha256": "74870ac922cb17d027f296a14ea09dbeb63a01091e5b8453adaaf638057309b4",
+  "writeScope": "one app partition only; no NVS/otadata/bootloader/partition-table/assets write"
+}

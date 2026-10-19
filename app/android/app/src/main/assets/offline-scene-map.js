@@ -1,7 +1,7 @@
 /* Read-only game projection plus a separate durable wire-identity registry. No game writes, rewards or ACK. */
 (() => {
   'use strict';
-  const actions = {idle:'idle',walk:'walk',pet:'pet',feed:'feed',drink:'water',bath:'bath',tease:'play',play:'play',climb:'walk',sleep:'sleep'};
+  const actions = {idle:'idle',walk:'walk',pet:'pet',feed:'feed',drink:'water',bath:'bath',tease:'play',play:'play',climb:'play',sleep:'sleep'};
   function project(state, event = null, companion = null) {
     if(!state?.ready || !state.pet?.id || !state.pet.stats || state.pet.storageIssue)return null;
     const pet=state.pet, life=state.life;
@@ -16,6 +16,13 @@
     const number=value=>typeof value==='number'&&Number.isFinite(value)&&value>=0&&value<=100?Math.round(value):null;
     const snapshot={petId:String(pet.id),scene,action,weather,pet:{name:pet.name,breed:pet.breed,
       food:number(pet.stats.food),mood:number(pet.stats.mood),clean:number(pet.stats.clean),energy:number(pet.stats.energy),health:number(pet.health),coins:Number.isSafeInteger(pet.coins)&&pet.coins>=0?pet.coins:null}};
+    if(!outdoors&&!following&&snapshot.scene==='home'&&snapshot.action==='play'&&state.room?.currentAction==='climb')snapshot.interaction='ball_pounce';
+    // Display only: consume the existing game stage/outfit, never derive age or
+    // body shape from care stats. Unknown appearance is omitted as one group.
+    const growthStage=pet.stage==='baby'?'kitten':pet.stage;
+    if(['kitten','young','adult'].includes(growthStage)&&typeof pet.outfit==='string'&&/^[A-Za-z0-9_-]{1,64}$/.test(pet.outfit)){
+      Object.assign(snapshot.pet,{growthStage,outfit:pet.outfit,bodyShape:['standard','slim','round'].includes(pet.bodyShape)?pet.bodyShape:'standard'});
+    }
     if(Object.values(snapshot.pet).some(value=>value===null||value===undefined))return null;
     return snapshot;
   }
@@ -69,7 +76,11 @@
     identities??=createIdentityRegistry({storage:window.localStorage,uuid:()=>window.crypto.randomUUID()});
     snapshot.revision=window.CatTownExperience?.sceneRevision||0;
     if(context?.capabilities?.includes('scene_places_v1')&&snapshot.scene==='away')snapshot.scene='garden';
-    if(inTown){snapshot.scene=context?.capabilities?.includes('scene_places_v1')?(town.region==='garden'?'garden':'town'):'away';snapshot.action=town.action==='walk'?'walk':'idle';snapshot.weather=town.weather==='rain'?'rain':'clear';}
+    if(inTown){snapshot.scene=context?.capabilities?.includes('scene_places_v1')?(town.region==='garden'?'garden':'town'):'away';snapshot.action=town.action==='walk'||town.action==='play'?town.action:'idle';snapshot.weather=town.weather==='rain'?'rain':'clear';if(snapshot.scene==='garden'&&snapshot.action==='play'&&['flower_sniff','butterfly_chase'].includes(town.interaction))snapshot.interaction=town.interaction;}
+    if(snapshot.scene==='home'&&snapshot.action==='sleep')snapshot.interaction='bed_sleep';
+    if(!context?.capabilities?.includes('scene_interaction_v1'))delete snapshot.interaction;
+    // The appearance travels with THIS resolved wire identity, not pet.id or
+    // any separate display module's local cat-1 identifier.
     snapshot.petId=identities.resolve(state.pet,context);return snapshot;
   }
   window.CatOfflineSceneMap=Object.freeze({project,read,createIdentityRegistry,IDENTITY_KEY});

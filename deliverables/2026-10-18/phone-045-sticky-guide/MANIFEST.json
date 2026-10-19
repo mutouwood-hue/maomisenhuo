@@ -1,0 +1,192 @@
+{
+  "batch": "2026-10-18 手机045：只修引导/自由模式自动重置",
+  "recordedAtUtc": "2026-10-18T03:21:30.811314+00:00",
+  "sourceRoot": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4",
+  "sourceBaselineCommit": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "previousDelivery": "../phone-044-town-command/MANIFEST.json",
+  "scope": "仅模式写入所有权、模式显示文本及居民互动期间避免free闲逛竞争的原有门控。不改寻路、让行、冷却、圆环、CSS、奖励或其他功能。保留全部现有未提交修改；只app和本目录，无git提交/push/reset/清理，无firmware/吧唧操作。",
+  "phone": {
+    "file": "catforest-0.4.5-sticky-guide-debug.apk",
+    "bytes": 933051,
+    "sha256": "24df810674b69dc30de97f24e149107b9c892f272029a58b4cc8a2fd0a911d04",
+    "versionName": "0.4.5-sticky-guide",
+    "versionCode": 36,
+    "packageId": "com.catforest.htmlcandidate",
+    "applicationLabel": "猫咪森活",
+    "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+    "buildType": "debug",
+    "buildExitCode": 0,
+    "installed": true,
+    "installExitCode": 0
+  },
+  "deployment": {
+    "startedAtUtc": "2026-10-18T03:20:05.148555+00:00",
+    "serial": "ZYPZ261A01M65K0002A",
+    "packageId": "com.catforest.htmlcandidate",
+    "method": "adb install --no-incremental -r",
+    "installed": true,
+    "appLaunched": false,
+    "dataCleared": false,
+    "uninstalled": false,
+    "commands": [
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "get-state"
+        ],
+        "exitCode": 0,
+        "log": "phone-connection.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "getprop",
+          "ro.product.model"
+        ],
+        "exitCode": 0,
+        "log": "phone-model.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "getprop",
+          "ro.product.manufacturer"
+        ],
+        "exitCode": 0,
+        "log": "phone-manufacturer.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "dumpsys",
+          "package",
+          "com.catforest.htmlcandidate"
+        ],
+        "exitCode": 0,
+        "log": "phone-before.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "install",
+          "--no-incremental",
+          "-r",
+          "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/phone-045-sticky-guide/catforest-0.4.5-sticky-guide-debug.apk"
+        ],
+        "exitCode": 0,
+        "log": "phone-install.log"
+      },
+      {
+        "command": [
+          "adb",
+          "-s",
+          "ZYPZ261A01M65K0002A",
+          "shell",
+          "dumpsys",
+          "package",
+          "com.catforest.htmlcandidate"
+        ],
+        "exitCode": 0,
+        "log": "phone-after.log"
+      }
+    ],
+    "before": {
+      "versionCode": 35,
+      "versionName": "0.4.4-town-command",
+      "appId": 10191,
+      "firstInstallTime": "2026-10-15 23:14:25"
+    },
+    "installExitCode": 0,
+    "manufacturer": "StepX",
+    "model": "PZ261A",
+    "after": {
+      "versionCode": 36,
+      "versionName": "0.4.5-sticky-guide",
+      "appId": 10191,
+      "firstInstallTime": "2026-10-15 23:14:25"
+    },
+    "metadataMatchesBuiltVersion": true,
+    "sameAppId": true,
+    "sameFirstInstallTime": true,
+    "finishedAtUtc": "2026-10-18T03:20:05.604564+00:00"
+  },
+  "build": {
+    "command": "gradle --offline --no-daemon --console=plain :app:assembleDebug -x test -x lint",
+    "assetsLog": "assets-build.log",
+    "androidLog": "phone-build.log",
+    "result": "build-result.json",
+    "source": "仅当前隔离目录源码；旧项目路径仅复用原工具缓存及原签名。"
+  },
+  "findings": [
+    "044 finishOwnContact(resume)写mode=saved.mode，动作完成回调持有恢复旧模式的权力；updateAmbient完成分支写mode=free；每次begin()写mode=free并setMode(free)，同一场景重新进入即重置选择。",
+    "044按钮显示的是下一步切换动作：mode=guide时必定textContent=自由活动。因此开启引导后立即看到自由活动文案是源码确定的行为，不能把这段文案本身当作内部mode已回退的证据。",
+    "没有发现每帧无条件写free。tick可调用动作结束回调，但044 updateAmbient同时已有mode!=free清理门控，不能断言该分支就是用户每次反馈的实际来源。",
+    "小镇是同一WebView里的直接JS控制器，不通过iframe传递控制模式。town-integration只在enter调用show，show调用begin；sceneChanged/projection只发布场景。未找到postMessage或原生状态回投写该词法私有mode。原生onResume仅调用CatOfflineHost.resume，不reload；resume不改小镇mode。"
+  ],
+  "changes": [
+    "删除finishOwnContact、updateAmbient、begin中的自动模式赋值；删除初始化setMode(free)。begin只清理本次活动并调用无模式参数的takePlayerControl，保留当前用户模式。",
+    "takePlayerControl默认value=null，只有显式传入guide/free时赋值。用户切换按钮和手动地面目标传入模式；内部居民互动接管改为无参，不再借用guide切换来阻止自动漫游，原free寻路条件补上!ownContact&&!interacting。",
+    "统一renderControlMode：引导中 · 切回自由 / 自由中 · 我来引导，并同步aria-pressed及当前模式说明。生命周期/结束回调只刷新显示，不回写模式。"
+  ],
+  "initializationBoundary": "控制器首次创建默认free；同一页面内回家重进、前后台与动作结束保留该控制器中的选择。本轮未新增偏好存档，Android销毁整个WebView后新页面会重新创建初始状态。",
+  "actualCauseConfidence": "静态确定自动赋值点和反向文案；未运行应用，因此没有宣称哪一处已在044手机上重现。",
+  "evidence": {
+    "writersBefore": "mode-writers-before.json",
+    "writersAfter": "mode-writers-after.json",
+    "patch": "045-mode-changes-vs-044.patch",
+    "scope": "unchanged-scope.json",
+    "unchangedScope": true,
+    "apkInventory": "apk-static-inventory.json"
+  },
+  "sourceFiles": [
+    {
+      "path": "app/web/town-player-runtime.inc.js",
+      "sha256": "a8776e7e2ed0958b573a94410591097c4495219b427323071ea593c17cc79350"
+    },
+    {
+      "path": "app/web/town-contact-runtime.inc.js",
+      "sha256": "fcf2a6a7b892a9d0f0ad4e3f5b03ab522f54cee9ecb691952dd9065e888861d0"
+    },
+    {
+      "path": "app/android/app/build.gradle.kts",
+      "sha256": "5af6ee7099353785c243ee7f8993ee77bee92c05b5328083148619964b86ae4e"
+    }
+  ],
+  "acceptance": [
+    "开启我来引导，按钮应显示引导中 · 切回自由，等待并点地面换目标，模式应持续保持。",
+    "同一页面内回家再进小镇、或前后台后重新进入，应仍是引导中；动作结束不能自动改成自由。",
+    "只有主动点切回自由才显示自由中 · 我来引导，并恢复自由活动。"
+  ],
+  "notVerified": [
+    "上述实际触摸/模式保持表现待用户实机验收，未将静态赋值审计当作行为通过。"
+  ],
+  "technicalTests": {
+    "executed": false,
+    "lintExecuted": false,
+    "simulatedInteractionExecuted": false,
+    "browserQAExecuted": false,
+    "appLaunched": false,
+    "deviceBehaviorAcceptanceExecuted": false
+  },
+  "firmware": {
+    "sourceEdited": false,
+    "built": false,
+    "flashed": false
+  },
+  "docs": [
+    "DELIVERY.md"
+  ]
+}

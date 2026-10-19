@@ -1,0 +1,18 @@
+{
+  "staticMetadataOnly": true,
+  "comparedFields": {
+    "sources": true,
+    "canvas": true,
+    "footAnchor": true,
+    "clips": true,
+    "baseFrames": true,
+    "priorityOutfitLayers": true,
+    "layerPaletteLimit": true,
+    "camera": true
+  },
+  "beforePackedBytes": 1531621,
+  "candidatePackedBytes": 1531337,
+  "maxDecodedLayerBytesUnchanged": true,
+  "geometryOrFirmwareExecution": false,
+  "visualAcceptance": "pending user"
+}

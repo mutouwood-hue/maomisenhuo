@@ -1,0 +1,7 @@
+{
+  "firmware/main/main.c": "173d065fe68cd53b471ced4cabdcdc6dcd9a771100977049059dec5a15cfae35",
+  "firmware/main/local2_ble.c": "649a28d2e71853c1addb1fdce6589edb6dec85c38b2cbc0f8d43762b4c3fe6bc",
+  "firmware/main/local2_wire.c": "c33b89f6246ac7f85bf5b2e2d286f133071d9d60b2abe069aa060fd2da4cb2c1",
+  "firmware/CMakeLists.txt": "c6380c6df78f4cb45b995267d914187574ea69868aaec92a0899baa34c443bc2",
+  "firmware/main/badge_pages.c": "1ac605b51df200f8a3ad61a16e7891b81e5dc9696683d3e72c22efb9c306448a"
+}

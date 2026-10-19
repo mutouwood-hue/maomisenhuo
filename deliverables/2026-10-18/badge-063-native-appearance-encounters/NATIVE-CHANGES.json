@@ -1,0 +1,223 @@
+{
+  "generatedUtc": "2026-10-18T05:49:16.476820+00:00",
+  "supersedes": "early appearance.patch; do not stack both candidates",
+  "baseline": "BASELINE.json with NATIVE-REBASE.json overrides for parent build hook",
+  "files": [
+    {
+      "path": "app/scripts/build_assets.py",
+      "bytes": 29341,
+      "beforeSha256": "df8cffcbf6c6bc992e25121efd9b71287f39f1ef6d2188df4b781d6c228fc78d",
+      "afterSha256": "486342d4c336c61f1ff3c7390c85b9c3bfda2661bc62e16a1bf03b2e5b73cf5d",
+      "baselinePath": "rebase-baseline/app/scripts/build_assets.py",
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "app/scripts/import_native_cat_assets.py",
+      "bytes": 2442,
+      "beforeSha256": null,
+      "afterSha256": "a6c0f41c20abea20e9c27a2cac1d9d787daed9aeeafed8802cd26aa98709af07",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "app/web/native-cat-breeds.js",
+      "bytes": 3670,
+      "beforeSha256": null,
+      "afterSha256": "6c6eebbcbca964efa64184e82f4214eeb6eb8ec0aad02c61962c6b68a3027075",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "app/web/native-cat-data.js",
+      "bytes": 5884216,
+      "beforeSha256": null,
+      "afterSha256": "41d0798f34ce0e9ead8222b7704cbf8b1bd6ff741578fd8578538d21da43c510",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "app/web/native-cat-legacy-outfits.js",
+      "bytes": 7250,
+      "beforeSha256": null,
+      "afterSha256": "02c27abd9b0b80fcb7857a77061ea1f12d6e30fd46847bd10920e4bb32deb302",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "app/web/native-cat-model.js",
+      "bytes": 12176,
+      "beforeSha256": null,
+      "afterSha256": "b13b961d4c5dbcfa5772d8a1a68a09ad462666f30962624105f6b23f1d6afcdc",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "app/web/offline-room-bed.js",
+      "bytes": 5120,
+      "beforeSha256": "4b03c806905272ca9fd19828100dc9218f84e365b91d0f9e0354de1e5f2b639f",
+      "afterSha256": "1a47137b4a14ecbda592ca40b814db91f6e31f2bb42f382332f11351fa1f6025",
+      "baselinePath": "baseline/app/web/offline-room-bed.js",
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "app/web/pet-appearance.js",
+      "bytes": 1188,
+      "beforeSha256": null,
+      "afterSha256": "a65fd158c342e0dbcbc2d63744533126ba5e5d3ca186fec32479532bae92c329",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "app/web/pet-growth.js",
+      "bytes": 2392,
+      "beforeSha256": "216a6f185baf0f53143c028c258072a456af2fe819d4d7e2b059611ed5391538",
+      "afterSha256": "d92ab941247264039b0a394e86f60396a2ad499a529a303664c11dbbda3cfb4d",
+      "baselinePath": "baseline/app/web/pet-growth.js",
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/CMakeLists.txt",
+      "bytes": 1320,
+      "beforeSha256": "e6a09f3fbc961f7e5917d02bb73df4e5478608e25ba2c050d82a2e8402ead8a9",
+      "afterSha256": "dad77afe76d94a3f6df9a7919e934f768f70f65a70a5b2bf01f6f6df6c0cb119",
+      "baselinePath": "baseline/firmware/main/CMakeLists.txt",
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/assets/native-cat/legacy-provenance.json",
+      "bytes": 11968,
+      "beforeSha256": null,
+      "afterSha256": "d435a75e8cbeb3d503bcac8635751fdbcca2eb7082558af62519090a143313d8",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/assets/native-cat/legacy_cat_data.c",
+      "bytes": 890466,
+      "beforeSha256": null,
+      "afterSha256": "c7a062e95a050c8cd2f93521baf823b232331dbca573b68334cd7e4b42fe61dc",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/assets/native-cat/native_cat.rle",
+      "bytes": 4073508,
+      "beforeSha256": null,
+      "afterSha256": "81de2d619373f6e381838e633f48bf6dcb059bfe2a37e42c139298f5ed628ff0",
+      "baselinePath": null,
+      "patchIncluded": false,
+      "requiredForBuild": false
+    },
+    {
+      "path": "firmware/main/assets/native-cat/native_cat_data.c",
+      "bytes": 9727702,
+      "beforeSha256": null,
+      "afterSha256": "0453f9f199191dd06953dba8ff41b8f068a859844093ffa99ee41bba7dbc9fc5",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/assets/native-cat/native_cat_data.h",
+      "bytes": 182,
+      "beforeSha256": null,
+      "afterSha256": "7bc4e91fa2719799850fc410274e95ff70b6951535e47fc885a2e2aa02f122c3",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/assets/native-cat/provenance.json",
+      "bytes": 3416,
+      "beforeSha256": null,
+      "afterSha256": "564fe9a79288fba72f89b5f7cb86402bab00b37feed46854ef2c5f88d7e76326",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/badge_appearance.c",
+      "bytes": 4658,
+      "beforeSha256": null,
+      "afterSha256": "fd68df5fc4af4d5d6fffc3c3c90ca4967eac10971ff1a8138004de1653be4147",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/badge_appearance.h",
+      "bytes": 2083,
+      "beforeSha256": null,
+      "afterSha256": "954fc9c2378cb758c97707870e9a097f080c32370c19a7d890aed41dafc61163",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/badge_native_cat.c",
+      "bytes": 3045,
+      "beforeSha256": null,
+      "afterSha256": "78c0974061e9189228569293d5c340765570da2c837085400fb14fe3b5218451",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/badge_native_cat.h",
+      "bytes": 218,
+      "beforeSha256": null,
+      "afterSha256": "e41fa23f47445f75716a8bd2ae623f9695b916f04a0d634f6ada8173dda67dcd",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/badge_scene.c",
+      "bytes": 25827,
+      "beforeSha256": "efe6cf331e68258f3e2b527586cb6773f1a2601e841ae0914b769b16f5f217d5",
+      "afterSha256": "e1b1fa5222b70938ed42684ead470e52a2646e1e2fd87a26866b754656f41687",
+      "baselinePath": "baseline/firmware/main/badge_scene.c",
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/main/badge_scene.h",
+      "bytes": 3377,
+      "beforeSha256": "966b4bb2a7937e3ea7c79eff92e02be2f07a47d6c3d08f4efddb32d0d17ebd6a",
+      "afterSha256": "7a7844e6635f1faa9846c36b3b3aeacc3c65a1c38bf804e8fbf062284dab52e1",
+      "baselinePath": "baseline/firmware/main/badge_scene.h",
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/tools/pack_legacy_cat.py",
+      "bytes": 2432,
+      "beforeSha256": null,
+      "afterSha256": "95b17b321514dcdda90d9b052206683a5a346d3cffc020e72b325132751965a7",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    },
+    {
+      "path": "firmware/tools/pack_native_cat.py",
+      "bytes": 13143,
+      "beforeSha256": null,
+      "afterSha256": "1ae29773f3be08d4eb281ba94a1bfac3aeed6dcd5fb74384a37b0448b1a26ad6",
+      "baselinePath": null,
+      "patchIncluded": true,
+      "requiredForBuild": true
+    }
+  ]
+}

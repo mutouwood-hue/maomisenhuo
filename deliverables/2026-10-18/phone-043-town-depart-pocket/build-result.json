@@ -1,0 +1,65 @@
+{
+  "startedAtUtc": "2026-10-18T02:50:28.033407+00:00",
+  "sourceRoot": "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4",
+  "sourceBaseline": "b8ca479ee4dd99eab0c5fb8bc6404d9827851748",
+  "versionName": "0.4.3-town-depart-pocket",
+  "versionCode": 34,
+  "technicalTestsExecuted": false,
+  "lintExecuted": false,
+  "browserQAExecuted": false,
+  "simulatedInteractionExecuted": false,
+  "commands": [
+    {
+      "command": [
+        "/opt/homebrew/opt/python@3.13/bin/python3.13",
+        "app/scripts/build_assets.py"
+      ],
+      "log": "assets-build.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/zoumutou/coding/猫咪森活/.tools/gradle-8.9/bin/gradle",
+        "--offline",
+        "--no-daemon",
+        "--console=plain",
+        ":app:assembleDebug",
+        "-x",
+        "test",
+        "-x",
+        "lint"
+      ],
+      "log": "phone-build.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/zoumutou/coding/猫咪森活/.tools/android-sdk/build-tools/35.0.0/apksigner",
+        "verify",
+        "--print-certs",
+        "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/phone-043-town-depart-pocket/catforest-0.4.3-town-depart-pocket-debug.apk"
+      ],
+      "log": "phone-signature.log",
+      "exitCode": 0
+    },
+    {
+      "command": [
+        "/Users/zoumutou/coding/猫咪森活/.tools/android-sdk/build-tools/35.0.0/aapt",
+        "dump",
+        "badging",
+        "/private/tmp/maomisenhuo-review-care-lock-0.3.9-0.5.4/deliverables/2026-10-18/phone-043-town-depart-pocket/catforest-0.4.3-town-depart-pocket-debug.apk"
+      ],
+      "log": "phone-package.log",
+      "exitCode": 0
+    }
+  ],
+  "file": "catforest-0.4.3-town-depart-pocket-debug.apk",
+  "bytes": 930659,
+  "sha256": "1c5c2ecb2a8944194c0fc0d4767a811525303c8562dacb35af9d22e2b1f962d6",
+  "packageId": "com.catforest.htmlcandidate",
+  "applicationLabel": "猫咪森活",
+  "publicCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+  "buildType": "debug",
+  "buildExitCode": 0,
+  "finishedAtUtc": "2026-10-18T02:50:40.443600+00:00"
+}

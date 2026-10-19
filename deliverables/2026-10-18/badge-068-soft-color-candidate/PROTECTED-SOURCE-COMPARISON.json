@@ -1,0 +1,13 @@
+{
+  "staticFilesOnly": true,
+  "allPhoneSourcesUnchanged": true,
+  "allUnrelatedFirmwareSourcesUnchanged": true,
+  "changed": [
+    "firmware/main/assets/native-cat/native_cat_data.h",
+    "firmware/main/assets/native-cat/native_cat_color.h",
+    "firmware/main/assets/native-cat/native_cat_data.c"
+  ],
+  "missing": [],
+  "local2BleAndNativeRendererUnchanged": true,
+  "testsOrExecutionRun": false
+}

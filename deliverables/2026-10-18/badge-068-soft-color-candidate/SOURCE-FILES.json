@@ -1,0 +1,14 @@
+{
+  "firmware/tools/pack_native_cat.py": "232c794fa9d5933ddd023d33ff8460a0d216689f4be754c76ffb08aa2f639188",
+  "firmware/tools/native_cat_color.py": "c638b348cf67c19b11da618998e7b63e772a3f6c9d2c11e9ff6d5362378fc6f9",
+  "firmware/tools/native_cat_color_profile.json": "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae",
+  "firmware/tools/show_native_cat_assets.py": "a1c3d651f5c1616b013128eb4dccc6bc859d9a9d5cfa56d56d2c08e30ee1115b",
+  "firmware/main/badge_native_cat.c": "338adbfe79e3e34658c0f05062fac225e074415c2e75230027dae575d29a5dc3",
+  "firmware/CMakeLists.txt": "560ecba22e7e5e62f524695bf4616e0948a8d938acf113d34b243392071699ec",
+  "firmware/main/assets/native-cat/native_cat_data.c": "cc0798a8b41c09e716c71f6535b250acd5456b88c523b49e392310e644d1aa92",
+  "firmware/main/assets/native-cat/native_cat_data.h": "70e61971236939fd22107ef5abc5ef5747fb5dbb0d5c1dc3e080a13c860025b6",
+  "firmware/main/assets/native-cat/native_cat_color.h": "8aeeb5be0a14aef906e78b551d1e783c5703c17862826f3092fd2459c12b1633",
+  "firmware/main/assets/native-cat/color-profile.json": "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae",
+  "firmware/main/assets/native-cat/provenance.json": "3a08b1147651dba9ec8cf74cc0e00cf2abfe875ffd988dfb12d8c88e0b775c3c",
+  "protocol/2026-10-18-native-color-soft-v2-candidate.md": "7b3571426760373284630b91fab520ffc20439a0a6a79ffb0f2abee5c1b27ba2"
+}

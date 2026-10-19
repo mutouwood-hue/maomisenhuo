@@ -1,0 +1,78 @@
+{
+  "addedEntries": [],
+  "removedEntries": [],
+  "changedEntries": [
+    {
+      "name": "AndroidManifest.xml",
+      "beforeBytes": 5724,
+      "afterBytes": 5740
+    },
+    {
+      "name": "assets/life-companion.css",
+      "beforeBytes": 2997,
+      "afterBytes": 3269
+    },
+    {
+      "name": "assets/life-navigation.js",
+      "beforeBytes": 7861,
+      "afterBytes": 7953
+    },
+    {
+      "name": "assets/original-town-runtime.js",
+      "beforeBytes": 197827,
+      "afterBytes": 200215
+    },
+    {
+      "name": "assets/town-contact-runtime.inc.js",
+      "beforeBytes": 6559,
+      "afterBytes": 6497
+    },
+    {
+      "name": "assets/town-guide-layout.css",
+      "beforeBytes": 2092,
+      "afterBytes": 2676
+    },
+    {
+      "name": "assets/town-player-runtime.inc.js",
+      "beforeBytes": 46136,
+      "afterBytes": 48586
+    },
+    {
+      "name": "classes2.dex",
+      "beforeBytes": 166328,
+      "afterBytes": 166336
+    }
+  ],
+  "packagedSource": [
+    {
+      "asset": "assets/life-navigation.js",
+      "bytes": 7953,
+      "sha256": "44c9d7055fb53c36dd2d503ec089171ca1685b11dd20adef18cc4198dbd1884a"
+    },
+    {
+      "asset": "assets/life-companion.css",
+      "bytes": 3269,
+      "sha256": "94d2bbed53ae9038fd8ddf43c96b9741881b22681514defa3c350b2f19f72fbe"
+    },
+    {
+      "asset": "assets/town-player-runtime.inc.js",
+      "bytes": 48586,
+      "sha256": "1f33aeb2f97b06dc7ae9183b215af1827aef98dca69f52a77188c5c02ba5fc00"
+    },
+    {
+      "asset": "assets/town-contact-runtime.inc.js",
+      "bytes": 6497,
+      "sha256": "b704a1786256622c6ce20666ac62c8bf60aafaa3b9a05aa2950059dfb5ca3d1d"
+    },
+    {
+      "asset": "assets/town-guide-layout.css",
+      "bytes": 2676,
+      "sha256": "89173cab3c5692aa37c8e03d957c0bd12161ab8bd25ef6b1894e77f7e4b88057"
+    },
+    {
+      "asset": "assets/original-town-runtime.js",
+      "bytes": 200215,
+      "sha256": "ce2fa91eff23dab11bf24d140688fdecfa485d7537658ddee3237421f81f32ce"
+    }
+  ]
+}

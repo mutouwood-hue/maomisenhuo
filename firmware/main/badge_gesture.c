@@ -15,8 +15,14 @@ void badge_gesture_move(badge_gesture_t *g, int16_t x, int16_t y)
     int dx=g->last_x-g->x, dy=g->last_y-g->y;
     uint32_t distance=(uint32_t)(dx*dx+dy*dy);
     if(distance>g->maximum_distance_sq) g->maximum_distance_sq=distance;
-    if(!g->axis && distance>=BADGE_GESTURE_AXIS_LOCK_PX*BADGE_GESTURE_AXIS_LOCK_PX)
-        g->axis=abs(dx)>abs(dy)?BADGE_GESTURE_AXIS_HORIZONTAL:BADGE_GESTURE_AXIS_VERTICAL;
+    if(!g->axis && distance>=BADGE_GESTURE_AXIS_LOCK_PX*BADGE_GESTURE_AXIS_LOCK_PX) {
+        int ax=abs(dx),ay=abs(dy);
+        /* A few diagonal pixels at touchdown must not permanently turn a
+         * horizontal page drag into a vertical one. No time/hold requirement. */
+        if(ax*2>=ay*3)g->axis=BADGE_GESTURE_AXIS_HORIZONTAL;
+        else if(ay*2>=ax*3)g->axis=BADGE_GESTURE_AXIS_VERTICAL;
+        else if(distance>=32*32)g->axis=ax>=ay?BADGE_GESTURE_AXIS_HORIZONTAL:BADGE_GESTURE_AXIS_VERTICAL;
+    }
 }
 badge_gesture_kind_t badge_gesture_direction(const badge_gesture_t *g)
 {
@@ -39,7 +45,8 @@ badge_gesture_kind_t badge_gesture_end(badge_gesture_t *g, int16_t x, int16_t y,
     else {
         int dx=g->last_x-g->x, dy=g->last_y-g->y;
         unsigned dominant=(unsigned)(g->axis==1 ? abs(dx) : abs(dy));
-        if((elapsed<=ZIP_UI_SWIPEMAXMS && dominant>=ZIP_UI_SWIPEMINPX) || dominant>=BADGE_DRAG_SLOW_COMMIT_PX)
+        /* Distance alone controls navigation: no fling shortcut or slow-drag timeout. */
+        if(dominant>=BADGE_DRAG_COMMIT_DISTANCE_PX)
             result=badge_gesture_direction(g);
     }
     g->active=false; return result;

@@ -1,0 +1,22 @@
+{
+  "assets/build-manifest.json": {
+    "before": "e1f412f836d47bdf14c8449801f461ebf30880f54d4b55d4026d605d7d5aba6f",
+    "after": "041468d24d2cfb883d2824cc63f03b390baca6df44cc9402775608b7c29f6352"
+  },
+  "assets/cflocal2-adapter.js": {
+    "before": "2dbaf1cff2d837f04d1e832320c8f8526ee95bbd879129196822062bd3320b62",
+    "after": "7bea053082fcf26a2fb0cba9b59ed7f3074f5a20ef9ec5dd659ed84c0f79f9b5"
+  },
+  "assets/game-08.js": {
+    "before": "a84c3665b138d8f9bed8bb38248203941545f66de405271b3b84384225a89398",
+    "after": "9958229cb7e5e24e2fe564c46518f34721754ee64827bb0a466bcd2e91ac5fb6"
+  },
+  "assets/offline-device-events.js": {
+    "before": "84fc986d9ce63732fa5c61f6b1ec04584775ba12dea579c5377fe4683ef7cdd2",
+    "after": "fcbcd18fb995214cd325f40371a60b3652c3e27c7c53fbea407953d74bb37eeb"
+  },
+  "assets/offline-host.js": {
+    "before": "124650c9ea5714a9753c0d894f80c5c7bf827e75265a5861955d7be85daf8d8e",
+    "after": "7c2976b68f6420f66c1593f3fa187a738703260cdba99992f6fa22466ff9cede"
+  }
+}

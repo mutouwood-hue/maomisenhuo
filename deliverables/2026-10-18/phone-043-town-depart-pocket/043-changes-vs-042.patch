@@ -1,0 +1,367 @@
+--- 042/assets/life-navigation.js
++++ 043/assets/life-navigation.js
+@@ -45,7 +45,7 @@
+  const point=ringPoint(svg,e);if(!hitsTrack(svg,point))return;
+  // Capture the stable SVG before repaint removes the touched track child.
+  e.preventDefault();drag={svg,id:e.pointerId};try{svg.setPointerCapture?.(e.pointerId);}catch{}
+- svg.focus?.({preventScroll:true});preview(svg,e);
++ svg.dataset.dayPointer='';svg.focus?.({preventScroll:true});preview(svg,e);
+ }
+ function handlePointerMove(e){
+  if(!drag||drag.id!==e.pointerId)return;if(!lifeIsOpen()||!drag.svg.isConnected){cleanup();return;}
+@@ -63,7 +63,7 @@
+ d.addEventListener('pointerup',handlePointerUp,{capture:true,passive:false});
+ d.addEventListener('pointercancel',e=>{if(drag?.id===e.pointerId)clearDrag();},true);
+ d.addEventListener('lostpointercapture',e=>{if(drag?.id===e.pointerId&&(e.target===drag.svg||!drag.svg.isConnected))clearDrag();},true);
+-d.addEventListener('keydown',e=>{const svg=e.target.closest?.('#lf-body .lf-hero svg.lf-ring');if(!svg||!['ArrowLeft','ArrowRight'].includes(e.key))return;if(!lifeIsOpen()){cleanup();return;}e.preventDefault();show(svg,(selection?.minute??Number(svg.getAttribute('aria-valuenow')||0))+(e.key==='ArrowRight'?15:-15));},true);
++d.addEventListener('keydown',e=>{const current=ring();if(current)delete current.dataset.dayPointer;const svg=e.target.closest?.('#lf-body .lf-hero svg.lf-ring');if(!svg||!['ArrowLeft','ArrowRight'].includes(e.key))return;if(!lifeIsOpen()){cleanup();return;}e.preventDefault();show(svg,(selection?.minute??Number(svg.getAttribute('aria-valuenow')||0))+(e.key==='ArrowRight'?15:-15));},true);
+ d.addEventListener('click',e=>{
+  if(e.target.closest('#life-ov [data-act=replay]')){diag('click-replay');selection=null;clearDrag();stopFuture();ring()?.parentElement.querySelector('.day-manual-note')?.replaceChildren();return;}
+  if(e.target.closest('[data-day-live]')){diag('click-live');selection=null;clearDrag();w.__pgLife?.hostStopDayReplay?.();restore();}
+--- 042/assets/life-companion.css
++++ 043/assets/life-companion.css
+@@ -4,7 +4,9 @@
+ #interaction-panel .interaction-top button{min-width:48px;min-height:48px}
+ /* 样式入口为 build_assets.py 的 extras；调色板真源为 original/game.html 内联 :root。
+  * 只调整今日环手势作用域，不新增或合并设计变量。 */
+-#lf-body .lf-hero svg.lf-ring{touch-action:none;user-select:none;-webkit-user-select:none;cursor:auto}
++#lf-body .lf-hero svg.lf-ring{touch-action:none;user-select:none;-webkit-user-select:none;cursor:auto;border-radius:50%;-webkit-tap-highlight-color:transparent}
++#lf-body .lf-hero svg.lf-ring:focus:not(:focus-visible),#lf-body .lf-hero svg.lf-ring[data-day-pointer]:focus{outline:none}
++#lf-body .lf-hero svg.lf-ring:focus-visible{outline:3px solid #6e9181;outline-offset:4px}
+ #lf-body .lf-hero svg.lf-ring .day-ring-track{touch-action:none;pointer-events:stroke;cursor:ew-resize}
+ .day-manual-note{font-size:12px;line-height:1.6;color:#5b4632;margin:8px 0}
+ #offline-ai-dialog{width:min(460px,calc(100% - 24px));max-height:calc(100dvh - 36px);overflow:auto;border:1px solid #dacdb8;border-radius:20px;background:#fffaf2;color:#5b4632;padding:20px;box-sizing:border-box}
+--- 042/assets/town-player-runtime.inc.js
++++ 043/assets/town-player-runtime.inc.js
+@@ -32,11 +32,12 @@
+  function route(from,to){const S=nearest(from),E=nearest(to);if(!S||!E)return[];if(S.a===E.a&&S.b===E.b&&lineClear(from,to))return[to.clone()];const costs={},paths={},open=new Set(Object.keys(townWaypoints));for(const k of open)costs[k]=Infinity;for(const k of[S.a,S.b]){if(lineClear(from,point(k))){costs[k]=from.distanceTo(point(k));paths[k]=[k];}}while(open.size){let k=[...open].sort((a,b)=>costs[a]-costs[b])[0];open.delete(k);if(!Number.isFinite(costs[k]))break;for(const n of waypointEdges[k]){if(!lineClear(point(k),point(n)))continue;const c=costs[k]+point(k).distanceTo(point(n));if(c<costs[n]){costs[n]=c;paths[n]=[...paths[k],n];}}}const end=[E.a,E.b].filter(k=>lineClear(point(k),to)).sort((a,b)=>costs[a]+point(a).distanceTo(to)-costs[b]-point(b).distanceTo(to))[0];return end&&paths[end]?[...paths[end].map(point),to.clone()]:[];}
+  const ownerRoot=new THREE.Group(),visual=new THREE.Group();ownerRoot.name='当前存档小猫';visual.rotation.y=Math.PI;ownerRoot.add(visual);visual.add(playerModel.root);scene.add(ownerRoot);
+  const own={index:cats.length,isPlayer:true,root:ownerRoot,profile:{name:profile.name,role:'你的猫',emoji:'🐈',thoughts:['闻闻花香，再去看看小镇。']},currentNode:'plazaWest',targetNode:'plazaWest',state:'WANDER',animPhase:0,thoughtIndex:0};cats.push(own);ownerRoot.position.copy(point('plazaWest'));
+- function occupied(p,self){const from=self.root.position;return cats.some(c=>{if(c===self||Math.abs(c.root.position.y-p.y)>=2.4)return false;const other=c.root.position,before=Math.hypot(from.x-other.x,from.z-other.z),after=Math.hypot(p.x-other.x,p.z-other.z);
++ function occupiedFrom(from,p,self){return cats.some(c=>{if(c===self||Math.abs(c.root.position.y-p.y)>=2.4)return false;const other=c.root.position,before=Math.hypot(from.x-other.x,from.z-other.z),after=Math.hypot(p.x-other.x,p.z-other.z);
+   if(before<DIAM-.001)return after<=before+.00001; // Existing penetration may only separate.
+   const dx=p.x-from.x,dz=p.z-from.z,length=dx*dx+dz*dz,t=length?Math.max(0,Math.min(1,((other.x-from.x)*dx+(other.z-from.z)*dz)/length)):0;
+   return Math.hypot(from.x+dx*t-other.x,from.z+dz*t-other.z)<DIAM;
+  });}
++ function occupied(p,self){return occupiedFrom(self.root.position,p,self);}
+  // Place residents on the same road graph, with one common radius before first display.
+  const candidates=[];for(const[a,b]of segments){const A=point(a),B=point(b),n=Math.max(1,Math.floor(A.distanceTo(B)/2.5));for(let k=0;k<n;k++)candidates.push(A.clone().lerp(B,(k+.35)/n));}
+  // Read final ground-level boxes before the original drop-in animation; no physics engine.
+@@ -120,11 +121,14 @@
+   if(distance<.12){c.root.position.y=height(c.root.position,nearest(c.root.position));n.path.shift();return false;}
+   delta.divideScalar(distance);const step=Math.min(distance,speed*Math.min(dt,.05));
+   // No opportunistic lane changes or reverse-to-middle fallback inside the bridge.
+-  const controlled=bridgeCommitted(c)||onBridge(c.root.position),angles=controlled?[0]:[0,.38,-.38,.8,-.8,1.25,-1.25];let next=null;
++  const controlled=bridgeCommitted(c)||onBridge(c.root.position),angles=controlled||n.socialDeparture?[0]:[0,.38,-.38,.8,-.8,1.25,-1.25];let next=null;
+   for(const angle of angles){const dx=delta.x*Math.cos(angle)-delta.z*Math.sin(angle),dz=delta.x*Math.sin(angle)+delta.z*Math.cos(angle),candidate=walkPoint(c.root.position.clone().add(v(dx*step,0,dz*step)));
+    if(!candidate||onBridge(candidate)&&bridgeOwner!==c&&!n.bridgeRecovery||occupied(candidate,c))continue;next=candidate;break;
+   }
+   if(!next){n.blocked+=dt;
++   // Departure owns this path until the cats have actually separated. Preserve
++   // the blocked duration for serviceSocial; ordinary traffic must not reset it.
++   if(n.socialDeparture)return false;
+    if(!controlled&&n.blocked>1){
+     if(!c.isPlayer){const other=cats.find(o=>o!==c&&!o.isPlayer&&flatDistance(o.root.position,c.root.position)<DIAM+.45);if(other&&beginNpcContact(c,other)){n.blocked=0;return false;}}
+     // Move a non-travelling resident off the reserved entry/exit, never command
+@@ -162,12 +166,14 @@
+  const pocket=document.createElement('button');pocket.type='button';pocket.className='world-roam town-pocket-toggle';pocket.textContent='行程与口袋';pocket.setAttribute('aria-expanded','false');ui.querySelector('.world-top').append(pocket);
+  const tripDetails=document.createElement('section');tripDetails.id='town-trip-sheet';tripDetails.dataset.mode='world';tripDetails.hidden=true;tripDetails.setAttribute('role','dialog');tripDetails.setAttribute('aria-modal','false');tripDetails.setAttribute('aria-label','行程与口袋');
+  for(const selector of['.m-handle','.m-head']){const node=document.querySelector('#m-sheet '+selector)?.cloneNode(true);if(node){for(const item of[node,...node.querySelectorAll('[id]')])if(item.id)item.id='town-'+item.id;tripDetails.append(node);}}
++ if(!tripDetails.querySelector('.m-head')){const header=document.createElement('header');header.className='m-head';header.innerHTML='<h2></h2><button type="button"></button>';tripDetails.append(header);}
+  const title=tripDetails.querySelector('h2');if(title)title.textContent='行程与口袋';const close=tripDetails.querySelector('.m-head button');if(close){close.textContent='收起';close.setAttribute('aria-label','收起行程与口袋');}
+  const tripActions=document.createElement('div');tripActions.id='town-trip-sheet-body';tripActions.className='town-trip-actions';tripDetails.append(tripActions);
+  for(const button of panel.querySelectorAll('[data-host^=zoom]')){button.classList.add('town-camera-control');tripActions.append(button);}
+  tripActions.append(ui.querySelector('[data-player-next]'),ui.querySelector('[data-player-settle]'),mini.querySelector('[data-player-overview]'),mini.querySelector('[data-player-return]'),ui.querySelector('[data-player-garden]'));
+- const tripLabel=document.createElement('p');tripLabel.className='world-hint';tripActions.prepend(tripLabel);ui.append(tripDetails);
+- function setDrawer(open){tripDetails.hidden=!open;tripDetails.classList.toggle('on',open);pocket.setAttribute('aria-expanded',String(open));pocket.textContent=open?'收起行程':'行程与口袋';}
++ const tripLabel=document.createElement('p');tripLabel.className='world-hint';tripActions.prepend(tripLabel);
++ const tripContent=document.createElement('section');tripContent.className='town-trip-content';tripContent.setAttribute('aria-label','本次行程与真实口袋');tripContent.innerHTML='<h3>本次行程</h3><ol data-town-journey></ol><h3>本次待带回</h3><p data-town-pending></p><h3>家中口袋</h3><p data-town-inventory></p>';tripLabel.after(tripContent);ui.append(tripDetails);
++ function setDrawer(open){if(open)renderProgress();tripDetails.hidden=!open;tripDetails.classList.toggle('on',open);pocket.setAttribute('aria-expanded',String(open));pocket.textContent=open?'收起行程':'行程与口袋';}
+  pocket.addEventListener('click',()=>{if(!coreActive)setDrawer(tripDetails.hidden);});close?.addEventListener('click',()=>setDrawer(false));
+  function setCore(value){if(value===coreActive)return;if(value){drawerBeforeCore=!tripDetails.hidden;setDrawer(false);}coreActive=value;panel.dataset.townCore=String(value);if(!value&&drawerBeforeCore){setDrawer(true);drawerBeforeCore=false;}}
+  const gateButton=document.createElement('button');gateButton.type='button';gateButton.className='town-garden-gate';gateButton.dataset.sceneGarden='';gateButton.textContent='小花园 →';ui.append(gateButton);
+@@ -192,7 +198,19 @@
+  function focus(){followState.catIndex=own.index;toggleFollowMode(true);}
+  function setMode(value){if(eventPhase!=='idle')return;finishOwnContact(false);cancelSocialDeparture(own);clearAmbient();mode=value;destination=null;goalMarker.visible=false;ui.querySelector('[data-player-toggle]').textContent=value==='free'?'我来引导':'自由活动';interacting=null;if(value==='guide'&&!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery)nav.get(own).path=[];for(const b of ui.querySelectorAll('[data-player-mode]'))b.setAttribute('aria-pressed',String(b.dataset.playerMode===mode));say(mode==='free'?'小猫沿路自由活动；点地面也可以带路。':navigationGuide);focus();}
+  function next(){if(!journey[collected])return;say('走向'+townWaypoints[journey[collected].key].name);if(!go(own,goalPoint(journey[collected].key)))go(own,point('plazaEast'));}
+- function renderProgress(){const current=journey[collected];tripLabel.textContent='散步路标 '+collected+'/'+journey.length+' · '+(currentPlace==='garden'?'暖阳庭院':'喵喵小镇');marker.visible=!!current;if(current)marker.position.copy(goalPoint(current.key));ui.querySelector('[data-player-next]').hidden=!current;ui.querySelector('[data-player-settle]').disabled=collected<journey.length||!session||ended;}
++ function renderProgress(){
++  const current=journey[collected];tripLabel.textContent=(ended?'已完成散步':'散步路标')+' '+collected+'/'+journey.length+' · '+(currentPlace==='garden'?'暖阳庭院':'喵喵小镇');marker.visible=!!current;if(current)marker.position.copy(goalPoint(current.key));ui.querySelector('[data-player-next]').hidden=!current;ui.querySelector('[data-player-settle]').disabled=!journey.length||collected<journey.length||!session||ended;
++  const list=tripContent.querySelector('[data-town-journey]');list.replaceChildren();
++  for(const[index,node]of journey.entries()){const row=document.createElement('li');row.textContent=townWaypoints[node.key].name+' · '+(index<collected?'已走到':index===collected?'下一站':'待前往');list.append(row);}
++  if(!journey.length){const row=document.createElement('li');row.textContent='当前没有进行中的散步行程，请回家后重新出发。';list.append(row);}
++  // Read the original store projection. Walk nodes intentionally have no item;
++  // pending finds and the saved inventory are separate, never invented rewards.
++  const state=store?.getState?.(),items=state?.catalog?.items||[];
++  const describe=bag=>items.filter(item=>Number(bag?.[item.id])>0).map(item=>item.name+' × '+bag[item.id]).join('、');
++  const pending=tripContent.querySelector('[data-town-pending]'),inventory=tripContent.querySelector('[data-town-inventory]');
++  pending.textContent=ended?'本次散步已结算。':!session?'当前没有待结算的行程。':describe(state?.pendingWorld?.items)||(session.activity?.id==='walk'?'牵绳散步记录路标，不采集物品；走完后点「完成」结算。':'本次还没有拾取物品，完成行程后才会放入口袋。');
++  inventory.textContent=state?describe(state.inventory)||'口袋还是空的；探险或钓鱼带回物品后会显示在这里。':'口袋暂时无法读取，请回家后重新进入小镇。';
++ }
+  function showCard(title,copy,choices,blocking=true){card.querySelector('.world-event-title').textContent=title;card.querySelector('p').textContent=copy;const row=card.querySelector('div');row.replaceChildren();for(const [label,fn]of choices){const b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',()=>{card.hidden=true;fn();if(card.hidden&&eventPhase==='idle'&&elapsed>=chatUntil)setCore(false);});row.append(b);}card.hidden=false;setCore(blocking);nav.get(own).path=[];}
+  function resident(c){
+   if(!ownContact||ownContact.other!==c||bridgeNoStop(own.root.position)||bridgeNoStop(c.root.position)||nav.get(own).bridgeTrip||nav.get(c).bridgeTrip){finishOwnContact(true);return;}
+@@ -244,12 +262,12 @@
+   for(const b of ui.querySelectorAll('[data-player-toggle],[data-player-overview],[data-player-return],#town-trip-sheet button,[data-scene-garden]'))b.disabled=true;
+  }
+  function endEvent(){setCore(false);own.profile.thoughts=['闻闻花香，再去看看小镇。'];eventFx.cleanup();eventType=null;eventChoice=null;eventPhase='idle';eventResumeAt=0;butterfly.visible=false;own.state='GROOM';chatUntil=0;nav.get(own).path=eventSavedPath;eventSavedPath=[];for(const b of ui.querySelectorAll('[data-player-toggle],[data-player-overview],[data-player-return],#town-trip-sheet button,[data-scene-garden]'))b.disabled=false;renderProgress();say('偶遇结束，继续陪小猫逛逛；本次选择在完成散步时按原规则保存。');}
+- function story(){if(ownContact)return;if(bridgeNoStop(own.root.position)||nav.get(own).bridgeTrip||nav.get(own).bridgeRecovery)return;if(!session||eventShown||ended||!root.CatTownEventCatalogue)return;eventShown=true;const kinds=['butterfly','lost-pouch','rain'],type=kinds[[...String(session.token)].reduce((a,c)=>a+c.charCodeAt(0),0)%3],catalog=root.CatTownEventCatalogue(profile),item=catalog[type];beginEvent(type);showCard(item[0],item[1],item[2].map(([choice,label])=>[label,()=>{const result=store.applyWorldChoice(session.token,type,choice);say(result.message||'已记录本次选择，完成散步后按原规则保存。');if(!result.ok){card.hidden=false;return;}eventChoice=choice;eventPhase='reacting';eventResumeAt=elapsed+4.6;eventFx.choose(choice);} ]));}
++ function story(){if(ownContact||nav.get(own).socialDeparture)return;if(bridgeNoStop(own.root.position)||nav.get(own).bridgeTrip||nav.get(own).bridgeRecovery)return;if(!session||eventShown||ended||!root.CatTownEventCatalogue)return;eventShown=true;const kinds=['butterfly','lost-pouch','rain'],type=kinds[[...String(session.token)].reduce((a,c)=>a+c.charCodeAt(0),0)%3],catalog=root.CatTownEventCatalogue(profile),item=catalog[type];beginEvent(type);showCard(item[0],item[1],item[2].map(([choice,label])=>[label,()=>{const result=store.applyWorldChoice(session.token,type,choice);say(result.message||'已记录本次选择，完成散步后按原规则保存。');if(!result.ok){card.hidden=false;return;}eventChoice=choice;eventPhase='reacting';eventResumeAt=elapsed+4.6;eventFx.choose(choice);} ]));}
+  let eventType=null,eventUntil=0;const pouch=new THREE.Group();scene.add(pouch);createVoxel(.6,.45,.35,'#bd9271',0,.23,0,pouch);createVoxel(.65,.12,.4,'#e6bf91',0,.48,0,pouch);pouch.visible=false;const butterfly=new THREE.Group();scene.add(butterfly);createVoxel(.12,.25,.12,'#775e69',0,0,0,butterfly);const leftWing=createVoxel(.5,.32,.06,'#ebbd8a',-.28,.06,0,butterfly),rightWing=createVoxel(.5,.32,.06,'#ebbd8a',.28,.06,0,butterfly);butterfly.visible=false;
+  const eventFx=root.CatTownEventFx.create({parent:panel,view:{cat:ownerRoot,canvas:renderer.domElement,scene,hemi:{get intensity(){return hemiLight._legacyIntensity??hemiLight.intensity},set intensity(value){hemiLight.intensity=value}},sun:{get intensity(){return dirLight._legacyIntensity??dirLight.intensity},set intensity(value){dirLight.intensity=value}},bf:butterfly,ev:card,proj(p){const q=p.clone().project(camera);return{x:(q.x+1)/2,y:(1-q.y)/2};}}});
+  function prepareProfile(value){playerModel.setStage(value.stage);playerModel.setAppearance({breed:value.breed,outfit:'none'});playerModel.applyAnimation('idle',0);visual.position.y=0;playerModel.root.scale.setScalar(1);const box=new THREE.Box3().setFromObject(playerModel.root),size=box.getSize(new THREE.Vector3()),stage={kitten:.64,baby:.64,young:.82,adult:1}[value.stage]||1;playerModel.root.scale.setScalar(2.25*stage/Math.max(1,size.y));box.setFromObject(playerModel.root);visual.position.y=ownerRoot.position.y-box.min.y;playerModel.setAppearance({breed:value.breed,outfit:value.outfit,stage:value.stage});}
+  function begin(value,trip,engine){clearContacts();clearAmbient();ambientNext=10;ambientCount=0;socialReturn=null;setCore(false);setDrawer(false);destination=null;eventSavedPath=[];currentPlace='street';goalMarker.visible=false;own.profile.thoughts=['闻闻花香，再去看看小镇。'];eventFx.cleanup();eventPhase='idle';eventChoice=null;eventResumeAt=0;profile=value;session=trip;store=engine;elapsed=0;started=performance.now();intro=0;ended=false;eventShown=false;collected=0;mode='free';interacting=null;card.hidden=true;eventType=null;eventUntil=0;butterfly.visible=false;pouch.visible=false;own.profile.name=value.name;own.profile.role='你的猫 · '+(value.stageLabel||value.stage||'');prepareProfile(value);const start=point('plazaWest');own.root.position.copy(!occupied(start,own)&&validSolid(start)?start:(candidates.find(p=>!occupied(p,own)&&validSolid(p))||start));nav.get(own).path=[];resetBridgeTraffic();journey=(trip?.nodes||[]).map((n,i)=>({...n,key:['fishShop','bakery','southWest','gardenCenter','plazaEast','catCafe'][i%6]}));ui.querySelector('[data-player-name]').textContent=value.name+' · 小镇散步';setMode('free');resetOverviewCamera();orbitState.target.set(8,4,4);orbitState.radius=Math.min(overviewRadius()+40,overviewRadius()*1.18);renderProgress();say('先看看完整小镇，稍后跟随'+value.name+'。');}
+- function update(dt,time){lastMoving=false;elapsed+=dt;if(navigationErrorUntil&&elapsed>=navigationErrorUntil)say(nav.get(own).bridgeTrip?'在桥外等候，轮到你会连续走到对岸。':navigationGuide);ui.querySelector('[data-player-return]').hidden=followState.active;const gate=v(22,4,20).project(camera);gateButton.hidden=true;gateButton.textContent=own.root.position.x>21?'← 回小镇':'小花园 →';gateButton.style.left=(gate.x*.5+.5)*100+'%';gateButton.style.top=(-gate.y*.5+.5)*100+'%';const gardenButton=ui.querySelector('[data-player-garden]'),gardenLabel=currentPlace==='garden'?'回小镇':'去自己的小花园';const gardenCopy=gardenButton.querySelector('.town-button-copy');if(gardenCopy.textContent!==gardenLabel)gardenCopy.textContent=gardenLabel;if(intro<3.8){intro+=dt;if(intro>=3.8)focus();return;}if(root.CatOfflineDurable?.transactionPaused)return;if(!ownContact&&coreActive&&eventPhase==='idle'&&card.hidden&&elapsed>=chatUntil){setCore(false);if(socialReturn){mode=socialReturn.mode;nav.get(own).path=socialReturn.path;socialReturn=null;freeAt=elapsed+2;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';say('和居民打过招呼，继续散步。');}}if(destination&&own.root.position.distanceTo(destination.point)<.4){const reached=destination;destination=null;goalMarker.visible=false;if(reached.place){currentPlace=reached.place;if(currentPlace==='garden'){mode='free';ambientNext=elapsed+.6;freeAt=elapsed+1;}root.CatTownExperience?.sceneChanged('arrived_'+currentPlace);ui.querySelector('[data-player-name]').textContent=profile.name+' · '+(currentPlace==='garden'?'暖阳庭院':'小镇散步');say(currentPlace==='garden'?'到自己的小花园了；可自由走动，行程与口袋里可回小镇。':'已沿原路回到小镇。');renderProgress();}}if(currentPlace==='garden'&&!ambient&&!destination&&!interacting&&eventPhase==='idle'&&card.hidden&&!coreActive&&elapsed>ambientNext)startAmbient();updateAmbient();if(nav.get(own).hold>0)nav.get(own).hold-=dt;let moving=false;if(eventPhase==='idle'&&card.hidden&&(nav.get(own).hold<=0||bridgeCommitted(own))){if(interacting){nav.get(interacting).hold=Math.max(nav.get(interacting).hold,1);const distance=own.root.position.distanceTo(interacting.root.position);if(distance<=DIAM+.65){const c=interacting;interacting=null;resident(c);}else if(elapsed>freeAt){freeAt=elapsed+1;const delta=own.root.position.clone().sub(interacting.root.position);delta.y=0;if(delta.length()<.1)delta.set(1,0,0);const q=nearest(interacting.root.position.clone().addScaledVector(delta.normalize(),DIAM+.35));go(own,q.q);}}if(mode==='free'&&!ambient&&!nav.get(own).socialDeparture&&!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery&&!nav.get(own).path.length&&elapsed>freeAt){freeAt=elapsed+3;if(currentPlace==='garden'){go(own,point(['gardenCenter','gardenNorth','gardenSouthPath'][Math.floor(elapsed/5)%3]));}else if(journey[collected])next();else{const k=Object.keys(townWaypoints)[Math.floor(elapsed/5)%Object.keys(townWaypoints).length];go(own,point(k));}}moving=move(own,dt,2.6);}lastMoving=moving;own.state=moving?'WANDER':elapsed<chatUntil?own.state:'GROOM';own.animPhase+=dt*(moving||own.state==='PLAY'?7:1);playerModel.applyAnimation(moving||own.state==='PLAY'?'walk':'idle',own.animPhase);const head=playerModel.bones.get('head');if(head&&!moving&&own.state==='SNIFF_FLOWER')head.rotation.x-=.22;
++ function update(dt,time){lastMoving=false;elapsed+=dt;if(navigationErrorUntil&&elapsed>=navigationErrorUntil)say(nav.get(own).bridgeTrip?'在桥外等候，轮到你会连续走到对岸。':navigationGuide);ui.querySelector('[data-player-return]').hidden=followState.active;const gate=v(22,4,20).project(camera);gateButton.hidden=true;gateButton.textContent=own.root.position.x>21?'← 回小镇':'小花园 →';gateButton.style.left=(gate.x*.5+.5)*100+'%';gateButton.style.top=(-gate.y*.5+.5)*100+'%';const gardenButton=ui.querySelector('[data-player-garden]'),gardenLabel=currentPlace==='garden'?'回小镇':'去自己的小花园';const gardenCopy=gardenButton.querySelector('.town-button-copy');if(gardenCopy.textContent!==gardenLabel)gardenCopy.textContent=gardenLabel;if(intro<3.8){intro+=dt;if(intro>=3.8)focus();return;}if(root.CatOfflineDurable?.transactionPaused)return;if(!ownContact&&coreActive&&eventPhase==='idle'&&card.hidden&&elapsed>=chatUntil){setCore(false);if(socialReturn){mode=socialReturn.mode;nav.get(own).path=socialReturn.path;socialReturn=null;freeAt=elapsed+2;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';say('和居民打过招呼，继续散步。');}}if(destination&&own.root.position.distanceTo(destination.point)<.4){const reached=destination;destination=null;goalMarker.visible=false;if(reached.place){currentPlace=reached.place;if(currentPlace==='garden'){mode='free';ambientNext=elapsed+.6;freeAt=elapsed+1;}root.CatTownExperience?.sceneChanged('arrived_'+currentPlace);ui.querySelector('[data-player-name]').textContent=profile.name+' · '+(currentPlace==='garden'?'暖阳庭院':'小镇散步');say(currentPlace==='garden'?'到自己的小花园了；可自由走动，行程与口袋里可回小镇。':'已沿原路回到小镇。');renderProgress();}}if(currentPlace==='garden'&&!ambient&&!destination&&!interacting&&!nav.get(own).socialDeparture&&eventPhase==='idle'&&card.hidden&&!coreActive&&elapsed>ambientNext)startAmbient();updateAmbient();if(nav.get(own).hold>0)nav.get(own).hold-=dt;let moving=false;if(eventPhase==='idle'&&card.hidden&&(nav.get(own).hold<=0||bridgeCommitted(own))){if(interacting){nav.get(interacting).hold=Math.max(nav.get(interacting).hold,1);const distance=own.root.position.distanceTo(interacting.root.position);if(distance<=DIAM+.65){const c=interacting;interacting=null;resident(c);}else if(elapsed>freeAt){freeAt=elapsed+1;const delta=own.root.position.clone().sub(interacting.root.position);delta.y=0;if(delta.length()<.1)delta.set(1,0,0);const q=nearest(interacting.root.position.clone().addScaledVector(delta.normalize(),DIAM+.35));go(own,q.q);}}if(mode==='free'&&!ambient&&!nav.get(own).socialDeparture&&!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery&&!nav.get(own).path.length&&elapsed>freeAt){freeAt=elapsed+3;if(currentPlace==='garden'){go(own,point(['gardenCenter','gardenNorth','gardenSouthPath'][Math.floor(elapsed/5)%3]));}else if(journey[collected])next();else{const k=Object.keys(townWaypoints)[Math.floor(elapsed/5)%Object.keys(townWaypoints).length];go(own,point(k));}}moving=move(own,dt,2.6);}lastMoving=moving;own.state=moving?'WANDER':elapsed<chatUntil?own.state:'GROOM';own.animPhase+=dt*(moving||own.state==='PLAY'?7:1);playerModel.applyAnimation(moving||own.state==='PLAY'?'walk':'idle',own.animPhase);const head=playerModel.bones.get('head');if(head&&!moving&&own.state==='SNIFF_FLOWER')head.rotation.x-=.22;
+  if(ambient){if(ambient.type==='butterfly'){butterfly.visible=true;const q=ambient.target;butterfly.position.set(q.x+1+Math.sin(elapsed*1.8)*.5,q.y+1.6+Math.sin(elapsed*2.3)*.3,q.z+Math.cos(elapsed*1.4)*.5);leftWing.rotation.y=Math.sin(elapsed*11)*.8;rightWing.rotation.y=-leftWing.rotation.y;}if(ambient.phase==='action'){lastMoving=false;playerModel.applyAnimation(ambient.type==='butterfly'?'paw':'idle',elapsed);const head=playerModel.bones.get('head');if(head&&ambient.type==='flower')head.rotation.x-=.24;gardenFlower.rotation.z=Math.sin(elapsed*3)*.07;}}
+  if(eventPhase==='idle'&&session&&!ended&&journey[collected]&&own.root.position.distanceTo(goalPoint(journey[collected].key))<1.1){const result=store.collectWorldItem(session.token,journey[collected].id);if(result.ok){collected++;say('路标 '+collected+'/'+journey.length+' · '+result.message);renderProgress();}}
+  if(elapsed>9&&card.hidden&&eventPhase==='idle')story();
+--- 042/assets/town-contact-runtime.inc.js
++++ 043/assets/town-contact-runtime.inc.js
+@@ -7,31 +7,33 @@
+  function latchPair(a,b){const p=pairState(a,b);p.until=socialClock()+SOCIAL_COOLDOWN;p.left=false;}
+  function coolDown(c){nav.get(c).socialReadyAt=socialClock()+SOCIAL_COOLDOWN;}
+  function cancelSocialDeparture(c){nav.get(c).socialDeparture=null;}
+- function roadSeparation(c,other){
++ function roadSeparation(c,other,resumePath=nav.get(c).socialDeparture?.resumePath||[]){
+   if(nav.get(c).bridgeTrip||nav.get(c).bridgeRecovery||bridgeNoStop(c.root.position))return false;
+-  const n=nav.get(c);n.socialDeparture={other,retryAt:socialClock()+1200};n.hold=n.wait=0;
+-  function clearOfBridge(path){let from=c.root.position;for(const to of path){const steps=Math.max(1,Math.ceil(flatDistance(from,to)/.4));for(let i=1;i<=steps;i++)if(bridgeNoStop(from.clone().lerp(to,i/steps)))return false;from=to;}return true;}
+-  function depart(path){n.path=path;n.blocked=0;c.state='WANDER';return true;}
+-  const away=c.root.position.clone().sub(other.root.position);away.y=0;if(away.length()<.01)away.set(c.index<other.index?-1:1,0,0);away.normalize();
+-  for(const distance of[3,4.5])for(const angle of[0,.5,-.5,1,-1]){
+-   const dx=away.x*Math.cos(angle)-away.z*Math.sin(angle),dz=away.x*Math.sin(angle)+away.z*Math.cos(angle),goal=walkPoint(c.root.position.clone().add(v(dx*distance,0,dz*distance)));
+-   if(!goal||bridgeNoStop(goal)||bridgeSide(goal)!==bridgeSide(c.root.position)||occupied(goal,c)||flatDistance(goal,other.root.position)<EXIT_DISTANCE||!lineClear(c.root.position,goal)||!clearOfBridge([goal]))continue;
+-   const pieces=Math.ceil(distance/.4);let valid=true;for(let i=1;i<=pieces;i++)if(!walkPoint(c.root.position.clone().lerp(goal,i/pieces))){valid=false;break;}if(!valid)continue;
+-   return depart([goal]);
++  const n=nav.get(c);n.socialDeparture={other,resumePath,retryAt:socialClock()+1200};n.hold=n.wait=0;
++  // Search the actual walkable road width. A waypoint behind a cat is not a
++  // blocked destination when its route goes around a corner. Check each edge
++  // from its own origin, using exactly the movement collision clearance.
++  const origin=c.root.position.clone(),bank=bridgeSide(origin),spacing=.5;
++  const dirs=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
++  dirs.sort((a,b)=>flatDistance(origin.clone().add(v(b[0],0,b[1])),other.root.position)-flatDistance(origin.clone().add(v(a[0],0,a[1])),other.root.position));
++  const queue=[{x:0,z:0,p:origin,parent:null}],seen=new Set(['0:0']);let found=null,best=queue[0];
++  for(let head=0;head<queue.length&&head<900;head++){
++   const node=queue[head];
++   if(flatDistance(node.p,other.root.position)>flatDistance(best.p,other.root.position))best=node;
++   if(node.parent&&flatDistance(node.p,other.root.position)>=EXIT_DISTANCE+.25){found=node;break;}
++   for(const[dx,dz]of dirs){
++    const x=node.x+dx,z=node.z+dz,key=x+':'+z;if(Math.abs(x)>16||Math.abs(z)>16||seen.has(key))continue;
++    const target=walkPoint(origin.clone().add(v(x*spacing,0,z*spacing)));if(!target||bridgeSide(target)!==bank||bridgeNoStop(target)||occupiedFrom(node.p,target,c))continue;
++    const steps=Math.ceil(flatDistance(node.p,target)/.2);let clear=true;
++    for(let i=1;i<=steps;i++){const p=node.p.clone().lerp(target,i/steps);if(!walkPoint(p)||bridgeNoStop(p)){clear=false;break;}}
++    if(!clear)continue;seen.add(key);queue.push({x,z,p:target,parent:node});
++   }
+   }
+-  // A corner may have no straight exit. Use the existing road graph on this bank,
+-  // without reserving or stopping in the bridge corridor.
+-  const goals=Object.keys(townWaypoints).map(point).filter(goal=>walkPoint(goal)&&!bridgeNoStop(goal)&&bridgeSide(goal)===bridgeSide(c.root.position)&&!occupied(goal,c)&&flatDistance(goal,other.root.position)>=EXIT_DISTANCE);
+-  goals.sort((a,b)=>(a.distanceTo(c.root.position)-flatDistance(a,other.root.position))-(b.distanceTo(c.root.position)-flatDistance(b,other.root.position)));
+-  for(const goal of goals){
+-   const path=route(c.root.position,goal);if(!path.length||!clearOfBridge(path))continue;
+-   const first=path.find(p=>flatDistance(p,c.root.position)>.12);if(!first)continue;
+-   const direction=first.clone().sub(c.root.position);direction.y=0;direction.normalize();
+-   const step=walkPoint(c.root.position.clone().addScaledVector(direction,.4));
+-   if(!step||occupied(step,c)||flatDistance(step,other.root.position)<flatDistance(c.root.position,other.root.position))continue;
+-   return depart(path);
+-  }
+-  n.path=[];c.state='GROOM';return false;
++  // Partial progress is useful in a crowd; replan from the reached position.
++  // Never teleport, ignore a resident, or clear the physical collision radius.
++  found=found||(flatDistance(best.p,other.root.position)>flatDistance(origin,other.root.position)+.2?best:null);
++  const path=[];for(let node=found;node?.parent;node=node.parent)path.unshift(node.p);
++  n.path=path;n.blocked=0;c.state=path.length?'WANDER':'GROOM';return path.length>0;
+  }
+  function finishOwnContact(resume=true,scatter=true){
+   const contact=ownContact;if(!contact&&!interacting)return;
+@@ -39,7 +41,7 @@
+   if(!contact||contactMembers.get(own)===contact)contactMembers.delete(own);coolDown(own);
+   if(other){if(!contact||contactMembers.get(other)===contact)contactMembers.delete(other);latchPair(own,other);coolDown(other);nav.get(other).hold=0;other.state='GROOM';if(scatter)roadSeparation(other,own);}
+   nav.get(own).hold=0;own.state='GROOM';if(eventPhase==='idle'){card.hidden=true;card.querySelector('.world-event-actions').replaceChildren();setCore(false);}
+-  if(resume&&saved){mode=saved.mode;nav.get(own).path=saved.path;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';if(!saved.path.length&&scatter&&other)roadSeparation(own,other);}
++  if(resume&&saved){mode=saved.mode;nav.get(own).path=[];if(scatter&&other){if(!roadSeparation(own,other,saved.path))nav.get(own).path=nav.get(own).socialDeparture?[]:saved.path;}else nav.get(own).path=saved.path;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';}
+   else if(!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery)nav.get(own).path=[];
+   ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';
+   freeAt=elapsed+1;ambientNext=elapsed+8;
+@@ -56,7 +58,7 @@
+   for(const contact of[...npcContacts])if(now>=contact.until)finishNpcContact(contact);
+   if(ownContact&&now>=ownContact.until){finishOwnContact(true);say('这次打招呼结束了，先各自逛一逛吧。');}
+   for(const c of cats){const n=nav.get(c),departure=n.socialDeparture;if(!departure)continue;
+-   if(flatDistance(c.root.position,departure.other.root.position)>=EXIT_DISTANCE){n.socialDeparture=null;continue;}
++   if(flatDistance(c.root.position,departure.other.root.position)>=EXIT_DISTANCE){n.socialDeparture=null;if(departure.resumePath.length)go(c,departure.resumePath[departure.resumePath.length-1]);continue;}
+    if(now>=departure.retryAt&&(!n.path.length||n.blocked>.6))roadSeparation(c,departure.other);
+   }
+  }
+--- 042/assets/town-guide-layout.css
++++ 043/assets/town-guide-layout.css
+@@ -5,3 +5,9 @@
+ #town-trip-sheet{position:absolute;z-index:25;pointer-events:auto;max-height:min(48dvh,370px);border:1px solid #e2ece5}#town-trip-sheet[hidden]{display:none!important}#town-trip-sheet .m-head button{min-height:48px!important;min-width:48px!important}#town-trip-sheet-body{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;overflow:auto;padding:0 14px 20px}#town-trip-sheet-body>.world-hint{grid-column:1/-1;max-width:none;margin:0;font-size:12px}#original-town #town-trip-sheet-body button{font-size:12px;min-height:48px;display:flex;align-items:center;justify-content:center;gap:5px}#town-trip-sheet-body .town-button-icon{display:none}#town-trip-sheet-body [data-player-garden]{grid-column:1/-1}
+ #original-town[data-town-core=true]>.masthead,#original-town[data-town-core=true]>#m-stats,#original-town[data-town-core=true] .world-top,#original-town[data-town-core=true] .town-host-actions,#original-town[data-town-core=true] #town-trip-sheet{display:none!important}
+ #original-town .pet-world-ui{pointer-events:none}#original-town .world-top,#original-town .world-card{pointer-events:none}#original-town .world-event,#original-town .world-event button{pointer-events:auto}
++/* This sheet owns its content; original home-sheet mode filters do not apply. */
++#original-town #town-trip-sheet-body{display:grid;flex:1 1 auto;min-height:96px;color:#415b50;align-content:start}
++#town-trip-sheet-body>.town-trip-content{display:block;grid-column:1/-1;min-width:0;padding:0 2px}
++#town-trip-sheet-body .town-trip-content h3{font-size:14px;margin:10px 0 6px}
++#town-trip-sheet-body .town-trip-content ol{margin:0;padding-left:22px;line-height:1.7;font-size:12px}
++#town-trip-sheet-body .town-trip-content p{margin:0;font-size:12px;line-height:1.7;overflow-wrap:anywhere}
+--- 042/assets/original-town-runtime.js
++++ 043/assets/original-town-runtime.js
+@@ -2490,11 +2490,12 @@
+  function route(from,to){const S=nearest(from),E=nearest(to);if(!S||!E)return[];if(S.a===E.a&&S.b===E.b&&lineClear(from,to))return[to.clone()];const costs={},paths={},open=new Set(Object.keys(townWaypoints));for(const k of open)costs[k]=Infinity;for(const k of[S.a,S.b]){if(lineClear(from,point(k))){costs[k]=from.distanceTo(point(k));paths[k]=[k];}}while(open.size){let k=[...open].sort((a,b)=>costs[a]-costs[b])[0];open.delete(k);if(!Number.isFinite(costs[k]))break;for(const n of waypointEdges[k]){if(!lineClear(point(k),point(n)))continue;const c=costs[k]+point(k).distanceTo(point(n));if(c<costs[n]){costs[n]=c;paths[n]=[...paths[k],n];}}}const end=[E.a,E.b].filter(k=>lineClear(point(k),to)).sort((a,b)=>costs[a]+point(a).distanceTo(to)-costs[b]-point(b).distanceTo(to))[0];return end&&paths[end]?[...paths[end].map(point),to.clone()]:[];}
+  const ownerRoot=new THREE.Group(),visual=new THREE.Group();ownerRoot.name='当前存档小猫';visual.rotation.y=Math.PI;ownerRoot.add(visual);visual.add(playerModel.root);scene.add(ownerRoot);
+  const own={index:cats.length,isPlayer:true,root:ownerRoot,profile:{name:profile.name,role:'你的猫',emoji:'🐈',thoughts:['闻闻花香，再去看看小镇。']},currentNode:'plazaWest',targetNode:'plazaWest',state:'WANDER',animPhase:0,thoughtIndex:0};cats.push(own);ownerRoot.position.copy(point('plazaWest'));
+- function occupied(p,self){const from=self.root.position;return cats.some(c=>{if(c===self||Math.abs(c.root.position.y-p.y)>=2.4)return false;const other=c.root.position,before=Math.hypot(from.x-other.x,from.z-other.z),after=Math.hypot(p.x-other.x,p.z-other.z);
++ function occupiedFrom(from,p,self){return cats.some(c=>{if(c===self||Math.abs(c.root.position.y-p.y)>=2.4)return false;const other=c.root.position,before=Math.hypot(from.x-other.x,from.z-other.z),after=Math.hypot(p.x-other.x,p.z-other.z);
+   if(before<DIAM-.001)return after<=before+.00001; // Existing penetration may only separate.
+   const dx=p.x-from.x,dz=p.z-from.z,length=dx*dx+dz*dz,t=length?Math.max(0,Math.min(1,((other.x-from.x)*dx+(other.z-from.z)*dz)/length)):0;
+   return Math.hypot(from.x+dx*t-other.x,from.z+dz*t-other.z)<DIAM;
+  });}
++ function occupied(p,self){return occupiedFrom(self.root.position,p,self);}
+  // Place residents on the same road graph, with one common radius before first display.
+  const candidates=[];for(const[a,b]of segments){const A=point(a),B=point(b),n=Math.max(1,Math.floor(A.distanceTo(B)/2.5));for(let k=0;k<n;k++)candidates.push(A.clone().lerp(B,(k+.35)/n));}
+  // Read final ground-level boxes before the original drop-in animation; no physics engine.
+@@ -2578,11 +2579,14 @@
+   if(distance<.12){c.root.position.y=height(c.root.position,nearest(c.root.position));n.path.shift();return false;}
+   delta.divideScalar(distance);const step=Math.min(distance,speed*Math.min(dt,.05));
+   // No opportunistic lane changes or reverse-to-middle fallback inside the bridge.
+-  const controlled=bridgeCommitted(c)||onBridge(c.root.position),angles=controlled?[0]:[0,.38,-.38,.8,-.8,1.25,-1.25];let next=null;
++  const controlled=bridgeCommitted(c)||onBridge(c.root.position),angles=controlled||n.socialDeparture?[0]:[0,.38,-.38,.8,-.8,1.25,-1.25];let next=null;
+   for(const angle of angles){const dx=delta.x*Math.cos(angle)-delta.z*Math.sin(angle),dz=delta.x*Math.sin(angle)+delta.z*Math.cos(angle),candidate=walkPoint(c.root.position.clone().add(v(dx*step,0,dz*step)));
+    if(!candidate||onBridge(candidate)&&bridgeOwner!==c&&!n.bridgeRecovery||occupied(candidate,c))continue;next=candidate;break;
+   }
+   if(!next){n.blocked+=dt;
++   // Departure owns this path until the cats have actually separated. Preserve
++   // the blocked duration for serviceSocial; ordinary traffic must not reset it.
++   if(n.socialDeparture)return false;
+    if(!controlled&&n.blocked>1){
+     if(!c.isPlayer){const other=cats.find(o=>o!==c&&!o.isPlayer&&flatDistance(o.root.position,c.root.position)<DIAM+.45);if(other&&beginNpcContact(c,other)){n.blocked=0;return false;}}
+     // Move a non-travelling resident off the reserved entry/exit, never command
+@@ -2618,31 +2622,33 @@
+  function latchPair(a,b){const p=pairState(a,b);p.until=socialClock()+SOCIAL_COOLDOWN;p.left=false;}
+  function coolDown(c){nav.get(c).socialReadyAt=socialClock()+SOCIAL_COOLDOWN;}
+  function cancelSocialDeparture(c){nav.get(c).socialDeparture=null;}
+- function roadSeparation(c,other){
++ function roadSeparation(c,other,resumePath=nav.get(c).socialDeparture?.resumePath||[]){
+   if(nav.get(c).bridgeTrip||nav.get(c).bridgeRecovery||bridgeNoStop(c.root.position))return false;
+-  const n=nav.get(c);n.socialDeparture={other,retryAt:socialClock()+1200};n.hold=n.wait=0;
+-  function clearOfBridge(path){let from=c.root.position;for(const to of path){const steps=Math.max(1,Math.ceil(flatDistance(from,to)/.4));for(let i=1;i<=steps;i++)if(bridgeNoStop(from.clone().lerp(to,i/steps)))return false;from=to;}return true;}
+-  function depart(path){n.path=path;n.blocked=0;c.state='WANDER';return true;}
+-  const away=c.root.position.clone().sub(other.root.position);away.y=0;if(away.length()<.01)away.set(c.index<other.index?-1:1,0,0);away.normalize();
+-  for(const distance of[3,4.5])for(const angle of[0,.5,-.5,1,-1]){
+-   const dx=away.x*Math.cos(angle)-away.z*Math.sin(angle),dz=away.x*Math.sin(angle)+away.z*Math.cos(angle),goal=walkPoint(c.root.position.clone().add(v(dx*distance,0,dz*distance)));
+-   if(!goal||bridgeNoStop(goal)||bridgeSide(goal)!==bridgeSide(c.root.position)||occupied(goal,c)||flatDistance(goal,other.root.position)<EXIT_DISTANCE||!lineClear(c.root.position,goal)||!clearOfBridge([goal]))continue;
+-   const pieces=Math.ceil(distance/.4);let valid=true;for(let i=1;i<=pieces;i++)if(!walkPoint(c.root.position.clone().lerp(goal,i/pieces))){valid=false;break;}if(!valid)continue;
+-   return depart([goal]);
++  const n=nav.get(c);n.socialDeparture={other,resumePath,retryAt:socialClock()+1200};n.hold=n.wait=0;
++  // Search the actual walkable road width. A waypoint behind a cat is not a
++  // blocked destination when its route goes around a corner. Check each edge
++  // from its own origin, using exactly the movement collision clearance.
++  const origin=c.root.position.clone(),bank=bridgeSide(origin),spacing=.5;
++  const dirs=[[1,0],[-1,0],[0,1],[0,-1],[1,1],[1,-1],[-1,1],[-1,-1]];
++  dirs.sort((a,b)=>flatDistance(origin.clone().add(v(b[0],0,b[1])),other.root.position)-flatDistance(origin.clone().add(v(a[0],0,a[1])),other.root.position));
++  const queue=[{x:0,z:0,p:origin,parent:null}],seen=new Set(['0:0']);let found=null,best=queue[0];
++  for(let head=0;head<queue.length&&head<900;head++){
++   const node=queue[head];
++   if(flatDistance(node.p,other.root.position)>flatDistance(best.p,other.root.position))best=node;
++   if(node.parent&&flatDistance(node.p,other.root.position)>=EXIT_DISTANCE+.25){found=node;break;}
++   for(const[dx,dz]of dirs){
++    const x=node.x+dx,z=node.z+dz,key=x+':'+z;if(Math.abs(x)>16||Math.abs(z)>16||seen.has(key))continue;
++    const target=walkPoint(origin.clone().add(v(x*spacing,0,z*spacing)));if(!target||bridgeSide(target)!==bank||bridgeNoStop(target)||occupiedFrom(node.p,target,c))continue;
++    const steps=Math.ceil(flatDistance(node.p,target)/.2);let clear=true;
++    for(let i=1;i<=steps;i++){const p=node.p.clone().lerp(target,i/steps);if(!walkPoint(p)||bridgeNoStop(p)){clear=false;break;}}
++    if(!clear)continue;seen.add(key);queue.push({x,z,p:target,parent:node});
++   }
+   }
+-  // A corner may have no straight exit. Use the existing road graph on this bank,
+-  // without reserving or stopping in the bridge corridor.
+-  const goals=Object.keys(townWaypoints).map(point).filter(goal=>walkPoint(goal)&&!bridgeNoStop(goal)&&bridgeSide(goal)===bridgeSide(c.root.position)&&!occupied(goal,c)&&flatDistance(goal,other.root.position)>=EXIT_DISTANCE);
+-  goals.sort((a,b)=>(a.distanceTo(c.root.position)-flatDistance(a,other.root.position))-(b.distanceTo(c.root.position)-flatDistance(b,other.root.position)));
+-  for(const goal of goals){
+-   const path=route(c.root.position,goal);if(!path.length||!clearOfBridge(path))continue;
+-   const first=path.find(p=>flatDistance(p,c.root.position)>.12);if(!first)continue;
+-   const direction=first.clone().sub(c.root.position);direction.y=0;direction.normalize();
+-   const step=walkPoint(c.root.position.clone().addScaledVector(direction,.4));
+-   if(!step||occupied(step,c)||flatDistance(step,other.root.position)<flatDistance(c.root.position,other.root.position))continue;
+-   return depart(path);
+-  }
+-  n.path=[];c.state='GROOM';return false;
++  // Partial progress is useful in a crowd; replan from the reached position.
++  // Never teleport, ignore a resident, or clear the physical collision radius.
++  found=found||(flatDistance(best.p,other.root.position)>flatDistance(origin,other.root.position)+.2?best:null);
++  const path=[];for(let node=found;node?.parent;node=node.parent)path.unshift(node.p);
++  n.path=path;n.blocked=0;c.state=path.length?'WANDER':'GROOM';return path.length>0;
+  }
+  function finishOwnContact(resume=true,scatter=true){
+   const contact=ownContact;if(!contact&&!interacting)return;
+@@ -2650,7 +2656,7 @@
+   if(!contact||contactMembers.get(own)===contact)contactMembers.delete(own);coolDown(own);
+   if(other){if(!contact||contactMembers.get(other)===contact)contactMembers.delete(other);latchPair(own,other);coolDown(other);nav.get(other).hold=0;other.state='GROOM';if(scatter)roadSeparation(other,own);}
+   nav.get(own).hold=0;own.state='GROOM';if(eventPhase==='idle'){card.hidden=true;card.querySelector('.world-event-actions').replaceChildren();setCore(false);}
+-  if(resume&&saved){mode=saved.mode;nav.get(own).path=saved.path;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';if(!saved.path.length&&scatter&&other)roadSeparation(own,other);}
++  if(resume&&saved){mode=saved.mode;nav.get(own).path=[];if(scatter&&other){if(!roadSeparation(own,other,saved.path))nav.get(own).path=nav.get(own).socialDeparture?[]:saved.path;}else nav.get(own).path=saved.path;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';}
+   else if(!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery)nav.get(own).path=[];
+   ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';
+   freeAt=elapsed+1;ambientNext=elapsed+8;
+@@ -2667,7 +2673,7 @@
+   for(const contact of[...npcContacts])if(now>=contact.until)finishNpcContact(contact);
+   if(ownContact&&now>=ownContact.until){finishOwnContact(true);say('这次打招呼结束了，先各自逛一逛吧。');}
+   for(const c of cats){const n=nav.get(c),departure=n.socialDeparture;if(!departure)continue;
+-   if(flatDistance(c.root.position,departure.other.root.position)>=EXIT_DISTANCE){n.socialDeparture=null;continue;}
++   if(flatDistance(c.root.position,departure.other.root.position)>=EXIT_DISTANCE){n.socialDeparture=null;if(departure.resumePath.length)go(c,departure.resumePath[departure.resumePath.length-1]);continue;}
+    if(now>=departure.retryAt&&(!n.path.length||n.blocked>.6))roadSeparation(c,departure.other);
+   }
+  }
+@@ -2683,12 +2689,14 @@
+  const pocket=document.createElement('button');pocket.type='button';pocket.className='world-roam town-pocket-toggle';pocket.textContent='行程与口袋';pocket.setAttribute('aria-expanded','false');ui.querySelector('.world-top').append(pocket);
+  const tripDetails=document.createElement('section');tripDetails.id='town-trip-sheet';tripDetails.dataset.mode='world';tripDetails.hidden=true;tripDetails.setAttribute('role','dialog');tripDetails.setAttribute('aria-modal','false');tripDetails.setAttribute('aria-label','行程与口袋');
+  for(const selector of['.m-handle','.m-head']){const node=document.querySelector('#m-sheet '+selector)?.cloneNode(true);if(node){for(const item of[node,...node.querySelectorAll('[id]')])if(item.id)item.id='town-'+item.id;tripDetails.append(node);}}
++ if(!tripDetails.querySelector('.m-head')){const header=document.createElement('header');header.className='m-head';header.innerHTML='<h2></h2><button type="button"></button>';tripDetails.append(header);}
+  const title=tripDetails.querySelector('h2');if(title)title.textContent='行程与口袋';const close=tripDetails.querySelector('.m-head button');if(close){close.textContent='收起';close.setAttribute('aria-label','收起行程与口袋');}
+  const tripActions=document.createElement('div');tripActions.id='town-trip-sheet-body';tripActions.className='town-trip-actions';tripDetails.append(tripActions);
+  for(const button of panel.querySelectorAll('[data-host^=zoom]')){button.classList.add('town-camera-control');tripActions.append(button);}
+  tripActions.append(ui.querySelector('[data-player-next]'),ui.querySelector('[data-player-settle]'),mini.querySelector('[data-player-overview]'),mini.querySelector('[data-player-return]'),ui.querySelector('[data-player-garden]'));
+- const tripLabel=document.createElement('p');tripLabel.className='world-hint';tripActions.prepend(tripLabel);ui.append(tripDetails);
+- function setDrawer(open){tripDetails.hidden=!open;tripDetails.classList.toggle('on',open);pocket.setAttribute('aria-expanded',String(open));pocket.textContent=open?'收起行程':'行程与口袋';}
++ const tripLabel=document.createElement('p');tripLabel.className='world-hint';tripActions.prepend(tripLabel);
++ const tripContent=document.createElement('section');tripContent.className='town-trip-content';tripContent.setAttribute('aria-label','本次行程与真实口袋');tripContent.innerHTML='<h3>本次行程</h3><ol data-town-journey></ol><h3>本次待带回</h3><p data-town-pending></p><h3>家中口袋</h3><p data-town-inventory></p>';tripLabel.after(tripContent);ui.append(tripDetails);
++ function setDrawer(open){if(open)renderProgress();tripDetails.hidden=!open;tripDetails.classList.toggle('on',open);pocket.setAttribute('aria-expanded',String(open));pocket.textContent=open?'收起行程':'行程与口袋';}
+  pocket.addEventListener('click',()=>{if(!coreActive)setDrawer(tripDetails.hidden);});close?.addEventListener('click',()=>setDrawer(false));
+  function setCore(value){if(value===coreActive)return;if(value){drawerBeforeCore=!tripDetails.hidden;setDrawer(false);}coreActive=value;panel.dataset.townCore=String(value);if(!value&&drawerBeforeCore){setDrawer(true);drawerBeforeCore=false;}}
+  const gateButton=document.createElement('button');gateButton.type='button';gateButton.className='town-garden-gate';gateButton.dataset.sceneGarden='';gateButton.textContent='小花园 →';ui.append(gateButton);
+@@ -2713,7 +2721,19 @@
+  function focus(){followState.catIndex=own.index;toggleFollowMode(true);}
+  function setMode(value){if(eventPhase!=='idle')return;finishOwnContact(false);cancelSocialDeparture(own);clearAmbient();mode=value;destination=null;goalMarker.visible=false;ui.querySelector('[data-player-toggle]').textContent=value==='free'?'我来引导':'自由活动';interacting=null;if(value==='guide'&&!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery)nav.get(own).path=[];for(const b of ui.querySelectorAll('[data-player-mode]'))b.setAttribute('aria-pressed',String(b.dataset.playerMode===mode));say(mode==='free'?'小猫沿路自由活动；点地面也可以带路。':navigationGuide);focus();}
+  function next(){if(!journey[collected])return;say('走向'+townWaypoints[journey[collected].key].name);if(!go(own,goalPoint(journey[collected].key)))go(own,point('plazaEast'));}
+- function renderProgress(){const current=journey[collected];tripLabel.textContent='散步路标 '+collected+'/'+journey.length+' · '+(currentPlace==='garden'?'暖阳庭院':'喵喵小镇');marker.visible=!!current;if(current)marker.position.copy(goalPoint(current.key));ui.querySelector('[data-player-next]').hidden=!current;ui.querySelector('[data-player-settle]').disabled=collected<journey.length||!session||ended;}
++ function renderProgress(){
++  const current=journey[collected];tripLabel.textContent=(ended?'已完成散步':'散步路标')+' '+collected+'/'+journey.length+' · '+(currentPlace==='garden'?'暖阳庭院':'喵喵小镇');marker.visible=!!current;if(current)marker.position.copy(goalPoint(current.key));ui.querySelector('[data-player-next]').hidden=!current;ui.querySelector('[data-player-settle]').disabled=!journey.length||collected<journey.length||!session||ended;
++  const list=tripContent.querySelector('[data-town-journey]');list.replaceChildren();
++  for(const[index,node]of journey.entries()){const row=document.createElement('li');row.textContent=townWaypoints[node.key].name+' · '+(index<collected?'已走到':index===collected?'下一站':'待前往');list.append(row);}
++  if(!journey.length){const row=document.createElement('li');row.textContent='当前没有进行中的散步行程，请回家后重新出发。';list.append(row);}
++  // Read the original store projection. Walk nodes intentionally have no item;
++  // pending finds and the saved inventory are separate, never invented rewards.
++  const state=store?.getState?.(),items=state?.catalog?.items||[];
++  const describe=bag=>items.filter(item=>Number(bag?.[item.id])>0).map(item=>item.name+' × '+bag[item.id]).join('、');
++  const pending=tripContent.querySelector('[data-town-pending]'),inventory=tripContent.querySelector('[data-town-inventory]');
++  pending.textContent=ended?'本次散步已结算。':!session?'当前没有待结算的行程。':describe(state?.pendingWorld?.items)||(session.activity?.id==='walk'?'牵绳散步记录路标，不采集物品；走完后点「完成」结算。':'本次还没有拾取物品，完成行程后才会放入口袋。');
++  inventory.textContent=state?describe(state.inventory)||'口袋还是空的；探险或钓鱼带回物品后会显示在这里。':'口袋暂时无法读取，请回家后重新进入小镇。';
++ }
+  function showCard(title,copy,choices,blocking=true){card.querySelector('.world-event-title').textContent=title;card.querySelector('p').textContent=copy;const row=card.querySelector('div');row.replaceChildren();for(const [label,fn]of choices){const b=document.createElement('button');b.type='button';b.textContent=label;b.addEventListener('click',()=>{card.hidden=true;fn();if(card.hidden&&eventPhase==='idle'&&elapsed>=chatUntil)setCore(false);});row.append(b);}card.hidden=false;setCore(blocking);nav.get(own).path=[];}
+  function resident(c){
+   if(!ownContact||ownContact.other!==c||bridgeNoStop(own.root.position)||bridgeNoStop(c.root.position)||nav.get(own).bridgeTrip||nav.get(c).bridgeTrip){finishOwnContact(true);return;}
+@@ -2765,12 +2785,12 @@
+   for(const b of ui.querySelectorAll('[data-player-toggle],[data-player-overview],[data-player-return],#town-trip-sheet button,[data-scene-garden]'))b.disabled=true;
+  }
+  function endEvent(){setCore(false);own.profile.thoughts=['闻闻花香，再去看看小镇。'];eventFx.cleanup();eventType=null;eventChoice=null;eventPhase='idle';eventResumeAt=0;butterfly.visible=false;own.state='GROOM';chatUntil=0;nav.get(own).path=eventSavedPath;eventSavedPath=[];for(const b of ui.querySelectorAll('[data-player-toggle],[data-player-overview],[data-player-return],#town-trip-sheet button,[data-scene-garden]'))b.disabled=false;renderProgress();say('偶遇结束，继续陪小猫逛逛；本次选择在完成散步时按原规则保存。');}
+- function story(){if(ownContact)return;if(bridgeNoStop(own.root.position)||nav.get(own).bridgeTrip||nav.get(own).bridgeRecovery)return;if(!session||eventShown||ended||!root.CatTownEventCatalogue)return;eventShown=true;const kinds=['butterfly','lost-pouch','rain'],type=kinds[[...String(session.token)].reduce((a,c)=>a+c.charCodeAt(0),0)%3],catalog=root.CatTownEventCatalogue(profile),item=catalog[type];beginEvent(type);showCard(item[0],item[1],item[2].map(([choice,label])=>[label,()=>{const result=store.applyWorldChoice(session.token,type,choice);say(result.message||'已记录本次选择，完成散步后按原规则保存。');if(!result.ok){card.hidden=false;return;}eventChoice=choice;eventPhase='reacting';eventResumeAt=elapsed+4.6;eventFx.choose(choice);} ]));}
++ function story(){if(ownContact||nav.get(own).socialDeparture)return;if(bridgeNoStop(own.root.position)||nav.get(own).bridgeTrip||nav.get(own).bridgeRecovery)return;if(!session||eventShown||ended||!root.CatTownEventCatalogue)return;eventShown=true;const kinds=['butterfly','lost-pouch','rain'],type=kinds[[...String(session.token)].reduce((a,c)=>a+c.charCodeAt(0),0)%3],catalog=root.CatTownEventCatalogue(profile),item=catalog[type];beginEvent(type);showCard(item[0],item[1],item[2].map(([choice,label])=>[label,()=>{const result=store.applyWorldChoice(session.token,type,choice);say(result.message||'已记录本次选择，完成散步后按原规则保存。');if(!result.ok){card.hidden=false;return;}eventChoice=choice;eventPhase='reacting';eventResumeAt=elapsed+4.6;eventFx.choose(choice);} ]));}
+  let eventType=null,eventUntil=0;const pouch=new THREE.Group();scene.add(pouch);createVoxel(.6,.45,.35,'#bd9271',0,.23,0,pouch);createVoxel(.65,.12,.4,'#e6bf91',0,.48,0,pouch);pouch.visible=false;const butterfly=new THREE.Group();scene.add(butterfly);createVoxel(.12,.25,.12,'#775e69',0,0,0,butterfly);const leftWing=createVoxel(.5,.32,.06,'#ebbd8a',-.28,.06,0,butterfly),rightWing=createVoxel(.5,.32,.06,'#ebbd8a',.28,.06,0,butterfly);butterfly.visible=false;
+  const eventFx=root.CatTownEventFx.create({parent:panel,view:{cat:ownerRoot,canvas:renderer.domElement,scene,hemi:{get intensity(){return hemiLight._legacyIntensity??hemiLight.intensity},set intensity(value){hemiLight.intensity=value}},sun:{get intensity(){return dirLight._legacyIntensity??dirLight.intensity},set intensity(value){dirLight.intensity=value}},bf:butterfly,ev:card,proj(p){const q=p.clone().project(camera);return{x:(q.x+1)/2,y:(1-q.y)/2};}}});
+  function prepareProfile(value){playerModel.setStage(value.stage);playerModel.setAppearance({breed:value.breed,outfit:'none'});playerModel.applyAnimation('idle',0);visual.position.y=0;playerModel.root.scale.setScalar(1);const box=new THREE.Box3().setFromObject(playerModel.root),size=box.getSize(new THREE.Vector3()),stage={kitten:.64,baby:.64,young:.82,adult:1}[value.stage]||1;playerModel.root.scale.setScalar(2.25*stage/Math.max(1,size.y));box.setFromObject(playerModel.root);visual.position.y=ownerRoot.position.y-box.min.y;playerModel.setAppearance({breed:value.breed,outfit:value.outfit,stage:value.stage});}
+  function begin(value,trip,engine){clearContacts();clearAmbient();ambientNext=10;ambientCount=0;socialReturn=null;setCore(false);setDrawer(false);destination=null;eventSavedPath=[];currentPlace='street';goalMarker.visible=false;own.profile.thoughts=['闻闻花香，再去看看小镇。'];eventFx.cleanup();eventPhase='idle';eventChoice=null;eventResumeAt=0;profile=value;session=trip;store=engine;elapsed=0;started=performance.now();intro=0;ended=false;eventShown=false;collected=0;mode='free';interacting=null;card.hidden=true;eventType=null;eventUntil=0;butterfly.visible=false;pouch.visible=false;own.profile.name=value.name;own.profile.role='你的猫 · '+(value.stageLabel||value.stage||'');prepareProfile(value);const start=point('plazaWest');own.root.position.copy(!occupied(start,own)&&validSolid(start)?start:(candidates.find(p=>!occupied(p,own)&&validSolid(p))||start));nav.get(own).path=[];resetBridgeTraffic();journey=(trip?.nodes||[]).map((n,i)=>({...n,key:['fishShop','bakery','southWest','gardenCenter','plazaEast','catCafe'][i%6]}));ui.querySelector('[data-player-name]').textContent=value.name+' · 小镇散步';setMode('free');resetOverviewCamera();orbitState.target.set(8,4,4);orbitState.radius=Math.min(overviewRadius()+40,overviewRadius()*1.18);renderProgress();say('先看看完整小镇，稍后跟随'+value.name+'。');}
+- function update(dt,time){lastMoving=false;elapsed+=dt;if(navigationErrorUntil&&elapsed>=navigationErrorUntil)say(nav.get(own).bridgeTrip?'在桥外等候，轮到你会连续走到对岸。':navigationGuide);ui.querySelector('[data-player-return]').hidden=followState.active;const gate=v(22,4,20).project(camera);gateButton.hidden=true;gateButton.textContent=own.root.position.x>21?'← 回小镇':'小花园 →';gateButton.style.left=(gate.x*.5+.5)*100+'%';gateButton.style.top=(-gate.y*.5+.5)*100+'%';const gardenButton=ui.querySelector('[data-player-garden]'),gardenLabel=currentPlace==='garden'?'回小镇':'去自己的小花园';const gardenCopy=gardenButton.querySelector('.town-button-copy');if(gardenCopy.textContent!==gardenLabel)gardenCopy.textContent=gardenLabel;if(intro<3.8){intro+=dt;if(intro>=3.8)focus();return;}if(root.CatOfflineDurable?.transactionPaused)return;if(!ownContact&&coreActive&&eventPhase==='idle'&&card.hidden&&elapsed>=chatUntil){setCore(false);if(socialReturn){mode=socialReturn.mode;nav.get(own).path=socialReturn.path;socialReturn=null;freeAt=elapsed+2;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';say('和居民打过招呼，继续散步。');}}if(destination&&own.root.position.distanceTo(destination.point)<.4){const reached=destination;destination=null;goalMarker.visible=false;if(reached.place){currentPlace=reached.place;if(currentPlace==='garden'){mode='free';ambientNext=elapsed+.6;freeAt=elapsed+1;}root.CatTownExperience?.sceneChanged('arrived_'+currentPlace);ui.querySelector('[data-player-name]').textContent=profile.name+' · '+(currentPlace==='garden'?'暖阳庭院':'小镇散步');say(currentPlace==='garden'?'到自己的小花园了；可自由走动，行程与口袋里可回小镇。':'已沿原路回到小镇。');renderProgress();}}if(currentPlace==='garden'&&!ambient&&!destination&&!interacting&&eventPhase==='idle'&&card.hidden&&!coreActive&&elapsed>ambientNext)startAmbient();updateAmbient();if(nav.get(own).hold>0)nav.get(own).hold-=dt;let moving=false;if(eventPhase==='idle'&&card.hidden&&(nav.get(own).hold<=0||bridgeCommitted(own))){if(interacting){nav.get(interacting).hold=Math.max(nav.get(interacting).hold,1);const distance=own.root.position.distanceTo(interacting.root.position);if(distance<=DIAM+.65){const c=interacting;interacting=null;resident(c);}else if(elapsed>freeAt){freeAt=elapsed+1;const delta=own.root.position.clone().sub(interacting.root.position);delta.y=0;if(delta.length()<.1)delta.set(1,0,0);const q=nearest(interacting.root.position.clone().addScaledVector(delta.normalize(),DIAM+.35));go(own,q.q);}}if(mode==='free'&&!ambient&&!nav.get(own).socialDeparture&&!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery&&!nav.get(own).path.length&&elapsed>freeAt){freeAt=elapsed+3;if(currentPlace==='garden'){go(own,point(['gardenCenter','gardenNorth','gardenSouthPath'][Math.floor(elapsed/5)%3]));}else if(journey[collected])next();else{const k=Object.keys(townWaypoints)[Math.floor(elapsed/5)%Object.keys(townWaypoints).length];go(own,point(k));}}moving=move(own,dt,2.6);}lastMoving=moving;own.state=moving?'WANDER':elapsed<chatUntil?own.state:'GROOM';own.animPhase+=dt*(moving||own.state==='PLAY'?7:1);playerModel.applyAnimation(moving||own.state==='PLAY'?'walk':'idle',own.animPhase);const head=playerModel.bones.get('head');if(head&&!moving&&own.state==='SNIFF_FLOWER')head.rotation.x-=.22;
++ function update(dt,time){lastMoving=false;elapsed+=dt;if(navigationErrorUntil&&elapsed>=navigationErrorUntil)say(nav.get(own).bridgeTrip?'在桥外等候，轮到你会连续走到对岸。':navigationGuide);ui.querySelector('[data-player-return]').hidden=followState.active;const gate=v(22,4,20).project(camera);gateButton.hidden=true;gateButton.textContent=own.root.position.x>21?'← 回小镇':'小花园 →';gateButton.style.left=(gate.x*.5+.5)*100+'%';gateButton.style.top=(-gate.y*.5+.5)*100+'%';const gardenButton=ui.querySelector('[data-player-garden]'),gardenLabel=currentPlace==='garden'?'回小镇':'去自己的小花园';const gardenCopy=gardenButton.querySelector('.town-button-copy');if(gardenCopy.textContent!==gardenLabel)gardenCopy.textContent=gardenLabel;if(intro<3.8){intro+=dt;if(intro>=3.8)focus();return;}if(root.CatOfflineDurable?.transactionPaused)return;if(!ownContact&&coreActive&&eventPhase==='idle'&&card.hidden&&elapsed>=chatUntil){setCore(false);if(socialReturn){mode=socialReturn.mode;nav.get(own).path=socialReturn.path;socialReturn=null;freeAt=elapsed+2;ui.querySelector('[data-player-toggle]').textContent=mode==='free'?'我来引导':'自由活动';say('和居民打过招呼，继续散步。');}}if(destination&&own.root.position.distanceTo(destination.point)<.4){const reached=destination;destination=null;goalMarker.visible=false;if(reached.place){currentPlace=reached.place;if(currentPlace==='garden'){mode='free';ambientNext=elapsed+.6;freeAt=elapsed+1;}root.CatTownExperience?.sceneChanged('arrived_'+currentPlace);ui.querySelector('[data-player-name]').textContent=profile.name+' · '+(currentPlace==='garden'?'暖阳庭院':'小镇散步');say(currentPlace==='garden'?'到自己的小花园了；可自由走动，行程与口袋里可回小镇。':'已沿原路回到小镇。');renderProgress();}}if(currentPlace==='garden'&&!ambient&&!destination&&!interacting&&!nav.get(own).socialDeparture&&eventPhase==='idle'&&card.hidden&&!coreActive&&elapsed>ambientNext)startAmbient();updateAmbient();if(nav.get(own).hold>0)nav.get(own).hold-=dt;let moving=false;if(eventPhase==='idle'&&card.hidden&&(nav.get(own).hold<=0||bridgeCommitted(own))){if(interacting){nav.get(interacting).hold=Math.max(nav.get(interacting).hold,1);const distance=own.root.position.distanceTo(interacting.root.position);if(distance<=DIAM+.65){const c=interacting;interacting=null;resident(c);}else if(elapsed>freeAt){freeAt=elapsed+1;const delta=own.root.position.clone().sub(interacting.root.position);delta.y=0;if(delta.length()<.1)delta.set(1,0,0);const q=nearest(interacting.root.position.clone().addScaledVector(delta.normalize(),DIAM+.35));go(own,q.q);}}if(mode==='free'&&!ambient&&!nav.get(own).socialDeparture&&!nav.get(own).bridgeTrip&&!nav.get(own).bridgeRecovery&&!nav.get(own).path.length&&elapsed>freeAt){freeAt=elapsed+3;if(currentPlace==='garden'){go(own,point(['gardenCenter','gardenNorth','gardenSouthPath'][Math.floor(elapsed/5)%3]));}else if(journey[collected])next();else{const k=Object.keys(townWaypoints)[Math.floor(elapsed/5)%Object.keys(townWaypoints).length];go(own,point(k));}}moving=move(own,dt,2.6);}lastMoving=moving;own.state=moving?'WANDER':elapsed<chatUntil?own.state:'GROOM';own.animPhase+=dt*(moving||own.state==='PLAY'?7:1);playerModel.applyAnimation(moving||own.state==='PLAY'?'walk':'idle',own.animPhase);const head=playerModel.bones.get('head');if(head&&!moving&&own.state==='SNIFF_FLOWER')head.rotation.x-=.22;
+  if(ambient){if(ambient.type==='butterfly'){butterfly.visible=true;const q=ambient.target;butterfly.position.set(q.x+1+Math.sin(elapsed*1.8)*.5,q.y+1.6+Math.sin(elapsed*2.3)*.3,q.z+Math.cos(elapsed*1.4)*.5);leftWing.rotation.y=Math.sin(elapsed*11)*.8;rightWing.rotation.y=-leftWing.rotation.y;}if(ambient.phase==='action'){lastMoving=false;playerModel.applyAnimation(ambient.type==='butterfly'?'paw':'idle',elapsed);const head=playerModel.bones.get('head');if(head&&ambient.type==='flower')head.rotation.x-=.24;gardenFlower.rotation.z=Math.sin(elapsed*3)*.07;}}
+  if(eventPhase==='idle'&&session&&!ended&&journey[collected]&&own.root.position.distanceTo(goalPoint(journey[collected].key))<1.1){const result=store.collectWorldItem(session.token,journey[collected].id);if(result.ok){collected++;say('路标 '+collected+'/'+journey.length+' · '+result.message);renderProgress();}}
+  if(elapsed>9&&card.hidden&&eventPhase==='idle')story();

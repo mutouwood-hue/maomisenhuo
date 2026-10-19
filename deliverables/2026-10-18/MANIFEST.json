@@ -15,18 +15,20 @@
     "file": "cat_forest_badge-0.5.5-day-hearts.bin",
     "bytes": 6886224,
     "sha256": "4d6b3fd6365820df309933503c93e506847347e3643276c7f761cbb68d3eadc7",
-    "note": "仅写应用分区（原 0x820000）；不要擦写 bootloader / 分区表 / NVS"
+    "note": "仅写应用分区（原 0x820000）；不要擦写 bootloader / 分区表 / NVS",
+    "containsPart0HeartsReplayFix": false
   },
   "build": {
     "phone": "gradle :app:packageRelease -x lintVitalAnalyzeRelease -x lintVitalReportRelease（离线，AGP 8.7.3 / JDK21）",
     "badge": "python work/integrated/build-badge-windows.py --source R:/firmware --build R:/work/integrated/badge/root-build2 --log-dir R:/work/integrated/badge-logs7（ESP-IDF 5.5.5 / 隔离 SDK 环境）",
-    "badgePartition": "0x691240 / 0x800000，余 18%"
+    "badgePartition": "旧镜像文件占用 0x691350 / 单个应用分区容量 0x800000；剩余 1502384 B（约 18%），容量与分区表未改动"
   },
   "verification": {
     "phoneFocusedSuite": "142/142（python work/integrated/test-phone.py）",
     "badgeHostSuites": "3/3（python work/integrated/test-badge.py --skip-ui）",
     "badgeUiGate": "27 屏渲染 PASS：字形完整、命中区与标签都在 safeR=212 内（python firmware/tools/ui_gate.py）",
-    "coverageRecheck": "PASS 已实现19 / 部分2 / 未实现1 / 已取消1（python firmware/tools/check_ui_coverage.py）"
+    "coverageRecheck": "PASS 已实现19 / 部分2 / 未实现1 / 已取消1（python firmware/tools/check_ui_coverage.py）",
+    "scope": "以下均为修复前历史声明，本次未运行测试或重新认证这些结果。"
   },
   "notVerified": [
     "未安装、未刷写、未重绑，设备仍是 038 与 053",
@@ -39,5 +41,35 @@
     "work/integrated/PHONE-SUITE-TRIAGE.md",
     "firmware/UI-COVERAGE.md",
     "firmware/tools/host_preview/HOST-PREVIEW-STATUS.md"
-  ]
+  ],
+  "recordScope": "历史产物保留；当前050/064修复的构建、部署及待用户实机连接确认状态以currentDelivery为准。",
+  "currentDelivery": "badge-068-soft-color-candidate/MANIFEST.json",
+  "notVerifiedScope": "原始交付时的状态；本次实际构建与设备操作以 currentDelivery 为准。",
+  "latestInvestigation": "badge-066-ble-memory/STARTUP-BEFORE-AFTER.json",
+  "currentUserAcceptance": {
+    "phone": "050",
+    "connectionBaseline": {
+      "badge": "066",
+      "status": "explicitly accepted by user for050+066; no active connection diagnosis in067/068"
+    },
+    "latestVisualFeedback": {
+      "badge": "067",
+      "feedback": "应该再淡一点"
+    },
+    "candidateDeployedBadge": "068",
+    "appearance": "068 unified saturation/midtone candidate pending user visual selection",
+    "diagnosticApprovalPending": false
+  },
+  "previousUserAcceptance050064": {
+    "connection": "failed by user real-device feedback after050/064",
+    "appearance": "new appearance not yet delivered to badge",
+    "diagnosticApprovalPending": true
+  },
+  "latestColorCandidate": {
+    "ruleId": "native-linear-aces-soft-v2-candidate",
+    "profileSha256": "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae",
+    "draft": "../../protocol/2026-10-18-native-color-soft-v2-candidate.md",
+    "formalized": false,
+    "deployedBeforeAuthorizationDeadline": true
+  }
 }

@@ -1,0 +1,7 @@
+{
+  "file": "catforest-050-066-memory-fix-delivery.zip",
+  "bytes": 6412458,
+  "sha256": "809c323b71f089f65fc03471e927c47d6bae4fde308c9cda0edb006283dbb439",
+  "scope": "066firmware fix + unchanged050APK, combined source patch, normal production startup before/after, deployment receipts; no raw user data",
+  "userAcceptance": "pending after066"
+}

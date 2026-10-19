@@ -1,0 +1,11 @@
+{
+  "finishedAtUtc": "2026-10-18T15:52:08.814550+00:00",
+  "file": "catforest-050-068-soft-color-candidate-delivery.zip",
+  "bytes": 11445738,
+  "sha256": "be5678988f3c4e51c99b5ee7f8d5828456efe49bf466a35af3d0eb23e7e0ac76",
+  "phone": "050 carried forward, not installed this batch",
+  "badge": "068 deployed app-only",
+  "candidate": "single v2 candidate; pending user visual selection",
+  "authorizationDeadlineUtc": "2026-10-18T16:00:00+00:00",
+  "completedBeforeDeadline": true
+}

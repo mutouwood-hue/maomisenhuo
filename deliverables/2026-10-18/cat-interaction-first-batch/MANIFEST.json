@@ -1,0 +1,99 @@
+{
+  "batch": "猫咪森活小猫互动首批",
+  "date": "2026-10-18",
+  "phone": {
+    "device": "StepX PZ261A",
+    "serial": "ZYPZ261A01M65K0002A",
+    "appId": "com.catforest.htmlcandidate",
+    "versionName": "0.5.1-cat-interaction",
+    "versionCode": 42,
+    "artifact": {
+      "file": "catforest-0.5.1-cat-interaction-debug.apk",
+      "bytes": 2699447,
+      "sha256": "7f08c991d03d2cabf721af8b7ccd3138ab37b8abb07106a50c239813c3dc7bc2"
+    },
+    "signingCertificateSha256": "3408671bfff5d9b12886b90465f474ad5ecd630784b2945e955d4c152051ad82",
+    "build": "Gradle 8.9 / JDK 21; offline :app:assembleDebug -x test -x lint",
+    "buildLog": "phone-build.log",
+    "installed": true,
+    "installLog": "phone-install.log",
+    "versionAfterInstall": "0.5.1-cat-interaction",
+    "versionCodeAfterInstall": 42,
+    "firstInstallTimeBefore": "2026-10-15 23:14:25",
+    "firstInstallTimeAfter": "2026-10-15 23:14:25",
+    "uninstalled": false,
+    "dataCleared": false,
+    "appLaunchedForAcceptance": false
+  },
+  "badge": {
+    "device": "ESP32-S3",
+    "mac": "7c:0c:5f:42:36:84",
+    "versionBefore": "0.6.8-soft-color",
+    "imageVersion": "0.6.9-cat-interaction",
+    "artifact": {
+      "file": "cat_forest_badge-0.6.9-cat-interaction.bin",
+      "bytes": 6179600,
+      "sha256": "c325c25ac91e2470ed001cc120cb5c14c6a8d6d8281099550aab889e32e761a8"
+    },
+    "build": "ESP-IDF 5.5.5; isolated build directory /tmp/catforest-cat-interaction-badge-069",
+    "buildLog": "badge-build.log",
+    "flashPlan": "FLASH-PLAN.json",
+    "receipt": "FLASH-RECEIPT.json",
+    "deployed": true,
+    "partition": "ota_1",
+    "offset": "0x820000",
+    "partitionCapacityBytes": 8388608,
+    "freeBytes": 2209008,
+    "hashVerifiedByEsptool": true,
+    "writesNvs": false,
+    "writesOtadata": false,
+    "writesPartitionTable": false,
+    "writesBootloader": false,
+    "writesAssetsPartitions": false,
+    "eraseAll": false,
+    "runtimeAcceptance": "pending user"
+  },
+  "colorCandidate": {
+    "id": "native-linear-aces-soft-v2-candidate",
+    "profileSha256": "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae",
+    "changed": false
+  },
+  "scope": {
+    "roomBall": true,
+    "roomBed": true,
+    "gardenFlower": true,
+    "gardenButterfly": true,
+    "badgeProjection": true,
+    "encounterChanged": false,
+    "townNavigationOrSocialChanged": false,
+    "duplicateSettlementAdded": false,
+    "offlineRealtimeClaimAdded": false
+  },
+  "verification": {
+    "productionBuildsSucceeded": true,
+    "staticJavaScriptSyntaxCheck": "passed for modified generated runtime files",
+    "generatedAndroidAssetsMatchSources": true,
+    "technicalTestsRun": false,
+    "lintRun": false,
+    "browserAutomationRun": false,
+    "touchSimulationRun": false,
+    "bluetoothDiagnosticsRun": false,
+    "userAcceptance": "pending"
+  },
+  "notionSummary": "NOTION-REGISTRATION-SUMMARY.md",
+  "deliveryRecord": "DELIVERY-AND-ACCEPTANCE.md",
+  "evidenceFiles": [
+    "phone-build.log",
+    "phone-devices-before.log",
+    "phone-package-before.log",
+    "phone-install.log",
+    "phone-package-after.log",
+    "badge-build.log",
+    "FLASH-PLAN.json",
+    "FLASH-RECEIPT.json",
+    "badge-flash.log",
+    "read-partition-table-before.log",
+    "read-otadata-before.log",
+    "read-app-header-before.log"
+  ]
+}

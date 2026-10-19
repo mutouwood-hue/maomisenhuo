@@ -1,0 +1,16 @@
+{
+  "firmware/main/main.c": "a0fa2f7fd8adf68361a4524ee0e965a3622e14a9928de93c62005b266eba24b1",
+  "firmware/main/local2_ble.c": "fb71752b8def6bedadb5ce748ede3bb3c6b6dc3ce683c152e66bb78a13e27afc",
+  "firmware/main/local2_wire.c": "50dd2f48705af603aac987a215d59e0bf563dc8ccd0a6a74b456994e72f17582",
+  "firmware/main/badge_native_cat.c": "c33b1afe7f06979f5e326f01631d98c4be99277d73cba8c94fc2cd91b78c56e9",
+  "firmware/CMakeLists.txt": "2ff7e16e0b667abc207d15aa34ba7f67f2e3bbf4a9ec6d5b47398f9b9895d6e1",
+  "firmware/main/badge_pages.c": "b92482eda439be8de080bb1570f54eba2b0458877d532c6ff3a7514af8b45687",
+  "firmware/main/badge_scene.c": "e1b1fa5222b70938ed42684ead470e52a2646e1e2fd87a26866b754656f41687",
+  "firmware/main/badge_gesture.c": "cb9cbd38c52f8b414d66c5eaf92da3f0bbbd79b344233ed4dfece348aa541b62",
+  "firmware/main/local2_core.c": "a58aab117198ed98d03b66a5edceaa516df2cf4257e0ad3c6832acf37488cf21",
+  "firmware/main/local2_peer.c": "42df56d2fef8a29eae2ded314769c0b4019360c536ea50901e06a1384876ca3b",
+  "app/web/offline-scene-sync.js": "7edccc6cf71de2eb296efdc1b79532c05f814dbc62e1efdd1c379daa1c724b12",
+  "app/web/offline-host.js": "cdeccdbd8862b26b12c4f1ed3bef34da84ea14bd83c6fb33dbd90455d4f47368",
+  "app/web/offline-scene-map.js": "5d34412837101a0c7b76dfb8d5a6f85c3203e8258b9a5fec4d8cc5d634f0c5ba",
+  "app/web/cflocal2-adapter.js": "14d67c4bab557d2de3e0dab85677906fb0adf96b007ff56f55e1ff7435b6f1d2"
+}

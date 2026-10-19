@@ -1,0 +1,599 @@
+--- a/firmware/tools/native_cat_color.py
++++ b/firmware/tools/native_cat_color.py
+@@ -36,7 +36,21 @@
+         c = c @ np.asarray(t['inputMatrixRows']).T
+         n, d = t['rrtOdtNumerator'], t['rrtOdtDenominator']
+         c = (c * (c + n[0]) + n[1]) / (c * (d[0] * c + d[1]) + d[2])
+-        return self.encode(c @ np.asarray(t['outputMatrixRows']).T)
++        display = np.clip(c @ np.asarray(t['outputMatrixRows']).T, 0, 1)
++        adjustment = self.profile.get('displayLinearAdjustment')
++        if adjustment:
++            # Apply the same luminance-based rule to every material and breed.
++            # Keep near-black and bright white regions unchanged; do not add
++            # exposure or another transfer function to the encoded image.
++            y = display @ np.asarray(adjustment['luminanceWeights'])
++            def smoothstep(bounds):
++                x = np.clip((y - bounds[0]) / (bounds[1] - bounds[0]), 0, 1)
++                return x * x * (3 - 2 * x)
++            weight = smoothstep(adjustment['shadowFade']) * (1 - smoothstep(adjustment['highlightProtection']))
++            softened_y = y + (adjustment['contrastPivot'] - y) * (1 - adjustment['midtoneContrast']) * weight
++            saturation = 1 - (1 - adjustment['saturation']) * weight
++            display = softened_y[..., None] + (display - y[..., None]) * saturation[..., None]
++        return self.encode(display)
+ 
+     def srgb_shades(self, srgb, factor=(1, 1, 1)):
+         linear = self.decode(srgb) * np.asarray(factor)
+--- a/firmware/tools/native_cat_color_profile.json
++++ b/firmware/tools/native_cat_color_profile.json
+@@ -1,6 +1,6 @@
+ {
+   "schemaVersion": 1,
+-  "id": "native-linear-aces-v1-candidate",
++  "id": "native-linear-aces-soft-v2-candidate",
+   "status": "candidate-pending-user-visual-selection",
+   "reference": "phone 050 room: Three r185 ACESFilmicToneMapping, exposure 1.22, sRGB output",
+   "input": {
+@@ -10,21 +10,68 @@
+   },
+   "lighting": {
+     "model": "existing fixed three-level diffuse approximation; not a reproduction of the phone room PBR lights",
+-    "direction": [-0.35, 0.8, -0.6],
++    "direction": [
++      -0.35,
++      0.8,
++      -0.6
++    ],
+     "classifierAmbient": 0.62,
+     "classifierDiffuse": 0.45,
+     "classifierOrigin": 0.64,
+     "classifierStep": 0.18,
+-    "linearLevels": [0.64, 0.82, 1.0]
++    "linearLevels": [
++      0.64,
++      0.82,
++      1.0
++    ]
+   },
+   "toneMapping": {
+     "name": "Three-r185-ACESFilmic",
+     "exposure": 1.22,
+     "exposureNormalization": 0.6,
+-    "inputMatrixRows": [[0.59719, 0.35458, 0.04823], [0.076, 0.90834, 0.01566], [0.0284, 0.13383, 0.83777]],
+-    "rrtOdtNumerator": [0.0245786, -0.000090537],
+-    "rrtOdtDenominator": [0.983729, 0.432951, 0.238081],
+-    "outputMatrixRows": [[1.60475, -0.53108, -0.07367], [-0.10208, 1.10813, -0.00605], [-0.00327, -0.07276, 1.07602]]
++    "inputMatrixRows": [
++      [
++        0.59719,
++        0.35458,
++        0.04823
++      ],
++      [
++        0.076,
++        0.90834,
++        0.01566
++      ],
++      [
++        0.0284,
++        0.13383,
++        0.83777
++      ]
++    ],
++    "rrtOdtNumerator": [
++      0.0245786,
++      -9.0537e-05
++    ],
++    "rrtOdtDenominator": [
++      0.983729,
++      0.432951,
++      0.238081
++    ],
++    "outputMatrixRows": [
++      [
++        1.60475,
++        -0.53108,
++        -0.07367
++      ],
++      [
++        -0.10208,
++        1.10813,
++        -0.00605
++      ],
++      [
++        -0.00327,
++        -0.07276,
++        1.07602
++      ]
++    ]
+   },
+   "transfer": {
+     "decodeThreshold": 0.04045,
+@@ -36,16 +83,124 @@
+   },
+   "alternateBreedPalette": {
+     "note": "Existing badge role and age tint semantics retained before the shared linear lighting transform; rows are fur, shade, stripe, cream",
+-    "breeds": ["orange", "silver", "tuxedo", "siamese", "ragdoll", "blue", "calico", "golden", "starry"],
+-    "colors": [[14649913, 15442770, 11294507, 16312531], [12041922, 12041922, 5858669, 16052969], [3160389, 3160389, 2568252, 16315624], [15062197, 15062197, 6639690, 15062197], [15919840, 15919840, 9078158, 16775404], [8163751, 8163751, 7374235, 9084337], [15106891, 16248287, 3487029, 16774883], [14987362, 14987362, 12091451, 16247244], [3095397, 3095397, 2831189, 4344717]],
+-    "growthOrder": ["adult", "kitten", "young"],
+-    "growthTintPercent": [-6, 24, 9],
++    "breeds": [
++      "orange",
++      "silver",
++      "tuxedo",
++      "siamese",
++      "ragdoll",
++      "blue",
++      "calico",
++      "golden",
++      "starry"
++    ],
++    "colors": [
++      [
++        14649913,
++        15442770,
++        11294507,
++        16312531
++      ],
++      [
++        12041922,
++        12041922,
++        5858669,
++        16052969
++      ],
++      [
++        3160389,
++        3160389,
++        2568252,
++        16315624
++      ],
++      [
++        15062197,
++        15062197,
++        6639690,
++        15062197
++      ],
++      [
++        15919840,
++        15919840,
++        9078158,
++        16775404
++      ],
++      [
++        8163751,
++        8163751,
++        7374235,
++        9084337
++      ],
++      [
++        15106891,
++        16248287,
++        3487029,
++        16774883
++      ],
++      [
++        14987362,
++        14987362,
++        12091451,
++        16247244
++      ],
++      [
++        3095397,
++        3095397,
++        2831189,
++        4344717
++      ]
++    ],
++    "growthOrder": [
++      "adult",
++      "kitten",
++      "young"
++    ],
++    "growthTintPercent": [
++      -6,
++      24,
++      9
++    ],
+     "creamTintScale": 0.3,
+     "blueEye": "67aedd"
+   },
+   "output": {
+-    "order": ["decode sRGB texture", "multiply linear material factor", "linear diffuse level", "exposure", "ACES input matrix / RRT ODT fit / output matrix", "clamp linear display RGB", "encode sRGB once", "round uint8", "indexed ARGB8888 RLE", "lossless zlib", "LVGL RGB565 at composition"],
++    "order": [
++      "decode sRGB texture",
++      "multiply linear material factor",
++      "linear diffuse level",
++      "exposure",
++      "ACES input matrix / RRT ODT fit / output matrix",
++      "clamp linear display RGB",
++      "luminance-weighted chroma reduction and midtone softening with shadow/highlight protection",
++      "clamp adjusted linear display RGB",
++      "encode sRGB once",
++      "round uint8",
++      "indexed ARGB8888 RLE",
++      "lossless zlib",
++      "LVGL RGB565 at composition"
++    ],
+     "runtime": "Orange and accessories use baked sRGB without gamma or exposure; alternate breeds use generated final RGB lookup; no runtime RGB shade multiplication",
+     "rgb565": "existing LVGL conversion only; no additional gamma"
++  },
++  "feedback": "User on067: 应该再淡一点. One conservative candidate; not a user-selected final rule.",
++  "displayLinearAdjustment": {
++    "domain": "linear display RGB after ACES and clamp, before the single sRGB output encode",
++    "luminanceWeights": [
++      0.2126,
++      0.7152,
++      0.0722
++    ],
++    "saturation": 0.82,
++    "midtoneContrast": 0.96,
++    "contrastPivot": 0.18,
++    "shadowFade": [
++      0.02,
++      0.1
++    ],
++    "highlightProtection": [
++      0.55,
++      0.8
++    ],
++    "formula": "w=smoothstep(shadowFade,Y)*(1-smoothstep(highlightProtection,Y)); Y2=Y+(pivot-Y)*(1-contrast)*w; RGB2=Y2+(RGB-Y)*(1-(1-saturation)*w); Y>=0.80 or Y<=0.02 unchanged"
+   }
+ }
+--- a/firmware/tools/show_native_cat_assets.py
++++ b/firmware/tools/show_native_cat_assets.py
+@@ -46,6 +46,9 @@
+     parser.add_argument('--before', type=Path, required=True)
+     parser.add_argument('--after', type=Path, required=True)
+     parser.add_argument('--output', type=Path, required=True)
++    parser.add_argument('--before-version', default='066')
++    parser.add_argument('--after-version', default='067')
++    parser.add_argument('--candidate-caption', default='线性光照 + ACES / 曝光1.22')
+     args = parser.parse_args()
+     args.output.mkdir(parents=True, exist_ok=True)
+     before, after = StoredFrames(args.before), StoredFrames(args.after)
+@@ -59,12 +62,12 @@
+         draw = ImageDraw.Draw(sheet)
+         draw.text((24, 15), '生产素材对照 / 口水巾 / 原始帧 2×最近邻展示', font=font, fill='#25313b')
+         draw.text((24, 47), '仅供用户肉眼选择候选规则；不是手机或吧唧屏幕截图。', font=small, fill='#46525d')
+-        draw.text((24, 82), '旧：066 / 编码 RGB 直接乘阴影', font=small, fill='#25313b')
+-        draw.text((476, 82), '候选：067 / 线性光照 + ACES / 曝光1.22', font=small, fill='#25313b')
++        draw.text((24, 82), '上一版：' + args.before_version, font=small, fill='#25313b')
++        draw.text((476, 82), '候选：' + args.after_version + ' / ' + args.candidate_caption, font=small, fill='#25313b')
+         for row, (shape, frame, label) in enumerate(rows):
+             y = 130 + row * 466
+             draw.text((24, y), label, font=font, fill='#25313b')
+-            for column, (title, stored) in enumerate([('before066', before), ('candidate067', after)]):
++            for column, (title, stored) in enumerate([('before' + args.before_version, before), ('candidate' + args.after_version, after)]):
+                 image = stored.worn(shape, frame)
+                 filename = f'{title}-shape{shape}-frame{frame}-bandana.png'
+                 image.save(args.output / filename)
+@@ -73,7 +76,7 @@
+         sheet.save(args.output / (name + '.png'))
+     (args.output / 'README.md').write_text(
+         '# 生产素材展示\n\n'
+-        '左右分别来自已部署066的资源和067候选资源；读取现有压缩资源并导出静态像素，'
++        '左右分别来自已部署' + args.before_version + '的资源和' + args.after_version + '候选资源；读取现有压缩资源并导出静态像素，'
+         '不执行应用、固件、动画或交互。固定中性底色，2倍最近邻展示，无照片调色或锐化。'
+         '随附PNG是192×208原始透明生产帧，按原生产遮挡层叠加口水巾。'
+         '这不是两端截图，也不证明实机一致性；最终观感由用户决定。\n')
+--- a/firmware/CMakeLists.txt
++++ b/firmware/CMakeLists.txt
+@@ -282,8 +282,8 @@
+     endforeach()
+ 
+ endfunction()
+-set(PROJECT_VER "0.6.7-linear-color")
+-project(cat_forest_badge VERSION 0.6.7)
++set(PROJECT_VER "0.6.8-soft-color")
++project(cat_forest_badge VERSION 0.6.8)
+ include("${CMAKE_CURRENT_LIST_DIR}/cmake/private-mask-override.cmake")
+ foreach(local2_forbidden CONFIG_SECURE_BOOT CONFIG_SECURE_SIGNED_APPS_NO_SECURE_BOOT
+         CONFIG_SECURE_FLASH_ENC_ENABLED CONFIG_NVS_ENCRYPTION
+--- a/firmware/main/assets/native-cat/native_cat_data.h
++++ b/firmware/main/assets/native-cat/native_cat_data.h
+@@ -2,5 +2,5 @@
+ #include <stdint.h>
+ extern const uint8_t badge_native_cat_data[];
+ extern const uint32_t badge_native_cat_offsets[5][5][66];
+-#define BADGE_NATIVE_CAT_DATA_BYTES 1531337u
++#define BADGE_NATIVE_CAT_DATA_BYTES 1531748u
+ #define BADGE_NATIVE_CAT_MAX_RLE_BYTES 11112u
+--- a/firmware/main/assets/native-cat/native_cat_color.h
++++ b/firmware/main/assets/native-cat/native_cat_color.h
+@@ -1,6 +1,6 @@
+ /* Generated by pack_native_cat.py; candidate final sRGB colors. */
+ #pragma once
+ #include <stdint.h>
+-#define BADGE_NATIVE_COLOR_PROFILE "native-linear-aces-v1-candidate"
+-#define BADGE_NATIVE_COLOR_PROFILE_SHA256 "85cd904ac031a4edb21c899fde102643fb2f88787cba81c9d68eecbd07a01013"
+-static const uint32_t badge_native_breed_colors[3][9][4][3]={{{{0xffc87f2eu,0xffd7923bu,0xffe1a147u},{0xff9b4019u,0xffb04e20u,0xffbf5c27u},{0xffd6cfc6u,0xffdfdad2u,0xffe5e1dau},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffaaafb2u,0xffbabec1u,0xffc6c9ccu},{0xff414e58u,0xff4f5e68u,0xff5b6b76u},{0xffd4d4d0u,0xffdedddbu,0xffe4e4e2u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff151d28u,0xff1c2531u,0xff222c3au},{0xff0d151fu,0xff121b27u,0xff17212fu},{0xffd6d4d0u,0xffdfdedau,0xffe5e5e1u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffc8bfabu,0xffd4ccbbu,0xffdcd5c7u},{0xff4c3630u,0xff5b433bu,0xff694e46u},{0xffcec5b3u,0xffd9d1c2u,0xffe0dacdu},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffcecac6u,0xffd9d6d2u,0xffe0dedau},{0xff7b7780u,0xff8e8992u,0xff9c98a0u},{0xffd9d6d2u,0xffe1dfdcu,0xffe7e6e3u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff6e8498u,0xff8196aau,0xff90a4b7u},{0xff5f768cu,0xff71899eu,0xff8097acu},{0xff8799aau,0xff9aabbau,0xffa8b8c6u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffcd793fu,0xffdc8c4du,0xffe59c5au},{0xff191919u,0xff202020u,0xff272727u},{0xffd9d5ceu,0xffe1dfd9u,0xffe7e5e0u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffc9a45du,0xffd6b56fu,0xffdfc17eu},{0xffa8722bu,0xffba8437u,0xffc89342u},{0xffd6d0c2u,0xffdfdacfu,0xffe5e1d8u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff121f4au,0xff182759u,0xff1e2f66u},{0xff101737u,0xff151e44u,0xff1a244fu},{0xff283582u,0xff344194u,0xff3f4ca3u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}}},{{{0xffd3a66bu,0xffdeb77eu,0xffe5c38du},{0xffba7c56u,0xffca8f66u,0xffd59d75u},{0xffd7d1c9u,0xffe0dbd5u,0xffe6e2ddu},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffbfc2c4u,0xffcdcfd0u,0xffd6d8d9u},{0xff7c858cu,0xff8e979fu,0xff9da6acu},{0xffd6d5d2u,0xffdfdedcu,0xffe5e5e3u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff535b66u,0xff636c78u,0xff717a86u},{0xff4a525du,0xff59626eu,0xff66707cu},{0xffd7d6d2u,0xffe0dfdcu,0xffe6e5e3u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffd2ccc0u,0xffdcd7cdu,0xffe3dfd6u},{0xff84736eu,0xff968680u,0xffa5948eu},{0xffcfc8b8u,0xffdad4c6u,0xffe1dcd0u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffd6d4d1u,0xffdfdedbu,0xffe5e4e2u},{0xffa4a0a6u,0xffb5b1b7u,0xffc1bec3u},{0xffdad7d3u,0xffe2e0ddu,0xffe8e6e4u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff9ba9b5u,0xffadb9c4u,0xffbac4ceu},{0xff92a0aeu,0xffa4b1beu,0xffb2bec9u},{0xff92a1b0u,0xffa4b2c0u,0xffb2becbu},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffd6a179u,0xffe1b38bu,0xffe8bf9au},{0xff575757u,0xff686868u,0xff767676u},{0xffdad6d0u,0xffe2e0dau,0xffe8e6e1u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffd3bc8eu,0xffddcaa1u,0xffe4d3afu},{0xffc09d69u,0xffceaf7cu,0xffd8bc8bu},{0xffd7d2c6u,0xffe0dcd2u,0xffe6e3dau},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff525e82u,0xff626f94u,0xff717ea3u},{0xff4e5574u,0xff5d6586u,0xff6b7395u},{0xff3b468du,0xff49549fu,0xff5661adu},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}}},{{{0xffd19548u,0xffdea758u,0xffe6b567u},{0xffaf5c30u,0xffc26e3cu,0xffcf7d47u},{0xffd7d1c7u,0xffe0dbd4u,0xffe6e2dcu},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffb8bcbeu,0xffc6caccu,0xffd0d3d5u},{0xff5b6872u,0xff6c7a84u,0xff7b8992u},{0xffd6d5d1u,0xffdfdedcu,0xffe5e5e2u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff2c3541u,0xff36414fu,0xff404b5bu},{0xff232b37u,0xff2c3543u,0xff343f4eu},{0xffd7d6d1u,0xffe0dfdcu,0xffe6e5e2u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffd0c8b9u,0xffdbd4c7u,0xffe2dcd1u},{0xff66504au,0xff786059u,0xff876e67u},{0xffcfc7b5u,0xffdad3c4u,0xffe1dbceu},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffd5d2ceu,0xffdfdcd9u,0xffe5e3e0u},{0xff918c95u,0xffa39fa7u,0xffb1acb4u},{0xffdad7d3u,0xffe2e0ddu,0xffe8e6e4u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff8698a9u,0xff98aabau,0xffa7b7c5u},{0xff788ca0u,0xff8b9eb1u,0xff9aacbeu},{0xff8b9cadu,0xff9eadbdu,0xffacbac8u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffd69059u,0xffe2a26bu,0xffeab079u},{0xff313131u,0xff3d3d3du,0xff474747u},{0xffdad6cfu,0xffe2e0dau,0xffe8e6e1u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xffd1b476u,0xffddc389u,0xffe4cd99u},{0xffb88945u,0xffc89c55u,0xffd3aa62u},{0xffd7d1c4u,0xffe0dbd1u,0xffe6e2dau},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}},{{0xff2a3764u,0xff354476u,0xff3f4f84u},{0xff272f52u,0xff303a62u,0xff3a4470u},{0xff2e3a86u,0xff3a4799u,0xff4653a8u},{0xff6eabc9u,0xff84bbd5u,0xff95c7ddu}}}};
++#define BADGE_NATIVE_COLOR_PROFILE "native-linear-aces-soft-v2-candidate"
++#define BADGE_NATIVE_COLOR_PROFILE_SHA256 "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae"
++static const uint32_t badge_native_breed_colors[3][9][4][3]={{{{0xffbf824au,0xffcd9356u,0xffd7a260u},{0xff934730u,0xffa65538u,0xffb56140u},{0xffd3cdc5u,0xffded9d2u,0xffe5e1dau},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffa9adafu,0xffb9bcbeu,0xffc4c7c9u},{0xff454f58u,0xff535e67u,0xff5f6b74u},{0xffd3d2cfu,0xffdddddau,0xffe4e4e2u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff151d28u,0xff1c2531u,0xff222c3au},{0xff0d151fu,0xff121b27u,0xff17212fu},{0xffd4d3cfu,0xffdfdedau,0xffe5e4e1u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffc4bcadu,0xffd1cabcu,0xffdad4c7u},{0xff4c3832u,0xff5a453fu,0xff67514au},{0xffcac3b4u,0xffd6d0c2u,0xffdfd9ccu},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffcbc8c4u,0xffd7d4d1u,0xffdfdddau},{0xff7b777eu,0xff8c8990u,0xff9b979eu},{0xffd7d5d1u,0xffe1dfdcu,0xffe7e6e3u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff718394u,0xff8395a5u,0xff91a3b2u},{0xff647688u,0xff74889au,0xff8396a7u},{0xff8997a6u,0xff9ba9b6u,0xffa8b5c1u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffc37c53u,0xffd28e60u,0xffdb9d6cu},{0xff191919u,0xff202020u,0xff272727u},{0xffd7d4cdu,0xffe1ded9u,0xffe7e5e0u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffc2a46du,0xffcfb47du,0xffd8bf8bu},{0xffa17443u,0xffb3854eu,0xffc09458u},{0xffd3cec2u,0xffded9cfu,0xffe5e1d8u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff121f4au,0xff192759u,0xff1f2f66u},{0xff101737u,0xff151e44u,0xff1a244fu},{0xff2b3780u,0xff39448fu,0xff45509au},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}}},{{{0xffcba678u,0xffd7b689u,0xffdfc196u},{0xffb27e61u,0xffc29070u,0xffcd9e7eu},{0xffd5cfc8u,0xffdfdbd4u,0xffe6e2ddu},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffbdc0c1u,0xffcbcdceu,0xffd5d7d8u},{0xff7c848au,0xff8e969cu,0xff9ca4aau},{0xffd4d3d1u,0xffdfdedcu,0xffe5e5e3u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff565c65u,0xff656c76u,0xff727a84u},{0xff4d545cu,0xff5b636cu,0xff68707au},{0xffd6d4d1u,0xffe0dfdbu,0xffe6e5e3u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffcfcabfu,0xffdad6cdu,0xffe2ded6u},{0xff82746fu,0xff938581u,0xffa1948fu},{0xffccc6b8u,0xffd8d3c6u,0xffe0dbd0u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffd4d2cfu,0xffdfdddbu,0xffe5e4e2u},{0xffa29fa4u,0xffb2b0b4u,0xffbebcc0u},{0xffd8d6d2u,0xffe2e0ddu,0xffe8e6e4u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff9ca7b1u,0xffadb6c0u,0xffb9c2cau},{0xff939eaau,0xffa4afbau,0xffb1bbc5u},{0xff939facu,0xffa4b0bbu,0xffb2bcc6u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffcea281u,0xffd9b293u,0xffe1bea0u},{0xff595959u,0xff696969u,0xff767676u},{0xffd8d5cfu,0xffe2dfdau,0xffe8e6e1u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffcdba95u,0xffd8c8a6u,0xffe1d2b1u},{0xffba9d74u,0xffc8ae85u,0xffd2ba93u},{0xffd4d0c5u,0xffdfdbd2u,0xffe6e2dau},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff565f7du,0xff65708fu,0xff737d9du},{0xff515770u,0xff606681u,0xff6d7390u},{0xff404887u,0xff4e5796u,0xff5a63a4u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}}},{{{0xffc9965du,0xffd5a76cu,0xffdeb478u},{0xffa66143u,0xffb8714eu,0xffc58058u},{0xffd4cfc7u,0xffdfdad3u,0xffe6e2dbu},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffb6b9bbu,0xffc4c7c9u,0xffcfd1d3u},{0xff5e6970u,0xff6e7a82u,0xff7c8890u},{0xffd4d3d0u,0xffdfdedbu,0xffe5e5e2u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff2c3541u,0xff38424fu,0xff434d5bu},{0xff232b37u,0xff2c3643u,0xff36404eu},{0xffd5d4d0u,0xffe0dfdbu,0xffe6e5e2u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffccc6b9u,0xffd8d3c7u,0xffe1dbd1u},{0xff65534eu,0xff76625cu,0xff846f69u},{0xffcbc4b6u,0xffd7d1c4u,0xffe0daceu},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffd3d0cdu,0xffdedbd9u,0xffe5e3e0u},{0xff908c93u,0xffa19da5u,0xffafabb1u},{0xffd8d6d2u,0xffe2e0ddu,0xffe8e6e4u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff8896a5u,0xff99a8b5u,0xffa7b4c1u},{0xff7b8b9cu,0xff8d9cacu,0xff9baab9u},{0xff8d9ba9u,0xff9fabb8u,0xffacb8c3u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffcd9168u,0xffd9a378u,0xffe1b085u},{0xff313131u,0xff3d3d3du,0xff484848u},{0xffd8d5cfu,0xffe2dfdau,0xffe8e6e1u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xffcbb282u,0xffd7c193u,0xffdfcc9fu},{0xffb28a57u,0xffc19c66u,0xffcca972u},{0xffd4cfc4u,0xffdfdbd1u,0xffe6e2d9u},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}},{{0xff2c3863u,0xff384573u,0xff44517fu},{0xff272f52u,0xff323b62u,0xff3d466eu},{0xff313c84u,0xff404a92u,0xff4b569eu},{0xff77a8c2u,0xff8bb8ceu,0xff9ac3d6u}}}};
+--- a/firmware/main/assets/native-cat/color-profile.json
++++ b/firmware/main/assets/native-cat/color-profile.json
+@@ -1,6 +1,6 @@
+ {
+   "schemaVersion": 1,
+-  "id": "native-linear-aces-v1-candidate",
++  "id": "native-linear-aces-soft-v2-candidate",
+   "status": "candidate-pending-user-visual-selection",
+   "reference": "phone 050 room: Three r185 ACESFilmicToneMapping, exposure 1.22, sRGB output",
+   "input": {
+@@ -10,21 +10,68 @@
+   },
+   "lighting": {
+     "model": "existing fixed three-level diffuse approximation; not a reproduction of the phone room PBR lights",
+-    "direction": [-0.35, 0.8, -0.6],
++    "direction": [
++      -0.35,
++      0.8,
++      -0.6
++    ],
+     "classifierAmbient": 0.62,
+     "classifierDiffuse": 0.45,
+     "classifierOrigin": 0.64,
+     "classifierStep": 0.18,
+-    "linearLevels": [0.64, 0.82, 1.0]
++    "linearLevels": [
++      0.64,
++      0.82,
++      1.0
++    ]
+   },
+   "toneMapping": {
+     "name": "Three-r185-ACESFilmic",
+     "exposure": 1.22,
+     "exposureNormalization": 0.6,
+-    "inputMatrixRows": [[0.59719, 0.35458, 0.04823], [0.076, 0.90834, 0.01566], [0.0284, 0.13383, 0.83777]],
+-    "rrtOdtNumerator": [0.0245786, -0.000090537],
+-    "rrtOdtDenominator": [0.983729, 0.432951, 0.238081],
+-    "outputMatrixRows": [[1.60475, -0.53108, -0.07367], [-0.10208, 1.10813, -0.00605], [-0.00327, -0.07276, 1.07602]]
++    "inputMatrixRows": [
++      [
++        0.59719,
++        0.35458,
++        0.04823
++      ],
++      [
++        0.076,
++        0.90834,
++        0.01566
++      ],
++      [
++        0.0284,
++        0.13383,
++        0.83777
++      ]
++    ],
++    "rrtOdtNumerator": [
++      0.0245786,
++      -9.0537e-05
++    ],
++    "rrtOdtDenominator": [
++      0.983729,
++      0.432951,
++      0.238081
++    ],
++    "outputMatrixRows": [
++      [
++        1.60475,
++        -0.53108,
++        -0.07367
++      ],
++      [
++        -0.10208,
++        1.10813,
++        -0.00605
++      ],
++      [
++        -0.00327,
++        -0.07276,
++        1.07602
++      ]
++    ]
+   },
+   "transfer": {
+     "decodeThreshold": 0.04045,
+@@ -36,16 +83,124 @@
+   },
+   "alternateBreedPalette": {
+     "note": "Existing badge role and age tint semantics retained before the shared linear lighting transform; rows are fur, shade, stripe, cream",
+-    "breeds": ["orange", "silver", "tuxedo", "siamese", "ragdoll", "blue", "calico", "golden", "starry"],
+-    "colors": [[14649913, 15442770, 11294507, 16312531], [12041922, 12041922, 5858669, 16052969], [3160389, 3160389, 2568252, 16315624], [15062197, 15062197, 6639690, 15062197], [15919840, 15919840, 9078158, 16775404], [8163751, 8163751, 7374235, 9084337], [15106891, 16248287, 3487029, 16774883], [14987362, 14987362, 12091451, 16247244], [3095397, 3095397, 2831189, 4344717]],
+-    "growthOrder": ["adult", "kitten", "young"],
+-    "growthTintPercent": [-6, 24, 9],
++    "breeds": [
++      "orange",
++      "silver",
++      "tuxedo",
++      "siamese",
++      "ragdoll",
++      "blue",
++      "calico",
++      "golden",
++      "starry"
++    ],
++    "colors": [
++      [
++        14649913,
++        15442770,
++        11294507,
++        16312531
++      ],
++      [
++        12041922,
++        12041922,
++        5858669,
++        16052969
++      ],
++      [
++        3160389,
++        3160389,
++        2568252,
++        16315624
++      ],
++      [
++        15062197,
++        15062197,
++        6639690,
++        15062197
++      ],
++      [
++        15919840,
++        15919840,
++        9078158,
++        16775404
++      ],
++      [
++        8163751,
++        8163751,
++        7374235,
++        9084337
++      ],
++      [
++        15106891,
++        16248287,
++        3487029,
++        16774883
++      ],
++      [
++        14987362,
++        14987362,
++        12091451,
++        16247244
++      ],
++      [
++        3095397,
++        3095397,
++        2831189,
++        4344717
++      ]
++    ],
++    "growthOrder": [
++      "adult",
++      "kitten",
++      "young"
++    ],
++    "growthTintPercent": [
++      -6,
++      24,
++      9
++    ],
+     "creamTintScale": 0.3,
+     "blueEye": "67aedd"
+   },
+   "output": {
+-    "order": ["decode sRGB texture", "multiply linear material factor", "linear diffuse level", "exposure", "ACES input matrix / RRT ODT fit / output matrix", "clamp linear display RGB", "encode sRGB once", "round uint8", "indexed ARGB8888 RLE", "lossless zlib", "LVGL RGB565 at composition"],
++    "order": [
++      "decode sRGB texture",
++      "multiply linear material factor",
++      "linear diffuse level",
++      "exposure",
++      "ACES input matrix / RRT ODT fit / output matrix",
++      "clamp linear display RGB",
++      "luminance-weighted chroma reduction and midtone softening with shadow/highlight protection",
++      "clamp adjusted linear display RGB",
++      "encode sRGB once",
++      "round uint8",
++      "indexed ARGB8888 RLE",
++      "lossless zlib",
++      "LVGL RGB565 at composition"
++    ],
+     "runtime": "Orange and accessories use baked sRGB without gamma or exposure; alternate breeds use generated final RGB lookup; no runtime RGB shade multiplication",
+     "rgb565": "existing LVGL conversion only; no additional gamma"
++  },
++  "feedback": "User on067: 应该再淡一点. One conservative candidate; not a user-selected final rule.",
++  "displayLinearAdjustment": {
++    "domain": "linear display RGB after ACES and clamp, before the single sRGB output encode",
++    "luminanceWeights": [
++      0.2126,
++      0.7152,
++      0.0722
++    ],
++    "saturation": 0.82,
++    "midtoneContrast": 0.96,
++    "contrastPivot": 0.18,
++    "shadowFade": [
++      0.02,
++      0.1
++    ],
++    "highlightProtection": [
++      0.55,
++      0.8
++    ],
++    "formula": "w=smoothstep(shadowFade,Y)*(1-smoothstep(highlightProtection,Y)); Y2=Y+(pivot-Y)*(1-contrast)*w; RGB2=Y2+(RGB-Y)*(1-(1-saturation)*w); Y>=0.80 or Y<=0.02 unchanged"
+   }
+ }
+--- a/firmware/main/assets/native-cat/provenance.json
++++ b/firmware/main/assets/native-cat/provenance.json
+@@ -86,14 +86,14 @@
+   "priorityOutfitLayers": 1320,
+   "layerPaletteLimit": 128,
+   "bytes": 4073508,
+-  "sha256": "c6c26f880078fd417288c03e3cbdba1cae3b8cfc0edd3366c52b56e98a0b20e4",
++  "sha256": "e9acd8e1c80f295fdcc8f108b80dd8caa45a396e782db01d72a4b71be1e1303c",
+   "packaging": {
+     "format": "zlib-wrapped-rle-v1",
+     "layers": 1650,
+     "uncompressedRleBytes": 4073508,
+-    "uncompressedRleSha256": "c6c26f880078fd417288c03e3cbdba1cae3b8cfc0edd3366c52b56e98a0b20e4",
+-    "bytes": 1531337,
+-    "sha256": "5462913ac47c00ac4a3768647f2d350b5573f0d8e5b7ec024de45b261f057106",
++    "uncompressedRleSha256": "e9acd8e1c80f295fdcc8f108b80dd8caa45a396e782db01d72a4b71be1e1303c",
++    "bytes": 1531748,
++    "sha256": "6c4e55c7ab7cb934139f42ffa583a45840559d18580bfcebb3aa62f272ff38c6",
+     "maxDecodedLayerBytes": 11112,
+     "losslessProductionPackagingOnly": true
+   },
+@@ -104,9 +104,9 @@
+     "focal": 970.5148464310672
+   },
+   "colorPipeline": {
+-    "id": "native-linear-aces-v1-candidate",
++    "id": "native-linear-aces-soft-v2-candidate",
+     "status": "candidate-pending-user-visual-selection",
+-    "profileSha256": "85cd904ac031a4edb21c899fde102643fb2f88787cba81c9d68eecbd07a01013",
++    "profileSha256": "3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae",
+     "profileFile": "color-profile.json",
+     "runtimeLookup": "native_cat_color.h",
+     "reference": "phone050; fixed diffuse approximation, not full room PBR equivalence"
+--- a/protocol/2026-10-18-native-color-soft-v2-candidate.md
++++ b/protocol/2026-10-18-native-color-soft-v2-candidate.md
+@@ -0,0 +1,37 @@
++# 原生猫素材颜色生成规则 v2（候选，待用户肉眼选定）
++
++候选ID：`native-linear-aces-soft-v2-candidate`，对应吧唧`0.6.8-soft-color`（068），手机保持050。
++
++本次候选配置SHA256：`3736aa24b8928c3b02aba225b95edb39208a533be7ffb80123401719d9e1eeae`。
++
++用户对067的反馈为“应该再淡一点”。本轮只交付一个保守候选，重点是统一降低过强饱和度、柔化中间调；不增加整体曝光，不单独调整橘猫，不改屏幕亮度。067和本轮068都不能标为已定稿规则，最终仍待用户肉眼选择。
++
++## 参数与处理顺序
++
++1. 输入：贴图RGB按sRGB解码一次，alpha覆盖率保持；glTF `baseColorFactor`按线性RGB在解码后相乘，纯材质色直接按线性RGB处理。
++2. 光照：保留方向`[-0.35,0.8,-0.6]`、三档线性照度`[0.64,0.82,1.0]`及分级`round((0.62+0.45*max(N·L,0)-0.64)/0.18)`，档位限制0–2。
++3. 曝光和曲线：沿用曝光`1.22`、Three r185 ACES输入矩阵/RRT-ODT拟合/输出矩阵及内部归一常数`0.6`，本轮不抬曝光。ACES后线性显示RGB限制为0–1。
++4. 新增统一柔化，仅在线性显示RGB上计算：`Y=dot(RGB,[0.2126,0.7152,0.0722])`；`w=smoothstep(0.02,0.10,Y)*(1-smoothstep(0.55,0.80,Y))`。`smoothstep(a,b,x)`为先将`(x-a)/(b-a)`限制0–1，再计算`t²*(3-2t)`。
++5. 饱和度候选参数`0.82`：实际系数`S=1-(1-0.82)*w`；中间调对比度`0.96`，枢轴`0.18`：`Y2=Y+(0.18-Y)*(1-0.96)*w`；最终`RGB2=Y2+(RGB-Y)*S`。白部和高亮区域逐渐退出调整：`Y>=0.80`完全保持原值；`Y<=0.02`的深暗部也不变。最大降饱和度18%，并非每个像素都固定降18%；中间调趋向枢轴的最大幅度是差值的4%。
++6. 再限制线性RGB为0–1，只做一次sRGB输出：阈值`0.0031308`、线性段`12.92`、指数`1/2.4`、比例`1.055`、偏移`0.055`；四舍五入到8位。输入sRGB解码阈值仍为`0.04045`、指数`2.4`。
++7. ARGB8888索引色→原RLE→无损zlib。橘猫/配饰使用烘焙终值，其他猫种使用同一管线生成的完整RGB查表；运行时不二次gamma、曝光或编码RGB阴影相乘。最终RGB565沿用原LVGL转换。
++
++## 集中配置与复用
++
++- 参数源：`firmware/tools/native_cat_color_profile.json`；新增参数位于`displayLinearAdjustment`，其余光照、曝光、ACES、传递函数和原猫种/年龄调色语义均保留。
++- 唯一生成入口：`python3 firmware/tools/pack_native_cat.py --asset-root <原生素材目录> --color-profile firmware/tools/native_cat_color_profile.json --output firmware/main/assets/native-cat`。
++- 生成330张基础帧、1320张原配饰遮挡层及其他猫种最终RGB查表。输出`color-profile.json`和`provenance.json`记录候选ID、完整配置SHA256、源GLB哈希、相机和打包信息；交付目录保留067/068配置及生产资源。
++- 保留源模型、纹理语义、姿势、动作时刻、相机、192×208画布、脚锚`[96,196]`、遮挡、布局、滑动、末帧处理、066的PSRAM暂存区/队列修复、绑定和存档。手机与小镇不变。
++- 这是原固定漫反射近似后的统一颜色处理，不代表完整复现手机PBR灯光或其他猫种花纹。本轮不扩展功能或增加试验轮次。
++
++## 定稿条件
++
++生产素材对照只供观察变化，不是手机/吧唧截图，不属于技术测试或自行验收。本轮未主动扫描、连接或诊断。
++
++用户并排比较手机050与吧唧068的橘色、条纹、白爪、奶油色和口水巾后，再选定规则。选定前保留候选状态；选定后才将对应配置ID、SHA256和用户结论写入原PRD正式规则，供批量替换复用。
++
++用户选定规则／配置SHA256：待选。真实观感：待用户。定稿日期及原PRD写入位置：待补。
++
++原PRD：https://app.notion.com/p/dabc209ad67f8338af9101d5810f7160
++
++最新纠正：https://app.notion.com/p/3fdc209ad67f81769985fc6c655e09a6

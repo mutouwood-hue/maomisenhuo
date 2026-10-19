@@ -1,0 +1,10 @@
+{
+  "source": "static reads of already stored phone journal and badge bytes; no product execution or replay",
+  "badgeHasOwner": true,
+  "sameStoredClientIdentity": true,
+  "badgeLastSequence": 568,
+  "phoneNextSequence": 569,
+  "sequenceFrontierConsistent": true,
+  "phonePending": false,
+  "noResetOrRebind": true
+}

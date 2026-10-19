@@ -17,14 +17,8 @@
   let lastFocus = null;
   function openDevice() {
     lastFocus = document.activeElement;
-    const pet = window.__petGame?.state()?.pet;
-    const canvas = $('offline-device-cat');
-    const ctx = canvas.getContext('2d');
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    window.__pgSocial?.drawPet(ctx, 0, 8, 8, pet?.breed || 'orange', { outfit: pet?.outfit });
-    renderDevice();
-    if (!dialog.open) dialog.showModal();
-    reconcile();
+    if(window.__pgLife?.open){window.__pgLife.open('badge');reconcile();}
+    else notice('吧唧页面正在准备，请稍后再打开。');
   }
   dialog.addEventListener('close', () => { lastFocus?.focus?.(); reconcile(); });
   const railButton = document.createElement('button');
@@ -39,6 +33,8 @@
   document.querySelector('.town-nav')?.append(desktopButton);
 
   function validatedLink() {
+    const current=window.CatOfflineSceneSync?.state;
+    if(current)return current;
     if (!ports) return null;
     const state = ports.control.getState();
     if (state?.stage === 'ready_local') {
@@ -151,7 +147,7 @@
     const hub = $('sc-hbody');
     if (hub && !$('offline-social-note')) {
       const tip = document.createElement('p'); tip.id = 'offline-social-note'; tip.className = 'lf-note';
-      tip.textContent = '本地试玩：官方 NPC、同机双窗口及遇见码沿用 HTML 原型规则。本页距离、震动与对暗号不代表实体 3 米测距、马达或 NFC。真实设备请从「我的吧唧」明确连接；双方好友确认尚无持久证明。';
+      tip.textContent = '真实相遇在两台吧唧完成敲暗号或连点暗号，并由双方确认保存；连接「我的吧唧」后自动补传好友、印章和世界成长。游戏角色互动另列，不代表附近真实设备。缘分擦肩保持独立、关闭；当面晃一晃未开放，扫码已取消。';
       hub.prepend(tip);
     }
   }
